@@ -11,7 +11,7 @@ permissions:
     paths:
       - metrics/RELEASES.md
 jobs:
-  publish:
+  publish_metrics_sdk:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
