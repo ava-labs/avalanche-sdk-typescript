@@ -2,10 +2,11 @@ speakeasyVersion: 1.516.0
 sources:
     metrics-source:
         sourceNamespace: avalanche-sdk-metrics-typescript
-        sourceRevisionDigest: sha256:882380c59d9190469a770346dc7f34d01e3587a7fd0369005e173b0b2843bb55
+        sourceRevisionDigest: sha256:3934c9b62233b9520de488e804c2ad6db2c9391528ce7170955f7fd699dfe06d
         sourceBlobDigest: sha256:fb4668172f91d4f38dc51bc8bc7c0bee11c924c63c8aba6d22d9b4d66302acb1
         tags:
             - latest
+            - speakeasy-sdk-regen-1741719892
             - Beta
 targets:
     avalanche:
@@ -18,10 +19,10 @@ targets:
     metrics-sdk:
         source: metrics-source
         sourceNamespace: avalanche-sdk-metrics-typescript
-        sourceRevisionDigest: sha256:882380c59d9190469a770346dc7f34d01e3587a7fd0369005e173b0b2843bb55
+        sourceRevisionDigest: sha256:3934c9b62233b9520de488e804c2ad6db2c9391528ce7170955f7fd699dfe06d
         sourceBlobDigest: sha256:fb4668172f91d4f38dc51bc8bc7c0bee11c924c63c8aba6d22d9b4d66302acb1
         codeSamplesNamespace: avalanche-sdk-metrics-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:133d7bd9e7e9a19d5a26f18dbabd9953b48d40d5b4b47dabe260066a9ef8e001
+        codeSamplesRevisionDigest: sha256:0a7efe41ec771cf5dd21b92e7bbd7e47173ebd1bc96e162f1c230717dc37cfaf
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
