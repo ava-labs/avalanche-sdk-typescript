@@ -52,25 +52,25 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add <UNSET>
+npm add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
 ```
 
 ### PNPM
 
 ```bash
-pnpm add <UNSET>
+pnpm add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
 ```
 
 ### Bun
 
 ```bash
-bun add <UNSET>
+bun add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
 ```
 
 ### Yarn
 
 ```bash
-yarn add <UNSET> zod
+yarn add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.

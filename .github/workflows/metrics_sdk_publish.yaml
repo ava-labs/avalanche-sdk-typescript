@@ -9,7 +9,7 @@ permissions:
     branches:
       - main
     paths:
-      - metrics/RELEASES.md
+      - ./metrics/RELEASES.md
 jobs:
   publish_metrics_sdk:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
