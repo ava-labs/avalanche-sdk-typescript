@@ -20,10 +20,12 @@ import {
   TimestampRangeNftHoldersParam$outboundSchema,
 } from "./timestamprangenftholdersparam.js";
 
-export const TypeAnyTimeNftHolders = {
+export const AnyTimeNftHoldersQueryDtoType = {
   AnyTimeNftHolders: "AnyTimeNftHolders",
 } as const;
-export type TypeAnyTimeNftHolders = ClosedEnum<typeof TypeAnyTimeNftHolders>;
+export type AnyTimeNftHoldersQueryDtoType = ClosedEnum<
+  typeof AnyTimeNftHoldersQueryDtoType
+>;
 
 export type AnyTimeNftHoldersQueryDtoParams =
   | TimestampRangeNftHoldersParam
@@ -31,29 +33,29 @@ export type AnyTimeNftHoldersQueryDtoParams =
 
 export type AnyTimeNftHoldersQueryDto = {
   id: string;
-  type: TypeAnyTimeNftHolders;
+  type: AnyTimeNftHoldersQueryDtoType;
   params: TimestampRangeNftHoldersParam | DateRangeNftHoldersParam;
 };
 
 /** @internal */
-export const TypeAnyTimeNftHolders$inboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeNftHolders
-> = z.nativeEnum(TypeAnyTimeNftHolders);
+export const AnyTimeNftHoldersQueryDtoType$inboundSchema: z.ZodNativeEnum<
+  typeof AnyTimeNftHoldersQueryDtoType
+> = z.nativeEnum(AnyTimeNftHoldersQueryDtoType);
 
 /** @internal */
-export const TypeAnyTimeNftHolders$outboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeNftHolders
-> = TypeAnyTimeNftHolders$inboundSchema;
+export const AnyTimeNftHoldersQueryDtoType$outboundSchema: z.ZodNativeEnum<
+  typeof AnyTimeNftHoldersQueryDtoType
+> = AnyTimeNftHoldersQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeAnyTimeNftHolders$ {
-  /** @deprecated use `TypeAnyTimeNftHolders$inboundSchema` instead. */
-  export const inboundSchema = TypeAnyTimeNftHolders$inboundSchema;
-  /** @deprecated use `TypeAnyTimeNftHolders$outboundSchema` instead. */
-  export const outboundSchema = TypeAnyTimeNftHolders$outboundSchema;
+export namespace AnyTimeNftHoldersQueryDtoType$ {
+  /** @deprecated use `AnyTimeNftHoldersQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema = AnyTimeNftHoldersQueryDtoType$inboundSchema;
+  /** @deprecated use `AnyTimeNftHoldersQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema = AnyTimeNftHoldersQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -121,7 +123,7 @@ export const AnyTimeNftHoldersQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeNftHolders$inboundSchema,
+  type: AnyTimeNftHoldersQueryDtoType$inboundSchema,
   params: z.union([
     TimestampRangeNftHoldersParam$inboundSchema,
     DateRangeNftHoldersParam$inboundSchema,
@@ -144,7 +146,7 @@ export const AnyTimeNftHoldersQueryDto$outboundSchema: z.ZodType<
   AnyTimeNftHoldersQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeNftHolders$outboundSchema,
+  type: AnyTimeNftHoldersQueryDtoType$outboundSchema,
   params: z.union([
     TimestampRangeNftHoldersParam$outboundSchema,
     DateRangeNftHoldersParam$outboundSchema,

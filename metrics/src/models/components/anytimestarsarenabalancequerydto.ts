@@ -14,38 +14,41 @@ import {
   DateRangeStarsArenaMinBalanceParam$outboundSchema,
 } from "./daterangestarsarenaminbalanceparam.js";
 
-export const TypeAnyTimeStarsArenaBalance = {
+export const AnyTimeStarsArenaBalanceQueryDtoType = {
   AnyTimeStarsArenaBalance: "AnyTimeStarsArenaBalance",
 } as const;
-export type TypeAnyTimeStarsArenaBalance = ClosedEnum<
-  typeof TypeAnyTimeStarsArenaBalance
+export type AnyTimeStarsArenaBalanceQueryDtoType = ClosedEnum<
+  typeof AnyTimeStarsArenaBalanceQueryDtoType
 >;
 
 export type AnyTimeStarsArenaBalanceQueryDto = {
   id: string;
-  type: TypeAnyTimeStarsArenaBalance;
+  type: AnyTimeStarsArenaBalanceQueryDtoType;
   params: DateRangeStarsArenaMinBalanceParam;
 };
 
 /** @internal */
-export const TypeAnyTimeStarsArenaBalance$inboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeStarsArenaBalance
-> = z.nativeEnum(TypeAnyTimeStarsArenaBalance);
+export const AnyTimeStarsArenaBalanceQueryDtoType$inboundSchema:
+  z.ZodNativeEnum<typeof AnyTimeStarsArenaBalanceQueryDtoType> = z.nativeEnum(
+    AnyTimeStarsArenaBalanceQueryDtoType,
+  );
 
 /** @internal */
-export const TypeAnyTimeStarsArenaBalance$outboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeStarsArenaBalance
-> = TypeAnyTimeStarsArenaBalance$inboundSchema;
+export const AnyTimeStarsArenaBalanceQueryDtoType$outboundSchema:
+  z.ZodNativeEnum<typeof AnyTimeStarsArenaBalanceQueryDtoType> =
+    AnyTimeStarsArenaBalanceQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeAnyTimeStarsArenaBalance$ {
-  /** @deprecated use `TypeAnyTimeStarsArenaBalance$inboundSchema` instead. */
-  export const inboundSchema = TypeAnyTimeStarsArenaBalance$inboundSchema;
-  /** @deprecated use `TypeAnyTimeStarsArenaBalance$outboundSchema` instead. */
-  export const outboundSchema = TypeAnyTimeStarsArenaBalance$outboundSchema;
+export namespace AnyTimeStarsArenaBalanceQueryDtoType$ {
+  /** @deprecated use `AnyTimeStarsArenaBalanceQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema =
+    AnyTimeStarsArenaBalanceQueryDtoType$inboundSchema;
+  /** @deprecated use `AnyTimeStarsArenaBalanceQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema =
+    AnyTimeStarsArenaBalanceQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -55,7 +58,7 @@ export const AnyTimeStarsArenaBalanceQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeStarsArenaBalance$inboundSchema,
+  type: AnyTimeStarsArenaBalanceQueryDtoType$inboundSchema,
   params: DateRangeStarsArenaMinBalanceParam$inboundSchema,
 });
 
@@ -73,7 +76,7 @@ export const AnyTimeStarsArenaBalanceQueryDto$outboundSchema: z.ZodType<
   AnyTimeStarsArenaBalanceQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeStarsArenaBalance$outboundSchema,
+  type: AnyTimeStarsArenaBalanceQueryDtoType$outboundSchema,
   params: DateRangeStarsArenaMinBalanceParam$outboundSchema,
 });
 

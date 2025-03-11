@@ -14,38 +14,38 @@ import {
   DateRangeMinBalanceParam$outboundSchema,
 } from "./daterangeminbalanceparam.js";
 
-export const TypeAllTimeNativeBalance = {
+export const AllTimeNativeBalanceQueryDtoType = {
   AllTimeNativeBalance: "AllTimeNativeBalance",
 } as const;
-export type TypeAllTimeNativeBalance = ClosedEnum<
-  typeof TypeAllTimeNativeBalance
+export type AllTimeNativeBalanceQueryDtoType = ClosedEnum<
+  typeof AllTimeNativeBalanceQueryDtoType
 >;
 
 export type AllTimeNativeBalanceQueryDto = {
   id: string;
-  type: TypeAllTimeNativeBalance;
+  type: AllTimeNativeBalanceQueryDtoType;
   params: DateRangeMinBalanceParam;
 };
 
 /** @internal */
-export const TypeAllTimeNativeBalance$inboundSchema: z.ZodNativeEnum<
-  typeof TypeAllTimeNativeBalance
-> = z.nativeEnum(TypeAllTimeNativeBalance);
+export const AllTimeNativeBalanceQueryDtoType$inboundSchema: z.ZodNativeEnum<
+  typeof AllTimeNativeBalanceQueryDtoType
+> = z.nativeEnum(AllTimeNativeBalanceQueryDtoType);
 
 /** @internal */
-export const TypeAllTimeNativeBalance$outboundSchema: z.ZodNativeEnum<
-  typeof TypeAllTimeNativeBalance
-> = TypeAllTimeNativeBalance$inboundSchema;
+export const AllTimeNativeBalanceQueryDtoType$outboundSchema: z.ZodNativeEnum<
+  typeof AllTimeNativeBalanceQueryDtoType
+> = AllTimeNativeBalanceQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeAllTimeNativeBalance$ {
-  /** @deprecated use `TypeAllTimeNativeBalance$inboundSchema` instead. */
-  export const inboundSchema = TypeAllTimeNativeBalance$inboundSchema;
-  /** @deprecated use `TypeAllTimeNativeBalance$outboundSchema` instead. */
-  export const outboundSchema = TypeAllTimeNativeBalance$outboundSchema;
+export namespace AllTimeNativeBalanceQueryDtoType$ {
+  /** @deprecated use `AllTimeNativeBalanceQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema = AllTimeNativeBalanceQueryDtoType$inboundSchema;
+  /** @deprecated use `AllTimeNativeBalanceQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema = AllTimeNativeBalanceQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -55,7 +55,7 @@ export const AllTimeNativeBalanceQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeAllTimeNativeBalance$inboundSchema,
+  type: AllTimeNativeBalanceQueryDtoType$inboundSchema,
   params: DateRangeMinBalanceParam$inboundSchema,
 });
 
@@ -73,7 +73,7 @@ export const AllTimeNativeBalanceQueryDto$outboundSchema: z.ZodType<
   AllTimeNativeBalanceQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeAllTimeNativeBalance$outboundSchema,
+  type: AllTimeNativeBalanceQueryDtoType$outboundSchema,
   params: DateRangeMinBalanceParam$outboundSchema,
 });
 
