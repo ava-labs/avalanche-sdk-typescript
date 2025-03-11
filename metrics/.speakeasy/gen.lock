@@ -5,8 +5,8 @@ management:
   docVersion: Beta
   speakeasyVersion: 1.517.0
   generationVersion: 2.548.1
-  releaseVersion: 0.1.8
-  configChecksum: 54f7948a1f720f4cac564519f27144e2
+  releaseVersion: 0.1.10
+  configChecksum: ac3c043ac89a8b82d324784518ae05b2
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics

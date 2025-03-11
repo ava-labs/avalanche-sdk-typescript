@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/metrics",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "author": "Avacloud",
   "type": "module",
   "bin": {

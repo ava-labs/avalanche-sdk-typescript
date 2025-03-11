@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: Overlay to change the merged OpenAPI Spec 
+  version: 1.0.0
+actions:
+  - target: $["paths"]["/v1/chains"]["get"][?(@['servers'][0]['url'] == 'https://glacier-api.avax.network')]["responses"]["200"]["content"]["application/json"]["schema"]
+    description: Change the response schema for the /v1/chains endpoint in glacier to avoid a merger conflict with Popsicle API Spec
+    update:
+      $ref: "#/components/schemas/DataListChainsResponse"
+  - target: $.paths['/v1/webhooks'].get
+    remove: true
+  - target: $.paths['/v1/webhooks'].post
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}'].get
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}'].patch
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}'].delete
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}/addresses'].get
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}/addresses'].patch
+    remove: true
+  - target: $.paths['/v1/webhooks/{id}/addresses'].delete
+    remove: true
+  - target: $.paths['/v1/webhooks:getSharedSecret'].get
+    remove: true
+  - target: $.paths['/v1/webhooks:generateOrRotateSharedSecret'].post
+    remove: true
