@@ -9,9 +9,6 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
     </a>
 </div>
 
-
-<br /><br />
-
 <!-- Start Summary [summary] -->
 ## Summary
 
