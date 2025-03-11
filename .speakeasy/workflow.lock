@@ -1,0 +1,40 @@
+speakeasyVersion: 1.516.0
+sources:
+    metrics-source:
+        sourceNamespace: avalanche-sdk-metrics-typescript
+        sourceRevisionDigest: sha256:a03cf954b8a9ab411af917229e651e87630a12703271f87b13a84eb915444486
+        sourceBlobDigest: sha256:fb4668172f91d4f38dc51bc8bc7c0bee11c924c63c8aba6d22d9b4d66302acb1
+        tags:
+            - latest
+            - Beta
+targets:
+    avalanche:
+        source: metrics-source
+        sourceNamespace: avalanche-sdk-metrics-typescript
+        sourceRevisionDigest: sha256:a03cf954b8a9ab411af917229e651e87630a12703271f87b13a84eb915444486
+        sourceBlobDigest: sha256:fb4668172f91d4f38dc51bc8bc7c0bee11c924c63c8aba6d22d9b4d66302acb1
+        codeSamplesNamespace: avalanche-sdk-metrics-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:14d9f387e3c309a88f573d5775768b039b089c94117ac33ac188d0b9066898cd
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        metrics-source:
+            inputs:
+                - location: https://popsicle-api.avax.network/api-json
+            overlays:
+                - location: metrics/overlays/overlay.yaml
+            registry:
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript
+    targets:
+        avalanche:
+            target: typescript
+            source: metrics-source
+            output: metrics
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript-code-samples
+                langOverride: javascript
+                labelOverride:
+                    fixedValue: JavaScript
+                blocking: false

@@ -1,0 +1,612 @@
+lockVersion: 2.0.0
+id: 08752bf2-e791-41ce-8509-32ac5e1c0179
+management:
+  docChecksum: 38219bbeac79f5f003cf8818da36221a
+  docVersion: Beta
+  speakeasyVersion: 1.516.0
+  generationVersion: 2.547.2
+  releaseVersion: 0.1.4
+  configChecksum: 29f1427ae36243d843978a57ac3f78b3
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.11
+    core: 3.21.4
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    globalSecurityCallbacks: 0.1.0
+    globalServerURLs: 2.82.4
+    globals: 2.82.2
+    groups: 2.81.2
+    ignores: 2.81.1
+    mcpServer: 0.7.0
+    nameOverrides: 2.81.2
+    nullables: 0.1.1
+    pagination: 2.83.0
+    responseFormat: 0.2.3
+    retries: 2.83.0
+    sdkHooks: 0.2.0
+    unions: 2.85.8
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - .npmignore
+  - FUNCTIONS.md
+  - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/components/addressdetails.md
+  - docs/models/components/alltimeerc20balancequerydto.md
+  - docs/models/components/alltimenativebalancequerydto.md
+  - docs/models/components/alltimenftholdersquerydto.md
+  - docs/models/components/alltimenftholdersquerydtoparams.md
+  - docs/models/components/alltimestarsarenabalancequerydto.md
+  - docs/models/components/anytimeerc20balancequerydto.md
+  - docs/models/components/anytimenativebalancequerydto.md
+  - docs/models/components/anytimenftholdersquerydto.md
+  - docs/models/components/anytimenftholdersquerydtoparams.md
+  - docs/models/components/anytimestarsarenabalancequerydto.md
+  - docs/models/components/chain.md
+  - docs/models/components/chainmetric.md
+  - docs/models/components/chainrollingwindowmetric.md
+  - docs/models/components/chainrollingwindowmetricsvalue.md
+  - docs/models/components/compositequeryrequestdto.md
+  - docs/models/components/compositequeryresponse.md
+  - docs/models/components/daterangeerc20minbalanceparam.md
+  - docs/models/components/daterangeminbalanceparam.md
+  - docs/models/components/daterangenftholdersparam.md
+  - docs/models/components/daterangestarsarenaminbalanceparam.md
+  - docs/models/components/globalparamnetwork.md
+  - docs/models/components/healthcheckresultdto.md
+  - docs/models/components/healthcheckresultdtostatus.md
+  - docs/models/components/healthindicatorresultdto.md
+  - docs/models/components/healthindicatorresultdtostatus.md
+  - docs/models/components/latestbalanceparams.md
+  - docs/models/components/latestbalancequerydto.md
+  - docs/models/components/lateststarsarenabalanceparams.md
+  - docs/models/components/lateststarsarenabalancequerydto.md
+  - docs/models/components/listchainsresponse.md
+  - docs/models/components/lookingglassresponse.md
+  - docs/models/components/metricsapiresponse.md
+  - docs/models/components/metricsvalue.md
+  - docs/models/components/network.md
+  - docs/models/components/networkmetric.md
+  - docs/models/components/networktype.md
+  - docs/models/components/nftholdersresponse.md
+  - docs/models/components/operator.md
+  - docs/models/components/pchainaddressdetails.md
+  - docs/models/components/pchainlookingglassresponse.md
+  - docs/models/components/queries.md
+  - docs/models/components/rollingwindowmetricsapiresponse.md
+  - docs/models/components/teleporterchainmetricsapiresponse.md
+  - docs/models/components/teleportermetric.md
+  - docs/models/components/teleportermetricsvalue.md
+  - docs/models/components/timeintervalgranularity.md
+  - docs/models/components/timestamprangenftholdersparam.md
+  - docs/models/components/tokentype.md
+  - docs/models/components/typealltimeerc20balance.md
+  - docs/models/components/typealltimenativebalance.md
+  - docs/models/components/typealltimenftholders.md
+  - docs/models/components/typealltimestarsarenabalance.md
+  - docs/models/components/typeanytimeerc20balance.md
+  - docs/models/components/typeanytimenativebalance.md
+  - docs/models/components/typeanytimenftholders.md
+  - docs/models/components/typeanytimestarsarenabalance.md
+  - docs/models/components/typelatestbalance.md
+  - docs/models/components/typelatestbalancestarsarena.md
+  - docs/models/errors/badgatewayerror.md
+  - docs/models/errors/badgatewaymessage.md
+  - docs/models/errors/badrequesterror.md
+  - docs/models/errors/badrequestmessage.md
+  - docs/models/errors/forbiddenerror.md
+  - docs/models/errors/forbiddenmessage.md
+  - docs/models/errors/internalservererror.md
+  - docs/models/errors/internalservererrormessage.md
+  - docs/models/errors/notfounderror.md
+  - docs/models/errors/notfoundmessage.md
+  - docs/models/errors/serviceunavailableerror.md
+  - docs/models/errors/serviceunavailablemessage.md
+  - docs/models/errors/toomanyrequestserror.md
+  - docs/models/errors/toomanyrequestsmessage.md
+  - docs/models/errors/unauthorizederror.md
+  - docs/models/errors/unauthorizedmessage.md
+  - docs/models/operations/compositequeryv2response.md
+  - docs/models/operations/getaddressesbybalanceovertimeglobals.md
+  - docs/models/operations/getaddressesbybalanceovertimerequest.md
+  - docs/models/operations/getaddressesbybalanceovertimeresponse.md
+  - docs/models/operations/getaddressesbybtcbbridgedrequest.md
+  - docs/models/operations/getaddressesbybtcbbridgedresponse.md
+  - docs/models/operations/getchainglobals.md
+  - docs/models/operations/getchainrequest.md
+  - docs/models/operations/getevmchainmetricsglobals.md
+  - docs/models/operations/getevmchainmetricsrequest.md
+  - docs/models/operations/getevmchainmetricsresponse.md
+  - docs/models/operations/getevmchainrollingwindowmetricsglobals.md
+  - docs/models/operations/getevmchainrollingwindowmetricsrequest.md
+  - docs/models/operations/getnftholdersbycontractaddressglobals.md
+  - docs/models/operations/getnftholdersbycontractaddressrequest.md
+  - docs/models/operations/getnftholdersbycontractaddressresponse.md
+  - docs/models/operations/getstakingmetricsglobals.md
+  - docs/models/operations/getstakingmetricsrequest.md
+  - docs/models/operations/getstakingmetricsresponse.md
+  - docs/models/operations/getteleportermetricsbychainglobals.md
+  - docs/models/operations/getteleportermetricsbychainrequest.md
+  - docs/models/operations/getvalidatorsbydaterangerequest.md
+  - docs/models/operations/getvalidatorsbydaterangeresponse.md
+  - docs/models/operations/listchainsrequest.md
+  - docs/models/operations/listchainsresponse.md
+  - docs/sdks/avalanche/README.md
+  - docs/sdks/chain/README.md
+  - docs/sdks/chainmetrics/README.md
+  - docs/sdks/chains/README.md
+  - docs/sdks/evm/README.md
+  - docs/sdks/healthcheck/README.md
+  - docs/sdks/lookingglass/README.md
+  - docs/sdks/metrics/README.md
+  - eslint.config.mjs
+  - jsr.json
+  - package.json
+  - src/core.ts
+  - src/funcs/metricsChainMetricsGetEvmChainMetrics.ts
+  - src/funcs/metricsChainMetricsGetEvmChainRollingWindowMetrics.ts
+  - src/funcs/metricsChainMetricsGetStakingMetrics.ts
+  - src/funcs/metricsChainMetricsGetTeleporterMetricsByChain.ts
+  - src/funcs/metricsEvmChainsGetChain.ts
+  - src/funcs/metricsEvmChainsListChains.ts
+  - src/funcs/metricsHealthCheckMetricsHealthCheck.ts
+  - src/funcs/metricsLookingGlassCompositeQuery.ts
+  - src/funcs/metricsLookingGlassGetAddressesByBalanceOverTime.ts
+  - src/funcs/metricsLookingGlassGetAddressesByBtcbBridged.ts
+  - src/funcs/metricsLookingGlassGetNftHoldersByContractAddress.ts
+  - src/funcs/metricsLookingGlassGetValidatorsByDateRange.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
+  - src/index.ts
+  - src/lib/base64.ts
+  - src/lib/config.ts
+  - src/lib/dlv.ts
+  - src/lib/encodings.ts
+  - src/lib/files.ts
+  - src/lib/http.ts
+  - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
+  - src/lib/primitives.ts
+  - src/lib/retries.ts
+  - src/lib/schemas.ts
+  - src/lib/sdks.ts
+  - src/lib/security.ts
+  - src/lib/url.ts
+  - src/mcp-server/build.mts
+  - src/mcp-server/cli.ts
+  - src/mcp-server/cli/start/command.ts
+  - src/mcp-server/cli/start/impl.ts
+  - src/mcp-server/console-logger.ts
+  - src/mcp-server/extensions.ts
+  - src/mcp-server/mcp-server.ts
+  - src/mcp-server/resources.ts
+  - src/mcp-server/scopes.ts
+  - src/mcp-server/server.ts
+  - src/mcp-server/shared.ts
+  - src/mcp-server/tools.ts
+  - src/mcp-server/tools/metricsChainMetricsGetEvmChainMetrics.ts
+  - src/mcp-server/tools/metricsChainMetricsGetEvmChainRollingWindowMetrics.ts
+  - src/mcp-server/tools/metricsChainMetricsGetStakingMetrics.ts
+  - src/mcp-server/tools/metricsChainMetricsGetTeleporterMetricsByChain.ts
+  - src/mcp-server/tools/metricsEvmChainsGetChain.ts
+  - src/mcp-server/tools/metricsEvmChainsListChains.ts
+  - src/mcp-server/tools/metricsHealthCheckMetricsHealthCheck.ts
+  - src/mcp-server/tools/metricsLookingGlassCompositeQuery.ts
+  - src/mcp-server/tools/metricsLookingGlassGetAddressesByBalanceOverTime.ts
+  - src/mcp-server/tools/metricsLookingGlassGetAddressesByBtcbBridged.ts
+  - src/mcp-server/tools/metricsLookingGlassGetNftHoldersByContractAddress.ts
+  - src/mcp-server/tools/metricsLookingGlassGetValidatorsByDateRange.ts
+  - src/models/components/addressdetails.ts
+  - src/models/components/alltimeerc20balancequerydto.ts
+  - src/models/components/alltimenativebalancequerydto.ts
+  - src/models/components/alltimenftholdersquerydto.ts
+  - src/models/components/alltimestarsarenabalancequerydto.ts
+  - src/models/components/anytimeerc20balancequerydto.ts
+  - src/models/components/anytimenativebalancequerydto.ts
+  - src/models/components/anytimenftholdersquerydto.ts
+  - src/models/components/anytimestarsarenabalancequerydto.ts
+  - src/models/components/chain.ts
+  - src/models/components/chainmetric.ts
+  - src/models/components/chainrollingwindowmetric.ts
+  - src/models/components/chainrollingwindowmetricsvalue.ts
+  - src/models/components/compositequeryrequestdto.ts
+  - src/models/components/compositequeryresponse.ts
+  - src/models/components/daterangeerc20minbalanceparam.ts
+  - src/models/components/daterangeminbalanceparam.ts
+  - src/models/components/daterangenftholdersparam.ts
+  - src/models/components/daterangestarsarenaminbalanceparam.ts
+  - src/models/components/globalparamnetwork.ts
+  - src/models/components/healthcheckresultdto.ts
+  - src/models/components/healthindicatorresultdto.ts
+  - src/models/components/index.ts
+  - src/models/components/latestbalanceparams.ts
+  - src/models/components/latestbalancequerydto.ts
+  - src/models/components/lateststarsarenabalanceparams.ts
+  - src/models/components/lateststarsarenabalancequerydto.ts
+  - src/models/components/listchainsresponse.ts
+  - src/models/components/lookingglassresponse.ts
+  - src/models/components/metricsapiresponse.ts
+  - src/models/components/metricsvalue.ts
+  - src/models/components/network.ts
+  - src/models/components/networkmetric.ts
+  - src/models/components/networktype.ts
+  - src/models/components/nftholdersresponse.ts
+  - src/models/components/operator.ts
+  - src/models/components/pchainaddressdetails.ts
+  - src/models/components/pchainlookingglassresponse.ts
+  - src/models/components/rollingwindowmetricsapiresponse.ts
+  - src/models/components/teleporterchainmetricsapiresponse.ts
+  - src/models/components/teleportermetric.ts
+  - src/models/components/teleportermetricsvalue.ts
+  - src/models/components/timeintervalgranularity.ts
+  - src/models/components/timestamprangenftholdersparam.ts
+  - src/models/components/tokentype.ts
+  - src/models/errors/avalancheapierror.ts
+  - src/models/errors/badgatewayerror.ts
+  - src/models/errors/badrequesterror.ts
+  - src/models/errors/forbiddenerror.ts
+  - src/models/errors/httpclienterrors.ts
+  - src/models/errors/index.ts
+  - src/models/errors/internalservererror.ts
+  - src/models/errors/notfounderror.ts
+  - src/models/errors/sdkvalidationerror.ts
+  - src/models/errors/serviceunavailableerror.ts
+  - src/models/errors/toomanyrequestserror.ts
+  - src/models/errors/unauthorizederror.ts
+  - src/models/operations/compositequeryv2.ts
+  - src/models/operations/getaddressesbybalanceovertime.ts
+  - src/models/operations/getaddressesbybtcbbridged.ts
+  - src/models/operations/getchain.ts
+  - src/models/operations/getevmchainmetrics.ts
+  - src/models/operations/getevmchainrollingwindowmetrics.ts
+  - src/models/operations/getnftholdersbycontractaddress.ts
+  - src/models/operations/getstakingmetrics.ts
+  - src/models/operations/getteleportermetricsbychain.ts
+  - src/models/operations/getvalidatorsbydaterange.ts
+  - src/models/operations/index.ts
+  - src/models/operations/listchains.ts
+  - src/sdk/chain.ts
+  - src/sdk/chainmetrics.ts
+  - src/sdk/chains.ts
+  - src/sdk/evm.ts
+  - src/sdk/healthcheck.ts
+  - src/sdk/index.ts
+  - src/sdk/lookingglass.ts
+  - src/sdk/metrics.ts
+  - src/sdk/sdk.ts
+  - src/types/async.ts
+  - src/types/blobs.ts
+  - src/types/constdatetime.ts
+  - src/types/enums.ts
+  - src/types/fp.ts
+  - src/types/index.ts
+  - src/types/operations.ts
+  - src/types/rfcdate.ts
+  - src/types/streams.ts
+  - tsconfig.json
+examples:
+  metrics-health-check:
+    speakeasy-default-metrics-health-check:
+      responses:
+        "200":
+          application/json: {"info": {"database": {"status": "up"}}, "details": {"database": {"status": "up"}}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  listChains:
+    "":
+      parameters:
+        query:
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"chains": [{"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}, {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "testnet"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getChain:
+    "":
+      parameters:
+        path:
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getEvmChainMetrics:
+    "":
+      parameters:
+        path:
+          metric: "activeAddresses"
+          chainId: "43114"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          timeInterval: "day"
+          pageSize: "10"
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": ["<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getTeleporterMetricsByChain:
+    "":
+      parameters:
+        path:
+          metric: "teleporterSourceTxnCount"
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"result": {"value": 2345.82}}
+        "400":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getEvmChainRollingWindowMetrics:
+    "":
+      parameters:
+        path:
+          metric: "txCount"
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"result": {"lastHour": 7983.08, "lastDay": 371.4, "lastMonth": 1946.22, "lastYear": 5530.22, "allTime": 2030.22}}
+        "400":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getStakingMetrics:
+    "":
+      parameters:
+        path:
+          metric: "validatorCount"
+          network: "mainnet"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: "10"
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"results": [{"value": 2512.08, "timestamp": 9079.49}, {"value": 5878.55, "timestamp": 471.45}, {"value": 3716.7, "timestamp": 8933.57}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getNftHoldersByContractAddress:
+    "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x7a420AEFF902AAa2c85a190D7B91Ce8BEFffFE14"
+        query:
+          pageSize: "10"
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}], "nftCollectionName": ["NFT Project"], "nftSymbol": ["NFTPROJ"], "totalHolders": 10, "totalTokens": 10}
+        "400":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getAddressesByBalanceOverTime:
+    "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        query:
+          threshold: "1000000"
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: "10"
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}, {"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getAddressesByBtcbBridged:
+    "":
+      parameters:
+        query:
+          threshold: "1000000"
+          pageSize: "10"
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}, {"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getValidatorsByDateRange:
+    "":
+      parameters:
+        path:
+          subnetId: "11111111111111111111111111111111LpoYY"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: "10"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"addresses": []}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  compositeQueryV2:
+    speakeasy-default-composite-query-v2:
+      requestBody:
+        application/json: {"pageSize": 1000, "queries": [{"id": "<id>", "type": "AllTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}, {"id": "<id>", "type": "AnyTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}, {"id": "<id>", "type": "AllTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}], "operator": "OR"}
+      responses:
+        "200":
+          application/json: {"subQueryCounts": {"1": 1, "2": 2, "3": 2}, "totalCount": 2, "addresses": ["0x1234567890abcdef1234567890abcdef123456789"]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+examplesVersion: 1.0.0
+generatedTests: {}

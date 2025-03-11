@@ -1,0 +1,22 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    metrics-source:
+        inputs:
+            - location: https://popsicle-api.avax.network/api-json
+        overlays:
+            - location: metrics/overlays/overlay.yaml
+        registry:
+            location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript
+targets:
+    avalanche:
+        target: typescript
+        source: metrics-source
+        output: metrics
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript-code-samples
+            langOverride: javascript
+            labelOverride:
+                fixedValue: JavaScript
+            blocking: false
