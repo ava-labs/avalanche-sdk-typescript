@@ -5,8 +5,8 @@ management:
   docVersion: Beta
   speakeasyVersion: 1.516.0
   generationVersion: 2.547.2
-  releaseVersion: 0.1.4
-  configChecksum: 29f1427ae36243d843978a57ac3f78b3
+  releaseVersion: 0.1.5
+  configChecksum: 872240cdfbf2df1474d8edfd9f551ab8
 features:
   typescript:
     additionalDependencies: 0.1.0
