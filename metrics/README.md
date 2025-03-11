@@ -43,34 +43,30 @@ Metrics API: The Metrics API provides metrics and analytics of on-chain activity
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
-
-
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
 
 ### NPM
 
 ```bash
-npm add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
+npm add @avalanche-sdk/metrics
 ```
 
 ### PNPM
 
 ```bash
-pnpm add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
+pnpm add @avalanche-sdk/metrics
 ```
 
 ### Bun
 
 ```bash
-bun add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
+bun add @avalanche-sdk/metrics
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics zod
+yarn add @avalanche-sdk/metrics zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
