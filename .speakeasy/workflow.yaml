@@ -13,6 +13,9 @@ targets:
         target: typescript
         source: metrics-source
         output: metrics
+        publish:
+            npm:
+                token: $npm_token
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript-code-samples
