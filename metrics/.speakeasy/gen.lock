@@ -3,10 +3,10 @@ id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
   docChecksum: ed268ae1acdde9f28f40d266007e734d
   docVersion: Beta
-  speakeasyVersion: 1.516.0
-  generationVersion: 2.547.2
-  releaseVersion: 0.1.7
-  configChecksum: b33a835122c92e150e8154d2b4ded677
+  speakeasyVersion: 1.517.0
+  generationVersion: 2.548.1
+  releaseVersion: 0.1.8
+  configChecksum: 54f7948a1f720f4cac564519f27144e2
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -45,15 +45,23 @@ generatedFiles:
   - docs/lib/utils/retryconfig.md
   - docs/models/components/addressdetails.md
   - docs/models/components/alltimeerc20balancequerydto.md
+  - docs/models/components/alltimeerc20balancequerydtotype.md
   - docs/models/components/alltimenativebalancequerydto.md
+  - docs/models/components/alltimenativebalancequerydtotype.md
   - docs/models/components/alltimenftholdersquerydto.md
   - docs/models/components/alltimenftholdersquerydtoparams.md
+  - docs/models/components/alltimenftholdersquerydtotype.md
   - docs/models/components/alltimestarsarenabalancequerydto.md
+  - docs/models/components/alltimestarsarenabalancequerydtotype.md
   - docs/models/components/anytimeerc20balancequerydto.md
+  - docs/models/components/anytimeerc20balancequerydtotype.md
   - docs/models/components/anytimenativebalancequerydto.md
+  - docs/models/components/anytimenativebalancequerydtotype.md
   - docs/models/components/anytimenftholdersquerydto.md
   - docs/models/components/anytimenftholdersquerydtoparams.md
+  - docs/models/components/anytimenftholdersquerydtotype.md
   - docs/models/components/anytimestarsarenabalancequerydto.md
+  - docs/models/components/anytimestarsarenabalancequerydtotype.md
   - docs/models/components/chain.md
   - docs/models/components/chainmetric.md
   - docs/models/components/chainrollingwindowmetric.md
@@ -71,8 +79,10 @@ generatedFiles:
   - docs/models/components/healthindicatorresultdtostatus.md
   - docs/models/components/latestbalanceparams.md
   - docs/models/components/latestbalancequerydto.md
+  - docs/models/components/latestbalancequerydtotype.md
   - docs/models/components/lateststarsarenabalanceparams.md
   - docs/models/components/lateststarsarenabalancequerydto.md
+  - docs/models/components/lateststarsarenabalancequerydtotype.md
   - docs/models/components/listchainsresponse.md
   - docs/models/components/lookingglassresponse.md
   - docs/models/components/metricsapiresponse.md
@@ -84,7 +94,7 @@ generatedFiles:
   - docs/models/components/operator.md
   - docs/models/components/pchainaddressdetails.md
   - docs/models/components/pchainlookingglassresponse.md
-  - docs/models/components/queries.md
+  - docs/models/components/query.md
   - docs/models/components/rollingwindowmetricsapiresponse.md
   - docs/models/components/teleporterchainmetricsapiresponse.md
   - docs/models/components/teleportermetric.md
@@ -92,16 +102,6 @@ generatedFiles:
   - docs/models/components/timeintervalgranularity.md
   - docs/models/components/timestamprangenftholdersparam.md
   - docs/models/components/tokentype.md
-  - docs/models/components/typealltimeerc20balance.md
-  - docs/models/components/typealltimenativebalance.md
-  - docs/models/components/typealltimenftholders.md
-  - docs/models/components/typealltimestarsarenabalance.md
-  - docs/models/components/typeanytimeerc20balance.md
-  - docs/models/components/typeanytimenativebalance.md
-  - docs/models/components/typeanytimenftholders.md
-  - docs/models/components/typeanytimestarsarenabalance.md
-  - docs/models/components/typelatestbalance.md
-  - docs/models/components/typelatestbalancestarsarena.md
   - docs/models/errors/badgatewayerror.md
   - docs/models/errors/badgatewaymessage.md
   - docs/models/errors/badrequesterror.md

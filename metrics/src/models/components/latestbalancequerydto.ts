@@ -14,36 +14,38 @@ import {
   LatestBalanceParams$outboundSchema,
 } from "./latestbalanceparams.js";
 
-export const TypeLatestBalance = {
+export const LatestBalanceQueryDtoType = {
   LatestBalance: "LatestBalance",
 } as const;
-export type TypeLatestBalance = ClosedEnum<typeof TypeLatestBalance>;
+export type LatestBalanceQueryDtoType = ClosedEnum<
+  typeof LatestBalanceQueryDtoType
+>;
 
 export type LatestBalanceQueryDto = {
   id: string;
-  type: TypeLatestBalance;
+  type: LatestBalanceQueryDtoType;
   params: LatestBalanceParams;
 };
 
 /** @internal */
-export const TypeLatestBalance$inboundSchema: z.ZodNativeEnum<
-  typeof TypeLatestBalance
-> = z.nativeEnum(TypeLatestBalance);
+export const LatestBalanceQueryDtoType$inboundSchema: z.ZodNativeEnum<
+  typeof LatestBalanceQueryDtoType
+> = z.nativeEnum(LatestBalanceQueryDtoType);
 
 /** @internal */
-export const TypeLatestBalance$outboundSchema: z.ZodNativeEnum<
-  typeof TypeLatestBalance
-> = TypeLatestBalance$inboundSchema;
+export const LatestBalanceQueryDtoType$outboundSchema: z.ZodNativeEnum<
+  typeof LatestBalanceQueryDtoType
+> = LatestBalanceQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeLatestBalance$ {
-  /** @deprecated use `TypeLatestBalance$inboundSchema` instead. */
-  export const inboundSchema = TypeLatestBalance$inboundSchema;
-  /** @deprecated use `TypeLatestBalance$outboundSchema` instead. */
-  export const outboundSchema = TypeLatestBalance$outboundSchema;
+export namespace LatestBalanceQueryDtoType$ {
+  /** @deprecated use `LatestBalanceQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema = LatestBalanceQueryDtoType$inboundSchema;
+  /** @deprecated use `LatestBalanceQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema = LatestBalanceQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -53,7 +55,7 @@ export const LatestBalanceQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeLatestBalance$inboundSchema,
+  type: LatestBalanceQueryDtoType$inboundSchema,
   params: LatestBalanceParams$inboundSchema,
 });
 
@@ -71,7 +73,7 @@ export const LatestBalanceQueryDto$outboundSchema: z.ZodType<
   LatestBalanceQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeLatestBalance$outboundSchema,
+  type: LatestBalanceQueryDtoType$outboundSchema,
   params: LatestBalanceParams$outboundSchema,
 });
 

@@ -14,38 +14,40 @@ import {
   LatestStarsArenaBalanceParams$outboundSchema,
 } from "./lateststarsarenabalanceparams.js";
 
-export const TypeLatestBalanceStarsArena = {
+export const LatestStarsArenaBalanceQueryDtoType = {
   LatestBalanceStarsArena: "LatestBalanceStarsArena",
 } as const;
-export type TypeLatestBalanceStarsArena = ClosedEnum<
-  typeof TypeLatestBalanceStarsArena
+export type LatestStarsArenaBalanceQueryDtoType = ClosedEnum<
+  typeof LatestStarsArenaBalanceQueryDtoType
 >;
 
 export type LatestStarsArenaBalanceQueryDto = {
   id: string;
-  type: TypeLatestBalanceStarsArena;
+  type: LatestStarsArenaBalanceQueryDtoType;
   params: LatestStarsArenaBalanceParams;
 };
 
 /** @internal */
-export const TypeLatestBalanceStarsArena$inboundSchema: z.ZodNativeEnum<
-  typeof TypeLatestBalanceStarsArena
-> = z.nativeEnum(TypeLatestBalanceStarsArena);
+export const LatestStarsArenaBalanceQueryDtoType$inboundSchema: z.ZodNativeEnum<
+  typeof LatestStarsArenaBalanceQueryDtoType
+> = z.nativeEnum(LatestStarsArenaBalanceQueryDtoType);
 
 /** @internal */
-export const TypeLatestBalanceStarsArena$outboundSchema: z.ZodNativeEnum<
-  typeof TypeLatestBalanceStarsArena
-> = TypeLatestBalanceStarsArena$inboundSchema;
+export const LatestStarsArenaBalanceQueryDtoType$outboundSchema:
+  z.ZodNativeEnum<typeof LatestStarsArenaBalanceQueryDtoType> =
+    LatestStarsArenaBalanceQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeLatestBalanceStarsArena$ {
-  /** @deprecated use `TypeLatestBalanceStarsArena$inboundSchema` instead. */
-  export const inboundSchema = TypeLatestBalanceStarsArena$inboundSchema;
-  /** @deprecated use `TypeLatestBalanceStarsArena$outboundSchema` instead. */
-  export const outboundSchema = TypeLatestBalanceStarsArena$outboundSchema;
+export namespace LatestStarsArenaBalanceQueryDtoType$ {
+  /** @deprecated use `LatestStarsArenaBalanceQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema =
+    LatestStarsArenaBalanceQueryDtoType$inboundSchema;
+  /** @deprecated use `LatestStarsArenaBalanceQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema =
+    LatestStarsArenaBalanceQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -55,7 +57,7 @@ export const LatestStarsArenaBalanceQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeLatestBalanceStarsArena$inboundSchema,
+  type: LatestStarsArenaBalanceQueryDtoType$inboundSchema,
   params: LatestStarsArenaBalanceParams$inboundSchema,
 });
 
@@ -73,7 +75,7 @@ export const LatestStarsArenaBalanceQueryDto$outboundSchema: z.ZodType<
   LatestStarsArenaBalanceQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeLatestBalanceStarsArena$outboundSchema,
+  type: LatestStarsArenaBalanceQueryDtoType$outboundSchema,
   params: LatestStarsArenaBalanceParams$outboundSchema,
 });
 

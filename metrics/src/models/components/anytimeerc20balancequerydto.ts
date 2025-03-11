@@ -14,38 +14,38 @@ import {
   DateRangeErc20MinBalanceParam$outboundSchema,
 } from "./daterangeerc20minbalanceparam.js";
 
-export const TypeAnyTimeErc20Balance = {
+export const AnyTimeErc20BalanceQueryDtoType = {
   AnyTimeErc20Balance: "AnyTimeErc20Balance",
 } as const;
-export type TypeAnyTimeErc20Balance = ClosedEnum<
-  typeof TypeAnyTimeErc20Balance
+export type AnyTimeErc20BalanceQueryDtoType = ClosedEnum<
+  typeof AnyTimeErc20BalanceQueryDtoType
 >;
 
 export type AnyTimeErc20BalanceQueryDto = {
   id: string;
-  type: TypeAnyTimeErc20Balance;
+  type: AnyTimeErc20BalanceQueryDtoType;
   params: DateRangeErc20MinBalanceParam;
 };
 
 /** @internal */
-export const TypeAnyTimeErc20Balance$inboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeErc20Balance
-> = z.nativeEnum(TypeAnyTimeErc20Balance);
+export const AnyTimeErc20BalanceQueryDtoType$inboundSchema: z.ZodNativeEnum<
+  typeof AnyTimeErc20BalanceQueryDtoType
+> = z.nativeEnum(AnyTimeErc20BalanceQueryDtoType);
 
 /** @internal */
-export const TypeAnyTimeErc20Balance$outboundSchema: z.ZodNativeEnum<
-  typeof TypeAnyTimeErc20Balance
-> = TypeAnyTimeErc20Balance$inboundSchema;
+export const AnyTimeErc20BalanceQueryDtoType$outboundSchema: z.ZodNativeEnum<
+  typeof AnyTimeErc20BalanceQueryDtoType
+> = AnyTimeErc20BalanceQueryDtoType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace TypeAnyTimeErc20Balance$ {
-  /** @deprecated use `TypeAnyTimeErc20Balance$inboundSchema` instead. */
-  export const inboundSchema = TypeAnyTimeErc20Balance$inboundSchema;
-  /** @deprecated use `TypeAnyTimeErc20Balance$outboundSchema` instead. */
-  export const outboundSchema = TypeAnyTimeErc20Balance$outboundSchema;
+export namespace AnyTimeErc20BalanceQueryDtoType$ {
+  /** @deprecated use `AnyTimeErc20BalanceQueryDtoType$inboundSchema` instead. */
+  export const inboundSchema = AnyTimeErc20BalanceQueryDtoType$inboundSchema;
+  /** @deprecated use `AnyTimeErc20BalanceQueryDtoType$outboundSchema` instead. */
+  export const outboundSchema = AnyTimeErc20BalanceQueryDtoType$outboundSchema;
 }
 
 /** @internal */
@@ -55,7 +55,7 @@ export const AnyTimeErc20BalanceQueryDto$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeErc20Balance$inboundSchema,
+  type: AnyTimeErc20BalanceQueryDtoType$inboundSchema,
   params: DateRangeErc20MinBalanceParam$inboundSchema,
 });
 
@@ -73,7 +73,7 @@ export const AnyTimeErc20BalanceQueryDto$outboundSchema: z.ZodType<
   AnyTimeErc20BalanceQueryDto
 > = z.object({
   id: z.string(),
-  type: TypeAnyTimeErc20Balance$outboundSchema,
+  type: AnyTimeErc20BalanceQueryDtoType$outboundSchema,
   params: DateRangeErc20MinBalanceParam$outboundSchema,
 });
 

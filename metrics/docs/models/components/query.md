@@ -1,4 +1,4 @@
-# Queries
+# Query
 
 
 ## Supported Types

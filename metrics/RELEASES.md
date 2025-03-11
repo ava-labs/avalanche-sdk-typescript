@@ -17,3 +17,13 @@ Based on:
 - [typescript v0.1.7] metrics
 ### Releases
 - [NPM v0.1.7] https://www.npmjs.com/package/@avalanche-sdk/metrics/v/0.1.7 - metrics
+
+## 2025-03-11 20:32:19
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.517.0 (2.548.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.1.8] metrics
+### Releases
+- [NPM v0.1.8] https://www.npmjs.com/package/@avalanche-sdk/metrics/v/0.1.8 - metrics

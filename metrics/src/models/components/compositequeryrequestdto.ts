@@ -72,7 +72,7 @@ import {
   Operator$outboundSchema,
 } from "./operator.js";
 
-export type Queries =
+export type Query =
   | (AllTimeNativeBalanceQueryDto & { type: "AllTimeNativeBalance" })
   | (AnyTimeNativeBalanceQueryDto & { type: "AnyTimeNativeBalance" })
   | (AllTimeErc20BalanceQueryDto & { type: "AllTimeErc20Balance" })
@@ -109,8 +109,8 @@ export type CompositeQueryRequestDto = {
 };
 
 /** @internal */
-export const Queries$inboundSchema: z.ZodType<Queries, z.ZodTypeDef, unknown> =
-  z.union([
+export const Query$inboundSchema: z.ZodType<Query, z.ZodTypeDef, unknown> = z
+  .union([
     AllTimeNativeBalanceQueryDto$inboundSchema.and(
       z.object({ type: z.literal("AllTimeNativeBalance") }).transform((v) => ({
         type: v.type,
@@ -164,7 +164,7 @@ export const Queries$inboundSchema: z.ZodType<Queries, z.ZodTypeDef, unknown> =
   ]);
 
 /** @internal */
-export type Queries$Outbound =
+export type Query$Outbound =
   | (AllTimeNativeBalanceQueryDto$Outbound & { type: "AllTimeNativeBalance" })
   | (AnyTimeNativeBalanceQueryDto$Outbound & { type: "AnyTimeNativeBalance" })
   | (AllTimeErc20BalanceQueryDto$Outbound & { type: "AllTimeErc20Balance" })
@@ -183,10 +183,10 @@ export type Queries$Outbound =
   });
 
 /** @internal */
-export const Queries$outboundSchema: z.ZodType<
-  Queries$Outbound,
+export const Query$outboundSchema: z.ZodType<
+  Query$Outbound,
   z.ZodTypeDef,
-  Queries
+  Query
 > = z.union([
   AllTimeNativeBalanceQueryDto$outboundSchema.and(
     z.object({ type: z.literal("AllTimeNativeBalance") }).transform((v) => ({
@@ -244,26 +244,26 @@ export const Queries$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace Queries$ {
-  /** @deprecated use `Queries$inboundSchema` instead. */
-  export const inboundSchema = Queries$inboundSchema;
-  /** @deprecated use `Queries$outboundSchema` instead. */
-  export const outboundSchema = Queries$outboundSchema;
-  /** @deprecated use `Queries$Outbound` instead. */
-  export type Outbound = Queries$Outbound;
+export namespace Query$ {
+  /** @deprecated use `Query$inboundSchema` instead. */
+  export const inboundSchema = Query$inboundSchema;
+  /** @deprecated use `Query$outboundSchema` instead. */
+  export const outboundSchema = Query$outboundSchema;
+  /** @deprecated use `Query$Outbound` instead. */
+  export type Outbound = Query$Outbound;
 }
 
-export function queriesToJSON(queries: Queries): string {
-  return JSON.stringify(Queries$outboundSchema.parse(queries));
+export function queryToJSON(query: Query): string {
+  return JSON.stringify(Query$outboundSchema.parse(query));
 }
 
-export function queriesFromJSON(
+export function queryFromJSON(
   jsonString: string,
-): SafeParseResult<Queries, SDKValidationError> {
+): SafeParseResult<Query, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Queries$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Queries' from JSON`,
+    (x) => Query$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Query' from JSON`,
   );
 }
 
