@@ -9,7 +9,7 @@ sources:
         registry:
             location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript
 targets:
-    avalanche:
+    metrics-sdk:
         target: typescript
         source: metrics-source
         output: metrics
