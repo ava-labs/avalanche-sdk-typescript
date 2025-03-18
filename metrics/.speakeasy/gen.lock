@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: ed268ae1acdde9f28f40d266007e734d
+  docChecksum: 7b09206ec42c22b3b1510bfd43f1d85f
   docVersion: Beta
-  speakeasyVersion: 1.517.0
-  generationVersion: 2.548.1
-  releaseVersion: 0.1.10
-  configChecksum: ac3c043ac89a8b82d324784518ae05b2
+  speakeasyVersion: 1.520.0
+  generationVersion: 2.555.1
+  releaseVersion: 0.2.0
+  configChecksum: afe688b5848fb2d16862ae87109dc900
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -25,7 +25,7 @@ features:
     globals: 2.82.2
     groups: 2.81.2
     ignores: 2.81.1
-    mcpServer: 0.7.0
+    mcpServer: 0.8.0
     nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
@@ -193,6 +193,7 @@ generatedFiles:
   - src/mcp-server/console-logger.ts
   - src/mcp-server/extensions.ts
   - src/mcp-server/mcp-server.ts
+  - src/mcp-server/prompts.ts
   - src/mcp-server/resources.ts
   - src/mcp-server/scopes.ts
   - src/mcp-server/server.ts
