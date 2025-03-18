@@ -12,22 +12,14 @@ let value: ListValidatorDetailsResponse = {
       nodeId: "<id>",
       subnetId: "<id>",
       amountStaked: "<value>",
-      startTimestamp: 4287.96,
-      endTimestamp: 680.74,
-      stakePercentage: 2519.41,
-      delegatorCount: 2211.61,
-      uptimePerformance: 2531.91,
-      potentialRewards: {
+      startTimestamp: 330.74,
+      endTimestamp: 156.06,
+      delegatorCount: 4287.96,
+      rewards: {
         validationRewardAmount: "<value>",
         delegationRewardAmount: "<value>",
       },
-      validationStatus: "active",
-      validatorHealth: {
-        reachabilityPercent: 1310.55,
-        benchedPChainRequestsPercent: 120.36,
-        benchedXChainRequestsPercent: 1154.84,
-        benchedCChainRequestsPercent: 6184.8,
-      },
+      validationStatus: "completed",
     },
   ],
 };

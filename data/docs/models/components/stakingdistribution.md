@@ -8,7 +8,7 @@ import { StakingDistribution } from "@avalanche-sdk/data/models/components";
 let value: StakingDistribution = {
   version: "<value>",
   amountStaked: "<value>",
-  validatorCount: 8207.67,
+  validatorCount: 9518.75,
 };
 ```
 

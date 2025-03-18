@@ -10,7 +10,7 @@ let value: PChainSharedAsset = {
   name: "Avalanche",
   symbol: "AVAX",
   denomination: 9,
-  type: "nft",
+  type: "secp256k1",
   amount: "5001000",
   utxoCount: 1,
   sharedWithChainId: "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",

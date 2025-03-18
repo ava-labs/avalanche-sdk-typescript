@@ -4,6 +4,7 @@
 
 export * from "./aggregatesignatures.js";
 export * from "./getaddresschains.js";
+export * from "./getaggregatedsignatures.js";
 export * from "./getapilogs.js";
 export * from "./getapiusagemetrics.js";
 export * from "./getassetdetails.js";

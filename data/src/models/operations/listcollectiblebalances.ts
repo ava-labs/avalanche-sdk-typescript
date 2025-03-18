@@ -22,7 +22,7 @@ export type ListCollectibleBalancesRequest = {
    */
   pageToken?: string | undefined;
   /**
-   * The maximum number of items to return. The minimum page size is 1. The maximum pageSize is 100.
+   * The maximum number of items to return. The minimum page size is 1. The maximum pageSize is 500.
    */
   pageSize?: number | undefined;
   /**

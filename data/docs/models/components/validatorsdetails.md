@@ -6,14 +6,14 @@
 import { ValidatorsDetails } from "@avalanche-sdk/data/models/components";
 
 let value: ValidatorsDetails = {
-  validatorCount: 9518.75,
+  validatorCount: 8577.23,
   totalAmountStaked: "<value>",
   estimatedAnnualStakingReward: "<value>",
   stakingDistributionByVersion: [
     {
       version: "<value>",
       amountStaked: "<value>",
-      validatorCount: 5757.51,
+      validatorCount: 4572.23,
     },
   ],
   stakingRatio: "<value>",

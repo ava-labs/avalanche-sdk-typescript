@@ -12,9 +12,9 @@ const value: components.Erc721Token = {
   symbol: "WAVAX",
   ercType: "ERC-721",
   tokenId: "<id>",
-  tokenUri: "https://back-possession.net",
+  tokenUri: "https://delirious-scorpion.com/",
   metadata: {
-    indexStatus: "INVALID_METADATA_JSON",
+    indexStatus: "INVALID_METADATA",
   },
   ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
 };
@@ -27,9 +27,9 @@ const value: components.Erc1155Token = {
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   ercType: "ERC-1155",
   tokenId: "<id>",
-  tokenUri: "https://hopeful-morning.biz/",
+  tokenUri: "https://sour-disposer.info",
   metadata: {
-    indexStatus: "UNREACHABLE_TOKEN_URI",
+    indexStatus: "METADATA_CONTENT_TOO_LARGE",
   },
 };
 ```

@@ -8,9 +8,9 @@ import { ChainAddressChainIdMapListResponse } from "@avalanche-sdk/data/models/c
 let value: ChainAddressChainIdMapListResponse = {
   addresses: [
     {
-      address: "548 Reilly Inlet",
+      address: "295 Tillman Land",
       blockchainIds: [
-        "vV3cui1DsEPC3nLCGH9rorwo8s6BYxM2Hz4QFE5gEYjwTqAu",
+        "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp",
       ],
     },
   ],

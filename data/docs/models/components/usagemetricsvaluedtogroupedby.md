@@ -7,7 +7,7 @@ Column name used for data aggregation
 ```typescript
 import { UsageMetricsValueDTOGroupedBy } from "@avalanche-sdk/data/models/components";
 
-let value: UsageMetricsValueDTOGroupedBy = "responseCode";
+let value: UsageMetricsValueDTOGroupedBy = "chainId";
 ```
 
 ## Values

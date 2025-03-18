@@ -6,14 +6,14 @@
 import { Subnet } from "@avalanche-sdk/data/models/components";
 
 let value: Subnet = {
-  createBlockTimestamp: 627.13,
+  createBlockTimestamp: 6288.99,
   createBlockIndex: "<value>",
   subnetId: "<id>",
   ownerAddresses: [
     "<value>",
   ],
-  threshold: 4240.32,
-  locktime: 2586.84,
+  threshold: 3984.34,
+  locktime: 627.13,
   subnetOwnershipInfo: {
     locktime: 0,
     threshold: 1,

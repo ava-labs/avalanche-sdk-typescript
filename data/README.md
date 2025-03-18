@@ -13,10 +13,15 @@
 </div>
 <!-- End Summary [summary] -->
 
+<!-- Start Summary [summary] -->
+## Summary
+
+Data API: The Data API provides web3 application developers with multi-chain data related to Avalanche's primary network, Avalanche subnets, and Ethereum. With Data API, you can easily build products that leverage real-time and historical transaction and transfer history, native and token balances, and various types of token metadata. The API is in Beta and may be subject to change.</br></br>If you have feedback or feature requests for the API, please submit them <a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">here</a>. Bug reports can be submitted <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">here</a>, and any potential security issues can be reported <a href="https://immunefi.com/bounty/avalabs">here</a>.
+<!-- End Summary [summary] -->
+
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [@avalanche-sdk/data](#avalanche-sdkdata)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
   * [SDK Example Usage](#sdk-example-usage)
@@ -320,6 +325,7 @@ run();
 #### [data.signatureAggregator](docs/sdks/signatureaggregator/README.md)
 
 * [aggregateSignatures](docs/sdks/signatureaggregator/README.md#aggregatesignatures) - Aggregate Signatures
+* [getAggregatedSignatures](docs/sdks/signatureaggregator/README.md#getaggregatedsignatures) - Get Aggregated Signatures
 
 #### [~~data.teleporter~~](docs/sdks/teleporter/README.md)
 
@@ -419,6 +425,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataPrimaryNetworkVerticesGetVertexByHeight`](docs/sdks/vertices/README.md#getvertexbyheight) - List vertices by height
 - [`dataPrimaryNetworkVerticesListLatestXChainVertices`](docs/sdks/vertices/README.md#listlatestxchainvertices) - List vertices
 - [`dataSignatureAggregatorAggregateSignatures`](docs/sdks/signatureaggregator/README.md#aggregatesignatures) - Aggregate Signatures
+- [`dataSignatureAggregatorGetAggregatedSignatures`](docs/sdks/signatureaggregator/README.md#getaggregatedsignatures) - Get Aggregated Signatures
 - [`dataUsageMetricsGetApiLogs`](docs/sdks/usagemetrics/README.md#getapilogs) - Get logs for requests made by client
 - [`dataUsageMetricsGetApiUsageMetrics`](docs/sdks/usagemetrics/README.md#getapiusagemetrics) - Get usage metrics for the Data API
 - [`dataUsageMetricsGetSubnetRpcUsageMetrics`](docs/sdks/usagemetrics/README.md#getsubnetrpcusagemetrics) - Get usage metrics for the Subnet RPC
