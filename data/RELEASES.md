@@ -9,3 +9,13 @@ Based on:
 - [typescript v0.0.2] data
 ### Releases
 - [NPM v0.0.2] https://www.npmjs.com/package/@avalanche-sdk/data/v/0.0.2 - data
+
+## 2025-03-18 18:19:28
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.520.0 (2.555.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.1.0] data
+### Releases
+- [NPM v0.1.0] https://www.npmjs.com/package/@avalanche-sdk/data/v/0.1.0 - data

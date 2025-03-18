@@ -6,6 +6,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { AvalancheCore } from "../core.js";
 import { SDKOptions } from "../lib/config.js";
 import type { ConsoleLogger } from "./console-logger.js";
+import { createRegisterPrompt } from "./prompts.js";
 import {
   createRegisterResource,
   createRegisterResourceTemplate,
@@ -74,6 +75,7 @@ import { tool$dataPrimaryNetworkVerticesGetVertexByHash } from "./tools/dataPrim
 import { tool$dataPrimaryNetworkVerticesGetVertexByHeight } from "./tools/dataPrimaryNetworkVerticesGetVertexByHeight.js";
 import { tool$dataPrimaryNetworkVerticesListLatestXChainVertices } from "./tools/dataPrimaryNetworkVerticesListLatestXChainVertices.js";
 import { tool$dataSignatureAggregatorAggregateSignatures } from "./tools/dataSignatureAggregatorAggregateSignatures.js";
+import { tool$dataSignatureAggregatorGetAggregatedSignatures } from "./tools/dataSignatureAggregatorGetAggregatedSignatures.js";
 import { tool$dataTeleporterGetTeleporterMessage } from "./tools/dataTeleporterGetTeleporterMessage.js";
 import { tool$dataTeleporterListTeleporterMessages } from "./tools/dataTeleporterListTeleporterMessages.js";
 import { tool$dataTeleporterListTeleporterMessagesByAddress } from "./tools/dataTeleporterListTeleporterMessagesByAddress.js";
@@ -94,7 +96,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.0.2",
+    version: "0.1.0",
   });
 
   const client = new AvalancheCore({
@@ -122,7 +124,8 @@ export function createMCPServer(deps: {
     client,
     scopes,
   );
-  const register = { tool, resource, resourceTemplate };
+  const prompt = createRegisterPrompt(deps.logger, server, client, scopes);
+  const register = { tool, resource, resourceTemplate, prompt };
   void register; // suppress unused warnings
 
   tool(tool$dataHealthCheckDataHealthCheck);
@@ -152,6 +155,7 @@ export function createMCPServer(deps: {
   tool(tool$dataUsageMetricsGetSubnetRpcUsageMetrics);
   tool(tool$dataUsageMetricsGetRpcUsageMetrics);
   tool(tool$dataSignatureAggregatorAggregateSignatures);
+  tool(tool$dataSignatureAggregatorGetAggregatedSignatures);
   tool(tool$dataEvmChainsListAddressChains);
   tool(tool$dataEvmChainsSupportedChains);
   tool(tool$dataEvmChainsGetChainInfo);
