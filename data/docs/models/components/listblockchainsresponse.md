@@ -8,7 +8,7 @@ import { ListBlockchainsResponse } from "@avalanche-sdk/data/models/components";
 let value: ListBlockchainsResponse = {
   blockchains: [
     {
-      createBlockTimestamp: 9088.44,
+      createBlockTimestamp: 5757.51,
       createBlockNumber: "<value>",
       blockchainId: "<id>",
       vmId: "<id>",

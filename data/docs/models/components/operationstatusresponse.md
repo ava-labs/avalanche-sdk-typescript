@@ -7,10 +7,10 @@ import { OperationStatusResponse } from "@avalanche-sdk/data/models/components";
 
 let value: OperationStatusResponse = {
   operationId: "<id>",
-  operationType: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+  operationType: "TRANSACTION_EXPORT_PRIMARY_NETWORK",
   operationStatus: "COMPLETED_WITH_WARNING",
-  createdAtTimestamp: 9594.34,
-  updatedAtTimestamp: 6455.7,
+  createdAtTimestamp: 3068.1,
+  updatedAtTimestamp: 5775.43,
 };
 ```
 

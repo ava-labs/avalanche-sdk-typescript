@@ -6,9 +6,9 @@
 import { ChainAddressChainIdMap } from "@avalanche-sdk/data/models/components";
 
 let value: ChainAddressChainIdMap = {
-  address: "737 Fisher Crossing",
+  address: "9663 Prospect Place",
   blockchainIds: [
-    "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp",
+    "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
   ],
 };
 ```

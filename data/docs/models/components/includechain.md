@@ -5,7 +5,7 @@
 ```typescript
 import { IncludeChain } from "@avalanche-sdk/data/models/components";
 
-let value: IncludeChain = "vV3cui1DsEPC3nLCGH9rorwo8s6BYxM2Hz4QFE5gEYjwTqAu";
+let value: IncludeChain = "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp";
 ```
 
 ## Values

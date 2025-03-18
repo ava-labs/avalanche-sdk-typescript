@@ -11,21 +11,21 @@ const value: components.ActiveValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 8490.39,
-  endTimestamp: 333.04,
-  stakePercentage: 9589.83,
-  delegatorCount: 3553.69,
-  uptimePerformance: 3567.07,
+  startTimestamp: 4240.32,
+  endTimestamp: 2586.84,
+  stakePercentage: 8490.39,
+  delegatorCount: 333.04,
+  uptimePerformance: 9589.83,
   potentialRewards: {
     validationRewardAmount: "<value>",
     delegationRewardAmount: "<value>",
   },
   validationStatus: "active",
   validatorHealth: {
-    reachabilityPercent: 163.28,
-    benchedPChainRequestsPercent: 1852.32,
-    benchedXChainRequestsPercent: 4012.59,
-    benchedCChainRequestsPercent: 9292.92,
+    reachabilityPercent: 3553.69,
+    benchedPChainRequestsPercent: 3567.07,
+    benchedXChainRequestsPercent: 163.28,
+    benchedCChainRequestsPercent: 1852.32,
   },
 };
 ```
@@ -38,8 +38,8 @@ const value: components.PendingValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 996.15,
-  endTimestamp: 9453.02,
+  startTimestamp: 4012.59,
+  endTimestamp: 9292.92,
   validationStatus: "pending",
 };
 ```
@@ -52,9 +52,9 @@ const value: components.CompletedValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 8694.89,
-  endTimestamp: 4541.62,
-  delegatorCount: 3267.01,
+  startTimestamp: 996.15,
+  endTimestamp: 9453.02,
+  delegatorCount: 8694.89,
   rewards: {
     validationRewardAmount: "<value>",
     delegationRewardAmount: "<value>",
@@ -71,10 +71,10 @@ const value: components.RemovedValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 2327.44,
-  endTimestamp: 6144.65,
+  startTimestamp: 4541.62,
+  endTimestamp: 3267.01,
   removeTxHash: "<value>",
-  removeTimestamp: 330.74,
+  removeTimestamp: 2327.44,
   validationStatus: "removed",
 };
 ```

@@ -5,7 +5,7 @@
 ```typescript
 import { OperationStatusCode } from "@avalanche-sdk/data/models/components";
 
-let value: OperationStatusCode = "ErrInvalidRequest";
+let value: OperationStatusCode = "WarnTruncatedExport";
 ```
 
 ## Values

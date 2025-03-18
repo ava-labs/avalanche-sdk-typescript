@@ -6,14 +6,14 @@
 import { UsageMetricsValueDTO } from "@avalanche-sdk/data/models/components";
 
 let value: UsageMetricsValueDTO = {
-  groupedBy: "requestPath",
-  totalRequests: 2213.96,
-  requestsPerSecond: 1000.14,
-  successRatePercent: 2650.39,
-  medianResponseTimeMsecs: 661.49,
-  invalidRequests: 656.04,
-  apiCreditsUsed: 8562.77,
-  apiCreditsWasted: 1621.2,
+  groupedBy: "chainId",
+  totalRequests: 1905.67,
+  requestsPerSecond: 191.22,
+  successRatePercent: 5181.5,
+  medianResponseTimeMsecs: 8427.77,
+  invalidRequests: 3732.16,
+  apiCreditsUsed: 2228.64,
+  apiCreditsWasted: 805.32,
 };
 ```
 

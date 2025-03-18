@@ -13,9 +13,9 @@ let value: ListNftTokens = {
       symbol: "WAVAX",
       ercType: "ERC-721",
       tokenId: "<id>",
-      tokenUri: "https://assured-sediment.com/",
+      tokenUri: "https://discrete-in-joke.com/",
       metadata: {
-        indexStatus: "THROTTLED_TOKEN_URI",
+        indexStatus: "INVALID_METADATA_JSON",
       },
       ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     },

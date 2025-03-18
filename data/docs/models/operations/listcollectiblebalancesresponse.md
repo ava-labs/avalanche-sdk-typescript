@@ -10,16 +10,14 @@ let value: ListCollectibleBalancesResponse = {
     collectibleBalances: [
       {
         address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-        name: "Wrapped AVAX",
-        symbol: "WAVAX",
-        ercType: "ERC-721",
+        ercType: "ERC-1155",
         tokenId: "<id>",
-        tokenUri: "https://hasty-tuber.org/",
+        tokenUri: "https://understated-reasoning.info/",
         metadata: {
-          indexStatus: "INVALID_TOKEN_URI_SCHEME",
+          indexStatus: "UNREACHABLE_TOKEN_URI",
         },
-        ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         chainId: "43114",
+        balance: "2000000000000000000",
       },
     ],
   },

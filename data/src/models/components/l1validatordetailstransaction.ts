@@ -14,6 +14,10 @@ export type L1ValidatorDetailsTransaction = {
    * Unique L1 validation ID used network-wide to identify L1 validation until its weight is reduced to 0 i.e. removed.
    */
   validationId: string;
+  /**
+   * Unique L1 validation ID used network-wide to identify L1 validation until its weight is reduced to 0 i.e. removed. In hex format
+   */
+  validationIdHex: string;
   nodeId: string;
   subnetId: string;
   /**
@@ -99,6 +103,7 @@ export const L1ValidatorDetailsTransaction$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   validationId: z.string(),
+  validationIdHex: z.string(),
   nodeId: z.string(),
   subnetId: z.string(),
   weight: z.number(),
@@ -112,6 +117,7 @@ export const L1ValidatorDetailsTransaction$inboundSchema: z.ZodType<
 /** @internal */
 export type L1ValidatorDetailsTransaction$Outbound = {
   validationId: string;
+  validationIdHex: string;
   nodeId: string;
   subnetId: string;
   weight: number;
@@ -129,6 +135,7 @@ export const L1ValidatorDetailsTransaction$outboundSchema: z.ZodType<
   L1ValidatorDetailsTransaction
 > = z.object({
   validationId: z.string(),
+  validationIdHex: z.string(),
   nodeId: z.string(),
   subnetId: z.string(),
   weight: z.number(),

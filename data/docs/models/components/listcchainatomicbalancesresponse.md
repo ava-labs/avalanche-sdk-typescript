@@ -33,7 +33,7 @@ let value: ListCChainAtomicBalancesResponse = {
     ],
   },
   chainInfo: {
-    chainName: "p-chain",
+    chainName: "x-chain",
     network: "mainnet",
   },
 };

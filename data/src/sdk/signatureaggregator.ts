@@ -3,6 +3,7 @@
  */
 
 import { dataSignatureAggregatorAggregateSignatures } from "../funcs/dataSignatureAggregatorAggregateSignatures.js";
+import { dataSignatureAggregatorGetAggregatedSignatures } from "../funcs/dataSignatureAggregatorGetAggregatedSignatures.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
@@ -20,6 +21,23 @@ export class SignatureAggregator extends ClientSDK {
     options?: RequestOptions,
   ): Promise<components.SignatureAggregationResponse> {
     return unwrapAsync(dataSignatureAggregatorAggregateSignatures(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Get Aggregated Signatures
+   *
+   * @remarks
+   * Get Aggregated Signatures for a P-Chain L1 related Warp Message.
+   */
+  async getAggregatedSignatures(
+    request: operations.GetAggregatedSignaturesRequest,
+    options?: RequestOptions,
+  ): Promise<components.SignatureAggregationResponse> {
+    return unwrapAsync(dataSignatureAggregatorGetAggregatedSignatures(
       this,
       request,
       options,

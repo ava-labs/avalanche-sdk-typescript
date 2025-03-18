@@ -6,45 +6,36 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  InternalTransactionOpCall,
-  InternalTransactionOpCall$inboundSchema,
-  InternalTransactionOpCall$outboundSchema,
-} from "./internaltransactionopcall.js";
-import {
-  RichAddress,
-  RichAddress$inboundSchema,
-  RichAddress$Outbound,
-  RichAddress$outboundSchema,
-} from "./richaddress.js";
 
 export type InternalTransaction = {
   /**
-   * The block number on the chain.
+   * Sender address
    */
-  blockNumber: string;
+  from: string;
   /**
-   * The block finality timestamp.
+   * Recipient address
    */
-  blockTimestamp: number;
+  to: string;
   /**
-   * The block hash identifier.
+   * Internal transaction type
    */
-  blockHash: string;
+  internalTxType: string;
   /**
-   * The transaction hash identifier.
+   * Value transferred
    */
-  txHash: string;
-  from: RichAddress;
-  to: RichAddress;
-  internalTxType: InternalTransactionOpCall;
   value: string;
   /**
-   * True if the internal transaction was reverted.
+   * Gas used
    */
-  isReverted: boolean;
   gasUsed: string;
+  /**
+   * Gas limit
+   */
   gasLimit: string;
+  /**
+   * Transaction hash
+   */
+  transactionHash: string;
 };
 
 /** @internal */
@@ -53,32 +44,24 @@ export const InternalTransaction$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  blockNumber: z.string(),
-  blockTimestamp: z.number(),
-  blockHash: z.string(),
-  txHash: z.string(),
-  from: RichAddress$inboundSchema,
-  to: RichAddress$inboundSchema,
-  internalTxType: InternalTransactionOpCall$inboundSchema,
+  from: z.string(),
+  to: z.string(),
+  internalTxType: z.string(),
   value: z.string(),
-  isReverted: z.boolean(),
   gasUsed: z.string(),
   gasLimit: z.string(),
+  transactionHash: z.string(),
 });
 
 /** @internal */
 export type InternalTransaction$Outbound = {
-  blockNumber: string;
-  blockTimestamp: number;
-  blockHash: string;
-  txHash: string;
-  from: RichAddress$Outbound;
-  to: RichAddress$Outbound;
+  from: string;
+  to: string;
   internalTxType: string;
   value: string;
-  isReverted: boolean;
   gasUsed: string;
   gasLimit: string;
+  transactionHash: string;
 };
 
 /** @internal */
@@ -87,17 +70,13 @@ export const InternalTransaction$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   InternalTransaction
 > = z.object({
-  blockNumber: z.string(),
-  blockTimestamp: z.number(),
-  blockHash: z.string(),
-  txHash: z.string(),
-  from: RichAddress$outboundSchema,
-  to: RichAddress$outboundSchema,
-  internalTxType: InternalTransactionOpCall$outboundSchema,
+  from: z.string(),
+  to: z.string(),
+  internalTxType: z.string(),
   value: z.string(),
-  isReverted: z.boolean(),
   gasUsed: z.string(),
   gasLimit: z.string(),
+  transactionHash: z.string(),
 });
 
 /**

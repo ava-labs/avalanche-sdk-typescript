@@ -10,7 +10,7 @@ let value: XChainAssetDetails = {
   name: "Avalanche",
   symbol: "AVAX",
   denomination: 9,
-  type: "secp256k1",
+  type: "nft",
   createdAtTimestamp: 1675444720,
   cap: "fixed",
 };

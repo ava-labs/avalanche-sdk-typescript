@@ -28,7 +28,7 @@ let value: ListErc1155BalancesResponse = {
       address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
       ercType: "ERC-1155",
       tokenId: "<id>",
-      tokenUri: "https://complete-availability.net/",
+      tokenUri: "https://impure-department.com/",
       metadata: {
         indexStatus: "UNKNOWN",
       },

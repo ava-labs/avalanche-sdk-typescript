@@ -7,23 +7,24 @@ import { L1ValidatorDetailsFull } from "@avalanche-sdk/data/models/components";
 
 let value: L1ValidatorDetailsFull = {
   validationId: "<id>",
+  validationIdHex: "<value>",
   nodeId: "<id>",
   subnetId: "<id>",
-  weight: 3742.96,
-  remainingBalance: 7487.89,
-  creationTimestamp: 2378.07,
+  weight: 9509.53,
+  remainingBalance: 2334.2,
+  creationTimestamp: 6897.68,
   blsCredentials: {},
   remainingBalanceOwner: {
     addresses: [
       "<value>",
     ],
-    threshold: 1718.53,
+    threshold: 583.56,
   },
   deactivationOwner: {
     addresses: [
       "<value>",
     ],
-    threshold: 4492.92,
+    threshold: 7307.09,
   },
 };
 ```
@@ -33,6 +34,7 @@ let value: L1ValidatorDetailsFull = {
 | Field                                                                                                                                                                              | Type                                                                                                                                                                               | Required                                                                                                                                                                           | Description                                                                                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `validationId`                                                                                                                                                                     | *string*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                 | Unique L1 validation ID used network-wide to identify L1 validation until its weight is reduced to 0 i.e. removed.                                                                 |
+| `validationIdHex`                                                                                                                                                                  | *string*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                 | Unique L1 validation ID used network-wide to identify L1 validation until its weight is reduced to 0 i.e. removed. In hex format                                                   |
 | `nodeId`                                                                                                                                                                           | *string*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                 | N/A                                                                                                                                                                                |
 | `subnetId`                                                                                                                                                                         | *string*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                 | N/A                                                                                                                                                                                |
 | `weight`                                                                                                                                                                           | *number*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                 | Weight of the L1 validator used while sampling validators within the L1. A zero-weight L1 validator means it has been removed from the L1, and the validationID is no longer valid |

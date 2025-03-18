@@ -10,10 +10,10 @@ let value: RemovedValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 7065.75,
-  endTimestamp: 4148.57,
+  startTimestamp: 2414.18,
+  endTimestamp: 6625.05,
   removeTxHash: "<value>",
-  removeTimestamp: 3605.45,
+  removeTimestamp: 2460.63,
   validationStatus: "removed",
 };
 ```
