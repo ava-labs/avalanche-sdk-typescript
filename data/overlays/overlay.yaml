@@ -27,3 +27,6 @@ actions:
     remove: true
   - target: $.paths['/v1/webhooks:generateOrRotateSharedSecret'].post
     remove: true
+  - target: $.webhooks
+    remove: true
+  - target: $['x-speakeasy-webhooks']
