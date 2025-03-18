@@ -1,30 +1,26 @@
 <div align="center">
-    <h1> @avalanche-sdk/metrics </h1>
+    <h1> @avalanche-sdk/webhooks </h1>
         <p>
-            The Avalanche Metrics SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
+            The Avalanche Webhooks SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
         </p>
         <p> 
-            Currently, this SDK is focused on providing robust support for Metrics APIs.          
+            Currently, this SDK is focused on providing robust support for Webhooks APIs.          
         </p>
-        <a href="https://developers.avacloud.io/metrics-api/overview">
+        <a href="https://developers.avacloud.io/webhooks-api/overview">
             <img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=3b6ef9&style=for-the-badge" />
         </a>
 </div>
-<!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
-
 ## Table of Contents
-
 <!-- $toc-max-depth=2 -->
-
-* [@avalanche-sdk/metrics](#avalanche-sdkmetrics)
+* [@avalanche-sdk/webhooks](#avalanche-sdkwebhooks)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
   * [SDK Example Usage](#sdk-example-usage)
+  * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
-  * [Global Parameters](#global-parameters)
   * [Pagination](#pagination)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -38,7 +34,6 @@
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
-
 ## SDK Installation
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
@@ -46,25 +41,25 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add @avalanche-sdk/metrics
+npm add @avalanche-sdk/webhooks
 ```
 
 ### PNPM
 
 ```bash
-pnpm add @avalanche-sdk/metrics
+pnpm add @avalanche-sdk/webhooks
 ```
 
 ### Bun
 
 ```bash
-bun add @avalanche-sdk/metrics
+bun add @avalanche-sdk/webhooks
 ```
 
 ### Yarn
 
 ```bash
-yarn add @avalanche-sdk/metrics zod
+yarn add @avalanche-sdk/webhooks zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -72,6 +67,7 @@ yarn add @avalanche-sdk/metrics zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
+
 
 ### Model Context Protocol (MCP) Server
 
@@ -91,9 +87,10 @@ Add the following server definition to your `claude_desktop_config.json` file:
     "Avalanche": {
       "command": "npx",
       "args": [
-        "-y", "--package", "@avalanche-sdk/metrics",
+        "-y", "--package", "@avalanche-sdk/webhooks",
         "--",
         "mcp", "start",
+        "--api-key", "...",
         "--chain-id", "...",
         "--network", "..."
       ]
@@ -112,9 +109,8 @@ Go to `Cursor Settings > Features > MCP Servers > Add new MCP server` and use th
 - Name: Avalanche
 - Type: `command`
 - Command:
-
 ```sh
-npx -y --package @avalanche-sdk/metrics -- mcp start --chain-id ... --network ... 
+npx -y --package @avalanche-sdk/webhooks -- mcp start --api-key ... --chain-id ... --network ... 
 ```
 
 </details>
@@ -122,27 +118,23 @@ npx -y --package @avalanche-sdk/metrics -- mcp start --chain-id ... --network ..
 For a full list of server arguments, run:
 
 ```sh
-npx -y --package @avalanche-sdk/metrics -- mcp start --help
+npx -y --package @avalanche-sdk/webhooks -- mcp start --help
 ```
-
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
-
 ## Requirements
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-
 <!-- End Requirements [requirements] -->
 
 <!-- Start SDK Example Usage [usage] -->
-
 ## SDK Example Usage
 
 ### Example
 
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const avalanche = new Avalanche({
   chainId: "43114",
@@ -150,7 +142,20 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.webhooks.createWebhook({
+    eventType: "validator_activity",
+    url: "https://expensive-designation.info",
+    chainId: "<id>",
+    metadata: {
+      keyType: "addresses",
+      keys: [
+        "<value>",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
 
   // Handle the result
   console.log(result);
@@ -159,51 +164,78 @@ async function run() {
 run();
 
 ```
-
 <!-- End SDK Example Usage [usage] -->
 
-<!-- Start Available Resources and Operations [operations] -->
+<!-- Start Authentication [security] -->
+## Authentication
 
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name     | Type   | Scheme  |
+| -------- | ------ | ------- |
+| `apiKey` | apiKey | API key |
+
+To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
+```typescript
+import { Avalanche } from "@avalanche-sdk/webhooks";
+
+const avalanche = new Avalanche({
+  apiKey: "<YOUR_API_KEY_HERE>",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.webhooks.createWebhook({
+    eventType: "validator_activity",
+    url: "https://expensive-designation.info",
+    chainId: "<id>",
+    metadata: {
+      keyType: "addresses",
+      keys: [
+        "<value>",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+<!-- End Authentication [security] -->
+
+<!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
 <details open>
 <summary>Available methods</summary>
 
-### [metrics](docs/sdks/metrics/README.md)
 
-#### [metrics.chain](docs/sdks/chain/README.md)
+### [webhooks](docs/sdks/webhooks/README.md)
 
-#### [metrics.chain.metrics](docs/sdks/chainmetrics/README.md)
-
-* [getEvmChainMetrics](docs/sdks/chainmetrics/README.md#getevmchainmetrics) - Get metrics for EVM chains
-* [getTeleporterMetricsByChain](docs/sdks/chainmetrics/README.md#getteleportermetricsbychain) - Get teleporter metrics for EVM chains
-* [getEvmChainRollingWindowMetrics](docs/sdks/chainmetrics/README.md#getevmchainrollingwindowmetrics) - Get rolling window metrics for EVM chains
-* [getStakingMetrics](docs/sdks/chainmetrics/README.md#getstakingmetrics) - Get staking metrics for a given subnet
-
-#### [metrics.evm](docs/sdks/evm/README.md)
-
-#### [metrics.evm.chains](docs/sdks/chains/README.md)
-
-* [listChains](docs/sdks/chains/README.md#listchains) - Get a list of supported blockchains
-* [getChain](docs/sdks/chains/README.md#getchain) - Get chain information for supported blockchain
-
-#### [metrics.healthCheck](docs/sdks/healthcheck/README.md)
-
-* [metricsHealthCheck](docs/sdks/healthcheck/README.md#metricshealthcheck) - Get the health of the service
-
-#### [metrics.lookingGlass](docs/sdks/lookingglass/README.md)
-
-* [getNftHoldersByContractAddress](docs/sdks/lookingglass/README.md#getnftholdersbycontractaddress) - Get NFT holders by contract address
-* [getAddressesByBalanceOverTime](docs/sdks/lookingglass/README.md#getaddressesbybalanceovertime) - Get addresses by balance over time
-* [getAddressesByBtcbBridged](docs/sdks/lookingglass/README.md#getaddressesbybtcbbridged) - Get addresses by BTCb bridged balance
-* [getValidatorsByDateRange](docs/sdks/lookingglass/README.md#getvalidatorsbydaterange) - Get addresses running validators during a given time frame
-* [compositeQuery](docs/sdks/lookingglass/README.md#compositequery) - Composite query
+* [createWebhook](docs/sdks/webhooks/README.md#createwebhook) - Create a webhook
+* [listWebhooks](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
+* [getWebhook](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
+* [deactivateWebhook](docs/sdks/webhooks/README.md#deactivatewebhook) - Deactivate a webhook
+* [updateWebhook](docs/sdks/webhooks/README.md#updatewebhook) - Update a webhook
+* [generateOrRotateSharedSecret](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
+* [getSharedSecret](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
+* [addAddressesToWebhook](docs/sdks/webhooks/README.md#addaddressestowebhook) - Add addresses to EVM activity webhook
+* [removeAddressesFromWebhook](docs/sdks/webhooks/README.md#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
+* [getAddressesFromWebhook](docs/sdks/webhooks/README.md#getaddressesfromwebhook) - List adresses by EVM activity webhooks
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Standalone functions [standalone-funcs] -->
-
 ## Standalone functions
 
 All the methods listed above are available as standalone functions. These
@@ -218,79 +250,34 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`metricsChainMetricsGetEvmChainMetrics`](docs/sdks/chainmetrics/README.md#getevmchainmetrics) - Get metrics for EVM chains
-- [`metricsChainMetricsGetEvmChainRollingWindowMetrics`](docs/sdks/chainmetrics/README.md#getevmchainrollingwindowmetrics) - Get rolling window metrics for EVM chains
-- [`metricsChainMetricsGetStakingMetrics`](docs/sdks/chainmetrics/README.md#getstakingmetrics) - Get staking metrics for a given subnet
-- [`metricsChainMetricsGetTeleporterMetricsByChain`](docs/sdks/chainmetrics/README.md#getteleportermetricsbychain) - Get teleporter metrics for EVM chains
-- [`metricsEvmChainsGetChain`](docs/sdks/chains/README.md#getchain) - Get chain information for supported blockchain
-- [`metricsEvmChainsListChains`](docs/sdks/chains/README.md#listchains) - Get a list of supported blockchains
-- [`metricsHealthCheckMetricsHealthCheck`](docs/sdks/healthcheck/README.md#metricshealthcheck) - Get the health of the service
-- [`metricsLookingGlassCompositeQuery`](docs/sdks/lookingglass/README.md#compositequery) - Composite query
-- [`metricsLookingGlassGetAddressesByBalanceOverTime`](docs/sdks/lookingglass/README.md#getaddressesbybalanceovertime) - Get addresses by balance over time
-- [`metricsLookingGlassGetAddressesByBtcbBridged`](docs/sdks/lookingglass/README.md#getaddressesbybtcbbridged) - Get addresses by BTCb bridged balance
-- [`metricsLookingGlassGetNftHoldersByContractAddress`](docs/sdks/lookingglass/README.md#getnftholdersbycontractaddress) - Get NFT holders by contract address
-- [`metricsLookingGlassGetValidatorsByDateRange`](docs/sdks/lookingglass/README.md#getvalidatorsbydaterange) - Get addresses running validators during a given time frame
+- [`webhooksAddAddressesToWebhook`](docs/sdks/webhooks/README.md#addaddressestowebhook) - Add addresses to EVM activity webhook
+- [`webhooksCreateWebhook`](docs/sdks/webhooks/README.md#createwebhook) - Create a webhook
+- [`webhooksDeactivateWebhook`](docs/sdks/webhooks/README.md#deactivatewebhook) - Deactivate a webhook
+- [`webhooksGenerateOrRotateSharedSecret`](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
+- [`webhooksGetAddressesFromWebhook`](docs/sdks/webhooks/README.md#getaddressesfromwebhook) - List adresses by EVM activity webhooks
+- [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
+- [`webhooksGetWebhook`](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
+- [`webhooksListWebhooks`](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
+- [`webhooksRemoveAddressesFromWebhook`](docs/sdks/webhooks/README.md#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
+- [`webhooksUpdateWebhook`](docs/sdks/webhooks/README.md#updatewebhook) - Update a webhook
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
 
-<!-- Start Global Parameters [global-parameters] -->
-
-## Global Parameters
-
-Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
-
-For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `listChains`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
-
-### Available Globals
-
-The following global parameters are available.
-
-| Name    | Type                          | Description                                              |
-| ------- | ----------------------------- | -------------------------------------------------------- |
-| chainId | string                        | A supported EVM chain id, chain alias, or blockchain id. |
-| network | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
-
-### Example
-
-```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
-
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
-
-async function run() {
-  const result = await avalanche.metrics.evm.chains.listChains({
-    network: "mainnet",
-  });
-
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
-}
-
-run();
-
-```
-
-<!-- End Global Parameters [global-parameters] -->
-
 <!-- Start Pagination [pagination] -->
-
 ## Pagination
 
 Some of the endpoints in this SDK support pagination. To use pagination, you
 make your SDK calls as usual, but the returned response object will also be an
-async iterable that can be consumed using the 
+async iterable that can be consumed using the [`for await...of`][for-await-of]
 syntax.
+
+[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
 
 Here's an example of one such pagination call:
 
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const avalanche = new Avalanche({
   chainId: "43114",
@@ -298,8 +285,8 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.evm.chains.listChains({
-    network: "mainnet",
+  const result = await avalanche.webhooks.listWebhooks({
+    status: "active",
   });
 
   for await (const page of result) {
@@ -311,19 +298,16 @@ async function run() {
 run();
 
 ```
-
 <!-- End Pagination [pagination] -->
 
 <!-- Start Retries [retries] -->
-
 ## Retries
 
 Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
-
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const avalanche = new Avalanche({
   chainId: "43114",
@@ -331,7 +315,20 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck({
+  const result = await avalanche.webhooks.createWebhook({
+    eventType: "validator_activity",
+    url: "https://expensive-designation.info",
+    chainId: "<id>",
+    metadata: {
+      keyType: "addresses",
+      keys: [
+        "<value>",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  }, {
     retries: {
       strategy: "backoff",
       backoff: {
@@ -353,9 +350,8 @@ run();
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
-
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const avalanche = new Avalanche({
   retryConfig: {
@@ -373,7 +369,20 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.webhooks.createWebhook({
+    eventType: "validator_activity",
+    url: "https://expensive-designation.info",
+    chainId: "<id>",
+    metadata: {
+      keyType: "addresses",
+      keys: [
+        "<value>",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
 
   // Handle the result
   console.log(result);
@@ -382,14 +391,12 @@ async function run() {
 run();
 
 ```
-
 <!-- End Retries [retries] -->
 
 <!-- Start Error Handling [errors] -->
-
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `metricsHealthCheck` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `createWebhook` method may throw the following errors:
 
 | Error Type                     | Status Code | Content Type     |
 | ------------------------------ | ----------- | ---------------- |
@@ -406,7 +413,7 @@ Some methods specify known errors which can be thrown. All the known errors are 
 If the method throws an error and it is not captured by the known errors, it will default to throwing a `AvalancheAPIError`.
 
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 import {
   BadGatewayError,
   BadRequestError,
@@ -417,7 +424,7 @@ import {
   ServiceUnavailableError,
   TooManyRequestsError,
   UnauthorizedError,
-} from "@avalanche-sdk/metrics/models/errors";
+} from "@avalanche-sdk/webhooks/models/errors";
 
 const avalanche = new Avalanche({
   chainId: "43114",
@@ -427,7 +434,20 @@ const avalanche = new Avalanche({
 async function run() {
   let result;
   try {
-    result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+    result = await avalanche.webhooks.createWebhook({
+      eventType: "validator_activity",
+      url: "https://expensive-designation.info",
+      chainId: "<id>",
+      metadata: {
+        keyType: "addresses",
+        keys: [
+          "<value>",
+        ],
+        eventSignatures: [
+          "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+        ],
+      },
+    });
 
     // Handle the result
     console.log(result);
@@ -497,35 +517,45 @@ Validation errors can also occur when either method arguments or data returned f
 
 In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
 
-| HTTP Client Error     | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| RequestAbortedError   | HTTP request was aborted by the client               |
-| RequestTimeoutError   | HTTP request timed out due to an AbortSignal signal  |
-| ConnectionError       | HTTP client was unable to make a request to a server |
-| InvalidRequestError   | Any input used to create a request is invalid        |
-| UnexpectedClientError | Unrecognised or unexpected error                     |
-
+| HTTP Client Error                                    | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| RequestAbortedError                                  | HTTP request was aborted by the client               |
+| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
+| ConnectionError                                      | HTTP client was unable to make a request to a server |
+| InvalidRequestError                                  | Any input used to create a request is invalid        |
+| UnexpectedClientError                                | Unrecognised or unexpected error                     |
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
-
 ## Server Selection
 
 ### Override Server URL Per-Client
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
-
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const avalanche = new Avalanche({
-  serverURL: "https://metrics.avax.network",
+  serverURL: "https://glacier-api.avax.network",
   chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.webhooks.createWebhook({
+    eventType: "validator_activity",
+    url: "https://expensive-designation.info",
+    chainId: "<id>",
+    metadata: {
+      keyType: "addresses",
+      keys: [
+        "<value>",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
 
   // Handle the result
   console.log(result);
@@ -534,11 +564,9 @@ async function run() {
 run();
 
 ```
-
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
-
 ## Custom HTTP Client
 
 The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
@@ -556,8 +584,8 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
-import { HTTPClient } from "@avalanche-sdk/metrics/lib/http";
+import { Avalanche } from "@avalanche-sdk/webhooks";
+import { HTTPClient } from "@avalanche-sdk/webhooks/lib/http";
 
 const httpClient = new HTTPClient({
   // fetcher takes a function that has the same signature as native `fetch`.
@@ -585,11 +613,9 @@ httpClient.addHook("requestError", (error, request) => {
 
 const sdk = new Avalanche({ httpClient });
 ```
-
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Debugging [debug] -->
-
 ## Debugging
 
 You can setup your SDK to emit debug logs for SDK requests and responses.
@@ -600,11 +626,10 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { Avalanche } from "@avalanche-sdk/metrics";
+import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const sdk = new Avalanche({ debugLogger: console });
 ```
-
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
@@ -621,5 +646,3 @@ looking for the latest version.
 
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
-
-[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of

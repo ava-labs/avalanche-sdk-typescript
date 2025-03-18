@@ -15,6 +15,13 @@ sources:
             - location: metrics/overlays/overlay.yaml
         registry:
             location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript
+    webhooks-source:
+        inputs:
+            - location: https://glacier-api.avax.network/api-json
+        overlays:
+            - location: webhooks/overlays/overlay.yaml
+        registry:
+            location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript
 targets:
     data-sdk:
         target: typescript
@@ -40,6 +47,20 @@ targets:
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript-code-samples
+            langOverride: javascript
+            labelOverride:
+                fixedValue: JavaScript
+            blocking: false
+    webhooks-sdk:
+        target: typescript
+        source: webhooks-source
+        output: webhooks
+        publish:
+            npm:
+                token: $npm_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript-code-samples
             langOverride: javascript
             labelOverride:
                 fixedValue: JavaScript

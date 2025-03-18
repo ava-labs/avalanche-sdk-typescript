@@ -1,18 +1,16 @@
-# @avalanche-sdk/data
+<div align="center">
+    <h1> @avalanche-sdk/data </h1>
+        <p>
+            The Avalanche Data SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
+        </p>
+        <p> 
+            Currently, this SDK is focused on providing robust support for Data APIs.          
+        </p>
+        <a href="https://developers.avacloud.io/data-api/overview">
+            <img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=3b6ef9&style=for-the-badge" />
+        </a>
 
-Developer-friendly & type-safe Typescript SDK specifically catered to leverage *@avalanche-sdk/data* API.
-
-<div align="left">
-    <a href="https://www.speakeasy.com/?utm_source=@avalanche-sdk/data&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
 </div>
-
-<!-- Start Summary [summary] -->
-## Summary
-
-Data API: The Data API provides web3 application developers with multi-chain data related to Avalanche's primary network, Avalanche subnets, and Ethereum. With Data API, you can easily build products that leverage real-time and historical transaction and transfer history, native and token balances, and various types of token metadata. The API is in Beta and may be subject to change.</br></br>If you have feedback or feature requests for the API, please submit them <a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">here</a>. Bug reports can be submitted <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">here</a>, and any potential security issues can be reported <a href="https://immunefi.com/bounty/avalabs">here</a>.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -821,6 +819,4 @@ looking for the latest version.
 ## Contributions
 
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
-
-### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=@avalanche-sdk/data&utm_campaign=typescript)
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.

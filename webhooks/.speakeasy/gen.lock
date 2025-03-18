@@ -1,0 +1,461 @@
+lockVersion: 2.0.0
+id: 9e13cb72-75d2-4602-9f16-ef680e5b30c2
+management:
+  docChecksum: c5606a639cc9a6cb1d24b1312674c9cb
+  docVersion: Beta
+  speakeasyVersion: 1.520.0
+  generationVersion: 2.555.1
+  releaseVersion: 0.0.2
+  configChecksum: 133150f5fecdb90597e652486847f2bf
+  published: true
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.11
+    core: 3.21.4
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    globalSecurity: 2.82.13
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.4
+    globals: 2.82.2
+    groups: 2.81.2
+    mcpServer: 0.8.0
+    pagination: 2.83.0
+    responseFormat: 0.2.3
+    retries: 2.83.0
+    sdkHooks: 0.2.0
+    unions: 2.85.8
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - .npmignore
+  - FUNCTIONS.md
+  - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/components/addressactivitymetadata.md
+  - docs/models/components/addresseschangerequest.md
+  - docs/models/components/eventtype.md
+  - docs/models/components/evmaddressactivityrequest.md
+  - docs/models/components/evmaddressactivityrequesteventtype.md
+  - docs/models/components/evmaddressactivityrequestmetadata.md
+  - docs/models/components/evmaddressactivityresponse.md
+  - docs/models/components/evmaddressactivityresponsemetadata.md
+  - docs/models/components/globalparamnetwork.md
+  - docs/models/components/listwebhookaddressesresponse.md
+  - docs/models/components/listwebhooksresponse.md
+  - docs/models/components/pchainbalancetype.md
+  - docs/models/components/platformactivitykeytype.md
+  - docs/models/components/platformactivitymetadata.md
+  - docs/models/components/platformactivityrequest.md
+  - docs/models/components/platformactivityrequesteventtype.md
+  - docs/models/components/platformactivityrequestmetadata.md
+  - docs/models/components/platformactivityresponse.md
+  - docs/models/components/platformactivityresponsemetadata.md
+  - docs/models/components/platformactivitysubevents.md
+  - docs/models/components/platformaddressactivitysubeventtype.md
+  - docs/models/components/platformbalancethresholdfilter.md
+  - docs/models/components/primarynetworktype.md
+  - docs/models/components/security.md
+  - docs/models/components/sharedsecretsresponse.md
+  - docs/models/components/updatewebhookrequest.md
+  - docs/models/components/validatoractivitysubevent.md
+  - docs/models/components/webhook.md
+  - docs/models/components/webhookstatus.md
+  - docs/models/components/webhookstatustype.md
+  - docs/models/errors/badgatewayerror.md
+  - docs/models/errors/badgatewaymessage.md
+  - docs/models/errors/badrequesterror.md
+  - docs/models/errors/badrequestmessage.md
+  - docs/models/errors/forbiddenerror.md
+  - docs/models/errors/forbiddenmessage.md
+  - docs/models/errors/internalservererror.md
+  - docs/models/errors/internalservererrormessage.md
+  - docs/models/errors/notfounderror.md
+  - docs/models/errors/notfoundmessage.md
+  - docs/models/errors/serviceunavailableerror.md
+  - docs/models/errors/serviceunavailablemessage.md
+  - docs/models/errors/toomanyrequestserror.md
+  - docs/models/errors/toomanyrequestsmessage.md
+  - docs/models/errors/unauthorizederror.md
+  - docs/models/errors/unauthorizedmessage.md
+  - docs/models/operations/addaddressestowebhookrequest.md
+  - docs/models/operations/createwebhookrequest.md
+  - docs/models/operations/createwebhookresponse.md
+  - docs/models/operations/deactivatewebhookrequest.md
+  - docs/models/operations/deactivatewebhookresponse.md
+  - docs/models/operations/getaddressesfromwebhookrequest.md
+  - docs/models/operations/getaddressesfromwebhookresponse.md
+  - docs/models/operations/getwebhookrequest.md
+  - docs/models/operations/getwebhookresponse.md
+  - docs/models/operations/listwebhooksrequest.md
+  - docs/models/operations/listwebhooksresponse.md
+  - docs/models/operations/removeaddressesfromwebhookrequest.md
+  - docs/models/operations/updatewebhookrequest.md
+  - docs/models/operations/updatewebhookresponse.md
+  - docs/sdks/avalanche/README.md
+  - docs/sdks/webhooks/README.md
+  - eslint.config.mjs
+  - jsr.json
+  - package.json
+  - src/core.ts
+  - src/funcs/webhooksAddAddressesToWebhook.ts
+  - src/funcs/webhooksCreateWebhook.ts
+  - src/funcs/webhooksDeactivateWebhook.ts
+  - src/funcs/webhooksGenerateOrRotateSharedSecret.ts
+  - src/funcs/webhooksGetAddressesFromWebhook.ts
+  - src/funcs/webhooksGetSharedSecret.ts
+  - src/funcs/webhooksGetWebhook.ts
+  - src/funcs/webhooksListWebhooks.ts
+  - src/funcs/webhooksRemoveAddressesFromWebhook.ts
+  - src/funcs/webhooksUpdateWebhook.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
+  - src/index.ts
+  - src/lib/base64.ts
+  - src/lib/config.ts
+  - src/lib/dlv.ts
+  - src/lib/encodings.ts
+  - src/lib/files.ts
+  - src/lib/http.ts
+  - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
+  - src/lib/primitives.ts
+  - src/lib/retries.ts
+  - src/lib/schemas.ts
+  - src/lib/sdks.ts
+  - src/lib/security.ts
+  - src/lib/url.ts
+  - src/mcp-server/build.mts
+  - src/mcp-server/cli.ts
+  - src/mcp-server/cli/start/command.ts
+  - src/mcp-server/cli/start/impl.ts
+  - src/mcp-server/console-logger.ts
+  - src/mcp-server/extensions.ts
+  - src/mcp-server/mcp-server.ts
+  - src/mcp-server/prompts.ts
+  - src/mcp-server/resources.ts
+  - src/mcp-server/scopes.ts
+  - src/mcp-server/server.ts
+  - src/mcp-server/shared.ts
+  - src/mcp-server/tools.ts
+  - src/mcp-server/tools/webhooksAddAddressesToWebhook.ts
+  - src/mcp-server/tools/webhooksCreateWebhook.ts
+  - src/mcp-server/tools/webhooksDeactivateWebhook.ts
+  - src/mcp-server/tools/webhooksGenerateOrRotateSharedSecret.ts
+  - src/mcp-server/tools/webhooksGetAddressesFromWebhook.ts
+  - src/mcp-server/tools/webhooksGetSharedSecret.ts
+  - src/mcp-server/tools/webhooksGetWebhook.ts
+  - src/mcp-server/tools/webhooksListWebhooks.ts
+  - src/mcp-server/tools/webhooksRemoveAddressesFromWebhook.ts
+  - src/mcp-server/tools/webhooksUpdateWebhook.ts
+  - src/models/components/addressactivitymetadata.ts
+  - src/models/components/addresseschangerequest.ts
+  - src/models/components/eventtype.ts
+  - src/models/components/evmaddressactivityrequest.ts
+  - src/models/components/evmaddressactivityresponse.ts
+  - src/models/components/globalparamnetwork.ts
+  - src/models/components/index.ts
+  - src/models/components/listwebhookaddressesresponse.ts
+  - src/models/components/listwebhooksresponse.ts
+  - src/models/components/pchainbalancetype.ts
+  - src/models/components/platformactivitykeytype.ts
+  - src/models/components/platformactivitymetadata.ts
+  - src/models/components/platformactivityrequest.ts
+  - src/models/components/platformactivityresponse.ts
+  - src/models/components/platformactivitysubevents.ts
+  - src/models/components/platformaddressactivitysubeventtype.ts
+  - src/models/components/platformbalancethresholdfilter.ts
+  - src/models/components/primarynetworktype.ts
+  - src/models/components/security.ts
+  - src/models/components/sharedsecretsresponse.ts
+  - src/models/components/updatewebhookrequest.ts
+  - src/models/components/webhookstatus.ts
+  - src/models/components/webhookstatustype.ts
+  - src/models/errors/avalancheapierror.ts
+  - src/models/errors/badgatewayerror.ts
+  - src/models/errors/badrequesterror.ts
+  - src/models/errors/forbiddenerror.ts
+  - src/models/errors/httpclienterrors.ts
+  - src/models/errors/index.ts
+  - src/models/errors/internalservererror.ts
+  - src/models/errors/notfounderror.ts
+  - src/models/errors/sdkvalidationerror.ts
+  - src/models/errors/serviceunavailableerror.ts
+  - src/models/errors/toomanyrequestserror.ts
+  - src/models/errors/unauthorizederror.ts
+  - src/models/operations/addaddressestowebhook.ts
+  - src/models/operations/createwebhook.ts
+  - src/models/operations/deactivatewebhook.ts
+  - src/models/operations/getaddressesfromwebhook.ts
+  - src/models/operations/getwebhook.ts
+  - src/models/operations/index.ts
+  - src/models/operations/listwebhooks.ts
+  - src/models/operations/removeaddressesfromwebhook.ts
+  - src/models/operations/updatewebhook.ts
+  - src/sdk/index.ts
+  - src/sdk/sdk.ts
+  - src/sdk/webhooks.ts
+  - src/types/async.ts
+  - src/types/blobs.ts
+  - src/types/constdatetime.ts
+  - src/types/enums.ts
+  - src/types/fp.ts
+  - src/types/index.ts
+  - src/types/operations.ts
+  - src/types/rfcdate.ts
+  - src/types/streams.ts
+  - tsconfig.json
+examples:
+  createWebhook:
+    speakeasy-default-create-webhook:
+      requestBody:
+        application/json: {"eventType": "validator_activity", "url": "https://expensive-designation.info", "chainId": "<id>", "metadata": {"keyType": "addresses", "keys": ["<value>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://genuine-stump.com/", "chainId": "<id>", "status": "inactive", "createdAt": 7562.41, "name": "<value>", "description": "accidentally gee clean", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  listWebhooks:
+    "":
+      parameters:
+        query:
+          pageSize: "10"
+          status: "active"
+      responses:
+        "200":
+          application/json: {"webhooks": [{"id": "<id>", "eventType": "validator_activity", "url": "https://agitated-knickers.org/", "chainId": "<id>", "status": "inactive", "createdAt": 9934.64, "name": "<value>", "description": "er quickly indeed unless tapioca", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}, {"id": "<id>", "eventType": "validator_activity", "url": "https://coarse-version.biz", "chainId": "<id>", "status": "active", "createdAt": 6916.66, "name": "<value>", "description": "suspiciously over hasty supposing larva interestingly aw", "metadata": {"keyType": "addresses", "keys": ["<value>", "<value>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  getWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://sinful-tusk.name/", "chainId": "<id>", "status": "inactive", "createdAt": 9687.97, "name": "<value>", "description": "worth quarrelsomely till gee sniveling tennis", "metadata": {"keyType": "nodeId", "keys": ["<value>", "<value>", "<value>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  deactivateWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://sad-dependency.info", "chainId": "<id>", "status": "active", "createdAt": 3055.59, "name": "<value>", "description": "embarrassment whoa usefully stitcher more trial yet nervously", "metadata": {"keyType": "subnetId", "keys": ["<value>", "<value>", "<value>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  updateWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://cruel-ethyl.com/", "chainId": "<id>", "status": "inactive", "createdAt": 2253.68, "name": "<value>", "description": "or unbearably untidy", "metadata": {"keyType": "subnetId", "keys": ["<value>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": ["<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  generateOrRotateSharedSecret:
+    speakeasy-default-generate-or-rotate-shared-secret:
+      responses:
+        "201":
+          application/json: {"secret": "<value>"}
+        "400":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getSharedSecret:
+    speakeasy-default-get-shared-secret:
+      responses:
+        "200":
+          application/json: {"secret": "<value>"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  addAddressesToWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://skeletal-unblinking.name/", "chainId": "<id>", "status": "inactive", "createdAt": 4213.35, "name": "<value>", "description": "ha lobotomise courageously pfft ouch reconstitute whereas noteworthy nor pish", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  removeAddressesFromWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "address_activity", "url": "https://concerned-following.org", "chainId": "<id>", "status": "active", "createdAt": 5980.39, "name": "<value>", "description": "enchanted opera muddy quarrel within materialise fork foodstuffs", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getAddressesFromWebhook:
+    "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+        query:
+          pageSize: "10"
+      responses:
+        "200":
+          application/json: {"addresses": [], "totalAddresses": 175.66}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+examplesVersion: 1.0.0
+generatedTests: {}
