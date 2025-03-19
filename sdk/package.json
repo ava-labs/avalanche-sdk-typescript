@@ -2,9 +2,9 @@
   "name": "@avalanche-sdk/sdk",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "build": "npm run build",
+    "build": "tsc --noEmit false",
     "lint": "eslint --cache --max-warnings=0 src"
   },
   "repository": {
@@ -18,7 +18,17 @@
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/sdk#readme",
+  "dependencies": {
+    "@avalanche-sdk/data": "^0.1.0",
+    "@avalanche-sdk/metrics": "^0.2.0",
+    "@avalanche-sdk/webhooks": "^0.1.0",
+    "eslint": "^9.22.0"
+  },
   "devDependencies": {
-    "eslint": "^9.19.0"
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }
