@@ -7,3 +7,12 @@ actions:
     description: Change the response schema for the /v2/chains endpoint in popsicle to avoid a merger conflict with Popsicle API Spec
     update:
       $ref: "#/components/schemas/MetricsListChainsResponse"
+  - target: $.paths.*.*[?(@.deprecated == true)]
+    description: Remove all deprecated paths
+    remove: true
+  - target: $.paths['/v2/lookingGlass/compositeQuery']
+    description: Remove the /v2/lookingGlass/compositeQuery path
+    remove: true
+  - target: $.paths['/v1/lookingGlass/compositeQuery']
+    description: Remove the /v1/lookingGlass/compositeQuery path
+    remove: true
