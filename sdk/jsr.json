@@ -1,0 +1,46 @@
+
+
+{
+    "name": "@avalanche-sdk/sdk",
+    "version": "1.0.0",
+    "exports": {
+      ".": "./src/index.ts",
+      "./lib/config": "./src/lib/config.ts",
+      "./data": "./src/data/index.ts",    
+      "./data/models/errors": "./src/data/models/errors/index.ts",    
+      "./data/models/components": "./src/data/models/components/index.ts",    
+      "./data/models/operations": "./src/data/models/operations/index.ts",
+      "./data/lib/config": "./src/data/lib/config.ts",
+      "./data/lib/http": "./src/data/lib/http.ts",
+      "./data/lib/retries": "./src/data/lib/retries.ts",
+      "./data/lib/sdks": "./src/data/lib/sdks.ts",
+      "./data/types": "./src/data/types/index.ts",
+      "./metrics/models/errors": "./src/metrics/models/errors/index.ts",    
+      "./metrics/models/components": "./src/metrics/models/components/index.ts",    
+      "./metrics/models/operations": "./src/metrics/models/operations/index.ts",
+      "./metrics/lib/config": "./src/metrics/lib/config.ts",
+      "./metrics/lib/http": "./src/metrics/lib/http.ts",
+      "./metrics/lib/retries": "./src/metrics/lib/retries.ts",
+      "./metrics/lib/sdks": "./src/metrics/lib/sdks.ts",
+      "./metrics/types": "./src/metrics/types/index.ts",
+      "./webhooks/models/errors": "./src/webhooks/models/errors/index.ts",    
+      "./webhooks/models/components": "./src/webhooks/models/components/index.ts",    
+      "./webhooks/models/operations": "./src/webhooks/models/operations/index.ts",
+      "./webhooks/lib/config": "./src/webhooks/lib/config.ts",
+      "./webhooks/lib/http": "./src/webhooks/lib/http.ts",
+      "./webhooks/lib/retries": "./src/webhooks/lib/retries.ts",
+      "./webhooks/lib/sdks": "./src/webhooks/lib/sdks.ts",
+      "./webhooks/types": "./src/webhooks/types/index.ts"
+    },
+    "publish": {
+      "include": [
+        "LICENSE",
+        "README.md",
+        "RUNTIMES.md",
+        "USAGE.md",
+        "jsr.json",
+        "src/**/*.ts"
+      ]
+    }
+  }
+  

@@ -1,2 +1,2 @@
-export { Avalanche } from "./avalanche";
-export * from "./lib/config";
+export { Avalanche } from "./avalanche.js";
+export * from "./lib/config.js";

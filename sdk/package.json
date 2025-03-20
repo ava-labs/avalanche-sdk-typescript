@@ -1,23 +1,23 @@
 {
   "name": "@avalanche-sdk/sdk",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
+  "author": "Sayan Kar",
+  "license": "ISC",
+  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/sdk#readme",
+  "sideEffects": false,
   "scripts": {
-    "build": "tsc --noEmit false",
-    "lint": "eslint --cache --max-warnings=0 src"
+    "build": "tshy",
+    "lint": "eslint --cache --max-warnings=0 src",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
     "directory": "sdk"
   },
-  "author": "Sayan Kar",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
-  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/sdk#readme",
   "dependencies": {
     "@avalanche-sdk/data": "^0.1.0",
     "@avalanche-sdk/metrics": "^0.2.0",
@@ -29,6 +29,239 @@
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
-  }
+    "tshy": "^3.0.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.22.0"
+  },
+  "tshy": {
+    "sourceDialects": [
+      "@avalanche-sdk/sdk/source"
+    ],
+    "exports": {
+      ".": "./src/index.ts",
+      "./package.json": "./package.json",
+      "./data": "./src/data/index.ts",
+      "./data/types": "./src/data/types/index.ts",
+      "./data/models/errors": "./src/data/models/errors/index.ts",
+      "./data/models/components": "./src/data/models/components/index.ts",
+      "./data/models/operations": "./src/data/models/operations/index.ts",
+      "./metrics": "./src/metrics/index.ts",
+      "./metrics/types": "./src/metrics/types/index.ts",
+      "./metrics/models/errors": "./src/metrics/models/errors/index.ts",
+      "./metrics/models/components": "./src/metrics/models/components/index.ts",
+      "./metrics/models/operations": "./src/metrics/models/operations/index.ts",
+      "./webhooks": "./src/webhooks/index.ts",
+      "./webhooks/types": "./src/webhooks/types/index.ts",
+      "./webhooks/models/errors": "./src/webhooks/models/errors/index.ts",
+      "./webhooks/models/components": "./src/webhooks/models/components/index.ts",
+      "./webhooks/models/operations": "./src/webhooks/models/operations/index.ts",
+      "./*.js": "./src/*.ts",
+      "./*": "./src/*.ts"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/index.ts",
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./data": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/data/index.ts",
+        "types": "./dist/esm/data/index.d.ts",
+        "default": "./dist/esm/data/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/data/index.d.ts",
+        "default": "./dist/commonjs/data/index.js"
+      }
+    },
+    "./data/types": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/data/types/index.ts",
+        "types": "./dist/esm/data/types/index.d.ts",
+        "default": "./dist/esm/data/types/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/data/types/index.d.ts",
+        "default": "./dist/commonjs/data/types/index.js"
+      }
+    },
+    "./data/models/errors": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/data/models/errors/index.ts",
+        "types": "./dist/esm/data/models/errors/index.d.ts",
+        "default": "./dist/esm/data/models/errors/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/data/models/errors/index.d.ts",
+        "default": "./dist/commonjs/data/models/errors/index.js"
+      }
+    },
+    "./data/models/components": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/data/models/components/index.ts",
+        "types": "./dist/esm/data/models/components/index.d.ts",
+        "default": "./dist/esm/data/models/components/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/data/models/components/index.d.ts",
+        "default": "./dist/commonjs/data/models/components/index.js"
+      }
+    },
+    "./data/models/operations": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/data/models/operations/index.ts",
+        "types": "./dist/esm/data/models/operations/index.d.ts",
+        "default": "./dist/esm/data/models/operations/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/data/models/operations/index.d.ts",
+        "default": "./dist/commonjs/data/models/operations/index.js"
+      }
+    },
+    "./metrics": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/metrics/index.ts",
+        "types": "./dist/esm/metrics/index.d.ts",
+        "default": "./dist/esm/metrics/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/metrics/index.d.ts",
+        "default": "./dist/commonjs/metrics/index.js"
+      }
+    },
+    "./metrics/types": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/metrics/types/index.ts",
+        "types": "./dist/esm/metrics/types/index.d.ts",
+        "default": "./dist/esm/metrics/types/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/metrics/types/index.d.ts",
+        "default": "./dist/commonjs/metrics/types/index.js"
+      }
+    },
+    "./metrics/models/errors": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/metrics/models/errors/index.ts",
+        "types": "./dist/esm/metrics/models/errors/index.d.ts",
+        "default": "./dist/esm/metrics/models/errors/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/metrics/models/errors/index.d.ts",
+        "default": "./dist/commonjs/metrics/models/errors/index.js"
+      }
+    },
+    "./metrics/models/components": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/metrics/models/components/index.ts",
+        "types": "./dist/esm/metrics/models/components/index.d.ts",
+        "default": "./dist/esm/metrics/models/components/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/metrics/models/components/index.d.ts",
+        "default": "./dist/commonjs/metrics/models/components/index.js"
+      }
+    },
+    "./metrics/models/operations": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/metrics/models/operations/index.ts",
+        "types": "./dist/esm/metrics/models/operations/index.d.ts",
+        "default": "./dist/esm/metrics/models/operations/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/metrics/models/operations/index.d.ts",
+        "default": "./dist/commonjs/metrics/models/operations/index.js"
+      }
+    },
+    "./webhooks": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/webhooks/index.ts",
+        "types": "./dist/esm/webhooks/index.d.ts",
+        "default": "./dist/esm/webhooks/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/webhooks/index.d.ts",
+        "default": "./dist/commonjs/webhooks/index.js"
+      }
+    },
+    "./webhooks/types": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/webhooks/types/index.ts",
+        "types": "./dist/esm/webhooks/types/index.d.ts",
+        "default": "./dist/esm/webhooks/types/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/webhooks/types/index.d.ts",
+        "default": "./dist/commonjs/webhooks/types/index.js"
+      }
+    },
+    "./webhooks/models/errors": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/webhooks/models/errors/index.ts",
+        "types": "./dist/esm/webhooks/models/errors/index.d.ts",
+        "default": "./dist/esm/webhooks/models/errors/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/webhooks/models/errors/index.d.ts",
+        "default": "./dist/commonjs/webhooks/models/errors/index.js"
+      }
+    },
+    "./webhooks/models/components": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/webhooks/models/components/index.ts",
+        "types": "./dist/esm/webhooks/models/components/index.d.ts",
+        "default": "./dist/esm/webhooks/models/components/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/webhooks/models/components/index.d.ts",
+        "default": "./dist/commonjs/webhooks/models/components/index.js"
+      }
+    },
+    "./webhooks/models/operations": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/webhooks/models/operations/index.ts",
+        "types": "./dist/esm/webhooks/models/operations/index.d.ts",
+        "default": "./dist/esm/webhooks/models/operations/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/webhooks/models/operations/index.d.ts",
+        "default": "./dist/commonjs/webhooks/models/operations/index.js"
+      }
+    },
+    "./*.js": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    },
+    "./*": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    }
+  },
+  "main": "./dist/commonjs/index.js",
+  "types": "./dist/commonjs/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "type": "module"
 }
