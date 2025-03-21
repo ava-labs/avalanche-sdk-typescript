@@ -9,13 +9,12 @@
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://ruddy-ignorance.net/",
+  url: "https://hidden-hubris.org",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 9755.22,
+  createdAt: 7038.89,
   name: "<value>",
-  description:
-    "around apologise lest ick yum following although trustworthy underplay",
+  description: "queasily ha intensely",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,14 +32,14 @@ const value: components.EVMAddressActivityResponse = {
 const value: components.PlatformActivityResponse = {
   id: "<id>",
   eventType: "validator_activity",
-  url: "https://earnest-legend.com/",
+  url: "https://misguided-avalanche.biz/",
   chainId: "<id>",
   status: "active",
-  createdAt: 4246.85,
+  createdAt: 7936.98,
   name: "<value>",
-  description: "ceramics instantly so till pish",
+  description: "overcharge general astride boohoo",
   metadata: {
-    keyType: "nodeId",
+    keyType: "addresses",
     keys: [
       "<value>",
     ],

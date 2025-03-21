@@ -9,6 +9,7 @@ import { webhooksGenerateOrRotateSharedSecret } from "../funcs/webhooksGenerateO
 import { webhooksGetAddressesFromWebhook } from "../funcs/webhooksGetAddressesFromWebhook.js";
 import { webhooksGetSharedSecret } from "../funcs/webhooksGetSharedSecret.js";
 import { webhooksGetWebhook } from "../funcs/webhooksGetWebhook.js";
+import { webhooksHealthCheck } from "../funcs/webhooksHealthCheck.js";
 import { webhooksListWebhooks } from "../funcs/webhooksListWebhooks.js";
 import { webhooksRemoveAddressesFromWebhook } from "../funcs/webhooksRemoveAddressesFromWebhook.js";
 import { webhooksUpdateWebhook } from "../funcs/webhooksUpdateWebhook.js";
@@ -19,6 +20,21 @@ import { unwrapAsync } from "../types/fp.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
 
 export class Webhooks extends ClientSDK {
+  /**
+   * Get the health of the service
+   *
+   * @remarks
+   * Check the health of the service.
+   */
+  async healthCheck(
+    options?: RequestOptions,
+  ): Promise<components.HealthCheckResultDto> {
+    return unwrapAsync(webhooksHealthCheck(
+      this,
+      options,
+    ));
+  }
+
   /**
    * Create a webhook
    *

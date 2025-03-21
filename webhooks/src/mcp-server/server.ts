@@ -20,6 +20,7 @@ import { tool$webhooksGenerateOrRotateSharedSecret } from "./tools/webhooksGener
 import { tool$webhooksGetAddressesFromWebhook } from "./tools/webhooksGetAddressesFromWebhook.js";
 import { tool$webhooksGetSharedSecret } from "./tools/webhooksGetSharedSecret.js";
 import { tool$webhooksGetWebhook } from "./tools/webhooksGetWebhook.js";
+import { tool$webhooksHealthCheck } from "./tools/webhooksHealthCheck.js";
 import { tool$webhooksListWebhooks } from "./tools/webhooksListWebhooks.js";
 import { tool$webhooksRemoveAddressesFromWebhook } from "./tools/webhooksRemoveAddressesFromWebhook.js";
 import { tool$webhooksUpdateWebhook } from "./tools/webhooksUpdateWebhook.js";
@@ -36,7 +37,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.1.0",
+    version: "0.3.0",
   });
 
   const client = new AvalancheCore({
@@ -68,6 +69,7 @@ export function createMCPServer(deps: {
   const register = { tool, resource, resourceTemplate, prompt };
   void register; // suppress unused warnings
 
+  tool(tool$webhooksHealthCheck);
   tool(tool$webhooksCreateWebhook);
   tool(tool$webhooksListWebhooks);
   tool(tool$webhooksGetWebhook);

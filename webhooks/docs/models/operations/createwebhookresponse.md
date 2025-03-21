@@ -11,13 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "address_activity",
-  url: "https://well-to-do-cook.org/",
+  url: "https://aggressive-travel.net/",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 4569.11,
+  createdAt: 2817.3,
   name: "<value>",
-  description:
-    "good-natured jell untrue disk finally helplessly hence why baseboard psst",
+  description: "dereference unaccountably mash astride fidget abaft knottily",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -35,15 +34,14 @@ const value: components.EVMAddressActivityResponse = {
 const value: components.PlatformActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://forceful-printer.info",
+  url: "https://shabby-dream.com",
   chainId: "<id>",
   status: "active",
-  createdAt: 8286.57,
+  createdAt: 3015.98,
   name: "<value>",
-  description:
-    "tag polyester when psst wide-eyed yowza near digestive traffic ouch",
+  description: "where politely after horst vanadyl",
   metadata: {
-    keyType: "subnetId",
+    keyType: "addresses",
     keys: [
       "<value>",
     ],

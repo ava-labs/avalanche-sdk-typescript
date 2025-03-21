@@ -79,7 +79,7 @@ yarn add @avalanche-sdk/webhooks zod
 This SDK is also an installable MCP server where the various SDK methods are
 exposed as tools that can be invoked by AI applications.
 
-> Node.js v20 or greater is required to run the MCP server.
+> Node.js v20 or greater is required to run the MCP server from npm.
 
 <details>
 <summary>Claude installation steps</summary>
@@ -109,16 +109,51 @@ Add the following server definition to your `claude_desktop_config.json` file:
 <details>
 <summary>Cursor installation steps</summary>
 
-Go to `Cursor Settings > Features > MCP Servers > Add new MCP server` and use the following settings:
+Create a `.cursor/mcp.json` file in your project root with the following content:
 
-- Name: Avalanche
-- Type: `command`
-- Command:
-```sh
-npx -y --package @avalanche-sdk/webhooks -- mcp start --api-key ... --chain-id ... --network ... 
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/webhooks",
+        "--",
+        "mcp", "start",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
 ```
 
 </details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
 
 For a full list of server arguments, run:
 
@@ -193,20 +228,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
-    eventType: "validator_activity",
-    url: "https://expensive-designation.info",
-    chainId: "<id>",
-    metadata: {
-      keyType: "addresses",
-      keys: [
-        "<value>",
-      ],
-      eventSignatures: [
-        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
-      ],
-    },
-  });
+  const result = await avalanche.webhooks.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -226,6 +248,7 @@ run();
 
 ### [webhooks](docs/sdks/webhooks/README.md)
 
+* [healthCheck](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
 * [createWebhook](docs/sdks/webhooks/README.md#createwebhook) - Create a webhook
 * [listWebhooks](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
 * [getWebhook](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
@@ -262,6 +285,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`webhooksGetAddressesFromWebhook`](docs/sdks/webhooks/README.md#getaddressesfromwebhook) - List adresses by EVM activity webhooks
 - [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
 - [`webhooksGetWebhook`](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
+- [`webhooksHealthCheck`](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
 - [`webhooksListWebhooks`](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
 - [`webhooksRemoveAddressesFromWebhook`](docs/sdks/webhooks/README.md#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
 - [`webhooksUpdateWebhook`](docs/sdks/webhooks/README.md#updatewebhook) - Update a webhook
@@ -320,20 +344,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
-    eventType: "validator_activity",
-    url: "https://expensive-designation.info",
-    chainId: "<id>",
-    metadata: {
-      keyType: "addresses",
-      keys: [
-        "<value>",
-      ],
-      eventSignatures: [
-        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
-      ],
-    },
-  }, {
+  const result = await avalanche.webhooks.healthCheck({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -374,20 +385,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
-    eventType: "validator_activity",
-    url: "https://expensive-designation.info",
-    chainId: "<id>",
-    metadata: {
-      keyType: "addresses",
-      keys: [
-        "<value>",
-      ],
-      eventSignatures: [
-        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
-      ],
-    },
-  });
+  const result = await avalanche.webhooks.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -401,7 +399,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `createWebhook` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `healthCheck` method may throw the following errors:
 
 | Error Type                     | Status Code | Content Type     |
 | ------------------------------ | ----------- | ---------------- |
@@ -439,20 +437,7 @@ const avalanche = new Avalanche({
 async function run() {
   let result;
   try {
-    result = await avalanche.webhooks.createWebhook({
-      eventType: "validator_activity",
-      url: "https://expensive-designation.info",
-      chainId: "<id>",
-      metadata: {
-        keyType: "addresses",
-        keys: [
-          "<value>",
-        ],
-        eventSignatures: [
-          "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
-        ],
-      },
-    });
+    result = await avalanche.webhooks.healthCheck();
 
     // Handle the result
     console.log(result);
@@ -547,20 +532,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
-    eventType: "validator_activity",
-    url: "https://expensive-designation.info",
-    chainId: "<id>",
-    metadata: {
-      keyType: "addresses",
-      keys: [
-        "<value>",
-      ],
-      eventSignatures: [
-        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
-      ],
-    },
-  });
+  const result = await avalanche.webhooks.healthCheck();
 
   // Handle the result
   console.log(result);

@@ -5,6 +5,7 @@
 
 ### Available Operations
 
+* [healthCheck](#healthcheck) - Get the health of the service
 * [createWebhook](#createwebhook) - Create a webhook
 * [listWebhooks](#listwebhooks) - List webhooks
 * [getWebhook](#getwebhook) - Get a webhook by ID
@@ -15,6 +16,87 @@
 * [addAddressesToWebhook](#addaddressestowebhook) - Add addresses to EVM activity webhook
 * [removeAddressesFromWebhook](#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
 * [getAddressesFromWebhook](#getaddressesfromwebhook) - List adresses by EVM activity webhooks
+
+## healthCheck
+
+Check the health of the service.
+
+### Example Usage
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/webhooks";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.webhooks.healthCheck();
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { AvalancheCore } from "@avalanche-sdk/webhooks/core.js";
+import { webhooksHealthCheck } from "@avalanche-sdk/webhooks/funcs/webhooksHealthCheck.js";
+
+// Use `AvalancheCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const avalanche = new AvalancheCore({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const res = await webhooksHealthCheck(avalanche);
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[components.HealthCheckResultDto](../../models/components/healthcheckresultdto.md)\>**
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| errors.BadRequestError         | 400                            | application/json               |
+| errors.UnauthorizedError       | 401                            | application/json               |
+| errors.ForbiddenError          | 403                            | application/json               |
+| errors.NotFoundError           | 404                            | application/json               |
+| errors.TooManyRequestsError    | 429                            | application/json               |
+| errors.InternalServerError     | 500                            | application/json               |
+| errors.BadGatewayError         | 502                            | application/json               |
+| errors.ServiceUnavailableError | 503                            | application/json               |
+| errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
 ## createWebhook
 

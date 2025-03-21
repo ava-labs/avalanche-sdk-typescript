@@ -7,7 +7,7 @@ Type of balance to monitor
 ```typescript
 import { PChainBalanceType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: PChainBalanceType = "lockedPlatform";
+let value: PChainBalanceType = "atomicMemoryLocked";
 ```
 
 ## Values

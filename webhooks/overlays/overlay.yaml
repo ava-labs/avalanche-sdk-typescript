@@ -3,6 +3,11 @@ info:
   title: Overlay to keep specific webhook routes
   version: 1.0.0
 actions:
+  - target: $.paths['/v1/health-check'].get
+    description: Keep the /v1/health-check GET endpoint in the OpenAPI spec
+    update:
+      x-speakeasy-group: 'webhooks'
+      x-speakeasy-name-override: 'healthCheck'
   - target: $.paths.*.*[?(! @['x-speakeasy-group'] == 'webhooks')]
     description: Remove all paths that are not part of the webhooks group
     remove: true

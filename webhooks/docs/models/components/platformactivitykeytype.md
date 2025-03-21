@@ -7,7 +7,7 @@ The type of key for platform activity depending on the event type
 ```typescript
 import { PlatformActivityKeyType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: PlatformActivityKeyType = "subnetId";
+let value: PlatformActivityKeyType = "nodeId";
 ```
 
 ## Values

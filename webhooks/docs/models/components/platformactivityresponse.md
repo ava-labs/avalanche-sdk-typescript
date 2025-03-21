@@ -7,15 +7,16 @@ import { PlatformActivityResponse } from "@avalanche-sdk/webhooks/models/compone
 
 let value: PlatformActivityResponse = {
   id: "<id>",
-  eventType: "platform_address_activity",
-  url: "https://rough-mentor.biz/",
+  eventType: "address_activity",
+  url: "https://fair-insolence.biz",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 939.4,
+  status: "active",
+  createdAt: 1103.75,
   name: "<value>",
-  description: "apropos shrilly ick swine proud plait opposite",
+  description:
+    "because furiously unless factorise although dishearten unaccountably unconscious",
   metadata: {
-    keyType: "nodeId",
+    keyType: "subnetId",
     keys: [
       "<value>",
     ],

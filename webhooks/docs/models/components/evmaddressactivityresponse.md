@@ -8,13 +8,12 @@ import { EVMAddressActivityResponse } from "@avalanche-sdk/webhooks/models/compo
 let value: EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://perky-making.info",
+  url: "https://insignificant-parsnip.info",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 4375.87,
+  createdAt: 9636.63,
   name: "<value>",
-  description:
-    "blaring the mismatch plagiarise past interestingly reassuringly amongst wedge colorfully",
+  description: "afterwards successfully how gee gadzooks insert",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",

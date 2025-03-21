@@ -7,7 +7,7 @@ import { EVMAddressActivityRequest } from "@avalanche-sdk/webhooks/models/compon
 
 let value: EVMAddressActivityRequest = {
   eventType: "address_activity",
-  url: "https://calculating-tooth.net",
+  url: "https://frizzy-perp.biz/",
   chainId: "<id>",
   metadata: {
     addresses: [

@@ -6,7 +6,7 @@
 import { PlatformActivityMetadata } from "@avalanche-sdk/webhooks/models/components";
 
 let value: PlatformActivityMetadata = {
-  keyType: "nodeId",
+  keyType: "subnetId",
   keys: [
     "<value>",
   ],

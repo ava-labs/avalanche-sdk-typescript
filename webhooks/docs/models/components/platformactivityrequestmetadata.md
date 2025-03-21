@@ -9,7 +9,7 @@ Metadata for platform activity
 
 ```typescript
 const value: components.PlatformActivityMetadata = {
-  keyType: "subnetId",
+  keyType: "addresses",
   keys: [
     "<value>",
   ],

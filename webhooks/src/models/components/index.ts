@@ -11,6 +11,8 @@ export * from "./eventtype.js";
 export * from "./evmaddressactivityrequest.js";
 export * from "./evmaddressactivityresponse.js";
 export * from "./globalparamnetwork.js";
+export * from "./healthcheckresultdto.js";
+export * from "./healthindicatorresultdto.js";
 export * from "./internaltransaction.js";
 export * from "./listwebhookaddressesresponse.js";
 export * from "./listwebhooksresponse.js";

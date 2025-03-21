@@ -10,13 +10,13 @@ let value: ListWebhooksResponse = {
     webhooks: [
       {
         id: "<id>",
-        eventType: "validator_activity",
-        url: "https://grouchy-plain.org/",
+        eventType: "platform_address_activity",
+        url: "https://understated-impostor.net/",
         chainId: "<id>",
-        status: "inactive",
-        createdAt: 2826.99,
+        status: "active",
+        createdAt: 9040.45,
         name: "<value>",
-        description: "holster minority eek",
+        description: "than optimistic as by summer horde whoa once",
         metadata: {
           keyType: "subnetId",
           keys: [

@@ -11,12 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "address_activity",
-  url: "https://stylish-language.info",
+  url: "https://formal-desk.name",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 972.43,
+  status: "active",
+  createdAt: 6658.59,
   name: "<value>",
-  description: "sunbathe like joyously coast blindly evince",
+  description: "till with furthermore jaggedly hence runny knavishly",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,15 +33,15 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "validator_activity",
-  url: "https://limp-giggle.org/",
+  eventType: "address_activity",
+  url: "https://icy-teammate.org",
   chainId: "<id>",
-  status: "active",
-  createdAt: 3279.88,
+  status: "inactive",
+  createdAt: 2748.23,
   name: "<value>",
-  description: "fund positively stylish barge card joshingly overload nor",
+  description: "digestive traffic ouch substantiate into ew a",
   metadata: {
-    keyType: "subnetId",
+    keyType: "nodeId",
     keys: [
       "<value>",
     ],

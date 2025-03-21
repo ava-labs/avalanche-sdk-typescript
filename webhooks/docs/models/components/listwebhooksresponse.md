@@ -9,18 +9,16 @@ let value: ListWebhooksResponse = {
   webhooks: [
     {
       id: "<id>",
-      eventType: "address_activity",
-      url: "https://waterlogged-sediment.name",
+      eventType: "validator_activity",
+      url: "https://muted-technician.org/",
       chainId: "<id>",
-      status: "inactive",
-      createdAt: 2930.2,
+      status: "active",
+      createdAt: 6630.78,
       name: "<value>",
-      description:
-        "mash astride fidget abaft knottily ethyl covenant jaggedly where",
+      description: "prejudge cutover for clear-cut consequently",
       metadata: {
-        keyType: "addresses",
-        keys: [
-          "<value>",
+        addresses: [
+          "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
         ],
         eventSignatures: [
           "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",

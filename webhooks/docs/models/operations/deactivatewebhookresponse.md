@@ -11,12 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://clear-cut-dredger.info",
+  url: "https://white-adviser.net",
   chainId: "<id>",
-  status: "active",
-  createdAt: 6713.84,
+  status: "inactive",
+  createdAt: 5098.07,
   name: "<value>",
-  description: "whereas besides vice fuel birdbath",
+  description: "faithfully under usable synergy redact",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -34,12 +34,12 @@ const value: components.EVMAddressActivityResponse = {
 const value: components.PlatformActivityResponse = {
   id: "<id>",
   eventType: "address_activity",
-  url: "https://calculating-doing.com/",
+  url: "https://bare-bar.org/",
   chainId: "<id>",
-  status: "active",
-  createdAt: 8562.77,
+  status: "inactive",
+  createdAt: 8980.63,
   name: "<value>",
-  description: "noisily harangue huge whoa",
+  description: "why however complicated form rundown phew trolley hmph",
   metadata: {
     keyType: "addresses",
     keys: [
