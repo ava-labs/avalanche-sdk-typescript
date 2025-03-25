@@ -9,10 +9,11 @@
 * [getChainIdsForAddresses](#getchainidsforaddresses) - Get chain interactions for addresses
 * [getNetworkDetails](#getnetworkdetails) - Get network details
 * [listBlockchains](#listblockchains) - List blockchains
+* [getBlockchainById](#getblockchainbyid) - Get blockchain details by ID
 * [listSubnets](#listsubnets) - List subnets
 * [getSubnetById](#getsubnetbyid) - Get Subnet details by ID
 * [listValidators](#listvalidators) - List validators
-* [getSingleValidatorDetails](#getsinglevalidatordetails) - Get single validator details
+* [getValidatorDetails](#getvalidatordetails) - Get single validator details
 * [listDelegators](#listdelegators) - List delegators
 * [listL1Validators](#listl1validators) - List L1 validators
 
@@ -372,6 +373,94 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
+## getBlockchainById
+
+Get details of the blockchain registered on the network.
+
+### Example Usage
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/data";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.data.primaryNetwork.getBlockchainById({
+    blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
+    network: "mainnet",
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { AvalancheCore } from "@avalanche-sdk/data/core.js";
+import { dataPrimaryNetworkGetBlockchainById } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkGetBlockchainById.js";
+
+// Use `AvalancheCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const avalanche = new AvalancheCore({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const res = await dataPrimaryNetworkGetBlockchainById(avalanche, {
+    blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
+    network: "mainnet",
+  });
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.GetBlockchainByIdRequest](../../models/operations/getblockchainbyidrequest.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[components.Blockchain](../../models/components/blockchain.md)\>**
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| errors.BadRequestError         | 400                            | application/json               |
+| errors.UnauthorizedError       | 401                            | application/json               |
+| errors.ForbiddenError          | 403                            | application/json               |
+| errors.NotFoundError           | 404                            | application/json               |
+| errors.TooManyRequestsError    | 429                            | application/json               |
+| errors.InternalServerError     | 500                            | application/json               |
+| errors.BadGatewayError         | 502                            | application/json               |
+| errors.ServiceUnavailableError | 503                            | application/json               |
+| errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
+
 ## listSubnets
 
 Lists all subnets registered on the network.
@@ -666,7 +755,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getSingleValidatorDetails
+## getValidatorDetails
 
 List validator details for a single validator.  Filterable by validation status.
 
@@ -681,7 +770,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.getSingleValidatorDetails({
+  const result = await avalanche.data.primaryNetwork.getValidatorDetails({
     network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     validationStatus: "completed",
@@ -703,7 +792,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkGetSingleValidatorDetails } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkGetSingleValidatorDetails.js";
+import { dataPrimaryNetworkGetValidatorDetails } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkGetValidatorDetails.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -713,7 +802,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkGetSingleValidatorDetails(avalanche, {
+  const res = await dataPrimaryNetworkGetValidatorDetails(avalanche, {
     network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     validationStatus: "completed",

@@ -5,7 +5,7 @@
 ```typescript
 import { OperationType } from "@avalanche-sdk/data/models/components";
 
-let value: OperationType = "TRANSACTION_EXPORT_PRIMARY_NETWORK";
+let value: OperationType = "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING";
 ```
 
 ## Values

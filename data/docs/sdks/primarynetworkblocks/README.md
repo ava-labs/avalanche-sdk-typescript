@@ -5,11 +5,11 @@
 
 ### Available Operations
 
-* [getBlockById](#getblockbyid) - Get block
-* [listPrimaryNetworkBlocksByNodeId](#listprimarynetworkblocksbynodeid) - List blocks proposed by node
-* [listLatestPrimaryNetworkBlocks](#listlatestprimarynetworkblocks) - List latest blocks
+* [get](#get) - Get block
+* [listByNodeId](#listbynodeid) - List blocks proposed by node
+* [listLatest](#listlatest) - List latest blocks
 
-## getBlockById
+## get
 
 Gets a block by block height or block hash on one of the Primary Network chains.
 
@@ -24,7 +24,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.blocks.getBlockById({
+  const result = await avalanche.data.primaryNetwork.blocks.get({
     blockchainId: "p-chain",
     network: "mainnet",
     blockId: "5615di9ytxujackzaXNrVuWQy5y8Yrt8chPCscMr5Ku9YxJ1S",
@@ -43,7 +43,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkBlocksGetBlockById } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksGetBlockById.js";
+import { dataPrimaryNetworkBlocksGet } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -53,7 +53,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkBlocksGetBlockById(avalanche, {
+  const res = await dataPrimaryNetworkBlocksGet(avalanche, {
     blockchainId: "p-chain",
     network: "mainnet",
     blockId: "5615di9ytxujackzaXNrVuWQy5y8Yrt8chPCscMr5Ku9YxJ1S",
@@ -99,7 +99,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listPrimaryNetworkBlocksByNodeId
+## listByNodeId
 
 Lists the latest blocks proposed by a given NodeID on one of the Primary Network chains.
 
@@ -114,7 +114,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.blocks.listPrimaryNetworkBlocksByNodeId({
+  const result = await avalanche.data.primaryNetwork.blocks.listByNodeId({
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
@@ -137,7 +137,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.js";
+import { dataPrimaryNetworkBlocksListByNodeId } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksListByNodeId.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -147,7 +147,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId(avalanche, {
+  const res = await dataPrimaryNetworkBlocksListByNodeId(avalanche, {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
@@ -197,7 +197,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listLatestPrimaryNetworkBlocks
+## listLatest
 
 Lists latest blocks on one of the Primary Network chains.
 
@@ -212,7 +212,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.blocks.listLatestPrimaryNetworkBlocks({
+  const result = await avalanche.data.primaryNetwork.blocks.listLatest({
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
@@ -234,7 +234,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.js";
+import { dataPrimaryNetworkBlocksListLatest } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksListLatest.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -244,7 +244,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks(avalanche, {
+  const res = await dataPrimaryNetworkBlocksListLatest(avalanche, {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",

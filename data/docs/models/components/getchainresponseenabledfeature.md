@@ -5,7 +5,7 @@
 ```typescript
 import { GetChainResponseEnabledFeature } from "@avalanche-sdk/data/models/components";
 
-let value: GetChainResponseEnabledFeature = "webhooks";
+let value: GetChainResponseEnabledFeature = "teleporter";
 ```
 
 ## Values

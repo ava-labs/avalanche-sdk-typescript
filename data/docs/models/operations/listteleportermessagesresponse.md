@@ -42,7 +42,7 @@ let value: ListTeleporterMessagesResponse = {
         },
         sourceTransaction: {
           txHash: "<value>",
-          timestamp: 53.1,
+          timestamp: 3970.26,
           gasSpent: "<value>",
         },
         status: "pending",

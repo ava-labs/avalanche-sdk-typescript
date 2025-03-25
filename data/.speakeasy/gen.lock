@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: 916ee1914e61223766cf9cd70dff5154
+  docChecksum: eb8f6f6d90ce83740849ebb8167e70de
   docVersion: Beta
-  speakeasyVersion: 1.520.0
-  generationVersion: 2.555.1
-  releaseVersion: 0.1.0
-  configChecksum: 77667e0c2a8bf1717ab7cee4a41775b1
+  speakeasyVersion: 1.523.2
+  generationVersion: 2.560.1
+  releaseVersion: 0.2.0
+  configChecksum: 9b0ed8737f5a77c283207bbbc722f554
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: data
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/data
@@ -29,7 +29,8 @@ features:
     globals: 2.82.2
     groups: 2.81.2
     ignores: 2.81.1
-    mcpServer: 0.8.0
+    mcpServer: 0.9.0
+    nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
     responseFormat: 0.2.3
@@ -46,6 +47,7 @@ generatedFiles:
   - RUNTIMES.md
   - USAGE.md
   - docs/lib/utils/retryconfig.md
+  - docs/models/components/accessrequest.md
   - docs/models/components/activedelegatordetails.md
   - docs/models/components/activedelegatordetailsdelegationstatus.md
   - docs/models/components/activevalidatordetails.md
@@ -58,7 +60,6 @@ generatedFiles:
   - docs/models/components/blockchain.md
   - docs/models/components/blockchainid.md
   - docs/models/components/blockchainids.md
-  - docs/models/components/blockchaininfo.md
   - docs/models/components/blscredentials.md
   - docs/models/components/cchainatomicbalances.md
   - docs/models/components/cchainexporttransaction.md
@@ -205,6 +206,7 @@ generatedFiles:
   - docs/models/components/networktoken.md
   - docs/models/components/networktokendetails.md
   - docs/models/components/nfttokenmetadatastatus.md
+  - docs/models/components/notificationsresponse.md
   - docs/models/components/operationstatus.md
   - docs/models/components/operationstatuscode.md
   - docs/models/components/operationstatusresponse.md
@@ -258,6 +260,12 @@ generatedFiles:
   - docs/models/components/subnetownershipinfo.md
   - docs/models/components/subnetrpctimeintervalgranularity.md
   - docs/models/components/subnetrpcusagemetricsresponsedto.md
+  - docs/models/components/subscriberequest.md
+  - docs/models/components/subscriberequestnotification.md
+  - docs/models/components/subscriptions.md
+  - docs/models/components/subscriptionsrequest.md
+  - docs/models/components/subscriptionsresponse.md
+  - docs/models/components/subscriptionsresponsenotification.md
   - docs/models/components/teleporterdestinationtransaction.md
   - docs/models/components/teleportermessageinfo.md
   - docs/models/components/teleporterreceipt.md
@@ -276,6 +284,7 @@ generatedFiles:
   - docs/models/components/transfer.md
   - docs/models/components/unknowncontract.md
   - docs/models/components/unknowncontracterctype.md
+  - docs/models/components/unsubscriberequest.md
   - docs/models/components/usagemetricsgroupbyenum.md
   - docs/models/components/usagemetricsresponsedto.md
   - docs/models/components/usagemetricsvaluedto.md
@@ -333,6 +342,8 @@ generatedFiles:
   - docs/models/operations/getbalancesbyaddressesresponse.md
   - docs/models/operations/getblockbyidglobals.md
   - docs/models/operations/getblockbyidrequest.md
+  - docs/models/operations/getblockchainbyidglobals.md
+  - docs/models/operations/getblockchainbyidrequest.md
   - docs/models/operations/getblockglobals.md
   - docs/models/operations/getblockrequest.md
   - docs/models/operations/getchainidsforaddressesglobals.md
@@ -483,17 +494,21 @@ generatedFiles:
   - docs/models/operations/reindexnftglobals.md
   - docs/models/operations/reindexnftrequest.md
   - docs/models/operations/supportedchainsrequest.md
+  - docs/sdks/address/README.md
+  - docs/sdks/addressbalances/README.md
+  - docs/sdks/addresschains/README.md
+  - docs/sdks/addresscontracts/README.md
+  - docs/sdks/addresstransactions/README.md
   - docs/sdks/avalanche/README.md
   - docs/sdks/chains/README.md
   - docs/sdks/contracts/README.md
   - docs/sdks/data/README.md
   - docs/sdks/evm/README.md
-  - docs/sdks/evmbalances/README.md
   - docs/sdks/evmblocks/README.md
   - docs/sdks/evmtransactions/README.md
-  - docs/sdks/healthcheck/README.md
   - docs/sdks/icm/README.md
   - docs/sdks/nfts/README.md
+  - docs/sdks/notifications/README.md
   - docs/sdks/operations/README.md
   - docs/sdks/primarynetwork/README.md
   - docs/sdks/primarynetworkbalances/README.md
@@ -509,76 +524,81 @@ generatedFiles:
   - jsr.json
   - package.json
   - src/core.ts
-  - src/funcs/dataEvmBalancesGetNativeBalance.ts
-  - src/funcs/dataEvmBalancesListCollectibleBalances.ts
-  - src/funcs/dataEvmBalancesListErc1155Balances.ts
-  - src/funcs/dataEvmBalancesListErc20Balances.ts
-  - src/funcs/dataEvmBalancesListErc721Balances.ts
-  - src/funcs/dataEvmBlocksGetBlock.ts
-  - src/funcs/dataEvmBlocksGetLatestBlocks.ts
-  - src/funcs/dataEvmBlocksListLatestBlocksAllChains.ts
+  - src/funcs/dataEvmAddressBalancesGetNative.ts
+  - src/funcs/dataEvmAddressBalancesListCollectibles.ts
+  - src/funcs/dataEvmAddressBalancesListErc1155.ts
+  - src/funcs/dataEvmAddressBalancesListErc20.ts
+  - src/funcs/dataEvmAddressBalancesListErc721.ts
+  - src/funcs/dataEvmAddressChainsList.ts
+  - src/funcs/dataEvmAddressContractsListDeployments.ts
+  - src/funcs/dataEvmAddressTransactionsList.ts
+  - src/funcs/dataEvmAddressTransactionsListErc1155.ts
+  - src/funcs/dataEvmAddressTransactionsListErc20.ts
+  - src/funcs/dataEvmAddressTransactionsListErc721.ts
+  - src/funcs/dataEvmAddressTransactionsListInternal.ts
+  - src/funcs/dataEvmAddressTransactionsListNative.ts
+  - src/funcs/dataEvmBlocksGet.ts
+  - src/funcs/dataEvmBlocksListLatest.ts
+  - src/funcs/dataEvmBlocksListLatestAllChains.ts
+  - src/funcs/dataEvmBlocksListTransactions.ts
+  - src/funcs/dataEvmChainsGet.ts
   - src/funcs/dataEvmChainsGetAddressChains.ts
-  - src/funcs/dataEvmChainsGetChainInfo.ts
-  - src/funcs/dataEvmChainsListAddressChains.ts
+  - src/funcs/dataEvmChainsList.ts
   - src/funcs/dataEvmChainsListAllLatestBlocks.ts
   - src/funcs/dataEvmChainsListAllLatestTransactions.ts
-  - src/funcs/dataEvmChainsSupportedChains.ts
-  - src/funcs/dataEvmContractsGetContractMetadata.ts
-  - src/funcs/dataEvmTransactionsGetDeploymentTransaction.ts
-  - src/funcs/dataEvmTransactionsGetTransaction.ts
-  - src/funcs/dataEvmTransactionsGetTransactionsForBlock.ts
-  - src/funcs/dataEvmTransactionsListContractDeployments.ts
-  - src/funcs/dataEvmTransactionsListErc1155Transactions.ts
-  - src/funcs/dataEvmTransactionsListErc20Transactions.ts
-  - src/funcs/dataEvmTransactionsListErc721Transactions.ts
-  - src/funcs/dataEvmTransactionsListInternalTransactions.ts
-  - src/funcs/dataEvmTransactionsListLatestTransactions.ts
-  - src/funcs/dataEvmTransactionsListLatestTransactionsAllChains.ts
-  - src/funcs/dataEvmTransactionsListNativeTransactions.ts
-  - src/funcs/dataEvmTransactionsListTransactions.ts
-  - src/funcs/dataEvmTransactionsListTransfers.ts
-  - src/funcs/dataHealthCheckDataHealthCheck.ts
-  - src/funcs/dataIcmGetIcmMessage.ts
-  - src/funcs/dataIcmListIcmMessages.ts
-  - src/funcs/dataIcmListIcmMessagesByAddress.ts
-  - src/funcs/dataNftsGetTokenDetails.ts
-  - src/funcs/dataNftsListTokens.ts
-  - src/funcs/dataNftsReindexNft.ts
-  - src/funcs/dataOperationsGetOperationResult.ts
-  - src/funcs/dataOperationsPostTransactionExportJob.ts
-  - src/funcs/dataPrimaryNetworkBalancesGetBalancesByAddresses.ts
-  - src/funcs/dataPrimaryNetworkBlocksGetBlockById.ts
-  - src/funcs/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.ts
-  - src/funcs/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.ts
+  - src/funcs/dataEvmContractsGetDeploymentTransaction.ts
+  - src/funcs/dataEvmContractsGetMetadata.ts
+  - src/funcs/dataEvmContractsListTransfers.ts
+  - src/funcs/dataEvmTransactionsGet.ts
+  - src/funcs/dataEvmTransactionsListLatest.ts
+  - src/funcs/dataEvmTransactionsListLatestAllChains.ts
+  - src/funcs/dataHealthCheck.ts
+  - src/funcs/dataIcmGet.ts
+  - src/funcs/dataIcmList.ts
+  - src/funcs/dataIcmListByAddress.ts
+  - src/funcs/dataNftsGet.ts
+  - src/funcs/dataNftsList.ts
+  - src/funcs/dataNftsReindex.ts
+  - src/funcs/dataOperationsExportTransactions.ts
+  - src/funcs/dataOperationsGetResult.ts
+  - src/funcs/dataPrimaryNetworkBalancesListByAddresses.ts
+  - src/funcs/dataPrimaryNetworkBlocksGet.ts
+  - src/funcs/dataPrimaryNetworkBlocksListByNodeId.ts
+  - src/funcs/dataPrimaryNetworkBlocksListLatest.ts
   - src/funcs/dataPrimaryNetworkGetAssetDetails.ts
+  - src/funcs/dataPrimaryNetworkGetBlockchainById.ts
   - src/funcs/dataPrimaryNetworkGetChainIdsForAddresses.ts
   - src/funcs/dataPrimaryNetworkGetNetworkDetails.ts
-  - src/funcs/dataPrimaryNetworkGetSingleValidatorDetails.ts
   - src/funcs/dataPrimaryNetworkGetSubnetById.ts
+  - src/funcs/dataPrimaryNetworkGetValidatorDetails.ts
   - src/funcs/dataPrimaryNetworkListBlockchains.ts
   - src/funcs/dataPrimaryNetworkListDelegators.ts
   - src/funcs/dataPrimaryNetworkListL1Validators.ts
   - src/funcs/dataPrimaryNetworkListSubnets.ts
   - src/funcs/dataPrimaryNetworkListValidators.ts
-  - src/funcs/dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards.ts
-  - src/funcs/dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards.ts
-  - src/funcs/dataPrimaryNetworkTransactionsGetTxByHash.ts
-  - src/funcs/dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions.ts
+  - src/funcs/dataPrimaryNetworkRewardsListHistoricalRewards.ts
+  - src/funcs/dataPrimaryNetworkRewardsListPendingRewards.ts
+  - src/funcs/dataPrimaryNetworkTransactionsGet.ts
+  - src/funcs/dataPrimaryNetworkTransactionsListActiveStakingTransactions.ts
   - src/funcs/dataPrimaryNetworkTransactionsListAssetTransactions.ts
-  - src/funcs/dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions.ts
-  - src/funcs/dataPrimaryNetworkUtxosGetUtxosByAddresses.ts
-  - src/funcs/dataPrimaryNetworkVerticesGetVertexByHash.ts
-  - src/funcs/dataPrimaryNetworkVerticesGetVertexByHeight.ts
-  - src/funcs/dataPrimaryNetworkVerticesListLatestXChainVertices.ts
-  - src/funcs/dataSignatureAggregatorAggregateSignatures.ts
-  - src/funcs/dataSignatureAggregatorGetAggregatedSignatures.ts
+  - src/funcs/dataPrimaryNetworkTransactionsListLatest.ts
+  - src/funcs/dataPrimaryNetworkUtxosListByAddresses.ts
+  - src/funcs/dataPrimaryNetworkVerticesGetByHash.ts
+  - src/funcs/dataPrimaryNetworkVerticesListByHeight.ts
+  - src/funcs/dataPrimaryNetworkVerticesListLatest.ts
+  - src/funcs/dataSignatureAggregatorAggregate.ts
+  - src/funcs/dataSignatureAggregatorGet.ts
   - src/funcs/dataTeleporterGetTeleporterMessage.ts
   - src/funcs/dataTeleporterListTeleporterMessages.ts
   - src/funcs/dataTeleporterListTeleporterMessagesByAddress.ts
-  - src/funcs/dataUsageMetricsGetApiLogs.ts
-  - src/funcs/dataUsageMetricsGetApiUsageMetrics.ts
+  - src/funcs/dataUsageMetricsGetLogs.ts
   - src/funcs/dataUsageMetricsGetRpcUsageMetrics.ts
-  - src/funcs/dataUsageMetricsGetSubnetRpcUsageMetrics.ts
+  - src/funcs/dataUsageMetricsGetSubnetRpcUsage.ts
+  - src/funcs/dataUsageMetricsGetUsage.ts
+  - src/funcs/notificationsAccess.ts
+  - src/funcs/notificationsSubscribe.ts
+  - src/funcs/notificationsSubscriptions.ts
+  - src/funcs/notificationsUnsubscribe.ts
   - src/hooks/hooks.ts
   - src/hooks/index.ts
   - src/hooks/types.ts
@@ -611,76 +631,82 @@ generatedFiles:
   - src/mcp-server/server.ts
   - src/mcp-server/shared.ts
   - src/mcp-server/tools.ts
-  - src/mcp-server/tools/dataEvmBalancesGetNativeBalance.ts
-  - src/mcp-server/tools/dataEvmBalancesListCollectibleBalances.ts
-  - src/mcp-server/tools/dataEvmBalancesListErc1155Balances.ts
-  - src/mcp-server/tools/dataEvmBalancesListErc20Balances.ts
-  - src/mcp-server/tools/dataEvmBalancesListErc721Balances.ts
-  - src/mcp-server/tools/dataEvmBlocksGetBlock.ts
-  - src/mcp-server/tools/dataEvmBlocksGetLatestBlocks.ts
-  - src/mcp-server/tools/dataEvmBlocksListLatestBlocksAllChains.ts
+  - src/mcp-server/tools/dataEvmAddressBalancesGetNative.ts
+  - src/mcp-server/tools/dataEvmAddressBalancesListCollectibles.ts
+  - src/mcp-server/tools/dataEvmAddressBalancesListErc1155.ts
+  - src/mcp-server/tools/dataEvmAddressBalancesListErc20.ts
+  - src/mcp-server/tools/dataEvmAddressBalancesListErc721.ts
+  - src/mcp-server/tools/dataEvmAddressChainsList.ts
+  - src/mcp-server/tools/dataEvmAddressContractsListDeployments.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsList.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsListErc1155.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsListErc20.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsListErc721.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsListInternal.ts
+  - src/mcp-server/tools/dataEvmAddressTransactionsListNative.ts
+  - src/mcp-server/tools/dataEvmBlocksGet.ts
+  - src/mcp-server/tools/dataEvmBlocksListLatest.ts
+  - src/mcp-server/tools/dataEvmBlocksListLatestAllChains.ts
+  - src/mcp-server/tools/dataEvmBlocksListTransactions.ts
+  - src/mcp-server/tools/dataEvmChainsGet.ts
   - src/mcp-server/tools/dataEvmChainsGetAddressChains.ts
-  - src/mcp-server/tools/dataEvmChainsGetChainInfo.ts
-  - src/mcp-server/tools/dataEvmChainsListAddressChains.ts
+  - src/mcp-server/tools/dataEvmChainsList.ts
   - src/mcp-server/tools/dataEvmChainsListAllLatestBlocks.ts
   - src/mcp-server/tools/dataEvmChainsListAllLatestTransactions.ts
-  - src/mcp-server/tools/dataEvmChainsSupportedChains.ts
-  - src/mcp-server/tools/dataEvmContractsGetContractMetadata.ts
-  - src/mcp-server/tools/dataEvmTransactionsGetDeploymentTransaction.ts
-  - src/mcp-server/tools/dataEvmTransactionsGetTransaction.ts
-  - src/mcp-server/tools/dataEvmTransactionsGetTransactionsForBlock.ts
-  - src/mcp-server/tools/dataEvmTransactionsListContractDeployments.ts
-  - src/mcp-server/tools/dataEvmTransactionsListErc1155Transactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListErc20Transactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListErc721Transactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListInternalTransactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListLatestTransactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListLatestTransactionsAllChains.ts
-  - src/mcp-server/tools/dataEvmTransactionsListNativeTransactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListTransactions.ts
-  - src/mcp-server/tools/dataEvmTransactionsListTransfers.ts
-  - src/mcp-server/tools/dataHealthCheckDataHealthCheck.ts
-  - src/mcp-server/tools/dataIcmGetIcmMessage.ts
-  - src/mcp-server/tools/dataIcmListIcmMessages.ts
-  - src/mcp-server/tools/dataIcmListIcmMessagesByAddress.ts
-  - src/mcp-server/tools/dataNftsGetTokenDetails.ts
-  - src/mcp-server/tools/dataNftsListTokens.ts
-  - src/mcp-server/tools/dataNftsReindexNft.ts
-  - src/mcp-server/tools/dataOperationsGetOperationResult.ts
-  - src/mcp-server/tools/dataOperationsPostTransactionExportJob.ts
-  - src/mcp-server/tools/dataPrimaryNetworkBalancesGetBalancesByAddresses.ts
-  - src/mcp-server/tools/dataPrimaryNetworkBlocksGetBlockById.ts
-  - src/mcp-server/tools/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.ts
-  - src/mcp-server/tools/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.ts
+  - src/mcp-server/tools/dataEvmContractsGetDeploymentTransaction.ts
+  - src/mcp-server/tools/dataEvmContractsGetMetadata.ts
+  - src/mcp-server/tools/dataEvmContractsListTransfers.ts
+  - src/mcp-server/tools/dataEvmTransactionsGet.ts
+  - src/mcp-server/tools/dataEvmTransactionsListLatest.ts
+  - src/mcp-server/tools/dataEvmTransactionsListLatestAllChains.ts
+  - src/mcp-server/tools/dataHealthCheck.ts
+  - src/mcp-server/tools/dataIcmGet.ts
+  - src/mcp-server/tools/dataIcmList.ts
+  - src/mcp-server/tools/dataIcmListByAddress.ts
+  - src/mcp-server/tools/dataNftsGet.ts
+  - src/mcp-server/tools/dataNftsList.ts
+  - src/mcp-server/tools/dataNftsReindex.ts
+  - src/mcp-server/tools/dataOperationsExportTransactions.ts
+  - src/mcp-server/tools/dataOperationsGetResult.ts
+  - src/mcp-server/tools/dataPrimaryNetworkBalancesListByAddresses.ts
+  - src/mcp-server/tools/dataPrimaryNetworkBlocksGet.ts
+  - src/mcp-server/tools/dataPrimaryNetworkBlocksListByNodeId.ts
+  - src/mcp-server/tools/dataPrimaryNetworkBlocksListLatest.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetAssetDetails.ts
+  - src/mcp-server/tools/dataPrimaryNetworkGetBlockchainById.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetChainIdsForAddresses.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetNetworkDetails.ts
-  - src/mcp-server/tools/dataPrimaryNetworkGetSingleValidatorDetails.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetSubnetById.ts
+  - src/mcp-server/tools/dataPrimaryNetworkGetValidatorDetails.ts
   - src/mcp-server/tools/dataPrimaryNetworkListBlockchains.ts
   - src/mcp-server/tools/dataPrimaryNetworkListDelegators.ts
   - src/mcp-server/tools/dataPrimaryNetworkListL1Validators.ts
   - src/mcp-server/tools/dataPrimaryNetworkListSubnets.ts
   - src/mcp-server/tools/dataPrimaryNetworkListValidators.ts
-  - src/mcp-server/tools/dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards.ts
-  - src/mcp-server/tools/dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards.ts
-  - src/mcp-server/tools/dataPrimaryNetworkTransactionsGetTxByHash.ts
-  - src/mcp-server/tools/dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions.ts
+  - src/mcp-server/tools/dataPrimaryNetworkRewardsListHistoricalRewards.ts
+  - src/mcp-server/tools/dataPrimaryNetworkRewardsListPendingRewards.ts
+  - src/mcp-server/tools/dataPrimaryNetworkTransactionsGet.ts
+  - src/mcp-server/tools/dataPrimaryNetworkTransactionsListActiveStakingTransactions.ts
   - src/mcp-server/tools/dataPrimaryNetworkTransactionsListAssetTransactions.ts
-  - src/mcp-server/tools/dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions.ts
-  - src/mcp-server/tools/dataPrimaryNetworkUtxosGetUtxosByAddresses.ts
-  - src/mcp-server/tools/dataPrimaryNetworkVerticesGetVertexByHash.ts
-  - src/mcp-server/tools/dataPrimaryNetworkVerticesGetVertexByHeight.ts
-  - src/mcp-server/tools/dataPrimaryNetworkVerticesListLatestXChainVertices.ts
-  - src/mcp-server/tools/dataSignatureAggregatorAggregateSignatures.ts
-  - src/mcp-server/tools/dataSignatureAggregatorGetAggregatedSignatures.ts
+  - src/mcp-server/tools/dataPrimaryNetworkTransactionsListLatest.ts
+  - src/mcp-server/tools/dataPrimaryNetworkUtxosListByAddresses.ts
+  - src/mcp-server/tools/dataPrimaryNetworkVerticesGetByHash.ts
+  - src/mcp-server/tools/dataPrimaryNetworkVerticesListByHeight.ts
+  - src/mcp-server/tools/dataPrimaryNetworkVerticesListLatest.ts
+  - src/mcp-server/tools/dataSignatureAggregatorAggregate.ts
+  - src/mcp-server/tools/dataSignatureAggregatorGet.ts
   - src/mcp-server/tools/dataTeleporterGetTeleporterMessage.ts
   - src/mcp-server/tools/dataTeleporterListTeleporterMessages.ts
   - src/mcp-server/tools/dataTeleporterListTeleporterMessagesByAddress.ts
-  - src/mcp-server/tools/dataUsageMetricsGetApiLogs.ts
-  - src/mcp-server/tools/dataUsageMetricsGetApiUsageMetrics.ts
+  - src/mcp-server/tools/dataUsageMetricsGetLogs.ts
   - src/mcp-server/tools/dataUsageMetricsGetRpcUsageMetrics.ts
-  - src/mcp-server/tools/dataUsageMetricsGetSubnetRpcUsageMetrics.ts
+  - src/mcp-server/tools/dataUsageMetricsGetSubnetRpcUsage.ts
+  - src/mcp-server/tools/dataUsageMetricsGetUsage.ts
+  - src/mcp-server/tools/notificationsAccess.ts
+  - src/mcp-server/tools/notificationsSubscribe.ts
+  - src/mcp-server/tools/notificationsSubscriptions.ts
+  - src/mcp-server/tools/notificationsUnsubscribe.ts
+  - src/models/components/accessrequest.ts
   - src/models/components/activedelegatordetails.ts
   - src/models/components/activevalidatordetails.ts
   - src/models/components/aggregatedassetamount.ts
@@ -691,7 +717,6 @@ generatedFiles:
   - src/models/components/blockchain.ts
   - src/models/components/blockchainid.ts
   - src/models/components/blockchainids.ts
-  - src/models/components/blockchaininfo.ts
   - src/models/components/blscredentials.ts
   - src/models/components/cchainatomicbalances.ts
   - src/models/components/cchainexporttransaction.ts
@@ -805,6 +830,7 @@ generatedFiles:
   - src/models/components/networktoken.ts
   - src/models/components/networktokendetails.ts
   - src/models/components/nfttokenmetadatastatus.ts
+  - src/models/components/notificationsresponse.ts
   - src/models/components/operationstatus.ts
   - src/models/components/operationstatuscode.ts
   - src/models/components/operationstatusresponse.ts
@@ -850,6 +876,9 @@ generatedFiles:
   - src/models/components/subnetownershipinfo.ts
   - src/models/components/subnetrpctimeintervalgranularity.ts
   - src/models/components/subnetrpcusagemetricsresponsedto.ts
+  - src/models/components/subscriberequest.ts
+  - src/models/components/subscriptionsrequest.ts
+  - src/models/components/subscriptionsresponse.ts
   - src/models/components/teleporterdestinationtransaction.ts
   - src/models/components/teleportermessageinfo.ts
   - src/models/components/teleporterreceipt.ts
@@ -863,6 +892,7 @@ generatedFiles:
   - src/models/components/transactionstatus.ts
   - src/models/components/transactionvertexdetail.ts
   - src/models/components/unknowncontract.ts
+  - src/models/components/unsubscriberequest.ts
   - src/models/components/usagemetricsgroupbyenum.ts
   - src/models/components/usagemetricsresponsedto.ts
   - src/models/components/usagemetricsvaluedto.ts
@@ -903,6 +933,7 @@ generatedFiles:
   - src/models/operations/getbalancesbyaddresses.ts
   - src/models/operations/getblock.ts
   - src/models/operations/getblockbyid.ts
+  - src/models/operations/getblockchainbyid.ts
   - src/models/operations/getchainidsforaddresses.ts
   - src/models/operations/getchaininfo.ts
   - src/models/operations/getcontractmetadata.ts
@@ -964,17 +995,21 @@ generatedFiles:
   - src/models/operations/posttransactionexportjob.ts
   - src/models/operations/reindexnft.ts
   - src/models/operations/supportedchains.ts
+  - src/sdk/address.ts
+  - src/sdk/addressbalances.ts
+  - src/sdk/addresschains.ts
+  - src/sdk/addresscontracts.ts
+  - src/sdk/addresstransactions.ts
   - src/sdk/chains.ts
   - src/sdk/contracts.ts
   - src/sdk/data.ts
   - src/sdk/evm.ts
-  - src/sdk/evmbalances.ts
   - src/sdk/evmblocks.ts
   - src/sdk/evmtransactions.ts
-  - src/sdk/healthcheck.ts
   - src/sdk/icm.ts
   - src/sdk/index.ts
   - src/sdk/nfts.ts
+  - src/sdk/notifications.ts
   - src/sdk/operations.ts
   - src/sdk/primarynetwork.ts
   - src/sdk/primarynetworkbalances.ts
@@ -2347,7 +2382,7 @@ examples:
           subnetId: "11111111111111111111111111111111LpoYY"
       responses:
         "200":
-          application/json: {"createBlockTimestamp": 6811.96, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value>", "<value>", "<value>"], "threshold": 8549.3, "locktime": 8471.28, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"blockchainId": "<id>"}]}
+          application/json: {"createBlockTimestamp": 6811.96, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value>", "<value>", "<value>"], "threshold": 8549.3, "locktime": 8471.28, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"createBlockTimestamp": 6811.96, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -3212,5 +3247,122 @@ examples:
           application/json: {"message": ["<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+  getBlockchainById:
+    "":
+      parameters:
+        path:
+          blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"createBlockTimestamp": 8742.71, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  access:
+    speakeasy-default-access:
+      requestBody:
+        application/json: {"email": "Ivy_Hartmann57@yahoo.com", "captcha": "<value>"}
+      responses:
+        "201":
+          application/json: {"message": "Subscribed. You will receive notifications for NodeID-1"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  subscribe:
+    speakeasy-default-subscribe:
+      requestBody:
+        application/json: {"accessToken": "<value>", "nodeId": "<id>", "notifications": ["connectivity", "ports", "version"]}
+      responses:
+        "201":
+          application/json: {"message": "Subscribed. You will receive notifications for NodeID-1"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+  unsubscribe:
+    speakeasy-default-unsubscribe:
+      requestBody:
+        application/json: {"accessToken": "<value>", "nodeId": "<id>"}
+      responses:
+        "201":
+          application/json: {"message": "Subscribed. You will receive notifications for NodeID-1"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  subscriptions:
+    speakeasy-default-subscriptions:
+      requestBody:
+        application/json: {"accessToken": "<value>"}
+      responses:
+        "201":
+          application/json: {"email": "Myrtice_Koelpin41@hotmail.com", "subscriptions": {"NodeID-1": {"notifications": ["connectivity"]}, "NodeID-2": {"notifications": ["connectivity", "ports", "version"]}}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.0
 generatedTests: {}

@@ -5,7 +5,7 @@
 ```typescript
 import { BlockchainIds } from "@avalanche-sdk/data/models/components";
 
-let value: BlockchainIds = "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM";
+let value: BlockchainIds = "11111111111111111111111111111111LpoYY";
 ```
 
 ## Values

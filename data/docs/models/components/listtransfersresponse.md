@@ -30,15 +30,15 @@ let value: ListTransfersResponse = {
           "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg",
         address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
       },
-      logIndex: 2155.07,
+      logIndex: 2817.3,
       value: "10000000000000000000",
       erc1155Token: {
         address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         ercType: "ERC-1155",
         tokenId: "<id>",
-        tokenUri: "https://shallow-disappointment.biz",
+        tokenUri: "https://best-jet.org",
         metadata: {
-          indexStatus: "THROTTLED_TOKEN_URI",
+          indexStatus: "INDEXED",
         },
       },
     },

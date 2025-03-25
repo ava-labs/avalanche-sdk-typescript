@@ -11,6 +11,7 @@ export * from "./getassetdetails.js";
 export * from "./getbalancesbyaddresses.js";
 export * from "./getblock.js";
 export * from "./getblockbyid.js";
+export * from "./getblockchainbyid.js";
 export * from "./getchainidsforaddresses.js";
 export * from "./getchaininfo.js";
 export * from "./getcontractmetadata.js";

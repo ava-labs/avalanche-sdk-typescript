@@ -29,9 +29,9 @@ let value: ListErc1155BalancesResponse = {
         address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         ercType: "ERC-1155",
         tokenId: "<id>",
-        tokenUri: "https://second-hello.biz/",
+        tokenUri: "https://dependent-lotion.biz",
         metadata: {
-          indexStatus: "MISSING_TOKEN",
+          indexStatus: "INVALID_TOKEN_URI_SCHEME",
         },
         chainId: "43114",
         balance: "2000000000000000000",

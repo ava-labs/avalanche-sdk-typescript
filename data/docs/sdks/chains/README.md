@@ -5,9 +5,8 @@
 
 ### Available Operations
 
-* [listAddressChains](#listaddresschains) - List all chains associated with a given address
-* [supportedChains](#supportedchains) - List chains
-* [getChainInfo](#getchaininfo) - Get chain information
+* [list](#list) - List chains
+* [get](#get) - Get chain information
 * [~~getAddressChains~~](#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
@@ -18,93 +17,7 @@
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
 
-## listAddressChains
-
-Lists the chains where the specified address has  participated in transactions or ERC token transfers,  either as a sender or receiver. The data is refreshed every 15  minutes.
-
-### Example Usage
-
-```typescript
-import { Avalanche } from "@avalanche-sdk/data";
-
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
-
-async function run() {
-  const result = await avalanche.data.evm.chains.listAddressChains({
-    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-  });
-
-  // Handle the result
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataEvmChainsListAddressChains } from "@avalanche-sdk/data/funcs/dataEvmChainsListAddressChains.js";
-
-// Use `AvalancheCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
-
-async function run() {
-  const res = await dataEvmChainsListAddressChains(avalanche, {
-    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-  });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListAddressChainsRequest](../../models/operations/listaddresschainsrequest.md)                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[components.ListAddressChainsResponse](../../models/components/listaddresschainsresponse.md)\>**
-
-### Errors
-
-| Error Type                     | Status Code                    | Content Type                   |
-| ------------------------------ | ------------------------------ | ------------------------------ |
-| errors.BadRequestError         | 400                            | application/json               |
-| errors.UnauthorizedError       | 401                            | application/json               |
-| errors.ForbiddenError          | 403                            | application/json               |
-| errors.NotFoundError           | 404                            | application/json               |
-| errors.TooManyRequestsError    | 429                            | application/json               |
-| errors.InternalServerError     | 500                            | application/json               |
-| errors.BadGatewayError         | 502                            | application/json               |
-| errors.ServiceUnavailableError | 503                            | application/json               |
-| errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
-
-## supportedChains
+## list
 
 Lists the AvaCloud supported EVM-compatible chains. Filterable by network.
 
@@ -119,7 +32,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.evm.chains.supportedChains({
+  const result = await avalanche.data.evm.chains.list({
     network: "mainnet",
     feature: "nftIndexing",
   });
@@ -137,7 +50,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataEvmChainsSupportedChains } from "@avalanche-sdk/data/funcs/dataEvmChainsSupportedChains.js";
+import { dataEvmChainsList } from "@avalanche-sdk/data/funcs/dataEvmChainsList.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -147,7 +60,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataEvmChainsSupportedChains(avalanche, {
+  const res = await dataEvmChainsList(avalanche, {
     network: "mainnet",
     feature: "nftIndexing",
   });
@@ -192,7 +105,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getChainInfo
+## get
 
 Gets chain information for the EVM-compatible chain if supported by AvaCloud.
 
@@ -207,7 +120,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.evm.chains.getChainInfo({
+  const result = await avalanche.data.evm.chains.get({
     chainId: "43114",
   });
 
@@ -224,7 +137,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataEvmChainsGetChainInfo } from "@avalanche-sdk/data/funcs/dataEvmChainsGetChainInfo.js";
+import { dataEvmChainsGet } from "@avalanche-sdk/data/funcs/dataEvmChainsGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -234,7 +147,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataEvmChainsGetChainInfo(avalanche, {
+  const res = await dataEvmChainsGet(avalanche, {
     chainId: "43114",
   });
 

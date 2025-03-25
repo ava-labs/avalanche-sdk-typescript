@@ -5,7 +5,7 @@
 ```typescript
 import { InternalTransactionOpCall } from "@avalanche-sdk/data/models/components";
 
-let value: InternalTransactionOpCall = "UNKNOWN";
+let value: InternalTransactionOpCall = "CREATE";
 ```
 
 ## Values

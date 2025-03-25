@@ -5,9 +5,9 @@
 
 ### Available Operations
 
-* [getUtxosByAddresses](#getutxosbyaddresses) - List UTXOs
+* [listByAddresses](#listbyaddresses) - List UTXOs
 
-## getUtxosByAddresses
+## listByAddresses
 
 Lists UTXOs on one of the Primary Network chains for the supplied addresses.
 
@@ -22,7 +22,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.utxos.getUtxosByAddresses({
+  const result = await avalanche.data.primaryNetwork.utxos.listByAddresses({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
     network: "mainnet",
@@ -44,7 +44,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkUtxosGetUtxosByAddresses } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkUtxosGetUtxosByAddresses.js";
+import { dataPrimaryNetworkUtxosListByAddresses } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkUtxosListByAddresses.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -54,7 +54,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkUtxosGetUtxosByAddresses(avalanche, {
+  const res = await dataPrimaryNetworkUtxosListByAddresses(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
     network: "mainnet",

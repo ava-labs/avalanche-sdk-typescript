@@ -8,9 +8,9 @@ import { OperationStatusResponse } from "@avalanche-sdk/data/models/components";
 let value: OperationStatusResponse = {
   operationId: "<id>",
   operationType: "TRANSACTION_EXPORT_PRIMARY_NETWORK",
-  operationStatus: "COMPLETED_WITH_WARNING",
-  createdAtTimestamp: 3068.1,
-  updatedAtTimestamp: 5775.43,
+  operationStatus: "FAILED",
+  createdAtTimestamp: 3553.69,
+  updatedAtTimestamp: 3567.07,
 };
 ```
 

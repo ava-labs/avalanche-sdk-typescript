@@ -7,7 +7,7 @@ import { TeleporterMessageInfo } from "@avalanche-sdk/data/models/components";
 
 let value: TeleporterMessageInfo = {
   teleporterMessageId: "<id>",
-  direction: "SOURCE_TRANSACTION",
+  direction: "DESTINATION_TRANSACTION",
 };
 ```
 

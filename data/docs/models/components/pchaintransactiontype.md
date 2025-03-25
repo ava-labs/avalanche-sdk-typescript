@@ -5,7 +5,7 @@
 ```typescript
 import { PChainTransactionType } from "@avalanche-sdk/data/models/components";
 
-let value: PChainTransactionType = "AddPermissionlessDelegatorTx";
+let value: PChainTransactionType = "TransferSubnetOwnershipTx";
 ```
 
 ## Values

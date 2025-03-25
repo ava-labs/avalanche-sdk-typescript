@@ -8,7 +8,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck();
+  const result = await avalanche.data.healthCheck();
 
   // Handle the result
   console.log(result);

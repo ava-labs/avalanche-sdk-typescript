@@ -7,11 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  BlockchainInfo,
-  BlockchainInfo$inboundSchema,
-  BlockchainInfo$Outbound,
-  BlockchainInfo$outboundSchema,
-} from "./blockchaininfo.js";
+  Blockchain,
+  Blockchain$inboundSchema,
+  Blockchain$Outbound,
+  Blockchain$outboundSchema,
+} from "./blockchain.js";
 import {
   L1ValidatorManagerDetails,
   L1ValidatorManagerDetails$inboundSchema,
@@ -63,7 +63,7 @@ export type Subnet = {
    * L1 validator manager details.
    */
   l1ValidatorManagerDetails?: L1ValidatorManagerDetails | undefined;
-  blockchains: Array<BlockchainInfo>;
+  blockchains: Array<Blockchain>;
 };
 
 /** @internal */
@@ -80,7 +80,7 @@ export const Subnet$inboundSchema: z.ZodType<Subnet, z.ZodTypeDef, unknown> = z
     l1ConversionTransactionHash: z.string().optional(),
     l1ValidatorManagerDetails: L1ValidatorManagerDetails$inboundSchema
       .optional(),
-    blockchains: z.array(BlockchainInfo$inboundSchema),
+    blockchains: z.array(Blockchain$inboundSchema),
   });
 
 /** @internal */
@@ -95,7 +95,7 @@ export type Subnet$Outbound = {
   isL1: boolean;
   l1ConversionTransactionHash?: string | undefined;
   l1ValidatorManagerDetails?: L1ValidatorManagerDetails$Outbound | undefined;
-  blockchains: Array<BlockchainInfo$Outbound>;
+  blockchains: Array<Blockchain$Outbound>;
 };
 
 /** @internal */
@@ -115,7 +115,7 @@ export const Subnet$outboundSchema: z.ZodType<
   l1ConversionTransactionHash: z.string().optional(),
   l1ValidatorManagerDetails: L1ValidatorManagerDetails$outboundSchema
     .optional(),
-  blockchains: z.array(BlockchainInfo$outboundSchema),
+  blockchains: z.array(Blockchain$outboundSchema),
 });
 
 /**

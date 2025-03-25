@@ -5,11 +5,11 @@
 
 ### Available Operations
 
-* [listLatestXChainVertices](#listlatestxchainvertices) - List vertices
-* [getVertexByHash](#getvertexbyhash) - Get vertex
-* [getVertexByHeight](#getvertexbyheight) - List vertices by height
+* [listLatest](#listlatest) - List vertices
+* [getByHash](#getbyhash) - Get vertex
+* [listByHeight](#listbyheight) - List vertices by height
 
-## listLatestXChainVertices
+## listLatest
 
 Lists latest vertices on the X-Chain.
 
@@ -24,7 +24,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.vertices.listLatestXChainVertices({
+  const result = await avalanche.data.primaryNetwork.vertices.listLatest({
     blockchainId: "x-chain",
     network: "mainnet",
   });
@@ -44,7 +44,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkVerticesListLatestXChainVertices } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesListLatestXChainVertices.js";
+import { dataPrimaryNetworkVerticesListLatest } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesListLatest.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -54,7 +54,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkVerticesListLatestXChainVertices(avalanche, {
+  const res = await dataPrimaryNetworkVerticesListLatest(avalanche, {
     blockchainId: "x-chain",
     network: "mainnet",
   });
@@ -101,7 +101,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getVertexByHash
+## getByHash
 
 Gets a single vertex on the X-Chain.
 
@@ -116,7 +116,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.vertices.getVertexByHash({
+  const result = await avalanche.data.primaryNetwork.vertices.getByHash({
     vertexHash: "haP1CW56cspZY7aEuqHNrtpvhqCaMTxQaYe6j5u2Mbn4L2Gqr",
     blockchainId: "x-chain",
     network: "mainnet",
@@ -135,7 +135,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkVerticesGetVertexByHash } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesGetVertexByHash.js";
+import { dataPrimaryNetworkVerticesGetByHash } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesGetByHash.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -145,7 +145,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkVerticesGetVertexByHash(avalanche, {
+  const res = await dataPrimaryNetworkVerticesGetByHash(avalanche, {
     vertexHash: "haP1CW56cspZY7aEuqHNrtpvhqCaMTxQaYe6j5u2Mbn4L2Gqr",
     blockchainId: "x-chain",
     network: "mainnet",
@@ -191,7 +191,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getVertexByHeight
+## listByHeight
 
 Lists vertices at the given vertex height on the X-Chain.
 
@@ -206,7 +206,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.vertices.getVertexByHeight({
+  const result = await avalanche.data.primaryNetwork.vertices.listByHeight({
     vertexHeight: 123,
     blockchainId: "x-chain",
     network: "mainnet",
@@ -228,7 +228,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkVerticesGetVertexByHeight } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesGetVertexByHeight.js";
+import { dataPrimaryNetworkVerticesListByHeight } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesListByHeight.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -238,7 +238,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkVerticesGetVertexByHeight(avalanche, {
+  const res = await dataPrimaryNetworkVerticesListByHeight(avalanche, {
     vertexHeight: 123,
     blockchainId: "x-chain",
     network: "mainnet",

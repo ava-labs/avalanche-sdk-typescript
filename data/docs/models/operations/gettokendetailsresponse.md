@@ -14,9 +14,9 @@ const value: components.Erc721Token = {
   symbol: "WAVAX",
   ercType: "ERC-721",
   tokenId: "<id>",
-  tokenUri: "https://definite-jazz.com",
+  tokenUri: "https://artistic-finger.com",
   metadata: {
-    indexStatus: "INVALID_TOKEN_URI_SCHEME",
+    indexStatus: "THROTTLED_TOKEN_URI",
   },
   ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
 };
@@ -29,9 +29,9 @@ const value: components.Erc1155Token = {
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   ercType: "ERC-1155",
   tokenId: "<id>",
-  tokenUri: "https://vague-ecliptic.info",
+  tokenUri: "https://frightened-cinder.biz",
   metadata: {
-    indexStatus: "METADATA_CONTENT_TOO_LARGE",
+    indexStatus: "INVALID_METADATA_JSON",
   },
 };
 ```

@@ -12,14 +12,14 @@ let value: ListXChainVerticesResponse = {
       parentHashes: [
         "<value>",
       ],
-      vertexHeight: 9834.27,
-      vertexIndex: 3998.02,
-      vertexTimestamp: 3803.35,
-      txCount: 1478.08,
+      vertexHeight: 3651,
+      vertexIndex: 1905.67,
+      vertexTimestamp: 191.22,
+      txCount: 5181.5,
       transactions: [
         "<value>",
       ],
-      vertexSizeBytes: 6849.35,
+      vertexSizeBytes: 8427.77,
     },
   ],
   chainInfo: {
