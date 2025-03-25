@@ -7,26 +7,8 @@ actions:
     description: Change the response schema for the /v1/chains endpoint in glacier to avoid a merger conflict with Popsicle API Spec
     update:
       $ref: "#/components/schemas/DataListChainsResponse"
-  - target: $.paths['/v1/webhooks'].get
-    remove: true
-  - target: $.paths['/v1/webhooks'].post
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}'].get
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}'].patch
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}'].delete
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}/addresses'].get
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}/addresses'].patch
-    remove: true
-  - target: $.paths['/v1/webhooks/{id}/addresses'].delete
-    remove: true
-  - target: $.paths['/v1/webhooks:getSharedSecret'].get
-    remove: true
-  - target: $.paths['/v1/webhooks:generateOrRotateSharedSecret'].post
+  - target: $.paths.*.*[?(@['x-speakeasy-group'] == 'webhooks' || @['x-speakeasy-group'] == 'webhooks.addresses')]
+    description: Remove all paths that are part of the webhooks group
     remove: true
   - target: $.webhooks
     remove: true
-  - target: $['x-speakeasy-webhooks']

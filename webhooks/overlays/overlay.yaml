@@ -8,7 +8,7 @@ actions:
     update:
       x-speakeasy-group: 'webhooks'
       x-speakeasy-name-override: 'healthCheck'
-  - target: $.paths.*.*[?(! @['x-speakeasy-group'] == 'webhooks')]
+  - target: $.paths.*.*[?(! (@['x-speakeasy-group'] == 'webhooks' || @['x-speakeasy-group'] == 'webhooks.addresses') )]
     description: Remove all paths that are not part of the webhooks group
     remove: true
   - target: $.paths['/v1/webhooks'].post
