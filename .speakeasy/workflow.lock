@@ -1,12 +1,12 @@
-speakeasyVersion: 1.521.1
+speakeasyVersion: 1.523.2
 sources:
     data-source:
         sourceNamespace: avalanche-sdk-data-typescript
-        sourceRevisionDigest: sha256:064c7c56d52967d0f00fd326ec9e16e5764185e748c88c5e620ccf173073eda7
-        sourceBlobDigest: sha256:5897a3541c4e19059b82872c3f4037be2564aa42d17cebccce6e72053b12d7cd
+        sourceRevisionDigest: sha256:f62ff67fd4d6bbe035c91950e7c41a1e7fd3adf13d26330b8cb98cd758342c41
+        sourceBlobDigest: sha256:399c4f93d0919792dd055ea41c7b9f819d8cb7f5f9339e37802e0387125f86e5
         tags:
             - latest
-            - speakeasy-sdk-regen-1742326810
+            - speakeasy-sdk-regen-1742841617
             - Beta
     metrics-source:
         sourceNamespace: avalanche-sdk-metrics-typescript
@@ -34,10 +34,10 @@ targets:
     data-sdk:
         source: data-source
         sourceNamespace: avalanche-sdk-data-typescript
-        sourceRevisionDigest: sha256:064c7c56d52967d0f00fd326ec9e16e5764185e748c88c5e620ccf173073eda7
-        sourceBlobDigest: sha256:5897a3541c4e19059b82872c3f4037be2564aa42d17cebccce6e72053b12d7cd
+        sourceRevisionDigest: sha256:f62ff67fd4d6bbe035c91950e7c41a1e7fd3adf13d26330b8cb98cd758342c41
+        sourceBlobDigest: sha256:399c4f93d0919792dd055ea41c7b9f819d8cb7f5f9339e37802e0387125f86e5
         codeSamplesNamespace: avalanche-sdk-data-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:103cd9d981a9f3f4d097c72c9f99deb72072f8a8625fdb67b4e47a10b7dcee52
+        codeSamplesRevisionDigest: sha256:20aa790aed2dd4e8419777e02a2ef3ddc882ef41691c5c522439d349d1fc6aae
     metrics-sdk:
         source: metrics-source
         sourceNamespace: avalanche-sdk-metrics-typescript

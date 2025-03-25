@@ -3,6 +3,7 @@
  */
 
 import { dataPrimaryNetworkGetAssetDetails } from "../funcs/dataPrimaryNetworkGetAssetDetails.js";
+import { dataPrimaryNetworkGetBlockchainById } from "../funcs/dataPrimaryNetworkGetBlockchainById.js";
 import { dataPrimaryNetworkGetChainIdsForAddresses } from "../funcs/dataPrimaryNetworkGetChainIdsForAddresses.js";
 import { dataPrimaryNetworkGetNetworkDetails } from "../funcs/dataPrimaryNetworkGetNetworkDetails.js";
 import { dataPrimaryNetworkGetSingleValidatorDetails } from "../funcs/dataPrimaryNetworkGetSingleValidatorDetails.js";
@@ -121,6 +122,23 @@ export class PrimaryNetwork extends ClientSDK {
     PageIterator<operations.ListBlockchainsResponse, { cursor: string }>
   > {
     return unwrapResultIterator(dataPrimaryNetworkListBlockchains(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Get blockchain details by ID
+   *
+   * @remarks
+   * Get details of the blockchain registered on the network.
+   */
+  async getBlockchainById(
+    request: operations.GetBlockchainByIdRequest,
+    options?: RequestOptions,
+  ): Promise<components.Blockchain> {
+    return unwrapAsync(dataPrimaryNetworkGetBlockchainById(
       this,
       request,
       options,

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: 916ee1914e61223766cf9cd70dff5154
+  docChecksum: cd988961038162bf84be0b48ddb22d64
   docVersion: Beta
-  speakeasyVersion: 1.520.0
-  generationVersion: 2.555.1
-  releaseVersion: 0.1.0
-  configChecksum: 77667e0c2a8bf1717ab7cee4a41775b1
+  speakeasyVersion: 1.523.2
+  generationVersion: 2.560.1
+  releaseVersion: 0.2.0
+  configChecksum: 9b0ed8737f5a77c283207bbbc722f554
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: data
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/data
@@ -29,7 +29,7 @@ features:
     globals: 2.82.2
     groups: 2.81.2
     ignores: 2.81.1
-    mcpServer: 0.8.0
+    mcpServer: 0.9.0
     nullables: 0.1.1
     pagination: 2.83.0
     responseFormat: 0.2.3
@@ -333,6 +333,8 @@ generatedFiles:
   - docs/models/operations/getbalancesbyaddressesresponse.md
   - docs/models/operations/getblockbyidglobals.md
   - docs/models/operations/getblockbyidrequest.md
+  - docs/models/operations/getblockchainbyidglobals.md
+  - docs/models/operations/getblockchainbyidrequest.md
   - docs/models/operations/getblockglobals.md
   - docs/models/operations/getblockrequest.md
   - docs/models/operations/getchainidsforaddressesglobals.md
@@ -551,6 +553,7 @@ generatedFiles:
   - src/funcs/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.ts
   - src/funcs/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.ts
   - src/funcs/dataPrimaryNetworkGetAssetDetails.ts
+  - src/funcs/dataPrimaryNetworkGetBlockchainById.ts
   - src/funcs/dataPrimaryNetworkGetChainIdsForAddresses.ts
   - src/funcs/dataPrimaryNetworkGetNetworkDetails.ts
   - src/funcs/dataPrimaryNetworkGetSingleValidatorDetails.ts
@@ -653,6 +656,7 @@ generatedFiles:
   - src/mcp-server/tools/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.ts
   - src/mcp-server/tools/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetAssetDetails.ts
+  - src/mcp-server/tools/dataPrimaryNetworkGetBlockchainById.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetChainIdsForAddresses.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetNetworkDetails.ts
   - src/mcp-server/tools/dataPrimaryNetworkGetSingleValidatorDetails.ts
@@ -903,6 +907,7 @@ generatedFiles:
   - src/models/operations/getbalancesbyaddresses.ts
   - src/models/operations/getblock.ts
   - src/models/operations/getblockbyid.ts
+  - src/models/operations/getblockchainbyid.ts
   - src/models/operations/getchainidsforaddresses.ts
   - src/models/operations/getchaininfo.ts
   - src/models/operations/getcontractmetadata.ts
@@ -3212,5 +3217,30 @@ examples:
           application/json: {"message": ["<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+  getBlockchainById:
+    "":
+      parameters:
+        path:
+          blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"createBlockTimestamp": 8742.71, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.0
 generatedTests: {}

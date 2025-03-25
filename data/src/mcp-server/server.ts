@@ -55,6 +55,7 @@ import { tool$dataPrimaryNetworkBlocksGetBlockById } from "./tools/dataPrimaryNe
 import { tool$dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks } from "./tools/dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks.js";
 import { tool$dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId } from "./tools/dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId.js";
 import { tool$dataPrimaryNetworkGetAssetDetails } from "./tools/dataPrimaryNetworkGetAssetDetails.js";
+import { tool$dataPrimaryNetworkGetBlockchainById } from "./tools/dataPrimaryNetworkGetBlockchainById.js";
 import { tool$dataPrimaryNetworkGetChainIdsForAddresses } from "./tools/dataPrimaryNetworkGetChainIdsForAddresses.js";
 import { tool$dataPrimaryNetworkGetNetworkDetails } from "./tools/dataPrimaryNetworkGetNetworkDetails.js";
 import { tool$dataPrimaryNetworkGetSingleValidatorDetails } from "./tools/dataPrimaryNetworkGetSingleValidatorDetails.js";
@@ -96,7 +97,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.1.0",
+    version: "0.2.0",
   });
 
   const client = new AvalancheCore({
@@ -138,6 +139,7 @@ export function createMCPServer(deps: {
   tool(tool$dataPrimaryNetworkGetChainIdsForAddresses);
   tool(tool$dataPrimaryNetworkGetNetworkDetails);
   tool(tool$dataPrimaryNetworkListBlockchains);
+  tool(tool$dataPrimaryNetworkGetBlockchainById);
   tool(tool$dataPrimaryNetworkListSubnets);
   tool(tool$dataPrimaryNetworkGetSubnetById);
   tool(tool$dataPrimaryNetworkListValidators);
