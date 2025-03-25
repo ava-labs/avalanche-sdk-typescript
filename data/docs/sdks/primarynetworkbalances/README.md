@@ -5,9 +5,9 @@
 
 ### Available Operations
 
-* [getBalancesByAddresses](#getbalancesbyaddresses) - Get balances
+* [listByAddresses](#listbyaddresses) - Get balances
 
-## getBalancesByAddresses
+## listByAddresses
 
 Gets primary network balances for one of the Primary Network chains for the supplied addresses.
 
@@ -24,7 +24,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.balances.getBalancesByAddresses({
+  const result = await avalanche.data.primaryNetwork.balances.listByAddresses({
     blockTimestamp: 1599696000,
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
@@ -44,7 +44,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkBalancesGetBalancesByAddresses } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBalancesGetBalancesByAddresses.js";
+import { dataPrimaryNetworkBalancesListByAddresses } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBalancesListByAddresses.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -54,7 +54,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkBalancesGetBalancesByAddresses(avalanche, {
+  const res = await dataPrimaryNetworkBalancesListByAddresses(avalanche, {
     blockTimestamp: 1599696000,
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",

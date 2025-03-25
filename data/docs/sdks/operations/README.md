@@ -5,10 +5,10 @@
 
 ### Available Operations
 
-* [getOperationResult](#getoperationresult) - Get operation
-* [postTransactionExportJob](#posttransactionexportjob) - Create transaction export operation
+* [getResult](#getresult) - Get operation
+* [exportTransactions](#exporttransactions) - Create transaction export operation
 
-## getOperationResult
+## getResult
 
 Gets operation details for the given operation id.
 
@@ -23,7 +23,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.operations.getOperationResult({
+  const result = await avalanche.data.operations.getResult({
     operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
   });
 
@@ -40,7 +40,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataOperationsGetOperationResult } from "@avalanche-sdk/data/funcs/dataOperationsGetOperationResult.js";
+import { dataOperationsGetResult } from "@avalanche-sdk/data/funcs/dataOperationsGetResult.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -50,7 +50,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataOperationsGetOperationResult(avalanche, {
+  const res = await dataOperationsGetResult(avalanche, {
     operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
   });
 
@@ -94,7 +94,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## postTransactionExportJob
+## exportTransactions
 
 Trigger a transaction export operation with given parameters.
 
@@ -111,7 +111,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.operations.postTransactionExportJob({
+  const result = await avalanche.data.operations.exportTransactions({
     type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
@@ -135,7 +135,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataOperationsPostTransactionExportJob } from "@avalanche-sdk/data/funcs/dataOperationsPostTransactionExportJob.js";
+import { dataOperationsExportTransactions } from "@avalanche-sdk/data/funcs/dataOperationsExportTransactions.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -145,7 +145,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataOperationsPostTransactionExportJob(avalanche, {
+  const res = await dataOperationsExportTransactions(avalanche, {
     type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",

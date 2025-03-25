@@ -5,11 +5,11 @@
 
 ### Available Operations
 
-* [reindexNft](#reindexnft) - Reindex NFT metadata
-* [listTokens](#listtokens) - List tokens
-* [getTokenDetails](#gettokendetails) - Get token details
+* [reindex](#reindex) - Reindex NFT metadata
+* [list](#list) - List tokens
+* [get](#get) - Get token details
 
-## reindexNft
+## reindex
 
 Triggers reindexing of token metadata for an NFT token. Reindexing can only be called once per hour for each NFT token.
 
@@ -24,7 +24,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  await avalanche.data.nfts.reindexNft({
+  await avalanche.data.nfts.reindex({
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
@@ -42,7 +42,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataNftsReindexNft } from "@avalanche-sdk/data/funcs/dataNftsReindexNft.js";
+import { dataNftsReindex } from "@avalanche-sdk/data/funcs/dataNftsReindex.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -52,7 +52,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataNftsReindexNft(avalanche, {
+  const res = await dataNftsReindex(avalanche, {
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
@@ -97,7 +97,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listTokens
+## list
 
 Lists tokens for an NFT contract.
 
@@ -112,7 +112,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.nfts.listTokens({
+  const result = await avalanche.data.nfts.list({
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
@@ -132,7 +132,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataNftsListTokens } from "@avalanche-sdk/data/funcs/dataNftsListTokens.js";
+import { dataNftsList } from "@avalanche-sdk/data/funcs/dataNftsList.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -142,7 +142,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataNftsListTokens(avalanche, {
+  const res = await dataNftsList(avalanche, {
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
@@ -189,7 +189,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getTokenDetails
+## get
 
 Gets token details for a specific token of an NFT contract.
 
@@ -204,7 +204,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.nfts.getTokenDetails({
+  const result = await avalanche.data.nfts.get({
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
@@ -223,7 +223,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataNftsGetTokenDetails } from "@avalanche-sdk/data/funcs/dataNftsGetTokenDetails.js";
+import { dataNftsGet } from "@avalanche-sdk/data/funcs/dataNftsGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -233,7 +233,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataNftsGetTokenDetails(avalanche, {
+  const res = await dataNftsGet(avalanche, {
     chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",

@@ -3,16 +3,16 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { Address } from "./address.js";
 import { Chains } from "./chains.js";
 import { Contracts } from "./contracts.js";
-import { EvmBalances } from "./evmbalances.js";
 import { EvmBlocks } from "./evmblocks.js";
 import { EvmTransactions } from "./evmtransactions.js";
 
 export class Evm extends ClientSDK {
-  private _chains?: Chains;
-  get chains(): Chains {
-    return (this._chains ??= new Chains(this._options));
+  private _address?: Address;
+  get address(): Address {
+    return (this._address ??= new Address(this._options));
   }
 
   private _transactions?: EvmTransactions;
@@ -25,13 +25,13 @@ export class Evm extends ClientSDK {
     return (this._blocks ??= new EvmBlocks(this._options));
   }
 
-  private _balances?: EvmBalances;
-  get balances(): EvmBalances {
-    return (this._balances ??= new EvmBalances(this._options));
-  }
-
   private _contracts?: Contracts;
   get contracts(): Contracts {
     return (this._contracts ??= new Contracts(this._options));
+  }
+
+  private _chains?: Chains;
+  get chains(): Chains {
+    return (this._chains ??= new Chains(this._options));
   }
 }

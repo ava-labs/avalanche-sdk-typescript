@@ -6,7 +6,7 @@
 import { CreatePrimaryNetworkTransactionExportRequest } from "@avalanche-sdk/data/models/components";
 
 let value: CreatePrimaryNetworkTransactionExportRequest = {
-  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE",
   firstDate: "2023-05-01",
   lastDate: "2023-05-02",
   options: {

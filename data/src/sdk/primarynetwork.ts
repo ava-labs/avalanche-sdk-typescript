@@ -3,10 +3,11 @@
  */
 
 import { dataPrimaryNetworkGetAssetDetails } from "../funcs/dataPrimaryNetworkGetAssetDetails.js";
+import { dataPrimaryNetworkGetBlockchainById } from "../funcs/dataPrimaryNetworkGetBlockchainById.js";
 import { dataPrimaryNetworkGetChainIdsForAddresses } from "../funcs/dataPrimaryNetworkGetChainIdsForAddresses.js";
 import { dataPrimaryNetworkGetNetworkDetails } from "../funcs/dataPrimaryNetworkGetNetworkDetails.js";
-import { dataPrimaryNetworkGetSingleValidatorDetails } from "../funcs/dataPrimaryNetworkGetSingleValidatorDetails.js";
 import { dataPrimaryNetworkGetSubnetById } from "../funcs/dataPrimaryNetworkGetSubnetById.js";
+import { dataPrimaryNetworkGetValidatorDetails } from "../funcs/dataPrimaryNetworkGetValidatorDetails.js";
 import { dataPrimaryNetworkListBlockchains } from "../funcs/dataPrimaryNetworkListBlockchains.js";
 import { dataPrimaryNetworkListDelegators } from "../funcs/dataPrimaryNetworkListDelegators.js";
 import { dataPrimaryNetworkListL1Validators } from "../funcs/dataPrimaryNetworkListL1Validators.js";
@@ -128,6 +129,23 @@ export class PrimaryNetwork extends ClientSDK {
   }
 
   /**
+   * Get blockchain details by ID
+   *
+   * @remarks
+   * Get details of the blockchain registered on the network.
+   */
+  async getBlockchainById(
+    request: operations.GetBlockchainByIdRequest,
+    options?: RequestOptions,
+  ): Promise<components.Blockchain> {
+    return unwrapAsync(dataPrimaryNetworkGetBlockchainById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * List subnets
    *
    * @remarks
@@ -186,7 +204,7 @@ export class PrimaryNetwork extends ClientSDK {
    * @remarks
    * List validator details for a single validator.  Filterable by validation status.
    */
-  async getSingleValidatorDetails(
+  async getValidatorDetails(
     request: operations.GetSingleValidatorDetailsRequest,
     options?: RequestOptions,
   ): Promise<
@@ -195,7 +213,7 @@ export class PrimaryNetwork extends ClientSDK {
       { cursor: string }
     >
   > {
-    return unwrapResultIterator(dataPrimaryNetworkGetSingleValidatorDetails(
+    return unwrapResultIterator(dataPrimaryNetworkGetValidatorDetails(
       this,
       request,
       options,

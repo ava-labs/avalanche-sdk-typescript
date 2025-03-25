@@ -7,7 +7,7 @@ The contract call type. NATIVE_TRANSFER indicates a transfer of the native token
 ```typescript
 import { TransactionMethodType } from "@avalanche-sdk/data/models/components";
 
-let value: TransactionMethodType = "CONTRACT_CREATION";
+let value: TransactionMethodType = "CONTRACT_CALL";
 ```
 
 ## Values

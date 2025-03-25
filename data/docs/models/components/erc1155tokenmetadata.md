@@ -6,7 +6,7 @@
 import { Erc1155TokenMetadata } from "@avalanche-sdk/data/models/components";
 
 let value: Erc1155TokenMetadata = {
-  indexStatus: "INVALID_TOKEN_URI",
+  indexStatus: "THROTTLED_TOKEN_URI",
 };
 ```
 

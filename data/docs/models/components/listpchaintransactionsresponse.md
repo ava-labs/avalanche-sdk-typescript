@@ -9,7 +9,7 @@ let value: ListPChainTransactionsResponse = {
   transactions: [
     {
       txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
-      txType: "ConvertSubnetToL1Tx",
+      txType: "IncreaseL1ValidatorBalanceTx",
       blockTimestamp: 1648672486,
       blockNumber: "<value>",
       blockHash: "<value>",
@@ -32,13 +32,13 @@ let value: ListPChainTransactionsResponse = {
           createdOnChainId:
             "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
           utxoId: "68vLva9kfKUsX88ZPM8jdbf8qHUZRoZSFH6NdpAVTspkfrXDC",
-          amount: "622.39",
+          amount: "923.31",
           assetId: "<id>",
           blockNumber: "<value>",
-          blockTimestamp: 7105.29,
-          outputIndex: 2049.23,
+          blockTimestamp: 8298.98,
+          outputIndex: 9682.87,
           txHash: "<value>",
-          utxoType: "STAKE",
+          utxoType: "TRANSFER",
         },
       ],
       emittedUtxos: [
@@ -51,7 +51,7 @@ let value: ListPChainTransactionsResponse = {
             name: "Avalanche",
             symbol: "AVAX",
             denomination: 9,
-            type: "nft",
+            type: "secp256k1",
             amount: "5001000",
           },
           consumedOnChainId:
@@ -60,11 +60,11 @@ let value: ListPChainTransactionsResponse = {
           createdOnChainId:
             "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
           utxoId: "68vLva9kfKUsX88ZPM8jdbf8qHUZRoZSFH6NdpAVTspkfrXDC",
-          amount: "879.24",
+          amount: "174.77",
           assetId: "<id>",
           blockNumber: "<value>",
-          blockTimestamp: 5436.78,
-          outputIndex: 2826.99,
+          blockTimestamp: 3891.35,
+          outputIndex: 9521.43,
           txHash: "<value>",
           utxoType: "STAKE",
         },
@@ -77,7 +77,7 @@ let value: ListPChainTransactionsResponse = {
           name: "Avalanche",
           symbol: "AVAX",
           denomination: 9,
-          type: "nft",
+          type: "secp256k1",
           amount: "5001000",
         },
       ],
@@ -87,7 +87,7 @@ let value: ListPChainTransactionsResponse = {
           name: "Avalanche",
           symbol: "AVAX",
           denomination: 9,
-          type: "secp256k1",
+          type: "nft",
           amount: "5001000",
         },
       ],
@@ -121,7 +121,7 @@ let value: ListPChainTransactionsResponse = {
     },
   ],
   chainInfo: {
-    chainName: "c-chain",
+    chainName: "p-chain",
     network: "mainnet",
   },
 };

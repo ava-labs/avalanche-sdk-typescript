@@ -5,14 +5,14 @@
 
 ### Available Operations
 
-* [getApiUsageMetrics](#getapiusagemetrics) - Get usage metrics for the Data API
-* [getApiLogs](#getapilogs) - Get logs for requests made by client
-* [getSubnetRpcUsageMetrics](#getsubnetrpcusagemetrics) - Get usage metrics for the Subnet RPC
+* [getUsage](#getusage) - Get usage metrics for the Data API
+* [getLogs](#getlogs) - Get logs for requests made by client
+* [getSubnetRpcUsage](#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 * [~~getRpcUsageMetrics~~](#getrpcusagemetrics) - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
-## getApiUsageMetrics
+## getUsage
 
 Gets metrics for Data API usage over a specified time interval aggregated at the specified time-duration granularity.
 
@@ -27,7 +27,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.usageMetrics.getApiUsageMetrics({
+  const result = await avalanche.data.usageMetrics.getUsage({
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
     timeInterval: "daily",
@@ -47,7 +47,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataUsageMetricsGetApiUsageMetrics } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetApiUsageMetrics.js";
+import { dataUsageMetricsGetUsage } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetUsage.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -57,7 +57,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataUsageMetricsGetApiUsageMetrics(avalanche, {
+  const res = await dataUsageMetricsGetUsage(avalanche, {
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
     timeInterval: "daily",
@@ -104,7 +104,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getApiLogs
+## getLogs
 
 Gets logs for requests made by client over a specified time interval for a specific organization.
 
@@ -119,7 +119,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.usageMetrics.getApiLogs({
+  const result = await avalanche.data.usageMetrics.getLogs({
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
   });
@@ -139,7 +139,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataUsageMetricsGetApiLogs } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetApiLogs.js";
+import { dataUsageMetricsGetLogs } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetLogs.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -149,7 +149,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataUsageMetricsGetApiLogs(avalanche, {
+  const res = await dataUsageMetricsGetLogs(avalanche, {
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
   });
@@ -196,7 +196,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getSubnetRpcUsageMetrics
+## getSubnetRpcUsage
 
 Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
 
@@ -211,7 +211,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.usageMetrics.getSubnetRpcUsageMetrics({
+  const result = await avalanche.data.usageMetrics.getSubnetRpcUsage({
     timeInterval: "daily",
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
@@ -231,7 +231,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataUsageMetricsGetSubnetRpcUsageMetrics } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetSubnetRpcUsageMetrics.js";
+import { dataUsageMetricsGetSubnetRpcUsage } from "@avalanche-sdk/data/funcs/dataUsageMetricsGetSubnetRpcUsage.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -241,7 +241,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataUsageMetricsGetSubnetRpcUsageMetrics(avalanche, {
+  const res = await dataUsageMetricsGetSubnetRpcUsage(avalanche, {
     timeInterval: "daily",
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,

@@ -9,14 +9,14 @@ let value: ListSubnetsResponse = {
   result: {
     subnets: [
       {
-        createBlockTimestamp: 2569.16,
+        createBlockTimestamp: 688.52,
         createBlockIndex: "<value>",
         subnetId: "<id>",
         ownerAddresses: [
           "<value>",
         ],
-        threshold: 8735.57,
-        locktime: 4918.92,
+        threshold: 7057.1,
+        locktime: 3952.33,
         subnetOwnershipInfo: {
           locktime: 0,
           threshold: 1,
@@ -27,7 +27,12 @@ let value: ListSubnetsResponse = {
         isL1: false,
         blockchains: [
           {
+            createBlockTimestamp: 3108.4,
+            createBlockNumber: "<value>",
             blockchainId: "<id>",
+            vmId: "<id>",
+            subnetId: "<id>",
+            blockchainName: "<value>",
           },
         ],
       },

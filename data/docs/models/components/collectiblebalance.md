@@ -12,9 +12,9 @@ const value: components.Erc721TokenBalance = {
   symbol: "WAVAX",
   ercType: "ERC-721",
   tokenId: "<id>",
-  tokenUri: "https://rectangular-developmental.info/",
+  tokenUri: "https://proud-hierarchy.name",
   metadata: {
-    indexStatus: "METADATA_CONTENT_TOO_LARGE",
+    indexStatus: "UNKNOWN",
   },
   ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   chainId: "43114",
@@ -28,9 +28,9 @@ const value: components.Erc1155TokenBalance = {
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   ercType: "ERC-1155",
   tokenId: "<id>",
-  tokenUri: "https://shabby-dream.com",
+  tokenUri: "https://quiet-elevator.name/",
   metadata: {
-    indexStatus: "UNKNOWN",
+    indexStatus: "UNREACHABLE_TOKEN_URI",
   },
   chainId: "43114",
   balance: "2000000000000000000",

@@ -12,14 +12,9 @@ let value: ListValidatorDetailsResponse = {
       nodeId: "<id>",
       subnetId: "<id>",
       amountStaked: "<value>",
-      startTimestamp: 330.74,
-      endTimestamp: 156.06,
-      delegatorCount: 4287.96,
-      rewards: {
-        validationRewardAmount: "<value>",
-        delegationRewardAmount: "<value>",
-      },
-      validationStatus: "completed",
+      startTimestamp: 7487.89,
+      endTimestamp: 2378.07,
+      validationStatus: "pending",
     },
   ],
 };

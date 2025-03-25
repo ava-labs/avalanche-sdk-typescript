@@ -5,10 +5,10 @@
 
 ### Available Operations
 
-* [listPendingPrimaryNetworkRewards](#listpendingprimarynetworkrewards) - List pending rewards
-* [listHistoricalPrimaryNetworkRewards](#listhistoricalprimarynetworkrewards) - List historical rewards
+* [listPendingRewards](#listpendingrewards) - List pending rewards
+* [listHistoricalRewards](#listhistoricalrewards) - List historical rewards
 
-## listPendingPrimaryNetworkRewards
+## listPendingRewards
 
 Lists pending rewards on the Primary Network for the supplied addresses.
 
@@ -23,7 +23,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.rewards.listPendingPrimaryNetworkRewards({
+  const result = await avalanche.data.primaryNetwork.rewards.listPendingRewards({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
@@ -45,7 +45,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards.js";
+import { dataPrimaryNetworkRewardsListPendingRewards } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkRewardsListPendingRewards.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -55,7 +55,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards(avalanche, {
+  const res = await dataPrimaryNetworkRewardsListPendingRewards(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
@@ -104,7 +104,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listHistoricalPrimaryNetworkRewards
+## listHistoricalRewards
 
 Lists historical rewards on the Primary Network for the supplied addresses.
 
@@ -119,7 +119,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.rewards.listHistoricalPrimaryNetworkRewards({
+  const result = await avalanche.data.primaryNetwork.rewards.listHistoricalRewards({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
@@ -142,7 +142,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards.js";
+import { dataPrimaryNetworkRewardsListHistoricalRewards } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkRewardsListHistoricalRewards.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -152,7 +152,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards(avalanche, {
+  const res = await dataPrimaryNetworkRewardsListHistoricalRewards(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",

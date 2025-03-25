@@ -82,7 +82,7 @@ yarn add @avalanche-sdk/data zod
 This SDK is also an installable MCP server where the various SDK methods are
 exposed as tools that can be invoked by AI applications.
 
-> Node.js v20 or greater is required to run the MCP server.
+> Node.js v20 or greater is required to run the MCP server from npm.
 
 <details>
 <summary>Claude installation steps</summary>
@@ -112,16 +112,51 @@ Add the following server definition to your `claude_desktop_config.json` file:
 <details>
 <summary>Cursor installation steps</summary>
 
-Go to `Cursor Settings > Features > MCP Servers > Add new MCP server` and use the following settings:
+Create a `.cursor/mcp.json` file in your project root with the following content:
 
-- Name: Avalanche
-- Type: `command`
-- Command:
-```sh
-npx -y --package @avalanche-sdk/data -- mcp start --api-key ... --chain-id ... --network ... 
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/data",
+        "--",
+        "mcp", "start",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
 ```
 
 </details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
 
 For a full list of server arguments, run:
 
@@ -150,7 +185,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck();
+  const result = await avalanche.data.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -183,7 +218,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck();
+  const result = await avalanche.data.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -203,29 +238,50 @@ run();
 
 ### [data](docs/sdks/data/README.md)
 
+* [healthCheck](docs/sdks/data/README.md#healthcheck) - Get the health of the service
 
 #### [data.evm](docs/sdks/evm/README.md)
 
 
-#### [data.evm.balances](docs/sdks/evmbalances/README.md)
+#### [data.evm.address](docs/sdks/address/README.md)
 
-* [getNativeBalance](docs/sdks/evmbalances/README.md#getnativebalance) - Get native token balance
-* [listErc20Balances](docs/sdks/evmbalances/README.md#listerc20balances) - List ERC-20 balances
-* [listErc721Balances](docs/sdks/evmbalances/README.md#listerc721balances) - List ERC-721 balances
-* [listErc1155Balances](docs/sdks/evmbalances/README.md#listerc1155balances) - List ERC-1155 balances
-* [listCollectibleBalances](docs/sdks/evmbalances/README.md#listcollectiblebalances) - List collectible (ERC-721/ERC-1155) balances
+
+#### [data.evm.address.balances](docs/sdks/addressbalances/README.md)
+
+* [getNative](docs/sdks/addressbalances/README.md#getnative) - Get native token balance
+* [listErc20](docs/sdks/addressbalances/README.md#listerc20) - List ERC-20 balances
+* [listErc721](docs/sdks/addressbalances/README.md#listerc721) - List ERC-721 balances
+* [listErc1155](docs/sdks/addressbalances/README.md#listerc1155) - List ERC-1155 balances
+* [listCollectibles](docs/sdks/addressbalances/README.md#listcollectibles) - List collectible (ERC-721/ERC-1155) balances
+
+#### [data.evm.address.chains](docs/sdks/addresschains/README.md)
+
+* [list](docs/sdks/addresschains/README.md#list) - List all chains associated with a given address
+
+#### [data.evm.address.contracts](docs/sdks/addresscontracts/README.md)
+
+* [listDeployments](docs/sdks/addresscontracts/README.md#listdeployments) - List deployed contracts
+
+#### [data.evm.address.transactions](docs/sdks/addresstransactions/README.md)
+
+* [list](docs/sdks/addresstransactions/README.md#list) - List transactions
+* [listNative](docs/sdks/addresstransactions/README.md#listnative) - List native transactions
+* [listErc20](docs/sdks/addresstransactions/README.md#listerc20) - List ERC-20 transfers
+* [listErc721](docs/sdks/addresstransactions/README.md#listerc721) - List ERC-721 transfers
+* [listErc1155](docs/sdks/addresstransactions/README.md#listerc1155) - List ERC-1155 transfers
+* [listInternal](docs/sdks/addresstransactions/README.md#listinternal) - List internal transactions
 
 #### [data.evm.blocks](docs/sdks/evmblocks/README.md)
 
-* [listLatestBlocksAllChains](docs/sdks/evmblocks/README.md#listlatestblocksallchains) - List latest blocks across all supported EVM chains
-* [getLatestBlocks](docs/sdks/evmblocks/README.md#getlatestblocks) - List latest blocks
-* [getBlock](docs/sdks/evmblocks/README.md#getblock) - Get block
+* [listLatestAllChains](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
+* [listLatest](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
+* [get](docs/sdks/evmblocks/README.md#get) - Get block
+* [listTransactions](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
 
 #### [data.evm.chains](docs/sdks/chains/README.md)
 
-* [listAddressChains](docs/sdks/chains/README.md#listaddresschains) - List all chains associated with a given address
-* [supportedChains](docs/sdks/chains/README.md#supportedchains) - List chains
-* [getChainInfo](docs/sdks/chains/README.md#getchaininfo) - Get chain information
+* [list](docs/sdks/chains/README.md#list) - List chains
+* [get](docs/sdks/chains/README.md#get) - Get chain information
 * [~~getAddressChains~~](docs/sdks/chains/README.md#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
@@ -238,44 +294,32 @@ run();
 
 #### [data.evm.contracts](docs/sdks/contracts/README.md)
 
-* [getContractMetadata](docs/sdks/contracts/README.md#getcontractmetadata) - Get contract metadata
+* [getDeploymentTransaction](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
+* [getMetadata](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
+* [listTransfers](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
 
 #### [data.evm.transactions](docs/sdks/evmtransactions/README.md)
 
-* [listLatestTransactionsAllChains](docs/sdks/evmtransactions/README.md#listlatesttransactionsallchains) - List the latest transactions across all supported EVM chains
-* [getDeploymentTransaction](docs/sdks/evmtransactions/README.md#getdeploymenttransaction) - Get deployment transaction
-* [listContractDeployments](docs/sdks/evmtransactions/README.md#listcontractdeployments) - List deployed contracts
-* [listTransfers](docs/sdks/evmtransactions/README.md#listtransfers) - List ERC transfers
-* [listTransactions](docs/sdks/evmtransactions/README.md#listtransactions) - List transactions
-* [listNativeTransactions](docs/sdks/evmtransactions/README.md#listnativetransactions) - List native transactions
-* [listErc20Transactions](docs/sdks/evmtransactions/README.md#listerc20transactions) - List ERC-20 transfers
-* [listErc721Transactions](docs/sdks/evmtransactions/README.md#listerc721transactions) - List ERC-721 transfers
-* [listErc1155Transactions](docs/sdks/evmtransactions/README.md#listerc1155transactions) - List ERC-1155 transfers
-* [listInternalTransactions](docs/sdks/evmtransactions/README.md#listinternaltransactions) - List internal transactions
-* [getTransaction](docs/sdks/evmtransactions/README.md#gettransaction) - Get transaction
-* [getTransactionsForBlock](docs/sdks/evmtransactions/README.md#gettransactionsforblock) - List transactions for a block
-* [listLatestTransactions](docs/sdks/evmtransactions/README.md#listlatesttransactions) - List latest transactions
-
-#### [data.healthCheck](docs/sdks/healthcheck/README.md)
-
-* [dataHealthCheck](docs/sdks/healthcheck/README.md#datahealthcheck) - Get the health of the service
+* [listLatestAllChains](docs/sdks/evmtransactions/README.md#listlatestallchains) - List the latest transactions across all supported EVM chains
+* [get](docs/sdks/evmtransactions/README.md#get) - Get transaction
+* [listLatest](docs/sdks/evmtransactions/README.md#listlatest) - List latest transactions
 
 #### [data.icm](docs/sdks/icm/README.md)
 
-* [getIcmMessage](docs/sdks/icm/README.md#geticmmessage) - Get an ICM message
-* [listIcmMessages](docs/sdks/icm/README.md#listicmmessages) - List ICM messages
-* [listIcmMessagesByAddress](docs/sdks/icm/README.md#listicmmessagesbyaddress) - List ICM messages by address
+* [get](docs/sdks/icm/README.md#get) - Get an ICM message
+* [list](docs/sdks/icm/README.md#list) - List ICM messages
+* [listByAddress](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
 
 #### [data.nfts](docs/sdks/nfts/README.md)
 
-* [reindexNft](docs/sdks/nfts/README.md#reindexnft) - Reindex NFT metadata
-* [listTokens](docs/sdks/nfts/README.md#listtokens) - List tokens
-* [getTokenDetails](docs/sdks/nfts/README.md#gettokendetails) - Get token details
+* [reindex](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
+* [list](docs/sdks/nfts/README.md#list) - List tokens
+* [get](docs/sdks/nfts/README.md#get) - Get token details
 
 #### [data.operations](docs/sdks/operations/README.md)
 
-* [getOperationResult](docs/sdks/operations/README.md#getoperationresult) - Get operation
-* [postTransactionExportJob](docs/sdks/operations/README.md#posttransactionexportjob) - Create transaction export operation
+* [getResult](docs/sdks/operations/README.md#getresult) - Get operation
+* [exportTransactions](docs/sdks/operations/README.md#exporttransactions) - Create transaction export operation
 
 #### [data.primaryNetwork](docs/sdks/primarynetwork/README.md)
 
@@ -283,49 +327,50 @@ run();
 * [getChainIdsForAddresses](docs/sdks/primarynetwork/README.md#getchainidsforaddresses) - Get chain interactions for addresses
 * [getNetworkDetails](docs/sdks/primarynetwork/README.md#getnetworkdetails) - Get network details
 * [listBlockchains](docs/sdks/primarynetwork/README.md#listblockchains) - List blockchains
+* [getBlockchainById](docs/sdks/primarynetwork/README.md#getblockchainbyid) - Get blockchain details by ID
 * [listSubnets](docs/sdks/primarynetwork/README.md#listsubnets) - List subnets
 * [getSubnetById](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
 * [listValidators](docs/sdks/primarynetwork/README.md#listvalidators) - List validators
-* [getSingleValidatorDetails](docs/sdks/primarynetwork/README.md#getsinglevalidatordetails) - Get single validator details
+* [getValidatorDetails](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
 * [listDelegators](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
 * [listL1Validators](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
 
 #### [data.primaryNetwork.balances](docs/sdks/primarynetworkbalances/README.md)
 
-* [getBalancesByAddresses](docs/sdks/primarynetworkbalances/README.md#getbalancesbyaddresses) - Get balances
+* [listByAddresses](docs/sdks/primarynetworkbalances/README.md#listbyaddresses) - Get balances
 
 #### [data.primaryNetwork.blocks](docs/sdks/primarynetworkblocks/README.md)
 
-* [getBlockById](docs/sdks/primarynetworkblocks/README.md#getblockbyid) - Get block
-* [listPrimaryNetworkBlocksByNodeId](docs/sdks/primarynetworkblocks/README.md#listprimarynetworkblocksbynodeid) - List blocks proposed by node
-* [listLatestPrimaryNetworkBlocks](docs/sdks/primarynetworkblocks/README.md#listlatestprimarynetworkblocks) - List latest blocks
+* [get](docs/sdks/primarynetworkblocks/README.md#get) - Get block
+* [listByNodeId](docs/sdks/primarynetworkblocks/README.md#listbynodeid) - List blocks proposed by node
+* [listLatest](docs/sdks/primarynetworkblocks/README.md#listlatest) - List latest blocks
 
 #### [data.primaryNetwork.rewards](docs/sdks/rewards/README.md)
 
-* [listPendingPrimaryNetworkRewards](docs/sdks/rewards/README.md#listpendingprimarynetworkrewards) - List pending rewards
-* [listHistoricalPrimaryNetworkRewards](docs/sdks/rewards/README.md#listhistoricalprimarynetworkrewards) - List historical rewards
+* [listPendingRewards](docs/sdks/rewards/README.md#listpendingrewards) - List pending rewards
+* [listHistoricalRewards](docs/sdks/rewards/README.md#listhistoricalrewards) - List historical rewards
 
 #### [data.primaryNetwork.transactions](docs/sdks/primarynetworktransactions/README.md)
 
-* [getTxByHash](docs/sdks/primarynetworktransactions/README.md#gettxbyhash) - Get transaction
-* [listLatestPrimaryNetworkTransactions](docs/sdks/primarynetworktransactions/README.md#listlatestprimarynetworktransactions) - List latest transactions
-* [listActivePrimaryNetworkStakingTransactions](docs/sdks/primarynetworktransactions/README.md#listactiveprimarynetworkstakingtransactions) - List staking transactions
+* [get](docs/sdks/primarynetworktransactions/README.md#get) - Get transaction
+* [listLatest](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
+* [listActiveStakingTransactions](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
 * [listAssetTransactions](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
 
 #### [data.primaryNetwork.utxos](docs/sdks/utxos/README.md)
 
-* [getUtxosByAddresses](docs/sdks/utxos/README.md#getutxosbyaddresses) - List UTXOs
+* [listByAddresses](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
 
 #### [data.primaryNetwork.vertices](docs/sdks/vertices/README.md)
 
-* [listLatestXChainVertices](docs/sdks/vertices/README.md#listlatestxchainvertices) - List vertices
-* [getVertexByHash](docs/sdks/vertices/README.md#getvertexbyhash) - Get vertex
-* [getVertexByHeight](docs/sdks/vertices/README.md#getvertexbyheight) - List vertices by height
+* [listLatest](docs/sdks/vertices/README.md#listlatest) - List vertices
+* [getByHash](docs/sdks/vertices/README.md#getbyhash) - Get vertex
+* [listByHeight](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
 
 #### [data.signatureAggregator](docs/sdks/signatureaggregator/README.md)
 
-* [aggregateSignatures](docs/sdks/signatureaggregator/README.md#aggregatesignatures) - Aggregate Signatures
-* [getAggregatedSignatures](docs/sdks/signatureaggregator/README.md#getaggregatedsignatures) - Get Aggregated Signatures
+* [aggregate](docs/sdks/signatureaggregator/README.md#aggregate) - Aggregate Signatures
+* [get](docs/sdks/signatureaggregator/README.md#get) - Get Aggregated Signatures
 
 #### [~~data.teleporter~~](docs/sdks/teleporter/README.md)
 
@@ -341,12 +386,19 @@ run();
 
 #### [data.usageMetrics](docs/sdks/usagemetrics/README.md)
 
-* [getApiUsageMetrics](docs/sdks/usagemetrics/README.md#getapiusagemetrics) - Get usage metrics for the Data API
-* [getApiLogs](docs/sdks/usagemetrics/README.md#getapilogs) - Get logs for requests made by client
-* [getSubnetRpcUsageMetrics](docs/sdks/usagemetrics/README.md#getsubnetrpcusagemetrics) - Get usage metrics for the Subnet RPC
+* [getUsage](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
+* [getLogs](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
+* [getSubnetRpcUsage](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 * [~~getRpcUsageMetrics~~](docs/sdks/usagemetrics/README.md#getrpcusagemetrics) - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
+
+### [notifications](docs/sdks/notifications/README.md)
+
+* [access](docs/sdks/notifications/README.md#access) - Access Notifications
+* [subscribe](docs/sdks/notifications/README.md#subscribe) - Subscribe to Notifications
+* [unsubscribe](docs/sdks/notifications/README.md#unsubscribe) - Unsubscribe from Notifications
+* [subscriptions](docs/sdks/notifications/README.md#subscriptions) - Get Subscriptions
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -366,69 +418,74 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`dataEvmBalancesGetNativeBalance`](docs/sdks/evmbalances/README.md#getnativebalance) - Get native token balance
-- [`dataEvmBalancesListCollectibleBalances`](docs/sdks/evmbalances/README.md#listcollectiblebalances) - List collectible (ERC-721/ERC-1155) balances
-- [`dataEvmBalancesListErc1155Balances`](docs/sdks/evmbalances/README.md#listerc1155balances) - List ERC-1155 balances
-- [`dataEvmBalancesListErc20Balances`](docs/sdks/evmbalances/README.md#listerc20balances) - List ERC-20 balances
-- [`dataEvmBalancesListErc721Balances`](docs/sdks/evmbalances/README.md#listerc721balances) - List ERC-721 balances
-- [`dataEvmBlocksGetBlock`](docs/sdks/evmblocks/README.md#getblock) - Get block
-- [`dataEvmBlocksGetLatestBlocks`](docs/sdks/evmblocks/README.md#getlatestblocks) - List latest blocks
-- [`dataEvmBlocksListLatestBlocksAllChains`](docs/sdks/evmblocks/README.md#listlatestblocksallchains) - List latest blocks across all supported EVM chains
-- [`dataEvmChainsGetChainInfo`](docs/sdks/chains/README.md#getchaininfo) - Get chain information
-- [`dataEvmChainsListAddressChains`](docs/sdks/chains/README.md#listaddresschains) - List all chains associated with a given address
-- [`dataEvmChainsSupportedChains`](docs/sdks/chains/README.md#supportedchains) - List chains
-- [`dataEvmContractsGetContractMetadata`](docs/sdks/contracts/README.md#getcontractmetadata) - Get contract metadata
-- [`dataEvmTransactionsGetDeploymentTransaction`](docs/sdks/evmtransactions/README.md#getdeploymenttransaction) - Get deployment transaction
-- [`dataEvmTransactionsGetTransaction`](docs/sdks/evmtransactions/README.md#gettransaction) - Get transaction
-- [`dataEvmTransactionsGetTransactionsForBlock`](docs/sdks/evmtransactions/README.md#gettransactionsforblock) - List transactions for a block
-- [`dataEvmTransactionsListContractDeployments`](docs/sdks/evmtransactions/README.md#listcontractdeployments) - List deployed contracts
-- [`dataEvmTransactionsListErc1155Transactions`](docs/sdks/evmtransactions/README.md#listerc1155transactions) - List ERC-1155 transfers
-- [`dataEvmTransactionsListErc20Transactions`](docs/sdks/evmtransactions/README.md#listerc20transactions) - List ERC-20 transfers
-- [`dataEvmTransactionsListErc721Transactions`](docs/sdks/evmtransactions/README.md#listerc721transactions) - List ERC-721 transfers
-- [`dataEvmTransactionsListInternalTransactions`](docs/sdks/evmtransactions/README.md#listinternaltransactions) - List internal transactions
-- [`dataEvmTransactionsListLatestTransactions`](docs/sdks/evmtransactions/README.md#listlatesttransactions) - List latest transactions
-- [`dataEvmTransactionsListLatestTransactionsAllChains`](docs/sdks/evmtransactions/README.md#listlatesttransactionsallchains) - List the latest transactions across all supported EVM chains
-- [`dataEvmTransactionsListNativeTransactions`](docs/sdks/evmtransactions/README.md#listnativetransactions) - List native transactions
-- [`dataEvmTransactionsListTransactions`](docs/sdks/evmtransactions/README.md#listtransactions) - List transactions
-- [`dataEvmTransactionsListTransfers`](docs/sdks/evmtransactions/README.md#listtransfers) - List ERC transfers
-- [`dataHealthCheckDataHealthCheck`](docs/sdks/healthcheck/README.md#datahealthcheck) - Get the health of the service
-- [`dataIcmGetIcmMessage`](docs/sdks/icm/README.md#geticmmessage) - Get an ICM message
-- [`dataIcmListIcmMessages`](docs/sdks/icm/README.md#listicmmessages) - List ICM messages
-- [`dataIcmListIcmMessagesByAddress`](docs/sdks/icm/README.md#listicmmessagesbyaddress) - List ICM messages by address
-- [`dataNftsGetTokenDetails`](docs/sdks/nfts/README.md#gettokendetails) - Get token details
-- [`dataNftsListTokens`](docs/sdks/nfts/README.md#listtokens) - List tokens
-- [`dataNftsReindexNft`](docs/sdks/nfts/README.md#reindexnft) - Reindex NFT metadata
-- [`dataOperationsGetOperationResult`](docs/sdks/operations/README.md#getoperationresult) - Get operation
-- [`dataOperationsPostTransactionExportJob`](docs/sdks/operations/README.md#posttransactionexportjob) - Create transaction export operation
-- [`dataPrimaryNetworkBalancesGetBalancesByAddresses`](docs/sdks/primarynetworkbalances/README.md#getbalancesbyaddresses) - Get balances
-- [`dataPrimaryNetworkBlocksGetBlockById`](docs/sdks/primarynetworkblocks/README.md#getblockbyid) - Get block
-- [`dataPrimaryNetworkBlocksListLatestPrimaryNetworkBlocks`](docs/sdks/primarynetworkblocks/README.md#listlatestprimarynetworkblocks) - List latest blocks
-- [`dataPrimaryNetworkBlocksListPrimaryNetworkBlocksByNodeId`](docs/sdks/primarynetworkblocks/README.md#listprimarynetworkblocksbynodeid) - List blocks proposed by node
+- [`dataEvmAddressBalancesGetNative`](docs/sdks/addressbalances/README.md#getnative) - Get native token balance
+- [`dataEvmAddressBalancesListCollectibles`](docs/sdks/addressbalances/README.md#listcollectibles) - List collectible (ERC-721/ERC-1155) balances
+- [`dataEvmAddressBalancesListErc1155`](docs/sdks/addressbalances/README.md#listerc1155) - List ERC-1155 balances
+- [`dataEvmAddressBalancesListErc20`](docs/sdks/addressbalances/README.md#listerc20) - List ERC-20 balances
+- [`dataEvmAddressBalancesListErc721`](docs/sdks/addressbalances/README.md#listerc721) - List ERC-721 balances
+- [`dataEvmAddressChainsList`](docs/sdks/addresschains/README.md#list) - List all chains associated with a given address
+- [`dataEvmAddressContractsListDeployments`](docs/sdks/addresscontracts/README.md#listdeployments) - List deployed contracts
+- [`dataEvmAddressTransactionsList`](docs/sdks/addresstransactions/README.md#list) - List transactions
+- [`dataEvmAddressTransactionsListErc1155`](docs/sdks/addresstransactions/README.md#listerc1155) - List ERC-1155 transfers
+- [`dataEvmAddressTransactionsListErc20`](docs/sdks/addresstransactions/README.md#listerc20) - List ERC-20 transfers
+- [`dataEvmAddressTransactionsListErc721`](docs/sdks/addresstransactions/README.md#listerc721) - List ERC-721 transfers
+- [`dataEvmAddressTransactionsListInternal`](docs/sdks/addresstransactions/README.md#listinternal) - List internal transactions
+- [`dataEvmAddressTransactionsListNative`](docs/sdks/addresstransactions/README.md#listnative) - List native transactions
+- [`dataEvmBlocksGet`](docs/sdks/evmblocks/README.md#get) - Get block
+- [`dataEvmBlocksListLatest`](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
+- [`dataEvmBlocksListLatestAllChains`](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
+- [`dataEvmBlocksListTransactions`](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
+- [`dataEvmChainsGet`](docs/sdks/chains/README.md#get) - Get chain information
+- [`dataEvmChainsList`](docs/sdks/chains/README.md#list) - List chains
+- [`dataEvmContractsGetDeploymentTransaction`](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
+- [`dataEvmContractsGetMetadata`](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
+- [`dataEvmContractsListTransfers`](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
+- [`dataEvmTransactionsGet`](docs/sdks/evmtransactions/README.md#get) - Get transaction
+- [`dataEvmTransactionsListLatest`](docs/sdks/evmtransactions/README.md#listlatest) - List latest transactions
+- [`dataEvmTransactionsListLatestAllChains`](docs/sdks/evmtransactions/README.md#listlatestallchains) - List the latest transactions across all supported EVM chains
+- [`dataHealthCheck`](docs/sdks/data/README.md#healthcheck) - Get the health of the service
+- [`dataIcmGet`](docs/sdks/icm/README.md#get) - Get an ICM message
+- [`dataIcmList`](docs/sdks/icm/README.md#list) - List ICM messages
+- [`dataIcmListByAddress`](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
+- [`dataNftsGet`](docs/sdks/nfts/README.md#get) - Get token details
+- [`dataNftsList`](docs/sdks/nfts/README.md#list) - List tokens
+- [`dataNftsReindex`](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
+- [`dataOperationsExportTransactions`](docs/sdks/operations/README.md#exporttransactions) - Create transaction export operation
+- [`dataOperationsGetResult`](docs/sdks/operations/README.md#getresult) - Get operation
+- [`dataPrimaryNetworkBalancesListByAddresses`](docs/sdks/primarynetworkbalances/README.md#listbyaddresses) - Get balances
+- [`dataPrimaryNetworkBlocksGet`](docs/sdks/primarynetworkblocks/README.md#get) - Get block
+- [`dataPrimaryNetworkBlocksListByNodeId`](docs/sdks/primarynetworkblocks/README.md#listbynodeid) - List blocks proposed by node
+- [`dataPrimaryNetworkBlocksListLatest`](docs/sdks/primarynetworkblocks/README.md#listlatest) - List latest blocks
 - [`dataPrimaryNetworkGetAssetDetails`](docs/sdks/primarynetwork/README.md#getassetdetails) - Get asset details
+- [`dataPrimaryNetworkGetBlockchainById`](docs/sdks/primarynetwork/README.md#getblockchainbyid) - Get blockchain details by ID
 - [`dataPrimaryNetworkGetChainIdsForAddresses`](docs/sdks/primarynetwork/README.md#getchainidsforaddresses) - Get chain interactions for addresses
 - [`dataPrimaryNetworkGetNetworkDetails`](docs/sdks/primarynetwork/README.md#getnetworkdetails) - Get network details
-- [`dataPrimaryNetworkGetSingleValidatorDetails`](docs/sdks/primarynetwork/README.md#getsinglevalidatordetails) - Get single validator details
 - [`dataPrimaryNetworkGetSubnetById`](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
+- [`dataPrimaryNetworkGetValidatorDetails`](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
 - [`dataPrimaryNetworkListBlockchains`](docs/sdks/primarynetwork/README.md#listblockchains) - List blockchains
 - [`dataPrimaryNetworkListDelegators`](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
 - [`dataPrimaryNetworkListL1Validators`](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
 - [`dataPrimaryNetworkListSubnets`](docs/sdks/primarynetwork/README.md#listsubnets) - List subnets
 - [`dataPrimaryNetworkListValidators`](docs/sdks/primarynetwork/README.md#listvalidators) - List validators
-- [`dataPrimaryNetworkRewardsListHistoricalPrimaryNetworkRewards`](docs/sdks/rewards/README.md#listhistoricalprimarynetworkrewards) - List historical rewards
-- [`dataPrimaryNetworkRewardsListPendingPrimaryNetworkRewards`](docs/sdks/rewards/README.md#listpendingprimarynetworkrewards) - List pending rewards
-- [`dataPrimaryNetworkTransactionsGetTxByHash`](docs/sdks/primarynetworktransactions/README.md#gettxbyhash) - Get transaction
-- [`dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions`](docs/sdks/primarynetworktransactions/README.md#listactiveprimarynetworkstakingtransactions) - List staking transactions
+- [`dataPrimaryNetworkRewardsListHistoricalRewards`](docs/sdks/rewards/README.md#listhistoricalrewards) - List historical rewards
+- [`dataPrimaryNetworkRewardsListPendingRewards`](docs/sdks/rewards/README.md#listpendingrewards) - List pending rewards
+- [`dataPrimaryNetworkTransactionsGet`](docs/sdks/primarynetworktransactions/README.md#get) - Get transaction
+- [`dataPrimaryNetworkTransactionsListActiveStakingTransactions`](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
 - [`dataPrimaryNetworkTransactionsListAssetTransactions`](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
-- [`dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions`](docs/sdks/primarynetworktransactions/README.md#listlatestprimarynetworktransactions) - List latest transactions
-- [`dataPrimaryNetworkUtxosGetUtxosByAddresses`](docs/sdks/utxos/README.md#getutxosbyaddresses) - List UTXOs
-- [`dataPrimaryNetworkVerticesGetVertexByHash`](docs/sdks/vertices/README.md#getvertexbyhash) - Get vertex
-- [`dataPrimaryNetworkVerticesGetVertexByHeight`](docs/sdks/vertices/README.md#getvertexbyheight) - List vertices by height
-- [`dataPrimaryNetworkVerticesListLatestXChainVertices`](docs/sdks/vertices/README.md#listlatestxchainvertices) - List vertices
-- [`dataSignatureAggregatorAggregateSignatures`](docs/sdks/signatureaggregator/README.md#aggregatesignatures) - Aggregate Signatures
-- [`dataSignatureAggregatorGetAggregatedSignatures`](docs/sdks/signatureaggregator/README.md#getaggregatedsignatures) - Get Aggregated Signatures
-- [`dataUsageMetricsGetApiLogs`](docs/sdks/usagemetrics/README.md#getapilogs) - Get logs for requests made by client
-- [`dataUsageMetricsGetApiUsageMetrics`](docs/sdks/usagemetrics/README.md#getapiusagemetrics) - Get usage metrics for the Data API
-- [`dataUsageMetricsGetSubnetRpcUsageMetrics`](docs/sdks/usagemetrics/README.md#getsubnetrpcusagemetrics) - Get usage metrics for the Subnet RPC
+- [`dataPrimaryNetworkTransactionsListLatest`](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
+- [`dataPrimaryNetworkUtxosListByAddresses`](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
+- [`dataPrimaryNetworkVerticesGetByHash`](docs/sdks/vertices/README.md#getbyhash) - Get vertex
+- [`dataPrimaryNetworkVerticesListByHeight`](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
+- [`dataPrimaryNetworkVerticesListLatest`](docs/sdks/vertices/README.md#listlatest) - List vertices
+- [`dataSignatureAggregatorAggregate`](docs/sdks/signatureaggregator/README.md#aggregate) - Aggregate Signatures
+- [`dataSignatureAggregatorGet`](docs/sdks/signatureaggregator/README.md#get) - Get Aggregated Signatures
+- [`dataUsageMetricsGetLogs`](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
+- [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
+- [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
+- [`notificationsAccess`](docs/sdks/notifications/README.md#access) - Access Notifications
+- [`notificationsSubscribe`](docs/sdks/notifications/README.md#subscribe) - Subscribe to Notifications
+- [`notificationsSubscriptions`](docs/sdks/notifications/README.md#subscriptions) - Get Subscriptions
+- [`notificationsUnsubscribe`](docs/sdks/notifications/README.md#unsubscribe) - Unsubscribe from Notifications
 - ~~[`dataEvmChainsGetAddressChains`](docs/sdks/chains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
@@ -459,7 +516,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
 
-For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `supportedChains`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `getNative`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
 
 
 ### Available Globals
@@ -482,9 +539,11 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.evm.chains.supportedChains({
-    network: "mainnet",
-    feature: "nftIndexing",
+  const result = await avalanche.data.evm.address.balances.getNative({
+    blockNumber: "6479329",
+    chainId: "43114",
+    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    currency: "usd",
   });
 
   // Handle the result
@@ -517,10 +576,14 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.evm.transactions
-    .listLatestTransactionsAllChains({
-      network: "mainnet",
-    });
+  const result = await avalanche.data.evm.address.balances.listErc20({
+    blockNumber: "6479329",
+    chainId: "43114",
+    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    contractAddresses:
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7, 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    currency: "usd",
+  });
 
   for await (const page of result) {
     // Handle the page
@@ -548,7 +611,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck({
+  const result = await avalanche.data.healthCheck({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -589,7 +652,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck();
+  const result = await avalanche.data.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -603,7 +666,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `reindexNft` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `reindex` method may throw the following errors:
 
 | Error Type                     | Status Code | Content Type     |
 | ------------------------------ | ----------- | ---------------- |
@@ -640,7 +703,7 @@ const avalanche = new Avalanche({
 
 async function run() {
   try {
-    await avalanche.data.nfts.reindexNft({
+    await avalanche.data.nfts.reindex({
       chainId: "43114",
       address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
       tokenId: "145",
@@ -730,13 +793,13 @@ The default server can be overridden globally by passing a URL to the `serverURL
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  serverURL: "https://glacier-api.avax.network",
+  serverURL: "https://glacier-api-dev.avax.network",
   chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck.dataHealthCheck();
+  const result = await avalanche.data.healthCheck();
 
   // Handle the result
   console.log(result);

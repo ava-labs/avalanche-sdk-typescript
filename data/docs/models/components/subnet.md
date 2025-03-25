@@ -6,14 +6,14 @@
 import { Subnet } from "@avalanche-sdk/data/models/components";
 
 let value: Subnet = {
-  createBlockTimestamp: 6288.99,
+  createBlockTimestamp: 8286.57,
   createBlockIndex: "<value>",
   subnetId: "<id>",
   ownerAddresses: [
     "<value>",
   ],
-  threshold: 3984.34,
-  locktime: 627.13,
+  threshold: 9249.67,
+  locktime: 460.07,
   subnetOwnershipInfo: {
     locktime: 0,
     threshold: 1,
@@ -24,7 +24,12 @@ let value: Subnet = {
   isL1: false,
   blockchains: [
     {
+      createBlockTimestamp: 2326.27,
+      createBlockNumber: "<value>",
       blockchainId: "<id>",
+      vmId: "<id>",
+      subnetId: "<id>",
+      blockchainName: "<value>",
     },
   ],
 };
@@ -44,4 +49,4 @@ let value: Subnet = {
 | `isL1`                                                                                                                                                                              | *boolean*                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                  | Whether the subnet is an L1 or not.                                                                                                                                                 |
 | `l1ConversionTransactionHash`                                                                                                                                                       | *string*                                                                                                                                                                            | :heavy_minus_sign:                                                                                                                                                                  | Transaction hash of ConvertSubnetToL1Tx which converted this Subnet to L1.                                                                                                          |
 | `l1ValidatorManagerDetails`                                                                                                                                                         | [components.L1ValidatorManagerDetails](../../models/components/l1validatormanagerdetails.md)                                                                                        | :heavy_minus_sign:                                                                                                                                                                  | L1 validator manager details.                                                                                                                                                       |
-| `blockchains`                                                                                                                                                                       | [components.BlockchainInfo](../../models/components/blockchaininfo.md)[]                                                                                                            | :heavy_check_mark:                                                                                                                                                                  | N/A                                                                                                                                                                                 |
+| `blockchains`                                                                                                                                                                       | [components.Blockchain](../../models/components/blockchain.md)[]                                                                                                                    | :heavy_check_mark:                                                                                                                                                                  | N/A                                                                                                                                                                                 |

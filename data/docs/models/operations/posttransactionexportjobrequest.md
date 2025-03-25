@@ -25,7 +25,7 @@ const value: components.CreateEvmTransactionExportRequest = {
 
 ```typescript
 const value: components.CreatePrimaryNetworkTransactionExportRequest = {
-  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE",
+  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK",
   firstDate: "2023-05-01",
   lastDate: "2023-05-02",
   options: {

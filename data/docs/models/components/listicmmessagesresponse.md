@@ -41,10 +41,17 @@ let value: ListIcmMessagesResponse = {
       },
       sourceTransaction: {
         txHash: "<value>",
-        timestamp: 8224.07,
+        timestamp: 9873.49,
         gasSpent: "<value>",
       },
-      status: "pending",
+      destinationTransaction: {
+        txHash: "<value>",
+        timestamp: 7592.83,
+        gasSpent: "<value>",
+        rewardRedeemer: "<value>",
+        delivererAddress: "<value>",
+      },
+      status: "delivered",
     },
   ],
 };

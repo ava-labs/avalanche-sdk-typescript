@@ -7,7 +7,7 @@ The metadata indexing status of the nft.
 ```typescript
 import { NftTokenMetadataStatus } from "@avalanche-sdk/data/models/components";
 
-let value: NftTokenMetadataStatus = "INVALID_TOKEN_URI";
+let value: NftTokenMetadataStatus = "UNREACHABLE_TOKEN_URI";
 ```
 
 ## Values

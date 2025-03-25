@@ -5,12 +5,12 @@
 
 ### Available Operations
 
-* [getTxByHash](#gettxbyhash) - Get transaction
-* [listLatestPrimaryNetworkTransactions](#listlatestprimarynetworktransactions) - List latest transactions
-* [listActivePrimaryNetworkStakingTransactions](#listactiveprimarynetworkstakingtransactions) - List staking transactions
+* [get](#get) - Get transaction
+* [listLatest](#listlatest) - List latest transactions
+* [listActiveStakingTransactions](#listactivestakingtransactions) - List staking transactions
 * [listAssetTransactions](#listassettransactions) - List asset transactions
 
-## getTxByHash
+## get
 
 Gets the details of a single transaction on one of the Primary Network chains.
 
@@ -25,7 +25,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.transactions.getTxByHash({
+  const result = await avalanche.data.primaryNetwork.transactions.get({
     blockchainId: "p-chain",
     network: "mainnet",
     txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
@@ -44,7 +44,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkTransactionsGetTxByHash } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsGetTxByHash.js";
+import { dataPrimaryNetworkTransactionsGet } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -54,7 +54,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkTransactionsGetTxByHash(avalanche, {
+  const res = await dataPrimaryNetworkTransactionsGet(avalanche, {
     blockchainId: "p-chain",
     network: "mainnet",
     txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
@@ -100,7 +100,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listLatestPrimaryNetworkTransactions
+## listLatest
 
 Lists the latest transactions on one of the Primary Network chains.
 
@@ -121,7 +121,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.transactions.listLatestPrimaryNetworkTransactions({
+  const result = await avalanche.data.primaryNetwork.transactions.listLatest({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     txTypes: [
       "AddValidatorTx",
@@ -148,7 +148,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions.js";
+import { dataPrimaryNetworkTransactionsListLatest } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsListLatest.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -158,7 +158,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkTransactionsListLatestPrimaryNetworkTransactions(avalanche, {
+  const res = await dataPrimaryNetworkTransactionsListLatest(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     txTypes: [
       "AddValidatorTx",
@@ -212,7 +212,7 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## listActivePrimaryNetworkStakingTransactions
+## listActiveStakingTransactions
 
 Lists active staking transactions on the P-Chain for the supplied addresses.
 
@@ -227,7 +227,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.transactions.listActivePrimaryNetworkStakingTransactions({
+  const result = await avalanche.data.primaryNetwork.transactions.listActiveStakingTransactions({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     txTypes: [
       "AddValidatorTx",
@@ -254,7 +254,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/data/core.js";
-import { dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions.js";
+import { dataPrimaryNetworkTransactionsListActiveStakingTransactions } from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsListActiveStakingTransactions.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -264,7 +264,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkTransactionsListActivePrimaryNetworkStakingTransactions(avalanche, {
+  const res = await dataPrimaryNetworkTransactionsListActiveStakingTransactions(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     txTypes: [
       "AddValidatorTx",

@@ -6,7 +6,7 @@
 import { Erc721TokenMetadata } from "@avalanche-sdk/data/models/components";
 
 let value: Erc721TokenMetadata = {
-  indexStatus: "UNKNOWN",
+  indexStatus: "UNINDEXED",
 };
 ```
 
