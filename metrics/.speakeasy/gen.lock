@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: 7b09206ec42c22b3b1510bfd43f1d85f
+  docChecksum: 9866175345ab48b104bf10823d646305
   docVersion: Beta
-  speakeasyVersion: 1.520.0
-  generationVersion: 2.555.1
-  releaseVersion: 0.2.0
-  configChecksum: afe688b5848fb2d16862ae87109dc900
+  speakeasyVersion: 1.523.2
+  generationVersion: 2.560.1
+  releaseVersion: 0.3.0
+  configChecksum: 39a7627e1eba6dd5e9a20d06af2a612d
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -24,8 +24,7 @@ features:
     globalServerURLs: 2.82.4
     globals: 2.82.2
     groups: 2.81.2
-    ignores: 2.81.1
-    mcpServer: 0.8.0
+    mcpServer: 0.9.0
     nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
@@ -44,45 +43,15 @@ generatedFiles:
   - USAGE.md
   - docs/lib/utils/retryconfig.md
   - docs/models/components/addressdetails.md
-  - docs/models/components/alltimeerc20balancequerydto.md
-  - docs/models/components/alltimeerc20balancequerydtotype.md
-  - docs/models/components/alltimenativebalancequerydto.md
-  - docs/models/components/alltimenativebalancequerydtotype.md
-  - docs/models/components/alltimenftholdersquerydto.md
-  - docs/models/components/alltimenftholdersquerydtoparams.md
-  - docs/models/components/alltimenftholdersquerydtotype.md
-  - docs/models/components/alltimestarsarenabalancequerydto.md
-  - docs/models/components/alltimestarsarenabalancequerydtotype.md
-  - docs/models/components/anytimeerc20balancequerydto.md
-  - docs/models/components/anytimeerc20balancequerydtotype.md
-  - docs/models/components/anytimenativebalancequerydto.md
-  - docs/models/components/anytimenativebalancequerydtotype.md
-  - docs/models/components/anytimenftholdersquerydto.md
-  - docs/models/components/anytimenftholdersquerydtoparams.md
-  - docs/models/components/anytimenftholdersquerydtotype.md
-  - docs/models/components/anytimestarsarenabalancequerydto.md
-  - docs/models/components/anytimestarsarenabalancequerydtotype.md
   - docs/models/components/chain.md
   - docs/models/components/chainmetric.md
   - docs/models/components/chainrollingwindowmetric.md
   - docs/models/components/chainrollingwindowmetricsvalue.md
-  - docs/models/components/compositequeryrequestdto.md
-  - docs/models/components/compositequeryresponse.md
-  - docs/models/components/daterangeerc20minbalanceparam.md
-  - docs/models/components/daterangeminbalanceparam.md
-  - docs/models/components/daterangenftholdersparam.md
-  - docs/models/components/daterangestarsarenaminbalanceparam.md
   - docs/models/components/globalparamnetwork.md
   - docs/models/components/healthcheckresultdto.md
   - docs/models/components/healthcheckresultdtostatus.md
   - docs/models/components/healthindicatorresultdto.md
   - docs/models/components/healthindicatorresultdtostatus.md
-  - docs/models/components/latestbalanceparams.md
-  - docs/models/components/latestbalancequerydto.md
-  - docs/models/components/latestbalancequerydtotype.md
-  - docs/models/components/lateststarsarenabalanceparams.md
-  - docs/models/components/lateststarsarenabalancequerydto.md
-  - docs/models/components/lateststarsarenabalancequerydtotype.md
   - docs/models/components/listchainsresponse.md
   - docs/models/components/lookingglassresponse.md
   - docs/models/components/metricsapiresponse.md
@@ -91,17 +60,13 @@ generatedFiles:
   - docs/models/components/networkmetric.md
   - docs/models/components/networktype.md
   - docs/models/components/nftholdersresponse.md
-  - docs/models/components/operator.md
   - docs/models/components/pchainaddressdetails.md
   - docs/models/components/pchainlookingglassresponse.md
-  - docs/models/components/query.md
   - docs/models/components/rollingwindowmetricsapiresponse.md
   - docs/models/components/teleporterchainmetricsapiresponse.md
   - docs/models/components/teleportermetric.md
   - docs/models/components/teleportermetricsvalue.md
   - docs/models/components/timeintervalgranularity.md
-  - docs/models/components/timestamprangenftholdersparam.md
-  - docs/models/components/tokentype.md
   - docs/models/errors/badgatewayerror.md
   - docs/models/errors/badgatewaymessage.md
   - docs/models/errors/badrequesterror.md
@@ -118,7 +83,6 @@ generatedFiles:
   - docs/models/errors/toomanyrequestsmessage.md
   - docs/models/errors/unauthorizederror.md
   - docs/models/errors/unauthorizedmessage.md
-  - docs/models/operations/compositequeryv2response.md
   - docs/models/operations/getaddressesbybalanceovertimeglobals.md
   - docs/models/operations/getaddressesbybalanceovertimerequest.md
   - docs/models/operations/getaddressesbybalanceovertimeresponse.md
@@ -144,29 +108,25 @@ generatedFiles:
   - docs/models/operations/listchainsrequest.md
   - docs/models/operations/listchainsresponse.md
   - docs/sdks/avalanche/README.md
-  - docs/sdks/chain/README.md
-  - docs/sdks/chainmetrics/README.md
   - docs/sdks/chains/README.md
-  - docs/sdks/evm/README.md
-  - docs/sdks/healthcheck/README.md
-  - docs/sdks/lookingglass/README.md
   - docs/sdks/metrics/README.md
+  - docs/sdks/networks/README.md
+  - docs/sdks/subnets/README.md
   - eslint.config.mjs
   - jsr.json
   - package.json
   - src/core.ts
-  - src/funcs/metricsChainMetricsGetEvmChainMetrics.ts
-  - src/funcs/metricsChainMetricsGetEvmChainRollingWindowMetrics.ts
-  - src/funcs/metricsChainMetricsGetStakingMetrics.ts
-  - src/funcs/metricsChainMetricsGetTeleporterMetricsByChain.ts
-  - src/funcs/metricsEvmChainsGetChain.ts
-  - src/funcs/metricsEvmChainsListChains.ts
-  - src/funcs/metricsHealthCheckMetricsHealthCheck.ts
-  - src/funcs/metricsLookingGlassCompositeQuery.ts
-  - src/funcs/metricsLookingGlassGetAddressesByBalanceOverTime.ts
-  - src/funcs/metricsLookingGlassGetAddressesByBtcbBridged.ts
-  - src/funcs/metricsLookingGlassGetNftHoldersByContractAddress.ts
-  - src/funcs/metricsLookingGlassGetValidatorsByDateRange.ts
+  - src/funcs/metricsChainsGet.ts
+  - src/funcs/metricsChainsGetMetrics.ts
+  - src/funcs/metricsChainsGetRollingWindowMetrics.ts
+  - src/funcs/metricsChainsGetTeleporterMetrics.ts
+  - src/funcs/metricsChainsList.ts
+  - src/funcs/metricsChainsListBTCbBridgersAboveThreshold.ts
+  - src/funcs/metricsChainsListNftHolders.ts
+  - src/funcs/metricsChainsListTokenHoldersAboveThreshold.ts
+  - src/funcs/metricsHealthCheck.ts
+  - src/funcs/metricsNetworksGetStakingMetrics.ts
+  - src/funcs/metricsSubnetsGetValidators.ts
   - src/hooks/hooks.ts
   - src/hooks/index.ts
   - src/hooks/types.ts
@@ -199,45 +159,26 @@ generatedFiles:
   - src/mcp-server/server.ts
   - src/mcp-server/shared.ts
   - src/mcp-server/tools.ts
-  - src/mcp-server/tools/metricsChainMetricsGetEvmChainMetrics.ts
-  - src/mcp-server/tools/metricsChainMetricsGetEvmChainRollingWindowMetrics.ts
-  - src/mcp-server/tools/metricsChainMetricsGetStakingMetrics.ts
-  - src/mcp-server/tools/metricsChainMetricsGetTeleporterMetricsByChain.ts
-  - src/mcp-server/tools/metricsEvmChainsGetChain.ts
-  - src/mcp-server/tools/metricsEvmChainsListChains.ts
-  - src/mcp-server/tools/metricsHealthCheckMetricsHealthCheck.ts
-  - src/mcp-server/tools/metricsLookingGlassCompositeQuery.ts
-  - src/mcp-server/tools/metricsLookingGlassGetAddressesByBalanceOverTime.ts
-  - src/mcp-server/tools/metricsLookingGlassGetAddressesByBtcbBridged.ts
-  - src/mcp-server/tools/metricsLookingGlassGetNftHoldersByContractAddress.ts
-  - src/mcp-server/tools/metricsLookingGlassGetValidatorsByDateRange.ts
+  - src/mcp-server/tools/metricsChainsGet.ts
+  - src/mcp-server/tools/metricsChainsGetMetrics.ts
+  - src/mcp-server/tools/metricsChainsGetRollingWindowMetrics.ts
+  - src/mcp-server/tools/metricsChainsGetTeleporterMetrics.ts
+  - src/mcp-server/tools/metricsChainsList.ts
+  - src/mcp-server/tools/metricsChainsListBTCbBridgersAboveThreshold.ts
+  - src/mcp-server/tools/metricsChainsListNftHolders.ts
+  - src/mcp-server/tools/metricsChainsListTokenHoldersAboveThreshold.ts
+  - src/mcp-server/tools/metricsHealthCheck.ts
+  - src/mcp-server/tools/metricsNetworksGetStakingMetrics.ts
+  - src/mcp-server/tools/metricsSubnetsGetValidators.ts
   - src/models/components/addressdetails.ts
-  - src/models/components/alltimeerc20balancequerydto.ts
-  - src/models/components/alltimenativebalancequerydto.ts
-  - src/models/components/alltimenftholdersquerydto.ts
-  - src/models/components/alltimestarsarenabalancequerydto.ts
-  - src/models/components/anytimeerc20balancequerydto.ts
-  - src/models/components/anytimenativebalancequerydto.ts
-  - src/models/components/anytimenftholdersquerydto.ts
-  - src/models/components/anytimestarsarenabalancequerydto.ts
   - src/models/components/chain.ts
   - src/models/components/chainmetric.ts
   - src/models/components/chainrollingwindowmetric.ts
   - src/models/components/chainrollingwindowmetricsvalue.ts
-  - src/models/components/compositequeryrequestdto.ts
-  - src/models/components/compositequeryresponse.ts
-  - src/models/components/daterangeerc20minbalanceparam.ts
-  - src/models/components/daterangeminbalanceparam.ts
-  - src/models/components/daterangenftholdersparam.ts
-  - src/models/components/daterangestarsarenaminbalanceparam.ts
   - src/models/components/globalparamnetwork.ts
   - src/models/components/healthcheckresultdto.ts
   - src/models/components/healthindicatorresultdto.ts
   - src/models/components/index.ts
-  - src/models/components/latestbalanceparams.ts
-  - src/models/components/latestbalancequerydto.ts
-  - src/models/components/lateststarsarenabalanceparams.ts
-  - src/models/components/lateststarsarenabalancequerydto.ts
   - src/models/components/listchainsresponse.ts
   - src/models/components/lookingglassresponse.ts
   - src/models/components/metricsapiresponse.ts
@@ -246,7 +187,6 @@ generatedFiles:
   - src/models/components/networkmetric.ts
   - src/models/components/networktype.ts
   - src/models/components/nftholdersresponse.ts
-  - src/models/components/operator.ts
   - src/models/components/pchainaddressdetails.ts
   - src/models/components/pchainlookingglassresponse.ts
   - src/models/components/rollingwindowmetricsapiresponse.ts
@@ -254,8 +194,6 @@ generatedFiles:
   - src/models/components/teleportermetric.ts
   - src/models/components/teleportermetricsvalue.ts
   - src/models/components/timeintervalgranularity.ts
-  - src/models/components/timestamprangenftholdersparam.ts
-  - src/models/components/tokentype.ts
   - src/models/errors/avalancheapierror.ts
   - src/models/errors/badgatewayerror.ts
   - src/models/errors/badrequesterror.ts
@@ -268,7 +206,6 @@ generatedFiles:
   - src/models/errors/serviceunavailableerror.ts
   - src/models/errors/toomanyrequestserror.ts
   - src/models/errors/unauthorizederror.ts
-  - src/models/operations/compositequeryv2.ts
   - src/models/operations/getaddressesbybalanceovertime.ts
   - src/models/operations/getaddressesbybtcbbridged.ts
   - src/models/operations/getchain.ts
@@ -280,15 +217,12 @@ generatedFiles:
   - src/models/operations/getvalidatorsbydaterange.ts
   - src/models/operations/index.ts
   - src/models/operations/listchains.ts
-  - src/sdk/chain.ts
-  - src/sdk/chainmetrics.ts
   - src/sdk/chains.ts
-  - src/sdk/evm.ts
-  - src/sdk/healthcheck.ts
   - src/sdk/index.ts
-  - src/sdk/lookingglass.ts
   - src/sdk/metrics.ts
+  - src/sdk/networks.ts
   - src/sdk/sdk.ts
+  - src/sdk/subnets.ts
   - src/types/async.ts
   - src/types/blobs.ts
   - src/types/constdatetime.ts

@@ -80,7 +80,7 @@ yarn add @avalanche-sdk/metrics zod
 This SDK is also an installable MCP server where the various SDK methods are
 exposed as tools that can be invoked by AI applications.
 
-> Node.js v20 or greater is required to run the MCP server.
+> Node.js v20 or greater is required to run the MCP server from npm.
 
 <details>
 <summary>Claude installation steps</summary>
@@ -109,16 +109,50 @@ Add the following server definition to your `claude_desktop_config.json` file:
 <details>
 <summary>Cursor installation steps</summary>
 
-Go to `Cursor Settings > Features > MCP Servers > Add new MCP server` and use the following settings:
+Create a `.cursor/mcp.json` file in your project root with the following content:
 
-- Name: Avalanche
-- Type: `command`
-- Command:
-```sh
-npx -y --package @avalanche-sdk/metrics -- mcp start --chain-id ... --network ... 
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/metrics",
+        "--",
+        "mcp", "start",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
 ```
 
 </details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
 
 For a full list of server arguments, run:
 
@@ -147,7 +181,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.metrics.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -167,36 +201,26 @@ run();
 
 ### [metrics](docs/sdks/metrics/README.md)
 
+* [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
 
-#### [metrics.chain](docs/sdks/chain/README.md)
+#### [metrics.chains](docs/sdks/chains/README.md)
 
+* [list](docs/sdks/chains/README.md#list) - Get a list of supported blockchains
+* [get](docs/sdks/chains/README.md#get) - Get chain information for supported blockchain
+* [getMetrics](docs/sdks/chains/README.md#getmetrics) - Get metrics for EVM chains
+* [getTeleporterMetrics](docs/sdks/chains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+* [getRollingWindowMetrics](docs/sdks/chains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+* [listNftHolders](docs/sdks/chains/README.md#listnftholders) - Get NFT holders by contract address
+* [listTokenHoldersAboveThreshold](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+* [listBTCbBridgersAboveThreshold](docs/sdks/chains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
 
-#### [metrics.chain.metrics](docs/sdks/chainmetrics/README.md)
+#### [metrics.networks](docs/sdks/networks/README.md)
 
-* [getEvmChainMetrics](docs/sdks/chainmetrics/README.md#getevmchainmetrics) - Get metrics for EVM chains
-* [getTeleporterMetricsByChain](docs/sdks/chainmetrics/README.md#getteleportermetricsbychain) - Get teleporter metrics for EVM chains
-* [getEvmChainRollingWindowMetrics](docs/sdks/chainmetrics/README.md#getevmchainrollingwindowmetrics) - Get rolling window metrics for EVM chains
-* [getStakingMetrics](docs/sdks/chainmetrics/README.md#getstakingmetrics) - Get staking metrics for a given subnet
+* [getStakingMetrics](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
 
-#### [metrics.evm](docs/sdks/evm/README.md)
+#### [metrics.subnets](docs/sdks/subnets/README.md)
 
-
-#### [metrics.evm.chains](docs/sdks/chains/README.md)
-
-* [listChains](docs/sdks/chains/README.md#listchains) - Get a list of supported blockchains
-* [getChain](docs/sdks/chains/README.md#getchain) - Get chain information for supported blockchain
-
-#### [metrics.healthCheck](docs/sdks/healthcheck/README.md)
-
-* [metricsHealthCheck](docs/sdks/healthcheck/README.md#metricshealthcheck) - Get the health of the service
-
-#### [metrics.lookingGlass](docs/sdks/lookingglass/README.md)
-
-* [getNftHoldersByContractAddress](docs/sdks/lookingglass/README.md#getnftholdersbycontractaddress) - Get NFT holders by contract address
-* [getAddressesByBalanceOverTime](docs/sdks/lookingglass/README.md#getaddressesbybalanceovertime) - Get addresses by balance over time
-* [getAddressesByBtcbBridged](docs/sdks/lookingglass/README.md#getaddressesbybtcbbridged) - Get addresses by BTCb bridged balance
-* [getValidatorsByDateRange](docs/sdks/lookingglass/README.md#getvalidatorsbydaterange) - Get addresses running validators during a given time frame
-* [compositeQuery](docs/sdks/lookingglass/README.md#compositequery) - Composite query
+* [getValidators](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -216,18 +240,17 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`metricsChainMetricsGetEvmChainMetrics`](docs/sdks/chainmetrics/README.md#getevmchainmetrics) - Get metrics for EVM chains
-- [`metricsChainMetricsGetEvmChainRollingWindowMetrics`](docs/sdks/chainmetrics/README.md#getevmchainrollingwindowmetrics) - Get rolling window metrics for EVM chains
-- [`metricsChainMetricsGetStakingMetrics`](docs/sdks/chainmetrics/README.md#getstakingmetrics) - Get staking metrics for a given subnet
-- [`metricsChainMetricsGetTeleporterMetricsByChain`](docs/sdks/chainmetrics/README.md#getteleportermetricsbychain) - Get teleporter metrics for EVM chains
-- [`metricsEvmChainsGetChain`](docs/sdks/chains/README.md#getchain) - Get chain information for supported blockchain
-- [`metricsEvmChainsListChains`](docs/sdks/chains/README.md#listchains) - Get a list of supported blockchains
-- [`metricsHealthCheckMetricsHealthCheck`](docs/sdks/healthcheck/README.md#metricshealthcheck) - Get the health of the service
-- [`metricsLookingGlassCompositeQuery`](docs/sdks/lookingglass/README.md#compositequery) - Composite query
-- [`metricsLookingGlassGetAddressesByBalanceOverTime`](docs/sdks/lookingglass/README.md#getaddressesbybalanceovertime) - Get addresses by balance over time
-- [`metricsLookingGlassGetAddressesByBtcbBridged`](docs/sdks/lookingglass/README.md#getaddressesbybtcbbridged) - Get addresses by BTCb bridged balance
-- [`metricsLookingGlassGetNftHoldersByContractAddress`](docs/sdks/lookingglass/README.md#getnftholdersbycontractaddress) - Get NFT holders by contract address
-- [`metricsLookingGlassGetValidatorsByDateRange`](docs/sdks/lookingglass/README.md#getvalidatorsbydaterange) - Get addresses running validators during a given time frame
+- [`metricsChainsGet`](docs/sdks/chains/README.md#get) - Get chain information for supported blockchain
+- [`metricsChainsGetMetrics`](docs/sdks/chains/README.md#getmetrics) - Get metrics for EVM chains
+- [`metricsChainsGetRollingWindowMetrics`](docs/sdks/chains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+- [`metricsChainsGetTeleporterMetrics`](docs/sdks/chains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+- [`metricsChainsList`](docs/sdks/chains/README.md#list) - Get a list of supported blockchains
+- [`metricsChainsListBTCbBridgersAboveThreshold`](docs/sdks/chains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
+- [`metricsChainsListNftHolders`](docs/sdks/chains/README.md#listnftholders) - Get NFT holders by contract address
+- [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+- [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+- [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
+- [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -237,7 +260,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
 
-For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `listChains`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `list`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
 
 
 ### Available Globals
@@ -260,7 +283,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.evm.chains.listChains({
+  const result = await avalanche.metrics.chains.list({
     network: "mainnet",
   });
 
@@ -296,7 +319,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.evm.chains.listChains({
+  const result = await avalanche.metrics.chains.list({
     network: "mainnet",
   });
 
@@ -326,7 +349,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck({
+  const result = await avalanche.metrics.healthCheck({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -367,7 +390,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.metrics.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -381,7 +404,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `metricsHealthCheck` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `healthCheck` method may throw the following errors:
 
 | Error Type                     | Status Code | Content Type     |
 | ------------------------------ | ----------- | ---------------- |
@@ -419,7 +442,7 @@ const avalanche = new Avalanche({
 async function run() {
   let result;
   try {
-    result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+    result = await avalanche.metrics.healthCheck();
 
     // Handle the result
     console.log(result);
@@ -514,7 +537,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.metrics.healthCheck.metricsHealthCheck();
+  const result = await avalanche.metrics.healthCheck();
 
   // Handle the result
   console.log(result);

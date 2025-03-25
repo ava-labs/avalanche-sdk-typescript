@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/metrics/core.js";
-import { metricsHealthCheckMetricsHealthCheck } from "@avalanche-sdk/metrics/funcs/metricsHealthCheckMetricsHealthCheck.js";
+import { metricsHealthCheck } from "@avalanche-sdk/metrics/funcs/metricsHealthCheck.js";
 import { SDKValidationError } from "@avalanche-sdk/metrics/models/errors/sdkvalidationerror.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
@@ -31,7 +31,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await metricsHealthCheckMetricsHealthCheck(avalanche);
+  const res = await metricsHealthCheck(avalanche);
 
   switch (true) {
     case res.ok:
