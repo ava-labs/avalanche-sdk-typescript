@@ -182,7 +182,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
+  const result = await avalanche.webhooks.create({
     eventType: "validator_activity",
     url: "https://expensive-designation.info",
     chainId: "<id>",
@@ -249,16 +249,19 @@ run();
 ### [webhooks](docs/sdks/webhooks/README.md)
 
 * [healthCheck](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
-* [createWebhook](docs/sdks/webhooks/README.md#createwebhook) - Create a webhook
-* [listWebhooks](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
-* [getWebhook](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
-* [deactivateWebhook](docs/sdks/webhooks/README.md#deactivatewebhook) - Deactivate a webhook
-* [updateWebhook](docs/sdks/webhooks/README.md#updatewebhook) - Update a webhook
+* [create](docs/sdks/webhooks/README.md#create) - Create a webhook
+* [list](docs/sdks/webhooks/README.md#list) - List webhooks
+* [get](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
+* [deactivate](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
+* [update](docs/sdks/webhooks/README.md#update) - Update a webhook
 * [generateOrRotateSharedSecret](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
 * [getSharedSecret](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
-* [addAddressesToWebhook](docs/sdks/webhooks/README.md#addaddressestowebhook) - Add addresses to EVM activity webhook
-* [removeAddressesFromWebhook](docs/sdks/webhooks/README.md#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
-* [getAddressesFromWebhook](docs/sdks/webhooks/README.md#getaddressesfromwebhook) - List adresses by EVM activity webhooks
+
+#### [webhooks.addresses](docs/sdks/addresses/README.md)
+
+* [add](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+* [remove](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
+* [list](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -278,17 +281,17 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`webhooksAddAddressesToWebhook`](docs/sdks/webhooks/README.md#addaddressestowebhook) - Add addresses to EVM activity webhook
-- [`webhooksCreateWebhook`](docs/sdks/webhooks/README.md#createwebhook) - Create a webhook
-- [`webhooksDeactivateWebhook`](docs/sdks/webhooks/README.md#deactivatewebhook) - Deactivate a webhook
+- [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+- [`webhooksAddressesList`](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
+- [`webhooksAddressesRemove`](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
+- [`webhooksCreate`](docs/sdks/webhooks/README.md#create) - Create a webhook
+- [`webhooksDeactivate`](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
 - [`webhooksGenerateOrRotateSharedSecret`](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
-- [`webhooksGetAddressesFromWebhook`](docs/sdks/webhooks/README.md#getaddressesfromwebhook) - List adresses by EVM activity webhooks
+- [`webhooksGet`](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
 - [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
-- [`webhooksGetWebhook`](docs/sdks/webhooks/README.md#getwebhook) - Get a webhook by ID
 - [`webhooksHealthCheck`](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
-- [`webhooksListWebhooks`](docs/sdks/webhooks/README.md#listwebhooks) - List webhooks
-- [`webhooksRemoveAddressesFromWebhook`](docs/sdks/webhooks/README.md#removeaddressesfromwebhook) - Remove addresses from EVM activity  webhook
-- [`webhooksUpdateWebhook`](docs/sdks/webhooks/README.md#updatewebhook) - Update a webhook
+- [`webhooksList`](docs/sdks/webhooks/README.md#list) - List webhooks
+- [`webhooksUpdate`](docs/sdks/webhooks/README.md#update) - Update a webhook
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -314,7 +317,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.listWebhooks({
+  const result = await avalanche.webhooks.list({
     status: "active",
   });
 

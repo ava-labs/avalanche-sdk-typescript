@@ -31,7 +31,7 @@ import { Result } from "../types/fp.js";
  * @remarks
  * Add addresses to webhook. Only valid for EVM activity webhooks.
  */
-export function webhooksAddAddressesToWebhook(
+export function webhooksAddressesAdd(
   client: AvalancheCore,
   request: operations.AddAddressesToWebhookRequest,
   options?: RequestOptions,

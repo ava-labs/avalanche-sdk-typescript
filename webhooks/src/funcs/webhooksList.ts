@@ -3,7 +3,8 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeJSON } from "../lib/encodings.js";
+import { dlv } from "../lib/dlv.js";
+import { encodeFormQuery } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -23,52 +24,27 @@ import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
+import {
+  createPageIterator,
+  haltIterator,
+  PageIterator,
+  Paginator,
+} from "../types/operations.js";
 
 /**
- * Create a webhook
+ * List webhooks
  *
  * @remarks
- * Create a new webhook.
+ * Lists webhooks for the user.
  */
-export function webhooksCreateWebhook(
+export function webhooksList(
   client: AvalancheCore,
-  request: operations.CreateWebhookRequest,
+  request: operations.ListWebhooksRequest,
   options?: RequestOptions,
 ): APIPromise<
-  Result<
-    operations.CreateWebhookResponse,
-    | errors.BadRequestError
-    | errors.UnauthorizedError
-    | errors.ForbiddenError
-    | errors.NotFoundError
-    | errors.TooManyRequestsError
-    | errors.InternalServerError
-    | errors.BadGatewayError
-    | errors.ServiceUnavailableError
-    | AvalancheAPIError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | ConnectionError
-  >
-> {
-  return new APIPromise($do(
-    client,
-    request,
-    options,
-  ));
-}
-
-async function $do(
-  client: AvalancheCore,
-  request: operations.CreateWebhookRequest,
-  options?: RequestOptions,
-): Promise<
-  [
+  PageIterator<
     Result<
-      operations.CreateWebhookResponse,
+      operations.ListWebhooksResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -85,24 +61,66 @@ async function $do(
       | RequestTimeoutError
       | ConnectionError
     >,
+    { cursor: string }
+  >
+> {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
+  client: AvalancheCore,
+  request: operations.ListWebhooksRequest,
+  options?: RequestOptions,
+): Promise<
+  [
+    PageIterator<
+      Result<
+        operations.ListWebhooksResponse,
+        | errors.BadRequestError
+        | errors.UnauthorizedError
+        | errors.ForbiddenError
+        | errors.NotFoundError
+        | errors.TooManyRequestsError
+        | errors.InternalServerError
+        | errors.BadGatewayError
+        | errors.ServiceUnavailableError
+        | AvalancheAPIError
+        | SDKValidationError
+        | UnexpectedClientError
+        | InvalidRequestError
+        | RequestAbortedError
+        | RequestTimeoutError
+        | ConnectionError
+      >,
+      { cursor: string }
+    >,
     APICall,
   ]
 > {
   const parsed = safeParse(
     request,
-    (value) => operations.CreateWebhookRequest$outboundSchema.parse(value),
+    (value) => operations.ListWebhooksRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return [parsed, { status: "invalid" }];
+    return [haltIterator(parsed), { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload, { explode: true });
+  const body = null;
 
   const path = pathToFunc("/v1/webhooks")();
 
+  const query = encodeFormQuery({
+    "pageSize": payload.pageSize,
+    "pageToken": payload.pageToken,
+    "status": payload.status,
+  });
+
   const headers = new Headers(compactMap({
-    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 
@@ -112,7 +130,7 @@ async function $do(
 
   const context = {
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "createWebhook",
+    operationID: "listWebhooks",
     oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
@@ -136,15 +154,16 @@ async function $do(
 
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
-    method: "POST",
+    method: "GET",
     baseURL: options?.serverURL,
     path: path,
     headers: headers,
+    query: query,
     body: body,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return [requestRes, { status: "invalid" }];
+    return [haltIterator(requestRes), { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -166,7 +185,7 @@ async function $do(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return [doResult, { status: "request-error", request: req }];
+    return [haltIterator(doResult), { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -174,8 +193,8 @@ async function $do(
     HttpMeta: { Response: response, Request: req },
   };
 
-  const [result] = await M.match<
-    operations.CreateWebhookResponse,
+  const [result, raw] = await M.match<
+    operations.ListWebhooksResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -192,7 +211,9 @@ async function $do(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(201, operations.CreateWebhookResponse$inboundSchema),
+    M.json(200, operations.ListWebhooksResponse$inboundSchema, {
+      key: "Result",
+    }),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),
@@ -205,8 +226,60 @@ async function $do(
     M.fail("5XX"),
   )(response, { extraFields: responseFields });
   if (!result.ok) {
-    return [result, { status: "complete", request: req, response }];
+    return [haltIterator(result), {
+      status: "complete",
+      request: req,
+      response,
+    }];
   }
 
-  return [result, { status: "complete", request: req, response }];
+  const nextFunc = (
+    responseData: unknown,
+  ): {
+    next: Paginator<
+      Result<
+        operations.ListWebhooksResponse,
+        | errors.BadRequestError
+        | errors.UnauthorizedError
+        | errors.ForbiddenError
+        | errors.NotFoundError
+        | errors.TooManyRequestsError
+        | errors.InternalServerError
+        | errors.BadGatewayError
+        | errors.ServiceUnavailableError
+        | AvalancheAPIError
+        | SDKValidationError
+        | UnexpectedClientError
+        | InvalidRequestError
+        | RequestAbortedError
+        | RequestTimeoutError
+        | ConnectionError
+      >
+    >;
+    "~next"?: { cursor: string };
+  } => {
+    const nextCursor = dlv(responseData, "nextPageToken");
+    if (typeof nextCursor !== "string") {
+      return { next: () => null };
+    }
+
+    const nextVal = () =>
+      webhooksList(
+        client,
+        {
+          ...request,
+          pageToken: nextCursor,
+        },
+        options,
+      );
+
+    return { next: nextVal, "~next": { cursor: nextCursor } };
+  };
+
+  const page = { ...result, ...nextFunc(raw) };
+  return [{ ...page, ...createPageIterator(page, (v) => !v.ok) }, {
+    status: "complete",
+    request: req,
+    response,
+  }];
 }

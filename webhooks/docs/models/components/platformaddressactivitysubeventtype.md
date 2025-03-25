@@ -7,11 +7,11 @@ Array of address activity sub-event types
 ```typescript
 import { PlatformAddressActivitySubEventType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: PlatformAddressActivitySubEventType = "balance_change_platform";
+let value: PlatformAddressActivitySubEventType = "balance_threshold_platform";
 ```
 
 ## Values
 
 ```typescript
-"balance_change_platform" | "balance_threshold_platform"
+"balance_change_platform" | "balance_threshold_platform" | "reward_distribution"
 ```
