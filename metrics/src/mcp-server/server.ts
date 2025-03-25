@@ -13,18 +13,17 @@ import {
 } from "./resources.js";
 import { MCPScope, mcpScopes } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
-import { tool$metricsChainMetricsGetEvmChainMetrics } from "./tools/metricsChainMetricsGetEvmChainMetrics.js";
-import { tool$metricsChainMetricsGetEvmChainRollingWindowMetrics } from "./tools/metricsChainMetricsGetEvmChainRollingWindowMetrics.js";
-import { tool$metricsChainMetricsGetStakingMetrics } from "./tools/metricsChainMetricsGetStakingMetrics.js";
-import { tool$metricsChainMetricsGetTeleporterMetricsByChain } from "./tools/metricsChainMetricsGetTeleporterMetricsByChain.js";
-import { tool$metricsEvmChainsGetChain } from "./tools/metricsEvmChainsGetChain.js";
-import { tool$metricsEvmChainsListChains } from "./tools/metricsEvmChainsListChains.js";
-import { tool$metricsHealthCheckMetricsHealthCheck } from "./tools/metricsHealthCheckMetricsHealthCheck.js";
-import { tool$metricsLookingGlassCompositeQuery } from "./tools/metricsLookingGlassCompositeQuery.js";
-import { tool$metricsLookingGlassGetAddressesByBalanceOverTime } from "./tools/metricsLookingGlassGetAddressesByBalanceOverTime.js";
-import { tool$metricsLookingGlassGetAddressesByBtcbBridged } from "./tools/metricsLookingGlassGetAddressesByBtcbBridged.js";
-import { tool$metricsLookingGlassGetNftHoldersByContractAddress } from "./tools/metricsLookingGlassGetNftHoldersByContractAddress.js";
-import { tool$metricsLookingGlassGetValidatorsByDateRange } from "./tools/metricsLookingGlassGetValidatorsByDateRange.js";
+import { tool$metricsChainsGet } from "./tools/metricsChainsGet.js";
+import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js";
+import { tool$metricsChainsGetRollingWindowMetrics } from "./tools/metricsChainsGetRollingWindowMetrics.js";
+import { tool$metricsChainsGetTeleporterMetrics } from "./tools/metricsChainsGetTeleporterMetrics.js";
+import { tool$metricsChainsList } from "./tools/metricsChainsList.js";
+import { tool$metricsChainsListBTCbBridgersAboveThreshold } from "./tools/metricsChainsListBTCbBridgersAboveThreshold.js";
+import { tool$metricsChainsListNftHolders } from "./tools/metricsChainsListNftHolders.js";
+import { tool$metricsChainsListTokenHoldersAboveThreshold } from "./tools/metricsChainsListTokenHoldersAboveThreshold.js";
+import { tool$metricsHealthCheck } from "./tools/metricsHealthCheck.js";
+import { tool$metricsNetworksGetStakingMetrics } from "./tools/metricsNetworksGetStakingMetrics.js";
+import { tool$metricsSubnetsGetValidators } from "./tools/metricsSubnetsGetValidators.js";
 
 export function createMCPServer(deps: {
   logger: ConsoleLogger;
@@ -37,7 +36,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.2.0",
+    version: "0.3.0",
   });
 
   const client = new AvalancheCore({
@@ -68,18 +67,17 @@ export function createMCPServer(deps: {
   const register = { tool, resource, resourceTemplate, prompt };
   void register; // suppress unused warnings
 
-  tool(tool$metricsHealthCheckMetricsHealthCheck);
-  tool(tool$metricsLookingGlassGetNftHoldersByContractAddress);
-  tool(tool$metricsLookingGlassGetAddressesByBalanceOverTime);
-  tool(tool$metricsLookingGlassGetAddressesByBtcbBridged);
-  tool(tool$metricsLookingGlassGetValidatorsByDateRange);
-  tool(tool$metricsLookingGlassCompositeQuery);
-  tool(tool$metricsEvmChainsListChains);
-  tool(tool$metricsEvmChainsGetChain);
-  tool(tool$metricsChainMetricsGetEvmChainMetrics);
-  tool(tool$metricsChainMetricsGetTeleporterMetricsByChain);
-  tool(tool$metricsChainMetricsGetEvmChainRollingWindowMetrics);
-  tool(tool$metricsChainMetricsGetStakingMetrics);
+  tool(tool$metricsHealthCheck);
+  tool(tool$metricsChainsList);
+  tool(tool$metricsChainsGet);
+  tool(tool$metricsChainsGetMetrics);
+  tool(tool$metricsChainsGetTeleporterMetrics);
+  tool(tool$metricsChainsGetRollingWindowMetrics);
+  tool(tool$metricsChainsListNftHolders);
+  tool(tool$metricsChainsListTokenHoldersAboveThreshold);
+  tool(tool$metricsChainsListBTCbBridgersAboveThreshold);
+  tool(tool$metricsNetworksGetStakingMetrics);
+  tool(tool$metricsSubnetsGetValidators);
 
   return server;
 }
