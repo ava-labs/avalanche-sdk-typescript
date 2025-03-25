@@ -10,13 +10,13 @@ Successful response
 ```typescript
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://formal-desk.name",
+  eventType: "validator_activity",
+  url: "https://lavish-mouser.org",
   chainId: "<id>",
   status: "active",
-  createdAt: 6658.59,
+  createdAt: 9518.75,
   name: "<value>",
-  description: "till with furthermore jaggedly hence runny knavishly",
+  description: "as by summer horde whoa once hence",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,15 +33,15 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://icy-teammate.org",
+  eventType: "platform_address_activity",
+  url: "https://insistent-markup.biz",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 2748.23,
+  createdAt: 4148.57,
   name: "<value>",
-  description: "digestive traffic ouch substantiate into ew a",
+  description: "um unit grade soap sizzling",
   metadata: {
-    keyType: "nodeId",
+    keyType: "subnetId",
     keys: [
       "<value>",
     ],

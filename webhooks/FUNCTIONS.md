@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/webhooks/core.js";
-import { webhooksCreateWebhook } from "@avalanche-sdk/webhooks/funcs/webhooksCreateWebhook.js";
+import { webhooksCreate } from "@avalanche-sdk/webhooks/funcs/webhooksCreate.js";
 import { SDKValidationError } from "@avalanche-sdk/webhooks/models/errors/sdkvalidationerror.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
@@ -31,7 +31,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await webhooksCreateWebhook(avalanche, {
+  const res = await webhooksCreate(avalanche, {
     eventType: "validator_activity",
     url: "https://expensive-designation.info",
     chainId: "<id>",

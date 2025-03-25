@@ -6,7 +6,7 @@
 import { PlatformBalanceThresholdFilter } from "@avalanche-sdk/webhooks/models/components";
 
 let value: PlatformBalanceThresholdFilter = {
-  balanceType: "lockedStaked",
+  balanceType: "pendingStaked",
   balanceThreshold: "<value>",
 };
 ```
@@ -15,5 +15,5 @@ let value: PlatformBalanceThresholdFilter = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `balanceType`                                                                | [components.PChainBalanceType](../../models/components/pchainbalancetype.md) | :heavy_check_mark:                                                           | Type of balance to monitor                                                   |
+| `balanceType`                                                                | [components.CommonBalanceType](../../models/components/commonbalancetype.md) | :heavy_check_mark:                                                           | Type of balance to monitor                                                   |
 | `balanceThreshold`                                                           | *string*                                                                     | :heavy_check_mark:                                                           | Threshold for balance corresponding to balanceType in nAVAX                  |

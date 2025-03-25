@@ -11,12 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "address_activity",
-  url: "https://aggressive-travel.net/",
+  url: "https://calculating-adviser.org/",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 2817.3,
+  createdAt: 7851.53,
   name: "<value>",
-  description: "dereference unaccountably mash astride fidget abaft knottily",
+  description: "wildly frank now lashes save",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,15 +33,15 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "platform_address_activity",
-  url: "https://shabby-dream.com",
+  eventType: "address_activity",
+  url: "https://impure-department.com/",
   chainId: "<id>",
   status: "active",
-  createdAt: 3015.98,
+  createdAt: 7255.95,
   name: "<value>",
-  description: "where politely after horst vanadyl",
+  description: "knottily ethyl covenant",
   metadata: {
-    keyType: "addresses",
+    keyType: "subnetId",
     keys: [
       "<value>",
     ],

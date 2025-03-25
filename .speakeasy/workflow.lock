@@ -1,4 +1,4 @@
-speakeasyVersion: 1.521.1
+speakeasyVersion: 1.523.2
 sources:
     data-source:
         sourceNamespace: avalanche-sdk-data-typescript
@@ -18,10 +18,11 @@ sources:
             - Beta
     webhooks-source:
         sourceNamespace: avalanche-sdk-webhooks-typescript
-        sourceRevisionDigest: sha256:c3f5d50e06c46d96f36214c77d2aad565fd1c902b645b86f8e224e159664c747
-        sourceBlobDigest: sha256:0bed559ae989c10dfa3f1427c7429dbd6047a54c2cba68b71f870f242d70cb4f
+        sourceRevisionDigest: sha256:9f755eb92c26fa3f0417ff6ca6a71d4408cc6f3cdec62f0994d4996cc1aa94dd
+        sourceBlobDigest: sha256:08b964634fc9e4f5e1308afcad145104ac7b330a1219310b1c59711158195e30
         tags:
             - latest
+            - speakeasy-sdk-regen-1742841677
             - Beta
 targets:
     avalanche:
@@ -48,10 +49,10 @@ targets:
     webhooks-sdk:
         source: webhooks-source
         sourceNamespace: avalanche-sdk-webhooks-typescript
-        sourceRevisionDigest: sha256:c3f5d50e06c46d96f36214c77d2aad565fd1c902b645b86f8e224e159664c747
-        sourceBlobDigest: sha256:0bed559ae989c10dfa3f1427c7429dbd6047a54c2cba68b71f870f242d70cb4f
+        sourceRevisionDigest: sha256:9f755eb92c26fa3f0417ff6ca6a71d4408cc6f3cdec62f0994d4996cc1aa94dd
+        sourceBlobDigest: sha256:08b964634fc9e4f5e1308afcad145104ac7b330a1219310b1c59711158195e30
         codeSamplesNamespace: avalanche-sdk-webhooks-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:815bc090c427c4265e25e0fd16edb393bb7f9e86d27c5d681bc00f9866baf2ae
+        codeSamplesRevisionDigest: sha256:73ddaf3d04afb3030412b5bd8454266d433707aebf78c733fa32dc9905e71613
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

@@ -7,16 +7,16 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  PChainBalanceType,
-  PChainBalanceType$inboundSchema,
-  PChainBalanceType$outboundSchema,
-} from "./pchainbalancetype.js";
+  CommonBalanceType,
+  CommonBalanceType$inboundSchema,
+  CommonBalanceType$outboundSchema,
+} from "./commonbalancetype.js";
 
 export type PlatformBalanceThresholdFilter = {
   /**
    * Type of balance to monitor
    */
-  balanceType: PChainBalanceType;
+  balanceType: CommonBalanceType;
   /**
    * Threshold for balance corresponding to balanceType in nAVAX
    */
@@ -29,7 +29,7 @@ export const PlatformBalanceThresholdFilter$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  balanceType: PChainBalanceType$inboundSchema,
+  balanceType: CommonBalanceType$inboundSchema,
   balanceThreshold: z.string(),
 });
 
@@ -45,7 +45,7 @@ export const PlatformBalanceThresholdFilter$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   PlatformBalanceThresholdFilter
 > = z.object({
-  balanceType: PChainBalanceType$outboundSchema,
+  balanceType: CommonBalanceType$outboundSchema,
   balanceThreshold: z.string(),
 });
 

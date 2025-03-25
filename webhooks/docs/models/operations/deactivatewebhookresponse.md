@@ -10,13 +10,13 @@ Successful response
 ```typescript
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
-  eventType: "platform_address_activity",
-  url: "https://white-adviser.net",
+  eventType: "validator_activity",
+  url: "https://known-begonia.biz",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 5098.07,
+  status: "active",
+  createdAt: 4174.86,
   name: "<value>",
-  description: "faithfully under usable synergy redact",
+  description: "near digestive traffic ouch",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,15 +33,15 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://bare-bar.org/",
+  eventType: "validator_activity",
+  url: "https://scary-creature.info",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 8980.63,
+  createdAt: 8792.35,
   name: "<value>",
-  description: "why however complicated form rundown phew trolley hmph",
+  description: "topsail as readily including against within wiggly",
   metadata: {
-    keyType: "addresses",
+    keyType: "subnetId",
     keys: [
       "<value>",
     ],

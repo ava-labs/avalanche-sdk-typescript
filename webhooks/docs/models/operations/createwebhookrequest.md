@@ -8,7 +8,7 @@
 ```typescript
 const value: components.EVMAddressActivityRequest = {
   eventType: "address_activity",
-  url: "https://wasteful-roundabout.net/",
+  url: "https://happy-go-lucky-tusk.net/",
   chainId: "<id>",
   metadata: {
     addresses: [
@@ -26,10 +26,10 @@ const value: components.EVMAddressActivityRequest = {
 ```typescript
 const value: components.PlatformActivityRequest = {
   eventType: "validator_activity",
-  url: "https://next-monocle.org/",
+  url: "https://bouncy-marketplace.name",
   chainId: "<id>",
   metadata: {
-    keyType: "addresses",
+    keyType: "subnetId",
     keys: [
       "<value>",
     ],

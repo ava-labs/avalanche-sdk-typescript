@@ -3,7 +3,7 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeJSON, encodeSimple } from "../lib/encodings.js";
+import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -25,18 +25,18 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Update a webhook
+ * Deactivate a webhook
  *
  * @remarks
- * Updates an existing webhook.
+ * Deactivates a webhook by ID.
  */
-export function webhooksUpdateWebhook(
+export function webhooksDeactivate(
   client: AvalancheCore,
-  request: operations.UpdateWebhookRequest,
+  request: operations.DeactivateWebhookRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.UpdateWebhookResponse,
+    operations.DeactivateWebhookResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -63,12 +63,12 @@ export function webhooksUpdateWebhook(
 
 async function $do(
   client: AvalancheCore,
-  request: operations.UpdateWebhookRequest,
+  request: operations.DeactivateWebhookRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.UpdateWebhookResponse,
+      operations.DeactivateWebhookResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -90,16 +90,14 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => operations.UpdateWebhookRequest$outboundSchema.parse(value),
+    (value) => operations.DeactivateWebhookRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.UpdateWebhookRequest, {
-    explode: true,
-  });
+  const body = null;
 
   const pathParams = {
     id: encodeSimple("id", payload.id, {
@@ -111,7 +109,6 @@ async function $do(
   const path = pathToFunc("/v1/webhooks/{id}")(pathParams);
 
   const headers = new Headers(compactMap({
-    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 
@@ -121,7 +118,7 @@ async function $do(
 
   const context = {
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "updateWebhook",
+    operationID: "deactivateWebhook",
     oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
@@ -145,7 +142,7 @@ async function $do(
 
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
-    method: "PATCH",
+    method: "DELETE",
     baseURL: options?.serverURL,
     path: path,
     headers: headers,
@@ -184,7 +181,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.UpdateWebhookResponse,
+    operations.DeactivateWebhookResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -201,7 +198,7 @@ async function $do(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, operations.UpdateWebhookResponse$inboundSchema),
+    M.json(200, operations.DeactivateWebhookResponse$inboundSchema),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),

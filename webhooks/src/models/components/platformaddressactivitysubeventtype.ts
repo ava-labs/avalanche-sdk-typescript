@@ -11,6 +11,7 @@ import { ClosedEnum } from "../../types/enums.js";
 export const PlatformAddressActivitySubEventType = {
   BalanceChangePlatform: "balance_change_platform",
   BalanceThresholdPlatform: "balance_threshold_platform",
+  RewardDistribution: "reward_distribution",
 } as const;
 /**
  * Array of address activity sub-event types

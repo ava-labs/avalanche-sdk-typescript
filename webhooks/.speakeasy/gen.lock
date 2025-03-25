@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 9e13cb72-75d2-4602-9f16-ef680e5b30c2
 management:
-  docChecksum: a4eff6243d5c29a93c1fbdb373fffa98
+  docChecksum: 8d38a67abd2dc469902104df07d746b1
   docVersion: Beta
-  speakeasyVersion: 1.521.1
-  generationVersion: 2.558.5
-  releaseVersion: 0.3.0
-  configChecksum: 1c509a5535cdc779efcf43d1f5ef42bb
+  speakeasyVersion: 1.523.2
+  generationVersion: 2.560.1
+  releaseVersion: 0.3.1
+  configChecksum: 9293c1d1cc1571ab489404faf9052ae5
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: webhooks
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/webhooks
@@ -48,7 +48,7 @@ generatedFiles:
   - docs/lib/utils/retryconfig.md
   - docs/models/components/accesslistdata.md
   - docs/models/components/addressactivitymetadata.md
-  - docs/models/components/addresseschangerequest.md
+  - docs/models/components/commonbalancetype.md
   - docs/models/components/erctoken.md
   - docs/models/components/erctransfer.md
   - docs/models/components/eventtype.md
@@ -63,11 +63,9 @@ generatedFiles:
   - docs/models/components/healthindicatorresultdto.md
   - docs/models/components/healthindicatorresultdtostatus.md
   - docs/models/components/internaltransaction.md
-  - docs/models/components/listwebhookaddressesresponse.md
   - docs/models/components/listwebhooksresponse.md
   - docs/models/components/log.md
   - docs/models/components/networktokeninfo.md
-  - docs/models/components/pchainbalancetype.md
   - docs/models/components/platformactivitykeytype.md
   - docs/models/components/platformactivitymetadata.md
   - docs/models/components/platformactivityrequest.md
@@ -106,18 +104,14 @@ generatedFiles:
   - docs/models/errors/toomanyrequestsmessage.md
   - docs/models/errors/unauthorizederror.md
   - docs/models/errors/unauthorizedmessage.md
-  - docs/models/operations/addaddressestowebhookrequest.md
   - docs/models/operations/createwebhookrequest.md
   - docs/models/operations/createwebhookresponse.md
   - docs/models/operations/deactivatewebhookrequest.md
   - docs/models/operations/deactivatewebhookresponse.md
-  - docs/models/operations/getaddressesfromwebhookrequest.md
-  - docs/models/operations/getaddressesfromwebhookresponse.md
   - docs/models/operations/getwebhookrequest.md
   - docs/models/operations/getwebhookresponse.md
   - docs/models/operations/listwebhooksrequest.md
   - docs/models/operations/listwebhooksresponse.md
-  - docs/models/operations/removeaddressesfromwebhookrequest.md
   - docs/models/operations/updatewebhookrequest.md
   - docs/models/operations/updatewebhookresponse.md
   - docs/sdks/avalanche/README.md
@@ -125,17 +119,14 @@ generatedFiles:
   - eslint.config.mjs
   - package.json
   - src/core.ts
-  - src/funcs/webhooksAddAddressesToWebhook.ts
-  - src/funcs/webhooksCreateWebhook.ts
-  - src/funcs/webhooksDeactivateWebhook.ts
+  - src/funcs/webhooksCreate.ts
+  - src/funcs/webhooksDeactivate.ts
   - src/funcs/webhooksGenerateOrRotateSharedSecret.ts
-  - src/funcs/webhooksGetAddressesFromWebhook.ts
+  - src/funcs/webhooksGet.ts
   - src/funcs/webhooksGetSharedSecret.ts
-  - src/funcs/webhooksGetWebhook.ts
   - src/funcs/webhooksHealthCheck.ts
-  - src/funcs/webhooksListWebhooks.ts
-  - src/funcs/webhooksRemoveAddressesFromWebhook.ts
-  - src/funcs/webhooksUpdateWebhook.ts
+  - src/funcs/webhooksList.ts
+  - src/funcs/webhooksUpdate.ts
   - src/hooks/hooks.ts
   - src/hooks/index.ts
   - src/hooks/types.ts
@@ -168,20 +159,17 @@ generatedFiles:
   - src/mcp-server/server.ts
   - src/mcp-server/shared.ts
   - src/mcp-server/tools.ts
-  - src/mcp-server/tools/webhooksAddAddressesToWebhook.ts
-  - src/mcp-server/tools/webhooksCreateWebhook.ts
-  - src/mcp-server/tools/webhooksDeactivateWebhook.ts
+  - src/mcp-server/tools/webhooksCreate.ts
+  - src/mcp-server/tools/webhooksDeactivate.ts
   - src/mcp-server/tools/webhooksGenerateOrRotateSharedSecret.ts
-  - src/mcp-server/tools/webhooksGetAddressesFromWebhook.ts
+  - src/mcp-server/tools/webhooksGet.ts
   - src/mcp-server/tools/webhooksGetSharedSecret.ts
-  - src/mcp-server/tools/webhooksGetWebhook.ts
   - src/mcp-server/tools/webhooksHealthCheck.ts
-  - src/mcp-server/tools/webhooksListWebhooks.ts
-  - src/mcp-server/tools/webhooksRemoveAddressesFromWebhook.ts
-  - src/mcp-server/tools/webhooksUpdateWebhook.ts
+  - src/mcp-server/tools/webhooksList.ts
+  - src/mcp-server/tools/webhooksUpdate.ts
   - src/models/components/accesslistdata.ts
   - src/models/components/addressactivitymetadata.ts
-  - src/models/components/addresseschangerequest.ts
+  - src/models/components/commonbalancetype.ts
   - src/models/components/erctoken.ts
   - src/models/components/erctransfer.ts
   - src/models/components/eventtype.ts
@@ -192,11 +180,9 @@ generatedFiles:
   - src/models/components/healthindicatorresultdto.ts
   - src/models/components/index.ts
   - src/models/components/internaltransaction.ts
-  - src/models/components/listwebhookaddressesresponse.ts
   - src/models/components/listwebhooksresponse.ts
   - src/models/components/log.ts
   - src/models/components/networktokeninfo.ts
-  - src/models/components/pchainbalancetype.ts
   - src/models/components/platformactivitykeytype.ts
   - src/models/components/platformactivitymetadata.ts
   - src/models/components/platformactivityrequest.ts
@@ -225,14 +211,11 @@ generatedFiles:
   - src/models/errors/serviceunavailableerror.ts
   - src/models/errors/toomanyrequestserror.ts
   - src/models/errors/unauthorizederror.ts
-  - src/models/operations/addaddressestowebhook.ts
   - src/models/operations/createwebhook.ts
   - src/models/operations/deactivatewebhook.ts
-  - src/models/operations/getaddressesfromwebhook.ts
   - src/models/operations/getwebhook.ts
   - src/models/operations/index.ts
   - src/models/operations/listwebhooks.ts
-  - src/models/operations/removeaddressesfromwebhook.ts
   - src/models/operations/updatewebhook.ts
   - src/sdk/index.ts
   - src/sdk/sdk.ts
