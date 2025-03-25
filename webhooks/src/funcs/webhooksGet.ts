@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  * @remarks
  * Retrieves a webhook by ID.
  */
-export function webhooksGetWebhook(
+export function webhooksGet(
   client: AvalancheCore,
   request: operations.GetWebhookRequest,
   options?: RequestOptions,

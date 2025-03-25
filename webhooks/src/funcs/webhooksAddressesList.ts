@@ -37,7 +37,7 @@ import {
  * @remarks
  * List adresses by webhook. Only valid for EVM activity webhooks.
  */
-export function webhooksGetAddressesFromWebhook(
+export function webhooksAddressesList(
   client: AvalancheCore,
   request: operations.GetAddressesFromWebhookRequest,
   options?: RequestOptions,
@@ -271,7 +271,7 @@ async function $do(
     }
 
     const nextVal = () =>
-      webhooksGetAddressesFromWebhook(
+      webhooksAddressesList(
         client,
         {
           ...request,

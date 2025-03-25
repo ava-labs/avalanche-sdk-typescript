@@ -13,17 +13,17 @@ import {
 } from "./resources.js";
 import { MCPScope, mcpScopes } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
-import { tool$webhooksAddAddressesToWebhook } from "./tools/webhooksAddAddressesToWebhook.js";
-import { tool$webhooksCreateWebhook } from "./tools/webhooksCreateWebhook.js";
-import { tool$webhooksDeactivateWebhook } from "./tools/webhooksDeactivateWebhook.js";
+import { tool$webhooksAddressesAdd } from "./tools/webhooksAddressesAdd.js";
+import { tool$webhooksAddressesList } from "./tools/webhooksAddressesList.js";
+import { tool$webhooksAddressesRemove } from "./tools/webhooksAddressesRemove.js";
+import { tool$webhooksCreate } from "./tools/webhooksCreate.js";
+import { tool$webhooksDeactivate } from "./tools/webhooksDeactivate.js";
 import { tool$webhooksGenerateOrRotateSharedSecret } from "./tools/webhooksGenerateOrRotateSharedSecret.js";
-import { tool$webhooksGetAddressesFromWebhook } from "./tools/webhooksGetAddressesFromWebhook.js";
+import { tool$webhooksGet } from "./tools/webhooksGet.js";
 import { tool$webhooksGetSharedSecret } from "./tools/webhooksGetSharedSecret.js";
-import { tool$webhooksGetWebhook } from "./tools/webhooksGetWebhook.js";
 import { tool$webhooksHealthCheck } from "./tools/webhooksHealthCheck.js";
-import { tool$webhooksListWebhooks } from "./tools/webhooksListWebhooks.js";
-import { tool$webhooksRemoveAddressesFromWebhook } from "./tools/webhooksRemoveAddressesFromWebhook.js";
-import { tool$webhooksUpdateWebhook } from "./tools/webhooksUpdateWebhook.js";
+import { tool$webhooksList } from "./tools/webhooksList.js";
+import { tool$webhooksUpdate } from "./tools/webhooksUpdate.js";
 
 export function createMCPServer(deps: {
   logger: ConsoleLogger;
@@ -37,7 +37,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0",
+    version: "0.3.1",
   });
 
   const client = new AvalancheCore({
@@ -70,16 +70,16 @@ export function createMCPServer(deps: {
   void register; // suppress unused warnings
 
   tool(tool$webhooksHealthCheck);
-  tool(tool$webhooksCreateWebhook);
-  tool(tool$webhooksListWebhooks);
-  tool(tool$webhooksGetWebhook);
-  tool(tool$webhooksDeactivateWebhook);
-  tool(tool$webhooksUpdateWebhook);
+  tool(tool$webhooksCreate);
+  tool(tool$webhooksList);
+  tool(tool$webhooksGet);
+  tool(tool$webhooksDeactivate);
+  tool(tool$webhooksUpdate);
   tool(tool$webhooksGenerateOrRotateSharedSecret);
   tool(tool$webhooksGetSharedSecret);
-  tool(tool$webhooksAddAddressesToWebhook);
-  tool(tool$webhooksRemoveAddressesFromWebhook);
-  tool(tool$webhooksGetAddressesFromWebhook);
+  tool(tool$webhooksAddressesAdd);
+  tool(tool$webhooksAddressesRemove);
+  tool(tool$webhooksAddressesList);
 
   return server;
 }

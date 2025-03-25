@@ -5,6 +5,7 @@
 export * from "./accesslistdata.js";
 export * from "./addressactivitymetadata.js";
 export * from "./addresseschangerequest.js";
+export * from "./commonbalancetype.js";
 export * from "./erctoken.js";
 export * from "./erctransfer.js";
 export * from "./eventtype.js";
@@ -18,7 +19,6 @@ export * from "./listwebhookaddressesresponse.js";
 export * from "./listwebhooksresponse.js";
 export * from "./log.js";
 export * from "./networktokeninfo.js";
-export * from "./pchainbalancetype.js";
 export * from "./platformactivitykeytype.js";
 export * from "./platformactivitymetadata.js";
 export * from "./platformactivityrequest.js";

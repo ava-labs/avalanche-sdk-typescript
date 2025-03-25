@@ -14,7 +14,8 @@ import {
 } from "./platformaddressactivitysubeventtype.js";
 
 export const ValidatorActivitySubEvent = {
-  ValidatorRegistration: "validator_registration",
+  ValidatorStake: "validator_stake",
+  DelegatorStake: "delegator_stake",
   RewardDistribution: "reward_distribution",
   L1ValidatorBalanceIncreased: "l1_validator_balance_increased",
   L1ValidatorDisabled: "l1_validator_disabled",

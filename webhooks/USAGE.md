@@ -8,7 +8,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.createWebhook({
+  const result = await avalanche.webhooks.create({
     eventType: "validator_activity",
     url: "https://expensive-designation.info",
     chainId: "<id>",

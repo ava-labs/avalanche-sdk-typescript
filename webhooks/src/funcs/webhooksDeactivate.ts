@@ -3,14 +3,13 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeJSON, encodeSimple } from "../lib/encodings.js";
+import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { AvalancheAPIError } from "../models/errors/avalancheapierror.js";
 import {
   ConnectionError,
@@ -26,18 +25,18 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Remove addresses from EVM activity  webhook
+ * Deactivate a webhook
  *
  * @remarks
- * Remove addresses from webhook. Only valid for EVM activity webhooks.
+ * Deactivates a webhook by ID.
  */
-export function webhooksRemoveAddressesFromWebhook(
+export function webhooksDeactivate(
   client: AvalancheCore,
-  request: operations.RemoveAddressesFromWebhookRequest,
+  request: operations.DeactivateWebhookRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.EVMAddressActivityResponse,
+    operations.DeactivateWebhookResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -64,12 +63,12 @@ export function webhooksRemoveAddressesFromWebhook(
 
 async function $do(
   client: AvalancheCore,
-  request: operations.RemoveAddressesFromWebhookRequest,
+  request: operations.DeactivateWebhookRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      components.EVMAddressActivityResponse,
+      operations.DeactivateWebhookResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -91,17 +90,14 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) =>
-      operations.RemoveAddressesFromWebhookRequest$outboundSchema.parse(value),
+    (value) => operations.DeactivateWebhookRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload.AddressesChangeRequest, {
-    explode: true,
-  });
+  const body = null;
 
   const pathParams = {
     id: encodeSimple("id", payload.id, {
@@ -110,10 +106,9 @@ async function $do(
     }),
   };
 
-  const path = pathToFunc("/v1/webhooks/{id}/addresses")(pathParams);
+  const path = pathToFunc("/v1/webhooks/{id}")(pathParams);
 
   const headers = new Headers(compactMap({
-    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 
@@ -123,7 +118,7 @@ async function $do(
 
   const context = {
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "removeAddressesFromWebhook",
+    operationID: "deactivateWebhook",
     oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
@@ -186,7 +181,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.EVMAddressActivityResponse,
+    operations.DeactivateWebhookResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -203,7 +198,7 @@ async function $do(
     | RequestTimeoutError
     | ConnectionError
   >(
-    M.json(200, components.EVMAddressActivityResponse$inboundSchema),
+    M.json(200, operations.DeactivateWebhookResponse$inboundSchema),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),

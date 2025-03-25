@@ -8,38 +8,40 @@ import { ClosedEnum } from "../../types/enums.js";
 /**
  * Type of balance to monitor
  */
-export const PChainBalanceType = {
+export const CommonBalanceType = {
   UnlockedUnstaked: "unlockedUnstaked",
   UnlockedStaked: "unlockedStaked",
   LockedPlatform: "lockedPlatform",
   LockedStakeable: "lockedStakeable",
   LockedStaked: "lockedStaked",
   PendingStaked: "pendingStaked",
+  Unlocked: "unlocked",
+  Locked: "locked",
   AtomicMemoryUnlocked: "atomicMemoryUnlocked",
   AtomicMemoryLocked: "atomicMemoryLocked",
 } as const;
 /**
  * Type of balance to monitor
  */
-export type PChainBalanceType = ClosedEnum<typeof PChainBalanceType>;
+export type CommonBalanceType = ClosedEnum<typeof CommonBalanceType>;
 
 /** @internal */
-export const PChainBalanceType$inboundSchema: z.ZodNativeEnum<
-  typeof PChainBalanceType
-> = z.nativeEnum(PChainBalanceType);
+export const CommonBalanceType$inboundSchema: z.ZodNativeEnum<
+  typeof CommonBalanceType
+> = z.nativeEnum(CommonBalanceType);
 
 /** @internal */
-export const PChainBalanceType$outboundSchema: z.ZodNativeEnum<
-  typeof PChainBalanceType
-> = PChainBalanceType$inboundSchema;
+export const CommonBalanceType$outboundSchema: z.ZodNativeEnum<
+  typeof CommonBalanceType
+> = CommonBalanceType$inboundSchema;
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace PChainBalanceType$ {
-  /** @deprecated use `PChainBalanceType$inboundSchema` instead. */
-  export const inboundSchema = PChainBalanceType$inboundSchema;
-  /** @deprecated use `PChainBalanceType$outboundSchema` instead. */
-  export const outboundSchema = PChainBalanceType$outboundSchema;
+export namespace CommonBalanceType$ {
+  /** @deprecated use `CommonBalanceType$inboundSchema` instead. */
+  export const inboundSchema = CommonBalanceType$inboundSchema;
+  /** @deprecated use `CommonBalanceType$outboundSchema` instead. */
+  export const outboundSchema = CommonBalanceType$outboundSchema;
 }
