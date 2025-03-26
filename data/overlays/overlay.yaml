@@ -12,3 +12,6 @@ actions:
     remove: true
   - target: $.webhooks
     remove: true
+  - target: $.paths.*.*[?(@['tags'][0] == 'Notifications')]
+    description: Remove all paths that are tagged with 'notifications' if they somehow exist
+    remove: true
