@@ -4,16 +4,10 @@
 
 import { ClientSDK } from "../lib/sdks.js";
 import { Data } from "./data.js";
-import { Notifications } from "./notifications.js";
 
 export class Avalanche extends ClientSDK {
   private _data?: Data;
   get data(): Data {
     return (this._data ??= new Data(this._options));
-  }
-
-  private _notifications?: Notifications;
-  get notifications(): Notifications {
-    return (this._notifications ??= new Notifications(this._options));
   }
 }

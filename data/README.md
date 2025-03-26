@@ -393,13 +393,6 @@ run();
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
-### [notifications](docs/sdks/notifications/README.md)
-
-* [access](docs/sdks/notifications/README.md#access) - Access Notifications
-* [subscribe](docs/sdks/notifications/README.md#subscribe) - Subscribe to Notifications
-* [unsubscribe](docs/sdks/notifications/README.md#unsubscribe) - Unsubscribe from Notifications
-* [subscriptions](docs/sdks/notifications/README.md#subscriptions) - Get Subscriptions
-
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
@@ -482,10 +475,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataUsageMetricsGetLogs`](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
 - [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 - [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
-- [`notificationsAccess`](docs/sdks/notifications/README.md#access) - Access Notifications
-- [`notificationsSubscribe`](docs/sdks/notifications/README.md#subscribe) - Subscribe to Notifications
-- [`notificationsSubscriptions`](docs/sdks/notifications/README.md#subscriptions) - Get Subscriptions
-- [`notificationsUnsubscribe`](docs/sdks/notifications/README.md#unsubscribe) - Unsubscribe from Notifications
 - ~~[`dataEvmChainsGetAddressChains`](docs/sdks/chains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
