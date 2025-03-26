@@ -40,7 +40,7 @@ let value: ListNativeTransactionsResponse = {
           address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         },
         method: {
-          callType: "CONTRACT_CALL",
+          callType: "NATIVE_TRANSFER",
           methodHash: "0xa9059cbb",
           methodName: "transfer(address,uint256)",
         },

@@ -14,9 +14,9 @@ let value: ListCollectibleBalancesResponse = {
         symbol: "WAVAX",
         ercType: "ERC-721",
         tokenId: "<id>",
-        tokenUri: "https://harmful-toaster.net/",
+        tokenUri: "https://vague-ecliptic.info",
         metadata: {
-          indexStatus: "INVALID_METADATA_JSON",
+          indexStatus: "METADATA_CONTENT_TOO_LARGE",
         },
         ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         chainId: "43114",

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: eb8f6f6d90ce83740849ebb8167e70de
+  docChecksum: 64e1c03d6e88dcda599379bee09f8af9
   docVersion: Beta
-  speakeasyVersion: 1.523.2
-  generationVersion: 2.560.1
-  releaseVersion: 0.2.0
-  configChecksum: 9b0ed8737f5a77c283207bbbc722f554
+  speakeasyVersion: 1.524.0
+  generationVersion: 2.562.2
+  releaseVersion: 0.2.1
+  configChecksum: c3271cf6c656bb5689efb9e6a311bacb
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: data
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/data
@@ -47,7 +47,6 @@ generatedFiles:
   - RUNTIMES.md
   - USAGE.md
   - docs/lib/utils/retryconfig.md
-  - docs/models/components/accessrequest.md
   - docs/models/components/activedelegatordetails.md
   - docs/models/components/activedelegatordetailsdelegationstatus.md
   - docs/models/components/activevalidatordetails.md
@@ -206,7 +205,6 @@ generatedFiles:
   - docs/models/components/networktoken.md
   - docs/models/components/networktokendetails.md
   - docs/models/components/nfttokenmetadatastatus.md
-  - docs/models/components/notificationsresponse.md
   - docs/models/components/operationstatus.md
   - docs/models/components/operationstatuscode.md
   - docs/models/components/operationstatusresponse.md
@@ -260,12 +258,6 @@ generatedFiles:
   - docs/models/components/subnetownershipinfo.md
   - docs/models/components/subnetrpctimeintervalgranularity.md
   - docs/models/components/subnetrpcusagemetricsresponsedto.md
-  - docs/models/components/subscriberequest.md
-  - docs/models/components/subscriberequestnotification.md
-  - docs/models/components/subscriptions.md
-  - docs/models/components/subscriptionsrequest.md
-  - docs/models/components/subscriptionsresponse.md
-  - docs/models/components/subscriptionsresponsenotification.md
   - docs/models/components/teleporterdestinationtransaction.md
   - docs/models/components/teleportermessageinfo.md
   - docs/models/components/teleporterreceipt.md
@@ -284,7 +276,6 @@ generatedFiles:
   - docs/models/components/transfer.md
   - docs/models/components/unknowncontract.md
   - docs/models/components/unknowncontracterctype.md
-  - docs/models/components/unsubscriberequest.md
   - docs/models/components/usagemetricsgroupbyenum.md
   - docs/models/components/usagemetricsresponsedto.md
   - docs/models/components/usagemetricsvaluedto.md
@@ -508,7 +499,6 @@ generatedFiles:
   - docs/sdks/evmtransactions/README.md
   - docs/sdks/icm/README.md
   - docs/sdks/nfts/README.md
-  - docs/sdks/notifications/README.md
   - docs/sdks/operations/README.md
   - docs/sdks/primarynetwork/README.md
   - docs/sdks/primarynetworkbalances/README.md
@@ -595,10 +585,6 @@ generatedFiles:
   - src/funcs/dataUsageMetricsGetRpcUsageMetrics.ts
   - src/funcs/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/funcs/dataUsageMetricsGetUsage.ts
-  - src/funcs/notificationsAccess.ts
-  - src/funcs/notificationsSubscribe.ts
-  - src/funcs/notificationsSubscriptions.ts
-  - src/funcs/notificationsUnsubscribe.ts
   - src/hooks/hooks.ts
   - src/hooks/index.ts
   - src/hooks/types.ts
@@ -702,11 +688,6 @@ generatedFiles:
   - src/mcp-server/tools/dataUsageMetricsGetRpcUsageMetrics.ts
   - src/mcp-server/tools/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/mcp-server/tools/dataUsageMetricsGetUsage.ts
-  - src/mcp-server/tools/notificationsAccess.ts
-  - src/mcp-server/tools/notificationsSubscribe.ts
-  - src/mcp-server/tools/notificationsSubscriptions.ts
-  - src/mcp-server/tools/notificationsUnsubscribe.ts
-  - src/models/components/accessrequest.ts
   - src/models/components/activedelegatordetails.ts
   - src/models/components/activevalidatordetails.ts
   - src/models/components/aggregatedassetamount.ts
@@ -830,7 +811,6 @@ generatedFiles:
   - src/models/components/networktoken.ts
   - src/models/components/networktokendetails.ts
   - src/models/components/nfttokenmetadatastatus.ts
-  - src/models/components/notificationsresponse.ts
   - src/models/components/operationstatus.ts
   - src/models/components/operationstatuscode.ts
   - src/models/components/operationstatusresponse.ts
@@ -876,9 +856,6 @@ generatedFiles:
   - src/models/components/subnetownershipinfo.ts
   - src/models/components/subnetrpctimeintervalgranularity.ts
   - src/models/components/subnetrpcusagemetricsresponsedto.ts
-  - src/models/components/subscriberequest.ts
-  - src/models/components/subscriptionsrequest.ts
-  - src/models/components/subscriptionsresponse.ts
   - src/models/components/teleporterdestinationtransaction.ts
   - src/models/components/teleportermessageinfo.ts
   - src/models/components/teleporterreceipt.ts
@@ -892,7 +869,6 @@ generatedFiles:
   - src/models/components/transactionstatus.ts
   - src/models/components/transactionvertexdetail.ts
   - src/models/components/unknowncontract.ts
-  - src/models/components/unsubscriberequest.ts
   - src/models/components/usagemetricsgroupbyenum.ts
   - src/models/components/usagemetricsresponsedto.ts
   - src/models/components/usagemetricsvaluedto.ts
@@ -1009,7 +985,6 @@ generatedFiles:
   - src/sdk/icm.ts
   - src/sdk/index.ts
   - src/sdk/nfts.ts
-  - src/sdk/notifications.ts
   - src/sdk/operations.ts
   - src/sdk/primarynetwork.ts
   - src/sdk/primarynetworkbalances.ts

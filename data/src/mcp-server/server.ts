@@ -84,10 +84,6 @@ import { tool$dataUsageMetricsGetLogs } from "./tools/dataUsageMetricsGetLogs.js
 import { tool$dataUsageMetricsGetRpcUsageMetrics } from "./tools/dataUsageMetricsGetRpcUsageMetrics.js";
 import { tool$dataUsageMetricsGetSubnetRpcUsage } from "./tools/dataUsageMetricsGetSubnetRpcUsage.js";
 import { tool$dataUsageMetricsGetUsage } from "./tools/dataUsageMetricsGetUsage.js";
-import { tool$notificationsAccess } from "./tools/notificationsAccess.js";
-import { tool$notificationsSubscribe } from "./tools/notificationsSubscribe.js";
-import { tool$notificationsSubscriptions } from "./tools/notificationsSubscriptions.js";
-import { tool$notificationsUnsubscribe } from "./tools/notificationsUnsubscribe.js";
 
 export function createMCPServer(deps: {
   logger: ConsoleLogger;
@@ -101,7 +97,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.2.0",
+    version: "0.2.1",
   });
 
   const client = new AvalancheCore({
@@ -134,10 +130,6 @@ export function createMCPServer(deps: {
   void register; // suppress unused warnings
 
   tool(tool$dataHealthCheck);
-  tool(tool$notificationsAccess);
-  tool(tool$notificationsSubscribe);
-  tool(tool$notificationsUnsubscribe);
-  tool(tool$notificationsSubscriptions);
   tool(tool$dataNftsReindex);
   tool(tool$dataNftsList);
   tool(tool$dataNftsGet);
