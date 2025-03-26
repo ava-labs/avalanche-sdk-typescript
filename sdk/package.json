@@ -19,9 +19,9 @@
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
   "dependencies": {
-    "@avalanche-sdk/data": "^0.1.0",
-    "@avalanche-sdk/metrics": "^0.2.0",
-    "@avalanche-sdk/webhooks": "^0.1.0",
+    "@avalanche-sdk/data": "^0.2.0",
+    "@avalanche-sdk/metrics": "^0.3.0",
+    "@avalanche-sdk/webhooks": "^0.3.1",
     "eslint": "^9.22.0"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "exports": {
       ".": "./src/index.ts",
       "./package.json": "./package.json",
+      "./models/errors": "./src/models/errors/index.ts",
       "./data": "./src/data/index.ts",
       "./data/types": "./src/data/types/index.ts",
       "./data/models/errors": "./src/data/models/errors/index.ts",
@@ -72,6 +73,17 @@
       }
     },
     "./package.json": "./package.json",
+    "./models/errors": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/models/errors/index.ts",
+        "types": "./dist/esm/models/errors/index.d.ts",
+        "default": "./dist/esm/models/errors/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/models/errors/index.d.ts",
+        "default": "./dist/commonjs/models/errors/index.js"
+      }
+    },
     "./data": {
       "import": {
         "@avalanche-sdk/sdk/source": "./src/data/index.ts",

@@ -9,9 +9,10 @@ export class Avalanche {
   private webhooksInstance: AvalancheWebhooks;
 
   constructor(config: SDKOptions) {
-    this.dataInstance = new AvalancheData(config.dataSDKOptions ?? config as unknown as DataSDKOptions);
-    this.metricsInstance = new AvalancheMetrics(config.metricsSDKOptions ?? config as unknown as MetricsSDKOptions);
-    this.webhooksInstance = new AvalancheWebhooks(config.webhooksSDKOptions ?? config as unknown as WebhooksSDKOptions);
+    const { dataSDKOptions, metricsSDKOptions, webhooksSDKOptions, ...rest } = config;
+    this.dataInstance = new AvalancheData({ ...rest as unknown as DataSDKOptions, ...dataSDKOptions });
+    this.metricsInstance = new AvalancheMetrics({ ...rest as unknown as MetricsSDKOptions, ...metricsSDKOptions });
+    this.webhooksInstance = new AvalancheWebhooks({ ...rest as unknown as WebhooksSDKOptions, ...webhooksSDKOptions });
   }
 
   get data() {
@@ -25,4 +26,5 @@ export class Avalanche {
   get webhooks() {
     return this.webhooksInstance.webhooks;
   }
+
 }

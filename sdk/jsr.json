@@ -6,6 +6,7 @@
     "exports": {
       ".": "./src/index.ts",
       "./lib/config": "./src/lib/config.ts",
+      "./models/errors": "./src/models/errors/index.ts",
       "./data": "./src/data/index.ts",    
       "./data/models/errors": "./src/data/models/errors/index.ts",    
       "./data/models/components": "./src/data/models/components/index.ts",    
