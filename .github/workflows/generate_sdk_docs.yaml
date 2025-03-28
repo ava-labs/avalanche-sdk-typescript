@@ -31,22 +31,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          
+      # ✅ Remove the "Install Python dependencies" step
 
-      # Step 3: Install Python dependencies
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt || echo "No requirements.txt found, skipping."
-
-      # Step 4: Run the scripts
+      # Step 3: Run the scripts
       - name: Run SDK Docs Script
         run: python scripts/generate_sdk_docs.py
 
       - name: Run SDK README Script
         run: python scripts/generate_sdk_readme.py
 
-      # Step 5: Create new branch and handle existing PRs
+      # Step 4: Create new branch and handle existing PRs
       - name: Create or reset branch
         run: |
           BRANCH_NAME="auto-sdk-docs-update"
@@ -63,7 +58,7 @@ jobs:
           # Create a fresh branch from main
           git checkout -b "$BRANCH_NAME"
 
-      # Step 6: Commit and push changes
+      # Step 5: Commit and push changes
       - name: Commit and Push Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -79,7 +74,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 7: Create or update PR
+      # Step 6: Create or Update Pull Request
       - name: Create or Update Pull Request
         uses: actions/github-script@v7
         with:
