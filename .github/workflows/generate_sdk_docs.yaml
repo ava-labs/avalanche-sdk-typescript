@@ -1,0 +1,111 @@
+name: Generate SDK Docs from Data, Webhooks and Metrics
+
+"on":
+  push:
+    branches:
+      - main
+    paths:
+      - data/RELEASES.md
+      - webhooks/RELEASES.md
+      - metrics/RELEASES.md
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions
+
+permissions:
+  contents: write
+  pull-requests: write  # Required to create and manage PRs
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the main branch
+      - name: Checkout Main Branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      # Step 3: Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || echo "No requirements.txt found, skipping."
+
+      # Step 4: Run the scripts
+      - name: Run SDK Docs Script
+        run: python scripts/generate_sdk_docs.py
+
+      - name: Run SDK README Script
+        run: python scripts/generate_sdk_readme.py
+
+      # Step 5: Create new branch and handle existing PRs
+      - name: Create or reset branch
+        run: |
+          BRANCH_NAME="auto-sdk-docs-update"
+
+          # Check if the branch already exists remotely
+          if git ls-remote --heads origin | grep -q "refs/heads/$BRANCH_NAME"; then
+            echo "Branch $BRANCH_NAME already exists. Deleting and recreating..."
+            git push origin --delete "$BRANCH_NAME"
+          fi
+
+          # Delete local branch if it exists
+          git branch -D "$BRANCH_NAME" || true
+
+          # Create a fresh branch from main
+          git checkout -b "$BRANCH_NAME"
+
+      # Step 6: Commit and push changes
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+          
+          # Check for changes
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add .
+            git commit -m "Auto-generate SDK docs and README"
+            git push origin "auto-sdk-docs-update"
+          else
+            echo "No changes to commit."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 7: Create or update PR
+      - name: Create or Update Pull Request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = "auto-sdk-docs-update";
+            const { owner, repo } = context.repo;
+
+            // Find existing PR
+            const { data: prs } = await github.rest.pulls.list({
+              owner,
+              repo,
+              head: `${owner}:${branch}`,
+              state: "open"
+            });
+
+            if (prs.length > 0) {
+              console.log("PR already exists.");
+            } else {
+              console.log("Creating a new PR.");
+              await github.rest.pulls.create({
+                owner,
+                repo,
+                title: "Auto-generate SDK docs and README",
+                head: branch,
+                base: "main",
+                body: "This PR contains auto-generated SDK documentation and README updates.",
+              });
+            }
