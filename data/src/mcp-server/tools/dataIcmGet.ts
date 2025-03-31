@@ -14,7 +14,7 @@ export const tool$dataIcmGet: ToolDefinition<typeof args> = {
   name: "data-icm-get",
   description: `Get an ICM message
 
-Gets an ICM message by message ID.`,
+Gets an ICM message by teleporter message ID.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await dataIcmGet(

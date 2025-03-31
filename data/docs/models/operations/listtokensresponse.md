@@ -10,15 +10,12 @@ let value: ListTokensResponse = {
     tokens: [
       {
         address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-        name: "Wrapped AVAX",
-        symbol: "WAVAX",
-        ercType: "ERC-721",
+        ercType: "ERC-1155",
         tokenId: "<id>",
-        tokenUri: "https://unripe-babushka.org/",
+        tokenUri: "https://uniform-daughter.name",
         metadata: {
           indexStatus: "MISSING_TOKEN",
         },
-        ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
       },
     ],
   },

@@ -6,17 +6,17 @@
 import { Metric } from "@avalanche-sdk/data/models/components";
 
 let value: Metric = {
-  timestamp: 1173.8,
+  timestamp: 3182.33,
   values: [
     {
-      groupedBy: "requestPath",
-      totalRequests: 468.06,
-      requestsPerSecond: 9707.32,
-      successRatePercent: 38.6,
-      medianResponseTimeMsecs: 1785.8,
-      invalidRequests: 6128.67,
-      apiCreditsUsed: 813.69,
-      apiCreditsWasted: 8818.97,
+      groupedBy: "None",
+      totalRequests: 4585.03,
+      requestsPerSecond: 4445.87,
+      successRatePercent: 3361.02,
+      medianResponseTimeMsecs: 8806.79,
+      invalidRequests: 9450.27,
+      apiCreditsUsed: 9918.91,
+      apiCreditsWasted: 3767.41,
     },
   ],
 };

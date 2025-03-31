@@ -16,7 +16,7 @@ export class Icm extends ClientSDK {
    * Get an ICM message
    *
    * @remarks
-   * Gets an ICM message by message ID.
+   * Gets an ICM message by teleporter message ID.
    */
   async get(
     request: operations.GetIcmMessageRequest,
