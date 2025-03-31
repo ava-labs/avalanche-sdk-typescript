@@ -33,7 +33,6 @@ def create_extra_copy(root, dst_base, rel_path, files, prefix="sdks"):
     - files: List of files in the current directory.
     - prefix: The custom prefix to remove (default is "sdks").
     """
-    print (f"📂 Yo Yo Copying from {root} to {dst_base} with {rel_path}")
     # Remove the custom prefix if it exists
     prefix_with_slash = f"{prefix}/"
     cleaned_rel_path = (

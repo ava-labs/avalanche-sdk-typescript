@@ -55,54 +55,19 @@ jobs:
           # Delete local branch if it exists
           git branch -D "$BRANCH_NAME" || true
 
-          # Create a fresh branch from main
-          git checkout -b "$BRANCH_NAME"
-
       # Step 5: Commit and Push Changes
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Enable auto-upstream setup
-          git config --global push.autoSetupRemote true
-
-          # Add and commit changes
           git add -A
           git commit -m "Auto-generate SDK Docs and Readme" || echo "No changes to commit"
 
-          # Push without specifying upstream
-          git push origin "$BRANCH_NAME"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Step 6: Create or Update Pull Request
-      - name: Create or Update Pull Request
-        uses: actions/github-script@v7
+      # Step 6: Push to the remote branch
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branch = "auto-sdk-docs-update";
-            const { owner, repo } = context.repo;
-
-            // Find existing PR
-            const { data: prs } = await github.rest.pulls.list({
-              owner,
-              repo,
-              head: `${owner}:${branch}`,
-              state: "open"
-            });
-
-            if (prs.length > 0) {
-              console.log("PR already exists.");
-            } else {
-              console.log("Creating a new PR.");
-              await github.rest.pulls.create({
-                owner,
-                repo,
-                title: "Auto-generate SDK docs and README",
-                head: branch,
-                base: "main",
-                body: "This PR contains auto-generated SDK documentation and README updates.",
-              });
-            }
+          commit-message: "Auto-generate SDK Docs and Readme"
+          branch: "auto-sdk-docs-update"
+          title: "Auto-generated SDK Docs and Readme for Data, Webhooks, and Metrics"
+          body: "This PR includes auto-generated sdk docs from the modular sdks Python script."

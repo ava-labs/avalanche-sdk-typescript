@@ -125,9 +125,6 @@ def update_sdk_readme():
     # Get the merged sections
     merged_operations, merged_standalone = read_sections()
 
-    print("Merged operations:", merged_operations)
-    print("Merged standalone functions:", merged_standalone)
-
     # Use non-greedy regex pattern with multiline support
     operations_pattern = re.compile(
         f"{re.escape(OPERATIONS_START)}(.*?){re.escape(OPERATIONS_END)}",
