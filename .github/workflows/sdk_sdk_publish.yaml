@@ -7,11 +7,6 @@ on:
     paths:
       - sdk/RELEASE.md # Trigger only if RELEASE.md changes
   workflow_dispatch: # Allow manual trigger
-    inputs:
-      manual_version:
-        description: "Manually specify the SDK version (optional)"
-        required: false
-        type: string
 
 permissions:
   contents: write
@@ -33,18 +28,14 @@ jobs:
           node-version: "20" # Use your preferred version
           registry-url: "https://registry.npmjs.org/"
 
-      # Step 3: Extract version from RELEASE.md or use manual version
+      # Step 3: Extract version from RELEASE.md
       - name: Extract version
         id: extract_version
         run: |
-          if [ -n "${{ github.event.inputs.manual_version }}" ]; then
-            VERSION="${{ github.event.inputs.manual_version }}"
-            echo "Using manual version: $VERSION"
-          else
-            VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1 | sed 's/NPM v//')
-            echo "Extracted version from RELEASE.md: $VERSION"
-          fi
-
+          
+          VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1 | sed 's/NPM v//')
+          echo "Extracted version from RELEASE.md: $VERSION"
+          
           if [ -z "$VERSION" ]; then
             echo "❌ No version found in RELEASE.md. Exiting..."
             exit 1
