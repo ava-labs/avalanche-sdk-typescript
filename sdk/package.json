@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/sdk",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Sayan Kar",
   "license": "ISC",
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/sdk#readme",
@@ -19,7 +19,7 @@
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
   "dependencies": {
-    "@avalanche-sdk/data": "^0.2.1",
+    "@avalanche-sdk/data": "^0.2.2",
     "@avalanche-sdk/metrics": "^0.3.0",
     "@avalanche-sdk/webhooks": "^0.3.1",
     "eslint": "^9.22.0"
