@@ -30,8 +30,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+    
+      # Step 3: Install Python Dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install packaging
 
-      # ✅ Run Python script with optional version argument
+      # Step 4: Run Python script with optional version argument
       - name: Run SDK Docs Script
         run: |
           VERSION="${{ github.event.inputs.set_version }}"
@@ -43,7 +49,7 @@ jobs:
               python scripts/bump_sdk_version_and_update_release_doc.py
           fi
 
-      # Step 4: Create new branch and handle existing PRs
+      # Step 5: Create new branch and handle existing PRs
       - name: Create or reset branch
         run: |
           BRANCH_NAME="sdk/bump-version"
@@ -57,7 +63,7 @@ jobs:
           # Delete local branch if it exists
           git branch -D "$BRANCH_NAME" || true
 
-      # Step 5: Commit and Push Changes
+      # Step 6: Commit and Push Changes
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
@@ -65,7 +71,7 @@ jobs:
           git add -A
           git commit -m "Bump SDK version based on dependency bumps" || echo "No changes to commit"
 
-      # Step 6: Push to the remote branch
+      # Step 7: Push to the remote branch
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
