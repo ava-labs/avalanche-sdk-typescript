@@ -58,21 +58,12 @@ jobs:
           # Create a fresh branch from main
           git checkout -b "$BRANCH_NAME"
 
-      # Step 5: Commit and push changes
-      - name: Commit and Push Changes
+      - name: Commit changes
         run: |
+          git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "GitHub Actions Bot"
-          
-          # Check for changes
-          if [[ -n "$(git status --porcelain)" ]]; then
-            git add .
-            git commit -m "Auto-generate SDK docs and README"
-            git push origin "auto-sdk-docs-update"
-          else
-            echo "No changes to commit."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git add -A
+          git commit -m "Auto-generate SDK Docs and Readme" || echo "No changes to commit"
 
       # Step 6: Create or Update Pull Request
       - name: Create or Update Pull Request
