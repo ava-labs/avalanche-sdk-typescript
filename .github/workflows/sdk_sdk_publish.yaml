@@ -47,11 +47,11 @@ jobs:
       - name: Extract latest release body
         id: extract_release_body
         run: |
-          # Extract the most recent release timestamp
-          LATEST_TIMESTAMP=$(head -n 1 sdk/RELEASE.md | awk '{print $1 " " $2}')
+          # Step 1: Extract the most recent release timestamp
+          LATEST_TIMESTAMP=$(head -n 1 sdk/RELEASE.md | awk '{print $1 " " $2}' | sed 's/^ *//g' | sed 's/ *$//g')
           echo "LATEST_TIMESTAMP=$LATEST_TIMESTAMP" >> $GITHUB_ENV
 
-          # Extract the body of the release using the timestamp
+          # Step 2: Extract the body of the release using the timestamp
           RELEASE_BODY=$(sed -n "/$LATEST_TIMESTAMP/,/---/p" sdk/RELEASE.md)
           echo "LATEST_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
 
