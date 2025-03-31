@@ -64,7 +64,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Auto-generate SDK Docs and Readme" || echo "No changes to commit"
-          git push origin "$BRANCH_NAME"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
