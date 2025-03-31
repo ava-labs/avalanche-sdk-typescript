@@ -63,8 +63,8 @@ jobs:
           # Debug: Print the release body to verify it's correct
           echo "Extracted RELEASE_BODY: $RELEASE_BODY"
 
-          # Save the body into environment variable for GitHub release
-          echo "LATEST_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
+          # Save the release body to a file
+          echo "$RELEASE_BODY" > release_notes.txt
 
       # Step 5: Install dependencies and build the SDK
       - name: Install dependencies
@@ -107,7 +107,7 @@ jobs:
         with:
           tag: "sdk/v${{ env.VERSION }}"
           name: "typescript - sdk/v${{ env.VERSION }} - ${{ env.CURRENT_TIMESTAMP }}"
-          body: "${{ env.LATEST_RELEASE_BODY }}"
+          body: "$(cat release_notes.txt)"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 11: Upload assets to GitHub release
