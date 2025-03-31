@@ -5,7 +5,7 @@
 ```typescript
 import { PrimaryNetworkTxType } from "@avalanche-sdk/sdk/data/models/components";
 
-let value: PrimaryNetworkTxType = "RewardValidatorTx";
+let value: PrimaryNetworkTxType = "CreateAssetTx";
 ```
 
 ## Values

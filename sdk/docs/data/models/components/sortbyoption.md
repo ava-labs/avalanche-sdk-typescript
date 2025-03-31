@@ -5,7 +5,7 @@
 ```typescript
 import { SortByOption } from "@avalanche-sdk/sdk/data/models/components";
 
-let value: SortByOption = "delegationCapacity";
+let value: SortByOption = "blockIndex";
 ```
 
 ## Values

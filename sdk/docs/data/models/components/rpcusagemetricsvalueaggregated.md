@@ -6,14 +6,14 @@
 import { RpcUsageMetricsValueAggregated } from "@avalanche-sdk/sdk/data/models/components";
 
 let value: RpcUsageMetricsValueAggregated = {
-  totalRequests: 4181.09,
-  apiCreditsUsed: 1729.51,
-  requestsPerSecond: 1072.1,
-  successRatePercent: 8173.39,
-  medianResponseTimeMsecs: 4731.43,
-  invalidRequests: 8822.84,
-  apiCreditsWasted: 7332.89,
-  groupedBy: "requestPath",
+  totalRequests: 8659.46,
+  apiCreditsUsed: 4413.21,
+  requestsPerSecond: 4864.1,
+  successRatePercent: 4483.69,
+  medianResponseTimeMsecs: 5678.46,
+  invalidRequests: 6211.69,
+  apiCreditsWasted: 4981.8,
+  groupedBy: "userAgent",
 };
 ```
 

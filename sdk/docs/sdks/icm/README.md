@@ -11,7 +11,7 @@
 
 ## get
 
-Gets an ICM message by message ID.
+Gets an ICM message by teleporter message ID.
 
 ### Example Usage
 

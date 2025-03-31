@@ -7,7 +7,7 @@ Indicates whether the UTXO is staked or transferable
 ```typescript
 import { UtxoType } from "@avalanche-sdk/sdk/data/models/components";
 
-let value: UtxoType = "TRANSFER";
+let value: UtxoType = "STAKE";
 ```
 
 ## Values

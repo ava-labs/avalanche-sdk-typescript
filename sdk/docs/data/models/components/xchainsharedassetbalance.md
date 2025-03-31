@@ -10,7 +10,7 @@ let value: XChainSharedAssetBalance = {
   name: "Avalanche",
   symbol: "AVAX",
   denomination: 9,
-  type: "secp256k1",
+  type: "nft",
   amount: "5001000",
   utxoCount: 1,
   sharedWithChainId: "<id>",
