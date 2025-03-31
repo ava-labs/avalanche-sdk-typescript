@@ -13,14 +13,14 @@ let value: GetVertexByHeightResponse = {
         parentHashes: [
           "<value>",
         ],
-        vertexHeight: 9851.09,
-        vertexIndex: 7833.97,
-        vertexTimestamp: 5189.9,
-        txCount: 660.74,
+        vertexHeight: 1559.78,
+        vertexIndex: 4260.02,
+        vertexTimestamp: 8927.08,
+        txCount: 1035.78,
         transactions: [
           "<value>",
         ],
-        vertexSizeBytes: 4724.14,
+        vertexSizeBytes: 180.96,
       },
     ],
     chainInfo: {

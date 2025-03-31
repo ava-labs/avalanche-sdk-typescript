@@ -27,6 +27,13 @@ const value: components.ActiveValidatorDetails = {
     benchedXChainRequestsPercent: 2494.2,
     benchedCChainRequestsPercent: 1059.06,
   },
+  geolocation: {
+    city: "DeSoto",
+    country: "Panama",
+    countryCode: "AX",
+    latitude: 7307.09,
+    longitude: 8817.21,
+  },
 };
 ```
 
@@ -38,8 +45,8 @@ const value: components.PendingValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 9509.53,
-  endTimestamp: 2334.2,
+  startTimestamp: 2724.37,
+  endTimestamp: 3790.57,
   validationStatus: "pending",
 };
 ```
@@ -52,9 +59,9 @@ const value: components.CompletedValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 6897.68,
-  endTimestamp: 583.56,
-  delegatorCount: 7307.09,
+  startTimestamp: 3742.96,
+  endTimestamp: 7487.89,
+  delegatorCount: 2378.07,
   rewards: {
     validationRewardAmount: "<value>",
     delegationRewardAmount: "<value>",
@@ -71,10 +78,10 @@ const value: components.RemovedValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 8817.21,
-  endTimestamp: 2724.37,
+  startTimestamp: 1718.53,
+  endTimestamp: 4492.92,
   removeTxHash: "<value>",
-  removeTimestamp: 3790.57,
+  removeTimestamp: 3044.68,
   validationStatus: "removed",
 };
 ```

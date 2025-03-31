@@ -9,7 +9,7 @@ let value: BalanceOwner = {
   addresses: [
     "<value>",
   ],
-  threshold: 7400.98,
+  threshold: 2790.68,
 };
 ```
 
