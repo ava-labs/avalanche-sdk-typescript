@@ -1,0 +1,125 @@
+name: Release SDK to NPM and Create GitHub Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - sdk/RELEASE.md # Trigger only if RELEASE.md changes
+  workflow_dispatch: # Allow manual trigger
+    inputs:
+      manual_version:
+        description: "Manually specify the SDK version (optional)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release-sdk:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Use your preferred version
+          registry-url: "https://registry.npmjs.org/"
+
+      # Step 3: Extract version from RELEASE.md or use manual version
+      - name: Extract version
+        id: extract_version
+        run: |
+          if [ -n "${{ github.event.inputs.manual_version }}" ]; then
+            VERSION="${{ github.event.inputs.manual_version }}"
+            echo "Using manual version: $VERSION"
+          else
+            VERSION=$(grep -oP '(?<=NPM v)[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1)
+            echo "Extracted version from RELEASE.md: $VERSION"
+          fi
+
+          if [ -z "$VERSION" ]; then
+            echo "❌ No version found in RELEASE.md. Exiting..."
+            exit 1
+          fi
+
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # Step 4: Extract the latest release body from RELEASE.md
+      - name: Extract latest release body
+        id: extract_release_body
+        run: |
+          # Extract the most recent release timestamp
+          LATEST_TIMESTAMP=$(head -n 1 sdk/RELEASE.md | awk '{print $1 " " $2}')
+          echo "LATEST_TIMESTAMP=$LATEST_TIMESTAMP" >> $GITHUB_ENV
+
+          # Extract the body of the release using the timestamp
+          RELEASE_BODY=$(sed -n "/## $LATEST_TIMESTAMP/,/---/p" sdk/RELEASE.md)
+          echo "LATEST_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
+
+      # Step 5: Install dependencies and build the SDK
+      - name: Install dependencies
+        run: |
+          cd sdk
+          npm install
+          npm run build --if-present
+
+      # Step 6: Update version in package.json
+      - name: Update version in package.json
+        run: |
+          cd sdk
+          npm version ${{ env.VERSION }} --no-git-tag-version
+
+      # Step 7: Publish the SDK to NPM
+      - name: Publish to NPM
+        run: |
+          cd sdk
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Step 8: Create Git tag
+      - name: Create Git tag
+        run: |
+          git tag "sdk/v${{ env.VERSION }}"
+          git push origin "v${{ env.VERSION }}"
+
+      # Step 9: Create GitHub release with the body extracted from the latest release section
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "sdk/v${{ env.VERSION }}"
+          name: "SDK Release v${{ env.VERSION }}"
+          body: "${{ env.LATEST_RELEASE_BODY }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 10: Upload assets to GitHub release
+      - name: Upload assets to GitHub release
+        run: |
+          # Create zip and tar.gz artifacts of the SDK
+          cd sdk
+          zip -r sdk-v${{ env.VERSION }}.zip .
+          tar -czf sdk-v${{ env.VERSION }}.tar.gz .
+
+          # Upload the assets to the GitHub release
+          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d "{\"tag_name\": \"sdk/v${{ env.VERSION }}\", \"name\": \"SDK Release v${{ env.VERSION }}\"}" \
+          "https://api.github.com/repos/${{ github.repository }}/releases"
+
+          # Upload the files using the GitHub API
+          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/zip" \
+          --data-binary @sdk-v${{ env.VERSION }}.zip \
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=sdk-v${{ env.VERSION }}.zip"
+
+          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/gzip" \
+          --data-binary @sdk-v${{ env.VERSION }}.tar.gz \
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=sdk-v${{ env.VERSION }}.tar.gz"
