@@ -41,7 +41,7 @@ jobs:
             VERSION="${{ github.event.inputs.manual_version }}"
             echo "Using manual version: $VERSION"
           else
-            VERSION=$(grep -oP '(?<=NPM v)[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1)
+            VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1 | sed 's/NPM v//')
             echo "Extracted version from RELEASE.md: $VERSION"
           fi
 
@@ -61,7 +61,7 @@ jobs:
           echo "LATEST_TIMESTAMP=$LATEST_TIMESTAMP" >> $GITHUB_ENV
 
           # Extract the body of the release using the timestamp
-          RELEASE_BODY=$(sed -n "/## $LATEST_TIMESTAMP/,/---/p" sdk/RELEASE.md)
+          RELEASE_BODY=$(sed -n "/$LATEST_TIMESTAMP/,/---/p" sdk/RELEASE.md)
           echo "LATEST_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
 
       # Step 5: Install dependencies and build the SDK
@@ -91,16 +91,24 @@ jobs:
           git tag "sdk/v${{ env.VERSION }}"
           git push origin "v${{ env.VERSION }}"
 
-      # Step 9: Create GitHub release with the body extracted from the latest release section
+      # Step 9: Get the latest release body from the RELEASE.md file
+      - name: Get Current UTC Timestamp
+        id: get_timestamp
+        run: |
+          # Get current UTC timestamp in the format YYYY-MM-DD HH:MM:SS
+          CURRENT_TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S")
+          echo "CURRENT_TIMESTAMP=$CURRENT_TIMESTAMP" >> $GITHUB_ENV
+
+      # Step 10: Create GitHub release with the body extracted from the latest release section
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: "sdk/v${{ env.VERSION }}"
-          name: "SDK Release v${{ env.VERSION }}"
+          name: "typescript - sdk/v${{ env.VERSION }} - ${{ env.CURRENT_TIMESTAMP }}"
           body: "${{ env.LATEST_RELEASE_BODY }}"
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 10: Upload assets to GitHub release
+      # Step 11: Upload assets to GitHub release
       - name: Upload assets to GitHub release
         run: |
           # Create zip and tar.gz artifacts of the SDK
