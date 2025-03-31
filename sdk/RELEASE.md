@@ -1,3 +1,20 @@
+## 2025-03-31 19:19:46
+
+### Changes
+
+Based on:
+- @avalanche-sdk/data bumped from 0.2.1 to 0.2.2
+
+### Generated
+
+- [typescript v1.2.0] sdk
+
+### Releases
+
+- [NPM v1.2.0] https://www.npmjs.com/package/@avalanche-sdk/sdk/v/1.2.0 - sdk
+
+---
+
 ## 2025-03-28 01:58:28
 
 ### Changes
