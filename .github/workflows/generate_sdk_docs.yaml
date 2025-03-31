@@ -8,11 +8,11 @@ name: Generate SDK Docs from Data, Webhooks and Metrics
       - data/RELEASES.md
       - webhooks/RELEASES.md
       - metrics/RELEASES.md
-  workflow_dispatch:  # Allows manual triggering from GitHub Actions
+  workflow_dispatch: # Allows manual triggering from GitHub Actions
 
 permissions:
   contents: write
-  pull-requests: write  # Required to create and manage PRs
+  pull-requests: write # Required to create and manage PRs
 
 jobs:
   generate-docs:
@@ -30,8 +30,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          
+          python-version: "3.10"
+
       # ✅ Remove the "Install Python dependencies" step
 
       # Step 3: Run the scripts
@@ -58,13 +58,21 @@ jobs:
           # Create a fresh branch from main
           git checkout -b "$BRANCH_NAME"
 
-      - name: Commit changes
+      # Step 5: Commit and Push Changes
+      - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Enable auto-upstream setup
+          git config --global push.autoSetupRemote true
+
+          # Add and commit changes
           git add -A
           git commit -m "Auto-generate SDK Docs and Readme" || echo "No changes to commit"
-          git push
+
+          # Push without specifying upstream
+          git push origin "$BRANCH_NAME"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
