@@ -73,11 +73,21 @@ jobs:
           npm install
           npm run build --if-present
 
-      # Step 6: Update version in package.json
-      - name: Update version in package.json
+      # Step 6: Update version in package.json only if necessary
+      - name: Update version in package.json (if necessary)
         run: |
           cd sdk
-          npm version ${{ env.VERSION }} --no-git-tag-version
+
+          # Get the current version from package.json
+          CURRENT_VERSION=$(jq -r '.version' package.json)
+
+          # Check if the version needs to be updated
+          if [ "$CURRENT_VERSION" != "${{ env.VERSION }}" ]; then
+            echo "Updating version from $CURRENT_VERSION to ${{ env.VERSION }}"
+            npm version ${{ env.VERSION }} --no-git-tag-version
+          else
+            echo "Version is already up to date ($CURRENT_VERSION). Skipping npm version update."
+          fi
 
       # Step 7: Publish the SDK to NPM
       - name: Publish to NPM
