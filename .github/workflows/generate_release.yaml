@@ -1,4 +1,4 @@
-name: Generate SDK Docs from Data, Webhooks and Metrics
+name: Create release notes and bump SDK version
 
 "on":
   workflow_dispatch: # Allows manual triggering from GitHub Actions
@@ -31,12 +31,17 @@ jobs:
         with:
           python-version: "3.10"
 
-      # ✅ Remove the "Install Python dependencies" step
-
-      # Step 3: Run the scripts
+      # ✅ Run Python script with optional version argument
       - name: Run SDK Docs Script
-        run: python scripts/bump_sdk_version_and_update_release_doc.py
-
+        run: |
+          VERSION="${{ github.event.inputs.set_version }}"
+          if [ -n "$VERSION" ]; then
+              echo "Running with manual version: $VERSION"
+              python scripts/bump_sdk_version_and_update_release_doc.py "$VERSION"
+          else
+              echo "Running without manual version"
+              python scripts/bump_sdk_version_and_update_release_doc.py
+          fi
 
       # Step 4: Create new branch and handle existing PRs
       - name: Create or reset branch
