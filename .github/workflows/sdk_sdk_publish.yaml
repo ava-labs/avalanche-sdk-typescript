@@ -32,17 +32,17 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          
+
           VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1 | sed 's/NPM v//')
           echo "Extracted version from RELEASE.md: $VERSION"
-          
+
           if [ -z "$VERSION" ]; then
             echo "❌ No version found in RELEASE.md. Exiting..."
             exit 1
           fi
 
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-
+    
       # Step 4: Extract the latest release body from RELEASE.md
       - name: Extract latest release body
         id: extract_release_body
@@ -51,8 +51,18 @@ jobs:
           LATEST_TIMESTAMP=$(head -n 1 sdk/RELEASE.md | awk '{print $1 " " $2}' | sed 's/^ *//g' | sed 's/ *$//g')
           echo "LATEST_TIMESTAMP=$LATEST_TIMESTAMP" >> $GITHUB_ENV
 
-          # Step 2: Extract the body of the release using the timestamp
-          RELEASE_BODY=$(sed -n "/$LATEST_TIMESTAMP/,/---/p" sdk/RELEASE.md)
+          # Debug: Print the latest timestamp to verify it's correct
+          echo "Extracted Timestamp: $LATEST_TIMESTAMP"
+
+          # Step 2: Escape any special characters in the timestamp for sed
+          ESCAPED_TIMESTAMP=$(echo "$LATEST_TIMESTAMP" | sed 's/[\/&]/\\&/g')  # Escape any characters that sed might misinterpret
+
+          # Extract the body of the release using the timestamp
+          RELEASE_BODY=$(sed -n "/$ESCAPED_TIMESTAMP/,/---/p" sdk/RELEASE.md)
+
+          # Debug: Print the release body to verify it's correct
+          echo "Extracted RELEASE_BODY: $RELEASE_BODY"
+
           echo "LATEST_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
 
       # Step 5: Install dependencies and build the SDK
