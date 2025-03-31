@@ -12,7 +12,7 @@ let value: ListAssetTransactionsResponse = {
         txHash: "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c",
         chainFormat: "non-linear",
         timestamp: 1600762738,
-        txType: "BaseTx",
+        txType: "UNKNOWN",
         memo: "0x546865204176616c616e6368652050726f6a656374",
         consumedUtxos: [
           {
@@ -24,7 +24,7 @@ let value: ListAssetTransactionsResponse = {
               name: "Avalanche",
               symbol: "AVAX",
               denomination: 9,
-              type: "secp256k1",
+              type: "nft",
               amount: "5001000",
             },
             consumedOnChainId:
@@ -92,7 +92,7 @@ let value: ListAssetTransactionsResponse = {
             name: "Avalanche",
             symbol: "AVAX",
             denomination: 9,
-            type: "nft",
+            type: "secp256k1",
             amount: "5001000",
           },
         ],
@@ -102,7 +102,7 @@ let value: ListAssetTransactionsResponse = {
             name: "Avalanche",
             symbol: "AVAX",
             denomination: 9,
-            type: "secp256k1",
+            type: "nft",
             amount: "5001000",
           },
         ],
@@ -117,8 +117,13 @@ let value: ListAssetTransactionsResponse = {
           createdAtTimestamp: 1675444720,
           cap: "variable",
         },
-        blockHeight: 1005,
-        blockHash: "82qPRREHmh8Cfta4PGD6GymY9ZLyvgYugqW6hj9FykpMVRz1S",
+        vertices: [
+          {
+            hash: "82qPRREHmh8Cfta4PGD6GymY9ZLyvgYugqW6hj9FykpMVRz1S",
+            height: 1961,
+            timestamp: 1600762738,
+          },
+        ],
       },
     ],
     chainInfo: {

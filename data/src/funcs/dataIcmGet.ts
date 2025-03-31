@@ -28,7 +28,7 @@ import { Result } from "../types/fp.js";
  * Get an ICM message
  *
  * @remarks
- * Gets an ICM message by message ID.
+ * Gets an ICM message by teleporter message ID.
  */
 export function dataIcmGet(
   client: AvalancheCore,
@@ -119,7 +119,7 @@ async function $do(
   const context = {
     baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "getIcmMessage",
-    oAuth2Scopes: null,
+    oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
 

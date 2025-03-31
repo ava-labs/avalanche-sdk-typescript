@@ -13,14 +13,14 @@ let value: ListLatestXChainVerticesResponse = {
         parentHashes: [
           "<value>",
         ],
-        vertexHeight: 6150.58,
-        vertexIndex: 5524.39,
-        vertexTimestamp: 2959.5,
-        txCount: 9292.92,
+        vertexHeight: 9555.69,
+        vertexIndex: 3165.5,
+        vertexTimestamp: 8268.06,
+        txCount: 1039.9,
         transactions: [
           "<value>",
         ],
-        vertexSizeBytes: 2659.05,
+        vertexSizeBytes: 6339.82,
       },
     ],
     chainInfo: {

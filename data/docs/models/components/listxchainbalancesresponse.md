@@ -35,7 +35,7 @@ let value: ListXChainBalancesResponse = {
         name: "Avalanche",
         symbol: "AVAX",
         denomination: 9,
-        type: "secp256k1",
+        type: "nft",
         amount: "5001000",
         utxoCount: 1,
         sharedWithChainId: "<id>",
@@ -47,7 +47,7 @@ let value: ListXChainBalancesResponse = {
         name: "Avalanche",
         symbol: "AVAX",
         denomination: 9,
-        type: "nft",
+        type: "secp256k1",
         amount: "5001000",
         utxoCount: 1,
         sharedWithChainId: "<id>",
@@ -55,7 +55,7 @@ let value: ListXChainBalancesResponse = {
     ],
   },
   chainInfo: {
-    chainName: "p-chain",
+    chainName: "x-chain",
     network: "mainnet",
   },
 };

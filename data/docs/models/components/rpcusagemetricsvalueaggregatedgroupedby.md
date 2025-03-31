@@ -7,7 +7,7 @@ Column name used for data aggregation
 ```typescript
 import { RpcUsageMetricsValueAggregatedGroupedBy } from "@avalanche-sdk/data/models/components";
 
-let value: RpcUsageMetricsValueAggregatedGroupedBy = "rlBypassToken";
+let value: RpcUsageMetricsValueAggregatedGroupedBy = "continent";
 ```
 
 ## Values

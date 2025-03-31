@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: 64e1c03d6e88dcda599379bee09f8af9
+  docChecksum: 524d4e55f62b69ffd34e5504e45e1e1f
   docVersion: Beta
-  speakeasyVersion: 1.524.0
-  generationVersion: 2.562.2
-  releaseVersion: 0.2.1
-  configChecksum: c3271cf6c656bb5689efb9e6a311bacb
+  speakeasyVersion: 1.526.6
+  generationVersion: 2.563.1
+  releaseVersion: 0.2.2
+  configChecksum: f8de7d3076395b7173a37ac1965611a4
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: data
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/data
@@ -125,6 +125,7 @@ generatedFiles:
   - docs/models/components/evmoperationtype.md
   - docs/models/components/evmoutput.md
   - docs/models/components/fullnativetransactiondetails.md
+  - docs/models/components/geolocation.md
   - docs/models/components/getchainresponse.md
   - docs/models/components/getchainresponseenabledfeature.md
   - docs/models/components/getevmblockresponse.md
@@ -2424,7 +2425,7 @@ examples:
           sortOrder: "asc"
       responses:
         "200":
-          application/json: {"validators": [{"txHash": "<value>", "nodeId": "<id>", "subnetId": "<id>", "amountStaked": "<value>", "startTimestamp": 1194.5, "endTimestamp": 2887.32, "stakePercentage": 6812.51, "delegatorCount": 539.79, "uptimePerformance": 1316.21, "potentialRewards": {"validationRewardAmount": "<value>", "delegationRewardAmount": "<value>"}, "validationStatus": "active", "validatorHealth": {"reachabilityPercent": 2842.47, "benchedPChainRequestsPercent": 5462.48, "benchedXChainRequestsPercent": 4339.17, "benchedCChainRequestsPercent": 5017.28}}]}
+          application/json: {"validators": [{"txHash": "<value>", "nodeId": "<id>", "subnetId": "<id>", "amountStaked": "<value>", "startTimestamp": 1194.5, "endTimestamp": 2887.32, "stakePercentage": 6812.51, "delegatorCount": 539.79, "uptimePerformance": 1316.21, "potentialRewards": {"validationRewardAmount": "<value>", "delegationRewardAmount": "<value>"}, "validationStatus": "active", "validatorHealth": {"reachabilityPercent": 2842.47, "benchedPChainRequestsPercent": 5462.48, "benchedXChainRequestsPercent": 4339.17, "benchedCChainRequestsPercent": 5017.28}, "geolocation": {"city": "Fayport", "country": "Hong Kong", "countryCode": "VN", "latitude": 9526.46, "longitude": 5958.44}}]}
         "400":
           application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
         "401":

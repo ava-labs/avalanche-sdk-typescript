@@ -28,7 +28,7 @@ export type ListL1ValidatorsRequest = {
   /**
    * The L1 Validator's validation ID to filter by. If not provided, then all L1 Validators will be returned.
    */
-  l1ValidationId?: any | undefined;
+  l1ValidationId?: string | undefined;
   includeInactiveL1Validators?: boolean | undefined;
   /**
    * Either mainnet or testnet/fuji.
@@ -110,7 +110,7 @@ export const ListL1ValidatorsRequest$inboundSchema: z.ZodType<
 > = z.object({
   pageToken: z.string().optional(),
   pageSize: z.number().int().default(10),
-  l1ValidationId: z.any().optional(),
+  l1ValidationId: z.string().optional(),
   includeInactiveL1Validators: z.boolean().optional(),
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   nodeId: z.string().optional(),
@@ -121,7 +121,7 @@ export const ListL1ValidatorsRequest$inboundSchema: z.ZodType<
 export type ListL1ValidatorsRequest$Outbound = {
   pageToken?: string | undefined;
   pageSize: number;
-  l1ValidationId?: any | undefined;
+  l1ValidationId?: string | undefined;
   includeInactiveL1Validators?: boolean | undefined;
   network?: string | undefined;
   nodeId?: string | undefined;
@@ -136,7 +136,7 @@ export const ListL1ValidatorsRequest$outboundSchema: z.ZodType<
 > = z.object({
   pageToken: z.string().optional(),
   pageSize: z.number().int().default(10),
-  l1ValidationId: z.any().optional(),
+  l1ValidationId: z.string().optional(),
   includeInactiveL1Validators: z.boolean().optional(),
   network: components.GlobalParamNetwork$outboundSchema.optional(),
   nodeId: z.string().optional(),

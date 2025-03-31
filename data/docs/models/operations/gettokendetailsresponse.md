@@ -14,7 +14,7 @@ const value: components.Erc721Token = {
   symbol: "WAVAX",
   ercType: "ERC-721",
   tokenId: "<id>",
-  tokenUri: "https://obvious-fund.info",
+  tokenUri: "https://glorious-eyeliner.info/",
   metadata: {
     indexStatus: "INVALID_METADATA_JSON",
   },
@@ -29,9 +29,9 @@ const value: components.Erc1155Token = {
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   ercType: "ERC-1155",
   tokenId: "<id>",
-  tokenUri: "https://questionable-league.info/",
+  tokenUri: "https://uncomfortable-reboot.biz/",
   metadata: {
-    indexStatus: "INDEXED",
+    indexStatus: "UNINDEXED",
   },
 };
 ```

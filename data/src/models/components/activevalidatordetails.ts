@@ -33,6 +33,32 @@ export type ActiveValidatorDetailsValidationStatus = ClosedEnum<
   typeof ActiveValidatorDetailsValidationStatus
 >;
 
+/**
+ * The geographical location of the validator node, if available.
+ */
+export type Geolocation = {
+  /**
+   * The name of the validator node.
+   */
+  city: string;
+  /**
+   * The city of the validator node.
+   */
+  country: string;
+  /**
+   * The country code of the validator node.
+   */
+  countryCode: string;
+  /**
+   * The latitude of the validator node.
+   */
+  latitude: number;
+  /**
+   * The longitude of the validator node.
+   */
+  longitude: number;
+};
+
 export type ActiveValidatorDetails = {
   txHash: string;
   nodeId: string;
@@ -75,6 +101,10 @@ export type ActiveValidatorDetails = {
   potentialRewards: Rewards;
   validationStatus: ActiveValidatorDetailsValidationStatus;
   validatorHealth: ValidatorHealthDetails;
+  /**
+   * The geographical location of the validator node, if available.
+   */
+  geolocation: Geolocation | null;
 };
 
 /** @internal */
@@ -102,6 +132,68 @@ export namespace ActiveValidatorDetailsValidationStatus$ {
 }
 
 /** @internal */
+export const Geolocation$inboundSchema: z.ZodType<
+  Geolocation,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  city: z.string(),
+  country: z.string(),
+  countryCode: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+});
+
+/** @internal */
+export type Geolocation$Outbound = {
+  city: string;
+  country: string;
+  countryCode: string;
+  latitude: number;
+  longitude: number;
+};
+
+/** @internal */
+export const Geolocation$outboundSchema: z.ZodType<
+  Geolocation$Outbound,
+  z.ZodTypeDef,
+  Geolocation
+> = z.object({
+  city: z.string(),
+  country: z.string(),
+  countryCode: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Geolocation$ {
+  /** @deprecated use `Geolocation$inboundSchema` instead. */
+  export const inboundSchema = Geolocation$inboundSchema;
+  /** @deprecated use `Geolocation$outboundSchema` instead. */
+  export const outboundSchema = Geolocation$outboundSchema;
+  /** @deprecated use `Geolocation$Outbound` instead. */
+  export type Outbound = Geolocation$Outbound;
+}
+
+export function geolocationToJSON(geolocation: Geolocation): string {
+  return JSON.stringify(Geolocation$outboundSchema.parse(geolocation));
+}
+
+export function geolocationFromJSON(
+  jsonString: string,
+): SafeParseResult<Geolocation, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Geolocation$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Geolocation' from JSON`,
+  );
+}
+
+/** @internal */
 export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   ActiveValidatorDetails,
   z.ZodTypeDef,
@@ -124,6 +216,7 @@ export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   potentialRewards: Rewards$inboundSchema,
   validationStatus: ActiveValidatorDetailsValidationStatus$inboundSchema,
   validatorHealth: ValidatorHealthDetails$inboundSchema,
+  geolocation: z.nullable(z.lazy(() => Geolocation$inboundSchema)),
 });
 
 /** @internal */
@@ -145,6 +238,7 @@ export type ActiveValidatorDetails$Outbound = {
   potentialRewards: Rewards$Outbound;
   validationStatus: string;
   validatorHealth: ValidatorHealthDetails$Outbound;
+  geolocation: Geolocation$Outbound | null;
 };
 
 /** @internal */
@@ -170,6 +264,7 @@ export const ActiveValidatorDetails$outboundSchema: z.ZodType<
   potentialRewards: Rewards$outboundSchema,
   validationStatus: ActiveValidatorDetailsValidationStatus$outboundSchema,
   validatorHealth: ValidatorHealthDetails$outboundSchema,
+  geolocation: z.nullable(z.lazy(() => Geolocation$outboundSchema)),
 });
 
 /**

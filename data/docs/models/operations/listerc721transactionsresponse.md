@@ -31,14 +31,14 @@ let value: ListErc721TransactionsResponse = {
             "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg",
           address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         },
-        logIndex: 7791.8,
+        logIndex: 3330.72,
         erc721Token: {
           address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
           name: "Wrapped AVAX",
           symbol: "WAVAX",
           ercType: "ERC-721",
           tokenId: "<id>",
-          tokenUri: "https://grown-rust.net",
+          tokenUri: "https://little-slide.biz/",
           metadata: {
             indexStatus: "MISSING_TOKEN",
           },
