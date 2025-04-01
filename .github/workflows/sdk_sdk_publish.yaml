@@ -63,8 +63,14 @@ jobs:
           # Debug: Print the release body to verify it's correct
           echo "Extracted RELEASE_BODY: $RELEASE_BODY"
 
-          # Save the release body to a file
-          echo "$RELEASE_BODY" > release_notes.txt
+
+          # Store release body in GitHub environment
+          {
+            echo "RELEASE_BODY<<EOF"
+            echo "$RELEASE_BODY"
+            echo "EOF"
+          } >> $GITHUB_ENV
+
 
       # Step 5: Install dependencies and build the SDK
       - name: Install dependencies
@@ -89,21 +95,13 @@ jobs:
             echo "Version is already up to date ($CURRENT_VERSION). Skipping npm version update."
           fi
 
-      # Step 7: Publish the SDK to NPM
-      - name: Publish to NPM
-        run: |
-          cd sdk
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # Step 8: Create Git tag
+      # Step 7: Create Git tag
       - name: Create Git tag
         run: |
           git tag "sdk/v${{ env.VERSION }}"
           git push origin "sdk/v${{ env.VERSION }}"
 
-      # Step 9: Get the latest release body from the RELEASE.md file
+      # Step 8: Get the latest release body from the RELEASE.md file
       - name: Get Current UTC Timestamp
         id: get_timestamp
         run: |
@@ -111,9 +109,9 @@ jobs:
           CURRENT_TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S")
           echo "CURRENT_TIMESTAMP=$CURRENT_TIMESTAMP" >> $GITHUB_ENV
 
-            # Step 10: Create GitHub release with the extracted body
+          echo "Release Body: ${{ env.RELEASE_BODY }}"
       
-     # Step 10: Create GitHub release with the extracted body 
+     # Step 9: Create GitHub release with the extracted body 
       - name: Create GitHub Release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -122,34 +120,11 @@ jobs:
           name: "typescript - sdk/v${{ env.VERSION }} - ${{ env.CURRENT_TIMESTAMP }}"
           body: "$(cat release_notes.txt)"
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Step 11: Upload assets to GitHub release
-      - name: Upload assets to GitHub release
+    
+      # Step 10: Publish the SDK to NPM
+      - name: Publish to NPM
         run: |
-          # Create zip and tar.gz artifacts of the SDK
           cd sdk
-          zip -r avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip .
-          tar -czf avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz .
-
-          # Fetch the Release ID from GitHub
-          RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/releases/tags/sdk/v${{ env.VERSION }}" | jq -r .id)
-
-          if [ "$RELEASE_ID" = "null" ]; then
-            echo "Failed to fetch Release ID. Exiting..."
-            exit 1
-          fi
-
-          echo "Release ID: $RELEASE_ID"
-
-          # Upload the ZIP file
-          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/zip" \
-          --data-binary @avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip"
-
-          # Upload the TAR.GZ file
-          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/gzip" \
-          --data-binary @avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz"
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
