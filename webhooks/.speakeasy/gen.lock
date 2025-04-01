@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 9e13cb72-75d2-4602-9f16-ef680e5b30c2
 management:
-  docChecksum: 5257358ef403a1e0d5dbb6e54747d8c5
+  docChecksum: bc59fbf5dc61841426bb4f44ec31e7ce
   docVersion: Beta
-  speakeasyVersion: 1.523.2
-  generationVersion: 2.560.1
-  releaseVersion: 0.3.1
-  configChecksum: 9293c1d1cc1571ab489404faf9052ae5
+  speakeasyVersion: 1.527.1
+  generationVersion: 2.564.5
+  releaseVersion: 0.3.2
+  configChecksum: 24466a51d1464bdf004b5a6863200806
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: webhooks
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/webhooks
