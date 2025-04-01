@@ -20,7 +20,7 @@ def save_package_json(path, data):
         json.dump(data, f, indent=2)
 
 # Compare versions and determine the bump
-def compare_versions(sdk_version, sdk_versions):
+def compare_versions(sdk_version, sdk_versions, previous_versions):
     """
     Compare the SDK version with the versions from data, webhook, and metrics.
     Bump major if any major is bumped, else bump minor if any minor is bumped,
@@ -33,15 +33,16 @@ def compare_versions(sdk_version, sdk_versions):
     minor_bump = False
     patch_bump = False
 
-    for ver in sdk_versions:
+    for i, ver in enumerate(sdk_versions):
         dep_ver = Version(ver)
+        prev_ver = Version(previous_versions[i])
 
         # Check for version bumps
-        if dep_ver.major > sdk_ver.major:
+        if dep_ver.major > prev_ver.major:
             major_bump = True
-        elif dep_ver.minor > sdk_ver.minor:
+        elif dep_ver.minor > prev_ver.minor:
             minor_bump = True
-        elif dep_ver.micro > sdk_ver.micro:
+        elif dep_ver.micro > prev_ver.micro:
             patch_bump = True
 
     # Determine the necessary bump
@@ -141,28 +142,31 @@ def main():
         for dep in sdk_pkg.get('dependencies', {})
     }
 
-
     # Get all dependency versions from services
-    dependency_versions = get_dependency_versions()
+    latest_dependency_versions = get_dependency_versions()
+
+    common_deps = sorted(set(latest_dependency_versions.keys()) & set(previous_versions.keys()))
+    latest_dependency_versions_values = [latest_dependency_versions[key] for key in common_deps]
+    previous_versions_values = [previous_versions[key] for key in common_deps]
 
     if manual_version:
         print(f"Manually setting SDK version to {manual_version}")
         new_version = manual_version
     else:
         # Compare and bump versions automatically if no manual version is provided
-        new_version = compare_versions(current_sdk_version, list(dependency_versions.values()))
+        new_version = compare_versions(current_sdk_version, latest_dependency_versions_values, previous_versions_values)
 
     if new_version:
         print(f"Updating SDK version to {new_version}")
         sdk_pkg['version'] = new_version
 
         # Update dependencies with the actual versions found in the services
-        update_sdk_dependencies(sdk_pkg, dependency_versions)
+        update_sdk_dependencies(sdk_pkg, latest_dependency_versions)
 
         save_package_json(SDK_PATH, sdk_pkg)
 
         # Update or create the release notes
-        update_release_md(new_version, dependency_versions, previous_versions)
+        update_release_md(new_version, latest_dependency_versions, previous_versions)
 
         # Sync package-lock.json inside /sdk
         print("Running npm install inside /sdk...")
