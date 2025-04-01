@@ -7,11 +7,11 @@ Based on:
 
 ### Generated
 
-- [typescript v1.2.0] sdk
+- [typescript v1.2.1] sdk
 
 ### Releases
 
-- [NPM v1.2.0] https://www.npmjs.com/package/@avalanche-sdk/sdk/v/1.2.0 - sdk
+- [NPM v1.2.1] https://www.npmjs.com/package/@avalanche-sdk/sdk/v/1.2.1 - sdk
 
 ---
 
