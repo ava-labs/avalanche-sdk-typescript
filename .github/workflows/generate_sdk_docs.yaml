@@ -1,4 +1,4 @@
-name: Generate SDK Docs from Data, Webhooks and Metrics
+name: Generate SDK Docs
 
 "on":
   push:
