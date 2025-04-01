@@ -118,7 +118,7 @@ jobs:
         with:
           tag: "sdk/v${{ env.VERSION }}"
           name: "typescript - sdk/v${{ env.VERSION }} - ${{ env.CURRENT_TIMESTAMP }}"
-          body: "$(cat release_notes.txt)"
+          body: "${{ env.RELEASE_BODY }}"
           token: ${{ secrets.GITHUB_TOKEN }}
     
       # Step 10: Publish the SDK to NPM
