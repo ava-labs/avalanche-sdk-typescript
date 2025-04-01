@@ -1,3 +1,20 @@
+## 2025-04-01 21:18:03
+
+### Changes
+
+Based on:
+- @avalanche-sdk/webhooks bumped from 0.3.1 to 0.3.2
+
+### Generated
+
+- [typescript v1.3.0] sdk
+
+### Releases
+
+- [NPM v1.3.0] https://www.npmjs.com/package/@avalanche-sdk/sdk/v/1.3.0 - sdk
+
+---
+
 ## 2025-03-31 19:19:46
 
 ### Changes
