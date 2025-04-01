@@ -101,7 +101,7 @@ jobs:
       - name: Create Git tag
         run: |
           git tag "sdk/v${{ env.VERSION }}"
-          git push origin "v${{ env.VERSION }}"
+          git push origin "sdk/v${{ env.VERSION }}"
 
       # Step 9: Get the latest release body from the RELEASE.md file
       - name: Get Current UTC Timestamp
@@ -111,8 +111,11 @@ jobs:
           CURRENT_TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S")
           echo "CURRENT_TIMESTAMP=$CURRENT_TIMESTAMP" >> $GITHUB_ENV
 
-      # Step 10: Create GitHub release with the body extracted from the latest release section
+            # Step 10: Create GitHub release with the extracted body
+      
+     # Step 10: Create GitHub release with the extracted body 
       - name: Create GitHub Release
+        id: create_release
         uses: ncipollo/release-action@v1
         with:
           tag: "sdk/v${{ env.VERSION }}"
@@ -125,21 +128,28 @@ jobs:
         run: |
           # Create zip and tar.gz artifacts of the SDK
           cd sdk
-          zip -r sdk-v${{ env.VERSION }}.zip .
-          tar -czf sdk-v${{ env.VERSION }}.tar.gz .
+          zip -r avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip .
+          tar -czf avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz .
 
-          # Upload the assets to the GitHub release
-          curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -d "{\"tag_name\": \"sdk/v${{ env.VERSION }}\", \"name\": \"SDK Release v${{ env.VERSION }}\"}" \
-          "https://api.github.com/repos/${{ github.repository }}/releases"
+          # Fetch the Release ID from GitHub
+          RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/releases/tags/sdk/v${{ env.VERSION }}" | jq -r .id)
 
-          # Upload the files using the GitHub API
+          if [ "$RELEASE_ID" = "null" ]; then
+            echo "Failed to fetch Release ID. Exiting..."
+            exit 1
+          fi
+
+          echo "Release ID: $RELEASE_ID"
+
+          # Upload the ZIP file
           curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/zip" \
-          --data-binary @sdk-v${{ env.VERSION }}.zip \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=sdk-v${{ env.VERSION }}.zip"
+          --data-binary @avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip \
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.zip"
 
+          # Upload the TAR.GZ file
           curl -XPOST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/gzip" \
-          --data-binary @sdk-v${{ env.VERSION }}.tar.gz \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=sdk-v${{ env.VERSION }}.tar.gz"
+          --data-binary @avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz \
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=avalanche-sdk-typescript-sdk-v${{ env.VERSION }}.tar.gz"
