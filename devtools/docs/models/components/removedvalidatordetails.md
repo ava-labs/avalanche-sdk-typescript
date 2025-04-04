@@ -1,0 +1,35 @@
+# RemovedValidatorDetails
+
+## Example Usage
+
+```typescript
+import { RemovedValidatorDetails } from "@avalanche-sdk/devtools/models/components";
+
+let value: RemovedValidatorDetails = {
+  txHash: "<value>",
+  nodeId: "<id>",
+  subnetId: "<id>",
+  amountStaked: "<value>",
+  startTimestamp: 8198.04,
+  endTimestamp: 9814.49,
+  removeTxHash: "<value>",
+  removeTimestamp: 4756.62,
+  validationStatus: "removed",
+};
+```
+
+## Fields
+
+| Field                                                                                                                    | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `txHash`                                                                                                                 | *string*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `nodeId`                                                                                                                 | *string*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `subnetId`                                                                                                               | *string*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `amountStaked`                                                                                                           | *string*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `delegationFee`                                                                                                          | *string*                                                                                                                 | :heavy_minus_sign:                                                                                                       | The percentage of total estimated delegator rewards allocated to validator nodes for supporting delegations.             |
+| `startTimestamp`                                                                                                         | *number*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `endTimestamp`                                                                                                           | *number*                                                                                                                 | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |
+| `blsCredentials`                                                                                                         | [components.BlsCredentials](../../models/components/blscredentials.md)                                                   | :heavy_minus_sign:                                                                                                       | Present for AddPermissionlessValidatorTx                                                                                 |
+| `removeTxHash`                                                                                                           | *string*                                                                                                                 | :heavy_check_mark:                                                                                                       | The transaction hash that removed the permissioned subnet validator.                                                     |
+| `removeTimestamp`                                                                                                        | *number*                                                                                                                 | :heavy_check_mark:                                                                                                       | The timestamp of the transaction that removed the permissioned subnet validator.                                         |
+| `validationStatus`                                                                                                       | [components.RemovedValidatorDetailsValidationStatus](../../models/components/removedvalidatordetailsvalidationstatus.md) | :heavy_check_mark:                                                                                                       | N/A                                                                                                                      |

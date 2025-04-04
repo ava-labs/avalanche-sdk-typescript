@@ -1,0 +1,209 @@
+# Operations
+(*data.operations*)
+
+## Overview
+
+### Available Operations
+
+* [getResult](#getresult) - Get operation
+* [exportTransactions](#exporttransactions) - Create transaction export operation
+
+## getResult
+
+Gets operation details for the given operation id.
+
+### Example Usage
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.data.operations.getResult({
+    operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { AvalancheCore } from "@avalanche-sdk/devtools/core.js";
+import { dataOperationsGetResult } from "@avalanche-sdk/devtools/funcs/dataOperationsGetResult.js";
+
+// Use `AvalancheCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const avalanche = new AvalancheCore({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const res = await dataOperationsGetResult(avalanche, {
+    operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
+  });
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.GetOperationResultRequest](../../models/operations/getoperationresultrequest.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
+
+### Response
+
+**Promise\<[components.OperationStatusResponse](../../models/components/operationstatusresponse.md)\>**
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| errors.BadRequestError         | 400                            | application/json               |
+| errors.UnauthorizedError       | 401                            | application/json               |
+| errors.ForbiddenError          | 403                            | application/json               |
+| errors.NotFoundError           | 404                            | application/json               |
+| errors.TooManyRequestsError    | 429                            | application/json               |
+| errors.InternalServerError     | 500                            | application/json               |
+| errors.BadGatewayError         | 502                            | application/json               |
+| errors.ServiceUnavailableError | 503                            | application/json               |
+| errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
+
+## exportTransactions
+
+Trigger a transaction export operation with given parameters.
+
+The transaction export operation runs asynchronously in the background. The status of the job can be retrieved from the `/v1/operations/:operationId` endpoint using the `operationId` returned from this endpoint.
+
+### Example Usage
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.data.operations.exportTransactions({
+    type: "TRANSACTION_EXPORT_EVM",
+    firstDate: "2023-05-01",
+    lastDate: "2023-05-02",
+    options: {
+      addresses: [
+
+      ],
+      includeChains: [
+        "43114",
+      ],
+    },
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { AvalancheCore } from "@avalanche-sdk/devtools/core.js";
+import { dataOperationsExportTransactions } from "@avalanche-sdk/devtools/funcs/dataOperationsExportTransactions.js";
+
+// Use `AvalancheCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const avalanche = new AvalancheCore({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const res = await dataOperationsExportTransactions(avalanche, {
+    type: "TRANSACTION_EXPORT_EVM",
+    firstDate: "2023-05-01",
+    lastDate: "2023-05-02",
+    options: {
+      addresses: [
+  
+      ],
+      includeChains: [
+        "43114",
+      ],
+    },
+  });
+
+  if (!res.ok) {
+    throw res.error;
+  }
+
+  const { value: result } = res;
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.PostTransactionExportJobRequest](../../models/operations/posttransactionexportjobrequest.md)                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
+
+### Response
+
+**Promise\<[components.OperationStatusResponse](../../models/components/operationstatusresponse.md)\>**
+
+### Errors
+
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| errors.BadRequestError         | 400                            | application/json               |
+| errors.UnauthorizedError       | 401                            | application/json               |
+| errors.ForbiddenError          | 403                            | application/json               |
+| errors.NotFoundError           | 404                            | application/json               |
+| errors.TooManyRequestsError    | 429                            | application/json               |
+| errors.InternalServerError     | 500                            | application/json               |
+| errors.BadGatewayError         | 502                            | application/json               |
+| errors.ServiceUnavailableError | 503                            | application/json               |
+| errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |

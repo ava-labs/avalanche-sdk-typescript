@@ -1,4 +1,4 @@
-speakeasyVersion: 1.527.1
+speakeasyVersion: 1.529.1
 sources:
     data-source:
         sourceNamespace: avalanche-sdk-data-typescript
@@ -7,6 +7,13 @@ sources:
         tags:
             - latest
             - speakeasy-sdk-regen-1743100801
+            - Beta
+    devtools-source:
+        sourceNamespace: avalanche-sdk-devtools-typescript
+        sourceRevisionDigest: sha256:d16db6ed6f9c8d194dcbda9dc892077731a15236132d94111ed85639c4ac3907
+        sourceBlobDigest: sha256:4de1a306284ee0544f0333bceed74d679983ff590421a2954a90a5c2d5ffa85b
+        tags:
+            - latest
             - Beta
     metrics-source:
         sourceNamespace: avalanche-sdk-metrics-typescript
@@ -39,6 +46,13 @@ targets:
         sourceBlobDigest: sha256:771af2cb8ee61996410bc4541ba9505a14ec564ba7c364e82614029965ac3362
         codeSamplesNamespace: avalanche-sdk-data-typescript-code-samples
         codeSamplesRevisionDigest: sha256:dc6642713e849d94a6ae2c0796f6f80a2612a715bfbd784510595b0bc7838019
+    devtools-sdk:
+        source: devtools-source
+        sourceNamespace: avalanche-sdk-devtools-typescript
+        sourceRevisionDigest: sha256:d16db6ed6f9c8d194dcbda9dc892077731a15236132d94111ed85639c4ac3907
+        sourceBlobDigest: sha256:4de1a306284ee0544f0333bceed74d679983ff590421a2954a90a5c2d5ffa85b
+        codeSamplesNamespace: avalanche-sdk-devtools-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:3f3b0ff0f9d5d374a2552c3ab3c1adffae2fa7c18fc484e228aac9dd8e18deb8
     metrics-sdk:
         source: metrics-source
         sourceNamespace: avalanche-sdk-metrics-typescript
@@ -64,6 +78,14 @@ workflow:
                 - location: data/overlays/overlay.yaml
             registry:
                 location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-data-typescript
+        devtools-source:
+            inputs:
+                - location: https://popsicle-api.avax.network/api-json
+                - location: https://glacier-api.avax.network/api-json
+            overlays:
+                - location: devtools/overlays/overlay.yaml
+            registry:
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript
         metrics-source:
             inputs:
                 - location: https://popsicle-api.avax.network/api-json
@@ -89,6 +111,20 @@ workflow:
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-data-typescript-code-samples
+                langOverride: javascript
+                labelOverride:
+                    fixedValue: JavaScript
+                blocking: false
+        devtools-sdk:
+            target: typescript
+            source: devtools-source
+            output: devtools
+            publish:
+                npm:
+                    token: $npm_token
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript-code-samples
                 langOverride: javascript
                 labelOverride:
                     fixedValue: JavaScript

@@ -1,0 +1,1260 @@
+# @avalanche-sdk/devtools
+
+Developer-friendly & type-safe Typescript SDK specifically catered to leverage *@avalanche-sdk/devtools* API.
+
+<div align="left">
+    <a href="https://www.speakeasy.com/?utm_source=@avalanche-sdk/devtools&utm_campaign=typescript"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
+    </a>
+</div>
+
+
+<br /><br />
+> [!IMPORTANT]
+> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/avalabs/avalabs). Delete this section before > publishing to a package manager.
+
+<!-- Start Summary [summary] -->
+## Summary
+
+Data, Metrics, and Webhooks API: The Avalanche API suite offers powerful tools for real-time and historical blockchain data. The Webhooks API enables instant monitoring of on-chain events, including smart contract activity, NFT transfers, and wallet transactions, with customizable filters and secure notifications. The Metrics API (Beta) provides analytics on blockchain activity, while the Data API (Beta) delivers multi-chain data for Avalanche and Ethereum, including transaction history, token balances, and metadata. These APIs empower developers to build dynamic web3 applications with real-time insights and seamless integration.
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [@avalanche-sdk/devtools](#avalanche-sdkdevtools)
+  * [SDK Installation](#sdk-installation)
+  * [Requirements](#requirements)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Authentication](#authentication)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Standalone functions](#standalone-functions)
+  * [Global Parameters](#global-parameters)
+  * [Pagination](#pagination)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debugging](#debugging)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
+
+<!-- End Table of Contents [toc] -->
+
+<!-- Start SDK Installation [installation] -->
+## SDK Installation
+
+The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
+
+### NPM
+
+```bash
+npm add @avalanche-sdk/devtools
+```
+
+### PNPM
+
+```bash
+pnpm add @avalanche-sdk/devtools
+```
+
+### Bun
+
+```bash
+bun add @avalanche-sdk/devtools
+```
+
+### Yarn
+
+```bash
+yarn add @avalanche-sdk/devtools zod
+
+# Note that Yarn does not install peer dependencies automatically. You will need
+# to install zod as shown above.
+```
+
+> [!NOTE]
+> This package is published with CommonJS and ES Modules (ESM) support.
+
+
+### Model Context Protocol (MCP) Server
+
+This SDK is also an installable MCP server where the various SDK methods are
+exposed as tools that can be invoked by AI applications.
+
+> Node.js v20 or greater is required to run the MCP server from npm.
+
+<details>
+<summary>Claude installation steps</summary>
+
+Add the following server definition to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/devtools",
+        "--",
+        "mcp", "start",
+        "--server-url", "...",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Cursor installation steps</summary>
+
+Create a `.cursor/mcp.json` file in your project root with the following content:
+
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/devtools",
+        "--",
+        "mcp", "start",
+        "--server-url", "...",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
+
+For a full list of server arguments, run:
+
+```sh
+npx -y --package @avalanche-sdk/devtools -- mcp start --help
+```
+<!-- End SDK Installation [installation] -->
+
+<!-- Start Requirements [requirements] -->
+## Requirements
+
+For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
+<!-- End Requirements [requirements] -->
+
+<!-- Start SDK Example Usage [usage] -->
+## SDK Example Usage
+
+### Example
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  await avalanche.sendAddressActivityWebhook({
+    webhookId: "401da7d9-d6d7-46c8-b431-72ff1e1543f4",
+    eventType: "address_activity",
+    messageId: "bc9732db-2430-4296-afc3-c51267beb14a",
+    event: {
+      transaction: {
+        blockHash:
+          "0x2a47bebed93db4a21cc8339980f004cc67f17d0dff4a368001e450e7be2edaa0",
+        blockNumber: "45396106",
+        from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+        gas: "80000",
+        gasPrice: "52000000000",
+        maxFeePerGas: "52000000000",
+        maxPriorityFeePerGas: "2000000000",
+        txHash:
+          "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+        txStatus: "1",
+        input:
+          "0xa9059cbb00000000000000000000000040e832c3df9562dfae5a86a4849f27f687a9b46b00000000000000000000000000000000000000000000000000000000c68b2a69",
+        nonce: "0",
+        to: "0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7",
+        transactionIndex: 1,
+        value: "0",
+        type: 2,
+        chainId: "43114",
+        receiptCumulativeGasUsed: "668508",
+        receiptGasUsed: "44038",
+        receiptEffectiveGasPrice: "27000000000",
+        receiptRoot:
+          "0xe5b018c29a77c8a92c4ea2f2d7e58820283041a52e14a0620d90d13b881e1ee3",
+        blockTimestamp: 1715621840,
+        contractAddress: "0x0000000000000000000000000000000000000000",
+        erc20Transfers: [
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+        ],
+        erc721Transfers: [
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+        ],
+        erc1155Transfers: [
+          {
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+            type: "ERC20",
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
+            value: "3331009129",
+            tokenId: "2",
+            blockTimestamp: 1640995200,
+            logIndex: 5,
+            erc20Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc721Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+            erc1155Token: {
+              address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+              name: "TetherToken",
+              symbol: "USDt",
+              decimals: 6,
+              valueWithDecimals: "3331.009129",
+            },
+          },
+        ],
+        internalTransactions: [
+          {
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+            internalTxType: "call",
+            value: "50000000000000000",
+            gasUsed: "44038",
+            gasLimit: "50000",
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+          },
+          {
+            from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
+            to: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+            internalTxType: "call",
+            value: "50000000000000000",
+            gasUsed: "44038",
+            gasLimit: "50000",
+            transactionHash:
+              "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
+          },
+        ],
+        accessList: [
+          {
+            accessAddresses: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+            storageKeys: [],
+          },
+          {
+            accessAddresses: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+            storageKeys: [],
+          },
+          {
+            accessAddresses: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+            storageKeys: [],
+          },
+        ],
+        networkToken: {
+          tokenName: "TetherToken",
+          tokenSymbol: "USDt",
+          tokenDecimals: 6,
+          valueWithDecimals: "3331.009129",
+        },
+      },
+      logs: [
+        {
+          address: "0x54C800d2331E10467143911aabCa092d68bF4166",
+          topic0:
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+          topic1:
+            "0x0000000000000000000000000000333883f313ad709f583d0a3d2e18a44ef29b",
+          topic2:
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+          topic3:
+            "0x0000000000000000000000000000000000000000000000000000000000001350",
+          data: "0x",
+          transactionIndex: 2,
+          logIndex: 10,
+          removed: false,
+        },
+        {
+          address: "0x54C800d2331E10467143911aabCa092d68bF4166",
+          topic0:
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+          topic1:
+            "0x0000000000000000000000000000333883f313ad709f583d0a3d2e18a44ef29b",
+          topic2:
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+          topic3:
+            "0x0000000000000000000000000000000000000000000000000000000000001350",
+          data: "0x",
+          transactionIndex: 2,
+          logIndex: 10,
+          removed: false,
+        },
+      ],
+    },
+  });
+}
+
+run();
+
+```
+<!-- End SDK Example Usage [usage] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name     | Type   | Scheme  |
+| -------- | ------ | ------- |
+| `apiKey` | apiKey | API key |
+
+To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  apiKey: "<YOUR_API_KEY_HERE>",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck();
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+<!-- End Authentication [security] -->
+
+<!-- Start Available Resources and Operations [operations] -->
+## Available Resources and Operations
+
+<details open>
+<summary>Available methods</summary>
+
+
+### [data](docs/sdks/data/README.md)
+
+* [healthCheck](docs/sdks/data/README.md#healthcheck) - Get the health of the service
+
+#### [data.evm](docs/sdks/evm/README.md)
+
+
+#### [data.evm.address](docs/sdks/address/README.md)
+
+
+#### [data.evm.address.balances](docs/sdks/addressbalances/README.md)
+
+* [getNative](docs/sdks/addressbalances/README.md#getnative) - Get native token balance
+* [listErc20](docs/sdks/addressbalances/README.md#listerc20) - List ERC-20 balances
+* [listErc721](docs/sdks/addressbalances/README.md#listerc721) - List ERC-721 balances
+* [listErc1155](docs/sdks/addressbalances/README.md#listerc1155) - List ERC-1155 balances
+* [listCollectibles](docs/sdks/addressbalances/README.md#listcollectibles) - List collectible (ERC-721/ERC-1155) balances
+
+#### [data.evm.address.chains](docs/sdks/addresschains/README.md)
+
+* [list](docs/sdks/addresschains/README.md#list) - List all chains associated with a given address
+
+#### [data.evm.address.contracts](docs/sdks/addresscontracts/README.md)
+
+* [listDeployments](docs/sdks/addresscontracts/README.md#listdeployments) - List deployed contracts
+
+#### [data.evm.address.transactions](docs/sdks/addresstransactions/README.md)
+
+* [list](docs/sdks/addresstransactions/README.md#list) - List transactions
+* [listNative](docs/sdks/addresstransactions/README.md#listnative) - List native transactions
+* [listErc20](docs/sdks/addresstransactions/README.md#listerc20) - List ERC-20 transfers
+* [listErc721](docs/sdks/addresstransactions/README.md#listerc721) - List ERC-721 transfers
+* [listErc1155](docs/sdks/addresstransactions/README.md#listerc1155) - List ERC-1155 transfers
+* [listInternal](docs/sdks/addresstransactions/README.md#listinternal) - List internal transactions
+
+#### [data.evm.blocks](docs/sdks/evmblocks/README.md)
+
+* [listLatestAllChains](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
+* [listLatest](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
+* [get](docs/sdks/evmblocks/README.md#get) - Get block
+* [listTransactions](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
+
+#### [data.evm.chains](docs/sdks/evmchains/README.md)
+
+* [list](docs/sdks/evmchains/README.md#list) - List chains
+* [get](docs/sdks/evmchains/README.md#get) - Get chain information
+* [~~getAddressChains~~](docs/sdks/evmchains/README.md#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
+* [~~listAllLatestTransactions~~](docs/sdks/evmchains/README.md#listalllatesttransactions) - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
+* [~~listAllLatestBlocks~~](docs/sdks/evmchains/README.md#listalllatestblocks) - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
+
+#### [data.evm.contracts](docs/sdks/contracts/README.md)
+
+* [getDeploymentTransaction](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
+* [getMetadata](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
+* [listTransfers](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
+
+#### [data.evm.transactions](docs/sdks/evmtransactions/README.md)
+
+* [listLatestAllChains](docs/sdks/evmtransactions/README.md#listlatestallchains) - List the latest transactions across all supported EVM chains
+* [get](docs/sdks/evmtransactions/README.md#get) - Get transaction
+* [listLatest](docs/sdks/evmtransactions/README.md#listlatest) - List latest transactions
+
+#### [data.icm](docs/sdks/icm/README.md)
+
+* [get](docs/sdks/icm/README.md#get) - Get an ICM message
+* [list](docs/sdks/icm/README.md#list) - List ICM messages
+* [listByAddress](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
+
+#### [data.nfts](docs/sdks/nfts/README.md)
+
+* [reindex](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
+* [list](docs/sdks/nfts/README.md#list) - List tokens
+* [get](docs/sdks/nfts/README.md#get) - Get token details
+
+#### [data.operations](docs/sdks/operations/README.md)
+
+* [getResult](docs/sdks/operations/README.md#getresult) - Get operation
+* [exportTransactions](docs/sdks/operations/README.md#exporttransactions) - Create transaction export operation
+
+#### [data.primaryNetwork](docs/sdks/primarynetwork/README.md)
+
+* [getAssetDetails](docs/sdks/primarynetwork/README.md#getassetdetails) - Get asset details
+* [getChainIdsForAddresses](docs/sdks/primarynetwork/README.md#getchainidsforaddresses) - Get chain interactions for addresses
+* [getNetworkDetails](docs/sdks/primarynetwork/README.md#getnetworkdetails) - Get network details
+* [listBlockchains](docs/sdks/primarynetwork/README.md#listblockchains) - List blockchains
+* [getBlockchainById](docs/sdks/primarynetwork/README.md#getblockchainbyid) - Get blockchain details by ID
+* [listSubnets](docs/sdks/primarynetwork/README.md#listsubnets) - List subnets
+* [getSubnetById](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
+* [listValidators](docs/sdks/primarynetwork/README.md#listvalidators) - List validators
+* [getValidatorDetails](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
+* [listDelegators](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
+* [listL1Validators](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
+
+#### [data.primaryNetwork.balances](docs/sdks/primarynetworkbalances/README.md)
+
+* [listByAddresses](docs/sdks/primarynetworkbalances/README.md#listbyaddresses) - Get balances
+
+#### [data.primaryNetwork.blocks](docs/sdks/primarynetworkblocks/README.md)
+
+* [get](docs/sdks/primarynetworkblocks/README.md#get) - Get block
+* [listByNodeId](docs/sdks/primarynetworkblocks/README.md#listbynodeid) - List blocks proposed by node
+* [listLatest](docs/sdks/primarynetworkblocks/README.md#listlatest) - List latest blocks
+
+#### [data.primaryNetwork.rewards](docs/sdks/rewards/README.md)
+
+* [listPendingRewards](docs/sdks/rewards/README.md#listpendingrewards) - List pending rewards
+* [listHistoricalRewards](docs/sdks/rewards/README.md#listhistoricalrewards) - List historical rewards
+
+#### [data.primaryNetwork.transactions](docs/sdks/primarynetworktransactions/README.md)
+
+* [get](docs/sdks/primarynetworktransactions/README.md#get) - Get transaction
+* [listLatest](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
+* [listActiveStakingTransactions](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
+* [listAssetTransactions](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
+
+#### [data.primaryNetwork.utxos](docs/sdks/utxos/README.md)
+
+* [listByAddresses](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
+
+#### [data.primaryNetwork.vertices](docs/sdks/vertices/README.md)
+
+* [listLatest](docs/sdks/vertices/README.md#listlatest) - List vertices
+* [getByHash](docs/sdks/vertices/README.md#getbyhash) - Get vertex
+* [listByHeight](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
+
+#### [data.signatureAggregator](docs/sdks/signatureaggregator/README.md)
+
+* [aggregate](docs/sdks/signatureaggregator/README.md#aggregate) - Aggregate Signatures
+* [get](docs/sdks/signatureaggregator/README.md#get) - Get Aggregated Signatures
+
+#### [~~data.teleporter~~](docs/sdks/teleporter/README.md)
+
+* [~~getTeleporterMessage~~](docs/sdks/teleporter/README.md#getteleportermessage) - **[Deprecated]** Gets a teleporter message by message ID.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . :warning: **Deprecated**
+* [~~listTeleporterMessages~~](docs/sdks/teleporter/README.md#listteleportermessages) - **[Deprecated]** Lists teleporter messages. Ordered by timestamp in  descending order.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . :warning: **Deprecated**
+* [~~listTeleporterMessagesByAddress~~](docs/sdks/teleporter/README.md#listteleportermessagesbyaddress) - **[Deprecated]** Lists teleporter messages by address. Ordered by  timestamp in descending order.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . :warning: **Deprecated**
+
+#### [data.usageMetrics](docs/sdks/usagemetrics/README.md)
+
+* [getUsage](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
+* [getLogs](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
+* [getSubnetRpcUsage](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
+* [~~getRpcUsageMetrics~~](docs/sdks/usagemetrics/README.md#getrpcusagemetrics) - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
+
+### [lookingGlass](docs/sdks/lookingglass/README.md)
+
+* [compositeQuery](docs/sdks/lookingglass/README.md#compositequery) - Composite query
+
+### [metrics](docs/sdks/metrics/README.md)
+
+* [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+
+#### [metrics.chains](docs/sdks/metricschains/README.md)
+
+* [list](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
+* [get](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
+* [getMetrics](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
+* [getTeleporterMetrics](docs/sdks/metricschains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+* [getRollingWindowMetrics](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+* [listNftHolders](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
+* [listTokenHoldersAboveThreshold](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+* [listBTCbBridgersAboveThreshold](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
+
+#### [metrics.networks](docs/sdks/networks/README.md)
+
+* [getStakingMetrics](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
+
+#### [metrics.subnets](docs/sdks/subnets/README.md)
+
+* [getValidators](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
+
+### [webhooks](docs/sdks/webhooks/README.md)
+
+* [list](docs/sdks/webhooks/README.md#list) - List webhooks
+* [create](docs/sdks/webhooks/README.md#create) - Create a webhook
+* [get](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
+* [deactivate](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
+* [update](docs/sdks/webhooks/README.md#update) - Update a webhook
+* [generateOrRotateSharedSecret](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
+* [getSharedSecret](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
+
+#### [webhooks.addresses](docs/sdks/addresses/README.md)
+
+* [list](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
+* [remove](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
+* [add](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+
+</details>
+<!-- End Available Resources and Operations [operations] -->
+
+<!-- Start Standalone functions [standalone-funcs] -->
+## Standalone functions
+
+All the methods listed above are available as standalone functions. These
+functions are ideal for use in applications running in the browser, serverless
+runtimes or other environments where application bundle size is a primary
+concern. When using a bundler to build your application, all unused
+functionality will be either excluded from the final bundle or tree-shaken away.
+
+To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
+
+<details>
+
+<summary>Available standalone functions</summary>
+
+- [`dataEvmAddressBalancesGetNative`](docs/sdks/addressbalances/README.md#getnative) - Get native token balance
+- [`dataEvmAddressBalancesListCollectibles`](docs/sdks/addressbalances/README.md#listcollectibles) - List collectible (ERC-721/ERC-1155) balances
+- [`dataEvmAddressBalancesListErc1155`](docs/sdks/addressbalances/README.md#listerc1155) - List ERC-1155 balances
+- [`dataEvmAddressBalancesListErc20`](docs/sdks/addressbalances/README.md#listerc20) - List ERC-20 balances
+- [`dataEvmAddressBalancesListErc721`](docs/sdks/addressbalances/README.md#listerc721) - List ERC-721 balances
+- [`dataEvmAddressChainsList`](docs/sdks/addresschains/README.md#list) - List all chains associated with a given address
+- [`dataEvmAddressContractsListDeployments`](docs/sdks/addresscontracts/README.md#listdeployments) - List deployed contracts
+- [`dataEvmAddressTransactionsList`](docs/sdks/addresstransactions/README.md#list) - List transactions
+- [`dataEvmAddressTransactionsListErc1155`](docs/sdks/addresstransactions/README.md#listerc1155) - List ERC-1155 transfers
+- [`dataEvmAddressTransactionsListErc20`](docs/sdks/addresstransactions/README.md#listerc20) - List ERC-20 transfers
+- [`dataEvmAddressTransactionsListErc721`](docs/sdks/addresstransactions/README.md#listerc721) - List ERC-721 transfers
+- [`dataEvmAddressTransactionsListInternal`](docs/sdks/addresstransactions/README.md#listinternal) - List internal transactions
+- [`dataEvmAddressTransactionsListNative`](docs/sdks/addresstransactions/README.md#listnative) - List native transactions
+- [`dataEvmBlocksGet`](docs/sdks/evmblocks/README.md#get) - Get block
+- [`dataEvmBlocksListLatest`](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
+- [`dataEvmBlocksListLatestAllChains`](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
+- [`dataEvmBlocksListTransactions`](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
+- [`dataEvmChainsGet`](docs/sdks/evmchains/README.md#get) - Get chain information
+- [`dataEvmChainsList`](docs/sdks/evmchains/README.md#list) - List chains
+- [`dataEvmContractsGetDeploymentTransaction`](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
+- [`dataEvmContractsGetMetadata`](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
+- [`dataEvmContractsListTransfers`](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
+- [`dataEvmTransactionsGet`](docs/sdks/evmtransactions/README.md#get) - Get transaction
+- [`dataEvmTransactionsListLatest`](docs/sdks/evmtransactions/README.md#listlatest) - List latest transactions
+- [`dataEvmTransactionsListLatestAllChains`](docs/sdks/evmtransactions/README.md#listlatestallchains) - List the latest transactions across all supported EVM chains
+- [`dataHealthCheck`](docs/sdks/data/README.md#healthcheck) - Get the health of the service
+- [`dataIcmGet`](docs/sdks/icm/README.md#get) - Get an ICM message
+- [`dataIcmList`](docs/sdks/icm/README.md#list) - List ICM messages
+- [`dataIcmListByAddress`](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
+- [`dataNftsGet`](docs/sdks/nfts/README.md#get) - Get token details
+- [`dataNftsList`](docs/sdks/nfts/README.md#list) - List tokens
+- [`dataNftsReindex`](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
+- [`dataOperationsExportTransactions`](docs/sdks/operations/README.md#exporttransactions) - Create transaction export operation
+- [`dataOperationsGetResult`](docs/sdks/operations/README.md#getresult) - Get operation
+- [`dataPrimaryNetworkBalancesListByAddresses`](docs/sdks/primarynetworkbalances/README.md#listbyaddresses) - Get balances
+- [`dataPrimaryNetworkBlocksGet`](docs/sdks/primarynetworkblocks/README.md#get) - Get block
+- [`dataPrimaryNetworkBlocksListByNodeId`](docs/sdks/primarynetworkblocks/README.md#listbynodeid) - List blocks proposed by node
+- [`dataPrimaryNetworkBlocksListLatest`](docs/sdks/primarynetworkblocks/README.md#listlatest) - List latest blocks
+- [`dataPrimaryNetworkGetAssetDetails`](docs/sdks/primarynetwork/README.md#getassetdetails) - Get asset details
+- [`dataPrimaryNetworkGetBlockchainById`](docs/sdks/primarynetwork/README.md#getblockchainbyid) - Get blockchain details by ID
+- [`dataPrimaryNetworkGetChainIdsForAddresses`](docs/sdks/primarynetwork/README.md#getchainidsforaddresses) - Get chain interactions for addresses
+- [`dataPrimaryNetworkGetNetworkDetails`](docs/sdks/primarynetwork/README.md#getnetworkdetails) - Get network details
+- [`dataPrimaryNetworkGetSubnetById`](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
+- [`dataPrimaryNetworkGetValidatorDetails`](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
+- [`dataPrimaryNetworkListBlockchains`](docs/sdks/primarynetwork/README.md#listblockchains) - List blockchains
+- [`dataPrimaryNetworkListDelegators`](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
+- [`dataPrimaryNetworkListL1Validators`](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
+- [`dataPrimaryNetworkListSubnets`](docs/sdks/primarynetwork/README.md#listsubnets) - List subnets
+- [`dataPrimaryNetworkListValidators`](docs/sdks/primarynetwork/README.md#listvalidators) - List validators
+- [`dataPrimaryNetworkRewardsListHistoricalRewards`](docs/sdks/rewards/README.md#listhistoricalrewards) - List historical rewards
+- [`dataPrimaryNetworkRewardsListPendingRewards`](docs/sdks/rewards/README.md#listpendingrewards) - List pending rewards
+- [`dataPrimaryNetworkTransactionsGet`](docs/sdks/primarynetworktransactions/README.md#get) - Get transaction
+- [`dataPrimaryNetworkTransactionsListActiveStakingTransactions`](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
+- [`dataPrimaryNetworkTransactionsListAssetTransactions`](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
+- [`dataPrimaryNetworkTransactionsListLatest`](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
+- [`dataPrimaryNetworkUtxosListByAddresses`](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
+- [`dataPrimaryNetworkVerticesGetByHash`](docs/sdks/vertices/README.md#getbyhash) - Get vertex
+- [`dataPrimaryNetworkVerticesListByHeight`](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
+- [`dataPrimaryNetworkVerticesListLatest`](docs/sdks/vertices/README.md#listlatest) - List vertices
+- [`dataSignatureAggregatorAggregate`](docs/sdks/signatureaggregator/README.md#aggregate) - Aggregate Signatures
+- [`dataSignatureAggregatorGet`](docs/sdks/signatureaggregator/README.md#get) - Get Aggregated Signatures
+- [`dataUsageMetricsGetLogs`](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
+- [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
+- [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
+- [`lookingGlassCompositeQuery`](docs/sdks/lookingglass/README.md#compositequery) - Composite query
+- [`metricsChainsGet`](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
+- [`metricsChainsGetMetrics`](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
+- [`metricsChainsGetRollingWindowMetrics`](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+- [`metricsChainsGetTeleporterMetrics`](docs/sdks/metricschains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+- [`metricsChainsList`](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
+- [`metricsChainsListBTCbBridgersAboveThreshold`](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
+- [`metricsChainsListNftHolders`](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
+- [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+- [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+- [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
+- [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
+- [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+- [`webhooksAddressesList`](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
+- [`webhooksAddressesRemove`](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
+- [`webhooksCreate`](docs/sdks/webhooks/README.md#create) - Create a webhook
+- [`webhooksDeactivate`](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
+- [`webhooksGenerateOrRotateSharedSecret`](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
+- [`webhooksGet`](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
+- [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
+- [`webhooksList`](docs/sdks/webhooks/README.md#list) - List webhooks
+- [`webhooksUpdate`](docs/sdks/webhooks/README.md#update) - Update a webhook
+- ~~[`dataEvmChainsGetAddressChains`](docs/sdks/evmchains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
+- ~~[`dataEvmChainsListAllLatestBlocks`](docs/sdks/evmchains/README.md#listalllatestblocks)~~ - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
+- ~~[`dataEvmChainsListAllLatestTransactions`](docs/sdks/evmchains/README.md#listalllatesttransactions)~~ - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
+- ~~[`dataTeleporterGetTeleporterMessage`](docs/sdks/teleporter/README.md#getteleportermessage)~~ - **[Deprecated]** Gets a teleporter message by message ID.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . :warning: **Deprecated**
+- ~~[`dataTeleporterListTeleporterMessages`](docs/sdks/teleporter/README.md#listteleportermessages)~~ - **[Deprecated]** Lists teleporter messages. Ordered by timestamp in  descending order.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . :warning: **Deprecated**
+- ~~[`dataTeleporterListTeleporterMessagesByAddress`](docs/sdks/teleporter/README.md#listteleportermessagesbyaddress)~~ - **[Deprecated]** Lists teleporter messages by address. Ordered by  timestamp in descending order.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . :warning: **Deprecated**
+- ~~[`dataUsageMetricsGetRpcUsageMetrics`](docs/sdks/usagemetrics/README.md#getrpcusagemetrics)~~ - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
+
+⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
+
+</details>
+<!-- End Standalone functions [standalone-funcs] -->
+
+<!-- Start Global Parameters [global-parameters] -->
+## Global Parameters
+
+Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
+
+For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `list`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+
+
+### Available Globals
+
+The following global parameters are available.
+
+| Name    | Type                          | Description                                              |
+| ------- | ----------------------------- | -------------------------------------------------------- |
+| chainId | string                        | A supported EVM chain id, chain alias, or blockchain id. |
+| network | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
+
+### Example
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.chains.list({
+    network: "mainnet",
+  });
+
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
+}
+
+run();
+
+```
+<!-- End Global Parameters [global-parameters] -->
+
+<!-- Start Pagination [pagination] -->
+## Pagination
+
+Some of the endpoints in this SDK support pagination. To use pagination, you
+make your SDK calls as usual, but the returned response object will also be an
+async iterable that can be consumed using the [`for await...of`][for-await-of]
+syntax.
+
+[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
+
+Here's an example of one such pagination call:
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.chains.list({
+    network: "mainnet",
+  });
+
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
+}
+
+run();
+
+```
+<!-- End Pagination [pagination] -->
+
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck({
+    retries: {
+      strategy: "backoff",
+      backoff: {
+        initialInterval: 1,
+        maxInterval: 50,
+        exponent: 1.1,
+        maxElapsedTime: 100,
+      },
+      retryConnectionErrors: false,
+    },
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  retryConfig: {
+    strategy: "backoff",
+    backoff: {
+      initialInterval: 1,
+      maxInterval: 50,
+      exponent: 1.1,
+      maxElapsedTime: 100,
+    },
+    retryConnectionErrors: false,
+  },
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck();
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+<!-- End Retries [retries] -->
+
+<!-- Start Error Handling [errors] -->
+## Error Handling
+
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `reindex` method may throw the following errors:
+
+| Error Type                     | Status Code | Content Type     |
+| ------------------------------ | ----------- | ---------------- |
+| errors.BadRequestError         | 400         | application/json |
+| errors.UnauthorizedError       | 401         | application/json |
+| errors.ForbiddenError          | 403         | application/json |
+| errors.NotFoundError           | 404         | application/json |
+| errors.TooManyRequestsError    | 429         | application/json |
+| errors.InternalServerError     | 500         | application/json |
+| errors.BadGatewayError         | 502         | application/json |
+| errors.ServiceUnavailableError | 503         | application/json |
+| errors.AvalancheAPIError       | 4XX, 5XX    | \*/\*            |
+
+If the method throws an error and it is not captured by the known errors, it will default to throwing a `AvalancheAPIError`.
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+import {
+  BadGatewayError,
+  BadRequestError,
+  ForbiddenError,
+  InternalServerError,
+  NotFoundError,
+  SDKValidationError,
+  ServiceUnavailableError,
+  TooManyRequestsError,
+  UnauthorizedError,
+} from "@avalanche-sdk/devtools/models/errors";
+
+const avalanche = new Avalanche({
+  serverURL: "https://api.example.com",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  try {
+    await avalanche.data.nfts.reindex({
+      chainId: "43114",
+      address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      tokenId: "145",
+    });
+  } catch (err) {
+    switch (true) {
+      // The server response does not match the expected SDK schema
+      case (err instanceof SDKValidationError): {
+        // Pretty-print will provide a human-readable multi-line error message
+        console.error(err.pretty());
+        // Raw value may also be inspected
+        console.error(err.rawValue);
+        return;
+      }
+      case (err instanceof BadRequestError): {
+        // Handle err.data$: BadRequestErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof UnauthorizedError): {
+        // Handle err.data$: UnauthorizedErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof ForbiddenError): {
+        // Handle err.data$: ForbiddenErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof NotFoundError): {
+        // Handle err.data$: NotFoundErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof TooManyRequestsError): {
+        // Handle err.data$: TooManyRequestsErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof InternalServerError): {
+        // Handle err.data$: InternalServerErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof BadGatewayError): {
+        // Handle err.data$: BadGatewayErrorData
+        console.error(err);
+        return;
+      }
+      case (err instanceof ServiceUnavailableError): {
+        // Handle err.data$: ServiceUnavailableErrorData
+        console.error(err);
+        return;
+      }
+      default: {
+        // Other errors such as network errors, see HTTPClientErrors for more details
+        throw err;
+      }
+    }
+  }
+}
+
+run();
+
+```
+
+Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted multi-line string since validation errors can list many issues and the plain error string may be difficult read when debugging.
+
+In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
+
+| HTTP Client Error                                    | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| RequestAbortedError                                  | HTTP request was aborted by the client               |
+| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
+| ConnectionError                                      | HTTP client was unable to make a request to a server |
+| InvalidRequestError                                  | Any input used to create a request is invalid        |
+| UnexpectedClientError                                | Unrecognised or unexpected error                     |
+<!-- End Error Handling [errors] -->
+
+<!-- Start Custom HTTP Client [http-client] -->
+## Custom HTTP Client
+
+The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
+[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). This
+client is a thin wrapper around `fetch` and provides the ability to attach hooks
+around the request lifecycle that can be used to modify the request or handle
+errors and response.
+
+The `HTTPClient` constructor takes an optional `fetcher` argument that can be
+used to integrate a third-party HTTP client or when writing tests to mock out
+the HTTP client and feed in fixtures.
+
+The following example shows how to use the `"beforeRequest"` hook to to add a
+custom header and a timeout to requests and how to use the `"requestError"` hook
+to log errors:
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+import { HTTPClient } from "@avalanche-sdk/devtools/lib/http";
+
+const httpClient = new HTTPClient({
+  // fetcher takes a function that has the same signature as native `fetch`.
+  fetcher: (request) => {
+    return fetch(request);
+  }
+});
+
+httpClient.addHook("beforeRequest", (request) => {
+  const nextRequest = new Request(request, {
+    signal: request.signal || AbortSignal.timeout(5000)
+  });
+
+  nextRequest.headers.set("x-custom-header", "custom value");
+
+  return nextRequest;
+});
+
+httpClient.addHook("requestError", (error, request) => {
+  console.group("Request Error");
+  console.log("Reason:", `${error}`);
+  console.log("Endpoint:", `${request.method} ${request.url}`);
+  console.groupEnd();
+});
+
+const sdk = new Avalanche({ httpClient });
+```
+<!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+You can setup your SDK to emit debug logs for SDK requests and responses.
+
+You can pass a logger that matches `console`'s interface as an SDK option.
+
+> [!WARNING]
+> Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const sdk = new Avalanche({ debugLogger: console });
+```
+<!-- End Debugging [debug] -->
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
+
+# Development
+
+## Maturity
+
+This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
+to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
+looking for the latest version.
+
+## Contributions
+
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+
+### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=@avalanche-sdk/devtools&utm_campaign=typescript)
