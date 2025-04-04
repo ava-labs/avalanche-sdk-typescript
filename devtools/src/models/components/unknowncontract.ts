@@ -48,7 +48,7 @@ export type UnknownContract = {
    * A wallet or contract address in mixed-case checksum encoding.
    */
   address: string;
-  deploymentDetails: ContractDeploymentDetails;
+  deploymentDetails?: ContractDeploymentDetails | undefined;
   ercType: UnknownContractErcType;
 };
 
@@ -89,7 +89,7 @@ export const UnknownContract$inboundSchema: z.ZodType<
   resourceLinks: z.array(ResourceLink$inboundSchema).optional(),
   tags: z.array(z.string()).optional(),
   address: z.string(),
-  deploymentDetails: ContractDeploymentDetails$inboundSchema,
+  deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
   ercType: UnknownContractErcType$inboundSchema,
 });
 
@@ -105,7 +105,7 @@ export type UnknownContract$Outbound = {
   resourceLinks?: Array<ResourceLink$Outbound> | undefined;
   tags?: Array<string> | undefined;
   address: string;
-  deploymentDetails: ContractDeploymentDetails$Outbound;
+  deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
   ercType: string;
 };
 
@@ -125,7 +125,7 @@ export const UnknownContract$outboundSchema: z.ZodType<
   resourceLinks: z.array(ResourceLink$outboundSchema).optional(),
   tags: z.array(z.string()).optional(),
   address: z.string(),
-  deploymentDetails: ContractDeploymentDetails$outboundSchema,
+  deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
   ercType: UnknownContractErcType$outboundSchema,
 });
 

@@ -48,7 +48,7 @@ export type Erc721Contract = {
    * A wallet or contract address in mixed-case checksum encoding.
    */
   address: string;
-  deploymentDetails: ContractDeploymentDetails;
+  deploymentDetails?: ContractDeploymentDetails | undefined;
   ercType: Erc721ContractErcType;
   /**
    * The contract symbol.
@@ -93,7 +93,7 @@ export const Erc721Contract$inboundSchema: z.ZodType<
   resourceLinks: z.array(ResourceLink$inboundSchema).optional(),
   tags: z.array(z.string()).optional(),
   address: z.string(),
-  deploymentDetails: ContractDeploymentDetails$inboundSchema,
+  deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
   ercType: Erc721ContractErcType$inboundSchema,
   symbol: z.string().optional(),
 });
@@ -110,7 +110,7 @@ export type Erc721Contract$Outbound = {
   resourceLinks?: Array<ResourceLink$Outbound> | undefined;
   tags?: Array<string> | undefined;
   address: string;
-  deploymentDetails: ContractDeploymentDetails$Outbound;
+  deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
   ercType: string;
   symbol?: string | undefined;
 };
@@ -131,7 +131,7 @@ export const Erc721Contract$outboundSchema: z.ZodType<
   resourceLinks: z.array(ResourceLink$outboundSchema).optional(),
   tags: z.array(z.string()).optional(),
   address: z.string(),
-  deploymentDetails: ContractDeploymentDetails$outboundSchema,
+  deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
   ercType: Erc721ContractErcType$outboundSchema,
   symbol: z.string().optional(),
 });
