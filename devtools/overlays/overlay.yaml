@@ -27,3 +27,7 @@ actions:
     description: Keep the /v1/webhooks POST endpoint in usage example of root readme
     update:
       x-speakeasy-usage-example: true
+
+  - target: $.paths.*.*[?(@['tags'][0] == 'Notifications')]
+    description: Remove all paths that are tagged with 'notifications' if they somehow exist
+    remove: true
