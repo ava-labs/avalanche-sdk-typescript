@@ -8,10 +8,6 @@ import { Erc721Contract } from "@avalanche-sdk/devtools/models/components";
 let value: Erc721Contract = {
   name: "Wrapped AVAX",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-  deploymentDetails: {
-    txHash: "<value>",
-    deployerAddress: "<value>",
-  },
   ercType: "ERC-721",
   symbol: "WAVAX",
 };
@@ -31,6 +27,6 @@ let value: Erc721Contract = {
 | `resourceLinks`                                                                              | [components.ResourceLink](../../models/components/resourcelink.md)[]                         | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `tags`                                                                                       | *string*[]                                                                                   | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `address`                                                                                    | *string*                                                                                     | :heavy_check_mark:                                                                           | A wallet or contract address in mixed-case checksum encoding.                                | 0x71C7656EC7ab88b098defB751B7401B5f6d8976F                                                   |
-| `deploymentDetails`                                                                          | [components.ContractDeploymentDetails](../../models/components/contractdeploymentdetails.md) | :heavy_check_mark:                                                                           | N/A                                                                                          |                                                                                              |
+| `deploymentDetails`                                                                          | [components.ContractDeploymentDetails](../../models/components/contractdeploymentdetails.md) | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `ercType`                                                                                    | [components.Erc721ContractErcType](../../models/components/erc721contracterctype.md)         | :heavy_check_mark:                                                                           | N/A                                                                                          |                                                                                              |
 | `symbol`                                                                                     | *string*                                                                                     | :heavy_minus_sign:                                                                           | The contract symbol.                                                                         | WAVAX                                                                                        |
