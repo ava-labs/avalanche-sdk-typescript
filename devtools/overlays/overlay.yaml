@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: Overlay to change the merged OpenAPI Spec 
+  version: 1.0.0
+actions:
+  - target: $["paths"]["/v1/chains"]["get"][?(@['servers'][0]['url'] == 'https://glacier-api.avax.network')]["responses"]["200"]["content"]["application/json"]["schema"]
+    description: Change the response schema for the /v1/chains endpoint in glacier to avoid a merger conflict with Popsicle API Spec
+    update:
+      $ref: "#/components/schemas/DataListChainsResponse"
+    
+  - target: $["paths"]["/v2/chains"]["get"][?(@['servers'][0]['url'] == 'https://popsicle-api.avax.network' || @['servers'][0]['url'] == 'https://metrics.avax.network')]["responses"]["200"]["content"]["application/json"]["schema"]
+    description: Change the response schema for the /v2/chains endpoint in popsicle to avoid a merger conflict with Popsicle API Spec
+    update:
+      $ref: "#/components/schemas/MetricsListChainsResponse"
+    
+  - target: $["components"]["schemas"]["ListChainsResponse"]
+    description: Remove the unused schema
+    remove: true
+  
+  - target: $.info
+    description: Add a description to the OpenAPI spec
+    update:
+      description: The Avalanche API suite offers powerful tools for real-time and historical blockchain data. The Webhooks API enables instant monitoring of on-chain events, including smart contract activity, NFT transfers, and wallet transactions, with customizable filters and secure notifications. The Metrics API (Beta) provides analytics on blockchain activity, while the Data API (Beta) delivers multi-chain data for Avalanche and Ethereum, including transaction history, token balances, and metadata. These APIs empower developers to build dynamic web3 applications with real-time insights and seamless integration.
+      title: Data, Metrics, and Webhooks API

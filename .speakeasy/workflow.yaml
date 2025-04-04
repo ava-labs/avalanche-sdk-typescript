@@ -22,6 +22,14 @@ sources:
             - location: webhooks/overlays/overlay.yaml
         registry:
             location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript
+    devtools-source:
+        inputs:
+            - location: https://popsicle-api.avax.network/api-json
+            - location: https://glacier-api.avax.network/api-json
+        overlays:
+            - location: devtools/overlays/overlay.yaml
+        registry:
+            location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript
 targets:
     data-sdk:
         target: typescript
@@ -61,6 +69,20 @@ targets:
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript-code-samples
+            langOverride: javascript
+            labelOverride:
+                fixedValue: JavaScript
+            blocking: false
+    devtools-sdk:
+        target: typescript
+        source: devtools-source
+        output: devtools
+        publish:
+            npm:
+                token: $npm_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript-code-samples
             langOverride: javascript
             labelOverride:
                 fixedValue: JavaScript

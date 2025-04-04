@@ -1,10 +1,10 @@
 <div align="center">
     <h1> @avalanche-sdk/webhooks </h1>
         <p>
-            The Avalanche Webhooks SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
+            The Avalanche Webhooks SDK is a powerful and flexible toolset designed to simplify the integration with Avalanche's suite of blockchain services.
         </p>
         <p> 
-            Currently, this SDK is focused on providing robust support for Webhooks APIs.          
+            Currently, this SDK is focused on providing robust support for Webhooks APIs.  
         </p>
         <a href="https://developers.avacloud.io/webhooks-api/overview">
             <img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=3b6ef9&style=for-the-badge" />
@@ -12,26 +12,31 @@
 </div>
 
 <!-- Start Summary [summary] -->
+
 ## Summary
 
 Webhooks API: Webhooks API enables real-time monitoring of on-chain events across the Avalanche C-chain, subnets, and L1 networks. It provides instant notifications for activities like smart contract events, NFT transfers, and wallet transactions. Developers can customize filters to track specific events and verify notifications using shared secrets for security
+
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
+
 ## Table of Contents
+
 <!-- $toc-max-depth=2 -->
-  * [SDK Installation](#sdk-installation)
-  * [Requirements](#requirements)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Standalone functions](#standalone-functions)
-  * [Pagination](#pagination)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Debugging](#debugging)
+
+* [SDK Installation](#sdk-installation)
+* [Requirements](#requirements)
+* [SDK Example Usage](#sdk-example-usage)
+* [Authentication](#authentication)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Standalone functions](#standalone-functions)
+* [Pagination](#pagination)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
   * [Contributions](#contributions)
@@ -39,6 +44,7 @@ Webhooks API: Webhooks API enables real-time monitoring of on-chain events acros
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
+
 ## SDK Installation
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
@@ -72,7 +78,6 @@ yarn add @avalanche-sdk/webhooks zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
-
 
 ### Model Context Protocol (MCP) Server
 
@@ -141,7 +146,6 @@ chmod +x mcp-server
 
 If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
 
-
 ```json
 {
   "mcpServers": {
@@ -160,15 +164,19 @@ For a full list of server arguments, run:
 ```sh
 npx -y --package @avalanche-sdk/webhooks -- mcp start --help
 ```
+
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
+
 ## Requirements
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
+
 <!-- End Requirements [requirements] -->
 
 <!-- Start SDK Example Usage [usage] -->
+
 ## SDK Example Usage
 
 ### Example
@@ -204,20 +212,23 @@ async function run() {
 run();
 
 ```
+
 <!-- End SDK Example Usage [usage] -->
 
 <!-- Start Authentication [security] -->
+
 ## Authentication
 
 ### Per-Client Security Schemes
 
 This SDK supports the following security scheme globally:
 
-| Name     | Type   | Scheme  |
-| -------- | ------ | ------- |
+| Name       | Type   | Scheme  |
+| ---------- | ------ | ------- |
 | `apiKey` | apiKey | API key |
 
 To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
+
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -237,14 +248,15 @@ async function run() {
 run();
 
 ```
+
 <!-- End Authentication [security] -->
 
 <!-- Start Available Resources and Operations [operations] -->
+
 ## Available Resources and Operations
 
 <details open>
 <summary>Available methods</summary>
-
 
 ### [webhooks](docs/sdks/webhooks/README.md)
 
@@ -267,6 +279,7 @@ run();
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Standalone functions [standalone-funcs] -->
+
 ## Standalone functions
 
 All the methods listed above are available as standalone functions. These
@@ -297,14 +310,13 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 <!-- End Standalone functions [standalone-funcs] -->
 
 <!-- Start Pagination [pagination] -->
+
 ## Pagination
 
 Some of the endpoints in this SDK support pagination. To use pagination, you
 make your SDK calls as usual, but the returned response object will also be an
-async iterable that can be consumed using the [`for await...of`][for-await-of]
+async iterable that can be consumed using the 
 syntax.
-
-[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
 
 Here's an example of one such pagination call:
 
@@ -330,14 +342,17 @@ async function run() {
 run();
 
 ```
+
 <!-- End Pagination [pagination] -->
 
 <!-- Start Retries [retries] -->
+
 ## Retries
 
 Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
+
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -369,6 +384,7 @@ run();
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
+
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -397,9 +413,11 @@ async function run() {
 run();
 
 ```
+
 <!-- End Retries [retries] -->
 
 <!-- Start Error Handling [errors] -->
+
 ## Error Handling
 
 Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `healthCheck` method may throw the following errors:
@@ -510,21 +528,24 @@ Validation errors can also occur when either method arguments or data returned f
 
 In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
 
-| HTTP Client Error                                    | Description                                          |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| RequestAbortedError                                  | HTTP request was aborted by the client               |
-| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
-| ConnectionError                                      | HTTP client was unable to make a request to a server |
-| InvalidRequestError                                  | Any input used to create a request is invalid        |
-| UnexpectedClientError                                | Unrecognised or unexpected error                     |
+| HTTP Client Error     | Description                                          |
+| --------------------- | ---------------------------------------------------- |
+| RequestAbortedError   | HTTP request was aborted by the client               |
+| RequestTimeoutError   | HTTP request timed out due to an AbortSignal signal  |
+| ConnectionError       | HTTP client was unable to make a request to a server |
+| InvalidRequestError   | Any input used to create a request is invalid        |
+| UnexpectedClientError | Unrecognised or unexpected error                     |
+
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
+
 ## Server Selection
 
 ### Override Server URL Per-Client
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
+
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -544,9 +565,11 @@ async function run() {
 run();
 
 ```
+
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
+
 ## Custom HTTP Client
 
 The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
@@ -593,9 +616,11 @@ httpClient.addHook("requestError", (error, request) => {
 
 const sdk = new Avalanche({ httpClient });
 ```
+
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Debugging [debug] -->
+
 ## Debugging
 
 You can setup your SDK to emit debug logs for SDK requests and responses.
@@ -610,6 +635,7 @@ import { Avalanche } from "@avalanche-sdk/webhooks";
 
 const sdk = new Avalanche({ debugLogger: console });
 ```
+
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
@@ -626,3 +652,5 @@ looking for the latest version.
 
 While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
+
+[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
