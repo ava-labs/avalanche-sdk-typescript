@@ -12,10 +12,10 @@ let value: PendingReward = {
   txHash: "<value>",
   amountStaked: "<value>",
   nodeId: "<id>",
-  startTimestamp: 6567.62,
-  endTimestamp: 8620.63,
+  startTimestamp: 3021.86,
+  endTimestamp: 1563.84,
   rewardType: "VALIDATOR",
-  progress: 4977.77,
+  progress: 3727.95,
   estimatedReward: {
     assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
     name: "Avalanche",

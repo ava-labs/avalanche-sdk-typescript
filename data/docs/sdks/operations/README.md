@@ -112,12 +112,15 @@ const avalanche = new Avalanche({
 
 async function run() {
   const result = await avalanche.data.operations.exportTransactions({
-    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+    type: "TRANSACTION_EXPORT_EVM",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
+      addresses: [
+
+      ],
       includeChains: [
-        "p-chain",
+        "43114",
       ],
     },
   });
@@ -146,12 +149,15 @@ const avalanche = new AvalancheCore({
 
 async function run() {
   const res = await dataOperationsExportTransactions(avalanche, {
-    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+    type: "TRANSACTION_EXPORT_EVM",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
+      addresses: [
+  
+      ],
       includeChains: [
-        "p-chain",
+        "43114",
       ],
     },
   });

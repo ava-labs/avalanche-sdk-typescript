@@ -88,7 +88,7 @@ let value: ListCChainAtomicTransactionsResponse = {
     },
   ],
   chainInfo: {
-    chainName: "c-chain",
+    chainName: "p-chain",
     network: "mainnet",
   },
 };

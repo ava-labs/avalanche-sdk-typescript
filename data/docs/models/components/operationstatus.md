@@ -5,7 +5,7 @@
 ```typescript
 import { OperationStatus } from "@avalanche-sdk/data/models/components";
 
-let value: OperationStatus = "RUNNING";
+let value: OperationStatus = "COMPLETED";
 ```
 
 ## Values

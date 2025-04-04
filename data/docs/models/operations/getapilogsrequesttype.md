@@ -7,7 +7,7 @@ Filter data by request type.
 ```typescript
 import { GetApiLogsRequestType } from "@avalanche-sdk/data/models/operations";
 
-let value: GetApiLogsRequestType = "rpc";
+let value: GetApiLogsRequestType = "data";
 ```
 
 ## Values

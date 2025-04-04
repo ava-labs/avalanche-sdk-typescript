@@ -14,9 +14,9 @@ let value: ListCollectibleBalancesResponse = {
         symbol: "WAVAX",
         ercType: "ERC-721",
         tokenId: "<id>",
-        tokenUri: "https://unripe-babushka.org/",
+        tokenUri: "https://functional-entry.biz",
         metadata: {
-          indexStatus: "MISSING_TOKEN",
+          indexStatus: "INDEXED",
         },
         ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
         chainId: "43114",
