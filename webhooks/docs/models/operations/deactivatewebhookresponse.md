@@ -11,12 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://white-adviser.net",
+  url: "https://neighboring-knuckle.org/",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 5098.07,
+  status: "active",
+  createdAt: 5958.13,
   name: "<value>",
-  description: "faithfully under usable synergy redact",
+  description: "beneath bewail about ornery square",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,13 +33,13 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://bare-bar.org/",
+  eventType: "validator_activity",
+  url: "https://buttery-importance.org/",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 8980.63,
+  status: "active",
+  createdAt: 7013.76,
   name: "<value>",
-  description: "why however complicated form rundown phew trolley hmph",
+  description: "until rapidly instead save deficient headline devise",
   metadata: {
     keyType: "addresses",
     keys: [

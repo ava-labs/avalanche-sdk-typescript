@@ -5,7 +5,7 @@
 ```typescript
 import { EventType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: EventType = "address_activity";
+let value: EventType = "platform_address_activity";
 ```
 
 ## Values

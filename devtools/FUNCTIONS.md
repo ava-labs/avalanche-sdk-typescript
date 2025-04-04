@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/devtools/core.js";
-import { metricsHealthCheck } from "@avalanche-sdk/devtools/funcs/metricsHealthCheck.js";
+import { webhooksCreate } from "@avalanche-sdk/devtools/funcs/webhooksCreate.js";
 import { SDKValidationError } from "@avalanche-sdk/devtools/models/errors/sdkvalidationerror.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
@@ -32,7 +32,19 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await metricsHealthCheck(avalanche);
+  const res = await webhooksCreate(avalanche, {
+    eventType: "address_activity",
+    url: "https://inferior-chainstay.com",
+    chainId: "<id>",
+    metadata: {
+      addresses: [
+        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
 
   switch (true) {
     case res.ok:

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 7c9a674bc5f355b3da298851a7743bf8
+  docChecksum: ad8fc4dd6066cd285deb0559d1680650
   docVersion: Beta
   speakeasyVersion: 1.529.1
   generationVersion: 2.566.5
-  releaseVersion: 0.0.1
-  configChecksum: 885b8abb5a6a8e45f38151e12f333e61
+  releaseVersion: 0.0.2
+  configChecksum: 7281c0a631da4b173643bdf9c2cab192
   published: true
 features:
   typescript:
@@ -647,7 +647,6 @@ generatedFiles:
   - docs/sdks/vertices/README.md
   - docs/sdks/webhooks/README.md
   - eslint.config.mjs
-  - jsr.json
   - package.json
   - src/core.ts
   - src/funcs/dataEvmAddressBalancesGetNative.ts
@@ -2238,7 +2237,7 @@ examples:
           pageSize: "10"
       responses:
         "200":
-          application/json: {"transfers": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 7085.05, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://expensive-daddy.org/", "metadata": {"indexStatus": "INVALID_TOKEN_URI_SCHEME"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}, {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 2357.03, "value": "10000000000000000000", "erc20Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": "42.42"}}}]}
+          application/json: {"transfers": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 7085.05, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://expensive-daddy.org/", "metadata": {"indexStatus": "INVALID_TOKEN_URI_SCHEME"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}, {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 4602.18, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://fixed-devil.biz", "metadata": {"indexStatus": "UNINDEXED"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":

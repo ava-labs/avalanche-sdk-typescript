@@ -6,8 +6,8 @@
 import { PlatformActivityRequest } from "@avalanche-sdk/webhooks/models/components";
 
 let value: PlatformActivityRequest = {
-  eventType: "platform_address_activity",
-  url: "https://overdue-minion.name",
+  eventType: "validator_activity",
+  url: "https://untrue-parsnip.com",
   chainId: "<id>",
   metadata: {
     keyType: "nodeId",

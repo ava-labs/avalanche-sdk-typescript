@@ -5,7 +5,7 @@
 ```typescript
 import { HealthCheckResultDtoStatus } from "@avalanche-sdk/webhooks/models/components";
 
-let value: HealthCheckResultDtoStatus = "ok";
+let value: HealthCheckResultDtoStatus = "error";
 ```
 
 ## Values

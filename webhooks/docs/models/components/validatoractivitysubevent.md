@@ -5,7 +5,7 @@
 ```typescript
 import { ValidatorActivitySubEvent } from "@avalanche-sdk/webhooks/models/components";
 
-let value: ValidatorActivitySubEvent = "l1_validator_disabled";
+let value: ValidatorActivitySubEvent = "l1_validator_balance_threshold";
 ```
 
 ## Values

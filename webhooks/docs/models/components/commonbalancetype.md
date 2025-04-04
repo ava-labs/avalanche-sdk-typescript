@@ -7,7 +7,7 @@ Type of balance to monitor
 ```typescript
 import { CommonBalanceType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: CommonBalanceType = "atomicMemoryLocked";
+let value: CommonBalanceType = "atomicMemoryUnlocked";
 ```
 
 ## Values

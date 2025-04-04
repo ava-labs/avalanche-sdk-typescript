@@ -6,7 +6,7 @@
 import { PlatformBalanceThresholdFilter } from "@avalanche-sdk/webhooks/models/components";
 
 let value: PlatformBalanceThresholdFilter = {
-  balanceType: "pendingStaked",
+  balanceType: "lockedPlatform",
   balanceThreshold: "<value>",
 };
 ```

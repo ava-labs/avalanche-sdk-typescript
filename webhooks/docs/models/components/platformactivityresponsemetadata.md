@@ -7,7 +7,7 @@
 
 ```typescript
 const value: components.PlatformActivityMetadata = {
-  keyType: "addresses",
+  keyType: "nodeId",
   keys: [
     "<value>",
   ],

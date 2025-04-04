@@ -11,12 +11,12 @@ Successful response
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
   eventType: "platform_address_activity",
-  url: "https://excellent-comestible.org",
+  url: "https://neighboring-knuckle.org/",
   chainId: "<id>",
   status: "active",
-  createdAt: 4706.21,
+  createdAt: 5958.13,
   name: "<value>",
-  description: "kiddingly woot amid",
+  description: "beneath bewail about ornery square",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -33,13 +33,13 @@ const value: components.EVMAddressActivityResponse = {
 ```typescript
 const value: components.PlatformActivityResponse = {
   id: "<id>",
-  eventType: "platform_address_activity",
-  url: "https://gloomy-allegation.net/",
+  eventType: "validator_activity",
+  url: "https://buttery-importance.org/",
   chainId: "<id>",
   status: "active",
-  createdAt: 6063.08,
+  createdAt: 7013.76,
   name: "<value>",
-  description: "lest gloss bide daintily vast scamper over after",
+  description: "until rapidly instead save deficient headline devise",
   metadata: {
     keyType: "addresses",
     keys: [

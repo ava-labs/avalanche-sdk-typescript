@@ -5,7 +5,7 @@
 ```typescript
 import { PlatformActivityRequestEventType } from "@avalanche-sdk/webhooks/models/components";
 
-let value: PlatformActivityRequestEventType = "platform_address_activity";
+let value: PlatformActivityRequestEventType = "validator_activity";
 ```
 
 ## Values

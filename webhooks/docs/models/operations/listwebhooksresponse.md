@@ -11,16 +11,16 @@ let value: ListWebhooksResponse = {
       {
         id: "<id>",
         eventType: "platform_address_activity",
-        url: "https://understated-impostor.net/",
+        url: "https://superior-creature.net/",
         chainId: "<id>",
         status: "active",
-        createdAt: 9040.45,
+        createdAt: 6534.96,
         name: "<value>",
-        description: "than optimistic as by summer horde whoa once",
+        description:
+          "meh kettledrum posh ha dissemble place stealthily trolley owlishly heartache",
         metadata: {
-          keyType: "subnetId",
-          keys: [
-            "<value>",
+          addresses: [
+            "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
           ],
           eventSignatures: [
             "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",

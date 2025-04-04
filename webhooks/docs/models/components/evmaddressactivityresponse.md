@@ -7,13 +7,13 @@ import { EVMAddressActivityResponse } from "@avalanche-sdk/webhooks/models/compo
 
 let value: EVMAddressActivityResponse = {
   id: "<id>",
-  eventType: "platform_address_activity",
-  url: "https://insignificant-parsnip.info",
+  eventType: "validator_activity",
+  url: "https://wordy-shore.net/",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 9636.63,
+  createdAt: 967.63,
   name: "<value>",
-  description: "afterwards successfully how gee gadzooks insert",
+  description: "uh-huh scornful scratchy noted issue um",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",

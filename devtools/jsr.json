@@ -12,7 +12,8 @@
     "./lib/http": "./src/lib/http.ts",
     "./lib/retries": "./src/lib/retries.ts",
     "./lib/sdks": "./src/lib/sdks.ts",
-    "./types": "./src/types/index.ts"
+    "./types": "./src/types/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "publish": {
     "include": [
