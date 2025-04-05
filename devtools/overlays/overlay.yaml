@@ -30,4 +30,29 @@ actions:
 
   - target: $.paths.*.*[?(@['tags'][0] == 'Notifications')]
     description: Remove all paths that are tagged with 'notifications' if they somehow exist
-    remove: true
+    update:
+      x-speakeasy-ignore: true
+  
+  - target: $.paths.*.*[?(@.deprecated == true && (@['servers'][0]['url'] == 'https://popsicle-api.avax.network' || @['servers'][0]['url'] == 'https://metrics.avax.network'))]
+    description: Remove all deprecated paths
+    update:
+      x-speakeasy-ignore: true
+
+  - target: $.paths['/v2/lookingGlass/compositeQuery']
+    description: Remove the /v2/lookingGlass/compositeQuery path
+    update:
+      x-speakeasy-ignore: true
+
+  - target: $.paths['/v1/lookingGlass/compositeQuery']
+    description: Remove the /v1/lookingGlass/compositeQuery path
+    update:
+      x-speakeasy-ignore: true
+
+  - target: $
+    description: Add a servers list to the OpenAPI spec
+    update:
+      servers:
+        - url: https://glacier-api.avax.network
+          description: Data API
+        - url: https://metrics.avax.network
+          description: Metrics API
