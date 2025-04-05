@@ -4,7 +4,6 @@
 
 export * from "./addaddressestowebhook.js";
 export * from "./aggregatesignatures.js";
-export * from "./compositequeryv2.js";
 export * from "./createwebhook.js";
 export * from "./datahealthcheck.js";
 export * from "./deactivatewebhook.js";

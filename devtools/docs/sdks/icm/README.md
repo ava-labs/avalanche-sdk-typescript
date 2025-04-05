@@ -19,7 +19,6 @@ Gets an ICM message by teleporter message ID.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -47,7 +46,6 @@ import { dataIcmGet } from "@avalanche-sdk/devtools/funcs/dataIcmGet.js";
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -108,7 +106,6 @@ Lists ICM messages. Ordered by timestamp in descending order.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -142,7 +139,6 @@ import { dataIcmList } from "@avalanche-sdk/devtools/funcs/dataIcmList.js";
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -209,7 +205,6 @@ Lists ICM messages by address. Ordered by timestamp in descending order.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -238,7 +233,6 @@ import { dataIcmListByAddress } from "@avalanche-sdk/devtools/funcs/dataIcmListB
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

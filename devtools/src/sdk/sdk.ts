@@ -4,7 +4,6 @@
 
 import { ClientSDK } from "../lib/sdks.js";
 import { Data } from "./data.js";
-import { LookingGlass } from "./lookingglass.js";
 import { Metrics } from "./metrics.js";
 import { Webhooks } from "./webhooks.js";
 
@@ -12,11 +11,6 @@ export class Avalanche extends ClientSDK {
   private _metrics?: Metrics;
   get metrics(): Metrics {
     return (this._metrics ??= new Metrics(this._options));
-  }
-
-  private _lookingGlass?: LookingGlass;
-  get lookingGlass(): LookingGlass {
-    return (this._lookingGlass ??= new LookingGlass(this._options));
   }
 
   private _data?: Data;

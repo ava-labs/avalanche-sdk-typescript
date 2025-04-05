@@ -19,7 +19,6 @@ If the address is a smart contract, returns the transaction in which it was depl
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -49,7 +48,6 @@ import { dataEvmContractsGetDeploymentTransaction } from "@avalanche-sdk/devtool
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -112,7 +110,6 @@ Gets metadata about the contract at the given address.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -141,7 +138,6 @@ import { dataEvmContractsGetMetadata } from "@avalanche-sdk/devtools/funcs/dataE
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -203,7 +199,6 @@ Lists ERC transfers for an ERC-20, ERC-721, or ERC-1155 contract address.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -236,7 +231,6 @@ import { dataEvmContractsListTransfers } from "@avalanche-sdk/devtools/funcs/dat
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

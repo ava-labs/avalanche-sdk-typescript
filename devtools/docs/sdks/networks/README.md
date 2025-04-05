@@ -17,7 +17,6 @@ Gets staking metrics for a given subnet.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,7 +49,6 @@ import { metricsNetworksGetStakingMetrics } from "@avalanche-sdk/devtools/funcs/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

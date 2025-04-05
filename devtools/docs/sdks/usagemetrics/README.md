@@ -22,7 +22,6 @@ Gets metrics for Data API usage over a specified time interval aggregated at the
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -53,7 +52,6 @@ import { dataUsageMetricsGetUsage } from "@avalanche-sdk/devtools/funcs/dataUsag
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -117,7 +115,6 @@ Gets logs for requests made by client over a specified time interval for a speci
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -148,7 +145,6 @@ import { dataUsageMetricsGetLogs } from "@avalanche-sdk/devtools/funcs/dataUsage
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -212,7 +208,6 @@ Gets metrics for public Subnet RPC usage over a specified time interval aggregat
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -243,7 +238,6 @@ import { dataUsageMetricsGetSubnetRpcUsage } from "@avalanche-sdk/devtools/funcs
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -311,7 +305,6 @@ run();
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -342,7 +335,6 @@ import { dataUsageMetricsGetRpcUsageMetrics } from "@avalanche-sdk/devtools/func
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

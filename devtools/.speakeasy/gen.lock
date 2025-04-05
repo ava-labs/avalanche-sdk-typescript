@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 105b77e106244f83afb4785e38b03147
+  docChecksum: a7a452ac7d41ca805eeca643899d6113
   docVersion: Beta
   speakeasyVersion: 1.529.1
   generationVersion: 2.566.5
-  releaseVersion: 0.0.3
-  configChecksum: 97b27648c45e86605feef31f71cc1ca7
+  releaseVersion: 0.0.4
+  configChecksum: 536ae4cd921c3fbd743e7a4a04d0a47e
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: devtools
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
@@ -58,24 +58,6 @@ generatedFiles:
   - docs/models/components/addressdetails.md
   - docs/models/components/addresseschangerequest.md
   - docs/models/components/aggregatedassetamount.md
-  - docs/models/components/alltimeerc20balancequerydto.md
-  - docs/models/components/alltimeerc20balancequerydtotype.md
-  - docs/models/components/alltimenativebalancequerydto.md
-  - docs/models/components/alltimenativebalancequerydtotype.md
-  - docs/models/components/alltimenftholdersquerydto.md
-  - docs/models/components/alltimenftholdersquerydtoparams.md
-  - docs/models/components/alltimenftholdersquerydtotype.md
-  - docs/models/components/alltimestarsarenabalancequerydto.md
-  - docs/models/components/alltimestarsarenabalancequerydtotype.md
-  - docs/models/components/anytimeerc20balancequerydto.md
-  - docs/models/components/anytimeerc20balancequerydtotype.md
-  - docs/models/components/anytimenativebalancequerydto.md
-  - docs/models/components/anytimenativebalancequerydtotype.md
-  - docs/models/components/anytimenftholdersquerydto.md
-  - docs/models/components/anytimenftholdersquerydtoparams.md
-  - docs/models/components/anytimenftholdersquerydtotype.md
-  - docs/models/components/anytimestarsarenabalancequerydto.md
-  - docs/models/components/anytimestarsarenabalancequerydtotype.md
   - docs/models/components/apifeature.md
   - docs/models/components/assetamount.md
   - docs/models/components/assetwithpriceinfo.md
@@ -105,18 +87,12 @@ generatedFiles:
   - docs/models/components/completeddelegatordetailsdelegationstatus.md
   - docs/models/components/completedvalidatordetails.md
   - docs/models/components/completedvalidatordetailsvalidationstatus.md
-  - docs/models/components/compositequeryrequestdto.md
-  - docs/models/components/compositequeryresponse.md
   - docs/models/components/contract.md
   - docs/models/components/contractdeploymentdetails.md
   - docs/models/components/createevmtransactionexportrequest.md
   - docs/models/components/createprimarynetworktransactionexportrequest.md
   - docs/models/components/currencycode.md
   - docs/models/components/datalistchainsresponse.md
-  - docs/models/components/daterangeerc20minbalanceparam.md
-  - docs/models/components/daterangeminbalanceparam.md
-  - docs/models/components/daterangenftholdersparam.md
-  - docs/models/components/daterangestarsarenaminbalanceparam.md
   - docs/models/components/delegationstatustype.md
   - docs/models/components/delegator.md
   - docs/models/components/delegatorsdetails.md
@@ -198,12 +174,6 @@ generatedFiles:
   - docs/models/components/l1validatordetailstransaction.md
   - docs/models/components/l1validatordetailstransactionblscredentials.md
   - docs/models/components/l1validatormanagerdetails.md
-  - docs/models/components/latestbalanceparams.md
-  - docs/models/components/latestbalancequerydto.md
-  - docs/models/components/latestbalancequerydtotype.md
-  - docs/models/components/lateststarsarenabalanceparams.md
-  - docs/models/components/lateststarsarenabalancequerydto.md
-  - docs/models/components/lateststarsarenabalancequerydtotype.md
   - docs/models/components/listaddresschainsresponse.md
   - docs/models/components/listblockchainsresponse.md
   - docs/models/components/listcchainatomicbalancesresponse.md
@@ -270,7 +240,6 @@ generatedFiles:
   - docs/models/components/operationstatusresponse.md
   - docs/models/components/operationstatusresponsemetadata.md
   - docs/models/components/operationtype.md
-  - docs/models/components/operator.md
   - docs/models/components/pchainaddressdetails.md
   - docs/models/components/pchainbalance.md
   - docs/models/components/pchainid.md
@@ -309,7 +278,6 @@ generatedFiles:
   - docs/models/components/primarynetworktxtype.md
   - docs/models/components/primarynetworktype.md
   - docs/models/components/proposerdetails.md
-  - docs/models/components/query.md
   - docs/models/components/removedvalidatordetails.md
   - docs/models/components/removedvalidatordetailsvalidationstatus.md
   - docs/models/components/requesttype.md
@@ -347,10 +315,8 @@ generatedFiles:
   - docs/models/components/teleportersourcetransaction.md
   - docs/models/components/timeintervalgranularity.md
   - docs/models/components/timeintervalgranularityextended.md
-  - docs/models/components/timestamprangenftholdersparam.md
   - docs/models/components/token.md
   - docs/models/components/tokenreputation.md
-  - docs/models/components/tokentype.md
   - docs/models/components/transaction.md
   - docs/models/components/transactiondetails.md
   - docs/models/components/transactiondirectiontype.md
@@ -412,7 +378,6 @@ generatedFiles:
   - docs/models/operations/addaddressestowebhookrequest.md
   - docs/models/operations/aggregatesignaturesglobals.md
   - docs/models/operations/aggregatesignaturesrequest.md
-  - docs/models/operations/compositequeryv2response.md
   - docs/models/operations/createwebhookrequest.md
   - docs/models/operations/createwebhookresponse.md
   - docs/models/operations/deactivatewebhookrequest.md
@@ -631,7 +596,6 @@ generatedFiles:
   - docs/sdks/evmchains/README.md
   - docs/sdks/evmtransactions/README.md
   - docs/sdks/icm/README.md
-  - docs/sdks/lookingglass/README.md
   - docs/sdks/metrics/README.md
   - docs/sdks/metricschains/README.md
   - docs/sdks/networks/README.md
@@ -723,7 +687,6 @@ generatedFiles:
   - src/funcs/dataUsageMetricsGetRpcUsageMetrics.ts
   - src/funcs/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/funcs/dataUsageMetricsGetUsage.ts
-  - src/funcs/lookingGlassCompositeQuery.ts
   - src/funcs/metricsChainsGet.ts
   - src/funcs/metricsChainsGetMetrics.ts
   - src/funcs/metricsChainsGetRollingWindowMetrics.ts
@@ -848,7 +811,6 @@ generatedFiles:
   - src/mcp-server/tools/dataUsageMetricsGetRpcUsageMetrics.ts
   - src/mcp-server/tools/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/mcp-server/tools/dataUsageMetricsGetUsage.ts
-  - src/mcp-server/tools/lookingGlassCompositeQuery.ts
   - src/mcp-server/tools/metricsChainsGet.ts
   - src/mcp-server/tools/metricsChainsGetMetrics.ts
   - src/mcp-server/tools/metricsChainsGetRollingWindowMetrics.ts
@@ -877,14 +839,6 @@ generatedFiles:
   - src/models/components/addressdetails.ts
   - src/models/components/addresseschangerequest.ts
   - src/models/components/aggregatedassetamount.ts
-  - src/models/components/alltimeerc20balancequerydto.ts
-  - src/models/components/alltimenativebalancequerydto.ts
-  - src/models/components/alltimenftholdersquerydto.ts
-  - src/models/components/alltimestarsarenabalancequerydto.ts
-  - src/models/components/anytimeerc20balancequerydto.ts
-  - src/models/components/anytimenativebalancequerydto.ts
-  - src/models/components/anytimenftholdersquerydto.ts
-  - src/models/components/anytimestarsarenabalancequerydto.ts
   - src/models/components/apifeature.ts
   - src/models/components/assetamount.ts
   - src/models/components/assetwithpriceinfo.ts
@@ -908,17 +862,11 @@ generatedFiles:
   - src/models/components/commonbalancetype.ts
   - src/models/components/completeddelegatordetails.ts
   - src/models/components/completedvalidatordetails.ts
-  - src/models/components/compositequeryrequestdto.ts
-  - src/models/components/compositequeryresponse.ts
   - src/models/components/contractdeploymentdetails.ts
   - src/models/components/createevmtransactionexportrequest.ts
   - src/models/components/createprimarynetworktransactionexportrequest.ts
   - src/models/components/currencycode.ts
   - src/models/components/datalistchainsresponse.ts
-  - src/models/components/daterangeerc20minbalanceparam.ts
-  - src/models/components/daterangeminbalanceparam.ts
-  - src/models/components/daterangenftholdersparam.ts
-  - src/models/components/daterangestarsarenaminbalanceparam.ts
   - src/models/components/delegationstatustype.ts
   - src/models/components/delegatorsdetails.ts
   - src/models/components/deliveredicmmessage.ts
@@ -975,10 +923,6 @@ generatedFiles:
   - src/models/components/l1validatordetailsfull.ts
   - src/models/components/l1validatordetailstransaction.ts
   - src/models/components/l1validatormanagerdetails.ts
-  - src/models/components/latestbalanceparams.ts
-  - src/models/components/latestbalancequerydto.ts
-  - src/models/components/lateststarsarenabalanceparams.ts
-  - src/models/components/lateststarsarenabalancequerydto.ts
   - src/models/components/listaddresschainsresponse.ts
   - src/models/components/listblockchainsresponse.ts
   - src/models/components/listcchainatomicbalancesresponse.ts
@@ -1040,7 +984,6 @@ generatedFiles:
   - src/models/components/operationstatuscode.ts
   - src/models/components/operationstatusresponse.ts
   - src/models/components/operationtype.ts
-  - src/models/components/operator.ts
   - src/models/components/pchainaddressdetails.ts
   - src/models/components/pchainbalance.ts
   - src/models/components/pchainid.ts
@@ -1104,8 +1047,6 @@ generatedFiles:
   - src/models/components/teleportersourcetransaction.ts
   - src/models/components/timeintervalgranularity.ts
   - src/models/components/timeintervalgranularityextended.ts
-  - src/models/components/timestamprangenftholdersparam.ts
-  - src/models/components/tokentype.ts
   - src/models/components/transaction.ts
   - src/models/components/transactiondetails.ts
   - src/models/components/transactiondirectiontype.ts
@@ -1152,7 +1093,6 @@ generatedFiles:
   - src/models/errors/unauthorizederror.ts
   - src/models/operations/addaddressestowebhook.ts
   - src/models/operations/aggregatesignatures.ts
-  - src/models/operations/compositequeryv2.ts
   - src/models/operations/createwebhook.ts
   - src/models/operations/datahealthcheck.ts
   - src/models/operations/deactivatewebhook.ts
@@ -1258,7 +1198,6 @@ generatedFiles:
   - src/sdk/evmtransactions.ts
   - src/sdk/icm.ts
   - src/sdk/index.ts
-  - src/sdk/lookingglass.ts
   - src/sdk/metrics.ts
   - src/sdk/metricschains.ts
   - src/sdk/networks.ts

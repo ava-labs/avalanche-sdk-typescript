@@ -20,7 +20,6 @@ Lists the most recent blocks from all supported  EVM-compatible chains. The resu
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,7 +49,6 @@ import { dataEvmBlocksListLatestAllChains } from "@avalanche-sdk/devtools/funcs/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -113,7 +111,6 @@ Lists the latest indexed blocks on the EVM-compatible chain sorted in descending
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -143,7 +140,6 @@ import { dataEvmBlocksListLatest } from "@avalanche-sdk/devtools/funcs/dataEvmBl
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -206,7 +202,6 @@ Gets the details of an individual block on the EVM-compatible chain.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -235,7 +230,6 @@ import { dataEvmBlocksGet } from "@avalanche-sdk/devtools/funcs/dataEvmBlocksGet
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -297,7 +291,6 @@ Lists the transactions that occured in a given block.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -326,7 +319,6 @@ import { dataEvmBlocksListTransactions } from "@avalanche-sdk/devtools/funcs/dat
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

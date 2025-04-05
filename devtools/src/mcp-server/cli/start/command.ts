@@ -79,7 +79,7 @@ export const startCommand = buildCommand({
       "server-url": {
         kind: "parsed",
         brief: "Overrides the default server URL used by the SDK",
-        optional: false,
+        optional: true,
         parse: (value) => new URL(value).toString(),
       },
       "server-index": {

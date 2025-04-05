@@ -84,7 +84,6 @@ import { tool$dataUsageMetricsGetLogs } from "./tools/dataUsageMetricsGetLogs.js
 import { tool$dataUsageMetricsGetRpcUsageMetrics } from "./tools/dataUsageMetricsGetRpcUsageMetrics.js";
 import { tool$dataUsageMetricsGetSubnetRpcUsage } from "./tools/dataUsageMetricsGetSubnetRpcUsage.js";
 import { tool$dataUsageMetricsGetUsage } from "./tools/dataUsageMetricsGetUsage.js";
-import { tool$lookingGlassCompositeQuery } from "./tools/lookingGlassCompositeQuery.js";
 import { tool$metricsChainsGet } from "./tools/metricsChainsGet.js";
 import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js";
 import { tool$metricsChainsGetRollingWindowMetrics } from "./tools/metricsChainsGetRollingWindowMetrics.js";
@@ -111,7 +110,7 @@ export function createMCPServer(deps: {
   logger: ConsoleLogger;
   allowedTools?: string[] | undefined;
   scopes?: MCPScope[] | undefined;
-  serverURL: string;
+  serverURL?: string | undefined;
   apiKey?: SDKOptions["apiKey"] | undefined;
   chainId?: SDKOptions["chainId"] | undefined;
   network?: SDKOptions["network"] | undefined;
@@ -119,7 +118,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.0.3",
+    version: "0.0.4",
   });
 
   const client = new AvalancheCore({
@@ -152,7 +151,6 @@ export function createMCPServer(deps: {
   void register; // suppress unused warnings
 
   tool(tool$metricsHealthCheck);
-  tool(tool$lookingGlassCompositeQuery);
   tool(tool$dataHealthCheck);
   tool(tool$webhooksList);
   tool(tool$webhooksCreate);

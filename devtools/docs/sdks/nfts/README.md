@@ -19,7 +19,6 @@ Triggers reindexing of token metadata for an NFT token. Reindexing can only be c
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -48,7 +47,6 @@ import { dataNftsReindex } from "@avalanche-sdk/devtools/funcs/dataNftsReindex.j
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -110,7 +108,6 @@ Lists tokens for an NFT contract.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -141,7 +138,6 @@ import { dataNftsList } from "@avalanche-sdk/devtools/funcs/dataNftsList.js";
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -205,7 +201,6 @@ Gets token details for a specific token of an NFT contract.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -235,7 +230,6 @@ import { dataNftsGet } from "@avalanche-sdk/devtools/funcs/dataNftsGet.js";
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

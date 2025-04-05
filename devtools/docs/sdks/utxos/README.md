@@ -17,7 +17,6 @@ Lists UTXOs on one of the Primary Network chains for the supplied addresses.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,7 +49,6 @@ import { dataPrimaryNetworkUtxosListByAddresses } from "@avalanche-sdk/devtools/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

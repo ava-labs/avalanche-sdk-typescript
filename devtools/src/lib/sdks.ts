@@ -81,7 +81,7 @@ export class ClientSDK {
   public readonly _baseURL: URL | null;
   public readonly _options: SDKOptions & { hooks?: SDKHooks };
 
-  constructor(options: SDKOptions) {
+  constructor(options: SDKOptions = {}) {
     const opt = options as unknown;
     if (
       typeof opt === "object"

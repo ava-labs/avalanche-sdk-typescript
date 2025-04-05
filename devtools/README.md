@@ -30,6 +30,7 @@ Data, Metrics, and Webhooks API: The Avalanche API suite offers powerful tools f
   * [Pagination](#pagination)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
   * [Debugging](#debugging)
 * [Development](#development)
@@ -95,7 +96,6 @@ Add the following server definition to your `claude_desktop_config.json` file:
         "-y", "--package", "@avalanche-sdk/devtools",
         "--",
         "mcp", "start",
-        "--server-url", "...",
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "..."
@@ -121,7 +121,6 @@ Create a `.cursor/mcp.json` file in your project root with the following content
         "-y", "--package", "@avalanche-sdk/devtools",
         "--",
         "mcp", "start",
-        "--server-url", "...",
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "..."
@@ -179,7 +178,6 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -224,7 +222,6 @@ To authenticate with the API the `apiKey` parameter must be set when initializin
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   apiKey: "<YOUR_API_KEY_HERE>",
   chainId: "43114",
   network: "mainnet",
@@ -406,10 +403,6 @@ run();
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
-### [lookingGlass](docs/sdks/lookingglass/README.md)
-
-* [compositeQuery](docs/sdks/lookingglass/README.md#compositequery) - Composite query
-
 ### [metrics](docs/sdks/metrics/README.md)
 
 * [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
@@ -531,7 +524,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataUsageMetricsGetLogs`](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
 - [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 - [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
-- [`lookingGlassCompositeQuery`](docs/sdks/lookingglass/README.md#compositequery) - Composite query
 - [`metricsChainsGet`](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
 - [`metricsChainsGetMetrics`](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
 - [`metricsChainsGetRollingWindowMetrics`](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
@@ -601,7 +593,6 @@ The following global parameters are available.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -638,7 +629,6 @@ Here's an example of one such pagination call:
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -669,7 +659,6 @@ To change the default retry strategy for a single API call, simply provide a ret
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -701,7 +690,6 @@ If you'd like to override the default retry strategy for all operations that sup
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -762,7 +750,6 @@ import {
 } from "@avalanche-sdk/devtools/models/errors";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -848,6 +835,57 @@ In some rare cases, the SDK can fail to get a response from the server or even m
 | InvalidRequestError                                  | Any input used to create a request is invalid        |
 | UnexpectedClientError                                | Unrecognised or unexpected error                     |
 <!-- End Error Handling [errors] -->
+
+<!-- Start Server Selection [server] -->
+## Server Selection
+
+### Override Server URL Per-Client
+
+The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  serverURL: "https://glacier-api.avax.network",
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck();
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+
+### Override Server URL Per-Operation
+
+The server URL can also be overridden on a per-operation basis, provided a server list was specified for the operation. For example:
+```typescript
+import { Avalanche } from "@avalanche-sdk/devtools";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck({
+    serverURL: "https://metrics.avax.network",
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+<!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client

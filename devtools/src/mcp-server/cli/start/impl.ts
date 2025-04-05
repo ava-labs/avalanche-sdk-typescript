@@ -22,7 +22,7 @@ interface StartCommandFlags {
   readonly "api-key"?: string | undefined;
   readonly "chain-id"?: SDKOptions["chainId"] | undefined;
   readonly network?: SDKOptions["network"] | undefined;
-  readonly "server-url": string;
+  readonly "server-url"?: string;
   readonly "server-index"?: SDKOptions["serverIdx"];
   readonly "log-level": ConsoleLoggerLevel;
   readonly env?: [string, string][];
