@@ -54,5 +54,3 @@ actions:
       servers:
         - url: https://glacier-api.avax.network
           description: Data API
-        - url: https://metrics.avax.network
-          description: Metrics API
