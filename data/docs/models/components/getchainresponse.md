@@ -7,11 +7,11 @@ import { GetChainResponse } from "@avalanche-sdk/data/models/components";
 
 let value: GetChainResponse = {
   chainId: "<id>",
-  status: "UNAVAILABLE",
+  status: "OK",
   chainName: "<value>",
-  description: "jubilantly lavish solemnly",
-  vmName: "BITCOIN",
-  rpcUrl: "https://cute-secrecy.org/",
+  description: "colour hmph soon so fidget merrily unexpectedly utilization",
+  vmName: "ETHEREUM",
+  rpcUrl: "https://pleasant-gradient.info",
   isTestnet: false,
   networkToken: {
     name: "Wrapped AVAX",

@@ -15,32 +15,27 @@
 
 
 <!-- Start Summary [summary] -->
-
 ## Summary
 
-Data API: The Data API provides web3 application developers with multi-chain data related to Avalanche's primary network, Avalanche subnets, and Ethereum. With Data API, you can easily build products that leverage real-time and historical transaction and transfer history, native and token balances, and various types of token metadata. The API is in Beta and may be subject to change.`</br></br>`If you have feedback or feature requests for the API, please submit them `<a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">`here`</a>`. Bug reports can be submitted `<a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">`here`</a>`, and any potential security issues can be reported `<a href="https://immunefi.com/bounty/avalabs">`here`</a>`.
-
+Data API: The Data API provides web3 application developers with multi-chain data related to Avalanche's primary network, Avalanche subnets, and Ethereum. With Data API, you can easily build products that leverage real-time and historical transaction and transfer history, native and token balances, and various types of token metadata. The API is in Beta and may be subject to change.</br></br>If you have feedback or feature requests for the API, please submit them <a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">here</a>. Bug reports can be submitted <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">here</a>, and any potential security issues can be reported <a href="https://immunefi.com/bounty/avalabs">here</a>.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
-
 ## Table of Contents
-
 <!-- $toc-max-depth=2 -->
-
-* [SDK Installation](#sdk-installation)
-* [Requirements](#requirements)
-* [SDK Example Usage](#sdk-example-usage)
-* [Authentication](#authentication)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Standalone functions](#standalone-functions)
-* [Global Parameters](#global-parameters)
-* [Pagination](#pagination)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Debugging](#debugging)
+  * [SDK Installation](#sdk-installation)
+  * [Requirements](#requirements)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Authentication](#authentication)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Standalone functions](#standalone-functions)
+  * [Global Parameters](#global-parameters)
+  * [Pagination](#pagination)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
   * [Contributions](#contributions)
@@ -48,7 +43,6 @@ Data API: The Data API provides web3 application developers with multi-chain dat
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
-
 ## SDK Installation
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
@@ -82,6 +76,7 @@ yarn add @avalanche-sdk/data zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
+
 
 ### Model Context Protocol (MCP) Server
 
@@ -150,6 +145,7 @@ chmod +x mcp-server
 
 If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
 
+
 ```json
 {
   "mcpServers": {
@@ -168,19 +164,15 @@ For a full list of server arguments, run:
 ```sh
 npx -y --package @avalanche-sdk/data -- mcp start --help
 ```
-
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
-
 ## Requirements
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-
 <!-- End Requirements [requirements] -->
 
 <!-- Start SDK Example Usage [usage] -->
-
 ## SDK Example Usage
 
 ### Example
@@ -203,23 +195,20 @@ async function run() {
 run();
 
 ```
-
 <!-- End SDK Example Usage [usage] -->
 
 <!-- Start Authentication [security] -->
-
 ## Authentication
 
 ### Per-Client Security Schemes
 
 This SDK supports the following security scheme globally:
 
-| Name       | Type   | Scheme  |
-| ---------- | ------ | ------- |
+| Name     | Type   | Scheme  |
+| -------- | ------ | ------- |
 | `apiKey` | apiKey | API key |
 
 To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -239,15 +228,14 @@ async function run() {
 run();
 
 ```
-
 <!-- End Authentication [security] -->
 
 <!-- Start Available Resources and Operations [operations] -->
-
 ## Available Resources and Operations
 
 <details open>
 <summary>Available methods</summary>
+
 
 ### [data](docs/sdks/data/README.md)
 
@@ -255,7 +243,9 @@ run();
 
 #### [data.evm](docs/sdks/evm/README.md)
 
+
 #### [data.evm.address](docs/sdks/address/README.md)
+
 
 #### [data.evm.address.balances](docs/sdks/addressbalances/README.md)
 
@@ -295,15 +285,13 @@ run();
 * [get](docs/sdks/chains/README.md#get) - Get chain information
 * [~~getAddressChains~~](docs/sdks/chains/README.md#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
 * [~~listAllLatestTransactions~~](docs/sdks/chains/README.md#listalllatesttransactions) - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
 * [~~listAllLatestBlocks~~](docs/sdks/chains/README.md#listalllatestblocks) - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . ⚠️ **Deprecated**
+⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
 
 #### [data.evm.contracts](docs/sdks/contracts/README.md)
 
@@ -389,15 +377,13 @@ run();
 
 * [~~getTeleporterMessage~~](docs/sdks/teleporter/README.md#getteleportermessage) - **[Deprecated]** Gets a teleporter message by message ID.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . :warning: **Deprecated**
 * [~~listTeleporterMessages~~](docs/sdks/teleporter/README.md#listteleportermessages) - **[Deprecated]** Lists teleporter messages. Ordered by timestamp in  descending order.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . :warning: **Deprecated**
 * [~~listTeleporterMessagesByAddress~~](docs/sdks/teleporter/README.md#listteleportermessagesbyaddress) - **[Deprecated]** Lists teleporter messages by address. Ordered by  timestamp in descending order.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . ⚠️ **Deprecated**
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . :warning: **Deprecated**
 
 #### [data.usageMetrics](docs/sdks/usagemetrics/README.md)
 
@@ -406,13 +392,12 @@ run();
 * [getSubnetRpcUsage](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 * [~~getRpcUsageMetrics~~](docs/sdks/usagemetrics/README.md#getrpcusagemetrics) - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. ⚠️ **Deprecated**
+⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Standalone functions [standalone-funcs] -->
-
 ## Standalone functions
 
 All the methods listed above are available as standalone functions. These
@@ -493,42 +478,36 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
 - ~~[`dataEvmChainsGetAddressChains`](docs/sdks/chains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
 - ~~[`dataEvmChainsListAllLatestBlocks`](docs/sdks/chains/README.md#listalllatestblocks)~~ - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
 - ~~[`dataEvmChainsListAllLatestTransactions`](docs/sdks/chains/README.md#listalllatesttransactions)~~ - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
 - ~~[`dataTeleporterGetTeleporterMessage`](docs/sdks/teleporter/README.md#getteleportermessage)~~ - **[Deprecated]** Gets a teleporter message by message ID.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages/:messageId endpoint instead** . :warning: **Deprecated**
 - ~~[`dataTeleporterListTeleporterMessages`](docs/sdks/teleporter/README.md#listteleportermessages)~~ - **[Deprecated]** Lists teleporter messages. Ordered by timestamp in  descending order.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/messages endpoint instead** . :warning: **Deprecated**
 - ~~[`dataTeleporterListTeleporterMessagesByAddress`](docs/sdks/teleporter/README.md#listteleportermessagesbyaddress)~~ - **[Deprecated]** Lists teleporter messages by address. Ordered by  timestamp in descending order.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . ⚠️ **Deprecated**
-
+⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . :warning: **Deprecated**
 - ~~[`dataUsageMetricsGetRpcUsageMetrics`](docs/sdks/usagemetrics/README.md#getrpcusagemetrics)~~ - **[Deprecated]**  Gets metrics for public Subnet RPC usage over a specified time interval aggregated at the specified time-duration granularity.
 
-⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. ⚠️ **Deprecated**
+⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
 
 <!-- Start Global Parameters [global-parameters] -->
-
 ## Global Parameters
 
 Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
 
 For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `getNative`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+
 
 ### Available Globals
 
@@ -564,17 +543,17 @@ async function run() {
 run();
 
 ```
-
 <!-- End Global Parameters [global-parameters] -->
 
 <!-- Start Pagination [pagination] -->
-
 ## Pagination
 
 Some of the endpoints in this SDK support pagination. To use pagination, you
 make your SDK calls as usual, but the returned response object will also be an
-async iterable that can be consumed using the 
+async iterable that can be consumed using the [`for await...of`][for-await-of]
 syntax.
+
+[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
 
 Here's an example of one such pagination call:
 
@@ -605,17 +584,14 @@ async function run() {
 run();
 
 ```
-
 <!-- End Pagination [pagination] -->
 
 <!-- Start Retries [retries] -->
-
 ## Retries
 
 Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -647,7 +623,6 @@ run();
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -676,11 +651,9 @@ async function run() {
 run();
 
 ```
-
 <!-- End Retries [retries] -->
 
 <!-- Start Error Handling [errors] -->
-
 ## Error Handling
 
 Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `reindex` method may throw the following errors:
@@ -791,29 +764,26 @@ Validation errors can also occur when either method arguments or data returned f
 
 In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
 
-| HTTP Client Error     | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| RequestAbortedError   | HTTP request was aborted by the client               |
-| RequestTimeoutError   | HTTP request timed out due to an AbortSignal signal  |
-| ConnectionError       | HTTP client was unable to make a request to a server |
-| InvalidRequestError   | Any input used to create a request is invalid        |
-| UnexpectedClientError | Unrecognised or unexpected error                     |
-
+| HTTP Client Error                                    | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| RequestAbortedError                                  | HTTP request was aborted by the client               |
+| RequestTimeoutError                                  | HTTP request timed out due to an AbortSignal signal  |
+| ConnectionError                                      | HTTP client was unable to make a request to a server |
+| InvalidRequestError                                  | Any input used to create a request is invalid        |
+| UnexpectedClientError                                | Unrecognised or unexpected error                     |
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
-
 ## Server Selection
 
 ### Override Server URL Per-Client
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  serverURL: "https://glacier-api-dev.avax.network",
+  serverURL: "https://glacier-api.avax.network",
   chainId: "43114",
   network: "mainnet",
 });
@@ -828,11 +798,9 @@ async function run() {
 run();
 
 ```
-
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
-
 ## Custom HTTP Client
 
 The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
@@ -879,11 +847,9 @@ httpClient.addHook("requestError", (error, request) => {
 
 const sdk = new Avalanche({ httpClient });
 ```
-
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Debugging [debug] -->
-
 ## Debugging
 
 You can setup your SDK to emit debug logs for SDK requests and responses.
@@ -898,7 +864,6 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const sdk = new Avalanche({ debugLogger: console });
 ```
-
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

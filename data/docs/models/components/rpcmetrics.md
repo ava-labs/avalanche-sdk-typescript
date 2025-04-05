@@ -6,16 +6,16 @@
 import { RpcMetrics } from "@avalanche-sdk/data/models/components";
 
 let value: RpcMetrics = {
-  timestamp: 9149.71,
+  timestamp: 1158.29,
   values: [
     {
-      totalRequests: 7317.44,
-      apiCreditsUsed: 7275.47,
-      requestsPerSecond: 2899.13,
-      successRatePercent: 5777.1,
-      medianResponseTimeMsecs: 7791.8,
-      invalidRequests: 7955.91,
-      apiCreditsWasted: 3445.3,
+      totalRequests: 2016.58,
+      apiCreditsUsed: 6183.71,
+      requestsPerSecond: 8704.65,
+      successRatePercent: 8469.62,
+      medianResponseTimeMsecs: 4253.06,
+      invalidRequests: 4201.69,
+      apiCreditsWasted: 2765.48,
       groupedBy: "userAgent",
     },
   ],

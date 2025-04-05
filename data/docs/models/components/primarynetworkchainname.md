@@ -5,7 +5,7 @@
 ```typescript
 import { PrimaryNetworkChainName } from "@avalanche-sdk/data/models/components";
 
-let value: PrimaryNetworkChainName = "p-chain";
+let value: PrimaryNetworkChainName = "x-chain";
 ```
 
 ## Values

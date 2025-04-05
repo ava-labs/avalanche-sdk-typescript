@@ -6,8 +6,8 @@
 import { ResourceLink } from "@avalanche-sdk/data/models/components";
 
 let value: ResourceLink = {
-  type: "Instagram",
-  url: "https://hidden-hubris.org",
+  type: "Twitter",
+  url: "https://putrid-sightseeing.org",
 };
 ```
 

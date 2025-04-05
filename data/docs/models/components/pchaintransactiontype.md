@@ -5,7 +5,7 @@
 ```typescript
 import { PChainTransactionType } from "@avalanche-sdk/data/models/components";
 
-let value: PChainTransactionType = "DisableL1ValidatorTx";
+let value: PChainTransactionType = "AddValidatorTx";
 ```
 
 ## Values

@@ -7,7 +7,7 @@ import { IcmDestinationTransaction } from "@avalanche-sdk/data/models/components
 
 let value: IcmDestinationTransaction = {
   txHash: "<value>",
-  timestamp: 38.6,
+  timestamp: 4661.9,
   gasSpent: "<value>",
   rewardRedeemer: "<value>",
   delivererAddress: "<value>",

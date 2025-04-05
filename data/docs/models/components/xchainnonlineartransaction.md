@@ -9,7 +9,7 @@ let value: XChainNonLinearTransaction = {
   txHash: "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c",
   chainFormat: "non-linear",
   timestamp: 1600762738,
-  txType: "ImportTx",
+  txType: "ExportTx",
   memo: "0x546865204176616c616e6368652050726f6a656374",
   consumedUtxos: [
     {
@@ -54,7 +54,7 @@ let value: XChainNonLinearTransaction = {
         name: "Avalanche",
         symbol: "AVAX",
         denomination: 9,
-        type: "nft",
+        type: "secp256k1",
         amount: "5001000",
       },
       consumedOnChainId: "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
@@ -93,7 +93,7 @@ let value: XChainNonLinearTransaction = {
       name: "Avalanche",
       symbol: "AVAX",
       denomination: 9,
-      type: "nft",
+      type: "secp256k1",
       amount: "5001000",
     },
   ],

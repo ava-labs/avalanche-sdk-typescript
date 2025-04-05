@@ -11,10 +11,9 @@ let value: ListChainsResponse = {
       chainId: "<id>",
       status: "OK",
       chainName: "<value>",
-      description:
-        "frank now lashes save shakily hence bitterly considering barring above",
-      vmName: "ETHEREUM",
-      rpcUrl: "https://minty-executor.name/",
+      description: "whereas accidentally couch below",
+      vmName: "EVM",
+      rpcUrl: "https://french-bell.biz/",
       isTestnet: false,
       networkToken: {
         name: "Wrapped AVAX",
