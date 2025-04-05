@@ -33,11 +33,11 @@ jobs:
         id: extract_version
         run: |
 
-          VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASE.md | head -1 | sed 's/NPM v//')
+          VERSION=$(grep -Eo 'NPM v[0-9]+\.[0-9]+\.[0-9]+' sdk/RELEASES.md | head -1 | sed 's/NPM v//')
           echo "Extracted version from RELEASE.md: $VERSION"
 
           if [ -z "$VERSION" ]; then
-            echo "❌ No version found in RELEASE.md. Exiting..."
+            echo "❌ No version found in RELEASES.md. Exiting..."
             exit 1
           fi
 
