@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/webhooks",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Avacloud",
   "type": "module",
   "bin": {
@@ -22,6 +22,11 @@
     }
   },
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
+    "directory": "webhooks"
+  },
   "scripts": {
     "lint": "eslint --cache --max-warnings=0 src",
     "build:mcp": "bun src/mcp-server/build.mts",
