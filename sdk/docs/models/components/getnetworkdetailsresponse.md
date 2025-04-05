@@ -1,0 +1,34 @@
+# GetNetworkDetailsResponse
+
+## Example Usage
+
+```typescript
+import { GetNetworkDetailsResponse } from "@avalanche-sdk/sdk/models/components";
+
+let value: GetNetworkDetailsResponse = {
+  validatorDetails: {
+    validatorCount: 5215.83,
+    totalAmountStaked: "<value>",
+    estimatedAnnualStakingReward: "<value>",
+    stakingDistributionByVersion: [
+      {
+        version: "<value>",
+        amountStaked: "<value>",
+        validatorCount: 3120.07,
+      },
+    ],
+    stakingRatio: "<value>",
+  },
+  delegatorDetails: {
+    delegatorCount: 4840.59,
+    totalAmountStaked: "<value>",
+  },
+};
+```
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `validatorDetails`                                                           | [components.ValidatorsDetails](../../models/components/validatorsdetails.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `delegatorDetails`                                                           | [components.DelegatorsDetails](../../models/components/delegatorsdetails.md) | :heavy_check_mark:                                                           | N/A                                                                          |

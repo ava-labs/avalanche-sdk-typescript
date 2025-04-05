@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkListBlockchains.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkListBlockchains.js";

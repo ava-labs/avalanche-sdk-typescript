@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkVerticesListLatest.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkVerticesListLatest.js";

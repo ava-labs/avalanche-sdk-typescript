@@ -1,12 +1,12 @@
 <div align="center">
     <h1> @avalanche-sdk/sdk </h1>
         <p>
-            The Avalanche SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
+            The Avalanche SDK SDK is a powerful and flexible toolset designed to simplify the integration with Avalanche's suite of blockchain services.
         </p>
         <p> 
-            Currently, this SDK is focused on providing robust support for Data, Metrics and Webhooks APIs.          
+            Currently, this SDK is focused on providing robust support for Data, Metrics and Webhooks APIs.  
         </p>
-        <a href="https://developers.avacloud.io/webhooks-api/overview">
+        <a href="https://developers.avacloud.io/data-api/overview">
             <img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=3b6ef9&style=for-the-badge" />
         </a>
 </div>
@@ -14,7 +14,7 @@
 <!-- Start Summary [summary] -->
 ## Summary
 
-The Avalanche SDK is a powerful and flexible toolset designed to simplify the integration with AvaCloud's suite of blockchain services.
+Data, Metrics, and Webhooks API: The Avalanche API suite offers powerful tools for real-time and historical blockchain data. The Webhooks API enables instant monitoring of on-chain events, including smart contract activity, NFT transfers, and wallet transactions, with customizable filters and secure notifications. The Metrics API (Beta) provides analytics on blockchain activity, while the Data API (Beta) delivers multi-chain data for Avalanche and Ethereum, including transaction history, token balances, and metadata. These APIs empower developers to build dynamic web3 applications with real-time insights and seamless integration.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -26,6 +26,7 @@ The Avalanche SDK is a powerful and flexible toolset designed to simplify the in
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
+  * [Global Parameters](#global-parameters)
   * [Pagination](#pagination)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -72,6 +73,94 @@ yarn add @avalanche-sdk/sdk zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
+
+
+### Model Context Protocol (MCP) Server
+
+This SDK is also an installable MCP server where the various SDK methods are
+exposed as tools that can be invoked by AI applications.
+
+> Node.js v20 or greater is required to run the MCP server from npm.
+
+<details>
+<summary>Claude installation steps</summary>
+
+Add the following server definition to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/sdk",
+        "--",
+        "mcp", "start",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Cursor installation steps</summary>
+
+Create a `.cursor/mcp.json` file in your project root with the following content:
+
+```json
+{
+  "mcpServers": {
+    "Avalanche": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@avalanche-sdk/sdk",
+        "--",
+        "mcp", "start",
+        "--api-key", "...",
+        "--chain-id", "...",
+        "--network", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
+
+For a full list of server arguments, run:
+
+```sh
+npx -y --package @avalanche-sdk/sdk -- mcp start --help
+```
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
@@ -79,6 +168,43 @@ yarn add @avalanche-sdk/sdk zod
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 <!-- End Requirements [requirements] -->
+
+<!-- Start SDK Example Usage [usage] -->
+## SDK Example Usage
+
+### Example
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/sdk";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.webhooks.create({
+    eventType: "address_activity",
+    url: "https://inferior-chainstay.com",
+    chainId: "<id>",
+    metadata: {
+      addresses: [
+        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      ],
+      eventSignatures: [
+        "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+    },
+  });
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+<!-- End SDK Example Usage [usage] -->
 
 <!-- Start Authentication [security] -->
 ## Authentication
@@ -102,7 +228,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.healthCheck();
+  const result = await avalanche.metrics.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -114,11 +240,11 @@ run();
 <!-- End Authentication [security] -->
 
 <!-- Start Available Resources and Operations [operations] -->
-
 ## Available Resources and Operations
 
 <details open>
-<summary>Available methods</summary> 
+<summary>Available methods</summary>
+
 
 ### [data](docs/sdks/data/README.md)
 
@@ -162,17 +288,17 @@ run();
 * [get](docs/sdks/evmblocks/README.md#get) - Get block
 * [listTransactions](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
 
-#### [data.evm.chains](docs/sdks/chains/README.md)
+#### [data.evm.chains](docs/sdks/evmchains/README.md)
 
-* [list](docs/sdks/chains/README.md#list) - List chains
-* [get](docs/sdks/chains/README.md#get) - Get chain information
-* [~~getAddressChains~~](docs/sdks/chains/README.md#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
+* [list](docs/sdks/evmchains/README.md#list) - List chains
+* [get](docs/sdks/evmchains/README.md#get) - Get chain information
+* [~~getAddressChains~~](docs/sdks/evmchains/README.md#getaddresschains) - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
-* [~~listAllLatestTransactions~~](docs/sdks/chains/README.md#listalllatesttransactions) - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
+* [~~listAllLatestTransactions~~](docs/sdks/evmchains/README.md#listalllatesttransactions) - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
-* [~~listAllLatestBlocks~~](docs/sdks/chains/README.md#listalllatestblocks) - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
+* [~~listAllLatestBlocks~~](docs/sdks/evmchains/README.md#listalllatestblocks) - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
 
@@ -281,16 +407,16 @@ run();
 
 * [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
 
-#### [metrics.chains](docs/sdks/chains/README.md)
+#### [metrics.chains](docs/sdks/metricschains/README.md)
 
-* [list](docs/sdks/chains/README.md#list) - Get a list of supported blockchains
-* [get](docs/sdks/chains/README.md#get) - Get chain information for supported blockchain
-* [getMetrics](docs/sdks/chains/README.md#getmetrics) - Get metrics for EVM chains
-* [getTeleporterMetrics](docs/sdks/chains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
-* [getRollingWindowMetrics](docs/sdks/chains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
-* [listNftHolders](docs/sdks/chains/README.md#listnftholders) - Get NFT holders by contract address
-* [listTokenHoldersAboveThreshold](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
-* [listBTCbBridgersAboveThreshold](docs/sdks/chains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
+* [list](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
+* [get](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
+* [getMetrics](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
+* [getTeleporterMetrics](docs/sdks/metricschains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+* [getRollingWindowMetrics](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+* [listNftHolders](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
+* [listTokenHoldersAboveThreshold](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+* [listBTCbBridgersAboveThreshold](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
 
 #### [metrics.networks](docs/sdks/networks/README.md)
 
@@ -302,9 +428,8 @@ run();
 
 ### [webhooks](docs/sdks/webhooks/README.md)
 
-* [healthCheck](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
-* [create](docs/sdks/webhooks/README.md#create) - Create a webhook
 * [list](docs/sdks/webhooks/README.md#list) - List webhooks
+* [create](docs/sdks/webhooks/README.md#create) - Create a webhook
 * [get](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
 * [deactivate](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
 * [update](docs/sdks/webhooks/README.md#update) - Update a webhook
@@ -313,16 +438,14 @@ run();
 
 #### [webhooks.addresses](docs/sdks/addresses/README.md)
 
-* [add](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+* [list](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
 * [remove](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
-* [list](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks 
+* [add](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
 
 </details>
-
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Standalone functions [standalone-funcs] -->
-
 ## Standalone functions
 
 All the methods listed above are available as standalone functions. These
@@ -354,8 +477,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataEvmBlocksListLatest`](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
 - [`dataEvmBlocksListLatestAllChains`](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
 - [`dataEvmBlocksListTransactions`](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
-- [`dataEvmChainsGet`](docs/sdks/chains/README.md#get) - Get chain information
-- [`dataEvmChainsList`](docs/sdks/chains/README.md#list) - List chains
+- [`dataEvmChainsGet`](docs/sdks/evmchains/README.md#get) - Get chain information
+- [`dataEvmChainsList`](docs/sdks/evmchains/README.md#list) - List chains
 - [`dataEvmContractsGetDeploymentTransaction`](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
 - [`dataEvmContractsGetMetadata`](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
 - [`dataEvmContractsListTransfers`](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
@@ -401,13 +524,34 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataUsageMetricsGetLogs`](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
 - [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 - [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
-- ~~[`dataEvmChainsGetAddressChains`](docs/sdks/chains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
+- [`metricsChainsGet`](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
+- [`metricsChainsGetMetrics`](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
+- [`metricsChainsGetRollingWindowMetrics`](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
+- [`metricsChainsGetTeleporterMetrics`](docs/sdks/metricschains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
+- [`metricsChainsList`](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
+- [`metricsChainsListBTCbBridgersAboveThreshold`](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
+- [`metricsChainsListNftHolders`](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
+- [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
+- [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+- [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
+- [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
+- [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
+- [`webhooksAddressesList`](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
+- [`webhooksAddressesRemove`](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
+- [`webhooksCreate`](docs/sdks/webhooks/README.md#create) - Create a webhook
+- [`webhooksDeactivate`](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
+- [`webhooksGenerateOrRotateSharedSecret`](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
+- [`webhooksGet`](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
+- [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
+- [`webhooksList`](docs/sdks/webhooks/README.md#list) - List webhooks
+- [`webhooksUpdate`](docs/sdks/webhooks/README.md#update) - Update a webhook
+- ~~[`dataEvmChainsGetAddressChains`](docs/sdks/evmchains/README.md#getaddresschains)~~ - **[Deprecated]** Gets a list of all chains where the address was either a sender or receiver in a transaction or ERC transfer. The list is currently updated every 15 minutes.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/address/:address/chains endpoint instead** . :warning: **Deprecated**
-- ~~[`dataEvmChainsListAllLatestBlocks`](docs/sdks/chains/README.md#listalllatestblocks)~~ - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
+- ~~[`dataEvmChainsListAllLatestBlocks`](docs/sdks/evmchains/README.md#listalllatestblocks)~~ - **[Deprecated]** Lists the latest blocks for all supported EVM chains. Filterable by network.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
-- ~~[`dataEvmChainsListAllLatestTransactions`](docs/sdks/chains/README.md#listalllatesttransactions)~~ - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
+- ~~[`dataEvmChainsListAllLatestTransactions`](docs/sdks/evmchains/README.md#listalllatesttransactions)~~ - **[Deprecated]** Lists the latest transactions for all supported EVM chains. Filterable by status.
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/transactions endpoint instead** . :warning: **Deprecated**
 - ~~[`dataTeleporterGetTeleporterMessage`](docs/sdks/teleporter/README.md#getteleportermessage)~~ - **[Deprecated]** Gets a teleporter message by message ID.
@@ -423,33 +567,51 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
-- [`metricsChainsGet`](docs/sdks/chains/README.md#get) - Get chain information for supported blockchain
-- [`metricsChainsGetMetrics`](docs/sdks/chains/README.md#getmetrics) - Get metrics for EVM chains
-- [`metricsChainsGetRollingWindowMetrics`](docs/sdks/chains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
-- [`metricsChainsGetTeleporterMetrics`](docs/sdks/chains/README.md#getteleportermetrics) - Get teleporter metrics for EVM chains
-- [`metricsChainsList`](docs/sdks/chains/README.md#list) - Get a list of supported blockchains
-- [`metricsChainsListBTCbBridgersAboveThreshold`](docs/sdks/chains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
-- [`metricsChainsListNftHolders`](docs/sdks/chains/README.md#listnftholders) - Get NFT holders by contract address
-- [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
-- [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
-- [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
-- [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
-
-- [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
-- [`webhooksAddressesList`](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
-- [`webhooksAddressesRemove`](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook
-- [`webhooksCreate`](docs/sdks/webhooks/README.md#create) - Create a webhook
-- [`webhooksDeactivate`](docs/sdks/webhooks/README.md#deactivate) - Deactivate a webhook
-- [`webhooksGenerateOrRotateSharedSecret`](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
-- [`webhooksGet`](docs/sdks/webhooks/README.md#get) - Get a webhook by ID
-- [`webhooksGetSharedSecret`](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
-- [`webhooksHealthCheck`](docs/sdks/webhooks/README.md#healthcheck) - Get the health of the service
-- [`webhooksList`](docs/sdks/webhooks/README.md#list) - List webhooks
-- [`webhooksUpdate`](docs/sdks/webhooks/README.md#update) - Update a webhook
-
 </details>
-
 <!-- End Standalone functions [standalone-funcs] -->
+
+<!-- Start Global Parameters [global-parameters] -->
+## Global Parameters
+
+Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
+
+For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `list`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+
+
+### Available Globals
+
+The following global parameters are available.
+
+| Name    | Type                          | Description                                              |
+| ------- | ----------------------------- | -------------------------------------------------------- |
+| chainId | string                        | A supported EVM chain id, chain alias, or blockchain id. |
+| network | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
+
+### Example
+
+```typescript
+import { Avalanche } from "@avalanche-sdk/sdk";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.chains.list({
+    network: "mainnet",
+  });
+
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
+}
+
+run();
+
+```
+<!-- End Global Parameters [global-parameters] -->
 
 <!-- Start Pagination [pagination] -->
 ## Pagination
@@ -472,8 +634,8 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.list({
-    status: "active",
+  const result = await avalanche.metrics.chains.list({
+    network: "mainnet",
   });
 
   for await (const page of result) {
@@ -502,7 +664,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck({
+  const result = await avalanche.metrics.healthCheck({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -543,7 +705,7 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.data.healthCheck();
+  const result = await avalanche.metrics.healthCheck();
 
   // Handle the result
   console.log(result);
@@ -557,7 +719,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Some methods specify known errors which can be thrown. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `healthCheck` method may throw the following errors:
+Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `reindex` method may throw the following errors:
 
 | Error Type                     | Status Code | Content Type     |
 | ------------------------------ | ----------- | ---------------- |
@@ -593,12 +755,12 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  let result;
   try {
-    result = await avalanche.webhooks.healthCheck();
-
-    // Handle the result
-    console.log(result);
+    await avalanche.data.nfts.reindex({
+      chainId: "43114",
+      address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      tokenId: "145",
+    });
   } catch (err) {
     switch (true) {
       // The server response does not match the expected SDK schema
@@ -663,7 +825,7 @@ run();
 
 Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted multi-line string since validation errors can list many issues and the plain error string may be difficult read when debugging.
 
-In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions:
+In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
 
 | HTTP Client Error                                    | Description                                          |
 | ---------------------------------------------------- | ---------------------------------------------------- |
@@ -690,7 +852,31 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.healthCheck();
+  const result = await avalanche.metrics.healthCheck();
+
+  // Handle the result
+  console.log(result);
+}
+
+run();
+
+```
+
+### Override Server URL Per-Operation
+
+The server URL can also be overridden on a per-operation basis, provided a server list was specified for the operation. For example:
+```typescript
+import { Avalanche } from "@avalanche-sdk/sdk";
+
+const avalanche = new Avalanche({
+  chainId: "43114",
+  network: "mainnet",
+});
+
+async function run() {
+  const result = await avalanche.metrics.healthCheck({
+    serverURL: "https://metrics.avax.network",
+  });
 
   // Handle the result
   console.log(result);
@@ -720,7 +906,7 @@ to log errors:
 
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
-import { HTTPClient } from "@avalanche-sdk/sdk/webhooks/lib/http";
+import { HTTPClient } from "@avalanche-sdk/sdk/lib/http";
 
 const httpClient = new HTTPClient({
   // fetcher takes a function that has the same signature as native `fetch`.
@@ -779,5 +965,5 @@ looking for the latest version.
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.

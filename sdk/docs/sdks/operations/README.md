@@ -50,7 +50,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataOperationsGetResult(avalanche.data, {
+  const res = await dataOperationsGetResult(avalanche, {
     operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
   });
 
@@ -75,6 +75,7 @@ run();
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
 
 ### Response
 
@@ -112,12 +113,15 @@ const avalanche = new Avalanche({
 
 async function run() {
   const result = await avalanche.data.operations.exportTransactions({
-    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+    type: "TRANSACTION_EXPORT_EVM",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
+      addresses: [
+
+      ],
       includeChains: [
-        "p-chain",
+        "43114",
       ],
     },
   });
@@ -145,13 +149,16 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await dataOperationsExportTransactions(avalanche.data, {
-    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING",
+  const res = await dataOperationsExportTransactions(avalanche, {
+    type: "TRANSACTION_EXPORT_EVM",
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
+      addresses: [
+  
+      ],
       includeChains: [
-        "p-chain",
+        "43114",
       ],
     },
   });
@@ -177,6 +184,7 @@ run();
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
 
 ### Response
 

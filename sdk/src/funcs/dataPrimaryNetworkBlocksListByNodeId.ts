@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkBlocksListByNodeId.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkBlocksListByNodeId.js";

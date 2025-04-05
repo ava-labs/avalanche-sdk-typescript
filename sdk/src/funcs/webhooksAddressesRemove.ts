@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/webhooks/funcs/webhooksAddressesRemove.js";
+export * from "@avalanche-sdk/devtools/funcs/webhooksAddressesRemove.js";

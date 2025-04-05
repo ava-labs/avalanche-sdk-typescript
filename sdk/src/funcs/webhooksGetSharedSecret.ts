@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/webhooks/funcs/webhooksGetSharedSecret.js";
+export * from "@avalanche-sdk/devtools/funcs/webhooksGetSharedSecret.js";

@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkUtxosListByAddresses.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkUtxosListByAddresses.js";

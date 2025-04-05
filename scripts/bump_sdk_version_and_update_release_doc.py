@@ -7,7 +7,7 @@ from datetime import datetime
 
 # Paths to the package.json files
 SDK_PATH = './sdk/package.json'
-SDK_DIRS = ['./data', './webhooks', './metrics']
+SDK_DIRS = ['./devtools']
 
 # Function to load package.json
 def load_package_json(path):
@@ -80,10 +80,10 @@ from datetime import datetime
 
 def update_release_md(new_version, dependency_versions, previous_versions):
     """
-    Update or create the RELEASE.md file with the fixed format,
+    Update or create the RELEASES.md file with the fixed format,
     mentioning the specific SDKs that have changed.
     """
-    release_file = './sdk/RELEASE.md'
+    release_file = './sdk/RELEASES.md'
 
     # Get the current timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

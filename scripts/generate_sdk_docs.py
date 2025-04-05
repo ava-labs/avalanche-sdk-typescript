@@ -1,16 +1,13 @@
 import os
 import shutil
 import re
+from pathlib import Path
 
 # Define source and destination mapping
 mappings = {
-    "data/docs": "sdk/docs/data/",
-    "webhooks/docs": "sdk/docs/webhooks/",
-    "metrics/docs": "sdk/docs/metrics/",
+    "devtools/docs": "sdk/docs/",
 }
 
-global_sdk_dst = "sdk/docs/sdks/"
-global_error_dst = "sdk/docs/errors/"
 funcs_dst = "sdk/src/funcs/"
 
 # Function to delete old files and folders
@@ -20,61 +17,6 @@ def delete_old_doc_files(directory):
         shutil.rmtree(directory)
         print(f"✅ Deleted old files in {directory}")
     os.makedirs(directory, exist_ok=True)
-
-def create_extra_copy(root, dst_base, rel_path, files, prefix="sdks"):
-    """
-    Copies the SDK folder docs of the Data, Metrics, and Webhooks SDK to the dst_base.
-    Preserves internal folder structure, removing the specified prefix dynamically.
-
-    Args:
-    - root: Source directory path.
-    - dst_base: Base destination path.
-    - rel_path: Relative path of the current directory being copied.
-    - files: List of files in the current directory.
-    - prefix: The custom prefix to remove (default is "sdks").
-    """
-    # Remove the custom prefix if it exists
-    prefix_with_slash = f"{prefix}/"
-    cleaned_rel_path = (
-        rel_path[len(prefix_with_slash):] if rel_path.startswith(prefix_with_slash)
-        else rel_path[len(prefix):] if rel_path.startswith(prefix)
-        else rel_path
-    )
-
-    # Construct the final destination path
-    dst = os.path.join(dst_base, cleaned_rel_path)
-    
-    
-    os.makedirs(dst, exist_ok=True)
-
-    # Regex pattern to find SDK imports
-    pattern = re.compile(r'@avalanche-sdk/(metrics|data|webhooks)')
-
-    for file in files:
-        src_file = os.path.join(root, file)
-        dst_file = os.path.join(dst, file)
-
-        # Copy file
-        shutil.copy2(src_file, dst_file)
-
-        # Replace text in the copied file
-        with open(dst_file, "r", encoding="utf-8") as f:
-            content = f.read()
-
-        updated_content = content
-        matches = pattern.findall(content)
-        for sdk_type in matches:
-            updated_content = updated_content.replace("avalanche,", f"avalanche.{sdk_type},")
-
-        # Replace occurrences
-        updated_content = updated_content.replace("@avalanche-sdk/data", "@avalanche-sdk/sdk")
-        updated_content = updated_content.replace("@avalanche-sdk/metrics", "@avalanche-sdk/sdk")
-        updated_content = updated_content.replace("@avalanche-sdk/webhooks", "@avalanche-sdk/sdk")
-
-        with open(dst_file, "w", encoding="utf-8") as f:
-            f.write(updated_content)
-
-        print(f"📄 Copied and replaced in: {dst_file}")
 
 # Function to copy files and preserve the internal folder structure
 def copy_and_replace(src, dst, search_text, replace_text):
@@ -89,12 +31,7 @@ def copy_and_replace(src, dst, search_text, replace_text):
         # Handle SDK folders separately
         if rel_path.startswith("sdks"):
             extract_and_create_func_files(root, files)
-            create_extra_copy(root, global_sdk_dst, rel_path, files, "sdks")
         
-        # Handle models/error folders separately
-        if rel_path.startswith("models/errors"):
-            create_extra_copy(root, global_error_dst, rel_path, files, "models/errors")
-
         # Create target directory
         target_dir = os.path.join(dst, rel_path)
 
@@ -129,7 +66,7 @@ def extract_and_create_func_files(root, files):
     - files: List of files to process.
     """
     # Regex pattern to find SDK imports
-    pattern = re.compile(r'@avalanche-sdk/(metrics|data|webhooks)/funcs/(\w+)\.js')
+    pattern = re.compile(r'@avalanche-sdk/(devtools)/funcs/(\w+)\.js')
 
     for file in files:
         src_file = os.path.join(root, file)
@@ -154,13 +91,53 @@ def extract_and_create_func_files(root, files):
 
             print(f"✅ Created {func_file} with export: {export_statement.strip()}")
 
+def copy_file_with_replacements(
+    src_path: str,
+    dst_path: str,
+    replacements: dict[str, str],
+    encoding: str = "utf-8",
+    default_content: str = ""
+) -> None:
+    """
+    Copy a file from src_path to dst_path using os.path, replacing keys in `replacements` with their values.
+    Creates dst_path even if src_path doesn't exist.
+
+    Args:
+        src_path (str): Source file path.
+        dst_path (str): Destination file path.
+        replacements (dict): String replacements {old: new}.
+        encoding (str): Encoding for file read/write.
+        default_content (str): Content to use if src file doesn't exist.
+    """
+
+    # Read or initialize content
+    if os.path.exists(src_path):
+        with open(src_path, "r", encoding=encoding) as f:
+            content = f.read()
+        print(f"📄 Reading from: {src_path}")
+    else:
+        content = default_content
+        print(f"⚠️ Source file not found: {src_path}. Creating destination with default content.")
+
+    # Apply replacements
+    for old, new in replacements.items():
+        content = content.replace(old, new)
+
+    # Make sure destination folder exists
+    dst_dir = os.path.dirname(dst_path)
+    if dst_dir:
+        os.makedirs(dst_dir, exist_ok=True)
+
+    # Write to destination
+    with open(dst_path, "w", encoding=encoding) as f:
+        f.write(content)
+
+    print(f"✅ File written to {dst_path} with {len(replacements)} replacements.")
 
 # Perform the cleanup, copy, and replace operation for each mapping
-search_text = "@avalanche-sdk"
+search_text = "@avalanche-sdk/devtools"
 replace_text = "@avalanche-sdk/sdk"
 
-delete_old_doc_files(global_sdk_dst)
-delete_old_doc_files(global_error_dst)
 delete_old_doc_files(funcs_dst)
 for src, dst in mappings.items():
     print(f"\n🔥 Deleting old files in {dst}...")
@@ -168,5 +145,15 @@ for src, dst in mappings.items():
     
     print(f"📂 Copying from {src} to {dst}...")
     copy_and_replace(src, dst, search_text, replace_text)
+
+copy_file_with_replacements(
+        src_path="devtools/README.md",
+        dst_path="sdk/README.md",
+        replacements={
+            "@avalanche-sdk/devtools": "@avalanche-sdk/sdk",
+            "Devtools": "SDK",
+        },
+        default_content="# SDK README\n\nGenerated because the source was missing."
+    )
 
 print("\n✅ All files copied, old files deleted, and text replaced successfully!")

@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/metrics/funcs/metricsChainsListTokenHoldersAboveThreshold.js";
+export * from "@avalanche-sdk/devtools/funcs/metricsChainsListTokenHoldersAboveThreshold.js";

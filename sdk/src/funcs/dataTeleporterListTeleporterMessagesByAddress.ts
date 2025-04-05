@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataTeleporterListTeleporterMessagesByAddress.js";
+export * from "@avalanche-sdk/devtools/funcs/dataTeleporterListTeleporterMessagesByAddress.js";

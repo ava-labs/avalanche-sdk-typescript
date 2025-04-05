@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataEvmAddressBalancesListCollectibles.js";
+export * from "@avalanche-sdk/devtools/funcs/dataEvmAddressBalancesListCollectibles.js";

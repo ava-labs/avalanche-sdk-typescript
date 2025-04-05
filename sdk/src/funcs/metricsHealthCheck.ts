@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/metrics/funcs/metricsHealthCheck.js";
+export * from "@avalanche-sdk/devtools/funcs/metricsHealthCheck.js";

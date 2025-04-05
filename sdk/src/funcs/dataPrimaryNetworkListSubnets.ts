@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkListSubnets.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkListSubnets.js";

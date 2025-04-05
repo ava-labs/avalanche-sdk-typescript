@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataIcmList.js";
+export * from "@avalanche-sdk/devtools/funcs/dataIcmList.js";

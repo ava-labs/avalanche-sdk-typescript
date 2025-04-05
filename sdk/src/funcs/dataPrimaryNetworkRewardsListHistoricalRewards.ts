@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkRewardsListHistoricalRewards.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkRewardsListHistoricalRewards.js";

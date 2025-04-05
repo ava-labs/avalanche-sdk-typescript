@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataPrimaryNetworkTransactionsListAssetTransactions.js";
+export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkTransactionsListAssetTransactions.js";

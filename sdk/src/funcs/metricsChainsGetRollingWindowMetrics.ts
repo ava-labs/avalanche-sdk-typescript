@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/metrics/funcs/metricsChainsGetRollingWindowMetrics.js";
+export * from "@avalanche-sdk/devtools/funcs/metricsChainsGetRollingWindowMetrics.js";

@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataSignatureAggregatorAggregate.js";
+export * from "@avalanche-sdk/devtools/funcs/dataSignatureAggregatorAggregate.js";

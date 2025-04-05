@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/metrics/funcs/metricsChainsListBTCbBridgersAboveThreshold.js";
+export * from "@avalanche-sdk/devtools/funcs/metricsChainsListBTCbBridgersAboveThreshold.js";

@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/data/funcs/dataEvmBlocksListLatestAllChains.js";
+export * from "@avalanche-sdk/devtools/funcs/dataEvmBlocksListLatestAllChains.js";

@@ -5,13 +5,13 @@
 
 ### Available Operations
 
-* [add](#add) - Add addresses to EVM activity webhook
-* [remove](#remove) - Remove addresses from EVM activity  webhook
 * [list](#list) - List adresses by EVM activity webhooks
+* [remove](#remove) - Remove addresses from EVM activity  webhook
+* [add](#add) - Add addresses to EVM activity webhook
 
-## add
+## list
 
-Add addresses to webhook. Only valid for EVM activity webhooks.
+List adresses by webhook. Only valid for EVM activity webhooks.
 
 ### Example Usage
 
@@ -24,17 +24,14 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.addresses.add({
+  const result = await avalanche.webhooks.addresses.list({
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
-    addressesChangeRequest: {
-      addresses: [
-        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-      ],
-    },
   });
 
-  // Handle the result
-  console.log(result);
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
 }
 
 run();
@@ -46,7 +43,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/sdk/core.js";
-import { webhooksAddressesAdd } from "@avalanche-sdk/sdk/funcs/webhooksAddressesAdd.js";
+import { webhooksAddressesList } from "@avalanche-sdk/sdk/funcs/webhooksAddressesList.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -56,13 +53,8 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await webhooksAddressesAdd(avalanche.webhooks, {
+  const res = await webhooksAddressesList(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
-    addressesChangeRequest: {
-      addresses: [
-        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-      ],
-    },
   });
 
   if (!res.ok) {
@@ -71,8 +63,10 @@ async function run() {
 
   const { value: result } = res;
 
-  // Handle the result
-  console.log(result);
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
 }
 
 run();
@@ -82,14 +76,15 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.AddAddressesToWebhookRequest](../../models/operations/addaddressestowebhookrequest.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetAddressesFromWebhookRequest](../../models/operations/getaddressesfromwebhookrequest.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
 
 ### Response
 
-**Promise\<[components.EVMAddressActivityResponse](../../models/components/evmaddressactivityresponse.md)\>**
+**Promise\<[operations.GetAddressesFromWebhookResponse](../../models/operations/getaddressesfromwebhookresponse.md)\>**
 
 ### Errors
 
@@ -152,7 +147,7 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await webhooksAddressesRemove(avalanche.webhooks, {
+  const res = await webhooksAddressesRemove(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
     addressesChangeRequest: {
       addresses: [
@@ -182,6 +177,7 @@ run();
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
 
 ### Response
 
@@ -201,9 +197,9 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## list
+## add
 
-List adresses by webhook. Only valid for EVM activity webhooks.
+Add addresses to webhook. Only valid for EVM activity webhooks.
 
 ### Example Usage
 
@@ -216,14 +212,17 @@ const avalanche = new Avalanche({
 });
 
 async function run() {
-  const result = await avalanche.webhooks.addresses.list({
+  const result = await avalanche.webhooks.addresses.add({
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
+    addressesChangeRequest: {
+      addresses: [
+        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      ],
+    },
   });
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -235,7 +234,7 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/sdk/core.js";
-import { webhooksAddressesList } from "@avalanche-sdk/sdk/funcs/webhooksAddressesList.js";
+import { webhooksAddressesAdd } from "@avalanche-sdk/sdk/funcs/webhooksAddressesAdd.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -245,8 +244,13 @@ const avalanche = new AvalancheCore({
 });
 
 async function run() {
-  const res = await webhooksAddressesList(avalanche.webhooks, {
+  const res = await webhooksAddressesAdd(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
+    addressesChangeRequest: {
+      addresses: [
+        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      ],
+    },
   });
 
   if (!res.ok) {
@@ -255,10 +259,8 @@ async function run() {
 
   const { value: result } = res;
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
@@ -268,14 +270,15 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetAddressesFromWebhookRequest](../../models/operations/getaddressesfromwebhookrequest.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.AddAddressesToWebhookRequest](../../models/operations/addaddressestowebhookrequest.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+| `options.serverURL`                                                                                                                                                            | *string*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | An optional server URL to use.                                                                                                                                                 |
 
 ### Response
 
-**Promise\<[operations.GetAddressesFromWebhookResponse](../../models/operations/getaddressesfromwebhookresponse.md)\>**
+**Promise\<[components.EVMAddressActivityResponse](../../models/components/evmaddressactivityresponse.md)\>**
 
 ### Errors
 

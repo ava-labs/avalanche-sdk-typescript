@@ -5,9 +5,7 @@ name: Generate SDK Docs
     branches:
       - main
     paths:
-      - data/RELEASES.md
-      - webhooks/RELEASES.md
-      - metrics/RELEASES.md
+      - devtools/RELEASES.md
   workflow_dispatch: # Allows manual triggering from GitHub Actions
 
 permissions:
@@ -37,9 +35,6 @@ jobs:
       # Step 3: Run the scripts
       - name: Run SDK Docs Script
         run: python scripts/generate_sdk_docs.py
-
-      - name: Run SDK README Script
-        run: python scripts/generate_sdk_readme.py
 
       # Step 4: Create new branch and handle existing PRs
       - name: Create or reset branch
