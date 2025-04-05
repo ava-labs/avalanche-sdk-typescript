@@ -12,7 +12,7 @@ let value: EVMOutput = {
     name: "Avalanche",
     symbol: "AVAX",
     denomination: 9,
-    type: "secp256k1",
+    type: "nft",
     amount: "5001000",
   },
 };

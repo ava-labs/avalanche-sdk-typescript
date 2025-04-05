@@ -10,8 +10,8 @@ let value: L1ValidatorDetailsTransaction = {
   validationIdHex: "<value>",
   nodeId: "<id>",
   subnetId: "<id>",
-  weight: 3339.65,
-  remainingBalance: 7908.4,
+  weight: 5125.49,
+  remainingBalance: 5784.59,
 };
 ```
 

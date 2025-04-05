@@ -8,10 +8,6 @@ import { UnknownContract } from "@avalanche-sdk/data/models/components";
 let value: UnknownContract = {
   name: "Wrapped AVAX",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-  deploymentDetails: {
-    txHash: "<value>",
-    deployerAddress: "<value>",
-  },
   ercType: "UNKNOWN",
 };
 ```
@@ -30,5 +26,5 @@ let value: UnknownContract = {
 | `resourceLinks`                                                                              | [components.ResourceLink](../../models/components/resourcelink.md)[]                         | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `tags`                                                                                       | *string*[]                                                                                   | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `address`                                                                                    | *string*                                                                                     | :heavy_check_mark:                                                                           | A wallet or contract address in mixed-case checksum encoding.                                | 0x71C7656EC7ab88b098defB751B7401B5f6d8976F                                                   |
-| `deploymentDetails`                                                                          | [components.ContractDeploymentDetails](../../models/components/contractdeploymentdetails.md) | :heavy_check_mark:                                                                           | N/A                                                                                          |                                                                                              |
+| `deploymentDetails`                                                                          | [components.ContractDeploymentDetails](../../models/components/contractdeploymentdetails.md) | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |
 | `ercType`                                                                                    | [components.UnknownContractErcType](../../models/components/unknowncontracterctype.md)       | :heavy_check_mark:                                                                           | N/A                                                                                          |                                                                                              |

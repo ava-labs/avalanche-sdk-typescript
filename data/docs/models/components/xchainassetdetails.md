@@ -12,7 +12,7 @@ let value: XChainAssetDetails = {
   denomination: 9,
   type: "nft",
   createdAtTimestamp: 1675444720,
-  cap: "fixed",
+  cap: "variable",
 };
 ```
 

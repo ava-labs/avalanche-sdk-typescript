@@ -7,7 +7,7 @@ The type of request made by the client.
 ```typescript
 import { RequestType } from "@avalanche-sdk/data/models/components";
 
-let value: RequestType = "rpc";
+let value: RequestType = "data";
 ```
 
 ## Values

@@ -7,7 +7,7 @@ import { TeleporterSourceTransaction } from "@avalanche-sdk/data/models/componen
 
 let value: TeleporterSourceTransaction = {
   txHash: "<value>",
-  timestamp: 7592.83,
+  timestamp: 1697.04,
   gasSpent: "<value>",
 };
 ```

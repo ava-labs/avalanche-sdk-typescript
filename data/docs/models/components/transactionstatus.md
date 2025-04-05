@@ -5,7 +5,7 @@
 ```typescript
 import { TransactionStatus } from "@avalanche-sdk/data/models/components";
 
-let value: TransactionStatus = "failed";
+let value: TransactionStatus = "success";
 ```
 
 ## Values

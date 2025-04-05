@@ -8,11 +8,11 @@ The geographical location of the validator node, if available.
 import { Geolocation } from "@avalanche-sdk/data/models/components";
 
 let value: Geolocation = {
-  city: "Priceworth",
-  country: "Zambia",
-  countryCode: "JO",
-  latitude: 708.69,
-  longitude: 2927.94,
+  city: "Antelope",
+  country: "Oman",
+  countryCode: "NR",
+  latitude: 6205.17,
+  longitude: 1551.06,
 };
 ```
 

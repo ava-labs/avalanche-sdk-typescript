@@ -5,7 +5,7 @@
 ```typescript
 import { ChainInfoEnabledFeature } from "@avalanche-sdk/data/models/components";
 
-let value: ChainInfoEnabledFeature = "webhooks";
+let value: ChainInfoEnabledFeature = "nftIndexing";
 ```
 
 ## Values

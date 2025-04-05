@@ -7,7 +7,7 @@ Status of chain nodes. Chain nodes can become temporarily `UNAVAILABLE` for seve
 ```typescript
 import { ChainStatus } from "@avalanche-sdk/data/models/components";
 
-let value: ChainStatus = "OK";
+let value: ChainStatus = "UNAVAILABLE";
 ```
 
 ## Values

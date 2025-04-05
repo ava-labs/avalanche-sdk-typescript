@@ -7,7 +7,7 @@ Type of transaction.
 ```typescript
 import { XChainTransactionType } from "@avalanche-sdk/data/models/components";
 
-let value: XChainTransactionType = "ExportTx";
+let value: XChainTransactionType = "ImportTx";
 ```
 
 ## Values
