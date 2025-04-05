@@ -20,7 +20,6 @@ Gets the details of a single transaction on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,7 +49,6 @@ import { dataPrimaryNetworkTransactionsGet } from "@avalanche-sdk/devtools/funcs
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -119,7 +117,6 @@ Given that each transaction may return a large number of UTXO objects, bounded o
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -157,7 +154,6 @@ import { dataPrimaryNetworkTransactionsListLatest } from "@avalanche-sdk/devtool
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -228,7 +224,6 @@ Lists active staking transactions on the P-Chain for the supplied addresses.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -266,7 +261,6 @@ import { dataPrimaryNetworkTransactionsListActiveStakingTransactions } from "@av
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -337,7 +331,6 @@ Lists asset transactions corresponding to the given asset id on the X-Chain.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -374,7 +367,6 @@ import { dataPrimaryNetworkTransactionsListAssetTransactions } from "@avalanche-
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

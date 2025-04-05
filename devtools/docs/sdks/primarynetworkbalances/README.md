@@ -19,7 +19,6 @@ C-Chain balances returned are only the shared atomic memory balance. For EVM bal
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,7 +49,6 @@ import { dataPrimaryNetworkBalancesListByAddresses } from "@avalanche-sdk/devtoo
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

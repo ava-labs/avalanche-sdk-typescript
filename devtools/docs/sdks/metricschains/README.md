@@ -24,7 +24,6 @@ Get a list of Metrics API supported blockchains.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -54,7 +53,6 @@ import { metricsChainsList } from "@avalanche-sdk/devtools/funcs/metricsChainsLi
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -117,7 +115,6 @@ Get chain information for Metrics API supported blockchain.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -145,7 +142,6 @@ import { metricsChainsGet } from "@avalanche-sdk/devtools/funcs/metricsChainsGet
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -206,7 +202,6 @@ Gets metrics for an EVM chain over a specified time interval aggregated at the s
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -240,7 +235,6 @@ import { metricsChainsGetMetrics } from "@avalanche-sdk/devtools/funcs/metricsCh
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -307,7 +301,6 @@ Gets teleporter metrics for an EVM chain.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -336,7 +329,6 @@ import { metricsChainsGetTeleporterMetrics } from "@avalanche-sdk/devtools/funcs
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -398,7 +390,6 @@ Gets the rolling window metrics for an EVM chain for the last hour, day, month, 
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -427,7 +418,6 @@ import { metricsChainsGetRollingWindowMetrics } from "@avalanche-sdk/devtools/fu
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -489,7 +479,6 @@ Get list of NFT holders and number of NFTs held by contract address.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -520,7 +509,6 @@ import { metricsChainsListNftHolders } from "@avalanche-sdk/devtools/funcs/metri
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -584,7 +572,6 @@ Get list of addresses and their latest balances that have held more than a certa
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -618,7 +605,6 @@ import { metricsChainsListTokenHoldersAboveThreshold } from "@avalanche-sdk/devt
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -685,7 +671,6 @@ Get list of addresses and their net bridged amounts that have bridged more than 
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -715,7 +700,6 @@ import { metricsChainsListBTCbBridgersAboveThreshold } from "@avalanche-sdk/devt
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

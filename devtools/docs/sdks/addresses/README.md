@@ -19,7 +19,6 @@ List adresses by webhook. Only valid for EVM activity webhooks.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -49,7 +48,6 @@ import { webhooksAddressesList } from "@avalanche-sdk/devtools/funcs/webhooksAdd
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -112,7 +110,6 @@ Remove addresses from webhook. Only valid for EVM activity webhooks.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -145,7 +142,6 @@ import { webhooksAddressesRemove } from "@avalanche-sdk/devtools/funcs/webhooksA
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -211,7 +207,6 @@ Add addresses to webhook. Only valid for EVM activity webhooks.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -244,7 +239,6 @@ import { webhooksAddressesAdd } from "@avalanche-sdk/devtools/funcs/webhooksAddr
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });

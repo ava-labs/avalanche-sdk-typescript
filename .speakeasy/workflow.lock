@@ -10,11 +10,11 @@ sources:
             - Beta
     devtools-source:
         sourceNamespace: avalanche-sdk-devtools-typescript
-        sourceRevisionDigest: sha256:3983a74866407a499a33ea362c7a4f86378b5a75b611eea06fc22e6cafb10bf3
-        sourceBlobDigest: sha256:0be78e02fe68bf49d361fb3f2f04142a0244327ae08c61824f07caacb8f5a8f1
+        sourceRevisionDigest: sha256:f9d1cae46cccf8b5ccbd3e90c2ada0aa6b42095b2b28c8224583b3ebc8b3819d
+        sourceBlobDigest: sha256:0989f4878dd1f1f9c67f6ef4e1ee3b3568e07d1fe70e44cd9636fd71863d02fc
         tags:
             - latest
-            - speakeasy-sdk-regen-1743797932
+            - speakeasy-sdk-regen-1743855810
             - Beta
     metrics-source:
         sourceNamespace: avalanche-sdk-metrics-typescript
@@ -49,10 +49,10 @@ targets:
     devtools-sdk:
         source: devtools-source
         sourceNamespace: avalanche-sdk-devtools-typescript
-        sourceRevisionDigest: sha256:3983a74866407a499a33ea362c7a4f86378b5a75b611eea06fc22e6cafb10bf3
-        sourceBlobDigest: sha256:0be78e02fe68bf49d361fb3f2f04142a0244327ae08c61824f07caacb8f5a8f1
+        sourceRevisionDigest: sha256:f9d1cae46cccf8b5ccbd3e90c2ada0aa6b42095b2b28c8224583b3ebc8b3819d
+        sourceBlobDigest: sha256:0989f4878dd1f1f9c67f6ef4e1ee3b3568e07d1fe70e44cd9636fd71863d02fc
         codeSamplesNamespace: avalanche-sdk-devtools-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:1a4d21cc3a9eea7c6767592ec6db7f38eeb0c6a3be8a402976a61240a34554c9
+        codeSamplesRevisionDigest: sha256:9528ce842669155a8af2890b5bd6fb8606877fbbdd77791cd9d6d0cf5e29dfc1
     metrics-sdk:
         source: metrics-source
         sourceNamespace: avalanche-sdk-metrics-typescript
@@ -73,7 +73,7 @@ workflow:
     sources:
         data-source:
             inputs:
-                - location: https://glacier-api-dev-us-east-1.avax.network/api-json
+                - location: https://glacier-api.avax.network/api-json
             overlays:
                 - location: data/overlays/overlay.yaml
             registry:

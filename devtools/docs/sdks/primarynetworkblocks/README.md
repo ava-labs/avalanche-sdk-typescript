@@ -19,7 +19,6 @@ Gets a block by block height or block hash on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -49,7 +48,6 @@ import { dataPrimaryNetworkBlocksGet } from "@avalanche-sdk/devtools/funcs/dataP
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -112,7 +110,6 @@ Lists the latest blocks proposed by a given NodeID on one of the Primary Network
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -146,7 +143,6 @@ import { dataPrimaryNetworkBlocksListByNodeId } from "@avalanche-sdk/devtools/fu
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -213,7 +209,6 @@ Lists latest blocks on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
@@ -246,7 +241,6 @@ import { dataPrimaryNetworkBlocksListLatest } from "@avalanche-sdk/devtools/func
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  serverURL: "https://api.example.com",
   chainId: "43114",
   network: "mainnet",
 });
