@@ -6,7 +6,7 @@
 import { Method } from "@avalanche-sdk/data/models/components";
 
 let value: Method = {
-  callType: "CONTRACT_CREATION",
+  callType: "NATIVE_TRANSFER",
   methodHash: "0xa9059cbb",
   methodName: "transfer(address,uint256)",
 };

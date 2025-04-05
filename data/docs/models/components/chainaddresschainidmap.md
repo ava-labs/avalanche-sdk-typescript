@@ -6,9 +6,9 @@
 import { ChainAddressChainIdMap } from "@avalanche-sdk/data/models/components";
 
 let value: ChainAddressChainIdMap = {
-  address: "26994 Loyce Lock",
+  address: "52144 Wendy Hills",
   blockchainIds: [
-    "vV3cui1DsEPC3nLCGH9rorwo8s6BYxM2Hz4QFE5gEYjwTqAu",
+    "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
   ],
 };
 ```

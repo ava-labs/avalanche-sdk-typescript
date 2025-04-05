@@ -30,9 +30,9 @@ let value: ListErc721BalancesResponse = {
       symbol: "WAVAX",
       ercType: "ERC-721",
       tokenId: "<id>",
-      tokenUri: "https://remarkable-dream.net/",
+      tokenUri: "https://qualified-stranger.net/",
       metadata: {
-        indexStatus: "UNINDEXED",
+        indexStatus: "INVALID_TOKEN_URI",
       },
       ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
       chainId: "43114",

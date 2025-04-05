@@ -26,17 +26,17 @@ const value: components.ListPChainUtxosResponse = {
       consumingTxHash: "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c",
       createdOnChainId: "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
       utxoId: "68vLva9kfKUsX88ZPM8jdbf8qHUZRoZSFH6NdpAVTspkfrXDC",
-      amount: "522.06",
+      amount: "634.58",
       assetId: "<id>",
       blockNumber: "<value>",
-      blockTimestamp: 351.6,
-      outputIndex: 9062.32,
+      blockTimestamp: 8796.32,
+      outputIndex: 1434.06,
       txHash: "<value>",
       utxoType: "TRANSFER",
     },
   ],
   chainInfo: {
-    chainName: "x-chain",
+    chainName: "c-chain",
     network: "mainnet",
   },
 };
@@ -80,7 +80,7 @@ const value: components.ListUtxosResponse = {
     },
   ],
   chainInfo: {
-    chainName: "c-chain",
+    chainName: "x-chain",
     network: "mainnet",
   },
 };

@@ -7,7 +7,7 @@ import { IcmSourceTransaction } from "@avalanche-sdk/data/models/components";
 
 let value: IcmSourceTransaction = {
   txHash: "<value>",
-  timestamp: 1598.45,
+  timestamp: 761.62,
   gasSpent: "<value>",
 };
 ```

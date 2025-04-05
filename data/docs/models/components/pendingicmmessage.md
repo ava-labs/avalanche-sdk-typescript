@@ -39,7 +39,7 @@ let value: PendingIcmMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 1173.8,
+    timestamp: 9224.62,
     gasSpent: "<value>",
   },
   status: "pending",
