@@ -1,0 +1,117 @@
+{
+  "name": "@avalanche-sdk/rpc",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "tshy",
+    "lint": "eslint --cache --max-warnings=0 src"
+  },
+  "author": "Sayan Kar",
+  "license": "ISC",
+  "dependencies": {
+    "viem": "^2.26.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "tshy": "^3.0.2",
+    "typescript": "^5.8.3"
+  },
+  "tshy": {
+    "sourceDialects": [
+      "@avalanche-sdk/rpc/source"
+    ],
+    "exports": {
+      ".": "./src/index.ts",
+      "./package.json": "./package.json",
+      "./methods": "./src/methods/index.ts",
+      "./node": "./src/node/index.ts",
+      "./siwe": "./src/siwe/index.ts",
+      "./chains": "./src/chains/index.ts",
+      "./*.js": "./src/*.ts",
+      "./*": "./src/*.ts"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/index.ts",
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./methods": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/index.ts",
+        "types": "./dist/esm/methods/index.d.ts",
+        "default": "./dist/esm/methods/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/index.d.ts",
+        "default": "./dist/commonjs/methods/index.js"
+      }
+    },
+    "./node": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/node/index.ts",
+        "types": "./dist/esm/node/index.d.ts",
+        "default": "./dist/esm/node/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/node/index.d.ts",
+        "default": "./dist/commonjs/node/index.js"
+      }
+    },
+    "./siwe": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/siwe/index.ts",
+        "types": "./dist/esm/siwe/index.d.ts",
+        "default": "./dist/esm/siwe/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/siwe/index.d.ts",
+        "default": "./dist/commonjs/siwe/index.js"
+      }
+    },
+    "./chains": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/chains/index.ts",
+        "types": "./dist/esm/chains/index.d.ts",
+        "default": "./dist/esm/chains/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/chains/index.d.ts",
+        "default": "./dist/commonjs/chains/index.js"
+      }
+    },
+    "./*.js": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    },
+    "./*": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
+      }
+    }
+  },
+  "main": "./dist/commonjs/index.js",
+  "types": "./dist/commonjs/index.d.ts",
+  "module": "./dist/esm/index.js"
+}
