@@ -7,6 +7,7 @@ import { type ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams, newConvertSub
 import { type CreateSubnetTx, type CreateSubnetTxParams, newCreateSubnetTx } from "../txs/createSubnetTx";
 import { type CreateChainTx, type CreateChainTxParams, newCreateChainTx } from "../txs/createChainTx";
 import { type AddSubnetValidatorTx, type AddSubnetValidatorTxParams, newAddSubnetValidatorTx } from "../txs/addSubnetValidatorTx";
+import { type RemoveSubnetValidatorTx, type RemoveSubnetValidatorTxParams, newRemoveSubnetValidatorTx } from "../txs/removeSubnetValidatorTx";
 
 export class TxBuilder {
     context: ContextType.Context;
@@ -75,6 +76,16 @@ export class TxBuilder {
 
     async newAddSubnetValidatorTx(params: AddSubnetValidatorTxParams): Promise<AddSubnetValidatorTx> {
         return newAddSubnetValidatorTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newRemoveSubnetValidatorTx(params: RemoveSubnetValidatorTxParams): Promise<RemoveSubnetValidatorTx> {
+        return newRemoveSubnetValidatorTx(
             params,
             this.context,
             this.pvmRpc,
