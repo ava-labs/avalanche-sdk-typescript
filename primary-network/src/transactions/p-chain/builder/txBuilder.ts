@@ -5,6 +5,7 @@ import type { Wallet } from "../../../wallet";
 import { type BaseTx, type BaseTxParams, newBaseTx } from "../txs/baseTx";
 import { type ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams, newConvertSubnetToL1Tx } from "../txs/convertSubnetToL1Tx";
 import { type CreateSubnetTx, type CreateSubnetTxParams, newCreateSubnetTx } from "../txs/createSubnetTx";
+import { type CreateChainTx, type CreateChainTxParams, newCreateChainTx } from "../txs/createChainTx";
 
 export class TxBuilder {
     context: ContextType.Context;
@@ -53,6 +54,16 @@ export class TxBuilder {
 
     async newCreateSubnetTx(params: CreateSubnetTxParams): Promise<CreateSubnetTx> {
         return newCreateSubnetTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newCreateChainTx(params: CreateChainTxParams): Promise<CreateChainTx> {
+        return newCreateChainTx(
             params,
             this.context,
             this.pvmRpc,
