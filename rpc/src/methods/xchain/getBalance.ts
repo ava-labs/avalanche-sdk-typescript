@@ -8,7 +8,7 @@ export async function getBalance<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetBalanceParameters
 ): Promise<GetBalanceReturnType> {
-  return client.request<
+  const balance = await client.request<
     XChainRpcSchema,
     {
       method: "avm.getBalance";
@@ -19,4 +19,8 @@ export async function getBalance<chain extends Chain | undefined>(
     method: "avm.getBalance",
     params,
   });
+  return {
+    ...balance,
+    balance: BigInt(balance.balance),
+  };
 }

@@ -1,10 +1,3 @@
-// index.getIndex({
-//     id: string,
-//     encoding: string
-//   }) -> {
-//     index: string
-//   }
-
 import { RequestErrorType } from "viem/utils";
 
 export type GetIndexParameters = {

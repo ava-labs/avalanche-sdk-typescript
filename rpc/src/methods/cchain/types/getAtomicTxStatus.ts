@@ -1,11 +1,12 @@
 import { RequestErrorType } from "viem/utils";
+import { CChainAtomicTxStatus } from "./common.js";
 
 export type GetAtomicTxStatusParameters = {
   txID: string;
 };
 
 export type GetAtomicTxStatusReturnType = {
-    status: string;
+    status: CChainAtomicTxStatus;
     blockHeight: string;
 };
 

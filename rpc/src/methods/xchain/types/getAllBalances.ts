@@ -5,7 +5,7 @@ export type GetAllBalancesParameters = {
 };
 
 export type GetAllBalancesReturnType = {
-  balances: { asset: string; balance: number }[];
+  balances: { asset: string; balance: bigint }[];
 };
 
 export type GetAllBalancesErrorType =  RequestErrorType;
