@@ -1,8 +1,9 @@
 import type { pvm } from "@avalabs/avalanchejs";
 import { Context as ContextType }  from '@avalabs/avalanchejs';
-import type { commonTxProps, txBuilderInstanceParams, txInstanceParams } from "./types";
-import type { Wallet } from "../../wallet";
-import { type BaseTx, newBaseTx } from "./txs/baseTx";
+import type { TxBuilderConstructorParams, NewTxBuilderParams } from "./types";
+import type { Wallet } from "../../../wallet";
+import { type BaseTx, type BaseTxParams, newBaseTx } from "../txs/baseTx";
+import { type ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams, newConvertSubnetToL1Tx } from "../txs/convertSubnetToL1Tx";
 
 export class TxBuilder {
     context: ContextType.Context;
@@ -10,14 +11,14 @@ export class TxBuilder {
     nodeUrl: string;
     pvmRpc: pvm.PVMApi;
 
-    constructor(params: txInstanceParams) {
+    constructor(params: TxBuilderConstructorParams) {
         this.context = params.context;
         this.wallet = params.wallet;
         this.nodeUrl = params.nodeUrl;
         this.pvmRpc = params.pvmRpc;
     }
 
-    static async newClient(params: txBuilderInstanceParams) {
+    static async newClient(params: NewTxBuilderParams) {
         const context = await ContextType.getContextFromURI(params.nodeUrl)
         return new TxBuilder({
             ...params,
@@ -29,8 +30,18 @@ export class TxBuilder {
         this.wallet = wallet;
     }
 
-    async newBaseTx(params: commonTxProps): Promise<BaseTx> {
+    async newBaseTx(params: BaseTxParams): Promise<BaseTx> {
         return newBaseTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newConvertSubnetToL1Tx(params: ConvertSubnetToL1TxParams): Promise<ConvertSubnetToL1Tx> {
+        return newConvertSubnetToL1Tx(
             params,
             this.context,
             this.pvmRpc,

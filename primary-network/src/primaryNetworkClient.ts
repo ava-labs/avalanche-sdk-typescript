@@ -1,5 +1,5 @@
 import { pvm } from "@avalabs/avalanchejs"
-import { TxBuilder } from "./transactions/p-chain/txBuilder";
+import { TxBuilder } from "./transactions/p-chain/builder/txBuilder";
 import type { Wallet } from "./wallet";
 
 export class PrimaryNetwork {

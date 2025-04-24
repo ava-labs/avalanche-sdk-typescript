@@ -1,5 +1,4 @@
 import { type Common, type pvm, utils, addTxSignatures } from "@avalabs/avalanchejs";
-import { Manager } from "@avalabs/avalanchejs/dist/serializable/codec";
 import { sha256 } from "@noble/hashes/sha2";
 import type { Wallet } from "../../../wallet";
 
@@ -8,7 +7,6 @@ export class Transaction {
     nodeUrl: string;
     pvmRpc: pvm.PVMApi;
     wallet: Wallet | undefined;
-    manager: Manager
 
     constructor(params: {
         unsignedTx: Common.UnsignedTx,
@@ -20,19 +18,15 @@ export class Transaction {
         this.wallet = params.wallet;
         this.nodeUrl = params.nodeUrl;
         this.pvmRpc = params.pvmRpc;
-        this.manager = new Manager();
     }
 
     linkWallet(wallet: Wallet) {
         this.wallet = wallet;
     }
 
-    fromBytes(bytes: Buffer): Common.Transaction {
-        return this.manager.unpackTransaction(bytes)
-    }
-
     toBytes(signed = false) {
-        return signed ? this.unsignedTx.getSignedTx().toBytes() : this.unsignedTx.toBytes()
+        const data = signed ? this.unsignedTx.getSignedTx().toBytes() : this.unsignedTx.toBytes()
+        return utils.addChecksum(data)
     }
 
     toHex(signed = false) {

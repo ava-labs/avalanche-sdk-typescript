@@ -1,4 +1,4 @@
-export * from "./p-chain/txBuilder";
+export * from "./p-chain/builder/txBuilder";
 export * from "./p-chain/txs/baseTx";
-export * from "./p-chain/txs/transaction";
-export * from "./p-chain/types";
+export * from "./p-chain/common/transaction";
+export * from "./p-chain/builder/types";
