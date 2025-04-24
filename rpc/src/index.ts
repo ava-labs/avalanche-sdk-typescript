@@ -1364,11 +1364,26 @@ export const myGetContract = viemGetContract;
 
 // ------------- Custom Clients ------------- //
 export {
-  type PlatformChainClient,
-  type PlatformChainClientConfig,
-  type CreatePlatformChainClientErrorType,
-  createPlatformChainClient,
-} from './clients/createPlatformChainClient.js'
+  type AvalancheCoreClient,
+  type AvalancheCoreClientConfig,
+  type CreateAvalancheCoreClientErrorType,
+  createAvalancheCoreClient  ,
+} from './clients/createAvalancheCoreClient.js'
 export {
-  type PlatformChainRpcSchema
-} from './methods/platformChain/platformChainSchema.js'
+  type PChainClient,
+  type PChainClientConfig,
+  type CreatePChainClientErrorType,
+  createPChainClient,
+} from './clients/createPChainClient.js'
+export {
+  type AvalancheClient,
+  type AvalancheClientConfig,
+  type CreateAvalancheClientErrorType,
+} from './clients/types/createAvalancheClient.js'
+export {
+  createAvalancheClient,
+} from './clients/createAvalancheClient.js'
+export {
+  type PChainRpcSchema
+} from './methods/pchain/pChainRpcSchema.js'
+

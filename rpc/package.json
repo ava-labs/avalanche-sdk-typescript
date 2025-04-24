@@ -24,6 +24,13 @@
       ".": "./src/index.ts",
       "./package.json": "./package.json",
       "./methods": "./src/methods/index.ts",
+      "./methods/pchain": "./src/methods/pchain/index.ts",
+      "./methods/admin": "./src/methods/admin/index.ts",
+      "./methods/cchain": "./src/methods/cchain/index.ts",
+      "./methods/xchain": "./src/methods/xchain/index.ts",
+      "./methods/health": "./src/methods/health/index.ts",
+      "./methods/index": "./src/methods/index/index.ts",
+      "./methods/info": "./src/methods/info/index.ts",
       "./node": "./src/node/index.ts",
       "./siwe": "./src/siwe/index.ts",
       "./chains": "./src/chains/index.ts",
@@ -53,6 +60,83 @@
       "require": {
         "types": "./dist/commonjs/methods/index.d.ts",
         "default": "./dist/commonjs/methods/index.js"
+      }
+    },
+    "./methods/pchain": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/pchain/index.ts",
+        "types": "./dist/esm/methods/pchain/index.d.ts",
+        "default": "./dist/esm/methods/pchain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/pchain/index.d.ts",
+        "default": "./dist/commonjs/methods/pchain/index.js"
+      }
+    },
+    "./methods/admin": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/admin/index.ts",
+        "types": "./dist/esm/methods/admin/index.d.ts",
+        "default": "./dist/esm/methods/admin/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/admin/index.d.ts",
+        "default": "./dist/commonjs/methods/admin/index.js"
+      }
+    },
+    "./methods/cchain": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/cchain/index.ts",
+        "types": "./dist/esm/methods/cchain/index.d.ts",
+        "default": "./dist/esm/methods/cchain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/cchain/index.d.ts",
+        "default": "./dist/commonjs/methods/cchain/index.js"
+      }
+    },
+    "./methods/xchain": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/xchain/index.ts",
+        "types": "./dist/esm/methods/xchain/index.d.ts",
+        "default": "./dist/esm/methods/xchain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/xchain/index.d.ts",
+        "default": "./dist/commonjs/methods/xchain/index.js"
+      }
+    },
+    "./methods/health": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/health/index.ts",
+        "types": "./dist/esm/methods/health/index.d.ts",
+        "default": "./dist/esm/methods/health/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/health/index.d.ts",
+        "default": "./dist/commonjs/methods/health/index.js"
+      }
+    },
+    "./methods/index": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/index/index.ts",
+        "types": "./dist/esm/methods/index/index.d.ts",
+        "default": "./dist/esm/methods/index/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/index/index.d.ts",
+        "default": "./dist/commonjs/methods/index/index.js"
+      }
+    },
+    "./methods/info": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/info/index.ts",
+        "types": "./dist/esm/methods/info/index.d.ts",
+        "default": "./dist/esm/methods/info/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/info/index.d.ts",
+        "default": "./dist/commonjs/methods/info/index.js"
       }
     },
     "./node": {
