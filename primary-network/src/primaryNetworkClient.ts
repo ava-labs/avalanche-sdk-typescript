@@ -2,6 +2,7 @@ import { pvm } from "@avalabs/avalanchejs"
 import { TxBuilder } from "./transactions/p-chain/builder/txBuilder";
 import type { Wallet } from "./wallet";
 
+// TODO: Add proper docs for all clients, methods, and params
 export class PrimaryNetwork {
     txBuilder: TxBuilder;
     nodeUrl: string;
