@@ -55,8 +55,10 @@ function getClientURL(
       return `${origin}/ext/bc/X`;
     case "cChain":
       return `${origin}/ext/bc/C/rpc`;
-    case "cChainAdmin":
-      return `${origin}/ext/bc/C/admin`;
+    case "admin":
+      return `${origin}/ext/admin`;
+    case "info":
+      return `${origin}/ext/info`;
     default:
       throw new Error("Invalid client type");
   }

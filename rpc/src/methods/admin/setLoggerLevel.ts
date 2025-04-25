@@ -1,22 +1,22 @@
 import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { AdminRpcSchema } from "./adminRpcSchema.js";
-import { SetLogLevelParameters } from "./types/setLogLevel.js";
+import { SetLoggerLevelParameters } from "./types/setLoggerLevel.js";
 
 
-export async function setLogLevel<chain extends Chain | undefined>(
+export async function setLoggerLevel<chain extends Chain | undefined>(
     client: Client<Transport, chain>,
-    params: SetLogLevelParameters
+    params: SetLoggerLevelParameters
 ): Promise<void> {
     return client.request<
         AdminRpcSchema,
         {
-            method: "admin.setLogLevel";
-            params: SetLogLevelParameters;
+            method: "admin.setLoggerLevel";
+            params: SetLoggerLevelParameters;
         },
         void
     >({
-        method: "admin.setLogLevel",
+        method: "admin.setLoggerLevel",
         params,
     });
 }

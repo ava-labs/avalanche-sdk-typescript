@@ -1,7 +1,7 @@
 
 import { Chain,  Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
-import { XChainRpcSchema } from "./XChainRpcSchema.js";
+import { XChainRpcSchema } from "./xChainRpcSchema.js";
 import { BuildGenesisParameters, BuildGenesisReturnType } from "./types/buildGenesis.js";
 
 export async function buildGenesis<chain extends Chain | undefined>(

@@ -1,19 +1,11 @@
-import {
-  Account,
-  Address,
-  Chain,
-  Prettify,
-  RpcSchema,
-  Transport,
-  ParseAccount,
-} from "viem";
+import { Account, Address, Chain, ParseAccount, Prettify, RpcSchema, Transport } from "viem";
 import { AvalancheCoreClient, AvalancheCoreClientConfig, createAvalancheCoreClient, CreateAvalancheCoreClientErrorType } from "./createAvalancheCoreClient.js";
-import { pChainActions, PChainActions } from "./decorators/pChain.js";
-import { PChainRpcSchema } from "../methods/pChain/pChainRpcSchema.js";
 import { TransportConfig } from "./types/types.js";
+import { XChainRpcSchema } from "../methods/xChain/xChainRpcSchema.js";
+import { xChainActions, XChainActions } from "./decorators/xChain.js";
 import { createTransportClient } from "./utils.js";
 
-export type PChainClientConfig<
+export type XChainClientConfig<
   transport extends Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
@@ -35,7 +27,7 @@ export type PChainClientConfig<
   }
 >;
 
-export type PChainClient<
+export type XChainClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | undefined = undefined,
@@ -45,30 +37,30 @@ export type PChainClient<
       transport,
       chain,
       accountOrAddress,
-      rpcSchema extends RpcSchema ? [ ...PChainRpcSchema, ...rpcSchema] : PChainRpcSchema,
-      PChainActions
+      rpcSchema extends RpcSchema ? [ ...XChainRpcSchema, ...rpcSchema] : XChainRpcSchema,
+      XChainActions
   >
 >;
 
-export type CreatePChainClientErrorType = CreateAvalancheCoreClientErrorType;
+export type CreateXChainClientErrorType = CreateAvalancheCoreClientErrorType;
 
-export function createPChainClient<
+export function createXChainClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-    parameters: PChainClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
-): PChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
+    parameters: XChainClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
+): XChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
 
-    const { key = 'pChain', name = 'P-Chain Client', transport: transportParam } = parameters;
-    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "pChain");
+    const { key = 'xChain', name = 'X-Chain Client', transport: transportParam } = parameters;
+    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "xChain");
     const client = createAvalancheCoreClient({
         ...parameters,
         key,
         name,
         transport: customTransport,
     })
-    return client.extend(pChainActions) as any;
+    return client.extend(xChainActions) as any;
 }

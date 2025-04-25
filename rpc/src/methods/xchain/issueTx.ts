@@ -1,7 +1,7 @@
 
 import { Chain,  Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
-import { XChainRpcSchema } from "./XChainRpcSchema.js";
+import { XChainRpcSchema } from "./xChainRpcSchema.js";
 import { IssueTxParameters, IssueTxReturnType } from "./types/issueTx.js";
 
 export async function issueTx<chain extends Chain | undefined>(

@@ -15,6 +15,6 @@ export type GetAtomicTxErrorType = RequestErrorType;
 
 export type GetAtomicTxMethod = {
   Method: "avax.getAtomicTx";
-  Params: GetAtomicTxParameters;
-  Result: GetAtomicTxReturnType;
+  Parameters: GetAtomicTxParameters;
+  ReturnType: GetAtomicTxReturnType;
 };

@@ -6,7 +6,7 @@ import { GetLoggerLevelMethod } from "./types/getLoggerLevel.js";
 import { LoadVMsMethod } from "./types/loadVMs.js";
 import { LockProfileMethod } from "./types/lockProfile.js";
 import { MemoryProfileMethod } from "./types/memoryProfile.js";
-import { SetLogLevelMethod } from "./types/setLogLevel.js";
+import { SetLoggerLevelMethod } from "./types/setLoggerLevel.js";
 import { StartCPUProfilerMethod } from "./types/startCPUProfiler.js";
 import { StopCPUProfilerMethod } from "./types/stopCPUProfiler.js";
 
@@ -18,7 +18,7 @@ export type AdminMethods = [
     LoadVMsMethod,
     LockProfileMethod,
     MemoryProfileMethod,
-    SetLogLevelMethod,
+    SetLoggerLevelMethod,
     StartCPUProfilerMethod,
     StopCPUProfilerMethod,
 ];

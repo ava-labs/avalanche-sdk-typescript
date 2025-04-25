@@ -1,7 +1,7 @@
 
 import { Chain,  Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
-import { XChainRpcSchema } from "./XChainRpcSchema.js";
+import { XChainRpcSchema } from "./xChainRpcSchema.js";
 import { GetBlockByHeightParameters, GetBlockByHeightReturnType } from "./types/getBlockByHeight.js";
 
 export async function getBlockByHeight<chain extends Chain | undefined>(

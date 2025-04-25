@@ -24,6 +24,6 @@ export type GetUTXOsErrorType = RequestErrorType;
 
 export type GetUTXOsMethod = {
   Method: "avax.getUTXOs";
-  Params: GetUTXOsParameters;
-  Result: GetUTXOsReturnType;
+  Parameters: GetUTXOsParameters;
+  ReturnType: GetUTXOsReturnType;
 };

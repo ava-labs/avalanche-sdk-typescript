@@ -8,10 +8,12 @@ import {
   Transport,
 } from "viem";
 import { createTransportClient } from "./utils.js";
-import { AvalancheClient, AvalancheClientConfig } from "./types/createAvalancheClient.js";
+import {
+  AvalancheClient,
+  AvalancheClientConfig,
+} from "./types/createAvalancheClient.js";
 import { pChainActions } from "./decorators/pChain.js";
 import { createPChainClient } from "./createPChainClient.js";
-
 
 export function createAvalancheClient<
   transport extends Transport,
@@ -49,13 +51,12 @@ export function createAvalancheClient<
   });
   const extendedClient = client as any;
 
-
   return {
     ...extendedClient,
     pChain: createPChainClient({
       ...parameters,
-      key: "pchain",
+      key: "pChain",
       name: "P-Chain Client",
     }).extend(pChainActions) as any,
-  } 
+  };
 }

@@ -1,7 +1,7 @@
 
 import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
-import { XChainRpcSchema } from "./XChainRpcSchema.js";
+import { XChainRpcSchema } from "./xChainRpcSchema.js";
 import { GetBalanceParameters, GetBalanceReturnType } from "./types/getBalance.js";
 
 export async function getBalance<chain extends Chain | undefined>(

@@ -1,126 +1,126 @@
 import { Transport, Chain } from "viem";
-import { getCurrentValidators } from "../../methods/pchain/getCurrentValidators.js";
+import { getCurrentValidators } from "../../methods/pChain/getCurrentValidators.js";
 import {
   GetCurrentValidatorsParameters,
   GetCurrentValidatorsReturnType,
-} from "../../methods/pchain/types/getCurrentValidators.js";
-import { getBalance } from "../../methods/pchain/getBalance.js";
+} from "../../methods/pChain/types/getCurrentValidators.js";
+import { getBalance } from "../../methods/pChain/getBalance.js";
 import {
   GetBalanceParameters,
   GetBalanceReturnType,
-} from "../../methods/pchain/types/getBalance.js";
+} from "../../methods/pChain/types/getBalance.js";
 import {
   GetBlockParameters,
   GetBlockReturnType,
-} from "../../methods/pchain/types/getBlock.js";
-import { getBlock as getBlock } from "../../methods/pchain/getBlock.js";
+} from "../../methods/pChain/types/getBlock.js";
+import { getBlock as getBlock } from "../../methods/pChain/getBlock.js";
 import {
   GetBlockByHeightParameters,
   GetBlockByHeightReturnType,
-} from "../../methods/pchain/types/getBlockByHeight.js";
-import { getBlockByHeight } from "../../methods/pchain/getBlockByHeight.js";
-import { GetBlockchainsReturnType } from "../../methods/pchain/types/getBlockchains.js";
-import { getBlockchains } from "../../methods/pchain/getBlockchains.js";
-import { getBlockchainStatus } from "../../methods/pchain/getBlockchainStatus.js";
+} from "../../methods/pChain/types/getBlockByHeight.js";
+import { getBlockByHeight } from "../../methods/pChain/getBlockByHeight.js";
+import { GetBlockchainsReturnType } from "../../methods/pChain/types/getBlockchains.js";
+import { getBlockchains } from "../../methods/pChain/getBlockchains.js";
+import { getBlockchainStatus } from "../../methods/pChain/getBlockchainStatus.js";
 import {
   GetBlockchainStatusParameters,
   GetBlockchainStatusReturnType,
-} from "../../methods/pchain/types/getBlockchainStatus.js";
+} from "../../methods/pChain/types/getBlockchainStatus.js";
 import {
   GetCurrentSupplyParameters,
   GetCurrentSupplyReturnType,
-} from "../../methods/pchain/types/getCurrentSupply.js";
-import { getCurrentSupply } from "../../methods/pchain/getCurrentSupply.js";
-import { getFeeConfig } from "../../methods/pchain/getFeeConfig.js";
-import { GetFeeStateReturnType } from "../../methods/pchain/types/getFeeState.js";
-import { getFeeState } from "../../methods/pchain/getFeeState.js";
+} from "../../methods/pChain/types/getCurrentSupply.js";
+import { getCurrentSupply } from "../../methods/pChain/getCurrentSupply.js";
+import { getFeeConfig } from "../../methods/pChain/getFeeConfig.js";
+import { GetFeeStateReturnType } from "../../methods/pChain/types/getFeeState.js";
+import { getFeeState } from "../../methods/pChain/getFeeState.js";
 import {
   GetL1ValidatorParameters,
   GetL1ValidatorReturnType,
-} from "../../methods/pchain/types/getL1Validator.js";
-import { GetHeightReturnType } from "../../methods/pchain/types/getHeight.js";
-import { getHeight } from "../../methods/pchain/getHeight.js";
-import { getL1Validator } from "../../methods/pchain/getL1Validator.js";
-import { GetFeeConfigReturnType } from "../../methods/pchain/types/getFeeConfig.js";
-import { GetProposedHeightReturnType } from "../../methods/pchain/types/getProposedHeight.js";
-import { getProposedHeight } from "../../methods/pchain/getProposedHeight.js";
+} from "../../methods/pChain/types/getL1Validator.js";
+import { GetHeightReturnType } from "../../methods/pChain/types/getHeight.js";
+import { getHeight } from "../../methods/pChain/getHeight.js";
+import { getL1Validator } from "../../methods/pChain/getL1Validator.js";
+import { GetFeeConfigReturnType } from "../../methods/pChain/types/getFeeConfig.js";
+import { GetProposedHeightReturnType } from "../../methods/pChain/types/getProposedHeight.js";
+import { getProposedHeight } from "../../methods/pChain/getProposedHeight.js";
 import {
   GetMinStakeParameters,
   GetMinStakeReturnType,
-} from "../../methods/pchain/types/getMinStake.js";
-import { getMinStake } from "../../methods/pchain/getMinStake.js";
+} from "../../methods/pChain/types/getMinStake.js";
+import { getMinStake } from "../../methods/pChain/getMinStake.js";
 import {
   GetRewardUTXOsParameters,
   GetRewardUTXOsReturnType,
-} from "../../methods/pchain/types/getRewardUTXOs.js";
-import { getRewardUTXOs } from "../../methods/pchain/getRewardUTXOs.js";
+} from "../../methods/pChain/types/getRewardUTXOs.js";
+import { getRewardUTXOs } from "../../methods/pChain/getRewardUTXOs.js";
 import {
   GetStakeParameters,
   GetStakeReturnType,
-} from "../../methods/pchain/types/getStake.js";
-import { getStake } from "../../methods/pchain/getStake.js";
-import { getStakingAssetID } from "../../methods/pchain/getStakingAssetID.js";
+} from "../../methods/pChain/types/getStake.js";
+import { getStake } from "../../methods/pChain/getStake.js";
+import { getStakingAssetID } from "../../methods/pChain/getStakingAssetID.js";
 import {
   GetStakingAssetIDParameters,
   GetStakingAssetIDReturnType,
-} from "../../methods/pchain/types/getStakingAssetID.js";
+} from "../../methods/pChain/types/getStakingAssetID.js";
 import {
   GetSubnetParameters,
   GetSubnetReturnType,
-} from "../../methods/pchain/types/getSubnet.js";
+} from "../../methods/pChain/types/getSubnet.js";
 import {
   GetSubnetsParameters,
   GetSubnetsReturnType,
-} from "../../methods/pchain/types/getSubnets.js";
+} from "../../methods/pChain/types/getSubnets.js";
 import {
   GetTotalStakeParameters,
   GetTotalStakeReturnType,
-} from "../../methods/pchain/types/getTotalStake.js";
-import { GetTimestampReturnType } from "../../methods/pchain/types/getTimestamp.js";
+} from "../../methods/pChain/types/getTotalStake.js";
+import { GetTimestampReturnType } from "../../methods/pChain/types/getTimestamp.js";
 import {
   GetTxParameters,
   GetTxReturnType,
-} from "../../methods/pchain/types/getTx.js";
+} from "../../methods/pChain/types/getTx.js";
 import {
   GetTxStatusParameters,
   GetTxStatusReturnType,
-} from "../../methods/pchain/types/getTxStatus.js";
+} from "../../methods/pChain/types/getTxStatus.js";
 import {
   GetUTXOsParameters,
   GetUTXOsReturnType,
-} from "../../methods/pchain/types/getUTXOs.js";
+} from "../../methods/pChain/types/getUTXOs.js";
 import {
   GetValidatorsAtParameters,
   GetValidatorsAtReturnType,
-} from "../../methods/pchain/types/getValidatorsAt.js";
+} from "../../methods/pChain/types/getValidatorsAt.js";
 import {
   IssueTxParameters,
   IssueTxReturnType,
-} from "../../methods/pchain/types/issueTx.js";
+} from "../../methods/pChain/types/issueTx.js";
 import {
   SampleValidatorsParameters,
   SampleValidatorsReturnType,
-} from "../../methods/pchain/types/sampleValidators.js";
+} from "../../methods/pChain/types/sampleValidators.js";
 import {
   ValidatesParameters,
   ValidatesReturnType,
-} from "../../methods/pchain/types/validates.js";
+} from "../../methods/pChain/types/validates.js";
 import {
   ValidatedByParameters,
   ValidatedByReturnType,
-} from "../../methods/pchain/types/validatedBy.js";
-import { getSubnet } from "../../methods/pchain/getSubnet.js";
-import { getSubnets } from "../../methods/pchain/getSubnets.js";
-import { getTimestamp } from "../../methods/pchain/getTimestamp.js";
-import { getTotalStake } from "../../methods/pchain/getTotalStake.js";
-import { getTx } from "../../methods/pchain/getTx.js";
-import { getTxStatus } from "../../methods/pchain/getTxStatus.js";
-import { getValidatorsAt } from "../../methods/pchain/getValidatorsAt.js";
-import { issueTx } from "../../methods/pchain/issueTx.js";
-import { getUTXOs } from "../../methods/pchain/getUTXOs.js";
-import { sampleValidators } from "../../methods/pchain/sampleValidators.js";
-import { validates } from "../../methods/pchain/validates.js";
-import { validatedBy } from "../../methods/pchain/validatedBy.js";
+} from "../../methods/pChain/types/validatedBy.js";
+import { getSubnet } from "../../methods/pChain/getSubnet.js";
+import { getSubnets } from "../../methods/pChain/getSubnets.js";
+import { getTimestamp } from "../../methods/pChain/getTimestamp.js";
+import { getTotalStake } from "../../methods/pChain/getTotalStake.js";
+import { getTx } from "../../methods/pChain/getTx.js";
+import { getTxStatus } from "../../methods/pChain/getTxStatus.js";
+import { getValidatorsAt } from "../../methods/pChain/getValidatorsAt.js";
+import { issueTx } from "../../methods/pChain/issueTx.js";
+import { getUTXOs } from "../../methods/pChain/getUTXOs.js";
+import { sampleValidators } from "../../methods/pChain/sampleValidators.js";
+import { validates } from "../../methods/pChain/validates.js";
+import { validatedBy } from "../../methods/pChain/validatedBy.js";
 import { AvalancheCoreClient } from "../createAvalancheCoreClient.js";
 
 export type PChainActions = {

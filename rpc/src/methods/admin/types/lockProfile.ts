@@ -4,6 +4,6 @@ export type LockProfileErrorType = RequestErrorType;
 
 export type LockProfileMethod = {
     Method: "admin.lockProfile";
-    Params: {};
-    Result: {};
+    Parameters: {};
+    ReturnType: {};
 };

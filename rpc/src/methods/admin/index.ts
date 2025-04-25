@@ -48,11 +48,11 @@ export {
 } from "./memoryProfile.js";
 
 export type {
-    SetLogLevelParameters,
-} from "./types/setLogLevel.js";    
+    SetLoggerLevelParameters,
+} from "./types/setLoggerLevel.js";    
 export {
-    setLogLevel,
-} from "./setLogLevel.js";
+    setLoggerLevel,
+} from "./setLoggerLevel.js";
 
 export type {
     StartCPUProfilerErrorType,

@@ -13,7 +13,7 @@ import {
   CreateAvalancheCoreClientErrorType,
 } from "../createAvalancheCoreClient.js";
 import { TransportConfig } from "./types.js";
-import { PChainRpcSchema } from "../../methods/pchain/pChainRpcSchema.js";
+import { PChainRpcSchema } from "../../methods/pChain/pChainRpcSchema.js";
 import { PChainActions } from "../decorators/pChain.js";
 
 export type AvalancheClientConfig<

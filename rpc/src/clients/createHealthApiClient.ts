@@ -1,19 +1,11 @@
-import {
-  Account,
-  Address,
-  Chain,
-  Prettify,
-  RpcSchema,
-  Transport,
-  ParseAccount,
-} from "viem";
+import { Account, Address, Chain, ParseAccount, Prettify, RpcSchema, Transport } from "viem";
 import { AvalancheCoreClient, AvalancheCoreClientConfig, createAvalancheCoreClient, CreateAvalancheCoreClientErrorType } from "./createAvalancheCoreClient.js";
-import { pChainActions, PChainActions } from "./decorators/pChain.js";
-import { PChainRpcSchema } from "../methods/pChain/pChainRpcSchema.js";
 import { TransportConfig } from "./types/types.js";
 import { createTransportClient } from "./utils.js";
+import { HealthRpcSchema } from "../methods/health/healthRpcSchema.js";
+import { HealthAPIActions, healthAPIActions } from "./decorators/healthApi.js";
 
-export type PChainClientConfig<
+export type HealthApiClientConfig<
   transport extends Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
@@ -35,7 +27,7 @@ export type PChainClientConfig<
   }
 >;
 
-export type PChainClient<
+export type HealthApiClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | undefined = undefined,
@@ -45,30 +37,30 @@ export type PChainClient<
       transport,
       chain,
       accountOrAddress,
-      rpcSchema extends RpcSchema ? [ ...PChainRpcSchema, ...rpcSchema] : PChainRpcSchema,
-      PChainActions
+      rpcSchema extends RpcSchema ? [ ...HealthRpcSchema, ...rpcSchema] : HealthRpcSchema,
+      HealthAPIActions
   >
 >;
 
-export type CreatePChainClientErrorType = CreateAvalancheCoreClientErrorType;
+export type CreateHealthApiClientErrorType = CreateAvalancheCoreClientErrorType;
 
-export function createPChainClient<
+export function createHealthApiClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-    parameters: PChainClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
-): PChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
+    parameters: HealthApiClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
+): HealthApiClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
 
-    const { key = 'pChain', name = 'P-Chain Client', transport: transportParam } = parameters;
-    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "pChain");
+    const { key = 'health', name = 'Health API Client', transport: transportParam } = parameters;
+    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "health");
     const client = createAvalancheCoreClient({
         ...parameters,
         key,
         name,
         transport: customTransport,
     })
-    return client.extend(pChainActions) as any;
+    return client.extend(healthAPIActions) as any;
 }

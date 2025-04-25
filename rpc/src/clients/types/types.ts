@@ -39,4 +39,4 @@ export type TransportConfig<
       config?: FallbackTransportConfig;
     };
 
-export type ClientType = "pChain" | "cChain" | "xChain" | "public" | "cChainAdmin";
+export type ClientType = "pChain" | "cChain" | "xChain" | "public" | "admin" | "info" | "index" | "health";

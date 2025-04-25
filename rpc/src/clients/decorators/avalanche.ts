@@ -4,7 +4,7 @@ import { AvalancheClient } from "../types/createAvalancheClient.js";
 import { publicActions } from "viem";
 
 export type AvalancheActions = {
-  pchain?: PChainActions;
+  pChain?: PChainActions;
 };
 
 export function avalancheActions<
@@ -14,6 +14,6 @@ export function avalancheActions<
   const { pChain: pChainClient, ...publicClient } = client;
   return {
     ...publicActions(publicClient),
-    ...(pChainClient ? { pchain: pChainActions(pChainClient) } : {}),
+    ...(pChainClient ? { pChain: pChainActions(pChainClient) } : {}),
   };
 }

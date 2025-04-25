@@ -1376,6 +1376,42 @@ export {
   createPChainClient,
 } from './clients/createPChainClient.js'
 export {
+  type CChainClient,
+  type CChainClientConfig,
+  type CreateCChainClientErrorType,
+  createCChainClient,
+} from './clients/createCChainClient.js'
+export {
+  type XChainClient,
+  type XChainClientConfig,
+  type CreateXChainClientErrorType,
+  createXChainClient,
+} from './clients/createXChainClient.js'
+export {
+  type InfoApiClient,
+  type InfoApiClientConfig,
+  type CreateInfoApiClientErrorType,
+  createInfoApiClient,
+} from './clients/createInfoApiClient.js'
+export {
+  type IndexApiClient,
+  type IndexApiClientConfig,
+  type CreateIndexApiClientErrorType,
+  createIndexApiClient,
+} from './clients/createIndexApiClient.js'
+export {
+  type HealthApiClient,
+  type HealthApiClientConfig,
+  type CreateHealthApiClientErrorType,
+  createHealthApiClient,
+} from './clients/createHealthApiClient.js'
+export {
+  type AdminApiClient,
+  type AdminApiClientConfig,
+  type CreateAdminApiClientErrorType,
+  createAdminApiClient,
+} from './clients/createAdminApiClient.js'
+export {
   type AvalancheClient,
   type AvalancheClientConfig,
   type CreateAvalancheClientErrorType,
@@ -1384,6 +1420,25 @@ export {
   createAvalancheClient,
 } from './clients/createAvalancheClient.js'
 export {
+  type IndexRpcSchema
+} from './methods/index/indexRpcSchema.js'
+export {
+  type InfoRpcSchema
+} from './methods/info/infoRpcSchema.js'
+export {
   type PChainRpcSchema
-} from './methods/pchain/pChainRpcSchema.js'
+} from './methods/pChain/pChainRpcSchema.js'
+export {
+  type CChainRpcSchema
+} from './methods/cChain/cChainRpcSchema.js'
+export {
+  type XChainRpcSchema
+} from './methods/xChain/xChainRpcSchema.js'
+export {
+  type HealthRpcSchema
+} from './methods/health/healthRpcSchema.js'
+export {
+  type AdminRpcSchema
+} from './methods/admin/adminRpcSchema.js'
+
 
