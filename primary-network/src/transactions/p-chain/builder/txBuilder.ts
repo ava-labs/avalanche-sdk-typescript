@@ -12,6 +12,10 @@ import { type RegisterL1ValidatorTx, type RegisterL1ValidatorTxParams, newRegist
 import { type IncreaseL1ValidatorBalanceTx, type IncreaseL1ValidatorBalanceTxParams, newIncreaseL1ValidatorBalanceTx } from "../txs/increaseL1ValidatorBalanceTx";
 import { type SetL1ValidatorWeightTx, type SetL1ValidatorWeightTxParams, newSetL1ValidatorWeightTx } from "../txs/setL1ValidatorWeightTx";
 import { type DisableL1ValidatorTx, type DisableL1ValidatorTxParams, newDisableL1ValidatorTx } from "../txs/disableL1ValidatorTx";
+import { type AddPermissionlessValidatorTx, type AddPermissionlessValidatorTxParams, newAddPermissionlessValidatorTx } from "../txs/addPermissionlessValidatorTx";
+import { type AddPermissionlessDelegatorTx, type AddPermissionlessDelegatorTxParams, newAddPermissionlessDelegatorTx } from "../txs/addPermissionlessDelegatorTx";
+import { type ExportTx, type ExportTxParams, newExportTx } from "../txs/exportTx";
+import { type ImportTx, type ImportTxParams, newImportTx } from "../txs/importTx";
 
 export class TxBuilder {
     context: ContextType.Context;
@@ -130,6 +134,46 @@ export class TxBuilder {
 
     async newDisableL1ValidatorTx(params: DisableL1ValidatorTxParams): Promise<DisableL1ValidatorTx> {
         return newDisableL1ValidatorTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newAddPermissionlessValidatorTx(params: AddPermissionlessValidatorTxParams): Promise<AddPermissionlessValidatorTx> {
+        return newAddPermissionlessValidatorTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newAddPermissionlessDelegatorTx(params: AddPermissionlessDelegatorTxParams): Promise<AddPermissionlessDelegatorTx> {
+        return newAddPermissionlessDelegatorTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newExportTx(params: ExportTxParams): Promise<ExportTx> {
+        return newExportTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newImportTx(params: ImportTxParams): Promise<ImportTx> {
+        return newImportTx(
             params,
             this.context,
             this.pvmRpc,

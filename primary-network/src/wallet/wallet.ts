@@ -23,9 +23,11 @@ export class Wallet {
     getFromAddressBytes(): Uint8Array[] {
         return this.privateKeys.map(address => privateKeyToAddressBytes(address))
     }
-
-    async getUtxos(): Promise<Utxo[]> {
-        const utxos = await this.pvmRpc.getUTXOs({ addresses: this.addresses });
+    async getUtxos(sourceChain?: string): Promise<Utxo[]> {
+        const utxos = await this.pvmRpc.getUTXOs({
+            addresses: this.addresses,
+            ...(sourceChain ? { sourceChain } : {}),
+        });
         return utxos.utxos;
     }
 }
