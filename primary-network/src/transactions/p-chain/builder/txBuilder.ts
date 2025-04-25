@@ -4,6 +4,10 @@ import type { TxBuilderConstructorParams, NewTxBuilderParams } from "./types";
 import type { Wallet } from "../../../wallet";
 import { type BaseTx, type BaseTxParams, newBaseTx } from "../txs/baseTx";
 import { type ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams, newConvertSubnetToL1Tx } from "../txs/convertSubnetToL1Tx";
+import { type CreateSubnetTx, type CreateSubnetTxParams, newCreateSubnetTx } from "../txs/createSubnetTx";
+import { type CreateChainTx, type CreateChainTxParams, newCreateChainTx } from "../txs/createChainTx";
+import { type AddSubnetValidatorTx, type AddSubnetValidatorTxParams, newAddSubnetValidatorTx } from "../txs/addSubnetValidatorTx";
+import { type RemoveSubnetValidatorTx, type RemoveSubnetValidatorTxParams, newRemoveSubnetValidatorTx } from "../txs/removeSubnetValidatorTx";
 
 export class TxBuilder {
     context: ContextType.Context;
@@ -42,6 +46,46 @@ export class TxBuilder {
 
     async newConvertSubnetToL1Tx(params: ConvertSubnetToL1TxParams): Promise<ConvertSubnetToL1Tx> {
         return newConvertSubnetToL1Tx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newCreateSubnetTx(params: CreateSubnetTxParams): Promise<CreateSubnetTx> {
+        return newCreateSubnetTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newCreateChainTx(params: CreateChainTxParams): Promise<CreateChainTx> {
+        return newCreateChainTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newAddSubnetValidatorTx(params: AddSubnetValidatorTxParams): Promise<AddSubnetValidatorTx> {
+        return newAddSubnetValidatorTx(
+            params,
+            this.context,
+            this.pvmRpc,
+            this.nodeUrl,
+            this.wallet,
+        )
+    }
+
+    async newRemoveSubnetValidatorTx(params: RemoveSubnetValidatorTxParams): Promise<RemoveSubnetValidatorTx> {
+        return newRemoveSubnetValidatorTx(
             params,
             this.context,
             this.pvmRpc,

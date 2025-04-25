@@ -25,8 +25,7 @@ export class Transaction {
     }
 
     toBytes(signed = false) {
-        const data = signed ? this.unsignedTx.getSignedTx().toBytes() : this.unsignedTx.toBytes()
-        return utils.addChecksum(data)
+        return signed ? utils.addChecksum(this.unsignedTx.getSignedTx().toBytes()) : this.unsignedTx.toBytes()
     }
 
     toHex(signed = false) {
@@ -63,6 +62,6 @@ export class Transaction {
         if (!this.unsignedTx.hasAllSignatures()) {
             throw new Error('Transaction is not completely signed. Cannot issue unsigned transaction')
         }
-        await this.pvmRpc.issueSignedTx(this.unsignedTx.getSignedTx())
+        return await this.pvmRpc.issueSignedTx(this.unsignedTx.getSignedTx())
     }
 }
