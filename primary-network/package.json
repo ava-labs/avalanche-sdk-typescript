@@ -1,0 +1,32 @@
+{
+  "name": "primary-network",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Primary Network module for building and interacting with Avalanche ecosystem",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git/primary-network"
+  },
+  "keywords": [
+    "primary-network",
+    "p-chain",
+    "x-chain"
+  ],
+  "author": "Raj Ranjan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
+  },
+  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network#readme",
+  "dependencies": {
+    "@avalabs/avalanchejs": "^5.0.0",
+    "@noble/hashes": "^1.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
