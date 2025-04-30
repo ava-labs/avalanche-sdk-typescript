@@ -10,6 +10,7 @@ export const InternalTransactionOpCall = {
   Call: "CALL",
   Create: "CREATE",
   Create2: "CREATE2",
+  Create3: "CREATE3",
   Callcode: "CALLCODE",
   Delegatecall: "DELEGATECALL",
   Staticcall: "STATICCALL",
