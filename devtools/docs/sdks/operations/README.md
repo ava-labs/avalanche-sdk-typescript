@@ -117,9 +117,7 @@ async function run() {
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
-      addresses: [
-
-      ],
+      addresses: [],
       includeChains: [
         "43114",
       ],
@@ -154,9 +152,7 @@ async function run() {
     firstDate: "2023-05-01",
     lastDate: "2023-05-02",
     options: {
-      addresses: [
-  
-      ],
+      addresses: [],
       includeChains: [
         "43114",
       ],
