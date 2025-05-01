@@ -32,6 +32,7 @@ let value: ListSubnetsResponse = {
           vmId: "<id>",
           subnetId: "<id>",
           blockchainName: "<value>",
+          evmChainId: 43114,
         },
       ],
     },
