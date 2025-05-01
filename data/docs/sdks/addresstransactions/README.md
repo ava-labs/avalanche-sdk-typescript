@@ -500,7 +500,7 @@ run();
 
 Returns a list of internal transactions for an address and chain. Filterable by block range.
 
-Note that the internal transactions list only contains `CALL` or `CALLCODE` transactions with a non-zero value and `CREATE`/`CREATE2` transactions. To get a complete list of internal transactions use the `debug_` prefixed RPC methods on an archive node.
+Note that the internal transactions list only contains `CALL` or `CALLCODE` transactions with a non-zero value and `CREATE`/`CREATE2`/`CREATE3` transactions. To get a complete list of internal transactions use the `debug_` prefixed RPC methods on an archive node.
 
 ### Example Usage
 
