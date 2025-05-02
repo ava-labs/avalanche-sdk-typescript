@@ -20,9 +20,6 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Switch to rpc directory
-        run: cd rpc
-
       - name: Set version from tag
         id: set_version
         run: |
@@ -33,13 +30,18 @@ jobs:
       - name: Update package.json version
         run: |
           VERSION=${{ steps.set_version.outputs.version }}
+          cd rpc
           npm version "$VERSION" --no-git-tag-version --allow-same-version
           npm run update-version
 
       - name: Install dependencies
-        run: npm i
+        run: |
+          cd rpc
+          npm i
 
       - name: Publish package
-        run: npm publish
+        run: |
+          cd rpc
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
