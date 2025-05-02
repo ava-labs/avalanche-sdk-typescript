@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/rpc",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "update-version": "node scripts/update-version.js",
@@ -8,7 +8,7 @@
     "lint": "eslint --cache --max-warnings=0 src"
   },
   "author": "Sayan Kar",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
