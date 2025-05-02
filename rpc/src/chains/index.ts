@@ -1,9 +1,10 @@
-export type { Chain } from "viem/chains";
-export { avalanche, avalancheFuji } from "viem/chains";
 export type {
-    Assign,
-    Omit,
-    PartialBy,
-    Prettify,
-    UnionLooseOmit,
-  } from "viem/chains";
+  Assign,
+  Chain,
+  Omit,
+  PartialBy,
+  Prettify,
+  UnionLooseOmit,
+} from "viem/chains";
+export { avalanche } from "./avalanche.js";
+export { avalancheFuji } from "./avalancheFuji.js";

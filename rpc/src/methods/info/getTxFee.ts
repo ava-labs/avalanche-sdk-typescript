@@ -3,9 +3,32 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { GetTxFeeReturnType } from "./types/getTxFee.js";
 
-
+/**
+ * Get the transaction fee for this node.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infogettxfee
+ *
+ * @param client - The client to use.
+ * @returns The transaction fee. {@link GetTxFeeReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getTxFee } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const txFee = await getTxFee(client)
+ * ```
+ */
 export async function getTxFee<chain extends Chain | undefined>(
-  client: Client<Transport, chain>,
+  client: Client<Transport, chain>
 ): Promise<GetTxFeeReturnType> {
   const txFee = await client.request<
     InfoRpcSchema,
@@ -13,7 +36,7 @@ export async function getTxFee<chain extends Chain | undefined>(
     GetTxFeeReturnType
   >({
     method: "info.getTxFee",
-    params: {}, 
+    params: {},
   });
   return {
     txFee: BigInt(txFee.txFee),

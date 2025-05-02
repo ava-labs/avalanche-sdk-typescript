@@ -1,8 +1,36 @@
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetBlockParameters, GetBlockReturnType } from "./types/getBlock.js";
 
+/**
+ * Get a block by its ID.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetblock
+ *
+ * @param client - The client to use to make the request
+ * @param parameters - The block ID and encoding format {@link GetBlockParameters}
+ * @returns The block data. {@link GetBlockReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getBlock } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const block = await getBlock(client, {
+ *   blockID: "d7WYmb8VeZNHsny3EJCwMm6QA37s1EHwMxw1Y71V3FqPZ5EFG",
+ *   encoding: "hex"
+ * })
+ * ```
+ */
 export async function getBlock<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetBlockParameters

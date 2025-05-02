@@ -1,9 +1,21 @@
-import { Account, Address, Chain, ParseAccount, Prettify, RpcSchema, Transport } from "viem";
-import { AvalancheCoreClient, AvalancheCoreClientConfig, createAvalancheCoreClient, CreateAvalancheCoreClientErrorType } from "./createAvalancheCoreClient.js";
-import { TransportConfig } from "./types/types.js";
-import { createTransportClient } from "./utils.js";
+import {
+  Account,
+  Address,
+  Chain,
+  ParseAccount,
+  Prettify,
+  RpcSchema,
+  Transport,
+} from "viem";
 import { IndexRpcSchema } from "../methods/index/indexRpcSchema.js";
+import {
+  AvalancheCoreClient,
+  createAvalancheCoreClient,
+  CreateAvalancheCoreClientErrorType,
+} from "./createAvalancheCoreClient.js";
 import { indexAPIActions, IndexAPIActions } from "./decorators/indexApi.js";
+import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
+import { createTransportClient } from "./utils.js";
 
 export type IndexApiClientConfig<
   transport extends Transport,
@@ -12,18 +24,12 @@ export type IndexApiClientConfig<
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 > = Prettify<
-  Pick<
-    AvalancheCoreClientConfig<transport, chain, accountOrAddress, rpcSchema>,
-    | "batch"
-    | "cacheTime"
-    | "ccipRead"
-    | "chain"
-    | "key"
-    | "name"
-    | "pollingInterval"
-    | "rpcSchema"
-  > & {
-    transport: TransportConfig<transport, rpcSchema, raw>;
+  AvalancheClientConfig<transport, chain, accountOrAddress, rpcSchema, raw> & {
+    clientType:
+      | "indexPChainBlock"
+      | "indexCChainBlock"
+      | "indexXChainBlock"
+      | "indexXChainTx";
   }
 >;
 
@@ -31,19 +37,48 @@ export type IndexApiClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | undefined = undefined,
-  rpcSchema extends RpcSchema | undefined = undefined,
+  rpcSchema extends RpcSchema | undefined = undefined
 > = Prettify<
-    AvalancheCoreClient<
-      transport,
-      chain,
-      accountOrAddress,
-      rpcSchema extends RpcSchema ? [ ...IndexRpcSchema, ...rpcSchema] : IndexRpcSchema,
-      IndexAPIActions
+  AvalancheCoreClient<
+    transport,
+    chain,
+    accountOrAddress,
+    rpcSchema extends RpcSchema
+      ? [...IndexRpcSchema, ...rpcSchema]
+      : IndexRpcSchema,
+    IndexAPIActions
   >
 >;
 
 export type CreateIndexApiClientErrorType = CreateAvalancheCoreClientErrorType;
 
+/**
+ * Creates an Index API Client with a given transport configured for a Chain.
+ *
+ * The Index API Client is an interface to interact with the Index API through Avalanche-specific JSON-RPC API methods.
+ *
+ * @param config - {@link IndexApiClientConfig}
+ * @returns An Index API Client. {@link IndexApiClient}
+ *
+ * @example
+ * ```ts
+ * import { createIndexApiClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ *
+ * const client = createIndexApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * // Get index P-Chain block
+ * const block = await client.indexPChainBlock.getContainerByID({
+ *   id: '0x1',
+ *   encoding: 'hex'
+ * })
+ * ```
+ */
 export function createIndexApiClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
@@ -51,16 +86,34 @@ export function createIndexApiClient<
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-    parameters: IndexApiClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
+  parameters: IndexApiClientConfig<
+    transport,
+    chain,
+    accountOrAddress,
+    rpcSchema,
+    raw
+  >
 ): IndexApiClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-
-    const { key = 'index', name = 'Index API Client', transport: transportParam } = parameters;
-    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "index");
-    const client = createAvalancheCoreClient({
-        ...parameters,
-        key,
-        name,
-        transport: customTransport,
-    })
-    return client.extend(indexAPIActions) as any;
+  const {
+    key = "index",
+    name = "Index API Client",
+    transport: transportParam,
+    chain: chainConfig,
+    clientType,
+    apiKey = "",
+    rlToken = "",
+  } = parameters;
+  const customTransport = createTransportClient<
+    transport,
+    chain,
+    rpcSchema,
+    raw
+  >(transportParam, chainConfig, { apiKey, rlToken }, clientType);
+  const client = createAvalancheCoreClient({
+    ...parameters,
+    key,
+    name,
+    transport: customTransport,
+  });
+  return client.extend(indexAPIActions) as any;
 }

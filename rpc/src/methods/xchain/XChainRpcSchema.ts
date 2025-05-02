@@ -13,19 +13,18 @@ import { GetUTXOsMethod } from "./types/getUTXOs.js";
 import { IssueTxMethod } from "./types/issueTx.js";
 
 export type XChainMethods = [
-    BuildGenesisMethod,
-    GetAllBalancesMethod,
-    GetAssetDescriptionMethod,
-    GetBalanceMethod,
-    GetBlockMethod,
-    GetBlockByHeightMethod,
-    GetHeightMethod,
-    GetTxMethod,
-    GetTxFeeMethod,
-    GetTxStatusMethod,
-    GetUTXOsMethod,
-    IssueTxMethod,
+  BuildGenesisMethod,
+  GetAllBalancesMethod,
+  GetAssetDescriptionMethod,
+  GetBalanceMethod,
+  GetBlockMethod,
+  GetBlockByHeightMethod,
+  GetHeightMethod,
+  GetTxMethod,
+  GetTxFeeMethod,
+  GetTxStatusMethod,
+  GetUTXOsMethod,
+  IssueTxMethod
 ];
 
 export type XChainRpcSchema = RpcSchemaOverride & XChainMethods;
-

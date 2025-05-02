@@ -3,6 +3,31 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { GetNodeIDReturnType } from "./types/getNodeID.js";
 
+/**
+ * Get the ID, the BLS key, and the proof of possession of this node.
+ * Note: This endpoint is only available on specific nodes, not on public servers.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetnodeid
+ *
+ * @param client - The client to use.
+ * @returns The node ID and BLS key information. {@link GetNodeIDReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getNodeID } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const nodeInfo = await getNodeID(client)
+ * ```
+ */
 export async function getNodeID<chain extends Chain | undefined>(
   client: Client<Transport, chain>
 ): Promise<GetNodeIDReturnType> {

@@ -1,6 +1,6 @@
 import { RpcSchemaOverride } from "viem";
-import { AliasChainMethod } from "./types/aliasChain.js";
 import { AliasMethod } from "./types/alias.js";
+import { AliasChainMethod } from "./types/aliasChain.js";
 import { GetChainAliasesMethod } from "./types/getChainAliases.js";
 import { GetLoggerLevelMethod } from "./types/getLoggerLevel.js";
 import { LoadVMsMethod } from "./types/loadVMs.js";
@@ -11,17 +11,16 @@ import { StartCPUProfilerMethod } from "./types/startCPUProfiler.js";
 import { StopCPUProfilerMethod } from "./types/stopCPUProfiler.js";
 
 export type AdminMethods = [
-    AliasMethod,
-    AliasChainMethod,
-    GetChainAliasesMethod,
-    GetLoggerLevelMethod,
-    LoadVMsMethod,
-    LockProfileMethod,
-    MemoryProfileMethod,
-    SetLoggerLevelMethod,
-    StartCPUProfilerMethod,
-    StopCPUProfilerMethod,
+  AliasMethod,
+  AliasChainMethod,
+  GetChainAliasesMethod,
+  GetLoggerLevelMethod,
+  LoadVMsMethod,
+  LockProfileMethod,
+  MemoryProfileMethod,
+  SetLoggerLevelMethod,
+  StartCPUProfilerMethod,
+  StopCPUProfilerMethod
 ];
 
 export type AdminRpcSchema = RpcSchemaOverride & AdminMethods;
-

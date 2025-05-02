@@ -1,9 +1,20 @@
 import { RequestErrorType } from "viem/utils";
 
+/**
+ * Parameters for the `health.health` method.
+ *
+ * @property tags - Optional array of tags to filter health checks
+ */
 export type HealthParameters = {
   tags?: string[];
 };
 
+/**
+ * Return type for the `health.health` method.
+ *
+ * @property checks - Object containing health check results for each component
+ * @property healthy - Overall health status of the node
+ */
 export type HealthReturnType = {
   healthy: boolean;
   checks: {

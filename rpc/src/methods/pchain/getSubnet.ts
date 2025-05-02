@@ -1,5 +1,4 @@
-
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetSubnetParameters, GetSubnetReturnType } from "./types/getSubnet.js";

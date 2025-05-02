@@ -1,42 +1,30 @@
 import { RequestErrorType } from "viem/utils";
 
 /**
- * Represents the parameters for the `getBalance` method.
+ * Parameters for the `platform.getBalance` method.
+ * Get the balance of AVAX controlled by a given address.
+ * @property addresses - The addresses to get the balance of
  */
 export type GetBalanceParameters = {
   /**
-   * The addresses to query the balance for.
+   * @property addresses - The addresses to get the balance of
    */
   addresses: string[];
 };
 
 /**
- * Represents the return type for the `getBalance` method.
+ * Return type for the `platform.getBalance` method.
+ * @property balance - The total balance of the queried addresses
+ * @property unlocked - The unlocked balance of the queried addresses
+ * @property lockedStakeable - The locked stakeable balance of the queried addresses
+ * @property lockedNotStakeable - The locked and not stakeable balance of the queried addresses
+ * @property utxoIDs - The IDs of the UTXOs that reference the queried addresses
  */
 export type GetBalanceReturnType = {
-  /**
-   * The total balance of the queried addresses.
-   */
   balance: bigint;
-
-  /**
-   * The unlocked balance of the queried addresses.
-   */
   unlocked: bigint;
-
-  /**
-   * The locked stakeable balance of the queried addresses.
-   */
   lockedStakeable: bigint;
-
-  /**
-   * The locked and not stakeable balance of the queried addresses.
-   */
   lockedNotStakeable: bigint;
-
-  /**
-   * The IDs of the UTXOs that reference the queried addresses.
-   */
   utxoIDs: {
     /**
      * The transaction ID of the UTXO.
@@ -57,4 +45,3 @@ export type GetBalanceMethod = {
   Parameters: GetBalanceParameters;
   ReturnType: GetBalanceReturnType;
 };
-

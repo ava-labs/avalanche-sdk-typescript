@@ -1,8 +1,38 @@
 import { Chain, Transport } from "viem";
-import { PChainRpcSchema } from "./pChainRpcSchema.js";
-import { GetBalanceParameters, GetBalanceReturnType } from "./types/getBalance.js";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import { PChainRpcSchema } from "./pChainRpcSchema.js";
+import {
+  GetBalanceParameters,
+  GetBalanceReturnType,
+} from "./types/getBalance.js";
 
+/**
+ * Get the balance of AVAX controlled by a given address.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance
+ *
+ * @param client - The client to use to make the request
+ * @param parameters - The addresses to get the balance of {@link GetBalanceParameters}
+ * @returns The balance information. {@link GetBalanceReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getBalance } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const balance = await getBalance(client, {
+ *   addresses: ["P-custom18jma8ppw3nhx5r4ap8clazz0dps7rv5u9xde7p"]
+ * })
+ * ```
+ */
 export async function getBalance<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetBalanceParameters

@@ -1,9 +1,38 @@
-
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  GetTxStatusParameters,
+  GetTxStatusReturnType,
+} from "./types/getTxStatus.js";
 import { XChainRpcSchema } from "./xChainRpcSchema.js";
-import { GetTxStatusParameters, GetTxStatusReturnType } from "./types/getTxStatus.js";
 
+/**
+ * Get the status of a transaction.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus
+ *
+ * @param client - The client to use.
+ * @param parameters - The transaction ID. {@link GetTxStatusParameters}
+ * @returns The transaction status. {@link GetTxStatusReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createXChainClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getTxStatus } from '@avalanche-sdk/rpc/methods/xchain'
+ *
+ * const client = createXChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const status = await getTxStatus(client, {
+ *   txID: "2QouvMUbQ6tchBHSJdZ7MoFhsQhHt5KqZQqHdZ7MoFhsQhHt5KqZQ"
+ * })
+ * ```
+ */
 export async function getTxStatus<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetTxStatusParameters

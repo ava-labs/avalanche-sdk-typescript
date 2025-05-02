@@ -1,8 +1,38 @@
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
-import { GetL1ValidatorParameters, GetL1ValidatorReturnType } from "./types/getL1Validator.js";
+import {
+  GetL1ValidatorParameters,
+  GetL1ValidatorReturnType,
+} from "./types/getL1Validator.js";
 
+/**
+ * Get the L1 validator information.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetl1validator
+ *
+ * @param client - The client to use to make the request
+ * @param parameters - The validator node ID {@link GetL1ValidatorParameters}
+ * @returns The L1 validator information. {@link GetL1ValidatorReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getL1Validator } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const validator = await getL1Validator(client, {
+ *   nodeID: "NodeID-111111111111111111111111111111111111111"
+ * })
+ * ```
+ */
 export async function getL1Validator<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetL1ValidatorParameters
@@ -26,5 +56,5 @@ export async function getL1Validator<chain extends Chain | undefined>(
     ...(l1Validator.minNonce && { minNonce: BigInt(l1Validator.minNonce) }),
     ...(l1Validator.balance && { balance: BigInt(l1Validator.balance) }),
     ...(l1Validator.height && { height: BigInt(l1Validator.height) }),
-  }
+  };
 }

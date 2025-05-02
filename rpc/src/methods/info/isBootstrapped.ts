@@ -6,6 +6,33 @@ import {
   IsBootstrappedReturnType,
 } from "./types/isBootstrapped.js";
 
+/**
+ * Check whether a given chain is done bootstrapping.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infoisbootstrapped
+ *
+ * @param client - The client to use.
+ * @param parameters - The chain ID or alias. {@link IsBootstrappedParameters}
+ * @returns Whether the chain is bootstrapped. {@link IsBootstrappedReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { isBootstrapped } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const isBootstrapped = await isBootstrapped(client, {
+ *   chain: "X"
+ * })
+ * ```
+ */
 export async function isBootstrapped<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: IsBootstrappedParameters

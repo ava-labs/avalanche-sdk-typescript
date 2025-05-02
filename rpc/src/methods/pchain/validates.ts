@@ -1,9 +1,35 @@
-
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { ValidatesParameters, ValidatesReturnType } from "./types/validates.js";
 
+/**
+ * Validates a transaction.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformvalidates
+ *
+ * @param client - The client to use to make the request
+ * @param params - The parameters for the request
+ * @returns The result of the validation. {@link ValidatesReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { validates } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const result = await validates(client, {
+ *   tx: "0x1234567890abcdef",
+ * })
+ * ```
+ */
 export async function validates<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: ValidatesParameters

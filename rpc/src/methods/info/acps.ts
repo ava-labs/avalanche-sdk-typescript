@@ -3,6 +3,30 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { AcpsReturnType } from "./types/acps.js";
 
+/**
+ * Returns peer preferences for Avalanche Community Proposals (ACPs).
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infoacps
+ *
+ * @param client - The client to use.
+ * @returns The ACP preferences. {@link AcpsReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { acps } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const acpPreferences = await acps(client)
+ * ```
+ */
 export async function acps<chain extends Chain | undefined>(
   client: Client<Transport, chain>
 ): Promise<AcpsReturnType> {
@@ -14,15 +38,18 @@ export async function acps<chain extends Chain | undefined>(
     method: "info.acps",
     params: {},
   });
-  return Object.keys(acps.acps).reduce((acc, curr) => {
-    const key = parseInt(curr);
-    acc.acps.set(key, {
-      supportWeight: BigInt(acps.acps.get(key)?.supportWeight || 0n),
-      supporters: new Set(acps.acps.get(key)?.supporters || []),
-      objectWeight: BigInt(acps.acps.get(key)?.objectWeight || 0n),
-      objectors: new Set(acps.acps.get(key)?.objectors || []),
-      abstainWeight: BigInt(acps.acps.get(key)?.abstainWeight || 0n)
-    });
-    return acc;
-  }, { acps: new Map() } as AcpsReturnType);
+  return Object.keys(acps.acps).reduce(
+    (acc, curr) => {
+      const key = parseInt(curr);
+      acc.acps.set(key, {
+        supportWeight: BigInt(acps.acps.get(key)?.supportWeight || 0n),
+        supporters: new Set(acps.acps.get(key)?.supporters || []),
+        objectWeight: BigInt(acps.acps.get(key)?.objectWeight || 0n),
+        objectors: new Set(acps.acps.get(key)?.objectors || []),
+        abstainWeight: BigInt(acps.acps.get(key)?.abstainWeight || 0n),
+      });
+      return acc;
+    },
+    { acps: new Map() } as AcpsReturnType
+  );
 }

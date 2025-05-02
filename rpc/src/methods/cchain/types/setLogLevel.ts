@@ -1,13 +1,13 @@
 import { RequestErrorType } from "viem/utils";
 
 export type SetLogLevelParameters = {
-    level: string;
-}
+  level: string;
+};
 
 export type SetLogLevelErrorType = RequestErrorType;
 
 export type SetLogLevelMethod = {
-    Method: "admin.setLogLevel";
-    Params: SetLogLevelParameters;
-    Result: {};
+  Method: "admin.setLogLevel";
+  Parameters: SetLogLevelParameters;
+  ReturnType: {};
 };

@@ -2,19 +2,35 @@ import {
   Account,
   Address,
   Chain,
+  Client,
   Prettify,
-  PublicClient,
+  PublicActions,
+  PublicRpcSchema,
   RpcSchema,
   Transport,
 } from "viem";
+import { AdminRpcSchema } from "../../methods/admin/adminRpcSchema.js";
+import { CChainRpcSchema } from "../../methods/cChain/cChainRpcSchema.js";
+import { HealthRpcSchema } from "../../methods/health/healthRpcSchema.js";
+import { IndexRpcSchema } from "../../methods/index/indexRpcSchema.js";
+import { InfoRpcSchema } from "../../methods/info/infoRpcSchema.js";
+import { PChainRpcSchema } from "../../methods/pChain/pChainRpcSchema.js";
+import { AvalanchePublicRpcSchema } from "../../methods/public/avalanchePublicRpcSchema.js";
+import { XChainRpcSchema } from "../../methods/xChain/xChainRpcSchema.js";
 import {
   AvalancheCoreClient,
   AvalancheCoreClientConfig,
   CreateAvalancheCoreClientErrorType,
 } from "../createAvalancheCoreClient.js";
-import { TransportConfig } from "./types.js";
-import { PChainRpcSchema } from "../../methods/pChain/pChainRpcSchema.js";
+import { AdminAPIActions } from "../decorators/adminApi.js";
+import { AvalanchePublicActions } from "../decorators/avalanchePublic.js";
+import { CChainActions } from "../decorators/cChain.js";
+import { HealthAPIActions } from "../decorators/healthApi.js";
+import { IndexAPIActions } from "../decorators/indexApi.js";
+import { InfoAPIActions } from "../decorators/infoApi.js";
 import { PChainActions } from "../decorators/pChain.js";
+import { XChainActions } from "../decorators/xChain.js";
+import { TransportConfig } from "./types.js";
 
 export type AvalancheClientConfig<
   transport extends Transport,
@@ -35,25 +51,106 @@ export type AvalancheClientConfig<
     | "rpcSchema"
   > & {
     transport: TransportConfig<transport, rpcSchema, raw>;
+    apiKey?: string;
+    rlToken?: string;
   }
 >;
 
 export type AvalancheClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
-  accountOrAddress extends Account | undefined = undefined,
-  rpcSchema extends RpcSchema | undefined = undefined
+  accountOrAddress extends Account | undefined = undefined
 > = Prettify<
-  PublicClient<
+  Client<
     transport,
     chain,
     accountOrAddress,
-    rpcSchema
-  > & {
-    pChain:
-      | AvalancheCoreClient<transport, chain, accountOrAddress, PChainRpcSchema, PChainActions>
-      | undefined;
-  }
+    AvalanchePublicRpcSchema & PublicRpcSchema,
+    AvalanchePublicActions & PublicActions
+  > &
+    (chain extends { name: "Avalanche" | "Avalanche Fuji" }
+      ? {
+          pChain: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            PChainRpcSchema,
+            PChainActions
+          >;
+
+          cChain: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            CChainRpcSchema,
+            CChainActions
+          >;
+
+          xChain: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            XChainRpcSchema,
+            XChainActions
+          >;
+
+          admin: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            AdminRpcSchema,
+            AdminAPIActions
+          >;
+
+          info: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            InfoRpcSchema,
+            InfoAPIActions
+          >;
+
+          health: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            HealthRpcSchema,
+            HealthAPIActions
+          >;
+
+          indexPChainBlock: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            IndexRpcSchema,
+            IndexAPIActions
+          >;
+
+          indexCChainBlock: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            IndexRpcSchema,
+            IndexAPIActions
+          >;
+
+          indexXChainBlock: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            IndexRpcSchema,
+            IndexAPIActions
+          >;
+
+          indexXChainTx: AvalancheCoreClient<
+            transport,
+            chain,
+            accountOrAddress,
+            IndexRpcSchema,
+            IndexAPIActions
+          >;
+        }
+      : {})
 >;
 
 export type CreateAvalancheClientErrorType = CreateAvalancheCoreClientErrorType;

@@ -1,8 +1,38 @@
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
-import { GetMinStakeParameters, GetMinStakeReturnType } from "./types/getMinStake.js";
+import {
+  GetMinStakeParameters,
+  GetMinStakeReturnType,
+} from "./types/getMinStake.js";
 
+/**
+ * Get the minimum stake amount for a subnet.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetminstake
+ *
+ * @param client - The client to use to make the request
+ * @param parameters - The subnet ID {@link GetMinStakeParameters}
+ * @returns The minimum stake amount. {@link GetMinStakeReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getMinStake } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const minStake = await getMinStake(client, {
+ *   subnetID: "11111111111111111111111111111111LpoYY"
+ * })
+ * ```
+ */
 export async function getMinStake<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetMinStakeParameters

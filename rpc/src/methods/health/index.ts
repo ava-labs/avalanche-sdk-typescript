@@ -1,27 +1,19 @@
+export { health } from "./health.js";
 export type {
-    HealthParameters,
-    HealthReturnType,
-    HealthErrorType,
+  HealthErrorType,
+  HealthParameters,
+  HealthReturnType,
 } from "./types/health.js";
-export {
-    health,
-} from "./health.js";
 
+export { liveness } from "./liveness.js";
 export type {
-    LivenessReturnType,
-    LivenessErrorType,
+  LivenessErrorType,
+  LivenessReturnType,
 } from "./types/liveness.js";
-export {
-    liveness,
-} from "./liveness.js";
 
+export { readiness } from "./readiness.js";
 export type {
-    ReadinessParameters,
-    ReadinessReturnType,
-    ReadinessErrorType, 
+  ReadinessErrorType,
+  ReadinessParameters,
+  ReadinessReturnType,
 } from "./types/readiness.js";
-export {
-    readiness,
-} from "./readiness.js";
-
-

@@ -24,6 +24,7 @@
       ".": "./src/index.ts",
       "./package.json": "./package.json",
       "./methods": "./src/methods/index.ts",
+      "./methods/public": "./src/methods/public/index.ts",
       "./methods/pChain": "./src/methods/pChain/index.ts",
       "./methods/admin": "./src/methods/admin/index.ts",
       "./methods/cChain": "./src/methods/cChain/index.ts",
@@ -60,6 +61,17 @@
       "require": {
         "types": "./dist/commonjs/methods/index.d.ts",
         "default": "./dist/commonjs/methods/index.js"
+      }
+    },
+    "./methods/public": {
+      "import": {
+        "@avalanche-sdk/rpc/source": "./src/methods/public/index.ts",
+        "types": "./dist/esm/methods/public/index.d.ts",
+        "default": "./dist/esm/methods/public/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/methods/public/index.d.ts",
+        "default": "./dist/commonjs/methods/public/index.js"
       }
     },
     "./methods/pChain": {

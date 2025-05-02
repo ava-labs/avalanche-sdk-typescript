@@ -1,22 +1,38 @@
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
-import { GetBlockByHeightParameters, GetBlockByHeightReturnType } from "./types/getBlockByHeight.js";
+import {
+  GetBlockByHeightParameters,
+  GetBlockByHeightReturnType,
+} from "./types/getBlockByHeight.js";
+
 /**
- * Retrieves a block from the P-Chain by its height.
+ * Get a block by its height.
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockbyheight
  *
+ * @param client - The client to use to make the request
+ * @param parameters - The block height and encoding format {@link GetBlockByHeightParameters}
+ * @returns The block data. {@link GetBlockByHeightReturnType}
+ *
+ * @example
  * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getBlockByHeight } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
  * const block = await getBlockByHeight(client, {
  *   height: 1000001,
- *   encoding: 'hex'
- * });
+ *   encoding: "hex"
+ * })
  * ```
- *
- * @param client - The client instance to use for the request.
- * @param params - The parameters for the request. {@link GetBlockByHeightParameters}
- * @returns The block data at the specified height. {@link GetBlockByHeightReturnType}
  */
 export async function getBlockByHeight<chain extends Chain | undefined>(
   client: Client<Transport, chain>,

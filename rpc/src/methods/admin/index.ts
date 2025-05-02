@@ -1,76 +1,40 @@
-export type {
-    AliasParameters,
-    AliasErrorType,
-} from "./types/alias.js";
-export {
-    alias,
-} from "./alias.js";
+export { alias } from "./alias.js";
+export type { AliasErrorType, AliasParameters } from "./types/alias.js";
 
+export { aliasChain } from "./aliasChain.js";
 export type {
-    AliasChainParameters,
-    AliasChainErrorType,
+  AliasChainErrorType,
+  AliasChainParameters,
 } from "./types/aliasChain.js";
-export {
-    aliasChain,
-} from "./aliasChain.js";
 
+export { getChainAliases } from "./getChainAliases.js";
 export type {
-    GetChainAliasesParameters,
-    GetChainAliasesReturnType,
-    GetChainAliasesErrorType,
+  GetChainAliasesErrorType,
+  GetChainAliasesParameters,
+  GetChainAliasesReturnType,
 } from "./types/getChainAliases.js";
-export {
-    getChainAliases,
-} from "./getChainAliases.js";
 
+export { getLoggerLevel } from "./getLoggerLevel.js";
 export type {
-    GetLoggerLevelParameters,
-    GetLoggerLevelReturnType,
-    GetLoggerLevelErrorType,
+  GetLoggerLevelErrorType,
+  GetLoggerLevelParameters,
+  GetLoggerLevelReturnType,
 } from "./types/getLoggerLevel.js";
-export {
-    getLoggerLevel,
-} from "./getLoggerLevel.js";
 
-export type {
-    LoadVMsReturnType,
-    LoadVMsErrorType,
-} from "./types/loadVMs.js";
-export {
-    loadVMs,
-} from "./loadVMs.js";
+export { loadVMs } from "./loadVMs.js";
+export type { LoadVMsErrorType, LoadVMsReturnType } from "./types/loadVMs.js";
 
-export type {
-    MemoryProfileErrorType,
-} from "./types/memoryProfile.js";
-export {
-    memoryProfile,
-} from "./memoryProfile.js";
+export { memoryProfile } from "./memoryProfile.js";
+export type { MemoryProfileErrorType } from "./types/memoryProfile.js";
 
-export type {
-    SetLoggerLevelParameters,
-} from "./types/setLoggerLevel.js";    
-export {
-    setLoggerLevel,
-} from "./setLoggerLevel.js";
+export { setLoggerLevel } from "./setLoggerLevel.js";
+export type { SetLoggerLevelParameters } from "./types/setLoggerLevel.js";
 
-export type {
-    StartCPUProfilerErrorType,
-} from "./types/startCPUProfiler.js";
-export {
-    startCPUProfiler,
-} from "./startCPUProfiler.js";
+export { startCPUProfiler } from "./startCPUProfiler.js";
+export type { StartCPUProfilerErrorType } from "./types/startCPUProfiler.js";
 
-export type {
-    StopCPUProfilerErrorType,
-} from "./types/stopCPUProfiler.js";
-export {
-    stopCPUProfiler,
-} from "./stopCPUProfiler.js";
+export { stopCPUProfiler } from "./stopCPUProfiler.js";
+export type { StopCPUProfilerErrorType } from "./types/stopCPUProfiler.js";
 
-export type {
-    LockProfileErrorType,
-} from "./types/lockProfile.js";    
-export {
-    lockProfile,
-} from "./lockProfile.js";
+export { lockProfile } from "./lockProfile.js";
+export type { LockProfileErrorType } from "./types/lockProfile.js";

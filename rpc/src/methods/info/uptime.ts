@@ -3,7 +3,31 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { UptimeReturnType } from "./types/uptime.js";
 
-
+/**
+ * Returns the network's observed uptime of this node.
+ * This is the only reliable source of data for your node's uptime.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infouptime
+ *
+ * @param client - The client to use.
+ * @returns The node's uptime statistics. {@link UptimeReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { uptime } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const uptime = await uptime(client)
+ * ```
+ */
 export async function uptime<chain extends Chain | undefined>(
   client: Client<Transport, chain>
 ): Promise<UptimeReturnType> {

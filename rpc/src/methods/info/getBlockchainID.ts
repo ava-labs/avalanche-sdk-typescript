@@ -6,15 +6,42 @@ import {
   GetBlockchainIDReturnType,
 } from "./types/getBlockchainID.js";
 
+/**
+ * Given a blockchain's alias, get its ID.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetblockchainid
+ *
+ * @param client - The client to use.
+ * @param parameters - The blockchain alias. {@link GetBlockchainIDParameters}
+ * @returns The blockchain ID. {@link GetBlockchainIDReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getBlockchainID } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const blockchainID = await getBlockchainID(client, {
+ *   alias: "X"
+ * })
+ * ```
+ */
 export async function getBlockchainID<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetBlockchainIDParameters
 ): Promise<GetBlockchainIDReturnType> {
   return client.request<
     InfoRpcSchema,
-    { 
-        method: "info.getBlockchainID"; 
-        params: GetBlockchainIDParameters 
+    {
+      method: "info.getBlockchainID";
+      params: GetBlockchainIDParameters;
     },
     GetBlockchainIDReturnType
   >({

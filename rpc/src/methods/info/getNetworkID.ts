@@ -3,9 +3,33 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { GetNetworkIDReturnType } from "./types/getNetworkID.js";
 
-
+/**
+ * Get the ID of the network this node is participating in.
+ * Network ID of 1 = Mainnet, Network ID of 5 = Fuji (testnet).
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetnetworkid
+ *
+ * @param client - The client to use.
+ * @returns The network ID. {@link GetNetworkIDReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getNetworkID } from '@avalanche-sdk/rpc/methods/info'
+ *
+ * const client = createInfoApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const networkID = await getNetworkID(client)
+ * ```
+ */
 export async function getNetworkID<chain extends Chain | undefined>(
-  client: Client<Transport, chain>,
+  client: Client<Transport, chain>
 ): Promise<GetNetworkIDReturnType> {
   return client.request<
     InfoRpcSchema,

@@ -3,21 +3,42 @@ import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCore
 import { AdminRpcSchema } from "./adminRpcSchema.js";
 import { LoadVMsReturnType } from "./types/loadVMs.js";
 
-
+/**
+ * Dynamically loads any virtual machines installed on the node as plugins.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminloadvms
+ *
+ * @param client - The client to use.
+ * @returns The virtual machines installed on the node. {@link LoadVMsReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createAdminApiClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { loadVMs } from '@avalanche-sdk/rpc/methods/admin'
+ *
+ * const client = createAdminApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * });
+ *
+ * const vms = await loadVMs(client);
+ * ```
+ */
 export async function loadVMs<chain extends Chain | undefined>(
-    client: Client<Transport, chain>
+  client: Client<Transport, chain>
 ): Promise<LoadVMsReturnType> {
-    return client.request<
-        AdminRpcSchema,
-        {
-            method: "admin.loadVMs";
-            params: {};
-        },
-        LoadVMsReturnType
-    >({
-        method: "admin.loadVMs",
-        params: {},
-    });
+  return client.request<
+    AdminRpcSchema,
+    {
+      method: "admin.loadVMs";
+      params: {};
+    },
+    LoadVMsReturnType
+  >({
+    method: "admin.loadVMs",
+    params: {},
+  });
 }
-
-

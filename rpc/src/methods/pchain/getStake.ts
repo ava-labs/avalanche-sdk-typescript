@@ -1,8 +1,36 @@
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetStakeParameters, GetStakeReturnType } from "./types/getStake.js";
 
+/**
+ * Get the stake amount for a set of addresses.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake
+ *
+ * @param client - The client to use to make the request
+ * @param parameters - The addresses and subnet ID {@link GetStakeParameters}
+ * @returns The stake amount. {@link GetStakeReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getStake } from '@avalanche-sdk/rpc/methods/pChain'
+ *
+ * const client = createPChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const stake = await getStake(client, {
+ *   addresses: ["P-custom18jma8ppw3nhx5r4ap8clazz0dps7rv5u9xde7p"],
+ *   subnetID: "11111111111111111111111111111111LpoYY"
+ * })
+ * ```
+ */
 export async function getStake<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetStakeParameters

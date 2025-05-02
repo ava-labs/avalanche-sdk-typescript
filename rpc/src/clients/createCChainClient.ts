@@ -1,9 +1,21 @@
-import { Account, Address, Chain, ParseAccount, Prettify, RpcSchema, Transport } from "viem";
-import { AvalancheCoreClient, AvalancheCoreClientConfig, createAvalancheCoreClient, CreateAvalancheCoreClientErrorType } from "./createAvalancheCoreClient.js";
-import { TransportConfig } from "./types/types.js";
-import { createTransportClient } from "./utils.js";
+import {
+  Account,
+  Address,
+  Chain,
+  ParseAccount,
+  Prettify,
+  RpcSchema,
+  Transport,
+} from "viem";
 import { CChainRpcSchema } from "../methods/cChain/cChainRpcSchema.js";
+import {
+  AvalancheCoreClient,
+  createAvalancheCoreClient,
+  CreateAvalancheCoreClientErrorType,
+} from "./createAvalancheCoreClient.js";
 import { CChainActions, cChainActions } from "./decorators/cChain.js";
+import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
+import { createTransportClient } from "./utils.js";
 
 export type CChainClientConfig<
   transport extends Transport,
@@ -12,38 +24,57 @@ export type CChainClientConfig<
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 > = Prettify<
-  Pick<
-    AvalancheCoreClientConfig<transport, chain, accountOrAddress, rpcSchema>,
-    | "batch"
-    | "cacheTime"
-    | "ccipRead"
-    | "chain"
-    | "key"
-    | "name"
-    | "pollingInterval"
-    | "rpcSchema"
-  > & {
-    transport: TransportConfig<transport, rpcSchema, raw>;
-  }
+  AvalancheClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>
 >;
 
 export type CChainClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | undefined = undefined,
-  rpcSchema extends RpcSchema | undefined = undefined,
+  rpcSchema extends RpcSchema | undefined = undefined
 > = Prettify<
-    AvalancheCoreClient<
-      transport,
-      chain,
-      accountOrAddress,
-      rpcSchema extends RpcSchema ? [ ...CChainRpcSchema, ...rpcSchema] : CChainRpcSchema,
-      CChainActions
+  AvalancheCoreClient<
+    transport,
+    chain,
+    accountOrAddress,
+    rpcSchema extends RpcSchema
+      ? [...CChainRpcSchema, ...rpcSchema]
+      : CChainRpcSchema,
+    CChainActions
   >
 >;
 
 export type CreateCChainClientErrorType = CreateAvalancheCoreClientErrorType;
 
+/**
+ * Creates a C-Chain (Contract Chain) Client with a given transport configured for a Chain.
+ *
+ * The C-Chain Client is an interface to interact with the Avalanche Contract Chain through Avalanche-specific JSON-RPC API methods.
+ * The Contract Chain is an instance of the Ethereum Virtual Machine (EVM) that supports:
+ * - Cross-chain operations (import/export)
+ * - Atomic transactions
+ * - UTXO management
+ * - Dynamic fee calculations
+ *
+ * @param config - {@link CChainClientConfig}
+ * @returns A C-Chain Client. {@link CChainClient}
+ *
+ * @example
+ * ```ts
+ * import { createCChainClient} from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ *
+ * const client = createCChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * // Get atomic transaction
+ * const atomicTx = await client.getAtomicTx({ txID: '0x...' })
+ * ```
+ */
 export function createCChainClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
@@ -51,16 +82,33 @@ export function createCChainClient<
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-    parameters: CChainClientConfig<transport, chain, accountOrAddress, rpcSchema, raw>,
+  parameters: CChainClientConfig<
+    transport,
+    chain,
+    accountOrAddress,
+    rpcSchema,
+    raw
+  >
 ): CChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-
-    const { key = 'cChain', name = 'C-Chain Client', transport: transportParam } = parameters;
-    const customTransport = createTransportClient<transport, rpcSchema, raw>(transportParam, "cChain");
-    const client = createAvalancheCoreClient({
-        ...parameters,
-        key,
-        name,
-        transport: customTransport,
-    })
-    return client.extend(cChainActions) as any;
+  const {
+    key = "cChain",
+    name = "C-Chain Client",
+    transport: transportParam,
+    chain: chainConfig,
+    apiKey = "",
+    rlToken = "",
+  } = parameters;
+  const customTransport = createTransportClient<
+    transport,
+    chain,
+    rpcSchema,
+    raw
+  >(transportParam, chainConfig, { apiKey, rlToken }, "cChain");
+  const client = createAvalancheCoreClient({
+    ...parameters,
+    key,
+    name,
+    transport: customTransport,
+  });
+  return client.extend(cChainActions) as any;
 }

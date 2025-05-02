@@ -1,9 +1,36 @@
-
-import { Chain,  Transport } from "viem";
+import { Chain, Transport } from "viem";
 import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
-import { XChainRpcSchema } from "./xChainRpcSchema.js";
 import { GetTxParameters, GetTxReturnType } from "./types/getTx.js";
+import { XChainRpcSchema } from "./xChainRpcSchema.js";
 
+/**
+ * Get a transaction by its ID.
+ *
+ * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettx
+ *
+ * @param client - The client to use.
+ * @param parameters - The transaction ID and encoding format. {@link GetTxParameters}
+ * @returns The transaction data. {@link GetTxReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createXChainClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { getTx } from '@avalanche-sdk/rpc/methods/xchain'
+ *
+ * const client = createXChainClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * })
+ *
+ * const tx = await getTx(client, {
+ *   txID: "2QouvMUbQ6tchBHSJdZ7MoFhsQhHt5KqZQqHdZ7MoFhsQhHt5KqZQ",
+ *   encoding: "hex"
+ * })
+ * ```
+ */
 export async function getTx<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   params: GetTxParameters

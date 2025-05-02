@@ -1,24 +1,49 @@
-import { custom, fallback, http, RpcSchema, Transport, webSocket } from "viem";
+import {
+  Chain,
+  custom,
+  fallback,
+  http,
+  RpcSchema,
+  Transport,
+  webSocket,
+} from "viem";
 import { ipc } from "viem/node";
 import { ClientType, TransportConfig } from "./types/types.js";
 
 export function createTransportClient<
   transport extends Transport,
+  chain extends Chain | undefined = Chain | undefined,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
   transportConfig: TransportConfig<transport, rpcSchema, raw>,
+  chain?: chain | Chain | undefined,
+  { apiKey, rlToken }: { apiKey?: string; rlToken?: string } = {},
   clientType: ClientType = "public"
 ): transport {
+  const commonHeaders = {
+    "User-Agent": "@avalanche-sdk/rpc v0.0.1",
+  };
+
   switch (transportConfig.type) {
     case "http":
       return http(
-        getClientURL(transportConfig.url, clientType),
-        transportConfig.config
+        getClientURL(chain, transportConfig.url, clientType, "http"),
+        {
+          ...transportConfig.config,
+          fetchOptions: {
+            ...(transportConfig.config?.fetchOptions ?? {}),
+            ...(apiKey
+              ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
+              : rlToken
+              ? { headers: { rlToken: rlToken, ...commonHeaders } }
+              : { headers: commonHeaders }),
+          },
+        }
       ) as transport;
     case "ws":
       return webSocket(
-        getClientURL(transportConfig.url, clientType),
+        getClientURL(chain, transportConfig.url, clientType, "webSocket"),
         transportConfig.config
       ) as transport;
     case "custom":
@@ -39,12 +64,19 @@ export function createTransportClient<
 }
 
 function getClientURL(
+  chain?: Chain,
   url?: string,
-  clientType: ClientType = "public"
+  clientType: ClientType = "public",
+  transportType: "http" | "webSocket" = "http"
 ): string | undefined {
+  if (chain?.name !== "Avalanche Fuji" && chain?.name !== "Avalanche") {
+    return url ?? chain?.rpcUrls.default[transportType]?.[0];
+  }
+
   if (!url) {
     throw new Error("URL is required");
   }
+
   const origin = new URL(url).origin;
   switch (clientType) {
     case "public":
@@ -59,6 +91,16 @@ function getClientURL(
       return `${origin}/ext/admin`;
     case "info":
       return `${origin}/ext/info`;
+    case "health":
+      return `${origin}/ext/health`;
+    case "indexPChainBlock":
+      return `${origin}/ext/index/P/block`;
+    case "indexCChainBlock":
+      return `${origin}/ext/index/C/block`;
+    case "indexXChainBlock":
+      return `${origin}/ext/index/X/block`;
+    case "indexXChainTx":
+      return `${origin}/ext/index/X/tx`;
     default:
       throw new Error("Invalid client type");
   }
