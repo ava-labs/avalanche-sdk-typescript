@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/rpc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "update-version": "node scripts/update-version.js",
