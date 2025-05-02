@@ -11,7 +11,7 @@ import {
   createRegisterResource,
   createRegisterResourceTemplate,
 } from "./resources.js";
-import { MCPScope, mcpScopes } from "./scopes.js";
+import { MCPScope } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
 import { tool$dataEvmAddressBalancesGetNative } from "./tools/dataEvmAddressBalancesGetNative.js";
 import { tool$dataEvmAddressBalancesListCollectibles } from "./tools/dataEvmAddressBalancesListCollectibles.js";
@@ -118,7 +118,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.0.4",
+    version: "0.0.5",
   });
 
   const client = new AvalancheCore({
@@ -129,7 +129,7 @@ export function createMCPServer(deps: {
     serverIdx: deps.serverIdx,
   });
 
-  const scopes = new Set(deps.scopes ?? mcpScopes);
+  const scopes = new Set(deps.scopes);
 
   const allowedTools = deps.allowedTools && new Set(deps.allowedTools);
   const tool = createRegisterTool(

@@ -14,6 +14,10 @@ export type Blockchain = {
   vmId: string;
   subnetId: string;
   blockchainName: string;
+  /**
+   * EVM Chain ID for the EVM-based chains. This field is extracted from genesis data, and may be present for non-EVM chains as well.
+   */
+  evmChainId: number;
 };
 
 /** @internal */
@@ -28,6 +32,7 @@ export const Blockchain$inboundSchema: z.ZodType<
   vmId: z.string(),
   subnetId: z.string(),
   blockchainName: z.string(),
+  evmChainId: z.number(),
 });
 
 /** @internal */
@@ -38,6 +43,7 @@ export type Blockchain$Outbound = {
   vmId: string;
   subnetId: string;
   blockchainName: string;
+  evmChainId: number;
 };
 
 /** @internal */
@@ -52,6 +58,7 @@ export const Blockchain$outboundSchema: z.ZodType<
   vmId: z.string(),
   subnetId: z.string(),
   blockchainName: z.string(),
+  evmChainId: z.number(),
 });
 
 /**

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: a7a452ac7d41ca805eeca643899d6113
+  docChecksum: 4424c6a568fe088abdca138043ee7857
   docVersion: Beta
-  speakeasyVersion: 1.529.1
-  generationVersion: 2.566.5
-  releaseVersion: 0.0.4
-  configChecksum: 536ae4cd921c3fbd743e7a4a04d0a47e
+  speakeasyVersion: 1.541.0
+  generationVersion: 2.595.2
+  releaseVersion: 0.0.5
+  configChecksum: c0eefdde4f2f81167fb96acb4c02b717
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: devtools
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
@@ -15,7 +15,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.5
+    core: 3.21.6
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     devContainers: 2.90.0
@@ -29,7 +29,7 @@ features:
     globals: 2.82.2
     groups: 2.81.2
     ignores: 2.81.1
-    mcpServer: 0.9.0
+    mcpServer: 0.9.2
     methodServerURLs: 2.82.1
     nameOverrides: 2.81.2
     nullables: 0.1.1
@@ -2529,7 +2529,7 @@ examples:
           sortOrder: "asc"
       responses:
         "200":
-          application/json: {"blockchains": [{"createBlockTimestamp": 7392.07, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}, {"createBlockTimestamp": 9745.04, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}, {"createBlockTimestamp": 2959.85, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}]}
+          application/json: {"blockchains": [{"createBlockTimestamp": 7392.07, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}, {"createBlockTimestamp": 9745.04, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}, {"createBlockTimestamp": 2959.85, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2554,7 +2554,7 @@ examples:
           network: "mainnet"
       responses:
         "200":
-          application/json: {"createBlockTimestamp": 8742.71, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}
+          application/json: {"createBlockTimestamp": 8742.71, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2606,7 +2606,7 @@ examples:
           subnetId: "11111111111111111111111111111111LpoYY"
       responses:
         "200":
-          application/json: {"createBlockTimestamp": 6811.96, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value>", "<value>", "<value>"], "threshold": 8549.3, "locktime": 8471.28, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"createBlockTimestamp": 933.74, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>"}]}
+          application/json: {"createBlockTimestamp": 6811.96, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value>", "<value>", "<value>"], "threshold": 8549.3, "locktime": 8471.28, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"createBlockTimestamp": 933.74, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}]}
         "400":
           application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
         "401":

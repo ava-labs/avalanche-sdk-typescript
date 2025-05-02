@@ -11,5 +11,5 @@ let value: InternalTransactionOpCall = "STATICCALL";
 ## Values
 
 ```typescript
-"UNKNOWN" | "CALL" | "CREATE" | "CREATE2" | "CALLCODE" | "DELEGATECALL" | "STATICCALL"
+"UNKNOWN" | "CALL" | "CREATE" | "CREATE2" | "CREATE3" | "CALLCODE" | "DELEGATECALL" | "STATICCALL"
 ```

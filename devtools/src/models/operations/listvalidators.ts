@@ -34,7 +34,7 @@ export type ListValidatorsRequest = {
    */
   network?: components.GlobalParamNetwork | undefined;
   /**
-   * A comma separated list of node ids to filter by.
+   * A comma separated list of node ids to filter by. Supports substring matching.
    */
   nodeIds?: string | undefined;
   /**

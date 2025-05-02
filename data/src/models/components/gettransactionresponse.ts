@@ -63,7 +63,7 @@ export type GetTransactionResponse = {
    */
   erc1155Transfers?: Array<Erc1155TransferDetails> | undefined;
   /**
-   * The list of internal transactions. Note that this list only includes CALL and CALLCODE internal transactions that had a non-zero value and CREATE/CREATE2 calls. Use a client provider to recieve a full debug trace of the transaction.
+   * The list of internal transactions. Note that this list only includes CALL and CALLCODE internal transactions that had a non-zero value and CREATE/CREATE2/CREATE3  calls. Use a client provider to recieve a full debug trace of the transaction.
    */
   internalTransactions?: Array<InternalTransactionDetails> | undefined;
   networkTokenDetails: NetworkTokenDetails;

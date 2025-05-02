@@ -36,7 +36,7 @@ import {
  * List validators
  *
  * @remarks
- * Lists details for validators. By default, returns details for all validators. Filterable by validator node ids and minimum delegation capacity.
+ * Lists details for validators. By default, returns details for all validators.  The nodeIds parameter supports substring matching. Filterable by validation status, delegation capacity, time remaining, fee percentage, uptime performance, and subnet id.
  */
 export function dataPrimaryNetworkListValidators(
   client: AvalancheCore,
