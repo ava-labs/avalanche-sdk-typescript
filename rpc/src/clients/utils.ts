@@ -8,6 +8,7 @@ import {
   webSocket,
 } from "viem";
 import { ipc } from "viem/node";
+import { commonHeaders } from "./common.js";
 import { ClientType, TransportConfig } from "./types/types.js";
 
 export function createTransportClient<
@@ -21,10 +22,6 @@ export function createTransportClient<
   { apiKey, rlToken }: { apiKey?: string; rlToken?: string } = {},
   clientType: ClientType = "public"
 ): transport {
-  const commonHeaders = {
-    "User-Agent": "@avalanche-sdk/rpc v0.0.1",
-  };
-
   switch (transportConfig.type) {
     case "http":
       return http(

@@ -1,9 +1,10 @@
 {
   "name": "@avalanche-sdk/rpc",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
-    "build": "tshy",
+    "update-version": "node scripts/update-version.js",
+    "build": "npm run update-version && tshy",
     "lint": "eslint --cache --max-warnings=0 src"
   },
   "author": "Sayan Kar",

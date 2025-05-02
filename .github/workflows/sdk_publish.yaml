@@ -71,7 +71,6 @@ jobs:
             echo "EOF"
           } >> $GITHUB_ENV
 
-
       # Step 5: Install dependencies and build the SDK
       - name: Install dependencies
         run: |
@@ -117,8 +116,8 @@ jobs:
           echo "CURRENT_TIMESTAMP=$CURRENT_TIMESTAMP" >> $GITHUB_ENV
 
           echo "Release Body: ${{ env.RELEASE_BODY }}"
-      
-     # Step 9: Create GitHub release with the extracted body 
+
+      # Step 9: Create GitHub release with the extracted body
       - name: Create GitHub Release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -127,7 +126,7 @@ jobs:
           name: "typescript - sdk/v${{ env.VERSION }} - ${{ env.CURRENT_TIMESTAMP }}"
           body: "${{ env.RELEASE_BODY }}"
           token: ${{ secrets.GITHUB_TOKEN }}
-    
+
       # Step 10: Publish the SDK to NPM
       - name: Publish to NPM
         run: |
