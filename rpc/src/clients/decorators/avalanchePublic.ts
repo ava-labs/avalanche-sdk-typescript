@@ -1,11 +1,20 @@
 import { Chain, Client, Transport } from "viem";
 import { baseFee } from "../../methods/public/baseFee.js";
+import { feeConfig } from "../../methods/public/feeConfig.js";
+import { getActiveRulesAt } from "../../methods/public/getActiveRulesAt.js";
 import { getChainConfig } from "../../methods/public/getChainConfig.js";
 import { maxPriorityFeePerGas } from "../../methods/public/maxPriorityFeePerGas.js";
 import { BaseFeeReturnType } from "../../methods/public/types/baseFee.js";
+import {
+  FeeConfigParameters,
+  FeeConfigReturnType,
+} from "../../methods/public/types/feeConfig.js";
+import {
+  GetActiveRulesAtParameters,
+  GetActiveRulesAtReturnType,
+} from "../../methods/public/types/getActiveRulesAt.js";
 import { GetChainConfigReturnType } from "../../methods/public/types/getChainConfig.js";
 import { MaxPriorityFeePerGasReturnType } from "../../methods/public/types/maxPriorityFeePerGas.js";
-
 export type AvalanchePublicActions = {
   /**
    * Get the base fee for the next block.
@@ -77,6 +86,54 @@ export type AvalanchePublicActions = {
    * ```
    */
   maxPriorityFeePerGas: () => Promise<MaxPriorityFeePerGasReturnType>;
+
+  /**
+   * Get the fee config for a specific block.
+   *
+   * - Docs: https://build.avax.network/docs/api-reference/c-chain/api#eth_feeconfig
+   *
+   * @param args - The parameters for the fee config for a specific block. {@link FeeConfigParameters}
+   * @returns The fee config for the specified block. {@link FeeConfigReturnType}
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheClient} from '@avalanche-sdk/rpc'
+   * import { avalanche } from '@avalanche-sdk/rpc/chains'
+   *
+   * const client = createAvalancheClient({
+   *   chain: avalanche,
+   *   transport: { type: "http" },
+   * })
+   *
+   * const feeConfig = await client.feeConfig({ blk: "0x1" })
+   * ```
+   */
+  feeConfig: (args: FeeConfigParameters) => Promise<FeeConfigReturnType>;
+
+  /**
+   * Get the active rules at a specific timestamp.
+   *
+   * - Docs: https://build.avax.network/docs/api-reference/c-chain/api#eth_getactiverulesat
+   *
+   * @param args - The parameters for the active rules at a specific timestamp. {@link GetActiveRulesAtParameters}
+   * @returns The active rules at the specified timestamp. {@link GetActiveRulesAtReturnType}
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheClient} from '@avalanche-sdk/rpc'
+   * import { avalanche } from '@avalanche-sdk/rpc/chains'
+   *
+   * const client = createAvalancheClient({
+   *   chain: avalanche,
+   *   transport: { type: "http" },
+   * })
+   *
+   * const activeRules = await client.getActiveRulesAt({ timestamp: "0x1" })
+   * ```
+   */
+  getActiveRulesAt: (
+    args: GetActiveRulesAtParameters
+  ) => Promise<GetActiveRulesAtReturnType>;
 };
 
 export function avalanchePublicActions<
@@ -86,5 +143,7 @@ export function avalanchePublicActions<
     baseFee: () => baseFee(client),
     getChainConfig: () => getChainConfig(client),
     maxPriorityFeePerGas: () => maxPriorityFeePerGas(client),
+    feeConfig: (args) => feeConfig(client, args),
+    getActiveRulesAt: (args) => getActiveRulesAt(client, args),
   };
 }

@@ -18,3 +18,17 @@ export type {
   MaxPriorityFeePerGasMethod,
   MaxPriorityFeePerGasReturnType,
 } from "./types/maxPriorityFeePerGas.js";
+
+export { feeConfig } from "./feeConfig.js";
+export type {
+  FeeConfigErrorType,
+  FeeConfigMethod,
+  FeeConfigReturnType,
+} from "./types/feeConfig.js";
+
+export { getActiveRulesAt } from "./getActiveRulesAt.js";
+export type {
+  GetActiveRulesAtErrorType,
+  GetActiveRulesAtMethod,
+  GetActiveRulesAtReturnType,
+} from "./types/getActiveRulesAt.js";

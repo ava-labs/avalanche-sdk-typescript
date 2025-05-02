@@ -8,6 +8,20 @@
   },
   "author": "Sayan Kar",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
+    "directory": "rpc"
+  },
+  "keywords": [
+    "rpc",
+    "avalanche",
+    "avalanche-sdk"
+  ],
+  "bugs": {
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
+  },
+  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/rpc#readme",
   "dependencies": {
     "viem": "^2.26.2"
   },
