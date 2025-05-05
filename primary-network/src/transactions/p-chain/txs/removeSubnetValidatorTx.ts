@@ -1,7 +1,7 @@
-import { type Context as ContextType, pvm } from "@avalabs/avalanchejs";
+import { type Context as ContextType, pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type RemoveSubnetValidatorTxParams = CommonTxParams & {
@@ -10,7 +10,14 @@ export type RemoveSubnetValidatorTxParams = CommonTxParams & {
     subnetAuth: readonly number[];
 }
 
-export class RemoveSubnetValidatorTx extends Transaction {}
+export class RemoveSubnetValidatorTx extends Transaction {
+    override tx: pvmSerial.RemoveSubnetValidatorTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.RemoveSubnetValidatorTx
+    }
+}
 
 export async function newRemoveSubnetValidatorTx(
     params: RemoveSubnetValidatorTxParams,

@@ -8,7 +8,7 @@ import {
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type ConvertSubnetToL1TxParams = CommonTxParams & {
@@ -36,8 +36,14 @@ export type PChainOwner = {
     threshold: number;
 }
 
-export class ConvertSubnetToL1Tx extends Transaction {}
+export class ConvertSubnetToL1Tx extends Transaction {
+    override tx: pvmSerial.ConvertSubnetToL1Tx;
 
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.ConvertSubnetToL1Tx
+    }
+}
 export async function newConvertSubnetToL1Tx(
     params: ConvertSubnetToL1TxParams,
     context: ContextType.Context,

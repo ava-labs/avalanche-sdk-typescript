@@ -1,4 +1,5 @@
-import type { pvm, TransferableOutput, Utxo }  from '@avalabs/avalanchejs';
+import type { Common, pvm, TransferableOutput, Utxo }  from '@avalabs/avalanchejs';
+import type { Wallet } from '../../../wallet';
 
 export type Output = {
     amount: number,
@@ -36,4 +37,11 @@ export type FormattedCommonTxParams = {
     utxos: Utxo[];
     outputs: TransferableOutput[];
     memo?: Uint8Array;
+}
+
+export type NewTxParams = {
+    unsignedTx: Common.UnsignedTx,
+    wallet: Wallet | undefined,
+    nodeUrl: string,
+    pvmRpc: pvm.PVMApi
 }

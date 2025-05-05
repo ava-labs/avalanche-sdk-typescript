@@ -1,7 +1,7 @@
-import { type Context as ContextType, pvm, utils } from "@avalabs/avalanchejs";
+import { type Context as ContextType, pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type AddPermissionlessDelegatorTxParams = CommonTxParams & {
@@ -13,7 +13,14 @@ export type AddPermissionlessDelegatorTxParams = CommonTxParams & {
     locktime?: number;
 }
 
-export class AddPermissionlessDelegatorTx extends Transaction {}
+export class AddPermissionlessDelegatorTx extends Transaction {
+    override tx: pvmSerial.AddPermissionlessDelegatorTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.AddPermissionlessDelegatorTx
+    }
+}
 
 export async function newAddPermissionlessDelegatorTx(
     params: AddPermissionlessDelegatorTxParams,

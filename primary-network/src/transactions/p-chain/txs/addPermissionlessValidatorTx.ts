@@ -1,7 +1,7 @@
-import { type Context as ContextType, pvm, utils } from "@avalabs/avalanchejs";
+import { type Context as ContextType, pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type AddPermissionlessValidatorTxParams = CommonTxParams & {
@@ -17,7 +17,14 @@ export type AddPermissionlessValidatorTxParams = CommonTxParams & {
     locktime?: number;
 }
 
-export class AddPermissionlessValidatorTx extends Transaction {}
+export class AddPermissionlessValidatorTx extends Transaction {
+    override tx: pvmSerial.AddPermissionlessValidatorTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.AddPermissionlessValidatorTx
+    }
+}
 
 export async function newAddPermissionlessValidatorTx(
     params: AddPermissionlessValidatorTxParams,

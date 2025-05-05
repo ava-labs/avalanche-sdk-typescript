@@ -1,7 +1,7 @@
-import { type Context as ContextType, pvm, utils} from "@avalabs/avalanchejs";
+import { type Context as ContextType, pvm, type pvmSerial, utils} from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type CreateSubnetTxParams = CommonTxParams & {
@@ -14,7 +14,14 @@ export type SubnetOwners = {
     locktime?: bigint;
 }
 
-export class CreateSubnetTx extends Transaction {}
+export class CreateSubnetTx extends Transaction {
+    override tx: pvmSerial.CreateSubnetTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.CreateSubnetTx
+    }
+}
 
 export async function newCreateSubnetTx(
     params: CreateSubnetTxParams,

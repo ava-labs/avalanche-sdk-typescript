@@ -1,20 +1,17 @@
 import { type Common, type pvm, utils, addTxSignatures } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 import type { Wallet } from "../../../wallet";
-
+import type { NewTxParams } from "./types";
 export class Transaction {
     unsignedTx: Common.UnsignedTx;
+    tx: Common.Transaction
     nodeUrl: string;
     pvmRpc: pvm.PVMApi;
     wallet: Wallet | undefined;
 
-    constructor(params: {
-        unsignedTx: Common.UnsignedTx,
-        wallet: Wallet | undefined,
-        nodeUrl: string,
-        pvmRpc: pvm.PVMApi
-    }) {
+    constructor(params: NewTxParams) {
         this.unsignedTx = params.unsignedTx;
+        this.tx = params.unsignedTx.getTx()
         this.wallet = params.wallet;
         this.nodeUrl = params.nodeUrl;
         this.pvmRpc = params.pvmRpc;
