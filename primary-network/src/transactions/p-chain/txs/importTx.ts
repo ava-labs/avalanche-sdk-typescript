@@ -1,8 +1,8 @@
-import { pvm, utils, type Context as ContextType } from "@avalabs/avalanchejs";
+import { pvm, utils, type Context as ContextType, type pvmSerial } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams, getChainIdFromAlias } from "../common/utils";
-import type { CommonTxParams, Output } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
 
 type ImportedOutput = {
@@ -16,7 +16,14 @@ export type ImportTxParams = CommonTxParams & {
     importedOutput: ImportedOutput;
 }
 
-export class ImportTx extends Transaction {}
+export class ImportTx extends Transaction {
+    override tx: pvmSerial.ImportTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.ImportTx
+    }
+}
 
 export async function newImportTx(
     txPrams: ImportTxParams,

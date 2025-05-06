@@ -1,12 +1,19 @@
-import { pvm, type Context as ContextType } from "@avalabs/avalanchejs";
+import { pvm, type pvmSerial, type Context as ContextType } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams } from "../common/utils";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 
 export type BaseTxParams = CommonTxParams
 
-export class BaseTx extends Transaction {}
+export class BaseTx extends Transaction {
+    override tx: pvmSerial.BaseTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.BaseTx
+    }
+}
 
 export async function newBaseTx(
     txPrams: BaseTxParams,

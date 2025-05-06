@@ -1,11 +1,12 @@
 import {
     type Context as ContextType,
     pvm,
-    utils
+    utils,
+    type pvmSerial,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type RegisterL1ValidatorTxParams = CommonTxParams & {
@@ -14,7 +15,14 @@ export type RegisterL1ValidatorTxParams = CommonTxParams & {
     message: string;
 }
 
-export class RegisterL1ValidatorTx extends Transaction {}
+export class RegisterL1ValidatorTx extends Transaction {
+    override tx: pvmSerial.RegisterL1ValidatorTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.RegisterL1ValidatorTx
+    }
+}
 
 export async function newRegisterL1ValidatorTx(
     params: RegisterL1ValidatorTxParams,

@@ -1,8 +1,8 @@
-import { pvm, type Context as ContextType } from "@avalabs/avalanchejs";
+import { pvm, type Context as ContextType, type pvmSerial } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams, formatOutput, getChainIdFromAlias } from "../common/utils";
-import type { CommonTxParams, Output } from "../common/types";
+import type { CommonTxParams, NewTxParams, Output } from "../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
 
 export type ExportTxParams = CommonTxParams & {
@@ -10,7 +10,14 @@ export type ExportTxParams = CommonTxParams & {
     exportedOutputs: Output[];
 }
 
-export class ExportTx extends Transaction {}
+export class ExportTx extends Transaction {
+    override tx: pvmSerial.ExportTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.ExportTx
+    }
+}
 
 export async function newExportTx(
     txPrams: ExportTxParams,
@@ -27,7 +34,7 @@ export async function newExportTx(
     const unsignedTx = pvm.newExportTx(
         {
             ...commonTxParams,
-            destinationChainId: 'yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp',
+            destinationChainId: getChainIdFromAlias(txPrams.destinationChain, context.networkID),
         },
         context,
     );

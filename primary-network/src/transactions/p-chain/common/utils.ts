@@ -3,10 +3,13 @@ import {
     type Context as ContextType,
     TransferableOutput,
     utils,
-    type Utxo
+    type Utxo,
+    type Common,
+    Credential,
+    UnsignedTx
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
-import type { CommonTxParams, FormattedCommonTxParams, Output } from "./types";
+import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output } from "./types";
 import {
     C_CHAIN_ALIAS, C_CHAIN_FUJI_ID, P_CHAIN_ALIAS, X_CHAIN_ALIAS, X_CHAIN_FUJI_ID,
     MAINNET_NETWORK_ID,
@@ -16,6 +19,7 @@ import {
     P_CHAIN_MAINNET_ID,
     P_CHAIN_FUJI_ID
 } from "./consts";
+import type { Transaction } from "./transaction";
 const errWalletNotFound = (param: string) => `Wallet not found. Link a wallet or provide required parameter: ${param}`
 
 export function formatOutput(output: Output, context: ContextType.Context) {
@@ -102,4 +106,50 @@ export function sortUtxos(utxos: Utxo[]): Utxo[] {
         // If txIDs are equal, compare by outputIndex
         return a.utxoId.outputIdx.value() - b.utxoId.outputIdx.value();
     });
+}
+
+export function getTxFromBytes(txBytes: string): [Common.Transaction, Credential[]] {
+    const strippedTxBytes = utils.strip0x(txBytes)
+    const manager = utils.getManagerForVM('PVM')
+    
+    const parsedTx = manager.unpackTransaction(Buffer.from(strippedTxBytes, 'hex'));
+    const txBytesWithoutCreds = utils.bufferToHex(parsedTx.toBytes(manager.getDefaultCodec()))
+
+    // get first 6 bytes (codec + type)
+    const codecAndType = strippedTxBytes.slice(0, 12)
+
+    // replace txBytesWithoutCreds from txBytes to get credentials
+    const creds = strippedTxBytes.replace(codecAndType + utils.strip0x(txBytesWithoutCreds), '')
+
+    // remove type from the creds (frist 4 bytes)
+    const credsWithoutType = Buffer.from(utils.strip0x(creds).slice(8), 'hex');
+
+    const credentials: Credential[] = []
+    let remainingBytes = new Uint8Array(credsWithoutType)
+
+    // signature length is 65 bytes
+    while (remainingBytes.length >= 65) {
+        const [cred, rest] = Credential.fromBytes(remainingBytes.slice(4), manager.getDefaultCodec());
+        credentials.push(cred)
+        remainingBytes = rest
+    }
+    return [parsedTx, credentials];
+}
+
+export function getTxClassFromBytes<T extends Transaction>(
+    Tx: new (params: NewTxParams) => T,
+    txBytes: string,
+    pvmRpc: pvm.PVMApi,
+    nodeUrl: string,
+    wallet?: Wallet,
+): T {
+    const [tx, credentials] = getTxFromBytes(txBytes)
+    const unsignedTx = new UnsignedTx(
+        tx,
+        // dummy values for utxos and addressMaps, since these can't be generated from bytes
+        [],
+        new utils.AddressMaps(),
+        credentials,
+    )
+    return new Tx({ unsignedTx, pvmRpc, nodeUrl, wallet })
 }

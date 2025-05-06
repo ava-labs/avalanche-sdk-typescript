@@ -1,18 +1,26 @@
 import {
     type Context as ContextType,
     pvm,
-    utils
+    utils,
+    type pvmSerial,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type SetL1ValidatorWeightTxParams = CommonTxParams & {
     message: string;
 }
 
-export class SetL1ValidatorWeightTx extends Transaction {}
+export class SetL1ValidatorWeightTx extends Transaction {
+    override tx: pvmSerial.SetL1ValidatorWeightTx;
+
+    constructor(params: NewTxParams) {
+        super(params)
+        this.tx = params.unsignedTx.getTx() as pvmSerial.SetL1ValidatorWeightTx
+    }
+}
 
 export async function newSetL1ValidatorWeightTx(
     params: SetL1ValidatorWeightTxParams,
