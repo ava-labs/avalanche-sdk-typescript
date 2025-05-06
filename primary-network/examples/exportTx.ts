@@ -1,9 +1,9 @@
 import { fetchInstantiatedClients } from "./boilerPlate";
 
 async function main() {
-    const { pClient } = await fetchInstantiatedClients()
+    const { pnClient } = await fetchInstantiatedClients()
 
-    const exportTx = await pClient.txBuilder.newExportTx({
+    const exportTx = await pnClient.pChain.newExportTx({
         exportedOutputs: [
             {
                 addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
