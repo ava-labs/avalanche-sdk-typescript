@@ -1,9 +1,10 @@
+import { AddSubnetValidatorTx } from "../src/transactions/p-chain/txs/addSubnetValidatorTx";
 import { fetchInstantiatedClients } from "./boilerPlate";
 
 async function main() {
-    const { pClient } = await fetchInstantiatedClients()
+    const { pnClient } = await fetchInstantiatedClients()
 
-    const addSubnetValidatorTx = await pClient.txBuilder.newAddSubnetValidatorTx({
+    const addSubnetValidatorTx = await pnClient.pChain.newAddSubnetValidatorTx({
         subnetId: 'tKEcW9xLggRsdhvhU87BXaDSjVKRUbLDh3z6R4A1TTSSVzegT',
         nodeId: 'NodeID-NQGEHM5YVqjT9yGo59bS7q2byqmkRGcsV',
         end: BigInt(Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2), // 2 days

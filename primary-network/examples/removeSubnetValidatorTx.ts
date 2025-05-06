@@ -1,9 +1,9 @@
 import { fetchInstantiatedClients } from "./boilerPlate";
 
 async function main() {
-    const { pClient } = await fetchInstantiatedClients()
+    const { pnClient } = await fetchInstantiatedClients()
 
-    const removeSubnetValidatorTx = await pClient.txBuilder.newRemoveSubnetValidatorTx({
+    const removeSubnetValidatorTx = await pnClient.pChain.newRemoveSubnetValidatorTx({
         subnetId: 'tKEcW9xLggRsdhvhU87BXaDSjVKRUbLDh3z6R4A1TTSSVzegT',
         nodeId: 'NodeID-NQGEHM5YVqjT9yGo59bS7q2byqmkRGcsV',
         subnetAuth: [0],
