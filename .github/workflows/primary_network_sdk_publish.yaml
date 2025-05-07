@@ -32,12 +32,16 @@ jobs:
           VERSION=${{ steps.set_version.outputs.version }}
           cd primary-network
           npm version "$VERSION" --no-git-tag-version --allow-same-version
-          npm run update-version
 
       - name: Install dependencies
         run: |
           cd primary-network
           npm i
+
+      - name: Build the package
+        run: |
+          cd primary-network
+          npm run build
 
       - name: Publish package
         run: |
