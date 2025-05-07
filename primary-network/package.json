@@ -4,12 +4,16 @@
   "type": "module",
   "description": "Primary Network module for building and interacting with Avalanche ecosystem",
   "main": "src/index.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git/primary-network"
+    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git/primary-network",
+    "directory": "primary-network"
   },
   "keywords": [
     "primary-network",
