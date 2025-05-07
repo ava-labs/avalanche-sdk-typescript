@@ -39,6 +39,11 @@ jobs:
           cd rpc
           npm i
 
+      - name: Build the package
+        run: |
+          cd rpc
+          npm run build
+
       - name: Publish package
         run: |
           cd rpc
