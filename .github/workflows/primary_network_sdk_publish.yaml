@@ -1,0 +1,51 @@
+name: Publish Primary Network SDK
+
+on:
+  push:
+    tags:
+      - "primary-network/v*"
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Set version from tag
+        id: set_version
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG_NAME#primary-network/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package.json version
+        run: |
+          VERSION=${{ steps.set_version.outputs.version }}
+          cd primary-network
+          npm version "$VERSION" --no-git-tag-version --allow-same-version
+
+      - name: Install dependencies
+        run: |
+          cd primary-network
+          npm i
+
+      - name: Build the package
+        run: |
+          cd primary-network
+          npm run build
+
+      - name: Publish package
+        run: |
+          cd primary-network
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
