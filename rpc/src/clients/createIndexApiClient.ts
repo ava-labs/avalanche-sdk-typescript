@@ -15,7 +15,7 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { indexAPIActions, IndexAPIActions } from "./decorators/indexApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createTransportClient } from "./utils.js";
+import { createAvalancheTransportClient } from "./utils.js";
 
 export type IndexApiClientConfig<
   transport extends Transport,
@@ -103,7 +103,7 @@ export function createIndexApiClient<
     apiKey = "",
     rlToken = "",
   } = parameters;
-  const customTransport = createTransportClient<
+  const customTransport = createAvalancheTransportClient<
     transport,
     chain,
     rpcSchema,

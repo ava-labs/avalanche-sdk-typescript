@@ -20,7 +20,7 @@ let commonTsContent = fs.readFileSync(commonTsPath, 'utf-8');
 
 // Regex to find and replace version in commonHeaders
 const versionHeaderKey = 'version';
-const versionRegex = new RegExp(`(${versionHeaderKey}\\s*:\\s*['"])v?\\d+\\.\\d+\\.\\d+(['"])`);
+const versionRegex = new RegExp(`(${versionHeaderKey}\\s*:\\s*['"])v?\\d+\\.\\d+\\.\\d+(?:-[\\w\\.]+)?(['"])`);
 
 if (!versionRegex.test(commonTsContent)) {
   console.error(`Could not find ${versionHeaderKey} in common.ts`);

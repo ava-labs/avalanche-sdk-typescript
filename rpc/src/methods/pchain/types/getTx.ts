@@ -5,11 +5,11 @@ import { Encoding, PChainTransactionType } from "./common.js";
  * Parameters for the `platform.getTx` method.
  * Get a transaction by its ID.
  * @property txID - The ID of the transaction to get
- * @property encoding - The encoding format to use. Can be either hex or json. Defaults to hex
+ * @property encoding - Optional. The encoding format to use. Can be either hex or json. Defaults to hex
  */
 export type GetTxParameters = {
   txID: string;
-  encoding: Encoding;
+  encoding?: Encoding;
 };
 
 /**

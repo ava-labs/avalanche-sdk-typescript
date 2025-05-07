@@ -9,15 +9,15 @@ import {
 } from "viem";
 import { ipc } from "viem/node";
 import { commonHeaders } from "./common.js";
-import { ClientType, TransportConfig } from "./types/types.js";
+import { AvalancheTransportConfig, ClientType } from "./types/types.js";
 
-export function createTransportClient<
+export function createAvalancheTransportClient<
   transport extends Transport,
   chain extends Chain | undefined = Chain | undefined,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-  transportConfig: TransportConfig<transport, rpcSchema, raw>,
+  transportConfig: AvalancheTransportConfig<transport, rpcSchema, raw>,
   chain?: chain | Chain | undefined,
   { apiKey, rlToken }: { apiKey?: string; rlToken?: string } = {},
   clientType: ClientType = "public"

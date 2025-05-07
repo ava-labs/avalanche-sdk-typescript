@@ -28,7 +28,7 @@ import {
   AvalancheClient,
   AvalancheClientConfig,
 } from "./types/createAvalancheClient.js";
-import { createTransportClient } from "./utils.js";
+import { createAvalancheTransportClient } from "./utils.js";
 /**
  * Creates an Avalanche Client with a given transport configured for a Chain.
  *
@@ -98,7 +98,7 @@ export function createAvalancheClient<
     apiKey = "",
     rlToken = "",
   } = parameters;
-  const publicTransport = createTransportClient<
+  const publicTransport = createAvalancheTransportClient<
     transport,
     chain,
     rpcSchema,

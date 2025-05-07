@@ -15,7 +15,7 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { xChainActions, XChainActions } from "./decorators/xChain.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createTransportClient } from "./utils.js";
+import { createAvalancheTransportClient } from "./utils.js";
 
 export type XChainClientConfig<
   transport extends Transport,
@@ -102,7 +102,7 @@ export function createXChainClient<
     rlToken = "",
   } = parameters;
 
-  const customTransport = createTransportClient<
+  const customTransport = createAvalancheTransportClient<
     transport,
     chain,
     rpcSchema,

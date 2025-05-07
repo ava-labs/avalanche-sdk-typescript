@@ -8,7 +8,7 @@ import {
 } from "viem";
 import { IpcTransportConfig } from "viem/node";
 
-export type TransportConfig<
+export type AvalancheTransportConfig<
   transport extends Transport,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false

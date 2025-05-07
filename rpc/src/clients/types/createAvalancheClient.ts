@@ -30,7 +30,7 @@ import { IndexAPIActions } from "../decorators/indexApi.js";
 import { InfoAPIActions } from "../decorators/infoApi.js";
 import { PChainActions } from "../decorators/pChain.js";
 import { XChainActions } from "../decorators/xChain.js";
-import { TransportConfig } from "./types.js";
+import { AvalancheTransportConfig } from "./types.js";
 
 export type AvalancheClientConfig<
   transport extends Transport,
@@ -50,7 +50,7 @@ export type AvalancheClientConfig<
     | "pollingInterval"
     | "rpcSchema"
   > & {
-    transport: TransportConfig<transport, rpcSchema, raw>;
+    transport: AvalancheTransportConfig<transport, rpcSchema, raw>;
     apiKey?: string;
     rlToken?: string;
   }

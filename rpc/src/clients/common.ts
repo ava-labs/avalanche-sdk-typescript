@@ -1,5 +1,5 @@
 export const SDK_METADATA = {
-  version: "0.0.3",
+  version: "0.0.4-alpha.0",
   name: "@avalanche-sdk/rpc",
 };
 

@@ -801,6 +801,7 @@ export type {
   AbiItemArgs,
   AbiItemName,
   AccessList,
+  Account,
   AddEthereumChainParameter,
   Assign,
   Authorization,
@@ -989,6 +990,7 @@ export type {
   OnTransactionsFn,
   OnTransactionsParameter,
   Or,
+  ParseAccount,
   PartialBy,
   PaymasterRpcSchema,
   Prettify,
@@ -1137,6 +1139,18 @@ export const myGetContract = viemGetContract;
 
 // ------------- Custom Clients ------------- //
 export {
+  createClient,
+  publicActions,
+  testActions,
+  walletActions,
+  type Client,
+  type ClientConfig,
+  type CreateClientErrorType,
+  type PublicActions,
+  type TestActions,
+  type WalletActions,
+} from "viem";
+export {
   createAdminApiClient,
   type AdminApiClient,
   type AdminApiClientConfig,
@@ -1186,20 +1200,6 @@ export {
   type XChainClientConfig,
 } from "./clients/createXChainClient.js";
 export {
-  type AvalancheClient,
-  type AvalancheClientConfig,
-  type CreateAvalancheClientErrorType,
-} from "./clients/types/createAvalancheClient.js";
-export { type AdminRpcSchema } from "./methods/admin/adminRpcSchema.js";
-export { type CChainRpcSchema } from "./methods/cChain/cChainRpcSchema.js";
-export { type HealthRpcSchema } from "./methods/health/healthRpcSchema.js";
-export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
-export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
-export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
-export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
-export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";
-
-export {
   adminAPIActions,
   type AdminAPIActions,
 } from "./clients/decorators/adminApi.js";
@@ -1231,3 +1231,18 @@ export {
   xChainActions,
   type XChainActions,
 } from "./clients/decorators/xChain.js";
+export {
+  type AvalancheClient,
+  type AvalancheClientConfig,
+  type CreateAvalancheClientErrorType,
+} from "./clients/types/createAvalancheClient.js";
+export { type AvalancheTransportConfig } from "./clients/types/types.js";
+export { createAvalancheTransportClient } from "./clients/utils.js";
+export { type AdminRpcSchema } from "./methods/admin/adminRpcSchema.js";
+export { type CChainRpcSchema } from "./methods/cChain/cChainRpcSchema.js";
+export { type HealthRpcSchema } from "./methods/health/healthRpcSchema.js";
+export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
+export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
+export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
+export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
+export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";

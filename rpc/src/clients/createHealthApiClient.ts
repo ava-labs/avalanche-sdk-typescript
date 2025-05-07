@@ -15,7 +15,7 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { HealthAPIActions, healthAPIActions } from "./decorators/healthApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createTransportClient } from "./utils.js";
+import { createAvalancheTransportClient } from "./utils.js";
 
 export type HealthApiClientConfig<
   transport extends Transport,
@@ -98,7 +98,7 @@ export function createHealthApiClient<
     apiKey = "",
     rlToken = "",
   } = parameters;
-  const customTransport = createTransportClient<
+  const customTransport = createAvalancheTransportClient<
     transport,
     chain,
     rpcSchema,
