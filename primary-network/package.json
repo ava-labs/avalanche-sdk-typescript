@@ -14,9 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git/primary-network",
+    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git",
     "directory": "primary-network"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "keywords": [
     "primary-network",
     "p-chain",
