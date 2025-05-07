@@ -1,10 +1,9 @@
 {
   "name": "@avalanche-sdk/rpc",
   "version": "0.0.4-alpha.0",
-  "type": "module",
   "scripts": {
     "update-version": "node scripts/update-version.js",
-    "build": "npm run update-version && tshy",
+    "build": "tshy",
     "lint": "eslint --cache --max-warnings=0 src",
     "test": "vitest"
   },
@@ -240,5 +239,6 @@
   },
   "main": "./dist/commonjs/index.js",
   "types": "./dist/commonjs/index.d.ts",
-  "module": "./dist/esm/index.js"
+  "module": "./dist/esm/index.js",
+  "type": "module"
 }
