@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "rpc/v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g., 1.0.0)"
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -20,11 +26,15 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Set version from tag
+      - name: Set version
         id: set_version
         run: |
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG_NAME#rpc/v}
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG_NAME#rpc/v}
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Update package.json version
