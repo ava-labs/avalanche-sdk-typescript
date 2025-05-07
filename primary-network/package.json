@@ -1,5 +1,5 @@
 {
-  "name": "primary-network",
+  "name": "@avalanche-sdk/primary-network",
   "version": "0.0.1",
   "type": "module",
   "description": "Primary Network module for building and interacting with Avalanche ecosystem",
