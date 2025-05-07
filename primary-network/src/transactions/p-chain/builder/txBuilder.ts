@@ -22,7 +22,7 @@ import { Transaction } from "../common/transaction";
 
 export class TxBuilder {
     context: ContextType.Context;
-    wallet: Wallet;
+    wallet: Wallet | undefined;
     nodeUrl: string;
     pvmRpc: pvm.PVMApi;
 
