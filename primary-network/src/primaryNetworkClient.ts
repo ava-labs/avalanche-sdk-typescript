@@ -1,17 +1,17 @@
 import { pvm } from "@avalabs/avalanchejs"
 import { TxBuilder as PChainTxBuilder } from "./transactions/p-chain/builder/txBuilder";
-import type { Wallet } from "./wallet";
+import { Wallet } from "./wallet";
 
 // TODO: Add proper docs for all clients, methods, and params
 export class PrimaryNetwork {
     pChain: PChainTxBuilder;
     nodeUrl: string;
-    wallet: Wallet;
+    wallet: Wallet | undefined;
 
     constructor(params: {
         nodeUrl: string,
         pChain: PChainTxBuilder,
-        wallet: Wallet,
+        wallet: Wallet | undefined,
     }) {
         this.nodeUrl = params.nodeUrl
         this.pChain = params.pChain
@@ -20,7 +20,7 @@ export class PrimaryNetwork {
 
     static async newClient(params: {
         nodeUrl: string,
-        wallet: Wallet,
+        wallet: Wallet | undefined,
     }) {
         const pvmRpc = new pvm.PVMApi(params.nodeUrl);
 
@@ -33,6 +33,13 @@ export class PrimaryNetwork {
             nodeUrl: params.nodeUrl,
             pChain,
             wallet: params.wallet,
+        })
+    }
+
+    linkPrivateKeys(privateKeys: string[]) {
+        this.wallet = new Wallet({
+            nodeUrl: this.nodeUrl,
+            privateKeys,
         })
     }
 }
