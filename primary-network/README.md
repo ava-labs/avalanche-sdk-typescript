@@ -46,7 +46,7 @@ export async function fetchInstantiatedClients() {
 
 Let's try to build a simple `BaseTx` that will transfer funds from one address to another on P-Chain.
 
-```
+```typescript
 async function main() {
     const pnClient = await PrimaryNetwork.newClient({
         nodeUrl: "https://api.avax-test.network",
