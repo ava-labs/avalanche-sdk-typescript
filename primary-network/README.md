@@ -10,11 +10,11 @@ A Typescript SDK for building transactions and interacting with the Avalanche Pr
 ## Installation
 
 ```bash
-npm install @avalanche-sdk/rpc
+npm install @avalanche-sdk/primary-network
 # or
-yarn add @avalanche-sdk/rpc
+yarn add @avalanche-sdk/primary-network
 # or
-pnpm add @avalanche-sdk/rpc
+pnpm add @avalanche-sdk/primary-network
 ```
 
 ## Transaction Building
