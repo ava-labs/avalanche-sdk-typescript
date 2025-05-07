@@ -3,6 +3,7 @@
   "version": "0.3.4",
   "author": "Avacloud",
   "type": "module",
+  "license": "MIT",
   "bin": {
     "mcp": "bin/mcp-server.js"
   },
