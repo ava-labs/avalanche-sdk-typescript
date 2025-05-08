@@ -21,7 +21,7 @@ import type { NewTxParams } from "../common/types";
 import { Transaction } from "../common/transaction";
 
 export class TxBuilder {
-    context: ContextType.Context;
+    context: ContextType.Context | undefined;
     wallet: Wallet | undefined;
     nodeUrl: string;
     pvmRpc: pvm.PVMApi;
@@ -33,16 +33,26 @@ export class TxBuilder {
         this.pvmRpc = params.pvmRpc;
     }
 
-    static async newClient(params: NewTxBuilderParams) {
-        const context = await ContextType.getContextFromURI(params.nodeUrl)
+    static newClient(params: NewTxBuilderParams) {
         return new TxBuilder({
             ...params,
-            context,
+            context: undefined,
         })
     }
 
     linkWallet(wallet: Wallet) {
         this.wallet = wallet;
+    }
+
+    /**
+     * Initializes the context when required if it is not already initialized.
+     * @returns The context.
+    */
+    async initializeContextIfNot() {
+        if (!this.context) {
+            this.context = await ContextType.getContextFromURI(this.nodeUrl);
+        }
+        return this.context;
     }
 
     /**
@@ -64,142 +74,156 @@ export class TxBuilder {
     }
 
     async newBaseTx(params: BaseTxParams): Promise<BaseTx> {
+        const context = await this.initializeContextIfNot();
         return newBaseTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newConvertSubnetToL1Tx(params: ConvertSubnetToL1TxParams): Promise<ConvertSubnetToL1Tx> {
+        const context = await this.initializeContextIfNot();
         return newConvertSubnetToL1Tx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newCreateSubnetTx(params: CreateSubnetTxParams): Promise<CreateSubnetTx> {
+        const context = await this.initializeContextIfNot();
         return newCreateSubnetTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newCreateChainTx(params: CreateChainTxParams): Promise<CreateChainTx> {
+        const context = await this.initializeContextIfNot();
         return newCreateChainTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newAddSubnetValidatorTx(params: AddSubnetValidatorTxParams): Promise<AddSubnetValidatorTx> {
+        const context = await this.initializeContextIfNot();
         return newAddSubnetValidatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newRemoveSubnetValidatorTx(params: RemoveSubnetValidatorTxParams): Promise<RemoveSubnetValidatorTx> {
+        const context = await this.initializeContextIfNot();
         return newRemoveSubnetValidatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newRegisterL1ValidatorTx(params: RegisterL1ValidatorTxParams): Promise<RegisterL1ValidatorTx> {
+        const context = await this.initializeContextIfNot();
         return newRegisterL1ValidatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newIncreaseL1ValidatorBalanceTx(params: IncreaseL1ValidatorBalanceTxParams): Promise<IncreaseL1ValidatorBalanceTx> {
+        const context = await this.initializeContextIfNot();
         return newIncreaseL1ValidatorBalanceTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newSetL1ValidatorWeightTx(params: SetL1ValidatorWeightTxParams): Promise<SetL1ValidatorWeightTx> {
+        const context = await this.initializeContextIfNot();
         return newSetL1ValidatorWeightTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newDisableL1ValidatorTx(params: DisableL1ValidatorTxParams): Promise<DisableL1ValidatorTx> {
+        const context = await this.initializeContextIfNot();
         return newDisableL1ValidatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newAddPermissionlessValidatorTx(params: AddPermissionlessValidatorTxParams): Promise<AddPermissionlessValidatorTx> {
+        const context = await this.initializeContextIfNot();
         return newAddPermissionlessValidatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newAddPermissionlessDelegatorTx(params: AddPermissionlessDelegatorTxParams): Promise<AddPermissionlessDelegatorTx> {
+        const context = await this.initializeContextIfNot();
         return newAddPermissionlessDelegatorTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newExportTx(params: ExportTxParams): Promise<ExportTx> {
+        const context = await this.initializeContextIfNot();
         return newExportTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 
     async newImportTx(params: ImportTxParams): Promise<ImportTx> {
+        const context = await this.initializeContextIfNot();
         return newImportTx(
             params,
-            this.context,
+            context,
             this.pvmRpc,
             this.nodeUrl,
             this.wallet,
-        )
+        );
     }
 }

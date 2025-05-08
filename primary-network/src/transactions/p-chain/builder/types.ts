@@ -12,5 +12,5 @@ export type TxBuilderConstructorParams = {
     nodeUrl: string,
     wallet: Wallet | undefined,
     pvmRpc: pvm.PVMApi,
-    context: ContextType.Context,
+    context: ContextType.Context | undefined,
 }

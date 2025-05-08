@@ -1,6 +1,7 @@
 import { pvm } from "@avalabs/avalanchejs"
 import { TxBuilder as PChainTxBuilder } from "./transactions/p-chain/builder/txBuilder";
 import { Wallet } from "./wallet";
+import { getNodeUrlFromChain } from "./utils";
 
 // TODO: Add proper docs for all clients, methods, and params
 export class PrimaryNetwork {
@@ -18,28 +19,33 @@ export class PrimaryNetwork {
         this.wallet = params.wallet
     }
 
-    static async newClient(params: {
-        nodeUrl: string,
-        wallet: Wallet | undefined,
-    }) {
-        const pvmRpc = new pvm.PVMApi(params.nodeUrl);
-
-        const pChain = await PChainTxBuilder.newClient({
-            nodeUrl: params.nodeUrl,
-            wallet: params.wallet,
-            pvmRpc,
-        })
-        return new PrimaryNetwork({
-            nodeUrl: params.nodeUrl,
-            pChain,
-            wallet: params.wallet,
-        })
-    }
-
     linkPrivateKeys(privateKeys: string[]) {
         this.wallet = new Wallet({
             nodeUrl: this.nodeUrl,
             privateKeys,
         })
     }
+}
+
+export function createPrimaryNetworkClient({
+    nodeUrlOrChain,
+    wallet,
+}: {
+    nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
+    wallet: Wallet | undefined,
+}) {
+    const nodeUrl = getNodeUrlFromChain(nodeUrlOrChain)
+    const pvmRpc = new pvm.PVMApi(nodeUrl);
+
+    const pChain = PChainTxBuilder.newClient({
+        nodeUrl,
+        wallet,
+        pvmRpc,
+    })
+
+    return new PrimaryNetwork({
+        nodeUrl,
+        pChain,
+        wallet,
+    })
 }
