@@ -51,7 +51,7 @@ export async function fetchCommonTxParams(
     // If utxos are not provided, use wallet to fetch utxos
     if (!txParams.utxos) {
         if (wallet) {
-            txParams.utxos = await wallet.getUtxos(sourceChain)
+            txParams.utxos = await wallet.getUtxos(txParams.fromAddresses, sourceChain)
         } else {
             throw new Error(errWalletNotFound('utxos'));
         }

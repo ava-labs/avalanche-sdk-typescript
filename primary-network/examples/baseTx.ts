@@ -1,8 +1,8 @@
 import { fetchInstantiatedClients } from "./boilerPlate";
 
-async function main() {
-    const { pnClient } = await fetchInstantiatedClients()
+const { pnClient } = fetchInstantiatedClients()
 
+async function main() {
     const baseTx = await pnClient.pChain.newBaseTx({
         outputs: [
             {

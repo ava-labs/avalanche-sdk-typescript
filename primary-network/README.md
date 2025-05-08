@@ -28,9 +28,9 @@ Most of the code will require these boilerplate instantiations
 ```typescript
 import { PrimaryNetwork, Wallet } from "@avalanche-sdk/primary-network";
 
-export async function fetchInstantiatedClients() {
-    const pnClient = await PrimaryNetwork.newClient({
-        nodeUrl: "https://api.avax-test.network",
+export function fetchInstantiatedClients() {
+    const pnClient = createPrimaryNetworkClient({
+        nodeUrlOrChain: "fuji",
     });
 
     // links private keys for signing transaction
@@ -47,11 +47,11 @@ export async function fetchInstantiatedClients() {
 Let's try to build a simple `BaseTx` that will transfer funds from one address to another on P-Chain.
 
 ```typescript
-async function main() {
-    const pnClient = await PrimaryNetwork.newClient({
-        nodeUrl: "https://api.avax-test.network",
-    });
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
 
+async function main() {
     pnClient.linkPrivateKeys(["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"]) 
 
     const baseTx = await pnClient.pChain.newBaseTx({
@@ -75,8 +75,8 @@ main()
 Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
 
 ```typescript
-    const pnClient = await PrimaryNetwork.newClient({
-        nodeUrl: "https://api.avax-test.network",
+    const pnClient = createPrimaryNetworkClient({
+        nodeUrlOrChain: "fuji",
     });
 
     const txHexBytes = '<HEX_TX_BYTES>'
