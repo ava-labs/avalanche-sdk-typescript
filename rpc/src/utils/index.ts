@@ -1,2 +1,12 @@
-export { concatBytes } from "./buffer.js";
-export { CB58ToHex as cb58ToHex, hexToCB58 } from "./cb58.js";
+export { Common, Credential, utils } from "@avalabs/avalanchejs";
+export {
+  addChecksum,
+  bufferToBigInt,
+  bufferToHex,
+  bufferToNumber,
+  CB58ToHex,
+  hammingWeight,
+  hexToBuffer,
+  hexToCB58,
+  padLeft,
+} from "./common.js";
