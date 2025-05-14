@@ -26,7 +26,7 @@ The SDK provides a structured way to build different types of transactions. Here
 Most of the code will require these boilerplate instantiations
 
 ```typescript
-import { PrimaryNetwork, Wallet } from "@avalanche-sdk/primary-network";
+import { createPrimaryNetworkClient, Wallet } from "@avalanche-sdk/primary-network";
 
 export function fetchInstantiatedClients() {
     const pnClient = createPrimaryNetworkClient({
@@ -97,6 +97,42 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 - `removeSubnetValidatorTx.ts` - Removing a validator from a subnet
 - `exportTx.ts` - Exporting assets from P-Chain
 - `importTx.ts` - Importing assets to P-Chain
+
+### Import Transaction Builders
+
+Import the specific transaction builders directly without bundling them with other transaction types. You can do that using the `PrimaryNetworkCoreClient`. See example below.
+
+```typescript
+import { createPrimaryNetworkCoreClient, Wallet } from "@avalanche-sdk/primary-network";
+import { newBaseTx } from '@avalanche-sdk/primary-network/dist/transactions/p-chain'
+
+async function main() {
+    const wallet = new Wallet({
+        nodeUrl: "https://api.avax-test.network",
+        privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
+    });
+
+    const pnClient = createPrimaryNetworkCoreClient({
+        nodeUrlOrChain: "fuji",
+        wallet,
+    });
+
+    const baseTx = await newBaseTx(
+        pnClient,
+        {
+            outputs: [
+                {
+                addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+                amount: 0.00001,
+            }
+        ],
+    })
+
+    await baseTx.sign()
+    baseTx.issue().then(console.log)
+}
+main()
+```
 
 ### Structured Transaction Data
 

@@ -12,3 +12,4 @@ export { newAddPermissionlessValidatorTx } from './txs/addPermissionlessValidato
 export { newAddPermissionlessDelegatorTx } from './txs/addPermissionlessDelegatorTx'
 export { newExportTx } from './txs/exportTx'
 export { newImportTx } from './txs/importTx'
+export { newTxFromBytes } from './txs/txFromBytes'

@@ -22,7 +22,7 @@ export function createPrimaryNetworkClient({
     wallet,
 }: {
     nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
-    wallet: Wallet | undefined,
+    wallet?: Wallet,
 }) {
     const primaryNetworkCore = new PrimaryNetworkCore({
         nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),

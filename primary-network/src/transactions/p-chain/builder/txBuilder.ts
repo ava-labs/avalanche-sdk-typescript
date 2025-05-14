@@ -12,10 +12,9 @@ import { type AddPermissionlessValidatorTx, type AddPermissionlessValidatorTxPar
 import { type AddPermissionlessDelegatorTx, type AddPermissionlessDelegatorTxParams, newAddPermissionlessDelegatorTx } from "../txs/addPermissionlessDelegatorTx";
 import { type ExportTx, type ExportTxParams, newExportTx } from "../txs/exportTx";
 import { type ImportTx, type ImportTxParams, newImportTx } from "../txs/importTx";
-import { getTxClassFromBytes } from "../common/utils";
-import type { NewTxParams } from "../common/types";
-import { Transaction } from "../common/transaction";
+import { type NewTxFromBytesParams, newTxFromBytes } from "../txs/txFromBytes";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
+import type { Transaction } from "../common/transaction";
 
 export class TxBuilder {
     primaryNetworkCore: PrimaryNetworkCore;
@@ -33,17 +32,8 @@ export class TxBuilder {
      * result in reduced feature sets, like missing input UTXOs, or,
      * signing functionality.
     */
-    newTxFromBytes<T extends Transaction>(
-        hexTxBytes: string,
-        txClass?: new (params: NewTxParams) => T,
-    ): T {
-        return getTxClassFromBytes(
-            txClass ?? (Transaction as new (params: NewTxParams) => T),
-            hexTxBytes,
-            this.primaryNetworkCore.pvmRpc,
-            this.primaryNetworkCore.nodeUrl,
-            this.primaryNetworkCore.wallet,
-        )
+    newTxFromBytes<T extends Transaction>(params: NewTxFromBytesParams<T>): T {
+        return newTxFromBytes(this.primaryNetworkCore, params)
     }
 
     async newBaseTx(params: BaseTxParams): Promise<BaseTx> {
