@@ -1,15 +1,14 @@
 import {
-    type Context as ContextType,
     L1Validator as FormattedL1Validator,
     PChainOwner as FormattedPChainOwner,
     pvm,
     pvmSerial,
     utils
 } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 import { SubnetTransaction } from "./subnetTransactions";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type ConvertSubnetToL1TxParams = CommonTxParams & {
     subnetId: string;
@@ -46,13 +45,11 @@ export class ConvertSubnetToL1Tx extends SubnetTransaction {
 }
 
 export async function newConvertSubnetToL1Tx(
+    primaryNetworkCore: PrimaryNetworkCore,
     params: ConvertSubnetToL1TxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<ConvertSubnetToL1Tx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCore.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
 
     const validators: FormattedL1Validator[] = params.validators.map(validator => FormattedL1Validator.fromNative(
         validator.nodeId,
@@ -80,5 +77,10 @@ export async function newConvertSubnetToL1Tx(
         subnetAuth: params.subnetAuth,
         validators
     }, context)
-    return new ConvertSubnetToL1Tx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new ConvertSubnetToL1Tx({ unsignedTx,
+        pvmRpc: primaryNetworkCore.pvmRpc,
+        nodeUrl: primaryNetworkCore.nodeUrl,
+        wallet: primaryNetworkCore.wallet,
+    })
 }

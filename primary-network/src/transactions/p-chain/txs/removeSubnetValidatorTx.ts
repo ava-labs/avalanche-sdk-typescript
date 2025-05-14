@@ -1,8 +1,8 @@
-import { type Context as ContextType, pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 import { SubnetTransaction } from "./subnetTransactions";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type RemoveSubnetValidatorTxParams = CommonTxParams & {
     subnetId: string;
@@ -20,13 +20,11 @@ export class RemoveSubnetValidatorTx extends SubnetTransaction {
 }
 
 export async function newRemoveSubnetValidatorTx(
+    primaryNetworkCore: PrimaryNetworkCore,
     params: RemoveSubnetValidatorTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<RemoveSubnetValidatorTx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCore.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
 
     const unsignedTx = pvm.newRemoveSubnetValidatorTx({
         ...commonTxParams,
@@ -34,5 +32,11 @@ export async function newRemoveSubnetValidatorTx(
         nodeId: params.nodeId,
         subnetAuth: params.subnetAuth,
     }, context)
-    return new RemoveSubnetValidatorTx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new RemoveSubnetValidatorTx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCore.pvmRpc,
+        nodeUrl: primaryNetworkCore.nodeUrl,
+        wallet: primaryNetworkCore.wallet,
+    })
 }

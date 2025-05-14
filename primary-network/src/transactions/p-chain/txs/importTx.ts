@@ -1,9 +1,9 @@
-import { pvm, utils, type Context as ContextType, type pvmSerial } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams, getChainIdFromAlias } from "../common/utils";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 type ImportedOutput = {
     addresses: string[],
@@ -26,17 +26,15 @@ export class ImportTx extends Transaction {
 }
 
 export async function newImportTx(
+    primaryNetworkCore: PrimaryNetworkCore,
     txPrams: ImportTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<ImportTx> {
+    const context = await primaryNetworkCore.initializeContextIfNot()
     const commonTxParams = await fetchCommonTxParams(
         txPrams,
         context,
-        pvmRpc,
-        wallet,
+        primaryNetworkCore.pvmRpc,
+        primaryNetworkCore.wallet,
         /* sourceChain = */ getChainIdFromAlias(txPrams.sourceChain, context.networkID),
     )
 
@@ -53,8 +51,8 @@ export async function newImportTx(
 
     return new ImportTx({
         unsignedTx,
-        wallet,
-        nodeUrl,
-        pvmRpc,
+        pvmRpc: primaryNetworkCore.pvmRpc,
+        nodeUrl: primaryNetworkCore.nodeUrl,
+        wallet: primaryNetworkCore.wallet,
     })
 }
