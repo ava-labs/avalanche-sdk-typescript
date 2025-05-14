@@ -1,8 +1,8 @@
 import { type Context as ContextType, pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
-import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
+import { SubnetTransaction } from "./subnetTransactions";
 
 export type AddSubnetValidatorTxParams = CommonTxParams & {
     subnetId: string;
@@ -12,7 +12,7 @@ export type AddSubnetValidatorTxParams = CommonTxParams & {
     subnetAuth: readonly number[];
 }
 
-export class AddSubnetValidatorTx extends Transaction {
+export class AddSubnetValidatorTx extends SubnetTransaction {
     override tx: pvmSerial.AddSubnetValidatorTx;
 
     constructor(params: NewTxParams) {

@@ -6,7 +6,8 @@ import {
     type Utxo,
     type Common,
     Credential,
-    UnsignedTx
+    UnsignedTx,
+    secp256k1
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output } from "./types";
@@ -153,3 +154,23 @@ export function getTxClassFromBytes<T extends Transaction>(
     )
     return new Tx({ unsignedTx, pvmRpc, nodeUrl, wallet })
 }
+
+export async function addSigToAllCreds(
+    unsignedTx: UnsignedTx,
+    privateKeys: Uint8Array[],
+) {
+    const unsignedBytes = unsignedTx.toBytes();
+
+    await Promise.all(
+        privateKeys.map(async (privateKey) => {
+            const publicKey = secp256k1.getPublicKey(privateKey);
+
+            if (unsignedTx.hasPubkey(publicKey)) {
+                const signature = await secp256k1.sign(unsignedBytes, privateKey);
+                for (let i = 0; i < unsignedTx.getCredentials().length; i++) {
+                    unsignedTx.addSignatureAt(signature, i, 0);
+                }
+            }
+        }),
+    );
+};
