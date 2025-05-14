@@ -12,7 +12,7 @@ export function privateKeyToAvalancheAccount(
 ): AvalancheAccount {
   return {
     evmAccount: privateKeyToAccount(privateKey, options),
-    XPAccount: {
+    xpAccount: {
       publicKey: privateKeyToXPPublicKey(privateKey),
       sign: (message: Hex | Uint8Array, to: "hex" | "bytes" = "bytes") =>
         xpSign(message, privateKey, to),

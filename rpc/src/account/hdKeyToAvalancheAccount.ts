@@ -25,8 +25,8 @@ export function hdKeyToAvalancheAccount(
   );
   return {
     evmAccount: account.evmAccount,
-    XPAccount: {
-      ...account.XPAccount,
+    xpAccount: {
+      ...account.xpAccount,
       source: "hdKey",
     } as LocalXPAccount,
     getHdKey: () => hdKey,

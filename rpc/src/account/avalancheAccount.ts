@@ -26,5 +26,5 @@ export type LocalXPAccount = {
 
 export type AvalancheAccount = {
   evmAccount: Account;
-  XPAccount?: XPAccount;
+  xpAccount?: XPAccount;
 };
