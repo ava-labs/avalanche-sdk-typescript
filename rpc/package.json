@@ -3,10 +3,14 @@
   "version": "0.0.4-alpha.0",
   "scripts": {
     "update-version": "node scripts/update-version.js",
-    "build": "npm run update-version && tsup",
+    "build": " npx tsc",
     "lint": "eslint --cache --max-warnings=0 src",
     "test": "vitest"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "author": "Sayan Kar",
   "license": "MIT",
   "repository": {
@@ -27,12 +31,13 @@
     "@avalabs/avalanchejs": "^5.0.0",
     "@noble/hashes": "^1.8.0",
     "@scure/base": "^1.2.5",
+    "@scure/bip32": "^1.7.0",
+    "@scure/bip39": "^1.6.0",
     "micro-eth-signer": "^0.14.0",
     "viem": "^2.26.2"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
-    "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vitest": "^3.1.3"
   },
@@ -40,76 +45,81 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json",
+    "./account": {
+      "types": "./dist/account/index.d.ts",
+      "import": "./dist/account/index.js",
+      "require": "./dist/account/index.js"
+    },
     "./methods": {
       "types": "./dist/methods/index.d.ts",
       "import": "./dist/methods/index.js",
-      "require": "./dist/methods/index.cjs"
+      "require": "./dist/methods/index.js"
     },
     "./methods/public": {
       "types": "./dist/methods/public/index.d.ts",
       "import": "./dist/methods/public/index.js",
-      "require": "./dist/methods/public/index.cjs"
+      "require": "./dist/methods/public/index.js"
     },
     "./methods/pChain": {
       "types": "./dist/methods/pChain/index.d.ts",
       "import": "./dist/methods/pChain/index.js",
-      "require": "./dist/methods/pChain/index.cjs"
+      "require": "./dist/methods/pChain/index.js"
     },
     "./methods/admin": {
       "types": "./dist/methods/admin/index.d.ts",
       "import": "./dist/methods/admin/index.js",
-      "require": "./dist/methods/admin/index.cjs"
+      "require": "./dist/methods/admin/index.js"
     },
     "./methods/cChain": {
       "types": "./dist/methods/cChain/index.d.ts",
       "import": "./dist/methods/cChain/index.js",
-      "require": "./dist/methods/cChain/index.cjs"
+      "require": "./dist/methods/cChain/index.js"
     },
     "./methods/xChain": {
       "types": "./dist/methods/xChain/index.d.ts",
       "import": "./dist/methods/xChain/index.js",
-      "require": "./dist/methods/xChain/index.cjs"
+      "require": "./dist/methods/xChain/index.js"
     },
     "./methods/health": {
       "types": "./dist/methods/health/index.d.ts",
       "import": "./dist/methods/health/index.js",
-      "require": "./dist/methods/health/index.cjs"
+      "require": "./dist/methods/health/index.js"
     },
     "./methods/index": {
       "types": "./dist/methods/index/index.d.ts",
       "import": "./dist/methods/index/index.js",
-      "require": "./dist/methods/index/index.cjs"
+      "require": "./dist/methods/index/index.js"
     },
     "./methods/info": {
       "types": "./dist/methods/info/index.d.ts",
       "import": "./dist/methods/info/index.js",
-      "require": "./dist/methods/info/index.cjs"
+      "require": "./dist/methods/info/index.js"
     },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.cjs"
+      "require": "./dist/utils/index.js"
     },
     "./node": {
       "types": "./dist/node/index.d.ts",
       "import": "./dist/node/index.js",
-      "require": "./dist/node/index.cjs"
+      "require": "./dist/node/index.js"
     },
     "./siwe": {
       "types": "./dist/siwe/index.d.ts",
       "import": "./dist/siwe/index.js",
-      "require": "./dist/siwe/index.cjs"
+      "require": "./dist/siwe/index.js"
     },
     "./chains": {
       "types": "./dist/chains/index.d.ts",
       "import": "./dist/chains/index.js",
-      "require": "./dist/chains/index.cjs"
+      "require": "./dist/chains/index.js"
     }
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",
   "type": "module"
