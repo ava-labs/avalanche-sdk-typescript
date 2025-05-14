@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/primary-network",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "description": "Primary Network module for building and interacting with Avalanche ecosystem",
   "main": "./dist/index.js",
