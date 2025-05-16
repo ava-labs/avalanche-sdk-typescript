@@ -1,6 +1,5 @@
 import { secp256k1, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
-import { hexToBuffer } from "../../utils/common.js";
 import { XPAddress } from "../avalancheAccount.js";
 
 /**
@@ -12,6 +11,6 @@ import { XPAddress } from "../avalancheAccount.js";
 export function publicKeyToXPAddress(publicKey: Hex, hrp: string): XPAddress {
   return utils.formatBech32(
     hrp,
-    secp256k1.publicKeyBytesToAddress(hexToBuffer(publicKey))
+    secp256k1.publicKeyBytesToAddress(utils.hexToBuffer(publicKey))
   );
 }

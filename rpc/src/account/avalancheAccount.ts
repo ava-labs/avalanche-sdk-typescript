@@ -10,16 +10,7 @@ export type LocalXPAccount = {
     message: Hex | Uint8Array,
     to: "hex" | "bytes"
   ) => Promise<Hex | Uint8Array>;
-  verify: (
-    message: Hex | Uint8Array,
-    signature: Hex | Uint8Array,
-    publicKey: Hex | Uint8Array
-  ) => boolean;
-  recoverPublicKey: (
-    message: Hex | Uint8Array,
-    signature: Hex | Uint8Array,
-    to: "hex" | "bytes"
-  ) => Hex | Uint8Array;
+  verify: (message: Hex | Uint8Array, signature: Hex | Uint8Array) => boolean;
   type: "local";
   source: "hdKey" | "privateKey" | "mnemonic";
 };

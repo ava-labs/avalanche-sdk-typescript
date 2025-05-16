@@ -1,8 +1,8 @@
 import { HDKey } from "@scure/bip32";
 import { toHex } from "viem";
-import { HDKeyToAccountOptions } from "viem/accounts";
+import { HDKeyToAccountOptions, privateKeyToAccount } from "viem/accounts";
 import { AvalancheAccount, LocalXPAccount } from "./avalancheAccount";
-import { privateKeyToAvalancheAccount } from "./privateKeyToAvalancheAccount";
+import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
 
 export function hdKeyToAvalancheAccount(
   hdKey_: HDKey,
@@ -10,25 +10,41 @@ export function hdKeyToAvalancheAccount(
     accountIndex = 0,
     addressIndex = 0,
     changeIndex = 0,
+    xpAccountIndex = 0,
+    xpAddressIndex = 0,
+    xpChangeIndex = 0,
     path,
     ...options
-  }: HDKeyToAccountOptions = {}
-): AvalancheAccount & {
-  getHdKey: () => HDKey;
-} {
-  const hdKey = hdKey_.derive(
+  }: HDKeyToAccountOptions & {
+    xpAccountIndex?: number;
+    xpAddressIndex?: number;
+    xpChangeIndex?: number;
+  } = {}
+): AvalancheAccount {
+  const cChainHdKey = hdKey_.derive(
     path || `m/44'/60'/${accountIndex}'/${changeIndex}/${addressIndex}`
   );
-  const account = privateKeyToAvalancheAccount(
-    toHex(hdKey.privateKey!),
+
+  const xpChainHdKey = hdKey_.derive(
+    path || `m/44'/9000'/${accountIndex}'/${changeIndex}/${addressIndex}`
+  );
+
+  const cChainAccount = privateKeyToAccount(
+    toHex(cChainHdKey.privateKey!),
     options
   );
+
+  const pChainAccount = privateKeyToXPAccount(toHex(xpChainHdKey.privateKey!));
+
   return {
-    evmAccount: account.evmAccount,
+    evmAccount: {
+      ...cChainAccount,
+      getHdKey: () => cChainHdKey,
+    } as any,
     xpAccount: {
-      ...account.xpAccount,
+      ...pChainAccount,
       source: "hdKey",
+      getHdKey: () => xpChainHdKey,
     } as LocalXPAccount,
-    getHdKey: () => hdKey,
   };
 }

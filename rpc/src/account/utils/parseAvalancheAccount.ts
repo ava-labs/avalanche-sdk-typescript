@@ -3,7 +3,7 @@ import { parseAccount } from "viem/utils";
 import { AvalancheAccount } from "../avalancheAccount";
 
 export function parseAvalancheAccount<
-  accountOrAddress extends Address | AvalancheAccount
+  accountOrAddress extends Address | AvalancheAccount | undefined
 >(
   account: accountOrAddress
 ): accountOrAddress extends Address ? AvalancheAccount : accountOrAddress {

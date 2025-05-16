@@ -1,7 +1,13 @@
-import { secp256k1 } from "@avalabs/avalanchejs";
+import { secp256k1, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
-import { bufferToHex, hexToBuffer } from "../../utils/common.js";
 
+/**
+ * Recover the public key from a message and signature
+ * @param message - The message to recover the public key from
+ * @param signature - The signature to recover the public key from
+ * @param to - The format of the public key to return
+ * @returns The public key in the specified format
+ */
 export function xpRecoverPublicKey(
   message: Hex | Uint8Array,
   signature: Hex | Uint8Array,
@@ -9,7 +15,7 @@ export function xpRecoverPublicKey(
 ): Hex | Uint8Array {
   const publicKey = secp256k1.recoverPublicKey(
     message,
-    typeof signature === "string" ? hexToBuffer(signature) : signature
+    typeof signature === "string" ? utils.hexToBuffer(signature) : signature
   );
-  return to === "hex" ? (bufferToHex(publicKey) as Hex) : publicKey;
+  return to === "hex" ? (utils.bufferToHex(publicKey) as Hex) : publicKey;
 }

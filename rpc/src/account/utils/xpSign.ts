@@ -1,7 +1,5 @@
-import { secp256k1 } from "@avalabs/avalanchejs";
+import { secp256k1, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
-import { bufferToHex, hexToBuffer } from "../../utils/common.js";
-
 export async function xpSign(
   message: Hex | Uint8Array,
   privateKey: Hex | Uint8Array,
@@ -9,7 +7,7 @@ export async function xpSign(
 ): Promise<Hex | Uint8Array> {
   const signature = await secp256k1.sign(
     message,
-    typeof privateKey === "string" ? hexToBuffer(privateKey) : privateKey
+    typeof privateKey === "string" ? utils.hexToBuffer(privateKey) : privateKey
   );
-  return to === "hex" ? (bufferToHex(signature) as Hex) : signature;
+  return to === "hex" ? (utils.bufferToHex(signature) as Hex) : signature;
 }

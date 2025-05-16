@@ -44,6 +44,18 @@ export function createAvalancheTransportClient<
         transportConfig.config
       ) as transport;
     case "custom":
+      if (clientType !== "wallet") {
+        return http(getClientURL(chain, undefined, clientType, "http"), {
+          ...transportConfig.config,
+          fetchOptions: {
+            ...(apiKey
+              ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
+              : rlToken
+              ? { headers: { rlToken: rlToken, ...commonHeaders } }
+              : { headers: commonHeaders }),
+          },
+        }) as transport;
+      }
       return custom(
         transportConfig.provider,
         transportConfig.config

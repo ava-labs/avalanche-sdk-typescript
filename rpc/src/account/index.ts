@@ -1,4 +1,4 @@
-export type { Address } from "abitype";
+export type { Address } from "viem";
 
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export { HDKey } from "@scure/bip32";
@@ -93,11 +93,11 @@ export { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress";
 
 export { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress";
 
-export { xpSign } from "./utils/XPSign";
+export { xpSign } from "./utils/xpSign";
 
-export { xpVerifySignature } from "./utils/XPVerifySignature";
+export { xpVerifySignature } from "./utils/xpVerifySignature";
 
-export { xpRecoverPublicKey } from "./utils/XPRecoverPublicKey";
+export { xpRecoverPublicKey } from "./utils/xpRecoverPublicKey";
 
 export { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey";
 
@@ -111,3 +111,5 @@ export type {
 } from "./avalancheAccount.js";
 
 export { parseAvalancheAccount } from "./utils/parseAvalancheAccount";
+
+export { privateKeyToXPAccount } from "./privateKeyToXPAccount";
