@@ -18,11 +18,11 @@ export class SetL1ValidatorWeightTx extends Transaction {
 }
 
 export async function newSetL1ValidatorWeightTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: SetL1ValidatorWeightTxParams,
 ): Promise<SetL1ValidatorWeightTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newSetL1ValidatorWeightTx({
         ...commonTxParams,
@@ -31,8 +31,8 @@ export async function newSetL1ValidatorWeightTx(
 
     return new SetL1ValidatorWeightTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

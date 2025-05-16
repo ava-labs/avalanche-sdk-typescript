@@ -23,11 +23,11 @@ export class AddPermissionlessDelegatorTx extends Transaction {
 }
 
 export async function newAddPermissionlessDelegatorTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: AddPermissionlessDelegatorTxParams,
 ): Promise<AddPermissionlessDelegatorTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newAddPermissionlessDelegatorTx({
         ...commonTxParams,
@@ -43,8 +43,8 @@ export async function newAddPermissionlessDelegatorTx(
 
     return new AddPermissionlessDelegatorTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

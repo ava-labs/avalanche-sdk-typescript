@@ -20,11 +20,11 @@ export class RemoveSubnetValidatorTx extends SubnetTransaction {
 }
 
 export async function newRemoveSubnetValidatorTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: RemoveSubnetValidatorTxParams,
 ): Promise<RemoveSubnetValidatorTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newRemoveSubnetValidatorTx({
         ...commonTxParams,
@@ -35,8 +35,8 @@ export async function newRemoveSubnetValidatorTx(
 
     return new RemoveSubnetValidatorTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

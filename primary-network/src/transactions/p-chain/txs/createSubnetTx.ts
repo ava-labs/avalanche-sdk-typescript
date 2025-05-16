@@ -24,11 +24,11 @@ export class CreateSubnetTx extends Transaction {
 }
 
 export async function newCreateSubnetTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: CreateSubnetTxParams,
 ): Promise<CreateSubnetTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const formattedSubnetOwnerAddresses = params.subnetOwners.addresses.map(utils.bech32ToBytes)
 
@@ -41,8 +41,8 @@ export async function newCreateSubnetTx(
 
     return new CreateSubnetTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

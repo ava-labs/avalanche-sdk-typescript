@@ -9,7 +9,7 @@ async function main() {
         subnetAuth: [0],
     })
     await removeSubnetValidatorTx.sign()
-    removeSubnetValidatorTx.issue().then(console.log)
+    console.log(await removeSubnetValidatorTx.issue())
 }
 
 main()

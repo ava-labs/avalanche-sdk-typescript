@@ -16,15 +16,15 @@ export class BaseTx extends Transaction {
 }
 
 export async function newBaseTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     txPrams: BaseTxParams,
 ): Promise<BaseTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
     const commonTxParams = await fetchCommonTxParams(
         txPrams,
         context,
-        primaryNetworkCore.pvmRpc,
-        primaryNetworkCore.wallet,
+        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.wallet,
     )
 
     const unsignedTx = pvm.newBaseTx(
@@ -34,8 +34,8 @@ export async function newBaseTx(
 
     return new BaseTx({
         unsignedTx,
-        wallet: primaryNetworkCore.wallet,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        pvmRpc: primaryNetworkCore.pvmRpc,
+        wallet: primaryNetworkCoreClient.wallet,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
     })
 }

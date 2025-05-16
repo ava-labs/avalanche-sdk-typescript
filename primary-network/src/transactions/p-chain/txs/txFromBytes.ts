@@ -9,14 +9,14 @@ export type NewTxFromBytesParams<T extends Transaction> = {
 }
 
 export function newTxFromBytes<T extends Transaction>(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: NewTxFromBytesParams<T>,
 ): T {
     return getTxClassFromBytes(
         params.txClass ?? (Transaction as new (params: NewTxParams) => T),
         params.hexTxBytes,
-        primaryNetworkCore.pvmRpc,
-        primaryNetworkCore.nodeUrl,
-        primaryNetworkCore.wallet,
+        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.nodeUrl,
+        primaryNetworkCoreClient.wallet,
     )
 }

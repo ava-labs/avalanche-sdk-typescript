@@ -14,7 +14,7 @@ async function main() {
     })
 
     await createSubnetTx.sign()
-    createSubnetTx.issue().then(console.log)
+    console.log(await createSubnetTx.issue())
 }
 
 main()

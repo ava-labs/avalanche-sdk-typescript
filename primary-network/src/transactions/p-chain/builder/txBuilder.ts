@@ -17,14 +17,14 @@ import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 import type { Transaction } from "../common/transaction";
 
 export class TxBuilder {
-    primaryNetworkCore: PrimaryNetworkCore;
+    primaryNetworkCoreClient: PrimaryNetworkCore;
 
-    constructor(primaryNetworkCore: PrimaryNetworkCore) {
-        this.primaryNetworkCore = primaryNetworkCore;
+    constructor(primaryNetworkCoreClient: PrimaryNetworkCore) {
+        this.primaryNetworkCoreClient = primaryNetworkCoreClient;
     }
 
-    static newClient(primaryNetworkCore: PrimaryNetworkCore) {
-        return new TxBuilder(primaryNetworkCore)
+    static newClient(primaryNetworkCoreClient: PrimaryNetworkCore) {
+        return new TxBuilder(primaryNetworkCoreClient)
     }
 
     /**
@@ -33,62 +33,62 @@ export class TxBuilder {
      * signing functionality.
     */
     newTxFromBytes<T extends Transaction>(params: NewTxFromBytesParams<T>): T {
-        return newTxFromBytes(this.primaryNetworkCore, params)
+        return newTxFromBytes(this.primaryNetworkCoreClient, params)
     }
 
     async newBaseTx(params: BaseTxParams): Promise<BaseTx> {
-        return newBaseTx(this.primaryNetworkCore, params);
+        return newBaseTx(this.primaryNetworkCoreClient, params);
     }
 
     async newConvertSubnetToL1Tx(params: ConvertSubnetToL1TxParams): Promise<ConvertSubnetToL1Tx> {
-        return newConvertSubnetToL1Tx(this.primaryNetworkCore, params);
+        return newConvertSubnetToL1Tx(this.primaryNetworkCoreClient, params);
     }
 
     async newCreateSubnetTx(params: CreateSubnetTxParams): Promise<CreateSubnetTx> {
-        return newCreateSubnetTx(this.primaryNetworkCore, params);
+        return newCreateSubnetTx(this.primaryNetworkCoreClient, params);
     }
 
     async newCreateChainTx(params: CreateChainTxParams): Promise<CreateChainTx> {
-        return newCreateChainTx(this.primaryNetworkCore, params);
+        return newCreateChainTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddSubnetValidatorTx(params: AddSubnetValidatorTxParams): Promise<AddSubnetValidatorTx> {
-        return newAddSubnetValidatorTx(this.primaryNetworkCore, params);
+        return newAddSubnetValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newRemoveSubnetValidatorTx(params: RemoveSubnetValidatorTxParams): Promise<RemoveSubnetValidatorTx> {
-        return newRemoveSubnetValidatorTx(this.primaryNetworkCore, params);
+        return newRemoveSubnetValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newRegisterL1ValidatorTx(params: RegisterL1ValidatorTxParams): Promise<RegisterL1ValidatorTx> {
-        return newRegisterL1ValidatorTx(this.primaryNetworkCore, params);
+        return newRegisterL1ValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newIncreaseL1ValidatorBalanceTx(params: IncreaseL1ValidatorBalanceTxParams): Promise<IncreaseL1ValidatorBalanceTx> {
-        return newIncreaseL1ValidatorBalanceTx(this.primaryNetworkCore, params);
+        return newIncreaseL1ValidatorBalanceTx(this.primaryNetworkCoreClient, params);
     }
 
     async newSetL1ValidatorWeightTx(params: SetL1ValidatorWeightTxParams): Promise<SetL1ValidatorWeightTx> {
-        return newSetL1ValidatorWeightTx(this.primaryNetworkCore, params);
+        return newSetL1ValidatorWeightTx(this.primaryNetworkCoreClient, params);
     }
 
     async newDisableL1ValidatorTx(params: DisableL1ValidatorTxParams): Promise<DisableL1ValidatorTx> {
-        return newDisableL1ValidatorTx(this.primaryNetworkCore, params);
+        return newDisableL1ValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddPermissionlessValidatorTx(params: AddPermissionlessValidatorTxParams): Promise<AddPermissionlessValidatorTx> {
-        return newAddPermissionlessValidatorTx(this.primaryNetworkCore, params);
+        return newAddPermissionlessValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddPermissionlessDelegatorTx(params: AddPermissionlessDelegatorTxParams): Promise<AddPermissionlessDelegatorTx> {
-        return newAddPermissionlessDelegatorTx(this.primaryNetworkCore, params);
+        return newAddPermissionlessDelegatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newExportTx(params: ExportTxParams): Promise<ExportTx> {
-        return newExportTx(this.primaryNetworkCore, params);
+        return newExportTx(this.primaryNetworkCoreClient, params);
     }
 
     async newImportTx(params: ImportTxParams): Promise<ImportTx> {
-        return newImportTx(this.primaryNetworkCore, params);
+        return newImportTx(this.primaryNetworkCoreClient, params);
     }
 }

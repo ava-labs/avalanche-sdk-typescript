@@ -27,11 +27,11 @@ export class AddPermissionlessValidatorTx extends Transaction {
 }
 
 export async function newAddPermissionlessValidatorTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: AddPermissionlessValidatorTxParams,
 ): Promise<AddPermissionlessValidatorTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newAddPermissionlessValidatorTx({
         ...commonTxParams,
@@ -51,8 +51,8 @@ export async function newAddPermissionlessValidatorTx(
 
     return new AddPermissionlessValidatorTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

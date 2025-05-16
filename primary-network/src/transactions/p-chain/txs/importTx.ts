@@ -26,15 +26,15 @@ export class ImportTx extends Transaction {
 }
 
 export async function newImportTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     txPrams: ImportTxParams,
 ): Promise<ImportTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
     const commonTxParams = await fetchCommonTxParams(
         txPrams,
         context,
-        primaryNetworkCore.pvmRpc,
-        primaryNetworkCore.wallet,
+        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.wallet,
         /* sourceChain = */ getChainIdFromAlias(txPrams.sourceChain, context.networkID),
     )
 
@@ -51,8 +51,8 @@ export async function newImportTx(
 
     return new ImportTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

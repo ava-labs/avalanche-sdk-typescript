@@ -20,11 +20,11 @@ export class ExportTx extends Transaction {
 }
 
 export async function newExportTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     txPrams: ExportTxParams,
 ): Promise<ExportTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(txPrams, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(txPrams, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const exportedOutputs = txPrams.exportedOutputs.map(output => formatOutput(output, context))
     commonTxParams.outputs = [...commonTxParams.outputs, ...exportedOutputs]
@@ -39,8 +39,8 @@ export async function newExportTx(
 
     return new ExportTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

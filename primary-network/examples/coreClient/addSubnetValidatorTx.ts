@@ -24,7 +24,7 @@ async function main() {
         },
     )
     await addSubnetValidatorTx.sign()
-    addSubnetValidatorTx.issue().then(console.log)
+    console.log(await addSubnetValidatorTx.issue())
 }
 
 main()

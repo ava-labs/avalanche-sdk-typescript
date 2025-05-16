@@ -65,7 +65,7 @@ async function main() {
     })
 
     await baseTx.sign()
-    baseTx.issue().then(console.log)
+    console.log(await baseTx.issue())
 }
 main()
 ```
@@ -129,7 +129,7 @@ async function main() {
     })
 
     await baseTx.sign()
-    baseTx.issue().then(console.log)
+    console.log(await baseTx.issue())
 }
 main()
 ```

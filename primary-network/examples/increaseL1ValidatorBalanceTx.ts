@@ -9,7 +9,7 @@ async function main() {
     })
 
     await increaseL1ValidatorBalanceTx.sign()
-    increaseL1ValidatorBalanceTx.issue().then(console.log)
+    console.log(await increaseL1ValidatorBalanceTx.issue())
 }
 
 main()

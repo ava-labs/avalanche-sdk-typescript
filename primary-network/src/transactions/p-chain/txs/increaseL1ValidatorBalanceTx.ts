@@ -19,11 +19,11 @@ export class IncreaseL1ValidatorBalanceTx extends Transaction {
 }
 
 export async function newIncreaseL1ValidatorBalanceTx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: IncreaseL1ValidatorBalanceTxParams,
 ): Promise<IncreaseL1ValidatorBalanceTx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newIncreaseL1ValidatorBalanceTx({
         ...commonTxParams,
@@ -33,8 +33,8 @@ export async function newIncreaseL1ValidatorBalanceTx(
 
     return new IncreaseL1ValidatorBalanceTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }

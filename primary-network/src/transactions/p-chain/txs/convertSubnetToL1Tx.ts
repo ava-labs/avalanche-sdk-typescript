@@ -45,11 +45,11 @@ export class ConvertSubnetToL1Tx extends SubnetTransaction {
 }
 
 export async function newConvertSubnetToL1Tx(
-    primaryNetworkCore: PrimaryNetworkCore,
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: ConvertSubnetToL1TxParams,
 ): Promise<ConvertSubnetToL1Tx> {
-    const context = await primaryNetworkCore.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCore.pvmRpc, primaryNetworkCore.wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const validators: FormattedL1Validator[] = params.validators.map(validator => FormattedL1Validator.fromNative(
         validator.nodeId,
@@ -78,9 +78,10 @@ export async function newConvertSubnetToL1Tx(
         validators
     }, context)
 
-    return new ConvertSubnetToL1Tx({ unsignedTx,
-        pvmRpc: primaryNetworkCore.pvmRpc,
-        nodeUrl: primaryNetworkCore.nodeUrl,
-        wallet: primaryNetworkCore.wallet,
+    return new ConvertSubnetToL1Tx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
     })
 }
