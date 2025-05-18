@@ -85,10 +85,11 @@ function getClientURL(
   if (!url) {
     throw new Error("URL is required");
   }
-
   const origin = new URL(url).origin;
   switch (clientType) {
     case "public":
+      return url;
+    case "wallet":
       return url;
     case "pChain":
       return `${origin}/ext/bc/P`;
@@ -111,6 +112,6 @@ function getClientURL(
     case "indexXChainTx":
       return `${origin}/ext/index/X/tx`;
     default:
-      throw new Error("Invalid client type");
+      throw new Error(`Invalid client type` + clientType);
   }
 }

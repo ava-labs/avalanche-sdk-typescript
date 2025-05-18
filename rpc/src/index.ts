@@ -1164,6 +1164,18 @@ export {
   type CreateAvalancheCoreClientErrorType,
 } from "./clients/createAvalancheCoreClient.js";
 export {
+  createAvalancheWalletClient,
+  type AvalancheWalletClient,
+  type AvalancheWalletClientConfig,
+  type CreateAvalancheWalletClientErrorType,
+} from "./clients/createAvalancheWalletClient.js";
+export {
+  createAvalancheWalletCoreClient,
+  type AvalancheWalletCoreClient,
+  type AvalancheWalletCoreClientConfig,
+  type CreateAvalancheWalletCoreClientErrorType,
+} from "./clients/createAvalancheWalletCoreClient.js";
+export {
   createCChainClient,
   type CChainClient,
   type CChainClientConfig,
@@ -1208,6 +1220,10 @@ export {
   type AvalanchePublicActions,
 } from "./clients/decorators/avalanchePublic.js";
 export {
+  avalancheWalletActions,
+  type AvalancheWalletActions,
+} from "./clients/decorators/avalancheWallet.js";
+export {
   cChainActions,
   type CChainActions,
 } from "./clients/decorators/cChain.js";
@@ -1236,6 +1252,7 @@ export {
   type AvalancheClientConfig,
   type CreateAvalancheClientErrorType,
 } from "./clients/types/createAvalancheClient.js";
+
 export { type AvalancheTransportConfig } from "./clients/types/types.js";
 export { createAvalancheTransportClient } from "./clients/utils.js";
 export { type AdminRpcSchema } from "./methods/admin/adminRpcSchema.js";
@@ -1245,4 +1262,5 @@ export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
 export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
 export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
 export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
+export { type AvalancheWalletRpcSchema } from "./methods/wallet/avalancheWalletRPCSchema.js";
 export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";

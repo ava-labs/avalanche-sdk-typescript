@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "maxNodeModuleJsDepth": 0,
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "target": "ES2020",
+    "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
 
-    "module": "es2022",
+    "module": "ES2022",
     "moduleResolution": "bundler",
     "outDir": "./dist",
 
@@ -29,16 +30,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "isolatedModules": true,
-    "checkJs": true,
+    "checkJs": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules/", "dist"]
 }

@@ -7,8 +7,8 @@ import { Hex } from "viem";
  * @param hex - The hex string to encode.
  * @returns The CB58 encoded string.
  */
-export function hexToCB58(hex: Hex): Hex {
-  return utils.base58.encode(utils.hexToBuffer(hex)) as Hex;
+export function hexToCB58(hex: Hex): string {
+  return utils.base58.encode(utils.hexToBuffer(hex));
 }
 
 /**
@@ -17,6 +17,6 @@ export function hexToCB58(hex: Hex): Hex {
  * @param cb58 - The CB58 string to decode.
  * @returns The hex string.
  */
-export function CB58ToHex(cb58: Hex): Hex {
+export function CB58ToHex(cb58: string): Hex {
   return utils.bufferToHex(utils.base58.decode(cb58)) as Hex;
 }

@@ -6,11 +6,9 @@ export type XPAccount = LocalXPAccount;
 
 export type LocalXPAccount = {
   publicKey: Hex;
-  sign: (
-    message: Hex | Uint8Array,
-    to: "hex" | "bytes"
-  ) => Promise<Hex | Uint8Array>;
-  verify: (message: Hex | Uint8Array, signature: Hex | Uint8Array) => boolean;
+  signMessage: (message: string) => Promise<Hex>;
+  signTransaction: (txHash: Hex) => Promise<Hex>;
+  verify: (message: Hex, signature: Hex) => boolean;
   type: "local";
   source: "hdKey" | "privateKey" | "mnemonic";
 };

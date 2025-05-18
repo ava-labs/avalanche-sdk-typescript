@@ -1,6 +1,6 @@
 import { UnsignedTx, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
-import { parseAvalancheAccount } from "../../account/utils/parseAvalancheAccount.js";
+import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
 import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { issueTx as issueTxCChain } from "../cChain/issueTx.js";
@@ -24,7 +24,7 @@ export async function sendXPTransaction(
   if (xpAccount) {
     // createTx from transactionHex
     const [tx] = getTxFromBytes(txHex, chainAlias);
-    const signature = (await xpAccount.sign(txHex, "bytes")) as Uint8Array;
+    const signature = utils.hexToBuffer(await xpAccount.signTransaction(txHex));
     const unsignedTx = new UnsignedTx(tx, [], new utils.AddressMaps());
     unsignedTx.addSignature(signature);
     const signedTx = utils.bufferToHex(
@@ -76,23 +76,3 @@ export async function sendXPTransaction(
     },
   });
 }
-
-/**
- *
- * const walletClient = createAvalancheWalletClient({
- *  chain: Avalanche | AvalancheFuji,
- *  transport: {
- *    type: "custom",
- *    provider: window.ethereum,
- *  },
- * })
- * const aa = privateKeyToAvalancheAccount("0x...", options);
- * const txHash = await walletClient.sendXPTransaction({
- *  account: aa,
- *  txHex: "0x...",
- *  chainAlias: "P",
- * })
- *
- *
- *
- */

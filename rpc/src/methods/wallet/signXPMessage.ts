@@ -1,6 +1,6 @@
-import { parseAvalancheAccount } from "@/account/utils/parseAvalancheAccount.js";
-import { AvalancheWalletCoreClient } from "@/clients/createAvalancheWalletCoreClient.js";
 import { Hex } from "viem";
+import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
+import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import {
   SignXPMessageParameters,
@@ -12,12 +12,10 @@ export async function signXPMessage(
   params: SignXPMessageParameters
 ): Promise<SignXPMessageReturnType> {
   const { message, account, accountIndex } = params;
-
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
-
   if (xpAccount) {
-    const signature = await xpAccount.sign(message as Hex, "hex");
+    const signature = await xpAccount.signMessage(message);
     return { signature: signature as Hex };
   }
 

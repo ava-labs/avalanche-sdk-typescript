@@ -1,6 +1,6 @@
-import { AvalancheAccount } from "@/account/avalancheAccount";
 import { Address, Hex } from "viem";
 import { RequestErrorType } from "viem/utils";
+import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 
 export type SignXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;

@@ -1,4 +1,4 @@
-import { AvalancheWalletCoreClient } from "@/clients/createAvalancheWalletCoreClient";
+import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
 

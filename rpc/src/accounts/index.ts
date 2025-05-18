@@ -93,7 +93,8 @@ export { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress";
 
 export { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress";
 
-export { xpSign } from "./utils/xpSign";
+export { xpSignMessage } from "./utils/xpSignMessage";
+export { xpSignTransaction } from "./utils/xpSignTransaction";
 
 export { xpVerifySignature } from "./utils/xpVerifySignature";
 

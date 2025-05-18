@@ -1,10 +1,10 @@
-import { AvalancheAccount } from "@/account/avalancheAccount";
-import { Address, Hex } from "viem";
+import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
+import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 
 export type SignXPMessageParameters = {
   account?: AvalancheAccount | Address | undefined;
-  message: Hex;
+  message: string;
   accountIndex?: number | undefined;
 };
 

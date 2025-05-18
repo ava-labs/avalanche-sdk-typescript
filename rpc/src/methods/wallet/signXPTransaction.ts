@@ -1,6 +1,6 @@
 import { UnsignedTx, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
-import { parseAvalancheAccount } from "../../account/utils/parseAvalancheAccount.js";
+import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
 import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
@@ -19,7 +19,7 @@ export async function signXPTransaction(
 
   if (xpAccount) {
     const [tx] = getTxFromBytes(txHex, chainAlias);
-    const signature = (await xpAccount.sign(txHex, "bytes")) as Uint8Array;
+    const signature = utils.hexToBuffer(await xpAccount.signTransaction(txHex));
     const unsignedTx = new UnsignedTx(tx, [], new utils.AddressMaps());
     unsignedTx.addSignature(signature);
     const signedTx = utils.bufferToHex(

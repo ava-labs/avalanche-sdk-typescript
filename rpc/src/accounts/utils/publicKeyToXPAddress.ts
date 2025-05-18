@@ -9,8 +9,8 @@ import { XPAddress } from "../avalancheAccount.js";
  * @returns The XP address.
  */
 export function publicKeyToXPAddress(publicKey: Hex, hrp: string): XPAddress {
-  return utils.formatBech32(
-    hrp,
-    secp256k1.publicKeyBytesToAddress(utils.hexToBuffer(publicKey))
+  const address = secp256k1.publicKeyBytesToAddress(
+    utils.hexToBuffer(publicKey)
   );
+  return utils.formatBech32(hrp, address) as XPAddress;
 }

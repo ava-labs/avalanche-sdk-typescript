@@ -1,4 +1,3 @@
-import { parseAvalancheAccount } from "@/account/utils/parseAvalancheAccount.js";
 import {
   Account,
   Address,
@@ -11,7 +10,8 @@ import {
   RpcSchema,
   Transport,
 } from "viem";
-import { AvalancheAccount, XPAccount } from "../account/avalancheAccount.js";
+import { AvalancheAccount, XPAccount } from "../accounts/avalancheAccount.js";
+import { parseAvalancheAccount } from "../accounts/utils/parseAvalancheAccount.js";
 import {
   AvalancheCoreClient,
   createAvalancheCoreClient,
@@ -60,9 +60,20 @@ export type AvalancheWalletCoreClient<
 export type CreateAvalancheWalletCoreClientErrorType =
   CreatePublicClientErrorType;
 
-export function createAvalancheWalletCoreClient(
-  parameters: AvalancheWalletCoreClientConfig
-): AvalancheWalletCoreClient {
+export function createAvalancheWalletCoreClient<
+  transport extends Transport = Transport,
+  chain extends Chain | undefined = Chain | undefined,
+  account extends Account | undefined = undefined,
+  rpcSchema extends RpcSchema | undefined = undefined,
+  extended extends Extended | undefined = Extended | undefined
+>(
+  parameters: AvalancheWalletCoreClientConfig<
+    transport,
+    chain,
+    account,
+    rpcSchema
+  >
+): AvalancheWalletCoreClient<transport, chain, account, rpcSchema, extended> {
   let {
     key = "avalancheWalletCore",
     name = "Avalanche Wallet Core Client",
@@ -77,7 +88,6 @@ export function createAvalancheWalletCoreClient(
   if (typeof account === "string") {
     account = parseAvalancheAccount(account);
   }
-
   const walletTransport = createAvalancheTransportClient(
     transportConfig,
     chainConfig,
@@ -114,7 +124,17 @@ export function createAvalancheWalletCoreClient(
     type: "avalancheWalletCoreClient",
   });
 
-  return {
+  function extend(base: typeof client) {
+    type ExtendFn = (base: typeof client) => unknown;
+    return (extendFn: ExtendFn) => {
+      const extended = extendFn(base) as Extended;
+      for (const key in client) delete extended[key];
+      const combined = { ...base, ...extended };
+      return Object.assign(combined, { extend: extend(combined as any) });
+    };
+  }
+
+  const walletCoreClient = {
     ...client,
     xpAccount: account?.xpAccount,
     pChainClient: createAvalancheCoreClient({
@@ -129,5 +149,15 @@ export function createAvalancheWalletCoreClient(
       ...rest,
       transport: xChainTransport,
     }),
-  } as any;
+  } as AvalancheWalletCoreClient<
+    transport,
+    chain,
+    account,
+    rpcSchema,
+    extended
+  >;
+
+  return Object.assign(walletCoreClient, {
+    extend: extend(walletCoreClient as any),
+  });
 }
