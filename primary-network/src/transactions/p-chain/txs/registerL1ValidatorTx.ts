@@ -1,13 +1,8 @@
-import {
-    type Context as ContextType,
-    pvm,
-    utils,
-    type pvmSerial,
-} from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type RegisterL1ValidatorTxParams = CommonTxParams & {
     balance: bigint;
@@ -25,13 +20,11 @@ export class RegisterL1ValidatorTx extends Transaction {
 }
 
 export async function newRegisterL1ValidatorTx(
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: RegisterL1ValidatorTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<RegisterL1ValidatorTx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newRegisterL1ValidatorTx({
         ...commonTxParams,
@@ -39,5 +32,11 @@ export async function newRegisterL1ValidatorTx(
         blsSignature: utils.hexToBuffer(params.blsSignature),
         message: utils.hexToBuffer(params.message),
     }, context)
-    return new RegisterL1ValidatorTx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new RegisterL1ValidatorTx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
+    })
 }

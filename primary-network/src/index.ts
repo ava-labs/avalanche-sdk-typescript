@@ -1,4 +1,5 @@
 export * from "./primaryNetworkClient";
+export * from "./primaryNetworkCoreClient";
 export * from "./transactions";
 export * from "./wallet";
 

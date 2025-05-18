@@ -1,8 +1,8 @@
-import { pvm, type pvmSerial, type Context as ContextType } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams } from "../common/utils";
 import type { CommonTxParams, NewTxParams } from "../common/types";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type BaseTxParams = CommonTxParams
 
@@ -16,13 +16,16 @@ export class BaseTx extends Transaction {
 }
 
 export async function newBaseTx(
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     txPrams: BaseTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<BaseTx> {
-    const commonTxParams = await fetchCommonTxParams(txPrams, context, pvmRpc, wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(
+        txPrams,
+        context,
+        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.wallet,
+    )
 
     const unsignedTx = pvm.newBaseTx(
         commonTxParams,
@@ -31,8 +34,8 @@ export async function newBaseTx(
 
     return new BaseTx({
         unsignedTx,
-        wallet,
-        nodeUrl,
-        pvmRpc,
+        wallet: primaryNetworkCoreClient.wallet,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
     })
 }

@@ -14,7 +14,7 @@ async function main() {
     })
 
     await exportTx.sign()
-    exportTx.issue().then(console.log)
+    console.log(await exportTx.issue())
 }
 
 main()

@@ -1,4 +1,4 @@
-export function getNodeUrlFromChain(chain: 'mainnet' | 'fuji' | string) {
+export function getNodeUrlFromChain(chain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`) {
     if (chain === 'mainnet') {
         return 'https://api.avax.network'
     }

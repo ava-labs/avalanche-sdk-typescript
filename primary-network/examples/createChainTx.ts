@@ -11,7 +11,7 @@ async function main() {
         subnetAuth: [0],
     })
     await createChainTx.sign()
-    createChainTx.issue().then(console.log)
+    console.log(await createChainTx.issue())
 }
 
 main()

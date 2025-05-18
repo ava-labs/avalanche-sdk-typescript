@@ -11,7 +11,7 @@ async function main() {
     })
 
     await importTx.sign()
-    importTx.issue().then(console.log)
+    console.log(await importTx.issue())
 }
 
 main()

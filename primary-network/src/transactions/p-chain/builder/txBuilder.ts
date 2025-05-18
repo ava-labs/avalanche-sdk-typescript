@@ -1,7 +1,3 @@
-import type { pvm } from "@avalabs/avalanchejs";
-import { Context as ContextType }  from '@avalabs/avalanchejs';
-import type { TxBuilderConstructorParams, NewTxBuilderParams } from "./types";
-import type { Wallet } from "../../../wallet";
 import { type BaseTx, type BaseTxParams, newBaseTx } from "../txs/baseTx";
 import { type ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams, newConvertSubnetToL1Tx } from "../txs/convertSubnetToL1Tx";
 import { type CreateSubnetTx, type CreateSubnetTxParams, newCreateSubnetTx } from "../txs/createSubnetTx";
@@ -16,43 +12,19 @@ import { type AddPermissionlessValidatorTx, type AddPermissionlessValidatorTxPar
 import { type AddPermissionlessDelegatorTx, type AddPermissionlessDelegatorTxParams, newAddPermissionlessDelegatorTx } from "../txs/addPermissionlessDelegatorTx";
 import { type ExportTx, type ExportTxParams, newExportTx } from "../txs/exportTx";
 import { type ImportTx, type ImportTxParams, newImportTx } from "../txs/importTx";
-import { getTxClassFromBytes } from "../common/utils";
-import type { NewTxParams } from "../common/types";
-import { Transaction } from "../common/transaction";
+import { type NewTxFromBytesParams, newTxFromBytes } from "../txs/txFromBytes";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
+import type { Transaction } from "../common/transaction";
 
 export class TxBuilder {
-    context: ContextType.Context | undefined;
-    wallet: Wallet | undefined;
-    nodeUrl: string;
-    pvmRpc: pvm.PVMApi;
+    primaryNetworkCoreClient: PrimaryNetworkCore;
 
-    constructor(params: TxBuilderConstructorParams) {
-        this.context = params.context;
-        this.wallet = params.wallet;
-        this.nodeUrl = params.nodeUrl;
-        this.pvmRpc = params.pvmRpc;
+    constructor(primaryNetworkCoreClient: PrimaryNetworkCore) {
+        this.primaryNetworkCoreClient = primaryNetworkCoreClient;
     }
 
-    static newClient(params: NewTxBuilderParams) {
-        return new TxBuilder({
-            ...params,
-            context: undefined,
-        })
-    }
-
-    linkWallet(wallet: Wallet) {
-        this.wallet = wallet;
-    }
-
-    /**
-     * Initializes the context when required if it is not already initialized.
-     * @returns The context.
-    */
-    async initializeContextIfNot() {
-        if (!this.context) {
-            this.context = await ContextType.getContextFromURI(this.nodeUrl);
-        }
-        return this.context;
+    static newClient(primaryNetworkCoreClient: PrimaryNetworkCore) {
+        return new TxBuilder(primaryNetworkCoreClient)
     }
 
     /**
@@ -60,170 +32,63 @@ export class TxBuilder {
      * result in reduced feature sets, like missing input UTXOs, or,
      * signing functionality.
     */
-    newTxFromBytes<T extends Transaction>(
-        hexTxBytes: string,
-        txClass?: new (params: NewTxParams) => T,
-    ): T {
-        return getTxClassFromBytes(
-            txClass ?? (Transaction as new (params: NewTxParams) => T),
-            hexTxBytes,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        )
+    newTxFromBytes<T extends Transaction>(params: NewTxFromBytesParams<T>): T {
+        return newTxFromBytes(this.primaryNetworkCoreClient, params)
     }
 
     async newBaseTx(params: BaseTxParams): Promise<BaseTx> {
-        const context = await this.initializeContextIfNot();
-        return newBaseTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newBaseTx(this.primaryNetworkCoreClient, params);
     }
 
     async newConvertSubnetToL1Tx(params: ConvertSubnetToL1TxParams): Promise<ConvertSubnetToL1Tx> {
-        const context = await this.initializeContextIfNot();
-        return newConvertSubnetToL1Tx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newConvertSubnetToL1Tx(this.primaryNetworkCoreClient, params);
     }
 
     async newCreateSubnetTx(params: CreateSubnetTxParams): Promise<CreateSubnetTx> {
-        const context = await this.initializeContextIfNot();
-        return newCreateSubnetTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newCreateSubnetTx(this.primaryNetworkCoreClient, params);
     }
 
     async newCreateChainTx(params: CreateChainTxParams): Promise<CreateChainTx> {
-        const context = await this.initializeContextIfNot();
-        return newCreateChainTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newCreateChainTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddSubnetValidatorTx(params: AddSubnetValidatorTxParams): Promise<AddSubnetValidatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newAddSubnetValidatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newAddSubnetValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newRemoveSubnetValidatorTx(params: RemoveSubnetValidatorTxParams): Promise<RemoveSubnetValidatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newRemoveSubnetValidatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newRemoveSubnetValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newRegisterL1ValidatorTx(params: RegisterL1ValidatorTxParams): Promise<RegisterL1ValidatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newRegisterL1ValidatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newRegisterL1ValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newIncreaseL1ValidatorBalanceTx(params: IncreaseL1ValidatorBalanceTxParams): Promise<IncreaseL1ValidatorBalanceTx> {
-        const context = await this.initializeContextIfNot();
-        return newIncreaseL1ValidatorBalanceTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newIncreaseL1ValidatorBalanceTx(this.primaryNetworkCoreClient, params);
     }
 
     async newSetL1ValidatorWeightTx(params: SetL1ValidatorWeightTxParams): Promise<SetL1ValidatorWeightTx> {
-        const context = await this.initializeContextIfNot();
-        return newSetL1ValidatorWeightTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newSetL1ValidatorWeightTx(this.primaryNetworkCoreClient, params);
     }
 
     async newDisableL1ValidatorTx(params: DisableL1ValidatorTxParams): Promise<DisableL1ValidatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newDisableL1ValidatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newDisableL1ValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddPermissionlessValidatorTx(params: AddPermissionlessValidatorTxParams): Promise<AddPermissionlessValidatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newAddPermissionlessValidatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newAddPermissionlessValidatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newAddPermissionlessDelegatorTx(params: AddPermissionlessDelegatorTxParams): Promise<AddPermissionlessDelegatorTx> {
-        const context = await this.initializeContextIfNot();
-        return newAddPermissionlessDelegatorTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newAddPermissionlessDelegatorTx(this.primaryNetworkCoreClient, params);
     }
 
     async newExportTx(params: ExportTxParams): Promise<ExportTx> {
-        const context = await this.initializeContextIfNot();
-        return newExportTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newExportTx(this.primaryNetworkCoreClient, params);
     }
 
     async newImportTx(params: ImportTxParams): Promise<ImportTx> {
-        const context = await this.initializeContextIfNot();
-        return newImportTx(
-            params,
-            context,
-            this.pvmRpc,
-            this.nodeUrl,
-            this.wallet,
-        );
+        return newImportTx(this.primaryNetworkCoreClient, params);
     }
 }

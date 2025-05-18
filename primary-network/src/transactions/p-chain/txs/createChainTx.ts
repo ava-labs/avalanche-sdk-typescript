@@ -1,8 +1,8 @@
-import { type Context as ContextType, pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
 import { SubnetTransaction } from "./subnetTransactions";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type CreateChainTxParams = CommonTxParams & {
     subnetId: string;
@@ -23,13 +23,11 @@ export class CreateChainTx extends SubnetTransaction {
 }
 
 export async function newCreateChainTx(
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: CreateChainTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<CreateChainTx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newCreateChainTx({
         ...commonTxParams,
@@ -40,5 +38,11 @@ export async function newCreateChainTx(
         subnetAuth: params.subnetAuth,
         fxIds: params.fxIds ?? [],
     }, context)
-    return new CreateChainTx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new CreateChainTx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
+    })
 }

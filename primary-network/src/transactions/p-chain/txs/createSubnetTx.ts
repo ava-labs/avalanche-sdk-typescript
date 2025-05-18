@@ -1,7 +1,7 @@
-import { type Context as ContextType, pvm, type pvmSerial, utils} from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../common/types";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type CreateSubnetTxParams = CommonTxParams & {
@@ -24,13 +24,11 @@ export class CreateSubnetTx extends Transaction {
 }
 
 export async function newCreateSubnetTx(
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: CreateSubnetTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<CreateSubnetTx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const formattedSubnetOwnerAddresses = params.subnetOwners.addresses.map(utils.bech32ToBytes)
 
@@ -40,5 +38,11 @@ export async function newCreateSubnetTx(
         locktime: params.subnetOwners.locktime ?? 0n,
         threshold: params.subnetOwners.threshold ?? 1
     }, context)
-    return new CreateSubnetTx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new CreateSubnetTx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
+    })
 }

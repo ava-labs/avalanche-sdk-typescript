@@ -1,8 +1,8 @@
-import { type Context as ContextType, pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
-import type { Wallet } from "../../../wallet";
+import { pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
+import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type AddPermissionlessValidatorTxParams = CommonTxParams & {
     stakeInAvax: number;
@@ -27,13 +27,11 @@ export class AddPermissionlessValidatorTx extends Transaction {
 }
 
 export async function newAddPermissionlessValidatorTx(
+    primaryNetworkCoreClient: PrimaryNetworkCore,
     params: AddPermissionlessValidatorTxParams,
-    context: ContextType.Context,
-    pvmRpc: pvm.PVMApi,
-    nodeUrl: string,
-    wallet?: Wallet,
 ): Promise<AddPermissionlessValidatorTx> {
-    const commonTxParams = await fetchCommonTxParams(params, context, pvmRpc, wallet)
+    const context = await primaryNetworkCoreClient.initializeContextIfNot()
+    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newAddPermissionlessValidatorTx({
         ...commonTxParams,
@@ -50,5 +48,11 @@ export async function newAddPermissionlessValidatorTx(
         locktime: BigInt(params.locktime ?? 0n),
         subnetId: '11111111111111111111111111111111LpoYY' // accept only Primary Network staking for permissionless validators
     }, context)
-    return new AddPermissionlessValidatorTx({ unsignedTx, pvmRpc, nodeUrl, wallet })
+
+    return new AddPermissionlessValidatorTx({
+        unsignedTx,
+        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        nodeUrl: primaryNetworkCoreClient.nodeUrl,
+        wallet: primaryNetworkCoreClient.wallet,
+    })
 }
