@@ -20,9 +20,10 @@ export async function xpSignMessage(
     ...new Int(message.length).toBytes(),
     ...utf8ToBytes(message),
   ]);
+  console.log(" sayan", messageToHashBuffer);
   const sig = await secp256k1.sign(
     messageToHashBuffer,
     utils.hexToBuffer(privateKey)
   );
-  return utils.base58.encode(sig) as Hex;
+  return utils.base58.encode(utils.addChecksum(utils.addChecksum(sig))) as Hex;
 }

@@ -1,5 +1,3 @@
-import { XPAccount } from "src/accounts/avalancheAccount";
-import { AvalancheWalletRpcSchema } from "src/methods/wallet/avalancheWalletRPCSchema.js";
 import {
   Account,
   Chain,
@@ -13,8 +11,11 @@ import {
   WalletActions,
   WalletRpcSchema,
 } from "viem";
+import { XPAccount } from "../accounts/avalancheAccount";
+import { AvalancheWalletRpcSchema } from "../methods/wallet/avalancheWalletRPCSchema.js";
 import { AvalancheCoreClient } from "./createAvalancheCoreClient";
 import {
+  AvalancheWalletCoreClient,
   AvalancheWalletCoreClientConfig,
   createAvalancheWalletCoreClient,
 } from "./createAvalancheWalletCoreClient";
@@ -22,6 +23,7 @@ import {
   avalancheWalletActions,
   AvalancheWalletActions,
 } from "./decorators/avalancheWallet.js";
+import { Erc20Actions, erc20Actions } from "./decorators/erc20";
 
 export type AvalancheWalletClientConfig<
   transport extends Transport = Transport,
@@ -52,6 +54,14 @@ export type AvalancheWalletClient<
     pChainClient: AvalancheCoreClient;
     cChainClient: AvalancheCoreClient;
     xChainClient: AvalancheCoreClient;
+  } & {
+    erc20: AvalancheWalletCoreClient<
+      transport,
+      chain,
+      account,
+      rpcSchema,
+      Erc20Actions
+    >;
   }
 >;
 
@@ -75,9 +85,12 @@ export function createAvalancheWalletClient<
     type: "avalancheWalletClient",
     rpcSchema: rpcSchema<AvalancheWalletRpcSchema & WalletRpcSchema>(),
   });
-
+  const erc20Methods = erc20Actions(client);
   const avalancheWalletClient = client
     .extend(walletActions)
     .extend(avalancheWalletActions as any);
-  return avalancheWalletClient;
+  return {
+    ...(avalancheWalletClient as any),
+    erc20: erc20Methods,
+  };
 }

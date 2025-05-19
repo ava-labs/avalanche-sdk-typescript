@@ -1,4 +1,5 @@
 import { secp256k1, utils } from "@avalabs/avalanchejs";
+import { sha256 } from "@noble/hashes/sha256";
 import { Hex } from "viem";
 
 /**
@@ -11,12 +12,12 @@ import { Hex } from "viem";
  */
 export function xpVerifySignature(
   signature: Hex,
-  message: string | Uint8Array,
+  message: string,
   publicKey: Hex
 ): boolean {
   return secp256k1.verify(
     utils.hexToBuffer(signature),
-    message,
+    sha256(message),
     utils.hexToBuffer(publicKey)
   );
 }
