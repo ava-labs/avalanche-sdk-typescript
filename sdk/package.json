@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/sdk",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "Sayan Kar",
   "license": "MIT",
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/sdk#readme",
@@ -19,7 +19,7 @@
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
   "dependencies": {
-    "@avalanche-sdk/devtools": "^0.0.4",
+    "@avalanche-sdk/devtools": "^0.0.5",
     "eslint": "^9.22.0"
   },
   "devDependencies": {
