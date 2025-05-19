@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network#readme",
   "dependencies": {
-    "@avalabs/avalanchejs": "^5.0.0",
+    "@avalabs/avalanchejs": "5.1.0-alpha.1",
     "@noble/hashes": "^1.8.0",
     "@scure/base": "^1.2.4"
   },
