@@ -19,7 +19,7 @@ generation:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
 typescript:
-  version: 0.3.4
+  version: 0.3.5
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
