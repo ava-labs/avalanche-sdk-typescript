@@ -1,9 +1,8 @@
 {
   "name": "@avalanche-sdk/data",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "Avacloud",
   "type": "module",
-  "license": "MIT",
   "bin": {
     "mcp": "bin/mcp-server.js"
   },
