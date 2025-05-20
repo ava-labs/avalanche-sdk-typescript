@@ -33,7 +33,7 @@ const avalanche = new AvalancheCore({
 async function run() {
   const res = await webhooksCreate(avalanche, {
     eventType: "address_activity",
-    url: "https://inferior-chainstay.com",
+    url: "https://sophisticated-exterior.org/",
     chainId: "<id>",
     metadata: {
       addresses: [
