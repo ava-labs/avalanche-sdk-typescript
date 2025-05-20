@@ -30,6 +30,7 @@ let value: Subnet = {
       vmId: "<id>",
       subnetId: "<id>",
       blockchainName: "<value>",
+      evmChainId: 43114,
     },
   ],
 };
