@@ -1,10 +1,11 @@
-import { Address, Hex } from "viem";
+import { UnsignedTx } from "@avalabs/avalanchejs";
+import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
 import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 
 export type SignXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
-  txHex: Hex;
+  txOrTxHex: string | UnsignedTx;
   chainAlias: "X" | "P";
   utxos?: string[] | undefined;
 };
@@ -15,7 +16,7 @@ export type Signatures = {
 };
 
 export type SignXPTransactionReturnType = {
-  signedTxHex: Hex;
+  signedTxHex: string;
   signatures: Signatures[];
 };
 

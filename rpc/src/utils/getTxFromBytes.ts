@@ -1,8 +1,20 @@
 import { Common, Credential, utils } from "@avalabs/avalanchejs";
-import { Hex } from "viem";
 
+/**
+ * @description Get a transaction from a buffer or hex string
+ * @param txBytes - The buffer or hex string to get the transaction from {@link string | Uint8Array}
+ * @param chainAlias - The chain alias to get the transaction from {@link "P" | "X" | "C"}
+ * @returns A array with the transaction {@link Common.Transaction} and credentials {@link Credential[]}
+ *
+ * @example
+ * ```ts
+ * import { getTxFromBytes } from "@avalanche-sdk/rpc/utils";
+ *
+ * const [tx, credentials] = getTxFromBytes("0x1234567890abcdef", "P");
+ * ```
+ */
 export function getTxFromBytes(
-  txBytes: Hex,
+  txBytes: string,
   chainAlias: string
 ): [Common.Transaction, Credential[]] {
   const strippedTxBytes = utils.strip0x(txBytes);

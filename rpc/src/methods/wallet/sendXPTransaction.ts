@@ -1,12 +1,10 @@
-import { UnsignedTx, utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
 import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
-import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
-import { issueTx as issueTxCChain } from "../cChain/issueTx.js";
 import { issueTx as issueTxPChain } from "../pChain/issueTx.js";
 import { issueTx as issueTxXChain } from "../xChain/issueTx.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
+import { signXPTransaction } from "./signXPTransaction.js";
 import {
   SendXPTransactionParameters,
   SendXPTransactionReturnType,
@@ -23,33 +21,30 @@ export async function sendXPTransaction(
 
   if (xpAccount) {
     // createTx from transactionHex
-    const [tx] = getTxFromBytes(txHex, chainAlias);
-    const signature = utils.hexToBuffer(await xpAccount.signTransaction(txHex));
-    const unsignedTx = new UnsignedTx(tx, [], new utils.AddressMaps());
-    unsignedTx.addSignature(signature);
-    const signedTx = utils.bufferToHex(
-      utils.addChecksum(unsignedTx.getSignedTx().toBytes())
-    );
+
     switch (chainAlias) {
       case "P":
+        let signedTxRes = await signXPTransaction(client, {
+          txOrTxHex: txHex,
+          chainAlias: chainAlias as "X" | "P",
+        });
+
         const issueTxPChainResponse = await issueTxPChain(client.pChainClient, {
-          tx: signedTx,
+          tx: signedTxRes.signedTxHex,
           encoding: "hex",
         });
         return {
           txHash: issueTxPChainResponse.txID as Hex,
         };
       case "C":
-        const issueTxCChainResponse = await issueTxCChain(client.cChainClient, {
-          tx: signedTx,
-          encoding: "hex",
-        });
-        return {
-          txHash: issueTxCChainResponse.txID as Hex,
-        };
+        throw new Error("C-Chain is not supported for XP transactions");
       case "X":
+        signedTxRes = await signXPTransaction(client, {
+          txOrTxHex: txHex,
+          chainAlias: chainAlias as "X" | "P",
+        });
         const issueTxXChainResponse = await issueTxXChain(client.xChainClient, {
-          tx: signedTx,
+          tx: signedTxRes.signedTxHex,
           encoding: "hex",
         });
         return {

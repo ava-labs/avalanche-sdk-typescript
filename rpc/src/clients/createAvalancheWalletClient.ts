@@ -85,6 +85,7 @@ export function createAvalancheWalletClient<
     type: "avalancheWalletClient",
     rpcSchema: rpcSchema<AvalancheWalletRpcSchema & WalletRpcSchema>(),
   });
+
   const erc20Methods = erc20Actions(client);
   const avalancheWalletClient = client
     .extend(walletActions)

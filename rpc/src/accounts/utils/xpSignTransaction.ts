@@ -10,12 +10,12 @@ import { Hex } from "viem";
  * @returns The signature.
  */
 export async function xpSignTransaction(
-  txHash: Hex,
-  privateKey: Hex
+  txHash: Hex | Uint8Array,
+  privateKey: Hex | Uint8Array
 ): Promise<Hex> {
-  const sig = await secp256k1.signHash(
-    utils.hexToBuffer(txHash),
-    utils.hexToBuffer(privateKey)
+  const sig = await secp256k1.sign(
+    typeof txHash === "string" ? utils.hexToBuffer(txHash) : txHash,
+    typeof privateKey === "string" ? utils.hexToBuffer(privateKey) : privateKey
   );
   return utils.bufferToHex(sig) as Hex;
 }

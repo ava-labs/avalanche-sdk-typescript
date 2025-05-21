@@ -82,10 +82,13 @@ function getClientURL(
     return url ?? chain?.rpcUrls.default[transportType]?.[0];
   }
 
-  if (!url) {
+  if (!url && !chain?.rpcUrls?.default?.[transportType]?.[0]) {
     throw new Error("URL is required");
   }
-  const origin = new URL(url).origin;
+
+  url = url ?? chain.rpcUrls.default[transportType]?.[0];
+
+  const origin = new URL(url!).origin;
   switch (clientType) {
     case "public":
       return url;

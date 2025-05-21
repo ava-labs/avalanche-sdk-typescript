@@ -1,45 +1,168 @@
-import { UnsignedTx, utils } from "@avalabs/avalanchejs";
+import {
+  Address,
+  avaxSerial,
+  Credential,
+  Signature,
+  UnsignedTx,
+  utils,
+} from "@avalabs/avalanchejs";
 import { Hex } from "viem";
 import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
+import { publicKeyToXPAddress } from "../../accounts/utils/publicKeyToXPAddress.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
 import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
+import { getUtxosForAddress } from "../../utils/getUtxosForAddress.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "./types/signXPTransaction.js";
+
+const SepkSignatureLength = 65;
+/**
+ * Formats an XP address with the chain alias prefix
+ * @param chainAlias - The chain alias (X or P)
+ * @param address - The XP address
+ * @returns The formatted address with chain alias prefix
+ */
+export function formatChainAddress(
+  chainAlias: "X" | "P",
+  address: string
+): string {
+  return `${chainAlias}-${address}`;
+}
+
 export async function signXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SignXPTransactionParameters
 ): Promise<SignXPTransactionReturnType> {
-  const { txHex, chainAlias, account, utxos } = params;
-
+  const { txOrTxHex, chainAlias, account, utxos } = params;
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
+  const isTestnet = client.chain?.testnet;
 
   if (xpAccount) {
-    const [tx] = getTxFromBytes(txHex, chainAlias);
-    const signature = utils.hexToBuffer(await xpAccount.signTransaction(txHex));
-    const unsignedTx = new UnsignedTx(tx, [], new utils.AddressMaps());
-    unsignedTx.addSignature(signature);
-    const signedTx = utils.bufferToHex(
-      utils.addChecksum(unsignedTx.getSignedTx().toBytes())
-    ) as Hex;
-    return {
-      signedTxHex: signedTx,
-      signatures: [{ signature: signature.toString(), sigIndices: [0] }],
-    };
+    const xpAddress = publicKeyToXPAddress(
+      xpAccount.publicKey,
+      isTestnet ? "fuji" : "avax"
+    );
+    if (typeof txOrTxHex === "string") {
+      // Get the tx and credentials from the txHex
+      let [tx, credentials] = getTxFromBytes(txOrTxHex, chainAlias);
+
+      // If there are no credentials, create empty credentials for all the inputs
+      const txSigIndices = tx.getSigIndices();
+      if (credentials.length === 0) {
+        credentials = txSigIndices.map((sigs) => {
+          const signatures = sigs.map((_) => {
+            return new Signature(
+              new Uint8Array(Array(SepkSignatureLength).fill(0))
+            );
+          });
+          return new Credential(signatures);
+        });
+      }
+
+      // Sign the tx and get the signature
+      const signature = utils.hexToBuffer(
+        await xpAccount.signTransaction(txOrTxHex as Hex)
+      );
+
+      // Fetch the utxoIds from all the inputs
+      const utxoIds = ((tx as any).baseTx as avaxSerial.BaseTx).inputs.map(
+        (input) => input.utxoID
+      );
+
+      // Fetch the utxos for the account address
+      const utxos = await getUtxosForAddress(client, {
+        address: formatChainAddress(chainAlias, xpAddress),
+        chainAlias,
+      });
+
+      // If no utxos are found, throw an error
+      if (utxos.length === 0) {
+        throw new Error("No utxos found for the account address");
+      }
+
+      // Get the signature indices for the utxos of current address
+      const addrSigIndices: number[][] = [];
+      utxoIds.forEach((utxoId, idx) => {
+        const utxo = utxos.find(
+          (utxo) =>
+            utxo.utxoId.txID.toString() === utxoId.txID.toString() &&
+            utxo.utxoId.outputIdx.toJSON() === utxoId.outputIdx.toJSON()
+        );
+        if (utxo) {
+          addrSigIndices.push([
+            idx,
+            utxo
+              .getOutputOwners()
+              .addrs.findIndex(
+                (add) => add.toString(isTestnet ? "fuji" : "avax") === xpAddress
+              ),
+          ]);
+        }
+      });
+
+      // Set the signature for the credentials
+      addrSigIndices.forEach((sig) => {
+        const sigIndex = sig[0]!;
+        const addrIndex = sig[1]!;
+        credentials[sigIndex]?.setSignature(addrIndex, signature);
+      });
+
+      // Serialize the signed tx
+      const signedTx = utils.bufferToHex(
+        utils.addChecksum(new avaxSerial.SignedTx(tx, credentials).toBytes())
+      ) as Hex;
+
+      return {
+        signedTxHex: signedTx,
+        signatures: addrSigIndices.map((sig) => {
+          return {
+            signature: utils.bufferToHex(signature),
+            sigIndices: sig,
+          };
+        }),
+      };
+    } else {
+      const tx = txOrTxHex as UnsignedTx;
+      const signature = await xpAccount.signTransaction(txOrTxHex.toBytes());
+      tx.addSignature(utils.hexToBuffer(signature));
+      return {
+        signedTxHex: utils.bufferToHex(
+          utils.addChecksum(tx.getSignedTx().toBytes())
+        ),
+        signatures: tx
+          .getSigIndicesForAddress(new Address(utils.hexToBuffer(xpAddress)))
+          .map((sig) => {
+            return {
+              signature: signature,
+              sigIndices: sig,
+            };
+          }),
+      };
+    }
   }
 
   return client.request<
     AvalancheWalletRpcSchema,
     {
       method: "avalanche_signTransaction";
-      params: Omit<SignXPTransactionParameters, "account">;
+      params: Omit<SignXPTransactionParameters, "account" | "txOrTxHex"> & {
+        transactionHex: string;
+      };
     },
     SignXPTransactionReturnType
   >({
     method: "avalanche_signTransaction",
-    params: { txHex, chainAlias, utxos },
+    params: {
+      transactionHex:
+        typeof txOrTxHex === "string"
+          ? txOrTxHex
+          : utils.bufferToHex(txOrTxHex.toBytes()),
+      chainAlias,
+      utxos,
+    },
   });
 }

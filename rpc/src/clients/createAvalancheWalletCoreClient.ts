@@ -119,6 +119,7 @@ export function createAvalancheWalletCoreClient<
     ...rest,
     transport: walletTransport,
     account: account?.evmAccount,
+    chain: chainConfig,
     key,
     name,
     type: "avalancheWalletCoreClient",
