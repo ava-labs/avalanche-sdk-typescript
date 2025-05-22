@@ -40,5 +40,16 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./warp": "./dist/warp/index.js",
+    "./transactions/pchain": "./dist/transactions/p-chain/index.js"  
+  },
+  "typesVersions": {
+    "*": {
+      "warp": ["dist/warp/index.d.ts"],
+      "transactions/pchain": ["dist/transactions/p-chain/index.d.ts"]
+    }
   }
 }

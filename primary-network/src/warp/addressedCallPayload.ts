@@ -1,5 +1,6 @@
-import { utils, pvmSerial } from "@avalabs/avalanchejs";
+import { utils, pvmSerial, Address, Bytes, Short } from "@avalabs/avalanchejs";
 import { parseWarpMessage } from "./warpMessage";
+import { evmOrBech32AddressToBytes } from "./utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
@@ -13,7 +14,10 @@ export function parseAddressedCallPayload(
             utils.hexToBuffer(payloadHex),
             pvmSerial.warp.AddressedCallPayloads.AddressedCall,
         );
-        return parsedAddressedCallPayload;
+        return new AddressedCall(
+            parsedAddressedCallPayload.sourceAddress,
+            parsedAddressedCallPayload.payload
+        );
     } catch (error) {
         const warpMsg = parseWarpMessage(payloadHex);
         const addressedCallPayload = parseAddressedCallPayload(
@@ -23,9 +27,25 @@ export function parseAddressedCallPayload(
     }
 }
 
+export function newAddressedCallPayload(sourceAddress: string, payloadHex: string) {
+    const sourceAddressBytes = evmOrBech32AddressToBytes(sourceAddress);
+    const payloadBytes = utils.hexToBuffer(payloadHex);
+    return new AddressedCall(new Address(sourceAddressBytes), new Bytes(payloadBytes));
+}
+
 export class AddressedCall extends pvmSerial.warp.AddressedCallPayloads.AddressedCall {
     static fromHex(addressedCallPayloadHex: string): AddressedCall {
         return parseAddressedCallPayload(addressedCallPayloadHex);
+    }
+
+    static fromValues(sourceAddress: string, payloadHex: string) {
+        return newAddressedCallPayload(sourceAddress, payloadHex);
+    }
+
+    toHex() {
+        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
+        const codecBytes = new Short(0)
+        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
     }
 
     /**

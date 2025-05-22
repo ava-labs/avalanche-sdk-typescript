@@ -1,23 +1,28 @@
-import { pvmSerial, utils } from "@avalabs/avalanchejs";
-
-export type DoNotUseOverride<T> = T extends never ? never : never;
+import { pvmSerial, Short, utils } from "@avalabs/avalanchejs";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
 export function parseWarpMessage(warpMsgHex: string): WarpMessage {
-    const msgHex = utils.strip0x(warpMsgHex);
-
     const parsedWarpMsg = warpManager.unpack(
-        utils.hexToBuffer(msgHex),
+        utils.hexToBuffer(warpMsgHex),
         pvmSerial.warp.WarpMessage,
     );
 
-    return parsedWarpMsg;
+    return new WarpMessage(
+        parsedWarpMsg.unsignedMessage,
+        parsedWarpMsg.signature
+    );
 }
 
 export class WarpMessage extends pvmSerial.warp.WarpMessage {
     static fromHex(warpMsgHex: string) {
         return parseWarpMessage(warpMsgHex);
+    }
+
+    toHex() {
+        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
+        const codecBytes = new Short(0)
+        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
     }
 
     /**

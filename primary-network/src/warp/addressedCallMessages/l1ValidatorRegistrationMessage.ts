@@ -1,11 +1,11 @@
-import { pvmSerial, utils } from "@avalabs/avalanchejs";
+import { Id, Bool, pvmSerial, utils, Short } from "@avalabs/avalanchejs";
 import { parseAddressedCallPayload } from "../addressedCallPayload";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
 export function parseL1ValidatorRegistrationMessage(
     l1ValidatorRegistrationMessageHex: string,
-): pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage {
+): L1ValidatorRegistrationMessage {
     const msgHex = utils.strip0x(l1ValidatorRegistrationMessageHex);
 
     try {
@@ -13,7 +13,10 @@ export function parseL1ValidatorRegistrationMessage(
             utils.hexToBuffer(msgHex),
             pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage,
         );
-        return parsedL1ValidatorRegistrationMessage;
+        return new L1ValidatorRegistrationMessage(
+            parsedL1ValidatorRegistrationMessage.validationId,
+            parsedL1ValidatorRegistrationMessage.registered,
+        );
     } catch (error) {
         const addressedCallPayload = parseAddressedCallPayload(msgHex);
         const l1ValidatorRegistrationMessage = parseL1ValidatorRegistrationMessage(
@@ -23,9 +26,33 @@ export function parseL1ValidatorRegistrationMessage(
     }
 }
 
+export function newL1ValidatorRegistrationMessage(
+    validationId: string,
+    registered: boolean,
+) {
+    const validationIdBytes = utils.base58check.decode(validationId);
+    return new L1ValidatorRegistrationMessage(
+        new Id(validationIdBytes),
+        new Bool(registered),
+    );
+}
+
 export class L1ValidatorRegistrationMessage extends pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage {
     static fromHex(l1ValidatorRegistrationMessageHex: string) {
         return parseL1ValidatorRegistrationMessage(l1ValidatorRegistrationMessageHex);
+    }
+
+    static fromValues(
+        validationId: string,
+        registered: boolean,
+    ) {
+        return newL1ValidatorRegistrationMessage(validationId, registered);
+    }
+
+    toHex() {
+        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
+        const codecBytes = new Short(0)
+        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
     }
 
     /**

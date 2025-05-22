@@ -151,3 +151,91 @@ delegator.tx.stake
 // returns any credentials if the tx is signed
 delegator.unsignedTx.getCredentials()
 ```
+
+## Warp Message Parsing
+
+The SDK provides utilities for parsing and working with Warp messages, which are used for cross-chain communication in the Avalanche network. Warp messages are signed messages that can be verified across different chains.
+
+### Message Structure
+
+A Warp message consists of several components:
+- Network ID
+- Source Chain ID
+- Addressed Call Payload
+  - Source Address
+  - Message Payload (specific to the message type)
+- BitSet Signatures
+
+For more details on the format, refer to original [AvalancheGo docs](https://github.com/ava-labs/avalanchego/blob/ae36212/vms/platformvm/warp/README.md)
+
+### Supported Message Types
+
+The SDK currently supports parsing the following types of AddressedCall payload messages:
+
+1. **RegisterL1ValidatorMessage**
+2. **L1ValidatorWeightMessage**
+3. **L1ValidatorRegistrationMessage**
+4. **SubnetToL1ConversionMessage**
+
+For more details on the format of message types, refer to original [ACP 77](https://github.com/avalanche-foundation/ACPs/blob/58c78c/ACPs/77-reinventing-subnets/README.md#p-chain-warp-message-payloads)
+
+### Working with Warp Messages
+
+You can parse Warp messages from their hex representation and access their components. The SDK provides type-safe methods to work with different message types.
+
+For detailed examples of working with Warp messages, see the [warp examples directory](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/warp).
+
+### Example Usage
+
+Message types and related builder functions can imported from `/warp` sub-path as shown below.
+
+```typescript
+import { WarpMessage, RegisterL1ValidatorMessage } from "@avalanche-sdk/primary-network/warp";
+
+const signedWarpMsgHex = '<SIGNED_MSG_HEX>'
+
+// Parse a signed Warp message
+const signedWarpMsg = WarpMessage.fromHex(signedWarpMsgHex);
+
+// Parse message from signed message, or AddressedCall payload, or the actual message
+const registerL1ValidatorMsg = RegisterL1ValidatorMessage.fromHex(signedWarpMsgHex);
+
+// Convert back to hex
+const hexBytes = registerL1ValidatorMsg.toHex();
+```
+
+### Building Unsigned Messages
+
+You can also build the unsigned messages like `RegisterL1ValidatorMessage` or `L1ValidatorWeightMessage`.
+
+```typescript
+import {
+    AddressedCall,
+    L1ValidatorWeightMessage,
+    WarpUnsignedMessage
+} from "@avalanche-sdk/primary-network/warp";
+
+// building the L1ValidatorWeight message using values
+const newL1ValidatorWeightMsg = L1ValidatorWeightMessage.fromValues(
+    '251q44yFiimeVSHaQbBk69TzoeYqKu9VagGtLVqo92LphUxjmR',
+    4n,
+    41n,
+)
+
+// building AddressedCall payload from the above message
+const addressedCallPayload = AddressedCall.fromValues(
+    '0x35F884853114D298D7aA8607f4e7e0DB52205f07',
+    newL1ValidatorWeightMsg.toHex()
+)
+
+// building WarpUnsignedMessage from the above addressed call payload
+const warpUnsignedMessage = WarpUnsignedMessage.fromValues(
+    1,
+    '251q44yFiimeVSHaQbBk69TzoeYqKu9VagGtLVqo92LphUxjmR',
+    addressedCallPayload.toHex()
+)
+```
+
+For more detailed examples and use cases, refer to the [warp examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/warp) in the repository.
+
+

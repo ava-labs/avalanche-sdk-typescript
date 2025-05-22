@@ -1,11 +1,11 @@
-import { pvmSerial, utils } from "@avalabs/avalanchejs";
+import { BigIntPr, Id, pvmSerial, Short, utils } from "@avalabs/avalanchejs";
 import { parseAddressedCallPayload } from "../addressedCallPayload";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
 export function parseL1ValidatorWeightMessage(
     l1ValidatorWeightMessageHex: string,
-): pvmSerial.warp.AddressedCallPayloads.L1ValidatorWeightMessage {
+): L1ValidatorWeightMessage {
     const msgHex = utils.strip0x(l1ValidatorWeightMessageHex);
 
     try {
@@ -13,7 +13,11 @@ export function parseL1ValidatorWeightMessage(
             utils.hexToBuffer(msgHex),
             pvmSerial.warp.AddressedCallPayloads.L1ValidatorWeightMessage,
         );
-        return parsedL1ValidatorWeightMessage;
+        return new L1ValidatorWeightMessage(
+            parsedL1ValidatorWeightMessage.validationId,
+            parsedL1ValidatorWeightMessage.nonce,
+            parsedL1ValidatorWeightMessage.weight
+        );
     } catch (error) {
         const addressedCallPayload = parseAddressedCallPayload(msgHex);
         const l1ValidatorWeightMessage = parseL1ValidatorWeightMessage(
@@ -23,9 +27,28 @@ export function parseL1ValidatorWeightMessage(
     }
 }
 
+export function newL1ValidatorWeightMessage(validationId: string, nonce: bigint, weight: bigint) {
+    const validationIdBytes = utils.base58check.decode(validationId);
+    return new L1ValidatorWeightMessage(
+        new Id(validationIdBytes),
+        new BigIntPr(nonce),
+        new BigIntPr(weight)
+    );
+}
+
 export class L1ValidatorWeightMessage extends pvmSerial.warp.AddressedCallPayloads.L1ValidatorWeightMessage {
     static fromHex(l1ValidatorWeightMessageHex: string) {
         return parseL1ValidatorWeightMessage(l1ValidatorWeightMessageHex);
+    }
+
+    static fromValues(validationId: string, nonce: bigint, weight: bigint) {
+        return newL1ValidatorWeightMessage(validationId, nonce, weight);
+    }
+
+    toHex() {
+        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
+        const codecBytes = new Short(0)
+        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
     }
 
     /**
