@@ -22,6 +22,10 @@ export type ListL1ValidatorsResponse = {
    * The list of L1 validations for the given Subnet ID, NodeId or validationId
    */
   validators: Array<L1ValidatorDetailsFull>;
+  /**
+   * Block height at which the L1 validator's remaining balance is calculated
+   */
+  blockHeight: string;
 };
 
 /** @internal */
@@ -32,12 +36,14 @@ export const ListL1ValidatorsResponse$inboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   validators: z.array(L1ValidatorDetailsFull$inboundSchema),
+  blockHeight: z.string(),
 });
 
 /** @internal */
 export type ListL1ValidatorsResponse$Outbound = {
   nextPageToken?: string | undefined;
   validators: Array<L1ValidatorDetailsFull$Outbound>;
+  blockHeight: string;
 };
 
 /** @internal */
@@ -48,6 +54,7 @@ export const ListL1ValidatorsResponse$outboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   validators: z.array(L1ValidatorDetailsFull$outboundSchema),
+  blockHeight: z.string(),
 });
 
 /**

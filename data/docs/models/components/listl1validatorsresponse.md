@@ -30,6 +30,7 @@ let value: ListL1ValidatorsResponse = {
       },
     },
   ],
+  blockHeight: "<value>",
 };
 ```
 
@@ -39,3 +40,4 @@ let value: ListL1ValidatorsResponse = {
 | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `nextPageToken`                                                                                                                        | *string*                                                                                                                               | :heavy_minus_sign:                                                                                                                     | A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages. |
 | `validators`                                                                                                                           | [components.L1ValidatorDetailsFull](../../models/components/l1validatordetailsfull.md)[]                                               | :heavy_check_mark:                                                                                                                     | The list of L1 validations for the given Subnet ID, NodeId or validationId                                                             |
+| `blockHeight`                                                                                                                          | *string*                                                                                                                               | :heavy_check_mark:                                                                                                                     | Block height at which the L1 validator's remaining balance is calculated                                                               |
