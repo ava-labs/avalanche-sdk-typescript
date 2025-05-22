@@ -1,10 +1,11 @@
-import { Address, Hex } from "viem";
+import { UnsignedTx } from "@avalabs/avalanchejs";
+import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
 import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 
 export type SendXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
-  txHex: Hex;
+  txOrTxHex: string | UnsignedTx;
   chainAlias: "X" | "P" | "C";
   externalIndices?: number[] | undefined;
   internalIndices?: number[] | undefined;
@@ -13,7 +14,7 @@ export type SendXPTransactionParameters = {
 };
 
 export type SendXPTransactionReturnType = {
-  txHash: Hex;
+  txHash: string;
 };
 
 export type SendXPTransactionErrorType = RequestErrorType;

@@ -13,12 +13,12 @@ import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCo
 import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { getUtxosForAddress } from "../../utils/getUtxosForAddress.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
+import { SepkSignatureLength } from "./constants.js";
 import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "./types/signXPTransaction.js";
 
-const SepkSignatureLength = 65;
 /**
  * Formats an XP address with the chain alias prefix
  * @param chainAlias - The chain alias (X or P)

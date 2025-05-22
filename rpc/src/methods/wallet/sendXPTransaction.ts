@@ -1,6 +1,15 @@
+import {
+  avaxSerial,
+  Credential,
+  Signature,
+  UnsignedTx,
+  utils,
+} from "@avalabs/avalanchejs";
+import { getTxFromBytes } from "src/utils/getTxFromBytes.js";
 import { Hex } from "viem";
 import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
+import { issueTx as issueTxCChain } from "../cChain/issueTx.js";
 import { issueTx as issueTxPChain } from "../pChain/issueTx.js";
 import { issueTx as issueTxXChain } from "../xChain/issueTx.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
@@ -9,23 +18,20 @@ import {
   SendXPTransactionParameters,
   SendXPTransactionReturnType,
 } from "./types/sendXPTransaction.js";
-
 export async function sendXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SendXPTransactionParameters
 ): Promise<SendXPTransactionReturnType> {
-  const { txHex, chainAlias, account, ...rest } = params;
+  const { txOrTxHex, chainAlias, account, ...rest } = params;
 
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
 
   if (xpAccount) {
-    // createTx from transactionHex
-
     switch (chainAlias) {
       case "P":
         let signedTxRes = await signXPTransaction(client, {
-          txOrTxHex: txHex,
+          txOrTxHex: txOrTxHex,
           chainAlias: chainAlias as "X" | "P",
         });
 
@@ -37,10 +43,63 @@ export async function sendXPTransaction(
           txHash: issueTxPChainResponse.txID as Hex,
         };
       case "C":
-        throw new Error("C-Chain is not supported for XP transactions");
+        if (typeof txOrTxHex === "string") {
+          // Get the tx and credentials from the txHex
+          let [tx] = getTxFromBytes(txOrTxHex, "C");
+
+          // Get the signature for the tx
+          const signature = utils.hexToBuffer(
+            await xpAccount.signTransaction(txOrTxHex as Hex)
+          );
+
+          // Create the credentials array
+          let credentials: Credential[] = [];
+          const txSigIndices = tx.getSigIndices();
+          if (credentials.length === 0) {
+            credentials = txSigIndices.map((sigs) => {
+              const signatures = sigs.map((_) => {
+                return new Signature(signature);
+              });
+              return new Credential(signatures);
+            });
+          }
+
+          // Serialize the signed tx
+          const signedTx = utils.bufferToHex(
+            utils.addChecksum(
+              new avaxSerial.SignedTx(tx, credentials).toBytes()
+            )
+          ) as Hex;
+
+          // Issue the tx
+          const issueTxCChainResponse = await issueTxCChain(
+            client.cChainClient,
+            {
+              tx: signedTx,
+              encoding: "hex",
+            }
+          );
+          return {
+            txHash: issueTxCChainResponse.txID as Hex,
+          };
+        } else {
+          const tx = txOrTxHex as UnsignedTx;
+          const signature = await xpAccount.signTransaction(tx.toBytes());
+          tx.addSignature(utils.hexToBuffer(signature));
+          const issueTxCChainResponse = await issueTxCChain(
+            client.cChainClient,
+            {
+              tx: utils.bufferToHex(tx.getSignedTx().toBytes()),
+              encoding: "hex",
+            }
+          );
+          return {
+            txHash: issueTxCChainResponse.txID as Hex,
+          };
+        }
       case "X":
         signedTxRes = await signXPTransaction(client, {
-          txOrTxHex: txHex,
+          txOrTxHex: txOrTxHex,
           chainAlias: chainAlias as "X" | "P",
         });
         const issueTxXChainResponse = await issueTxXChain(client.xChainClient, {
@@ -59,14 +118,19 @@ export async function sendXPTransaction(
     AvalancheWalletRpcSchema,
     {
       method: "avalanche_sendTransaction";
-      params: Omit<SendXPTransactionParameters, "account">;
+      params: Omit<SendXPTransactionParameters, "account" | "txOrTxHex"> & {
+        transactionHex: string;
+      };
     },
     SendXPTransactionReturnType
   >({
     method: "avalanche_sendTransaction",
     params: {
       ...rest,
-      txHex,
+      transactionHex:
+        typeof txOrTxHex === "string"
+          ? txOrTxHex
+          : utils.bufferToHex(txOrTxHex.toBytes()),
       chainAlias,
     },
   });

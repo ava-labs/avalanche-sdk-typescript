@@ -1,4 +1,12 @@
 export {
+  createNonceManager,
+  nonceManager,
+  type CreateNonceManagerParameters,
+  type NonceManager,
+  type NonceManagerSource,
+} from "viem";
+
+export {
   AbiConstructorNotFoundError,
   AbiConstructorParamsNotFoundError,
   AbiDecodingDataSizeInvalidError,
@@ -1010,8 +1018,10 @@ export type {
   RpcBlock,
   RpcBlockIdentifier,
   RpcBlockNumber,
+  RpcEstimateUserOperationGasReturnType,
   RpcFeeHistory,
   RpcFeeValues,
+  RpcGetUserOperationByHashReturnType,
   RpcLog,
   RpcProof,
   RpcSchema,
@@ -1022,6 +1032,9 @@ export type {
   RpcTransactionReceipt,
   RpcTransactionRequest,
   RpcUncle,
+  RpcUserOperation,
+  RpcUserOperationReceipt,
+  RpcUserOperationRequest,
   SerializedAuthorization,
   SerializedAuthorizationList,
   SignableMessage,
@@ -1134,6 +1147,7 @@ export type {
   Widen,
   Withdrawal,
 } from "viem";
+
 import { getContract as viemGetContract } from "viem";
 export const myGetContract = viemGetContract;
 

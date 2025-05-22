@@ -1,10 +1,11 @@
-import { Account, Hex } from "viem";
+import { Account, Hex, NonceManager } from "viem";
 
 export type XPAddress = string;
 
 export type XPAccount = LocalXPAccount;
 
 export type LocalXPAccount = {
+  nonceManager?: NonceManager | undefined;
   publicKey: Hex;
   signMessage: (message: string) => Promise<Hex>;
   signTransaction: (txHash: Hex | Uint8Array) => Promise<Hex>;
