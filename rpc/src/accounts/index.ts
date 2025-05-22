@@ -114,4 +114,3 @@ export type {
 export { parseAvalancheAccount } from "./utils/parseAvalancheAccount";
 
 export { privateKeyToXPAccount } from "./privateKeyToXPAccount";
-export type { PrivateKeyToXPAccountOptions } from "./privateKeyToXPAccount";
