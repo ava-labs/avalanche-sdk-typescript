@@ -18,11 +18,38 @@ import {
   SendXPTransactionParameters,
   SendXPTransactionReturnType,
 } from "./types/sendXPTransaction.js";
+
+/**
+ * Send an transaction to the X, P or C chain
+ * @param client - The client to use {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction {@link SendXPTransactionParameters}
+ * @returns The transaction hash {@link SendXPTransactionReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { sendXPTransaction } from '@avalanche-sdk/rpc/methods/wallet'
+ *
+ * const client = createWalletCoreClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "custom",
+ *     provider: window.avalanche!,
+ *   },
+ * })
+ *
+ * const txHash = await sendXPTransaction(client, {
+ *   txOrTxHex: "0x...",
+ *   chainAlias: "P",
+ * })
+ * ```
+ */
 export async function sendXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SendXPTransactionParameters
 ): Promise<SendXPTransactionReturnType> {
-  const { txOrTxHex, chainAlias, account, ...rest } = params;
+  const { txOrTxHex, chainAlias, account, utxoIds, ...rest } = params;
 
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
@@ -53,16 +80,13 @@ export async function sendXPTransaction(
           );
 
           // Create the credentials array
-          let credentials: Credential[] = [];
           const txSigIndices = tx.getSigIndices();
-          if (credentials.length === 0) {
-            credentials = txSigIndices.map((sigs) => {
-              const signatures = sigs.map((_) => {
-                return new Signature(signature);
-              });
-              return new Credential(signatures);
+          const credentials = txSigIndices.map((sigs) => {
+            const signatures = sigs.map((_) => {
+              return new Signature(signature);
             });
-          }
+            return new Credential(signatures);
+          });
 
           // Serialize the signed tx
           const signedTx = utils.bufferToHex(
@@ -118,8 +142,12 @@ export async function sendXPTransaction(
     AvalancheWalletRpcSchema,
     {
       method: "avalanche_sendTransaction";
-      params: Omit<SendXPTransactionParameters, "account" | "txOrTxHex"> & {
+      params: Omit<
+        SendXPTransactionParameters,
+        "account" | "txOrTxHex" | "utxoIds"
+      > & {
         transactionHex: string;
+        utxos: string[] | undefined;
       };
     },
     SendXPTransactionReturnType
@@ -132,6 +160,7 @@ export async function sendXPTransaction(
           ? txOrTxHex
           : utils.bufferToHex(txOrTxHex.toBytes()),
       chainAlias,
+      utxos: utxoIds,
     },
   });
 }

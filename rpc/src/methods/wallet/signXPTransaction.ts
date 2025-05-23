@@ -32,11 +32,37 @@ export function formatChainAddress(
   return `${chainAlias}-${address}`;
 }
 
+/**
+ * Sign an XP transaction
+ * @param client - The client to use {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction {@link SignXPTransactionParameters}
+ * @returns The signed transaction {@link SignXPTransactionReturnType}
+ *
+ * @example
+ * ```ts
+ * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ * import { signXPTransaction } from '@avalanche-sdk/rpc/methods/wallet'
+ *
+ * const client = createWalletCoreClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "custom",
+ *     provider: window.avalanche!,
+ *   },
+ * })
+ *
+ * const signedTx = await signXPTransaction(client, {
+ *   txOrTxHex: "0x...",
+ *   chainAlias: "P",
+ *   utxos: [],
+ * })
+ */
 export async function signXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SignXPTransactionParameters
 ): Promise<SignXPTransactionReturnType> {
-  const { txOrTxHex, chainAlias, account, utxos } = params;
+  const { txOrTxHex, chainAlias, account, utxoIds } = params;
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
   const isTestnet = client.chain?.testnet;
@@ -89,7 +115,7 @@ export async function signXPTransaction(
       utxoIds.forEach((utxoId, idx) => {
         const utxo = utxos.find(
           (utxo) =>
-            utxo.utxoId.txID.toString() === utxoId.txID.toString() &&
+            utxo.utxoId.ID() === utxoId.ID() &&
             utxo.utxoId.outputIdx.toJSON() === utxoId.outputIdx.toJSON()
         );
         if (utxo) {
@@ -149,8 +175,12 @@ export async function signXPTransaction(
     AvalancheWalletRpcSchema,
     {
       method: "avalanche_signTransaction";
-      params: Omit<SignXPTransactionParameters, "account" | "txOrTxHex"> & {
+      params: Omit<
+        SignXPTransactionParameters,
+        "account" | "txOrTxHex" | "utxoIds"
+      > & {
         transactionHex: string;
+        utxos: string[] | undefined;
       };
     },
     SignXPTransactionReturnType
@@ -162,7 +192,7 @@ export async function signXPTransaction(
           ? txOrTxHex
           : utils.bufferToHex(txOrTxHex.toBytes()),
       chainAlias,
-      utxos,
+      utxos: utxoIds,
     },
   });
 }
