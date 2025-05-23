@@ -31,6 +31,7 @@ let value: ListL1ValidatorsResponse = {
         },
       },
     ],
+    blockHeight: "<value>",
   },
 };
 ```
