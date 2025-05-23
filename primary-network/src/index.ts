@@ -1,5 +1,5 @@
-export { PrimaryNetwork } from "./primaryNetworkClient";
-export { PrimaryNetworkCore } from "./primaryNetworkCoreClient";
+export { PrimaryNetwork, createPrimaryNetworkClient } from "./primaryNetworkClient";
+export { PrimaryNetworkCore, createPrimaryNetworkCoreClient } from "./primaryNetworkCoreClient";
 
 export { 
     AddPermissionlessDelegatorTx, newAddPermissionlessDelegatorTx,
