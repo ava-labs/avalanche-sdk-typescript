@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 51747f72a94536a8ca2c3dc023b559ed
+  docChecksum: eb92566eafffaef7cfd21bffcef95ca6
   docVersion: 1.0.0
-  speakeasyVersion: 1.548.3
-  generationVersion: 2.605.6
-  releaseVersion: 0.0.6
-  configChecksum: 88bd24742f015d32f1f50e79254202a4
+  speakeasyVersion: 1.549.1
+  generationVersion: 2.607.1
+  releaseVersion: 0.0.7
+  configChecksum: 8eaddc2df03ac82b6fb4532ca0a2f4e6
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: devtools
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
@@ -2709,7 +2709,7 @@ examples:
           subnetId: "11111111111111111111111111111111LpoYY"
       responses:
         "200":
-          application/json: {"validators": [{"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}, {"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}]}
+          application/json: {"validators": [{"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}, {"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}], "blockHeight": "<value>"}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
