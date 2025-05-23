@@ -6,11 +6,9 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseL1ValidatorWeightMessage(
     l1ValidatorWeightMessageHex: string,
 ): L1ValidatorWeightMessage {
-    const msgHex = utils.strip0x(l1ValidatorWeightMessageHex);
-
     try {
         const parsedL1ValidatorWeightMessage = warpManager.unpack(
-            utils.hexToBuffer(msgHex),
+            utils.hexToBuffer(l1ValidatorWeightMessageHex),
             pvmSerial.warp.AddressedCallPayloads.L1ValidatorWeightMessage,
         );
         return new L1ValidatorWeightMessage(
@@ -19,7 +17,7 @@ export function parseL1ValidatorWeightMessage(
             parsedL1ValidatorWeightMessage.weight
         );
     } catch (error) {
-        const addressedCallPayload = parseAddressedCallPayload(msgHex);
+        const addressedCallPayload = parseAddressedCallPayload(l1ValidatorWeightMessageHex);
         const l1ValidatorWeightMessage = parseL1ValidatorWeightMessage(
             addressedCallPayload.payload.toString('hex'),
         );

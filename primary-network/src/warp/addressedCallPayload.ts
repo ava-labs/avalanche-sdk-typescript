@@ -7,11 +7,9 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseAddressedCallPayload(
     addressedCallPayloadHex: string,
 ): AddressedCall {
-    const payloadHex = utils.strip0x(addressedCallPayloadHex);
-
     try {
         const parsedAddressedCallPayload = warpManager.unpack(
-            utils.hexToBuffer(payloadHex),
+            utils.hexToBuffer(addressedCallPayloadHex),
             pvmSerial.warp.AddressedCallPayloads.AddressedCall,
         );
         return new AddressedCall(
@@ -19,7 +17,7 @@ export function parseAddressedCallPayload(
             parsedAddressedCallPayload.payload
         );
     } catch (error) {
-        const warpMsg = parseWarpMessage(payloadHex);
+        const warpMsg = parseWarpMessage(addressedCallPayloadHex);
         const addressedCallPayload = parseAddressedCallPayload(
             warpMsg.unsignedMessage.payload.toString('hex'),
         );

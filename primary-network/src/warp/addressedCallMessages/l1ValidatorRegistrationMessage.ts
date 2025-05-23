@@ -6,11 +6,9 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseL1ValidatorRegistrationMessage(
     l1ValidatorRegistrationMessageHex: string,
 ): L1ValidatorRegistrationMessage {
-    const msgHex = utils.strip0x(l1ValidatorRegistrationMessageHex);
-
     try {
         const parsedL1ValidatorRegistrationMessage = warpManager.unpack(
-            utils.hexToBuffer(msgHex),
+            utils.hexToBuffer(l1ValidatorRegistrationMessageHex),
             pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage,
         );
         return new L1ValidatorRegistrationMessage(
@@ -18,7 +16,7 @@ export function parseL1ValidatorRegistrationMessage(
             parsedL1ValidatorRegistrationMessage.registered,
         );
     } catch (error) {
-        const addressedCallPayload = parseAddressedCallPayload(msgHex);
+        const addressedCallPayload = parseAddressedCallPayload(l1ValidatorRegistrationMessageHex);
         const l1ValidatorRegistrationMessage = parseL1ValidatorRegistrationMessage(
             addressedCallPayload.payload.toString('hex'),
         );

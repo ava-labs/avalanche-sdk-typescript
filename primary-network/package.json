@@ -41,6 +41,7 @@
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   },
+  "sideEffects": false,
   "exports": {
     ".": "./dist/index.js",
     "./warp": "./dist/warp/index.js",

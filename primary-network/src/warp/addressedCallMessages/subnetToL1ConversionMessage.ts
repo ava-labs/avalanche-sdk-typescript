@@ -6,18 +6,16 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseSubnetToL1ConversionMessage(
     subnetToL1ConversionMessageHex: string,
 ): SubnetToL1ConversionMessage {
-    const msgHex = utils.strip0x(subnetToL1ConversionMessageHex);
-
     try {
         const parsedSubnetToL1ConversionMessage = warpManager.unpack(
-            utils.hexToBuffer(msgHex),
+            utils.hexToBuffer(subnetToL1ConversionMessageHex),
             pvmSerial.warp.AddressedCallPayloads.SubnetToL1ConversionMessage,
         );
         return new SubnetToL1ConversionMessage(
             parsedSubnetToL1ConversionMessage.conversionId,
         );
     } catch (error) {
-        const addressedCallPayload = parseAddressedCallPayload(msgHex);
+        const addressedCallPayload = parseAddressedCallPayload(subnetToL1ConversionMessageHex);
         const subnetToL1ConversionMessage = parseSubnetToL1ConversionMessage(
             addressedCallPayload.payload.toString('hex'),
         );

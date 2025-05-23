@@ -7,10 +7,8 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseConversionData(
     conversionDataHex: string,
 ): ConversionData {
-    const msgHex = utils.strip0x(conversionDataHex);
-
     const parsedConversionData = warpManager.unpack(
-        utils.hexToBuffer(msgHex),
+        utils.hexToBuffer(conversionDataHex),
         pvmSerial.warp.AddressedCallPayloads.ConversionData,
     );
     return new ConversionData(
