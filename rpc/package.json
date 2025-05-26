@@ -3,7 +3,7 @@
   "version": "0.0.4-alpha.0",
   "scripts": {
     "update-version": "node scripts/update-version.js",
-    "build": "rm -rf dist && rm .tsbuildinfo && npx tsc",
+    "build": "rm -rf dist && rm -f .tsbuildinfo && npx tsc",
     "lint": "eslint --cache --max-warnings=0 src",
     "test": "vitest"
   },
