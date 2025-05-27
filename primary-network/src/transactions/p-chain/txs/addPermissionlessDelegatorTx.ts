@@ -64,7 +64,7 @@ export async function newAddPermissionlessDelegatorTx(
     params: AddPermissionlessDelegatorTxParams,
 ): Promise<AddPermissionlessDelegatorTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newAddPermissionlessDelegatorTx({
         ...commonTxParams,

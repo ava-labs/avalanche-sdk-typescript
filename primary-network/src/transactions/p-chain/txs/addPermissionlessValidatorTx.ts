@@ -85,7 +85,7 @@ export async function newAddPermissionlessValidatorTx(
     params: AddPermissionlessValidatorTxParams,
 ): Promise<AddPermissionlessValidatorTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newAddPermissionlessValidatorTx({
         ...commonTxParams,

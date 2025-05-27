@@ -8,10 +8,12 @@ import {
     Credential,
     UnsignedTx,
     secp256k1,
-    type TransferOutput
+    type TransferOutput,
+    pvmSerial,
+    Address,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
-import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output } from "./types";
+import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, SubnetOwners } from "./types";
 import {
     C_CHAIN_ALIAS, C_CHAIN_FUJI_ID, P_CHAIN_ALIAS, X_CHAIN_ALIAS, X_CHAIN_FUJI_ID,
     MAINNET_NETWORK_ID,
@@ -19,9 +21,10 @@ import {
     X_CHAIN_MAINNET_ID,
     C_CHAIN_MAINNET_ID,
     P_CHAIN_MAINNET_ID,
-    P_CHAIN_FUJI_ID
+    P_CHAIN_FUJI_ID,
 } from "./consts";
 import type { Transaction } from "./transaction";
+
 const errWalletNotFound = (param: string) => `Wallet not found. Link a wallet or provide required parameter: ${param}`
 
 export function formatOutput(output: Output, context: ContextType.Context) {
@@ -34,13 +37,18 @@ export function formatOutput(output: Output, context: ContextType.Context) {
     )
 }
 
+// TODO: try to paralleize API calls within this function
 export async function fetchCommonTxParams(
     txParams: CommonTxParams,
     context: ContextType.Context,
     pvmRpc: pvm.PVMApi,
     wallet?: Wallet,
     sourceChain?: string,
-): Promise<FormattedCommonTxParams> {
+    subnetId?: string,
+): Promise<{
+    commonTxParams: FormattedCommonTxParams,
+    subnetOwners: SubnetOwners | undefined
+}> {
     // If fromAddresses is not provided, use wallet addresses
     if (!txParams.fromAddresses) {
         if (wallet) {
@@ -62,6 +70,19 @@ export async function fetchCommonTxParams(
     // Fetch fee state from api
     const feeState = await pvmRpc.getFeeState()
 
+    let subnetOwners: SubnetOwners | undefined
+    if (subnetId) {
+        const subnetTx = await pvmRpc.getTx({
+            txID: subnetId,
+        })
+        if (pvmSerial.isCreateSubnetTx(subnetTx.unsignedTx)) {
+            subnetOwners = {
+                addresses: subnetTx.unsignedTx.getSubnetOwners().addrs.map(addr => addr.toString(context.hrp)),
+                threshold: subnetTx.unsignedTx.getSubnetOwners().threshold.value()
+            }
+        }
+    }
+
     // Format outputs as per AvalancheJS
     const formattedOutputs = txParams.outputs ? txParams.outputs.map(output => formatOutput(output, context)) : []
 
@@ -80,7 +101,7 @@ export async function fetchCommonTxParams(
         result.minIssuanceTime = txParams.minIssuanceTime
     }
 
-    return result
+    return { commonTxParams: result, subnetOwners }
 }
 
 export function getChainIdFromAlias(
@@ -184,6 +205,41 @@ export async function addSigToAllCreds(
         }),
     );
 };
+
+export async function addSubnetAuthSignature(
+    subnetOwners: SubnetOwners,
+    subnetAuth: number[],
+    unsignedTx: UnsignedTx,
+    privateKeys: Uint8Array[],
+) {
+    // Get the addresses that need to sign based on subnetAuth indices
+    const signingOwners = subnetOwners.addresses.filter((_, index) => subnetAuth.includes(index));
+
+    // Last credential index is for the subnet auth signatures
+    const credentialIndex = unsignedTx.getCredentials().length - 1;
+
+    // Extract HRP from first signing owner address
+    const hrp = signingOwners[0]?.split('1')[0];
+    if (!hrp) {
+        throw new Error('No signing owners found');
+    }
+
+    // Sign with available private keys if they match required signers
+    await Promise.all(privateKeys.map(async (privateKey) => {
+        const address = new Address(
+            secp256k1.publicKeyBytesToAddress(
+                secp256k1.getPublicKey(privateKey)
+            )
+        );
+        const addressString = address.toString(hrp);
+
+        const signerIndex = signingOwners.indexOf(addressString);
+        if (signerIndex !== -1) {
+            const signature = await secp256k1.sign(unsignedTx.toBytes(), privateKey);
+            unsignedTx.addSignatureAt(signature, credentialIndex, signerIndex);
+        }
+    }));
+}
 
 export function evmAddressToBytes(address: string) {
     let evmAddress = address;

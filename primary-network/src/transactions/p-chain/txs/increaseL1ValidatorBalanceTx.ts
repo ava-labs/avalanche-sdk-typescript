@@ -23,7 +23,7 @@ export async function newIncreaseL1ValidatorBalanceTx(
     params: IncreaseL1ValidatorBalanceTxParams,
 ): Promise<IncreaseL1ValidatorBalanceTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newIncreaseL1ValidatorBalanceTx({
         ...commonTxParams,

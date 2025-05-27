@@ -20,7 +20,7 @@ export async function newBaseTx(
     txPrams: BaseTxParams,
 ): Promise<BaseTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(
+    const { commonTxParams } = await fetchCommonTxParams(
         txPrams,
         context,
         primaryNetworkCoreClient.pvmRpc,

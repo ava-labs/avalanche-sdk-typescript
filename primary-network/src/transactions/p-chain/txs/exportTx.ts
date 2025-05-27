@@ -24,7 +24,7 @@ export async function newExportTx(
     txPrams: ExportTxParams,
 ): Promise<ExportTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(txPrams, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(txPrams, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const exportedOutputs = txPrams.exportedOutputs.map(output => formatOutput(output, context))
     commonTxParams.outputs = [...commonTxParams.outputs, ...exportedOutputs]

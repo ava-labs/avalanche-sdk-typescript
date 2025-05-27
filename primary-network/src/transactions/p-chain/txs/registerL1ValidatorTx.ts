@@ -24,7 +24,7 @@ export async function newRegisterL1ValidatorTx(
     params: RegisterL1ValidatorTxParams,
 ): Promise<RegisterL1ValidatorTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newRegisterL1ValidatorTx({
         ...commonTxParams,

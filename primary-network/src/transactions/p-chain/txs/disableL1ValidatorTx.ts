@@ -23,7 +23,7 @@ export async function newDisableL1ValidatorTx(
     params: DisableL1ValidatorTxParams,
 ): Promise<DisableL1ValidatorTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newDisableL1ValidatorTx({
         ...commonTxParams,

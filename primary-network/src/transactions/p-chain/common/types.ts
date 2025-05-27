@@ -79,6 +79,11 @@ export type NewTxParams = {
     pvmRpc: pvm.PVMApi
 }
 
+export type SubnetOwners = {
+    addresses: `${Lowercase<string>}1${string}`[],
+    threshold: number,
+}
+
 export type TransferableOutputFull = {
     output: TransferOutput;
     assetId: Id;

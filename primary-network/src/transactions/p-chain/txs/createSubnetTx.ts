@@ -28,7 +28,7 @@ export async function newCreateSubnetTx(
     params: CreateSubnetTxParams,
 ): Promise<CreateSubnetTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const formattedSubnetOwnerAddresses = params.subnetOwners.addresses.map(utils.bech32ToBytes)
 
