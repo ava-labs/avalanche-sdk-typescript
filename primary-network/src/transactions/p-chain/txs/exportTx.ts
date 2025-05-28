@@ -27,11 +27,11 @@ export async function newExportTx(
     const { commonTxParams } = await fetchCommonTxParams(txPrams, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const exportedOutputs = txPrams.exportedOutputs.map(output => formatOutput(output, context))
-    commonTxParams.outputs = [...commonTxParams.outputs, ...exportedOutputs]
 
     const unsignedTx = pvm.newExportTx(
         {
             ...commonTxParams,
+            outputs: exportedOutputs,
             destinationChainId: getChainIdFromAlias(txPrams.destinationChain, context.networkID),
         },
         context,
