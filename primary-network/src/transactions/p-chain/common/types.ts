@@ -11,15 +11,15 @@ export type Output = {
      */
     addresses: string[],
     /**
-     * Asset ID of the UTXO.
+     * Optional. Asset ID of the UTXO.
      */
     assetId?: string,
     /**
-     * Timestamp in seconds after which this UTXO can be consumed.
+     * Optional. Timestamp in seconds after which this UTXO can be consumed.
      */
     locktime?: number,
     /**
-     * Threshold of `addresses`' signatures required to consume this UTXO.
+     * Optional. Threshold of `addresses`' signatures required to consume this UTXO.
      */
     threshold?: number,
 }
