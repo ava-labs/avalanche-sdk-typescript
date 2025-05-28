@@ -39,7 +39,7 @@ describe('addPermissionlessDelegatorTx', () => {
         const changeAddresses = [pAddressForTest2]
 
         const stakeAmount = 0.5
-        const endTime = Date.now() + 2 * 24 * 60 * 60 * 1000  // 2 days from now
+        const endTime = 1234356770
         const mockTxParams: AddPermissionlessDelegatorTxParams = {
             changeAddresses, // staked outputs will be owned by these addresses
             stakeInAvax: stakeAmount,
@@ -82,7 +82,7 @@ describe('addPermissionlessDelegatorTx', () => {
         const changeAddresses = [pAddressForTest2]
 
         const stakeAmount = 0.5
-        const endTime = Date.now() + 2 * 24 * 60 * 60 * 1000  // 2 days from now
+        const endTime = 1234356770
         const mockTxParams: AddPermissionlessDelegatorTxParams = {
             changeAddresses, // staked outputs will be owned by these addresses
             stakeInAvax: stakeAmount,
@@ -95,11 +95,41 @@ describe('addPermissionlessDelegatorTx', () => {
         const result = await newAddPermissionlessDelegatorTx(mockPrimaryNetworkCoreClient, mockTxParams);
 
         // check staking details
-        expect(result.tx.subnetValidator.validator.nodeId.value()).toBe(mockTxParams.nodeId)
-        expect(result.tx.subnetValidator.validator.endTime.value()).toBe(BigInt(mockTxParams.end))
-        expect(result.tx.subnetValidator.validator.weight.value()).toBe(BigInt(mockTxParams.stakeInAvax * 1e9))
-        expect(result.tx.getDelegatorRewardsOwner().locktime.value()).toBe(BigInt(mockTxParams.locktime ?? 0n))
-        expect(result.tx.getDelegatorRewardsOwner().threshold.value()).toBe(mockTxParams.threshold ?? 1)
-        expect(result.tx.getDelegatorRewardsOwner().addrs.map(a => a.toString('fuji'))).toEqual(mockTxParams.rewardAddresses.map(a => a.replace('P-', '')))
+        const vldr = result.tx.subnetValidator.validator
+        expect(vldr.nodeId.value(), 'nodeId mismatch').toBe(mockTxParams.nodeId)
+        expect(vldr.endTime.value(), 'endTime mismatch').toBe(BigInt(mockTxParams.end))
+        expect(vldr.weight.value(), 'weight mismatch').toBe(BigInt(mockTxParams.stakeInAvax * 1e9))
+
+        // check delegator rewards owner
+        const drw = result.tx.getDelegatorRewardsOwner()
+        expect(drw.locktime.value(), 'locktime mismatch').toBe(BigInt(mockTxParams.locktime ?? 0n))
+        expect(drw.threshold.value(), 'threshold mismatch').toBe(mockTxParams.threshold ?? 1)
+        expect(
+            drw.addrs.map(a => a.toString('fuji')),
+            'reward addresses mismatch'
+        ).toEqual(
+            mockTxParams.rewardAddresses.map(a => a.replace('P-', ''))
+        )
+    });
+
+    it('should give correct transaction hash', async () => {
+        const rewardAddresses = [pAddressForTest, pAddressForTest3]
+        const changeAddresses = [pAddressForTest2]
+
+        const stakeAmount = 0.5
+        const endTime = 1234356770
+        const mockTxParams: AddPermissionlessDelegatorTxParams = {
+            changeAddresses, // staked outputs will be owned by these addresses
+            stakeInAvax: stakeAmount,
+            nodeId: 'NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ',
+            end: Math.floor(endTime / 1000),
+            rewardAddresses,
+            threshold: 3,
+            locktime: 1234567890,
+        };
+        const result = await newAddPermissionlessDelegatorTx(mockPrimaryNetworkCoreClient, mockTxParams);
+
+        await result.sign()
+        expect(result.getId()).toBe('2vMibCNEgJBFtaYBGQQGLSxSn8btudvg7dsS9TrmD5fmWeomhf')
     });
 }); 
