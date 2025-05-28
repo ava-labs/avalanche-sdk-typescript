@@ -4,9 +4,6 @@ on:
   push:
     paths:
       - 'primary-network/**'
-  pull_request:
-    paths:
-      - 'primary-network/**'
 
 jobs:
   build-and-test:
