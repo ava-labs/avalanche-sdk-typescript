@@ -1,11 +1,17 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../common/types";
-import { fetchCommonTxParams } from "../common/utils";
+import { avaxToNanoAvax, fetchCommonTxParams } from "../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type IncreaseL1ValidatorBalanceTxParams = CommonTxParams & {
-    balanceInAVAX: number;
+    /**
+     * Amount of AVAX to increase the L1 validator balance by.
+     */
+    balanceInAvax: number;
+    /**
+     * Validation ID of the L1 validator.
+     */
     validationId: string;
 }
 
@@ -27,7 +33,7 @@ export async function newIncreaseL1ValidatorBalanceTx(
 
     const unsignedTx = pvm.newIncreaseL1ValidatorBalanceTx({
         ...commonTxParams,
-        balance: BigInt(params.balanceInAVAX * 1e9),
+        balance: avaxToNanoAvax(params.balanceInAvax),
         validationId: params.validationId,
     }, context)
 

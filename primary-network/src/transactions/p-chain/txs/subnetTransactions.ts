@@ -1,14 +1,14 @@
 import { utils } from "@avalabs/avalanchejs";
 import { Transaction } from "../common";
-import { addSubnetAuthSignature } from "../common/utils";
-import type { NewTxParams, SubnetOwners } from "../common/types";
+import { addPChainOwnerAuthSignature } from "../common/utils";
+import type { NewTxParams, PChainOwner } from "../common/types";
 
 export type SubnetTransactionParams = NewTxParams & {
-    subnetOwners: SubnetOwners
+    subnetOwners: PChainOwner
 }
 
 export class SubnetTransaction extends Transaction {
-    subnetOwners: SubnetOwners
+    subnetOwners: PChainOwner
     subnetAuth: number[]
 
     constructor(params: SubnetTransactionParams, subnetAuth: number[]) {
@@ -31,6 +31,6 @@ export class SubnetTransaction extends Transaction {
             throw new Error('Unable to sign transaction. Either provide private keys or link a wallet')
         }
 
-        await addSubnetAuthSignature(this.subnetOwners, this.subnetAuth, this.unsignedTx, privateKeysBuffer)
+        await addPChainOwnerAuthSignature(this.subnetOwners, this.subnetAuth, this.unsignedTx, privateKeysBuffer)
     }
 }

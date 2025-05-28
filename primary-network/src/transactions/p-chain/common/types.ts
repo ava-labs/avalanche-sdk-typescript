@@ -72,9 +72,16 @@ export type NewTxParams = {
     pvmRpc: pvm.PVMApi
 }
 
-export type SubnetOwners = {
-    addresses: `${Lowercase<string>}1${string}`[],
-    threshold: number,
+export type PChainOwner = {
+    /**
+     * Addresses who can sign the transaction.
+     */
+    addresses: string[];
+    /**
+     * Optional. Number of signatures required to sign the transaction.
+     * @default 1
+     */
+    threshold?: number;
 }
 
 export type TransferableOutputFull = {

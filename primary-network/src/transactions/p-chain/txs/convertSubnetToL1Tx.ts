@@ -5,34 +5,75 @@ import {
     pvmSerial,
     utils
 } from "@avalabs/avalanchejs";
-import type { CommonTxParams } from "../common/types";
-import { fetchCommonTxParams } from "../common/utils";
+import type { CommonTxParams, PChainOwner } from "../common/types";
+import { bech32AddressToBytes, avaxToNanoAvax, fetchCommonTxParams } from "../common/utils";
 import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransactions";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type ConvertSubnetToL1TxParams = CommonTxParams & {
+    /**
+     * Subnet ID of the subnet to convert to an L1.
+     */
     subnetId: string;
+    /**
+     * Blockchain ID of the L1 where the validator manager contract is deployed.
+     */
     blockchainId: string;
+    /**
+     * Address of the validator manager contract.
+     */
     managerContractAddress: string;
-    subnetAuth: number[];
+    /**
+     * Initial set of L1 validators after the conversion.
+     */
     validators: L1Validator[];
+    /**
+     * Array of indices from the subnet's owners array
+     * who will sign this `ConvertSubnetToL1Tx`.
+     */
+    subnetAuth: number[];
 }
 
+/**
+ * L1 validator
+ */
 export type L1Validator = {
+    /**
+     * Node ID of the validator.
+     */
     nodeId: string;
+    /**
+     * Proof of possession of the validator.
+     */
     nodePoP: {
+        /**
+         * Public key of the validator.
+         */
         publicKey: string;
+        /**
+         * Proof of possession of the public key.
+         */
         proofOfPossession: string;
     }
+    /**
+     * Weight of the validator on the L1 used during the consensus participation.
+     */
     weight: bigint;
-    initialBalance: bigint;
+    /**
+     * Initial balance (in AVAX) of the L1 validator required for paying
+     * a contiguous fee to the Primary Network to validate the L1.
+     */
+    initialBalanceInAvax: number;
+    /**
+     * Owner information to which the remaining L1 validator balance will be assigned, in case
+     * the validator is removed or disabled from the L1 validator set.
+     */
     remainingBalanceOwner: PChainOwner;
+    /**
+     * Owner information which can remove or disable the validator
+     * from the L1 validator set.
+     */
     deactivationOwner: PChainOwner;
-}
-
-export type PChainOwner = {
-    addresses: string[];
-    threshold: number;
 }
 
 export class ConvertSubnetToL1Tx extends SubnetTransaction {
@@ -65,17 +106,17 @@ export async function newConvertSubnetToL1Tx(
     const validators: FormattedL1Validator[] = params.validators.map(validator => FormattedL1Validator.fromNative(
         validator.nodeId,
         validator.weight,
-        validator.initialBalance,
+        avaxToNanoAvax(validator.initialBalanceInAvax),
         new pvmSerial.ProofOfPossession(
             utils.hexToBuffer(validator.nodePoP.publicKey),
             utils.hexToBuffer(validator.nodePoP.proofOfPossession)
         ),
         FormattedPChainOwner.fromNative(
-            validator.remainingBalanceOwner.addresses.map(utils.bech32ToBytes),
+            validator.remainingBalanceOwner.addresses.map(bech32AddressToBytes),
             validator.remainingBalanceOwner.threshold
         ),
         FormattedPChainOwner.fromNative(
-            validator.deactivationOwner.addresses.map(utils.bech32ToBytes),
+            validator.deactivationOwner.addresses.map(bech32AddressToBytes),
             validator.deactivationOwner.threshold
         )
     ));
@@ -84,7 +125,7 @@ export async function newConvertSubnetToL1Tx(
         ...commonTxParams,
         subnetId: params.subnetId,
         chainId: params.blockchainId,
-        address: utils.bech32ToBytes(params.managerContractAddress),
+        address: utils.hexToBuffer(params.managerContractAddress),
         subnetAuth: params.subnetAuth,
         validators
     }, context)
