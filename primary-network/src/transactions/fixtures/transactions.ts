@@ -68,3 +68,13 @@ export const feeState = (): pvm.FeeState => ({
     price: 1n,
     timestamp: new Date().toISOString(),
 });
+
+export const createSubnetTx = (subnetOwners: {addresses: string[], threshold: number}) => ({
+    unsignedTx: {
+        _type: 'pvm.CreateSubnetTx',
+        getSubnetOwners: () => ({
+            addrs: subnetOwners.addresses.map(Address.fromString),
+            threshold: new Int(subnetOwners.threshold)
+        })
+    }
+} as unknown as avaxSerial.SignedTx)

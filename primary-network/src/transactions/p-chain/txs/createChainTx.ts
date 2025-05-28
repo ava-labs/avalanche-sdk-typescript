@@ -5,11 +5,30 @@ import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransac
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type CreateChainTxParams = CommonTxParams & {
+    /**
+     * Subnet ID to create the chain on.
+     */
     subnetId: string;
+    /**
+     * VM ID of the chain being created.
+     */
     vmId: string;
+    /**
+     * Name of the chain being created.
+     */
     chainName: string;
+    /**
+     * Genesis JSON data of the chain being created.
+     */
     genesisData: Record<string, unknown>;
+    /**
+     * Array of indices from the subnet's owners array
+     * who will sign this `CreateChainTx`.
+     */
     subnetAuth: number[];
+    /**
+     * Array of FX IDs to be added to the chain.
+     */
     fxIds?: string[];
 }
 
