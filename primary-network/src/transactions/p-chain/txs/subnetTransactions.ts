@@ -19,7 +19,7 @@ export class SubnetTransaction extends Transaction {
 
     // Adds SubnetAuth signature to all credentials
     override async sign(privateKeys?: string[]) {
-        super.sign()
+        await super.sign(privateKeys)
         let privateKeysBuffer = this.wallet?.getPrivateKeysBuffer()
 
         // If private keys are provided, use them
