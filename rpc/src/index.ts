@@ -1,4 +1,12 @@
 export {
+  createNonceManager,
+  nonceManager,
+  type CreateNonceManagerParameters,
+  type NonceManager,
+  type NonceManagerSource,
+} from "viem";
+
+export {
   AbiConstructorNotFoundError,
   AbiConstructorParamsNotFoundError,
   AbiDecodingDataSizeInvalidError,
@@ -1010,8 +1018,10 @@ export type {
   RpcBlock,
   RpcBlockIdentifier,
   RpcBlockNumber,
+  RpcEstimateUserOperationGasReturnType,
   RpcFeeHistory,
   RpcFeeValues,
+  RpcGetUserOperationByHashReturnType,
   RpcLog,
   RpcProof,
   RpcSchema,
@@ -1022,6 +1032,9 @@ export type {
   RpcTransactionReceipt,
   RpcTransactionRequest,
   RpcUncle,
+  RpcUserOperation,
+  RpcUserOperationReceipt,
+  RpcUserOperationRequest,
   SerializedAuthorization,
   SerializedAuthorizationList,
   SignableMessage,
@@ -1134,6 +1147,7 @@ export type {
   Widen,
   Withdrawal,
 } from "viem";
+
 import { getContract as viemGetContract } from "viem";
 export const myGetContract = viemGetContract;
 
@@ -1163,6 +1177,18 @@ export {
   type AvalancheCoreClientConfig,
   type CreateAvalancheCoreClientErrorType,
 } from "./clients/createAvalancheCoreClient.js";
+export {
+  createAvalancheWalletClient,
+  type AvalancheWalletClient,
+  type AvalancheWalletClientConfig,
+  type CreateAvalancheWalletClientErrorType,
+} from "./clients/createAvalancheWalletClient.js";
+export {
+  createAvalancheWalletCoreClient,
+  type AvalancheWalletCoreClient,
+  type AvalancheWalletCoreClientConfig,
+  type CreateAvalancheWalletCoreClientErrorType,
+} from "./clients/createAvalancheWalletCoreClient.js";
 export {
   createCChainClient,
   type CChainClient,
@@ -1208,6 +1234,10 @@ export {
   type AvalanchePublicActions,
 } from "./clients/decorators/avalanchePublic.js";
 export {
+  avalancheWalletActions,
+  type AvalancheWalletActions,
+} from "./clients/decorators/avalancheWallet.js";
+export {
   cChainActions,
   type CChainActions,
 } from "./clients/decorators/cChain.js";
@@ -1236,6 +1266,7 @@ export {
   type AvalancheClientConfig,
   type CreateAvalancheClientErrorType,
 } from "./clients/types/createAvalancheClient.js";
+
 export { type AvalancheTransportConfig } from "./clients/types/types.js";
 export { createAvalancheTransportClient } from "./clients/utils.js";
 export { type AdminRpcSchema } from "./methods/admin/adminRpcSchema.js";
@@ -1245,4 +1276,5 @@ export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
 export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
 export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
 export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
+export { type AvalancheWalletRpcSchema } from "./methods/wallet/avalancheWalletRPCSchema.js";
 export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";
