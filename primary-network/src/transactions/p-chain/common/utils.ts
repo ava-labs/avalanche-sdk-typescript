@@ -83,14 +83,10 @@ export async function fetchCommonTxParams(
         }
     }
 
-    // Format outputs as per AvalancheJS
-    const formattedOutputs = txParams.outputs ? txParams.outputs.map(output => formatOutput(output, context)) : []
-
     const result: FormattedCommonTxParams = {
         feeState,
         fromAddressesBytes: txParams.fromAddresses.map(bech32AddressToBytes),
         utxos: txParams.utxos,
-        outputs: formattedOutputs,
         memo: txParams.memo ? new Uint8Array(Buffer.from(txParams.memo)) : new Uint8Array(),
     }
 

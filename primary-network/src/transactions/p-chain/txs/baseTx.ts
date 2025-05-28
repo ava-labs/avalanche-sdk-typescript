@@ -1,10 +1,16 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import { fetchCommonTxParams } from "../common/utils";
-import type { CommonTxParams, NewTxParams } from "../common/types";
+import { fetchCommonTxParams, formatOutput } from "../common/utils";
+import type { CommonTxParams, NewTxParams, Output } from "../common/types";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
-export type BaseTxParams = CommonTxParams
+export type BaseTxParams = CommonTxParams & {
+    /**
+     * Optional. Outputs to send funds to. It can
+     * be used to specify resulting UTXOs.
+     */
+    outputs?: Output[],
+}
 
 export class BaseTx extends Transaction {
     override tx: pvmSerial.BaseTx;
@@ -17,18 +23,25 @@ export class BaseTx extends Transaction {
 
 export async function newBaseTx(
     primaryNetworkCoreClient: PrimaryNetworkCore,
-    txPrams: BaseTxParams,
+    txParams: BaseTxParams,
 ): Promise<BaseTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
+
+    // Format outputs as per AvalancheJS
+    const formattedOutputs = txParams.outputs ? txParams.outputs.map(output => formatOutput(output, context)) : []
+
     const { commonTxParams } = await fetchCommonTxParams(
-        txPrams,
+        txParams,
         context,
         primaryNetworkCoreClient.pvmRpc,
         primaryNetworkCoreClient.wallet,
     )
 
     const unsignedTx = pvm.newBaseTx(
-        commonTxParams,
+        {
+            ...commonTxParams,
+            outputs: formattedOutputs,
+        },
         context,
     );
 
