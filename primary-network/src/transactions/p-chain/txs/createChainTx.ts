@@ -27,7 +27,7 @@ export type CreateChainTxParams = CommonTxParams & {
      */
     subnetAuth: number[];
     /**
-     * Array of FX IDs to be added to the chain.
+     * Optional. Array of FX IDs to be added to the chain.
      */
     fxIds?: string[];
 }
