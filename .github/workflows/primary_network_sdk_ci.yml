@@ -1,12 +1,7 @@
 name: Primary Network SDK CI
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'primary-network/**'
   pull_request:
-    branches: [ main ]
     paths:
       - 'primary-network/**'
 
