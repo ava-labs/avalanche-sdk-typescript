@@ -5,14 +5,37 @@ import type { CommonTxParams, NewTxParams } from "../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
-type ImportedOutput = {
+export type ImportedOutput = {
+    /**
+     * The addresses to import the funds to. These are the
+     * addresses who can sign the consuming of this UTXO.
+     */
     addresses: string[],
+    /**
+     * Optional. Timestamp in seconds after which this UTXO can be consumed.
+     */
     locktime?: number,  
+    /**
+     * Optional. The number of signatures required out of the total `addresses`
+     * to spend the imported output.
+     */
     threshold?: number,
 }
 
-export type ImportTxParams = CommonTxParams & {
+/**
+ * Parameters for building an import transaction. There will be no change outputs,
+ * as the imported output will be the only output of the transaction.
+ */
+export type ImportTxParams = Omit<CommonTxParams, 'changeAddresses'> & {
+    /**
+     * The chain to import the funds from.
+     */
     sourceChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS | typeof P_CHAIN_ALIAS;
+    /**
+     * Consolidated imported output from the atomic memory (source chain). Users
+     * cannot specify the amount, as it will be consolidation of all the UTXOs
+     * pending for import from the source chain.
+     */
     importedOutput: ImportedOutput;
 }
 

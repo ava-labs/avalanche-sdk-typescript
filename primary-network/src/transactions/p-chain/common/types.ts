@@ -38,7 +38,7 @@ export type CommonTxParams = {
      */
     changeAddresses?: string[],
     /**
-     * Optional. UTXOs to use for the transaction.
+     * Optional. UTXOs to use as inputs for the transaction.
      * If not provided, utxos will be fetched from the `fromAddresses`.
      * Preference would be given to `utxos` array.
      */

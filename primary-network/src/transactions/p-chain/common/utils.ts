@@ -13,7 +13,7 @@ import {
     Address,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
-import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner } from "./types";
+import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner, TransferableOutputFull } from "./types";
 
 import {
     C_CHAIN_ALIAS, C_CHAIN_FUJI_ID, P_CHAIN_ALIAS, X_CHAIN_ALIAS, X_CHAIN_FUJI_ID,
@@ -281,9 +281,10 @@ export function evmOrBech32AddressToBytes(address: string) {
 
 // AvalancheJS exports output as Amounter instead of TransferOutput,
 // so we cast them here.
-export function toTransferableOutput(output: TransferableOutput) {
+export function toTransferableOutput(output: TransferableOutput): TransferableOutputFull {
     return {
         ...output,
+        // Amounter to TransferOutput
         output: output.output as unknown as TransferOutput
     }
 }
