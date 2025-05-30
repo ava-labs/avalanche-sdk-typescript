@@ -1,92 +1,71 @@
-
-export type {
-    AcpsReturnType,
-    AcpsErrorType,
-} from "./types/acps.js";
 export { acps } from "./acps.js";
+export type { AcpsErrorType, AcpsReturnType } from "./types/acps.js";
 
-export type {
-    GetBlockchainIDParameters,
-    GetBlockchainIDReturnType,
-    GetBlockchainIDErrorType,
-} from "./types/getBlockchainID.js";
 export { getBlockchainID } from "./getBlockchainID.js";
-
 export type {
-    GetNetworkIDReturnType,
-    GetNetworkIDErrorType,
-} from "./types/getNetworkID.js";
+  GetBlockchainIDErrorType,
+  GetBlockchainIDParameters,
+  GetBlockchainIDReturnType,
+} from "./types/getBlockchainID.js";
+
 export { getNetworkID } from "./getNetworkID.js";
-
 export type {
-    GetNetworkNameReturnType,
-    GetNetworkNameErrorType,
-} from "./types/getNetworkName.js";
+  GetNetworkIDErrorType,
+  GetNetworkIDReturnType,
+} from "./types/getNetworkID.js";
+
 export { getNetworkName } from "./getNetworkName.js";
-
 export type {
-    GetNodeIDReturnType,
-    GetNodeIDErrorType,
-} from "./types/getNodeID.js";
+  GetNetworkNameErrorType,
+  GetNetworkNameReturnType,
+} from "./types/getNetworkName.js";
+
 export { getNodeID } from "./getNodeID.js";
-
 export type {
-    GetNodeIPReturnType,
-    GetNodeIPErrorType,
-} from "./types/getNodeIP.js";
+  GetNodeIDErrorType,
+  GetNodeIDReturnType,
+} from "./types/getNodeID.js";
+
 export { getNodeIP } from "./getNodeIP.js";
-
 export type {
-    GetNodeVersionReturnType,
-    GetNodeVersionErrorType,
-} from "./types/getNodeVersion.js";
+  GetNodeIPErrorType,
+  GetNodeIPReturnType,
+} from "./types/getNodeIP.js";
+
 export { getNodeVersion } from "./getNodeVersion.js";
-
 export type {
-    GetTxFeeReturnType,
-    GetTxFeeErrorType,
-} from "./types/getTxFee.js";
+  GetNodeVersionErrorType,
+  GetNodeVersionReturnType,
+} from "./types/getNodeVersion.js";
+
 export { getTxFee } from "./getTxFee.js";
-
 export type {
-    GetVMsReturnType,
-    GetVMsErrorType,
-} from "./types/getVMs.js";
+  GetTxFeeErrorType,
+  GetTxFeeReturnType,
+} from "./types/getTxFee.js";
+
 export { getVMs } from "./getVMs.js";
+export type { GetVMsErrorType, GetVMsReturnType } from "./types/getVMs.js";
 
-export type {
-    IsBootstrappedParameters,
-    IsBootstrappedReturnType,
-    IsBootstrappedErrorType,
-} from "./types/isBootstrapped.js";
 export { isBootstrapped } from "./isBootstrapped.js";
-
 export type {
-    PeersParameters,
-    PeersReturnType,
-    PeersErrorType,
-} from "./types/peers.js";
+  IsBootstrappedErrorType,
+  IsBootstrappedParameters,
+  IsBootstrappedReturnType,
+} from "./types/isBootstrapped.js";
+
 export { peers } from "./peers.js";
+export type {
+  PeersErrorType,
+  PeersParameters,
+  PeersReturnType,
+} from "./types/peers.js";
 
 export type {
-    UpgradesReturnType,
-    UpgradesErrorType,
+  UpgradesErrorType,
+  UpgradesReturnType,
 } from "./types/upgrades.js";
 export { upgrades } from "./upgrades.js";
 
-export type {
-    UptimeReturnType,
-    UptimeErrorType,
-} from "./types/uptime.js";
+export type { UptimeErrorType, UptimeReturnType } from "./types/uptime.js";
 export { uptime } from "./uptime.js";
-
-
-
-
-
-
-
-
-
-
-

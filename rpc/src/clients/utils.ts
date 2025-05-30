@@ -19,7 +19,10 @@ export function createAvalancheTransportClient<
 >(
   transportConfig: AvalancheTransportConfig<transport, rpcSchema, raw>,
   chain?: chain | Chain | undefined,
-  { apiKey, rlToken }: { apiKey?: string; rlToken?: string } = {},
+  {
+    apiKey,
+    rlToken,
+  }: { apiKey?: string | undefined; rlToken?: string | undefined } = {},
   clientType: ClientType = "public"
 ): transport {
   switch (transportConfig.type) {
@@ -34,7 +37,7 @@ export function createAvalancheTransportClient<
               ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
               : rlToken
               ? { headers: { rlToken: rlToken, ...commonHeaders } }
-              : { headers: commonHeaders }),
+              : {}),
           },
         }
       ) as transport;

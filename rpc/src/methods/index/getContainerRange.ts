@@ -11,20 +11,21 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/index-api#indexgetcontainerrange
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The start index, end index, and encoding. {@link GetContainerRangeParameters}
  * @returns The container details. {@link GetContainerRangeReturnType}
  *
  * @example
  * ```ts
- * import { createIndexApiClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getContainerRange } from '@avalanche-sdk/rpc/methods/index'
  *
- * const client = createIndexApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

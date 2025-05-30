@@ -8,20 +8,21 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetutxos
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The addresses and source chain. {@link GetUTXOsParameters}
  * @returns The UTXOs. {@link GetUTXOsReturnType}
  *
  * @example
  * ```ts
- * import { createXChainClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getUTXOs } from '@avalanche-sdk/rpc/methods/xChain'
  *
- * const client = createXChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

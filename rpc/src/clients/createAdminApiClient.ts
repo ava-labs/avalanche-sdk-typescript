@@ -15,7 +15,6 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { AdminAPIActions, adminAPIActions } from "./decorators/adminApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createAvalancheTransportClient } from "./utils.js";
 
 export type AdminApiClientConfig<
   transport extends Transport,
@@ -84,25 +83,14 @@ export function createAdminApiClient<
     raw
   >
 ): AdminApiClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-  const {
-    key = "admin",
-    name = "Admin API Client",
-    transport: transportParam,
-    chain: chainConfig,
-    apiKey = "",
-    rlToken = "",
-  } = parameters;
-  const customTransport = createAvalancheTransportClient<
-    transport,
-    chain,
-    rpcSchema,
-    raw
-  >(transportParam, chainConfig, { apiKey, rlToken }, "admin");
+  const { key = "admin", name = "Admin API Client" } = parameters;
+
   const client = createAvalancheCoreClient({
     ...parameters,
     key,
     name,
-    transport: customTransport,
+    clientType: "admin",
   });
+
   return client.extend(adminAPIActions) as any;
 }

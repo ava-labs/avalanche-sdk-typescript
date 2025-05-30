@@ -15,7 +15,6 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { infoAPIActions, InfoAPIActions } from "./decorators/infoApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createAvalancheTransportClient } from "./utils.js";
 
 export type InfoApiClientConfig<
   transport extends Transport,
@@ -85,25 +84,14 @@ export function createInfoApiClient<
     raw
   >
 ): InfoApiClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-  const {
-    key = "info",
-    name = "Info API Client",
-    transport: transportParam,
-    chain: chainConfig,
-    apiKey = "",
-    rlToken = "",
-  } = parameters;
-  const customTransport = createAvalancheTransportClient<
-    transport,
-    chain,
-    rpcSchema,
-    raw
-  >(transportParam, chainConfig, { apiKey, rlToken }, "info");
+  const { key = "info", name = "Info API Client" } = parameters;
+
   const client = createAvalancheCoreClient({
     ...parameters,
     key,
     name,
-    transport: customTransport,
+    clientType: "info",
   });
+
   return client.extend(infoAPIActions) as any;
 }

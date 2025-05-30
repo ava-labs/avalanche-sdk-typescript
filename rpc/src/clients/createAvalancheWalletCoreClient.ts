@@ -12,10 +12,10 @@ import {
 } from "viem";
 import { AvalancheAccount, XPAccount } from "../accounts/avalancheAccount.js";
 import { parseAvalancheAccount } from "../accounts/utils/parseAvalancheAccount.js";
+import { Extended } from "./createAvalancheBaseClient.js";
 import {
   AvalancheCoreClient,
   createAvalancheCoreClient,
-  Extended,
 } from "./createAvalancheCoreClient";
 import { AvalancheTransportConfig } from "./types/types.js";
 import { createAvalancheTransportClient } from "./utils.js";
@@ -94,26 +94,6 @@ export function createAvalancheWalletCoreClient<
     { apiKey, rlToken },
     "wallet"
   );
-  const pChainTransport = createAvalancheTransportClient(
-    transportConfig,
-    chainConfig,
-    { apiKey, rlToken },
-    "pChain"
-  );
-
-  const cChainTransport = createAvalancheTransportClient(
-    transportConfig,
-    chainConfig,
-    { apiKey, rlToken },
-    "cChain"
-  );
-
-  const xChainTransport = createAvalancheTransportClient(
-    transportConfig,
-    chainConfig,
-    { apiKey, rlToken },
-    "xChain"
-  );
 
   const client = createClient({
     ...rest,
@@ -139,16 +119,16 @@ export function createAvalancheWalletCoreClient<
     ...client,
     xpAccount: account?.xpAccount,
     pChainClient: createAvalancheCoreClient({
-      ...rest,
-      transport: pChainTransport,
+      ...parameters,
+      clientType: "pChain",
     }),
     cChainClient: createAvalancheCoreClient({
-      ...rest,
-      transport: cChainTransport,
+      ...parameters,
+      clientType: "cChain",
     }),
     xChainClient: createAvalancheCoreClient({
-      ...rest,
-      transport: xChainTransport,
+      ...parameters,
+      clientType: "xChain",
     }),
   } as AvalancheWalletCoreClient<
     transport,

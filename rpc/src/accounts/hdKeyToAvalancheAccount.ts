@@ -4,6 +4,25 @@ import { HDKeyToAccountOptions, privateKeyToAccount } from "viem/accounts";
 import { AvalancheAccount, LocalXPAccount } from "./avalancheAccount";
 import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
 
+/**
+ * Options for the hdKeyToAvalancheAccount function.
+ */
+export type HDKeyToAvalancheAccountOptions = HDKeyToAccountOptions & {
+  xpAccountIndex?: number;
+  xpAddressIndex?: number;
+  xpChangeIndex?: number;
+};
+
+/**
+ * Converts a HD key to an Avalanche account.
+ *
+ * Derives the C-chain and P-chain accounts from the HD key.
+ * @see https://support.avax.network/en/articles/7004986-what-derivation-paths-does-avalanche-use
+ *
+ * @param hdKey_ - The HD key to convert. {@link HDKey}
+ * @param options - The options for the account. {@link HDKeyToAvalancheAccountOptions}
+ * @returns The Avalanche account {@link AvalancheAccount}.
+ */
 export function hdKeyToAvalancheAccount(
   hdKey_: HDKey,
   {

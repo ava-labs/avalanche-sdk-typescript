@@ -9,20 +9,21 @@ import { AliasParameters } from "./types/alias.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminalias
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The endpoint and alias. {@link AliasParameters}
  * @returns Promise that resolves when the alias is set
  *
  * @example
  * ```ts
- * import { createAdminApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { alias } from '@avalanche-sdk/rpc/methods/admin'
  *
- * const client = createAdminApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * });
  *

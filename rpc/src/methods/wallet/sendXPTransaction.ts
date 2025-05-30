@@ -5,10 +5,10 @@ import {
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { getTxFromBytes } from "src/utils/getTxFromBytes.js";
 import { Hex } from "viem";
 import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
+import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { issueTx as issueTxCChain } from "../cChain/issueTx.js";
 import { issueTx as issueTxPChain } from "../pChain/issueTx.js";
 import { issueTx as issueTxXChain } from "../xChain/issueTx.js";
@@ -26,7 +26,7 @@ import {
  * @returns The transaction hash {@link SendXPTransactionReturnType}
  *
  * @example
- * ```ts
+ *
  * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { sendXPTransaction } from '@avalanche-sdk/rpc/methods/wallet'
@@ -43,7 +43,7 @@ import {
  *   txOrTxHex: "0x...",
  *   chainAlias: "P",
  * })
- * ```
+ *
  */
 export async function sendXPTransaction(
   client: AvalancheWalletCoreClient,

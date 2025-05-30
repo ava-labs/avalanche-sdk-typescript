@@ -2,41 +2,37 @@ import {
   Account,
   Address,
   Chain,
-  Client,
-  ClientConfig,
-  createClient,
-  CreatePublicClientErrorType,
   ParseAccount,
   Prettify,
   RpcSchema,
   Transport,
 } from "viem";
-
-export type Extended = Prettify<
-  // disallow redefining base properties
-  { [_ in keyof Client]?: undefined } & {
-    [key: string]: unknown;
-  }
->;
+import {
+  AvalancheBaseClient,
+  AvalancheBaseClientConfig,
+  CreateAvalancheBaseClientErrorType,
+  Extended,
+  createAvalancheBaseClient,
+} from "./createAvalancheBaseClient.js";
+import { AvalancheTransportConfig, ClientType } from "./types/types.js";
+import { createAvalancheTransportClient } from "./utils.js";
 
 export type AvalancheCoreClientConfig<
-  transport extends Transport = Transport,
+  transport extends Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
-  rpcSchema extends RpcSchema | undefined = undefined
+  rpcSchema extends RpcSchema | undefined = undefined,
+  raw extends boolean = false
 > = Prettify<
-  Pick<
-    ClientConfig<transport, chain, accountOrAddress, rpcSchema>,
-    | "batch"
-    | "cacheTime"
-    | "ccipRead"
-    | "chain"
-    | "key"
-    | "name"
-    | "pollingInterval"
-    | "rpcSchema"
-    | "transport"
-  >
+  Omit<
+    AvalancheBaseClientConfig<transport, chain, accountOrAddress, rpcSchema>,
+    "transport"
+  > & {
+    transport: AvalancheTransportConfig<transport, rpcSchema, raw>;
+    apiKey?: string;
+    rlToken?: string;
+    clientType?: ClientType | undefined;
+  }
 >;
 
 export type AvalancheCoreClient<
@@ -46,65 +42,79 @@ export type AvalancheCoreClient<
   rpcSchema extends RpcSchema | undefined = undefined,
   extended extends Extended | undefined = Extended | undefined
 > = Prettify<
-  Omit<Client<transport, chain, account, rpcSchema, extended>, "extend"> &
-    (extended extends Extended ? extended : unknown) & {
-      extend: <const client extends Extended>(
-        fn: (
-          client: AvalancheCoreClient<
-            transport,
-            chain,
-            account,
-            rpcSchema,
-            extended
-          >
-        ) => client
-      ) => AvalancheCoreClient<
-        transport,
-        chain,
-        account,
-        rpcSchema,
-        Prettify<client> & (extended extends Extended ? extended : unknown)
-      >;
-    }
+  AvalancheBaseClient<transport, chain, account, rpcSchema, extended>
 >;
 
-export type CreateAvalancheCoreClientErrorType = CreatePublicClientErrorType;
+export type CreateAvalancheCoreClientErrorType =
+  CreateAvalancheBaseClientErrorType;
 
+/**
+ * Creates an Avalanche Core Client with a given transport configured for a Chain.
+ *
+ * The Avalanche Core Client is a base client that can be used to create other
+ * Avalanche clients or make rpc requests.
+ *
+ * @param config - {@link AvalancheCoreClientConfig}
+ * @returns A Avalanche Core Client. {@link AvalancheCoreClient}
+ *
+ * @example
+ * ```ts
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ *
+ * const client = createAvalancheCoreClient({
+ *   chain: avalanche,
+ *   transport: { type: "http" },
+ * })
+ *
+ * const block = await client.getBlock("latest")
+ * ```
+ */
 export function createAvalancheCoreClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
-  rpcSchema extends RpcSchema | undefined = undefined
+  rpcSchema extends RpcSchema | undefined = undefined,
+  extended extends Extended | undefined = Extended | undefined,
+  raw extends boolean = false
 >(
   parameters: AvalancheCoreClientConfig<
     transport,
     chain,
     accountOrAddress,
-    rpcSchema
+    rpcSchema,
+    raw
   >
 ): AvalancheCoreClient<
   transport,
   chain,
   ParseAccount<accountOrAddress>,
-  rpcSchema
+  rpcSchema,
+  extended
 > {
-  const { key = "avalancheCore", name = "Avalanche Core Client" } = parameters;
-  const client = createClient({
+  const {
+    key = "avalancheCore",
+    name = "Avalanche Core Client",
+    transport: transportParam,
+    chain: chainConfig,
+    apiKey,
+    rlToken,
+    clientType = "public",
+  } = parameters;
+
+  const customTransport = createAvalancheTransportClient<
+    transport,
+    chain,
+    rpcSchema,
+    raw
+  >(transportParam, chainConfig, { apiKey, rlToken }, clientType);
+
+  const client = createAvalancheBaseClient({
     ...parameters,
     key,
     name,
-    type: "avalancheClient",
+    transport: customTransport,
   });
 
-  function extend(base: typeof client) {
-    type ExtendFn = (base: typeof client) => unknown;
-    return (extendFn: ExtendFn) => {
-      const extended = extendFn(base) as Extended;
-      for (const key in client) delete extended[key];
-      const combined = { ...base, ...extended };
-      return Object.assign(combined, { extend: extend(combined as any) });
-    };
-  }
-
-  return Object.assign(client, { extend: extend(client) as any }) as any;
+  return client as any;
 }

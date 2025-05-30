@@ -1,9 +1,9 @@
 export {
-    type IpcTransport,
-    type IpcTransportConfig,
-    type IpcTransportErrorType,
-    ipc,
-    mainnetTrustedSetupPath,
-    type IpcRpcClient,
-    getIpcRpcClient,
+  getIpcRpcClient,
+  ipc,
+  mainnetTrustedSetupPath,
+  type IpcRpcClient,
+  type IpcTransport,
+  type IpcTransportConfig,
+  type IpcTransportErrorType,
 } from "viem/node";

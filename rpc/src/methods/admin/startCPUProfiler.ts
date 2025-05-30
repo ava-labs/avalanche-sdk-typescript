@@ -8,19 +8,20 @@ import { AdminRpcSchema } from "./adminRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminstartcpuprofiler
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns Promise that resolves when the profiler is started
  *
  * @example
  * ```ts
- * import { createAdminApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient} from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { startCPUProfiler } from '@avalanche-sdk/rpc/methods/admin'
  *
- * const client = createAdminApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * });
  *

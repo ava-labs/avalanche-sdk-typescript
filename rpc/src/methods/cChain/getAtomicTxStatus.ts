@@ -11,20 +11,21 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/c-chain/api#avaxgetatomictxstatus
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The parameters to use. {@link GetAtomicTxStatusParameters}
  * @returns The status of the atomic transaction. {@link GetAtomicTxStatusReturnType}
  *
  * @example
  * ```ts
- * import { createCChainClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getAtomicTxStatus } from '@avalanche-sdk/rpc/methods/cChain'
  *
- * const client = createCChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -8,19 +8,20 @@ import { GetNodeVersionReturnType } from "./types/getNodeVersion.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetnodeversion
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns The node's version. {@link GetNodeVersionReturnType}
  *
  * @example
  * ```ts
- * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getNodeVersion } from '@avalanche-sdk/rpc/methods/info'
  *
- * const client = createInfoApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -11,20 +11,21 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#admingetloggerlevel
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The logger name. {@link GetLoggerLevelParameters}
  * @returns The log and display levels of loggers. {@link GetLoggerLevelReturnType}
  *
  * @example
  * ```ts
- * import { createAdminApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getLoggerLevel } from '@avalanche-sdk/rpc/methods/admin'
  *
- * const client = createAdminApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * });
  *

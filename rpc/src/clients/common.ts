@@ -5,4 +5,5 @@ export const SDK_METADATA = {
 
 export const commonHeaders = {
   "User-Agent": `${SDK_METADATA.name} ${SDK_METADATA.version}`,
+  "Content-Type": "application/json",
 };

@@ -9,19 +9,20 @@ import { GetNodeIDReturnType } from "./types/getNodeID.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetnodeid
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns The node ID and BLS key information. {@link GetNodeIDReturnType}
  *
  * @example
  * ```ts
- * import { createInfoApiClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getNodeID } from '@avalanche-sdk/rpc/methods/info'
  *
- * const client = createInfoApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -8,19 +8,20 @@ import { GetFeeConfigReturnType } from "./types/getFeeConfig.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetfeeconfig
  *
- * @param client - The client to use to make the request
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns The fee configuration. {@link GetFeeConfigReturnType}
  *
  * @example
  * ```ts
- * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getFeeConfig } from '@avalanche-sdk/rpc/methods/pChain'
  *
- * const client = createPChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

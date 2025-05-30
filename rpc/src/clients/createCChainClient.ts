@@ -15,7 +15,6 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { CChainActions, cChainActions } from "./decorators/cChain.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createAvalancheTransportClient } from "./utils.js";
 
 export type CChainClientConfig<
   transport extends Transport,
@@ -90,25 +89,14 @@ export function createCChainClient<
     raw
   >
 ): CChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-  const {
-    key = "cChain",
-    name = "C-Chain Client",
-    transport: transportParam,
-    chain: chainConfig,
-    apiKey = "",
-    rlToken = "",
-  } = parameters;
-  const customTransport = createAvalancheTransportClient<
-    transport,
-    chain,
-    rpcSchema,
-    raw
-  >(transportParam, chainConfig, { apiKey, rlToken }, "cChain");
+  const { key = "cChain", name = "C-Chain Client" } = parameters;
+
   const client = createAvalancheCoreClient({
     ...parameters,
     key,
     name,
-    transport: customTransport,
+    clientType: "cChain",
   });
+
   return client.extend(cChainActions) as any;
 }

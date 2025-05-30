@@ -8,7 +8,7 @@ import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
  * @returns The public key of the account {@link GetAccountPubKeyReturnType}
  *
  * @example
- * ```ts
+ *
  * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getAccountPubKey } from '@avalanche-sdk/rpc/methods/wallet'
@@ -38,7 +38,7 @@ import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
  *
  *
  * const pubKey = await getAccountPubKey(client)
- * ```
+ *
  */
 export async function getAccountPubKey(
   client: AvalancheWalletCoreClient

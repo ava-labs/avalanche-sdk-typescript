@@ -8,20 +8,21 @@ import { GetUTXOsParameters, GetUTXOsReturnType } from "./types/getUTXOs.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/c-chain/api#avaxgetutxos
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The parameters to use. {@link GetUTXOsParameters}
  * @returns The UTXOs for a set of addresses. {@link GetUTXOsReturnType}
  *
  * @example
  * ```ts
- * import { createCChainClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getUTXOs } from '@avalanche-sdk/rpc/methods/cChain'
  *
- * const client = createCChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *
