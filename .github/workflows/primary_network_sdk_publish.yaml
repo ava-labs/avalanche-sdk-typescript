@@ -43,6 +43,11 @@ jobs:
           cd primary-network
           npm run build
 
+      - name: Run tests
+        run: |
+          cd primary-network
+          npm run test
+
       - name: Publish package
         run: |
           cd primary-network

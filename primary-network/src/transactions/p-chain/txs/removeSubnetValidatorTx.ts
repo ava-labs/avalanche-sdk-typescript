@@ -5,8 +5,17 @@ import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransac
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type RemoveSubnetValidatorTxParams = CommonTxParams & {
+    /**
+     * Subnet ID of the subnet to remove the validator from.
+     */
     subnetId: string;
+    /**
+     * Node ID of the validator being removed.
+     */
     nodeId: string;
+    /**
+     * Array of indices from the subnet's owners array who will sign this `RemoveSubnetValidatorTx`.
+     */
     subnetAuth: readonly number[];
 }
 

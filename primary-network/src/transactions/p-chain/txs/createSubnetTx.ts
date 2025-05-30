@@ -5,6 +5,11 @@ import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 import { fetchCommonTxParams } from "../common/utils";
 
 export type CreateSubnetTxParams = CommonTxParams & {
+    /**
+     * Subnet owners of the subnet being created. Signatures
+     * from these addresses will be required to any Subnet related
+     * transactions.
+     */
     subnetOwners: SubnetOwners;
 }
 
