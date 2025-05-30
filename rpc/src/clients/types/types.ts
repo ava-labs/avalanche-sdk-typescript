@@ -50,4 +50,5 @@ export type ClientType =
   | "indexCChainBlock"
   | "indexXChainBlock"
   | "indexXChainTx"
-  | "health";
+  | "health"
+  | "wallet";

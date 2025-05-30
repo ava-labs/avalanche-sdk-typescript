@@ -33,7 +33,7 @@ export type UpgradesReturnType = {
   cortinaXChainStopVertexID: string;
   durangoTime: string;
   etnaTime: string;
-  fortunaTime: string;
+  fortunaTime?: string;
 };
 
 export type UpgradesErrorType = RequestErrorType;

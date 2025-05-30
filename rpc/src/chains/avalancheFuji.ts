@@ -23,6 +23,12 @@ export const avalancheFuji = /*#__PURE__*/ defineChain({
       address: "0xca11bde05977b3631167028862be2a173976ca11",
       blockCreated: 7096959,
     },
+    teleporterRegistry: {
+      address: "0xF86Cb19Ad8405AEFa7d09C778215D2Cb6eBfB228",
+    },
+    teleporterMessenger: {
+      address: "0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf",
+    },
   },
   testnet: true,
 });
