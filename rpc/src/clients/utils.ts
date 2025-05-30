@@ -44,6 +44,18 @@ export function createAvalancheTransportClient<
         transportConfig.config
       ) as transport;
     case "custom":
+      if (clientType !== "wallet") {
+        return http(getClientURL(chain, undefined, clientType, "http"), {
+          ...transportConfig.config,
+          fetchOptions: {
+            ...(apiKey
+              ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
+              : rlToken
+              ? { headers: { rlToken: rlToken, ...commonHeaders } }
+              : { headers: commonHeaders }),
+          },
+        }) as transport;
+      }
       return custom(
         transportConfig.provider,
         transportConfig.config
@@ -70,13 +82,17 @@ function getClientURL(
     return url ?? chain?.rpcUrls.default[transportType]?.[0];
   }
 
-  if (!url) {
+  if (!url && !chain?.rpcUrls?.default?.[transportType]?.[0]) {
     throw new Error("URL is required");
   }
 
-  const origin = new URL(url).origin;
+  url = url ?? chain.rpcUrls.default[transportType]?.[0];
+
+  const origin = new URL(url!).origin;
   switch (clientType) {
     case "public":
+      return url;
+    case "wallet":
       return url;
     case "pChain":
       return `${origin}/ext/bc/P`;
@@ -99,6 +115,6 @@ function getClientURL(
     case "indexXChainTx":
       return `${origin}/ext/index/X/tx`;
     default:
-      throw new Error("Invalid client type");
+      throw new Error(`Invalid client type` + clientType);
   }
 }
