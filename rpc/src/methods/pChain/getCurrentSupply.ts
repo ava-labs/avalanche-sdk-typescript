@@ -11,20 +11,21 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetcurrentsupply
  *
- * @param client - The client to use to make the request
+ * @param client - The client to use to make the request {@link AvalancheCoreClient}
  * @param parameters - The asset ID {@link GetCurrentSupplyParameters}
  * @returns The current supply. {@link GetCurrentSupplyReturnType}
  *
  * @example
  * ```ts
- * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getCurrentSupply } from '@avalanche-sdk/rpc/methods/pChain'
  *
- * const client = createPChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

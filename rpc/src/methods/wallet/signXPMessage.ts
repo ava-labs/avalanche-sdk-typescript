@@ -16,7 +16,7 @@ import {
  * "0x1A" + "Avalanche Signed Message:\n" + "size of message represented in 4 bytes" + message
  *
  * @example
- * ```ts
+ *
  * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { signXPMessage } from '@avalanche-sdk/rpc/methods/wallet'

@@ -8,19 +8,20 @@ import { LoadVMsReturnType } from "./types/loadVMs.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminloadvms
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns The virtual machines installed on the node. {@link LoadVMsReturnType}
  *
  * @example
  * ```ts
- * import { createAdminApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { loadVMs } from '@avalanche-sdk/rpc/methods/admin'
  *
- * const client = createAdminApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * });
  *

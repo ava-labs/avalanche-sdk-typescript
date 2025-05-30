@@ -39,7 +39,7 @@ export function formatChainAddress(
  * @returns The signed transaction {@link SignXPTransactionReturnType}
  *
  * @example
- * ```ts
+ *
  * import { createWalletCoreClient, http } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { signXPTransaction } from '@avalanche-sdk/rpc/methods/wallet'

@@ -11,20 +11,21 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The transaction ID. {@link GetTxStatusParameters}
  * @returns The transaction status. {@link GetTxStatusReturnType}
  *
  * @example
  * ```ts
- * import { createXChainClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getTxStatus } from '@avalanche-sdk/rpc/methods/xchain'
  *
- * const client = createXChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

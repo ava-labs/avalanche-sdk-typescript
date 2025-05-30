@@ -15,7 +15,6 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { pChainActions, PChainActions } from "./decorators/pChain.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createAvalancheTransportClient } from "./utils.js";
 
 export type PChainClientConfig<
   transport extends Transport,
@@ -93,25 +92,21 @@ export function createPChainClient<
     raw
   >
 ): PChainClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-  const {
-    key = "pChain",
-    name = "P-Chain Client",
-    transport: transportParam,
-    chain: chainConfig,
-    apiKey = "",
-    rlToken = "",
-  } = parameters;
-  const customTransport = createAvalancheTransportClient<
-    transport,
-    chain,
-    rpcSchema,
-    raw
-  >(transportParam, chainConfig, { apiKey, rlToken }, "pChain");
+  const { key = "pChain", name = "P-Chain Client" } = parameters;
+
   const client = createAvalancheCoreClient({
     ...parameters,
     key,
     name,
-    transport: customTransport,
+    clientType: "pChain",
   });
-  return client.extend(pChainActions) as any;
+
+  const extendedClient = client.extend(pChainActions);
+
+  return extendedClient as PChainClient<
+    transport,
+    chain,
+    ParseAccount<accountOrAddress>,
+    rpcSchema
+  >;
 }

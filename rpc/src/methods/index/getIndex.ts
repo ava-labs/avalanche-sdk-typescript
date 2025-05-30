@@ -8,20 +8,21 @@ import { GetIndexParameters, GetIndexReturnType } from "./types/getIndex.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/index-api#indexgetindex
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The container ID and encoding. {@link GetIndexParameters}
  * @returns The container index. {@link GetIndexReturnType}
  *
  * @example
  * ```ts
- * import { createIndexApiClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getIndex } from '@avalanche-sdk/rpc/methods/index'
  *
- * const client = createIndexApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

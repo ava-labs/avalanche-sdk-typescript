@@ -9,20 +9,21 @@ import { ReadinessParameters, ReadinessReturnType } from "./types/readiness.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/health-api#healthreadiness
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - Optional tags to filter readiness checks. {@link ReadinessParameters}
  * @returns The readiness check results. {@link ReadinessReturnType}
  *
  * @example
  * ```ts
- * import { createHealthApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { readiness } from '@avalanche-sdk/rpc/methods/health'
  *
- * const client = createHealthApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -11,20 +11,21 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmbuildgenesis
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The network ID and genesis data. {@link BuildGenesisParameters}
  * @returns The genesis bytes. {@link BuildGenesisReturnType}
  *
  * @example
  * ```ts
- * import { createXChainClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { buildGenesis } from '@avalanche-sdk/rpc/methods/xChain'
  *
- * const client = createXChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -1,17 +1,22 @@
-import { Hex } from "viem";
 import { XPAccount } from "./avalancheAccount";
 import { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey";
 import { xpSignMessage } from "./utils/xpSignMessage";
 import { xpSignTransaction } from "./utils/xpSignTransaction";
 import { xpVerifySignature } from "./utils/xpVerifySignature";
 
-export function privateKeyToXPAccount(privateKey: Hex): XPAccount {
+/**
+ * Converts a private key to an XP account.
+ *
+ * @param privateKey - The private key.
+ * @returns The XP account {@link XPAccount}.
+ */
+export function privateKeyToXPAccount(privateKey: string): XPAccount {
   return {
     publicKey: privateKeyToXPPublicKey(privateKey),
     signMessage: (message: string) => xpSignMessage(message, privateKey),
-    signTransaction: (txHash: Hex | Uint8Array<ArrayBufferLike>) =>
+    signTransaction: (txHash: string | Uint8Array<ArrayBufferLike>) =>
       xpSignTransaction(txHash, privateKey),
-    verify: (message: Hex, signature: Hex) =>
+    verify: (message: string, signature: string) =>
       xpVerifySignature(
         message,
         signature,

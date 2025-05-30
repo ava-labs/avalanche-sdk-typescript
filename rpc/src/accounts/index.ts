@@ -85,24 +85,24 @@ export type {
   PrivateKeyAccount,
 } from "viem/accounts";
 
-export { privateKeyToAvalancheAccount } from "./privateKeyToAvalancheAccount";
+export { privateKeyToAvalancheAccount } from "./privateKeyToAvalancheAccount.js";
 
-export { memonicsToAvalancheAccount } from "./memonicsToAvalancheAccount";
+export { memonicsToAvalancheAccount } from "./memonicsToAvalancheAccount.js";
 
-export { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress";
+export { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress.js";
 
-export { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress";
+export { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress.js";
 
-export { xpSignMessage } from "./utils/xpSignMessage";
-export { xpSignTransaction } from "./utils/xpSignTransaction";
+export { xpSignMessage } from "./utils/xpSignMessage.js";
+export { xpSignTransaction } from "./utils/xpSignTransaction.js";
 
-export { xpVerifySignature } from "./utils/xpVerifySignature";
+export { xpVerifySignature } from "./utils/xpVerifySignature.js";
 
-export { xpRecoverPublicKey } from "./utils/xpRecoverPublicKey";
+export { xpRecoverPublicKey } from "./utils/xpRecoverPublicKey.js";
 
-export { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey";
+export { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey.js";
 
-export { hdKeyToAvalancheAccount } from "./hdKeyToAvalancheAccount";
+export { hdKeyToAvalancheAccount } from "./hdKeyToAvalancheAccount.js";
 
 export type {
   AvalancheAccount,
@@ -111,6 +111,8 @@ export type {
   XPAddress,
 } from "./avalancheAccount.js";
 
-export { parseAvalancheAccount } from "./utils/parseAvalancheAccount";
+export { parseAvalancheAccount } from "./utils/parseAvalancheAccount.js";
 
-export { privateKeyToXPAccount } from "./privateKeyToXPAccount";
+export { privateKeyToXPAccount } from "./privateKeyToXPAccount.js";
+
+export type { HDKeyToAvalancheAccountOptions } from "./hdKeyToAvalancheAccount.js";

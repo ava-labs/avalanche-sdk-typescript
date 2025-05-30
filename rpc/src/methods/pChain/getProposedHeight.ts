@@ -8,19 +8,20 @@ import { GetProposedHeightReturnType } from "./types/getProposedHeight.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetproposedheight
  *
- * @param client - The client to use to make the request
+ * @param client - The client to use to make the request {@link AvalancheCoreClient}
  * @returns The proposed height. {@link GetProposedHeightReturnType}
  *
  * @example
  * ```ts
- * import { createPChainClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getProposedHeight } from '@avalanche-sdk/rpc/methods/pChain'
  *
- * const client = createPChainClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

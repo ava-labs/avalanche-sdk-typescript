@@ -11,20 +11,21 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/index-api#indexgetcontainerbyid
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @param parameters - The container ID and encoding. {@link GetContainerByIDParameters}
  * @returns The container details. {@link GetContainerByIDReturnType}
  *
  * @example
  * ```ts
- * import { createIndexApiClient } from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { getContainerByID } from '@avalanche-sdk/rpc/methods/index'
  *
- * const client = createIndexApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

@@ -67,6 +67,28 @@ export type AvalancheWalletClient<
 
 export type CreateAvalancheWalletClientErrorType = CreatePublicClientErrorType;
 
+/**
+ * Creates an Avalanche Wallet Client with a given transport configured for a Chain.
+ *
+ * The Avalanche Wallet Client is an interface to interact with the Core Wallet API through Avalanche-specific JSON-RPC API methods.
+ * @see https://docs.core.app/docs/reference/json-rpc-api
+ *
+ * @param config - {@link AvalancheWalletClientConfig}
+ * @returns A Avalanche Wallet Client. {@link AvalancheWalletClient}
+ *
+ * @example
+ * ```ts
+ * import { createAvalancheWalletClient } from '@avalanche-sdk/rpc'
+ * import { avalanche } from '@avalanche-sdk/rpc/chains'
+ *
+ * const client = createAvalancheWalletClient({
+ *   chain: avalanche,
+ *   transport: { type: "http" },
+ * })
+ *
+ * const pubKey = await client.getAccountPubKey()
+ * ```
+ */
 export function createAvalancheWalletClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,

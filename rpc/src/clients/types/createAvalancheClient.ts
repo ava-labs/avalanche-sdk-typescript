@@ -30,7 +30,6 @@ import { IndexAPIActions } from "../decorators/indexApi.js";
 import { InfoAPIActions } from "../decorators/infoApi.js";
 import { PChainActions } from "../decorators/pChain.js";
 import { XChainActions } from "../decorators/xChain.js";
-import { AvalancheTransportConfig } from "./types.js";
 
 export type AvalancheClientConfig<
   transport extends Transport,
@@ -39,21 +38,16 @@ export type AvalancheClientConfig<
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 > = Prettify<
-  Pick<
-    AvalancheCoreClientConfig<transport, chain, accountOrAddress, rpcSchema>,
-    | "batch"
-    | "cacheTime"
-    | "ccipRead"
-    | "chain"
-    | "key"
-    | "name"
-    | "pollingInterval"
-    | "rpcSchema"
-  > & {
-    transport: AvalancheTransportConfig<transport, rpcSchema, raw>;
-    apiKey?: string;
-    rlToken?: string;
-  }
+  Omit<
+    AvalancheCoreClientConfig<
+      transport,
+      chain,
+      accountOrAddress,
+      rpcSchema,
+      raw
+    >,
+    "clientType"
+  >
 >;
 
 export type AvalancheClient<

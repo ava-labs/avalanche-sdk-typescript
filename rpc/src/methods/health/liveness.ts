@@ -9,19 +9,20 @@ import { LivenessReturnType } from "./types/liveness.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/health-api#healthliveness
  *
- * @param client - The client to use.
+ * @param client - The client to use. {@link AvalancheCoreClient}
  * @returns The liveness check results. {@link LivenessReturnType}
  *
  * @example
  * ```ts
- * import { createHealthApiClient} from '@avalanche-sdk/rpc'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
  * import { avalanche } from '@avalanche-sdk/rpc/chains'
  * import { liveness } from '@avalanche-sdk/rpc/methods/health'
  *
- * const client = createHealthApiClient({
+ * const client = createAvalancheCoreClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
+ *     url: "<url>",
  *   },
  * })
  *

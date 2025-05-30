@@ -15,7 +15,6 @@ import {
 } from "./createAvalancheCoreClient.js";
 import { indexAPIActions, IndexAPIActions } from "./decorators/indexApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
-import { createAvalancheTransportClient } from "./utils.js";
 
 export type IndexApiClientConfig<
   transport extends Transport,
@@ -94,26 +93,14 @@ export function createIndexApiClient<
     raw
   >
 ): IndexApiClient<transport, chain, ParseAccount<accountOrAddress>, rpcSchema> {
-  const {
-    key = "index",
-    name = "Index API Client",
-    transport: transportParam,
-    chain: chainConfig,
-    clientType,
-    apiKey = "",
-    rlToken = "",
-  } = parameters;
-  const customTransport = createAvalancheTransportClient<
-    transport,
-    chain,
-    rpcSchema,
-    raw
-  >(transportParam, chainConfig, { apiKey, rlToken }, clientType);
+  const { key = "index", name = "Index API Client", clientType } = parameters;
+
   const client = createAvalancheCoreClient({
     ...parameters,
     key,
     name,
-    transport: customTransport,
+    clientType,
   });
+
   return client.extend(indexAPIActions) as any;
 }
