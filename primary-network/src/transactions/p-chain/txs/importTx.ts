@@ -30,7 +30,7 @@ export async function newImportTx(
     txPrams: ImportTxParams,
 ): Promise<ImportTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(
+    const { commonTxParams } = await fetchCommonTxParams(
         txPrams,
         context,
         primaryNetworkCoreClient.pvmRpc,

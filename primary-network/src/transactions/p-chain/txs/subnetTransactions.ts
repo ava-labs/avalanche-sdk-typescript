@@ -1,11 +1,25 @@
 import { utils } from "@avalabs/avalanchejs";
 import { Transaction } from "../common";
-import { addSigToAllCreds } from "../common/utils";
+import { addSubnetAuthSignature } from "../common/utils";
+import type { NewTxParams, SubnetOwners } from "../common/types";
+
+export type SubnetTransactionParams = NewTxParams & {
+    subnetOwners: SubnetOwners
+}
 
 export class SubnetTransaction extends Transaction {
+    subnetOwners: SubnetOwners
+    subnetAuth: number[]
+
+    constructor(params: SubnetTransactionParams, subnetAuth: number[]) {
+        super(params)
+        this.subnetOwners = params.subnetOwners
+        this.subnetAuth = subnetAuth
+    }
+
     // Adds SubnetAuth signature to all credentials
     override async sign(privateKeys?: string[]) {
-        super.sign()
+        await super.sign(privateKeys)
         let privateKeysBuffer = this.wallet?.getPrivateKeysBuffer()
 
         // If private keys are provided, use them
@@ -17,6 +31,6 @@ export class SubnetTransaction extends Transaction {
             throw new Error('Unable to sign transaction. Either provide private keys or link a wallet')
         }
 
-        await addSigToAllCreds(this.unsignedTx, privateKeysBuffer)
+        await addSubnetAuthSignature(this.subnetOwners, this.subnetAuth, this.unsignedTx, privateKeysBuffer)
     }
 }

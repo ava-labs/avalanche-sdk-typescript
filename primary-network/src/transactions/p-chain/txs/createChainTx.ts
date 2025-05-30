@@ -1,7 +1,7 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import type { CommonTxParams, NewTxParams } from "../common/types";
+import type { CommonTxParams } from "../common/types";
 import { fetchCommonTxParams } from "../common/utils";
-import { SubnetTransaction } from "./subnetTransactions";
+import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransactions";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type CreateChainTxParams = CommonTxParams & {
@@ -16,9 +16,10 @@ export type CreateChainTxParams = CommonTxParams & {
 export class CreateChainTx extends SubnetTransaction {
     override tx: pvmSerial.CreateChainTx;
 
-    constructor(params: NewTxParams) {
-        super(params)
-        this.tx = params.unsignedTx.getTx() as pvmSerial.CreateChainTx
+    constructor(params: SubnetTransactionParams) {
+        const subnetTx = params.unsignedTx.getTx() as pvmSerial.CreateChainTx
+        super(params, subnetTx.getSubnetAuth().values())
+        this.tx = subnetTx
     }
 }
 
@@ -27,7 +28,17 @@ export async function newCreateChainTx(
     params: CreateChainTxParams,
 ): Promise<CreateChainTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams, subnetOwners } = await fetchCommonTxParams(
+        params,
+        context,
+        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.wallet,
+        undefined,
+        params.subnetId
+    )
+    if (!subnetOwners) {
+        throw new Error("Subnet owners not found for a Subnet tx")
+    }
 
     const unsignedTx = pvm.newCreateChainTx({
         ...commonTxParams,
@@ -41,6 +52,7 @@ export async function newCreateChainTx(
 
     return new CreateChainTx({
         unsignedTx,
+        subnetOwners,
         pvmRpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,

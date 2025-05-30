@@ -1,4 +1,4 @@
-import type { Common, Id, pvm, pvmSerial, TransferableOutput, TransferOutput, TypeSymbols, Utxo }  from '@avalabs/avalanchejs';
+import type { Common, Id, pvm, pvmSerial, TransferOutput, TypeSymbols, Utxo }  from '@avalabs/avalanchejs';
 import type { Wallet } from '../../../wallet';
 
 export type Output = {
@@ -38,12 +38,6 @@ export type CommonTxParams = {
      */
     changeAddresses?: string[],
     /**
-     * Optional. Outputs to send funds to.
-     * If not provided, `utxos` can be used.
-     * Preference would be given to `utxos` array.
-     */
-    outputs?: Output[],
-    /**
      * Optional. UTXOs to use for the transaction.
      * If not provided, utxos will be fetched from the `fromAddresses`.
      * Preference would be given to `utxos` array.
@@ -67,7 +61,6 @@ export type FormattedCommonTxParams = {
     fromAddressesBytes: Uint8Array[];
     changeAddressesBytes?: Uint8Array[];
     utxos: Utxo[];
-    outputs: TransferableOutput[];
     memo?: Uint8Array;
     minIssuanceTime?: bigint;
 }
@@ -77,6 +70,11 @@ export type NewTxParams = {
     wallet: Wallet | undefined,
     nodeUrl: string,
     pvmRpc: pvm.PVMApi
+}
+
+export type SubnetOwners = {
+    addresses: `${Lowercase<string>}1${string}`[],
+    threshold: number,
 }
 
 export type TransferableOutputFull = {

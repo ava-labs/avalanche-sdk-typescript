@@ -22,7 +22,7 @@ export async function newSetL1ValidatorWeightTx(
     params: SetL1ValidatorWeightTxParams,
 ): Promise<SetL1ValidatorWeightTx> {
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const commonTxParams = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonTxParams(params, context, primaryNetworkCoreClient.pvmRpc, primaryNetworkCoreClient.wallet)
 
     const unsignedTx = pvm.newSetL1ValidatorWeightTx({
         ...commonTxParams,
