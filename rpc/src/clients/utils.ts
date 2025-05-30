@@ -31,14 +31,14 @@ export function createAvalancheTransportClient<
         getClientURL(chain, transportConfig.url, clientType, "http"),
         {
           ...transportConfig.config,
-          // fetchOptions: {
-          //   ...(transportConfig.config?.fetchOptions ?? {}),
-          //   ...(apiKey
-          //     ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
-          //     : rlToken
-          //     ? { headers: { rlToken: rlToken, ...commonHeaders } }
-          //     : {}),
-          // },
+          fetchOptions: {
+            ...(transportConfig.config?.fetchOptions ?? {}),
+            ...(apiKey
+              ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
+              : rlToken
+              ? { headers: { rlToken: rlToken, ...commonHeaders } }
+              : {}),
+          },
         }
       ) as transport;
     case "ws":
