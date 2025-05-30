@@ -5,6 +5,10 @@ import { fetchCommonTxParams } from "../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type SetL1ValidatorWeightTxParams = CommonTxParams & {
+    /**
+     * Signed warp message hex with the `AddressedCall` payload
+     * containing message of type `SetL1ValidatorWeightMessage`.
+    */
     message: string;
 }
 

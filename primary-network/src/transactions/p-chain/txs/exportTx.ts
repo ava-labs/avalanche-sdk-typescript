@@ -1,12 +1,18 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import { fetchCommonTxParams, formatOutput, getChainIdFromAlias } from "../common/utils";
+import { fetchCommonTxParams, formatOutput, getChainIdFromAlias, toTransferableOutput } from "../common/utils";
 import type { CommonTxParams, NewTxParams, Output } from "../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type ExportTxParams = CommonTxParams & {
+    /**
+     * The chain to export the funds to.
+     */
     destinationChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS | typeof P_CHAIN_ALIAS;
+    /**
+     * The outputs to export.
+     */
     exportedOutputs: Output[];
 }
 
@@ -16,6 +22,11 @@ export class ExportTx extends Transaction {
     constructor(params: NewTxParams) {
         super(params)
         this.tx = params.unsignedTx.getTx() as pvmSerial.ExportTx
+    }
+
+    getExportedOutputs() {
+        const transferableOutputs = this.tx.outs
+        return transferableOutputs.map(toTransferableOutput)
     }
 }
 

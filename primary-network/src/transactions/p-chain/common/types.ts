@@ -38,7 +38,7 @@ export type CommonTxParams = {
      */
     changeAddresses?: string[],
     /**
-     * Optional. UTXOs to use for the transaction.
+     * Optional. UTXOs to use as inputs for the transaction.
      * If not provided, utxos will be fetched from the `fromAddresses`.
      * Preference would be given to `utxos` array.
      */
@@ -72,9 +72,16 @@ export type NewTxParams = {
     pvmRpc: pvm.PVMApi
 }
 
-export type SubnetOwners = {
-    addresses: `${Lowercase<string>}1${string}`[],
-    threshold: number,
+export type PChainOwner = {
+    /**
+     * Addresses who can sign the transaction.
+     */
+    addresses: string[];
+    /**
+     * Optional. Number of signatures required to sign the transaction.
+     * @default 1
+     */
+    threshold?: number;
 }
 
 export type TransferableOutputFull = {

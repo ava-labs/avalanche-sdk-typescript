@@ -13,7 +13,8 @@ import {
     Address,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
-import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, SubnetOwners } from "./types";
+import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner, TransferableOutputFull } from "./types";
+
 import {
     C_CHAIN_ALIAS, C_CHAIN_FUJI_ID, P_CHAIN_ALIAS, X_CHAIN_ALIAS, X_CHAIN_FUJI_ID,
     MAINNET_NETWORK_ID,
@@ -45,9 +46,11 @@ export async function fetchCommonTxParams(
     wallet?: Wallet,
     sourceChain?: string,
     subnetId?: string,
+    l1ValidationId?: string,
 ): Promise<{
     commonTxParams: FormattedCommonTxParams,
-    subnetOwners: SubnetOwners | undefined
+    subnetOwners: PChainOwner | undefined,
+    disableOwners: PChainOwner | undefined,
 }> {
     // If fromAddresses is not provided, use wallet addresses
     if (!txParams.fromAddresses) {
@@ -70,7 +73,7 @@ export async function fetchCommonTxParams(
     // Fetch fee state from api
     const feeState = await pvmRpc.getFeeState()
 
-    let subnetOwners: SubnetOwners | undefined
+    let subnetOwners: PChainOwner | undefined
     if (subnetId) {
         const subnetTx = await pvmRpc.getTx({
             txID: subnetId,
@@ -80,6 +83,15 @@ export async function fetchCommonTxParams(
                 addresses: subnetTx.unsignedTx.getSubnetOwners().addrs.map(addr => addr.toString(context.hrp)),
                 threshold: subnetTx.unsignedTx.getSubnetOwners().threshold.value()
             }
+        }
+    }
+
+    let disableOwners: PChainOwner | undefined
+    if (l1ValidationId) {
+        const disableTx = await pvmRpc.getL1Validator(l1ValidationId)
+        disableOwners = {
+            addresses: disableTx.deactivationOwner.addresses.map(addr => addr.toString(context.hrp)),
+            threshold: disableTx.deactivationOwner.threshold.value()
         }
     }
 
@@ -97,7 +109,7 @@ export async function fetchCommonTxParams(
         result.minIssuanceTime = txParams.minIssuanceTime
     }
 
-    return { commonTxParams: result, subnetOwners }
+    return { commonTxParams: result, subnetOwners, disableOwners }
 }
 
 export function getChainIdFromAlias(
@@ -202,14 +214,14 @@ export async function addSigToAllCreds(
     );
 };
 
-export async function addSubnetAuthSignature(
-    subnetOwners: SubnetOwners,
-    subnetAuth: number[],
+export async function addPChainOwnerAuthSignature(
+    owners: PChainOwner,
+    authIndices: number[],
     unsignedTx: UnsignedTx,
     privateKeys: Uint8Array[],
 ) {
     // Get the addresses that need to sign based on subnetAuth indices
-    const signingOwners = subnetOwners.addresses.filter((_, index) => subnetAuth.includes(index));
+    const signingOwners = owners.addresses.filter((_, index) => authIndices.includes(index));
 
     // Last credential index is for the subnet auth signatures
     const credentialIndex = unsignedTx.getCredentials().length - 1;
@@ -269,9 +281,18 @@ export function evmOrBech32AddressToBytes(address: string) {
 
 // AvalancheJS exports output as Amounter instead of TransferOutput,
 // so we cast them here.
-export function toTransferableOutput(output: TransferableOutput) {
+export function toTransferableOutput(output: TransferableOutput): TransferableOutputFull {
     return {
         ...output,
+        // Amounter to TransferOutput
         output: output.output as unknown as TransferOutput
     }
+}
+
+export function avaxToNanoAvax(amount: number) {
+    return BigInt(amount * 1e9)
+}
+
+export function nanoAvaxToAvax(amount: bigint) {
+    return Number(amount) / 1e9
 }

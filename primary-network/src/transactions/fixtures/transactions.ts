@@ -10,6 +10,7 @@ import {
     TransferOutput,
     Address,
     Common,
+    PChainOwner,
 } from '@avalabs/avalanchejs';
 import { pAddressForTest } from './accounts';
 
@@ -78,3 +79,10 @@ export const createSubnetTx = (subnetOwners: {addresses: string[], threshold: nu
         })
     }
 } as unknown as avaxSerial.SignedTx)
+
+export const getL1Validator = (disableOwners: {addresses: string[], threshold: number}) => ({
+    deactivationOwner: new PChainOwner(
+        new Int(disableOwners.threshold),
+        disableOwners.addresses.map(Address.fromString)
+    )
+})

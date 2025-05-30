@@ -1,7 +1,7 @@
 import { type Common, type pvm, utils, addTxSignatures, type pvmSerial } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 import type { Wallet } from "../../../wallet";
-import type { NewTxParams, TransferableOutputFull } from "./types";
+import type { NewTxParams } from "./types";
 import { toTransferableOutput } from "./utils";
 export class Transaction {
     unsignedTx: Common.UnsignedTx;
@@ -38,7 +38,7 @@ export class Transaction {
         return utils.base58check.encode(sha256(txBuffer.subarray(0, txBuffer.length-4))) 
     }
 
-    getOutputs(): TransferableOutputFull[] {
+    getOutputs() {
         const transferableOutputs = (this.tx as pvmSerial.BaseTx).baseTx.outputs
         return transferableOutputs.map(toTransferableOutput)
     }

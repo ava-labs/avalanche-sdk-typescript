@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { pvm, utils } from '@avalabs/avalanchejs';
 import { feeState, testContext, getValidUtxo, createSubnetTx } from '../../fixtures/transactions';
-import { pAddressForTest, pAddressForTest2, privateKeyForTest, privateKeyForTest2 } from '../../fixtures/accounts';
+import { pAddressForTest, pAddressForTest2, pAddressForTest4, privateKeyForTest, privateKeyForTest2 } from '../../fixtures/accounts';
 import type { Output } from '../common/types';
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { checkOutputs } from '../../fixtures/utils';
@@ -114,7 +114,7 @@ describe('addSubnetValidatorTx', () => {
 
     it('should correctly sign multi-sig subnet auth', async () => {
         mockPvmRpc.getTx = vi.fn().mockResolvedValue(createSubnetTx(
-            { addresses: [pAddressForTest, pAddressForTest2], threshold: 2 }
+            { addresses: [pAddressForTest4, pAddressForTest, pAddressForTest2], threshold: 2 }
         ))
 
         const changeAddresses = [pAddressForTest2]
@@ -126,7 +126,7 @@ describe('addSubnetValidatorTx', () => {
             nodeId: 'NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ',
             weight: 12345n,
             end: BigInt(endTime),
-            subnetAuth: [0, 1],
+            subnetAuth: [1, 2],
         };
         const result = await newAddSubnetValidatorTx(mockPrimaryNetworkCoreClient, mockTxParams);
 
