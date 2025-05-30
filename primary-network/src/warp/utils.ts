@@ -17,7 +17,7 @@ export function parseBech32AddressToBytes(bech32Address: string, chainAlias?: st
     throw new Error(`Invalid address: ${bech32Address}. No chain alias provided.`);
 }
 
-export function evmOrBech32AddressToBytes(address: string) {
+export function evmAddressToBytes(address: string) {
     let evmAddress = address;
     if (!evmAddress.startsWith('0x')) {
         evmAddress = `0x${evmAddress}`;
@@ -26,7 +26,10 @@ export function evmOrBech32AddressToBytes(address: string) {
     if (evmAddress.length === 42) {
         return utils.hexToBuffer(evmAddress);
     }
+    throw new Error(`Invalid EVM address: ${address}`);
+}
 
+export function bech32AddressToBytes(address: string) {
     // Check if it's a Bech32 address (contains a hyphen)
     if (address.includes('-')) {
         return utils.bech32ToBytes(address);
@@ -34,4 +37,12 @@ export function evmOrBech32AddressToBytes(address: string) {
 
     // If it's a Bech32 address without chain alias, add P- prefix
     return utils.bech32ToBytes(`P-${address}`);
+}
+
+export function evmOrBech32AddressToBytes(address: string) {
+    try {
+        return evmAddressToBytes(address);
+    } catch (error) {
+        return bech32AddressToBytes(address);
+    }
 }

@@ -7,7 +7,8 @@ import {
     type Common,
     Credential,
     UnsignedTx,
-    secp256k1
+    secp256k1,
+    type TransferOutput
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../../wallet";
 import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output } from "./types";
@@ -64,13 +65,22 @@ export async function fetchCommonTxParams(
     // Format outputs as per AvalancheJS
     const formattedOutputs = txParams.outputs ? txParams.outputs.map(output => formatOutput(output, context)) : []
 
-    return {
+    const result: FormattedCommonTxParams = {
         feeState,
-        fromAddressesBytes: txParams.fromAddresses.map(utils.bech32ToBytes),
+        fromAddressesBytes: txParams.fromAddresses.map(bech32AddressToBytes),
         utxos: txParams.utxos,
         outputs: formattedOutputs,
         memo: txParams.memo ? new Uint8Array(Buffer.from(txParams.memo)) : new Uint8Array(),
     }
+
+    if (txParams.changeAddresses) {
+        result.changeAddressesBytes = txParams.changeAddresses.map(bech32AddressToBytes)
+    }
+    if (txParams.minIssuanceTime) {
+        result.minIssuanceTime = txParams.minIssuanceTime
+    }
+
+    return result
 }
 
 export function getChainIdFromAlias(
@@ -174,3 +184,42 @@ export async function addSigToAllCreds(
         }),
     );
 };
+
+export function evmAddressToBytes(address: string) {
+    let evmAddress = address;
+    if (!evmAddress.startsWith('0x')) {
+        evmAddress = `0x${evmAddress}`;
+    }
+    // EVM addresses are 20 bytes (0x + 40 chars)
+    if (evmAddress.length === 42) {
+        return utils.hexToBuffer(evmAddress);
+    }
+    throw new Error(`Invalid EVM address: ${address}`);
+}
+
+export function bech32AddressToBytes(address: string) {
+    // Check if it's a Bech32 address (contains a hyphen)
+    if (address.includes('-')) {
+        return utils.bech32ToBytes(address);
+    }
+
+    // If it's a Bech32 address without chain alias, add P- prefix
+    return utils.bech32ToBytes(`P-${address}`);
+}
+
+export function evmOrBech32AddressToBytes(address: string) {
+    try {
+        return evmAddressToBytes(address);
+    } catch (error) {
+        return bech32AddressToBytes(address);
+    }
+}
+
+// AvalancheJS exports output as Amounter instead of TransferOutput,
+// so we cast them here.
+export function toTransferableOutput(output: TransferableOutput) {
+    return {
+        ...output,
+        output: output.output as unknown as TransferOutput
+    }
+}
