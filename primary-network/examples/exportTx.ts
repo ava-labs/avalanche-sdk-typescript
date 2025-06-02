@@ -10,7 +10,7 @@ async function main() {
                 amount: 0.00001,
             }
         ],
-        destinationChain: 'c-chain',
+        destinationChain: 'C',
     })
 
     await exportTx.sign()

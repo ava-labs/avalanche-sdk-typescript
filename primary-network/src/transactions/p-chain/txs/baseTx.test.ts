@@ -5,7 +5,7 @@ import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import type { BaseTxParams } from './baseTx';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
 import { pAddressForTest, pAddressForTest2, pAddressForTest3, pAddressForTest4, privateKeyForTest, privateKeyForTest2 } from '../../fixtures/accounts';
-import type { Output } from '../common/types';
+import type { Output } from '../../common/types';
 import { checkOutputs } from '../../fixtures/utils';
 
 describe('newBaseTx', () => {
@@ -13,7 +13,7 @@ describe('newBaseTx', () => {
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        addresses: [pAddressForTest],
+        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };

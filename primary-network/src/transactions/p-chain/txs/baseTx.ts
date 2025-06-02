@@ -1,7 +1,7 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../common/transaction";
-import { fetchCommonTxParams, formatOutput } from "../common/utils";
-import type { CommonTxParams, NewTxParams, Output } from "../common/types";
+import { Transaction } from "../../common/transaction";
+import { fetchCommonTxParams, formatOutput } from "../../common/utils";
+import type { CommonTxParams, NewTxParams, Output } from "../../common/types";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type BaseTxParams = CommonTxParams & {
@@ -49,6 +49,6 @@ export async function newBaseTx(
         unsignedTx,
         wallet: primaryNetworkCoreClient.wallet,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
     })
 }

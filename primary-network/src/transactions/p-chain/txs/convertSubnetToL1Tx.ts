@@ -5,8 +5,8 @@ import {
     pvmSerial,
     utils
 } from "@avalabs/avalanchejs";
-import type { CommonTxParams, PChainOwner } from "../common/types";
-import { bech32AddressToBytes, avaxToNanoAvax, fetchCommonTxParams } from "../common/utils";
+import type { CommonTxParams, PChainOwner } from "../../common/types";
+import { bech32AddressToBytes, avaxToNanoAvax, fetchCommonTxParams } from "../../common/utils";
 import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransactions";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
@@ -133,7 +133,7 @@ export async function newConvertSubnetToL1Tx(
     return new ConvertSubnetToL1Tx({
         unsignedTx,
         subnetOwners,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

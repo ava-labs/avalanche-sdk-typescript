@@ -14,7 +14,7 @@ import { type ExportTx, type ExportTxParams, newExportTx } from "../txs/exportTx
 import { type ImportTx, type ImportTxParams, newImportTx } from "../txs/importTx";
 import { type NewTxFromBytesParams, newTxFromBytes } from "../txs/txFromBytes";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
-import type { Transaction } from "../common/transaction";
+import type { Transaction } from "../../common/transaction";
 
 export class TxBuilder {
     primaryNetworkCoreClient: PrimaryNetworkCore;

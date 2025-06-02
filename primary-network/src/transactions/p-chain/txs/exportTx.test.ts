@@ -4,16 +4,16 @@ import { type ExportTxParams, newExportTx } from './exportTx';
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
 import { pAddressForTest, pAddressForTest2, pAddressForTest3, pAddressForTest4, privateKeyForTest } from '../../fixtures/accounts';
-import type { Output } from '../common/types';
+import type { Output } from '../../common/types';
 import { checkOutputs } from '../../fixtures/utils';
-import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../common/utils';
+import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../../common/utils';
 
 describe('exportTx', () => {
     const testInputAmount = 1
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        addresses: [pAddressForTest],
+        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };
@@ -55,7 +55,7 @@ describe('exportTx', () => {
         const mockTxParams: ExportTxParams = {
             changeAddresses: changeAddresses,
             exportedOutputs: testOutputs,
-            destinationChain: 'c-chain'
+            destinationChain: 'C'
         };
 
         const result = await newExportTx(mockPrimaryNetworkCoreClient, mockTxParams);
@@ -92,14 +92,14 @@ describe('exportTx', () => {
         const mockTxParamsCChain: ExportTxParams = {
             changeAddresses: changeAddresses,
             exportedOutputs: testOutputs,
-            destinationChain: 'c-chain'
+            destinationChain: 'C'
         };
         const cChainExportTx = await newExportTx(mockPrimaryNetworkCoreClient, mockTxParamsCChain);
 
         const mockTxParamsXChain: ExportTxParams = {
             changeAddresses: changeAddresses,
             exportedOutputs: testOutputs,
-            destinationChain: 'x-chain'
+            destinationChain: 'X'
         };
         const xChainExportTx = await newExportTx(mockPrimaryNetworkCoreClient, mockTxParamsXChain);
 
@@ -126,7 +126,7 @@ describe('exportTx', () => {
         const mockTxParamsCChain: ExportTxParams = {
             changeAddresses: changeAddresses,
             exportedOutputs: testOutputs,
-            destinationChain: 'c-chain'
+            destinationChain: 'C'
         };
         const cChainExportTx = await newExportTx(mockPrimaryNetworkCoreClient, mockTxParamsCChain);
         await cChainExportTx.sign()
@@ -134,7 +134,7 @@ describe('exportTx', () => {
         const mockTxParamsXChain: ExportTxParams = {
             changeAddresses: changeAddresses,
             exportedOutputs: testOutputs,
-            destinationChain: 'x-chain'
+            destinationChain: 'X'
         };
         const xChainExportTx = await newExportTx(mockPrimaryNetworkCoreClient, mockTxParamsXChain);
         await xChainExportTx.sign()

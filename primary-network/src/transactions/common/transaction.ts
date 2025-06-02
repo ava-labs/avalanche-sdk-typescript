@@ -1,13 +1,14 @@
-import { type Common, type pvm, utils, addTxSignatures, type pvmSerial } from "@avalabs/avalanchejs";
+import { type Common, type evm, utils, addTxSignatures, type pvm, type pvmSerial } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
-import type { Wallet } from "../../../wallet";
+import type { Wallet } from "../../wallet";
 import type { NewTxParams } from "./types";
 import { toTransferableOutput } from "./utils";
+
 export class Transaction {
     unsignedTx: Common.UnsignedTx;
     tx: Common.Transaction
     nodeUrl: string;
-    pvmRpc: pvm.PVMApi;
+    rpc: pvm.PVMApi | evm.EVMApi;
     wallet: Wallet | undefined;
 
     constructor(params: NewTxParams) {
@@ -15,7 +16,7 @@ export class Transaction {
         this.tx = params.unsignedTx.getTx()
         this.wallet = params.wallet;
         this.nodeUrl = params.nodeUrl;
-        this.pvmRpc = params.pvmRpc;
+        this.rpc = params.rpc;
     }
 
     linkWallet(wallet: Wallet) {
@@ -26,8 +27,8 @@ export class Transaction {
         return signed ? utils.addChecksum(this.unsignedTx.getSignedTx().toBytes()) : this.unsignedTx.toBytes()
     }
 
-    toHex(signed = false) {
-        return utils.bufferToHex(this.toBytes(signed))
+    toHex(signed = false): `0x${string}` {
+        return utils.bufferToHex(this.toBytes(signed)) as `0x${string}`
     }
 
     getId() {
@@ -65,6 +66,6 @@ export class Transaction {
         if (!this.unsignedTx.hasAllSignatures()) {
             throw new Error('Transaction is not completely signed. Cannot issue unsigned transaction')
         }
-        return await this.pvmRpc.issueSignedTx(this.unsignedTx.getSignedTx())
+        return await this.rpc.issueSignedTx(this.unsignedTx.getSignedTx())
     }
 }

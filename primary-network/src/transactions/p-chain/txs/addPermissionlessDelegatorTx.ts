@@ -1,7 +1,7 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../common/transaction";
-import type { CommonTxParams, NewTxParams } from "../common/types";
-import { bech32AddressToBytes, fetchCommonTxParams } from "../common/utils";
+import { Transaction } from "../../common/transaction";
+import type { CommonTxParams, NewTxParams } from "../../common/types";
+import { bech32AddressToBytes, fetchCommonTxParams } from "../../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type AddPermissionlessDelegatorTxParams = CommonTxParams & {
@@ -80,7 +80,7 @@ export async function newAddPermissionlessDelegatorTx(
 
     return new AddPermissionlessDelegatorTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

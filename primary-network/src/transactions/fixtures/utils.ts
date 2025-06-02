@@ -1,5 +1,5 @@
 import { expect } from "vitest"
-import type { Output, StakeableOutputFull, TransferableOutputFull } from "../p-chain/common/types"
+import type { Output, StakeableOutputFull, TransferableOutputFull } from "../common/types"
 import { utils } from "@avalabs/avalanchejs"
 
 export function checkOutputs(expectedOutputs: Output[], actualOutputs: (TransferableOutputFull | StakeableOutputFull)[]) {

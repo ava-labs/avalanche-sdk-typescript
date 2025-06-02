@@ -1,15 +1,15 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../common/transaction";
-import { fetchCommonTxParams, formatOutput, getChainIdFromAlias, toTransferableOutput } from "../common/utils";
-import type { CommonTxParams, NewTxParams, Output } from "../common/types";
-import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
+import { Transaction } from "../../common/transaction";
+import { fetchCommonTxParams, formatOutput, getChainIdFromAlias, toTransferableOutput } from "../../common/utils";
+import type { CommonTxParams, NewTxParams, Output } from "../../common/types";
+import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS } from "../../common/consts";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type ExportTxParams = CommonTxParams & {
     /**
      * The chain to export the funds to.
      */
-    destinationChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS | typeof P_CHAIN_ALIAS;
+    destinationChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
     /**
      * The outputs to export.
      */
@@ -50,7 +50,7 @@ export async function newExportTx(
 
     return new ExportTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

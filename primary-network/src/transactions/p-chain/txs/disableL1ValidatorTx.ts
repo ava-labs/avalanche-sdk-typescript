@@ -1,7 +1,8 @@
 import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../common/transaction";
-import type { CommonTxParams, NewTxParams, PChainOwner } from "../common/types";
-import { addPChainOwnerAuthSignature, fetchCommonTxParams } from "../common/utils";
+import { Transaction } from "../../common/transaction";
+import type { CommonTxParams, NewTxParams, PChainOwner } from "../../common/types";
+import { fetchCommonTxParams } from "../../common/utils";
+import { addPChainOwnerAuthSignature } from "../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type DisableL1ValidatorTxParams = CommonTxParams & {
@@ -77,7 +78,7 @@ export async function newDisableL1ValidatorTx(
     return new DisableL1ValidatorTx(
         {
             unsignedTx,
-            pvmRpc: primaryNetworkCoreClient.pvmRpc,
+            rpc: primaryNetworkCoreClient.pvmRpc,
             nodeUrl: primaryNetworkCoreClient.nodeUrl,
             wallet: primaryNetworkCoreClient.wallet,
         },

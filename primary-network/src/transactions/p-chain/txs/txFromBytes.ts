@@ -1,7 +1,7 @@
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
-import type { NewTxParams } from "../common/types";
-import { Transaction } from "../common/transaction";
-import { getTxClassFromBytes } from "../common/utils";
+import type { NewTxParams } from "../../common/types";
+import { Transaction } from "../../common/transaction";
+import { getTxClassFromBytes } from "../../common/utils";
 
 export type NewTxFromBytesParams<T extends Transaction> = {
     hexTxBytes: string,

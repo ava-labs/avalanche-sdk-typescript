@@ -1,5 +1,5 @@
-import type { Common, Id, pvm, pvmSerial, TransferOutput, TypeSymbols, Utxo }  from '@avalabs/avalanchejs';
-import type { Wallet } from '../../../wallet';
+import type { Common, Id, pvm, pvmSerial, TransferOutput, TypeSymbols, Utxo, evm }  from '@avalabs/avalanchejs';
+import type { Wallet } from '../../wallet';
 
 export type Output = {
     /**
@@ -69,7 +69,7 @@ export type NewTxParams = {
     unsignedTx: Common.UnsignedTx,
     wallet: Wallet | undefined,
     nodeUrl: string,
-    pvmRpc: pvm.PVMApi
+    rpc: pvm.PVMApi | evm.EVMApi
 }
 
 export type PChainOwner = {

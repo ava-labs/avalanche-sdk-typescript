@@ -1,5 +1,5 @@
 export { txTypes as pChainTxTypes } from "./p-chain/txs";
-export * as pChainUtils from "./p-chain/common/";
+export * as pChainUtils from "./common";
 export {
     AddPermissionlessDelegatorTx, newAddPermissionlessDelegatorTx,
     AddPermissionlessValidatorTx, newAddPermissionlessValidatorTx,
