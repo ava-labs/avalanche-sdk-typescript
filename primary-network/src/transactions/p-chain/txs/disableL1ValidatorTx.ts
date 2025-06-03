@@ -1,5 +1,5 @@
 import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../../common/transaction";
+import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams, PChainOwner } from "../../common/types";
 import { fetchCommonTxParams } from "../../common/utils";
 import { addPChainOwnerAuthSignature } from "../common/utils";

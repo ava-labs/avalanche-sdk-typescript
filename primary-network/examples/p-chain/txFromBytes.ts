@@ -1,5 +1,5 @@
-import { fetchInstantiatedClients } from "./boilerPlate";
-import { txTypes } from "../src";
+import { fetchInstantiatedClients } from "../boilerPlate";
+import { txTypes } from "../../src";
 
 const { pnClient } = fetchInstantiatedClients()
 

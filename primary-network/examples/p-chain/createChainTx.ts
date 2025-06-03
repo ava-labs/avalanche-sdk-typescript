@@ -1,4 +1,4 @@
-import { fetchInstantiatedClients } from "./boilerPlate";
+import { fetchInstantiatedClients } from "../boilerPlate";
 
 const { pnClient } = fetchInstantiatedClients()
 

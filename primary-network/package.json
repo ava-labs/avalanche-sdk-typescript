@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/primary-network",
-  "version": "0.0.4",
+  "version": "0.0.4-alpha.0",
   "type": "module",
   "description": "Primary Network module for building and interacting with Avalanche ecosystem",
   "main": "./dist/index.js",
@@ -51,7 +51,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./warp": "./dist/warp/index.js",
-    "./transactions/pchain": "./dist/transactions/p-chain/index.js"
+    "./transactions/pchain": "./dist/transactions/p-chain/index.js",
+    "./transactions/cchain": "./dist/transactions/c-chain/index.js"
   },
   "typesVersions": {
     "*": {

@@ -58,7 +58,7 @@ export async function newImportTx(
         if (wallet) {
             params.fromAddresses = wallet.getBech32Addresses(C_CHAIN_ALIAS, context.networkID);
         } else {
-            throw new Error(errWalletNotFound('fromAddresses'));
+            throw errWalletNotFound('fromAddresses');
         }
     }
 
@@ -71,7 +71,7 @@ export async function newImportTx(
                 C_CHAIN_ALIAS,
             )
         } else {
-            throw new Error(errWalletNotFound('utxos'));
+            throw errWalletNotFound('utxos');
         }
     }
     const fromAddressesBytes = params.fromAddresses.map(address => bech32AddressToBytes(address));

@@ -1,6 +1,8 @@
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
+import type { Transaction } from "../../common";
 import { newExportTx, type ExportTxParams } from "../txs/exportTx";
 import { newImportTx, type ImportTxParams } from "../txs/importTx";
+import { newTxFromBytes, type NewTxFromBytesParams } from "../txs/txFromBytes";
 
 export class TxBuilder {
     primaryNetworkCoreClient: PrimaryNetworkCore;
@@ -11,6 +13,10 @@ export class TxBuilder {
 
     static newClient(primaryNetworkCoreClient: PrimaryNetworkCore) {
         return new TxBuilder(primaryNetworkCoreClient)
+    }
+
+    newTxFromBytes<T extends Transaction>(params: NewTxFromBytesParams<T>) {
+        return newTxFromBytes(this.primaryNetworkCoreClient, params)
     }
 
     async newExportTx(params: ExportTxParams) {

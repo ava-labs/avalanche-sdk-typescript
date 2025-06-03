@@ -3,11 +3,12 @@ import {
     type Context as ContextType,
     TransferableOutput,
     utils,
-    type Common,
-    Credential,
     UnsignedTx,
     type TransferOutput,
     pvmSerial,
+    type Common,
+    type Credential,
+    evm,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../wallet";
 import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner, TransferableOutputFull } from "./types";
@@ -22,8 +23,11 @@ import {
     P_CHAIN_FUJI_ID,
 } from "./consts";
 import type { Transaction } from "./transaction";
+import { getTxFromBytes } from "@avalanche-sdk/rpc/utils";
 
-export const errWalletNotFound = (param: string) => `Wallet not found. Link a wallet or provide required parameter: ${param}`
+export const errWalletNotFound = (param: string) => {
+    return new Error(`Wallet not found. Link a wallet or provide required parameter: ${param}`)
+}
 
 export function formatOutput(output: Output, context: ContextType.Context) {
     return TransferableOutput.fromNative(     
@@ -54,7 +58,7 @@ export async function fetchCommonTxParams(
         if (wallet) {
             txParams.fromAddresses = wallet.getBech32Addresses(P_CHAIN_ALIAS, context.networkID);
         } else {
-            throw new Error(errWalletNotFound('fromAddresses'));
+            throw errWalletNotFound('fromAddresses');
         }
     }
 
@@ -63,7 +67,7 @@ export async function fetchCommonTxParams(
         if (wallet) {
             txParams.utxos = await wallet.getUtxos(txParams.fromAddresses, sourceChain)
         } else {
-            throw new Error(errWalletNotFound('utxos'));
+            throw errWalletNotFound('utxos');
         }
     }
 
@@ -129,50 +133,26 @@ export function getChainIdFromAlias(
     }
 }
 
-export function getTxFromBytes(txBytes: string): [Common.Transaction, Credential[]] {
-    const strippedTxBytes = utils.strip0x(txBytes)
-    const manager = utils.getManagerForVM('PVM')
-    
-    const parsedTx = manager.unpackTransaction(Buffer.from(strippedTxBytes, 'hex'));
-    const txBytesWithoutCreds = utils.bufferToHex(parsedTx.toBytes(manager.getDefaultCodec()))
-
-    // get first 6 bytes (codec + type)
-    const codecAndType = strippedTxBytes.slice(0, 12)
-
-    // replace txBytesWithoutCreds from txBytes to get credentials
-    const creds = strippedTxBytes.replace(codecAndType + utils.strip0x(txBytesWithoutCreds), '')
-
-    // remove type from the creds (frist 4 bytes)
-    const credsWithoutType = Buffer.from(utils.strip0x(creds).slice(8), 'hex');
-
-    const credentials: Credential[] = []
-    let remainingBytes = new Uint8Array(credsWithoutType)
-
-    // signature length is 65 bytes
-    while (remainingBytes.length >= 65) {
-        const [cred, rest] = Credential.fromBytes(remainingBytes.slice(4), manager.getDefaultCodec());
-        credentials.push(cred)
-        remainingBytes = rest
-    }
-    return [parsedTx, credentials];
-}
-
 export function getTxClassFromBytes<T extends Transaction>(
     Tx: new (params: NewTxParams) => T,
     txBytes: string,
-    pvmRpc: pvm.PVMApi,
+    rpc: pvm.PVMApi | evm.EVMApi,
     nodeUrl: string,
     wallet?: Wallet,
 ): T {
-    const [tx, credentials] = getTxFromBytes(txBytes)
+    let alias = P_CHAIN_ALIAS;
+    if (rpc instanceof evm.EVMApi) {
+        alias = C_CHAIN_ALIAS;
+    }
+    const [tx, credentials] = getTxFromBytes(txBytes, alias)
     const unsignedTx = new UnsignedTx(
-        tx,
+        tx as unknown as Common.Transaction,
         // dummy values for utxos and addressMaps, since these can't be generated from bytes
         [],
         new utils.AddressMaps(),
-        credentials,
+        credentials as unknown as Credential[],
     )
-    return new Tx({ unsignedTx, rpc: pvmRpc, nodeUrl, wallet })
+    return new Tx({ unsignedTx, rpc, nodeUrl, wallet })
 }
 
 export function evmAddressToBytes(address: string) {

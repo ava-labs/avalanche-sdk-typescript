@@ -1,5 +1,5 @@
 import { pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
-import { Transaction } from "../../common/transaction";
+import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../../common/types";
 import { bech32AddressToBytes, fetchCommonTxParams } from "../../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";

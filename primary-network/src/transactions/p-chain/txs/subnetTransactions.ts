@@ -1,5 +1,5 @@
 import { utils } from "@avalabs/avalanchejs";
-import { Transaction } from "../../common";
+import { Transaction } from "../common/transaction";
 import { addPChainOwnerAuthSignature } from "../common/utils";
 import type { NewTxParams, PChainOwner } from "../../common/types";
 

@@ -1,5 +1,5 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../../common/transaction";
+import { Transaction } from "../common/transaction";
 import { fetchCommonTxParams, formatOutput, getChainIdFromAlias, toTransferableOutput } from "../../common/utils";
 import type { CommonTxParams, NewTxParams, Output } from "../../common/types";
 import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS } from "../../common/consts";

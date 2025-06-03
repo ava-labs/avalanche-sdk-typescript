@@ -1,5 +1,5 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import { Transaction } from "../../common/transaction";
+import { Transaction } from "../common/transaction";
 import type { CommonTxParams, NewTxParams } from "../../common/types";
 import { avaxToNanoAvax, fetchCommonTxParams } from "../../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
