@@ -1,6 +1,6 @@
 import { pvm, type pvmSerial } from "@avalabs/avalanchejs";
-import type { CommonTxParams } from "../common/types";
-import { fetchCommonTxParams } from "../common/utils";
+import type { CommonTxParams } from "../../common/types";
+import { fetchCommonTxParams } from "../../common/utils";
 import { SubnetTransaction, type SubnetTransactionParams } from "./subnetTransactions";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
@@ -70,7 +70,7 @@ export async function newAddSubnetValidatorTx(
     return new AddSubnetValidatorTx({
         unsignedTx,
         subnetOwners,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

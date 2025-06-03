@@ -1,4 +1,4 @@
-import { fetchInstantiatedClients } from "./boilerPlate";
+import { fetchInstantiatedClients } from "../boilerPlate";
 
 const { pnClient } = fetchInstantiatedClients()
 
@@ -10,7 +10,7 @@ async function main() {
                 amount: 0.00001,
             }
         ],
-        destinationChain: 'c-chain',
+        destinationChain: 'C',
     })
 
     await exportTx.sign()

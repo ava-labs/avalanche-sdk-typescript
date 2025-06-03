@@ -1,7 +1,7 @@
 import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams, NewTxParams } from "../common/types";
-import { avaxToNanoAvax, fetchCommonTxParams } from "../common/utils";
+import type { CommonTxParams, NewTxParams } from "../../common/types";
+import { avaxToNanoAvax, fetchCommonTxParams } from "../../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type RegisterL1ValidatorTxParams = CommonTxParams & {
@@ -47,7 +47,7 @@ export async function newRegisterL1ValidatorTx(
 
     return new RegisterL1ValidatorTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

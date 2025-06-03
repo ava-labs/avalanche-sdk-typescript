@@ -1,6 +1,6 @@
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 import type { NewTxParams } from "../../common/types";
-import { Transaction } from "../common/transaction";
+import { Transaction } from "../../common/transaction";
 import { getTxClassFromBytes } from "../../common/utils";
 
 export type NewTxFromBytesParams<T extends Transaction> = {
@@ -15,7 +15,7 @@ export function newTxFromBytes<T extends Transaction>(
     return getTxClassFromBytes(
         params.txClass ?? (Transaction as new (params: NewTxParams) => T),
         params.hexTxBytes,
-        primaryNetworkCoreClient.pvmRpc,
+        primaryNetworkCoreClient.evmRpc,
         primaryNetworkCoreClient.nodeUrl,
         primaryNetworkCoreClient.wallet,
     )

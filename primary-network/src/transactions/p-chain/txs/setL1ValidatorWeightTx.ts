@@ -1,7 +1,7 @@
 import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams, NewTxParams } from "../common/types";
-import { fetchCommonTxParams } from "../common/utils";
+import type { CommonTxParams, NewTxParams } from "../../common/types";
+import { fetchCommonTxParams } from "../../common/utils";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type SetL1ValidatorWeightTxParams = CommonTxParams & {
@@ -35,7 +35,7 @@ export async function newSetL1ValidatorWeightTx(
 
     return new SetL1ValidatorWeightTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

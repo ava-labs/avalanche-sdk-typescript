@@ -4,16 +4,16 @@ import { type ImportedOutput, type ImportTxParams, newImportTx } from './importT
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
 import { pAddressForTest, pAddressForTest3, privateKeyForTest } from '../../fixtures/accounts';
-import type { Output } from '../common/types';
+import type { Output } from '../../common/types';
 import { checkOutputs } from '../../fixtures/utils';
-import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../common/utils';
+import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../../common/utils';
 
 describe('importTx', () => {
     const testInputAmount = 1
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        addresses: [pAddressForTest],
+        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };
@@ -46,7 +46,7 @@ describe('importTx', () => {
         const testOutputs: Output[] = []
         const mockTxParams: ImportTxParams = {
             importedOutput: importedOutput,
-            sourceChain: 'c-chain'
+            sourceChain: 'C'
         };
 
         const result = await newImportTx(mockPrimaryNetworkCoreClient, mockTxParams);
@@ -82,7 +82,7 @@ describe('importTx', () => {
         }
         const mockTxParams: ImportTxParams = {
             importedOutput: importedOutput,
-            sourceChain: 'c-chain'
+            sourceChain: 'C'
         };
         const result = await newImportTx(mockPrimaryNetworkCoreClient, mockTxParams);
         expect(result.tx.sourceChain.value(), 'source chain mismatch').toBe(getChainIdFromAlias(mockTxParams.sourceChain, testContext.networkID))
@@ -98,7 +98,7 @@ describe('importTx', () => {
         }
         const mockTxParams: ImportTxParams = {
             importedOutput: importedOutput,
-            sourceChain: 'c-chain'
+            sourceChain: 'C'
         };
         const result = await newImportTx(mockPrimaryNetworkCoreClient, mockTxParams);
         await result.sign()

@@ -1,8 +1,8 @@
 import { pvm, utils, type pvmSerial } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import { fetchCommonTxParams, getChainIdFromAlias } from "../common/utils";
-import type { CommonTxParams, NewTxParams } from "../common/types";
-import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../common/consts";
+import { fetchCommonTxParams, getChainIdFromAlias } from "../../common/utils";
+import type { CommonTxParams, NewTxParams } from "../../common/types";
+import type { X_CHAIN_ALIAS, C_CHAIN_ALIAS } from "../../common/consts";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 
 export type ImportedOutput = {
@@ -30,7 +30,7 @@ export type ImportTxParams = Omit<CommonTxParams, 'changeAddresses'> & {
     /**
      * The chain to import the funds from.
      */
-    sourceChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS | typeof P_CHAIN_ALIAS;
+    sourceChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
     /**
      * Consolidated imported output from the atomic memory (source chain). Users
      * cannot specify the amount, as it will be consolidation of all the UTXOs
@@ -74,7 +74,7 @@ export async function newImportTx(
 
     return new ImportTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

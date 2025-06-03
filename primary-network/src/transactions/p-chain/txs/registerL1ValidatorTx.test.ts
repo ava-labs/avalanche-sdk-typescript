@@ -2,20 +2,20 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { pvm, utils } from '@avalabs/avalanchejs';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
 import { pAddressForTest, pAddressForTest2, pAddressForTest3, privateKeyForTest } from '../../fixtures/accounts';
-import type { Output } from '../common/types';
+import type { Output } from '../../common/types';
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { checkOutputs } from '../../fixtures/utils';
 import { type RegisterL1ValidatorTxParams, newRegisterL1ValidatorTx } from './registerL1ValidatorTx';
 import { popSignatureHex } from '../../fixtures/signatures';
 import { signedWarpMsgRegisterL1ValidatorHex } from '../../fixtures/warp';
-import { avaxToNanoAvax, nanoAvaxToAvax } from '../common/utils';
+import { avaxToNanoAvax, nanoAvaxToAvax } from '../../common/utils';
 
 describe('registerL1ValidatorTx', () => {
     const testInputAmount = 1
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        addresses: [pAddressForTest],
+        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };

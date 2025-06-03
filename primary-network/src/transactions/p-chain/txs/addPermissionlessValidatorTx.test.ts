@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { pvm, utils } from '@avalabs/avalanchejs';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
 import { pAddressForTest, pAddressForTest2, pAddressForTest3, pAddressForTest4, privateKeyForTest } from '../../fixtures/accounts';
-import type { Output } from '../common/types';
+import type { Output } from '../../common/types';
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { checkOutputs } from '../../fixtures/utils';
 import { newAddPermissionlessValidatorTx, type AddPermissionlessValidatorTxParams } from './addPermissionlessValidatorTx';
@@ -12,7 +12,7 @@ describe('addPermissionlessValidatorTx', () => {
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        addresses: [pAddressForTest],
+        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };

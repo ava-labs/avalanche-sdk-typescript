@@ -1,8 +1,8 @@
 import { pvm, type pvmSerial, utils } from "@avalabs/avalanchejs";
 import { Transaction } from "../common/transaction";
-import type { CommonTxParams, NewTxParams } from "../common/types";
+import type { CommonTxParams, NewTxParams } from "../../common/types";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
-import { fetchCommonTxParams } from "../common/utils";
+import { fetchCommonTxParams } from "../../common/utils";
 
 export type CreateSubnetTxParams = CommonTxParams & {
     /**
@@ -46,7 +46,7 @@ export async function newCreateSubnetTx(
 
     return new CreateSubnetTx({
         unsignedTx,
-        pvmRpc: primaryNetworkCoreClient.pvmRpc,
+        rpc: primaryNetworkCoreClient.pvmRpc,
         nodeUrl: primaryNetworkCoreClient.nodeUrl,
         wallet: primaryNetworkCoreClient.wallet,
     })

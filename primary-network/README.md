@@ -19,7 +19,7 @@ pnpm add @avalanche-sdk/primary-network
 
 ## Transaction Building
 
-The SDK provides a structured way to build different types of transactions. Here's a comprehensive guide on how to build transactions.
+The SDK provides a structured way to build different types of transactions. Currently this SDK supports all P-Chain transaction types and C-Chain atomic transactions (ExportTx and ImportTx) Here's a comprehensive guide on how to build transactions.
 
 ### Quickstart
 
@@ -70,25 +70,7 @@ async function main() {
 main()
 ```
 
-### Building Transactions from Bytes
-
-Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
-
-```typescript
-    const pnClient = createPrimaryNetworkClient({
-        nodeUrlOrChain: "fuji",
-    });
-
-    const txHexBytes = '<HEX_TX_BYTES>'
-
-    const addPermissionlessDelegatorTx = pnClient.pChain.newTxFromBytes(txHexBytes, txTypes.pChain.AddPermissionlessDelegatorTx)
-
-    console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
-```
-
-### Other Examples
-
-There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples) as well for building, signing, and issuing P-Chain transactions.
+There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/p-chain) as well for building, signing, and issuing P-Chain transactions.
 
 - `addSubnetValidatorTx.ts` - Adding a validator to a subnet
 - `createChainTx.ts` - Creating a new blockchain
@@ -98,13 +80,68 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 - `exportTx.ts` - Exporting assets from P-Chain
 - `importTx.ts` - Importing assets to P-Chain
 
+### C-Chain Atomic Transactions
+
+Let's try to build an ExportTx on the C-Chain, which will export AVAX to the P-Chain.
+
+```typescript
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
+
+async function main() {
+    pnClient.linkPrivateKeys(["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"]) 
+
+    // C-Chain to Atomic Memory (not yet on desitnation chain)
+    const exportTx = await pnClient.cChain.newExportTx({
+        destinationChain: 'P',
+        fromAddress: '0x8db97C7cEcE249c2b98bDC0226Cc4C2A57BF52FC',
+        exportedOutput: {
+            addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+            amountInAvax: 0.1,
+        }
+    })
+    await exportTx.sign()
+    console.log(await exportTx.issue())
+
+    // Atomic Memory to P-Chain (this will import all exported outputs)
+    const importTx = await pnClient.pChain.newImportTx({
+        sourceChain: 'C',
+        importedOutput: {
+            addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+        },
+    })
+    await importTx.sign()
+    console.log(await importTx.issue())
+}
+main()
+```
+
+There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/c-chain) to build, sign, and issue C-Chain atomic transactions.
+
+### Building Transactions from Bytes
+
+Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
+
+```typescript
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
+
+const txHexBytes = '<HEX_TX_BYTES>'
+
+const addPermissionlessDelegatorTx = pnClient.pChain.newTxFromBytes(txHexBytes, txTypes.pChain.AddPermissionlessDelegatorTx)
+
+console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
+```
+
 ### Import Transaction Builders
 
 Import the specific transaction builders directly without bundling them with other transaction types. You can do that using the `PrimaryNetworkCoreClient`. See example below.
 
 ```typescript
 import { createPrimaryNetworkCoreClient, Wallet } from "@avalanche-sdk/primary-network";
-import { newBaseTx } from '@avalanche-sdk/primary-network/dist/transactions/p-chain'
+import { newBaseTx } from '@avalanche-sdk/primary-network/transactions/pchain'
 
 async function main() {
     const wallet = new Wallet({
