@@ -1,11 +1,12 @@
-import { ExportTx, newExportTx } from "./exportTx";
-import { ImportTx, newImportTx } from "./importTx";
+import { ExportTx, newExportTx, type ExportTxParams } from "./exportTx";
+import { ImportTx, newImportTx, type ImportTxParams } from "./importTx";
 
 const txTypes = {
     ExportTx,
     ImportTx,
 };
-
 export { txTypes };
-export { ExportTx, newExportTx };
-export { ImportTx, newImportTx };
+
+export { ExportTx, newExportTx, type ExportTxParams };
+export { ImportTx, newImportTx, type ImportTxParams };
+export { newTxFromBytes, type NewTxFromBytesParams } from './txFromBytes';
