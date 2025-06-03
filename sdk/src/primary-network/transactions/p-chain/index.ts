@@ -1,0 +1,20 @@
+export {
+    newBaseTx, BaseTx, type BaseTxParams,
+    newConvertSubnetToL1Tx, ConvertSubnetToL1Tx, type ConvertSubnetToL1TxParams,
+    newCreateSubnetTx, CreateSubnetTx, type CreateSubnetTxParams,
+    newCreateChainTx, CreateChainTx, type CreateChainTxParams,
+    newAddSubnetValidatorTx, AddSubnetValidatorTx, type AddSubnetValidatorTxParams,
+    newRemoveSubnetValidatorTx, RemoveSubnetValidatorTx, type RemoveSubnetValidatorTxParams,
+    newAddPermissionlessDelegatorTx, AddPermissionlessDelegatorTx, type AddPermissionlessDelegatorTxParams,
+    newAddPermissionlessValidatorTx, AddPermissionlessValidatorTx, type AddPermissionlessValidatorTxParams,
+    newExportTx, ExportTx, type ExportTxParams,
+    newImportTx, ImportTx, type ImportTxParams,
+    newRegisterL1ValidatorTx, RegisterL1ValidatorTx, type RegisterL1ValidatorTxParams,
+    newIncreaseL1ValidatorBalanceTx, IncreaseL1ValidatorBalanceTx, type IncreaseL1ValidatorBalanceTxParams,
+    newSetL1ValidatorWeightTx, SetL1ValidatorWeightTx, type SetL1ValidatorWeightTxParams,
+    newDisableL1ValidatorTx, DisableL1ValidatorTx, type DisableL1ValidatorTxParams,
+    newTxFromBytes, type NewTxFromBytesParams,
+
+    createTxBuilder,
+    txTypes,
+} from "@avalanche-sdk/primary-network/transactions/pchain";
