@@ -2,8 +2,6 @@
 
 A Typescript SDK for building transactions and interacting with the Avalanche Primary Network (P-Chain and X-Chain). It offers an interface for creating, signing, and issuing various types of transactions on the Avalanche network.
 
-[toc]
-
 ## Requirements
 
 - Node.js >= 20.0.0
@@ -72,6 +70,16 @@ async function main() {
 main()
 ```
 
+There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/p-chain) as well for building, signing, and issuing P-Chain transactions.
+
+- `addSubnetValidatorTx.ts` - Adding a validator to a subnet
+- `createChainTx.ts` - Creating a new blockchain
+- `createSubnetTx.ts` - Creating a new subnet
+- `increaseL1ValidatorBalanceTx.ts` - Increasing L1 validator balance
+- `removeSubnetValidatorTx.ts` - Removing a validator from a subnet
+- `exportTx.ts` - Exporting assets from P-Chain
+- `importTx.ts` - Importing assets to P-Chain
+
 ### C-Chain Atomic Transactions
 
 Let's try to build an ExportTx on the C-Chain, which will export AVAX to the P-Chain.
@@ -109,33 +117,23 @@ async function main() {
 main()
 ```
 
+There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/c-chain) to build, sign, and issue C-Chain atomic transactions.
+
 ### Building Transactions from Bytes
 
 Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
 
 ```typescript
-    const pnClient = createPrimaryNetworkClient({
-        nodeUrlOrChain: "fuji",
-    });
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
 
-    const txHexBytes = '<HEX_TX_BYTES>'
+const txHexBytes = '<HEX_TX_BYTES>'
 
-    const addPermissionlessDelegatorTx = pnClient.pChain.newTxFromBytes(txHexBytes, txTypes.pChain.AddPermissionlessDelegatorTx)
+const addPermissionlessDelegatorTx = pnClient.pChain.newTxFromBytes(txHexBytes, txTypes.pChain.AddPermissionlessDelegatorTx)
 
-    console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
+console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
 ```
-
-### Other Examples
-
-There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/p-chain) as well for building, signing, and issuing P-Chain transactions.
-
-- `addSubnetValidatorTx.ts` - Adding a validator to a subnet
-- `createChainTx.ts` - Creating a new blockchain
-- `createSubnetTx.ts` - Creating a new subnet
-- `increaseL1ValidatorBalanceTx.ts` - Increasing L1 validator balance
-- `removeSubnetValidatorTx.ts` - Removing a validator from a subnet
-- `exportTx.ts` - Exporting assets from P-Chain
-- `importTx.ts` - Importing assets to P-Chain
 
 ### Import Transaction Builders
 
@@ -143,7 +141,7 @@ Import the specific transaction builders directly without bundling them with oth
 
 ```typescript
 import { createPrimaryNetworkCoreClient, Wallet } from "@avalanche-sdk/primary-network";
-import { newBaseTx } from '@avalanche-sdk/primary-network/transactions/p-chain'
+import { newBaseTx } from '@avalanche-sdk/primary-network/transactions/pchain'
 
 async function main() {
     const wallet = new Wallet({
