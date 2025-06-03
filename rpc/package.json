@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/rpc",
-  "version": "0.0.4-alpha.0",
+  "version": "0.0.4-alpha.1",
   "scripts": {
     "update-version": "node scripts/update-version.js",
     "build": "rm -rf dist && rm -f .tsbuildinfo && npx tsc",

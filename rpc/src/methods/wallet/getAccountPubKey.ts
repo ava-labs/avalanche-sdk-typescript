@@ -1,3 +1,4 @@
+import { PrivateKeyAccount } from "viem/accounts";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
@@ -43,15 +44,22 @@ import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
 export async function getAccountPubKey(
   client: AvalancheWalletCoreClient
 ): Promise<GetAccountPubKeyReturnType> {
+  if (client.account && client.xpAccount) {
+    return {
+      evm: (client.account as PrivateKeyAccount).publicKey,
+      xp: client.xpAccount.publicKey,
+    };
+  }
+
   return client.request<
     AvalancheWalletRpcSchema,
     {
-      method: "avalance_getAccountPubKey";
+      method: "avalanche_getAccountPubKey";
       params: {};
     },
     GetAccountPubKeyReturnType
   >({
-    method: "avalance_getAccountPubKey",
+    method: "avalanche_getAccountPubKey",
     params: {},
   });
 }

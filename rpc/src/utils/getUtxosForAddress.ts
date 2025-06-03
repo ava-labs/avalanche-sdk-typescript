@@ -16,6 +16,7 @@ import { getUtxoFromBytes } from "./getUtxoFromBytes.js";
  * ```ts
  * import { createAvalancheWalletCoreClient } from "@avalanche-sdk/rpc";
  * import { avalanche } from "@avalanche-sdk/rpc/chains";
+ * import { getUtxosForAddress } from "@avalanche-sdk/rpc/utils";
  *
  * const client = createAvalancheWalletCoreClient({
  *   chain: avalanche,
