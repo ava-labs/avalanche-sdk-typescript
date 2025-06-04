@@ -21,6 +21,7 @@
   "dependencies": {
     "@avalanche-sdk/devtools": "^0.0.4",
     "@avalanche-sdk/primary-network": "^0.0.4-alpha.0",
+    "@avalanche-sdk/rpc": "^0.0.4-alpha.1",
     "eslint": "^9.22.0"
   },
   "devDependencies": {
@@ -47,6 +48,25 @@
       "./primary-network/transactions/pchain": "./src/primary-network/transactions/p-chain/index.ts",
       "./primary-network/transactions/cchain": "./src/primary-network/transactions/c-chain/index.ts",
       "./primary-network/warp": "./src/primary-network/warp/index.ts",
+      "./rpc": "./src/rpc/index.ts",
+      "./rpc/accounts": "./src/rpc/accounts/index.ts",
+      "./rpc/chains": "./src/rpc/chains/index.ts",
+      "./rpc/methods": "./src/rpc/methods/index.ts",
+      "./rpc/methods/admin": "./src/rpc/methods/admin/index.ts",
+      "./rpc/methods/cChain": "./src/rpc/methods/cChain/index.ts",
+      "./rpc/methods/health": "./src/rpc/methods/health/index.ts",
+      "./rpc/methods/index": "./src/rpc/methods/index/index.ts",
+      "./rpc/methods/info": "./src/rpc/methods/info/index.ts",
+      "./rpc/methods/pChain": "./src/rpc/methods/pChain/index.ts",
+      "./rpc/methods/public": "./src/rpc/methods/public/index.ts",
+      "./rpc/methods/wallet": "./src/rpc/methods/wallet/index.ts",
+      "./rpc/methods/xChain": "./src/rpc/methods/xChain/index.ts",
+      "./rpc/node": "./src/rpc/node/index.ts",
+      "./rpc/nonce": "./src/rpc/nonce/index.ts",
+      "./rpc/serializable": "./src/rpc/serializable/index.ts",
+      "./rpc/siwe": "./src/rpc/siwe/index.ts",
+      "./rpc/utils": "./src/rpc/utils/index.ts",
+      "./rpc/window": "./src/rpc/window/index.ts",
       "./*.js": "./src/*.ts",
       "./*": "./src/*.ts"
     }
@@ -152,15 +172,213 @@
         "default": "./dist/commonjs/primary-network/warp/index.js"
       }
     },
-    "./*.js": {
+    "./rpc": {
       "import": {
-        "@avalanche-sdk/sdk/source": "./src/*.ts",
-        "types": "./dist/esm/*.d.ts",
-        "default": "./dist/esm/*.js"
+        "@avalanche-sdk/sdk/source": "./src/rpc/index.ts",
+        "types": "./dist/esm/rpc/index.d.ts",
+        "default": "./dist/esm/rpc/index.js"
       },
       "require": {
-        "types": "./dist/commonjs/*.d.ts",
-        "default": "./dist/commonjs/*.js"
+        "types": "./dist/commonjs/rpc/index.d.ts",
+        "default": "./dist/commonjs/rpc/index.js"
+      }
+    },
+    "./rpc/accounts": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/accounts/index.ts",
+        "types": "./dist/esm/rpc/accounts/index.d.ts",
+        "default": "./dist/esm/rpc/accounts/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/accounts/index.d.ts",
+        "default": "./dist/commonjs/rpc/accounts/index.js"
+      }
+    },
+    "./rpc/chains": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/chains/index.ts",
+        "types": "./dist/esm/rpc/chains/index.d.ts",
+        "default": "./dist/esm/rpc/chains/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/chains/index.d.ts",
+        "default": "./dist/commonjs/rpc/chains/index.js"
+      }
+    },
+    "./rpc/methods": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/index.ts",
+        "types": "./dist/esm/rpc/methods/index.d.ts",
+        "default": "./dist/esm/rpc/methods/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/index.js"
+      }
+    },
+    "./rpc/methods/admin": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/admin/index.ts",
+        "types": "./dist/esm/rpc/methods/admin/index.d.ts",
+        "default": "./dist/esm/rpc/methods/admin/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/admin/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/admin/index.js"
+      }
+    },
+    "./rpc/methods/cChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/cChain/index.ts",
+        "types": "./dist/esm/rpc/methods/cChain/index.d.ts",
+        "default": "./dist/esm/rpc/methods/cChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/cChain/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/cChain/index.js"
+      }
+    },
+    "./rpc/methods/health": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/health/index.ts",
+        "types": "./dist/esm/rpc/methods/health/index.d.ts",
+        "default": "./dist/esm/rpc/methods/health/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/health/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/health/index.js"
+      }
+    },
+    "./rpc/methods/index": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/index/index.ts",
+        "types": "./dist/esm/rpc/methods/index/index.d.ts",
+        "default": "./dist/esm/rpc/methods/index/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/index/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/index/index.js"
+      }
+    },
+    "./rpc/methods/info": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/info/index.ts",
+        "types": "./dist/esm/rpc/methods/info/index.d.ts",
+        "default": "./dist/esm/rpc/methods/info/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/info/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/info/index.js"
+      }
+    },
+    "./rpc/methods/pChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/pChain/index.ts",
+        "types": "./dist/esm/rpc/methods/pChain/index.d.ts",
+        "default": "./dist/esm/rpc/methods/pChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/pChain/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/pChain/index.js"
+      }
+    },
+    "./rpc/methods/public": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/public/index.ts",
+        "types": "./dist/esm/rpc/methods/public/index.d.ts",
+        "default": "./dist/esm/rpc/methods/public/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/public/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/public/index.js"
+      }
+    },
+    "./rpc/methods/wallet": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/wallet/index.ts",
+        "types": "./dist/esm/rpc/methods/wallet/index.d.ts",
+        "default": "./dist/esm/rpc/methods/wallet/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/wallet/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/wallet/index.js"
+      }
+    },
+    "./rpc/methods/xChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/methods/xChain/index.ts",
+        "types": "./dist/esm/rpc/methods/xChain/index.d.ts",
+        "default": "./dist/esm/rpc/methods/xChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/methods/xChain/index.d.ts",
+        "default": "./dist/commonjs/rpc/methods/xChain/index.js"
+      }
+    },
+    "./rpc/node": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/node/index.ts",
+        "types": "./dist/esm/rpc/node/index.d.ts",
+        "default": "./dist/esm/rpc/node/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/node/index.d.ts",
+        "default": "./dist/commonjs/rpc/node/index.js"
+      }
+    },
+    "./rpc/nonce": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/nonce/index.ts",
+        "types": "./dist/esm/rpc/nonce/index.d.ts",
+        "default": "./dist/esm/rpc/nonce/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/nonce/index.d.ts",
+        "default": "./dist/commonjs/rpc/nonce/index.js"
+      }
+    },
+    "./rpc/serializable": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/serializable/index.ts",
+        "types": "./dist/esm/rpc/serializable/index.d.ts",
+        "default": "./dist/esm/rpc/serializable/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/serializable/index.d.ts",
+        "default": "./dist/commonjs/rpc/serializable/index.js"
+      }
+    },
+    "./rpc/siwe": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/siwe/index.ts",
+        "types": "./dist/esm/rpc/siwe/index.d.ts",
+        "default": "./dist/esm/rpc/siwe/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/siwe/index.d.ts",
+        "default": "./dist/commonjs/rpc/siwe/index.js"
+      }
+    },
+    "./rpc/utils": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/utils/index.ts",
+        "types": "./dist/esm/rpc/utils/index.d.ts",
+        "default": "./dist/esm/rpc/utils/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/utils/index.d.ts",
+        "default": "./dist/commonjs/rpc/utils/index.js"
+      }
+    },
+    "./rpc/window": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/window/index.ts",
+        "types": "./dist/esm/rpc/window/index.d.ts",
+        "default": "./dist/esm/rpc/window/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/window/index.d.ts",
+        "default": "./dist/commonjs/rpc/window/index.js"
       }
     },
     "./*": {
