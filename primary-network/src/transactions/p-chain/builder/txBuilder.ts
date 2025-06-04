@@ -16,6 +16,10 @@ import { type NewTxFromBytesParams, newTxFromBytes } from "../txs/txFromBytes";
 import type { PrimaryNetworkCore } from "../../../primaryNetworkCoreClient";
 import type { Transaction } from "../common/transaction";
 
+export function createTxBuilder(primaryNetworkCoreClient: PrimaryNetworkCore) {
+    return TxBuilder.newClient(primaryNetworkCoreClient)
+}
+
 export class TxBuilder {
     primaryNetworkCoreClient: PrimaryNetworkCore;
 

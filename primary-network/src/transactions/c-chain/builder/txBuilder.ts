@@ -4,6 +4,10 @@ import { newExportTx, type ExportTxParams } from "../txs/exportTx";
 import { newImportTx, type ImportTxParams } from "../txs/importTx";
 import { newTxFromBytes, type NewTxFromBytesParams } from "../txs/txFromBytes";
 
+export function createTxBuilder(primaryNetworkCoreClient: PrimaryNetworkCore) {
+    return TxBuilder.newClient(primaryNetworkCoreClient)
+}
+
 export class TxBuilder {
     primaryNetworkCoreClient: PrimaryNetworkCore;
 
