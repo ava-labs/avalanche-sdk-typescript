@@ -49,6 +49,8 @@
       "./primary-network/transactions/cchain": "./src/primary-network/transactions/c-chain/index.ts",
       "./primary-network/warp": "./src/primary-network/warp/index.ts",
       "./rpc": "./src/rpc/index.ts",
+      "./rpc/accounts": "./src/rpc/accounts/index.ts",
+      "./rpc/chains": "./src/rpc/chains/index.ts",
       "./rpc/methods": "./src/rpc/methods/index.ts",
       "./rpc/methods/admin": "./src/rpc/methods/admin/index.ts",
       "./rpc/methods/cChain": "./src/rpc/methods/cChain/index.ts",
@@ -179,6 +181,28 @@
       "require": {
         "types": "./dist/commonjs/rpc/index.d.ts",
         "default": "./dist/commonjs/rpc/index.js"
+      }
+    },
+    "./rpc/accounts": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/accounts/index.ts",
+        "types": "./dist/esm/rpc/accounts/index.d.ts",
+        "default": "./dist/esm/rpc/accounts/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/accounts/index.d.ts",
+        "default": "./dist/commonjs/rpc/accounts/index.js"
+      }
+    },
+    "./rpc/chains": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/rpc/chains/index.ts",
+        "types": "./dist/esm/rpc/chains/index.d.ts",
+        "default": "./dist/esm/rpc/chains/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/rpc/chains/index.d.ts",
+        "default": "./dist/commonjs/rpc/chains/index.js"
       }
     },
     "./rpc/methods": {
