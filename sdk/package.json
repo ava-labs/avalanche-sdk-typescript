@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@avalanche-sdk/devtools": "^0.0.4",
+    "@avalanche-sdk/primary-network": "^0.0.4-alpha.0",
     "eslint": "^9.22.0"
   },
   "devDependencies": {
@@ -42,6 +43,10 @@
       "./models/errors": "./src/models/errors/index.ts",
       "./models/components": "./src/models/components/index.ts",
       "./models/operations": "./src/models/operations/index.ts",
+      "./primary-network": "./src/primary-network/index.ts",
+      "./primary-network/transactions/pchain": "./src/primary-network/transactions/p-chain/index.ts",
+      "./primary-network/transactions/cchain": "./src/primary-network/transactions/c-chain/index.ts",
+      "./primary-network/warp": "./src/primary-network/warp/index.ts",
       "./*.js": "./src/*.ts",
       "./*": "./src/*.ts"
     }
@@ -101,6 +106,50 @@
       "require": {
         "types": "./dist/commonjs/models/operations/index.d.ts",
         "default": "./dist/commonjs/models/operations/index.js"
+      }
+    },
+    "./primary-network": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/primary-network/index.ts",
+        "types": "./dist/esm/primary-network/index.d.ts",
+        "default": "./dist/esm/primary-network/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/primary-network/index.d.ts",
+        "default": "./dist/commonjs/primary-network/index.js"
+      }
+    },
+    "./primary-network/transactions/pchain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/primary-network/transactions/p-chain/index.ts",
+        "types": "./dist/esm/primary-network/transactions/p-chain/index.d.ts",
+        "default": "./dist/esm/primary-network/transactions/p-chain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/primary-network/transactions/p-chain/index.d.ts",
+        "default": "./dist/commonjs/primary-network/transactions/p-chain/index.js"
+      }
+    },
+    "./primary-network/transactions/cchain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/primary-network/transactions/c-chain/index.ts",
+        "types": "./dist/esm/primary-network/transactions/c-chain/index.d.ts",
+        "default": "./dist/esm/primary-network/transactions/c-chain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/primary-network/transactions/c-chain/index.d.ts",
+        "default": "./dist/commonjs/primary-network/transactions/c-chain/index.js"
+      }
+    },
+    "./primary-network/warp": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/primary-network/warp/index.ts",
+        "types": "./dist/esm/primary-network/warp/index.d.ts",
+        "default": "./dist/esm/primary-network/warp/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/primary-network/warp/index.d.ts",
+        "default": "./dist/commonjs/primary-network/warp/index.js"
       }
     },
     "./*.js": {
