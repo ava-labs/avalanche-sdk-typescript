@@ -5,10 +5,13 @@ export {
     Wallet,
 } from "./wallet";
 
-import { utils, pChainTxTypes, cChainTxTypes } from "./transactions";
-export { pChainTxTypes, cChainTxTypes };
+import { pChainTxTypes, cChainTxTypes } from "./transactions";
 export const txTypes = {
     pChain: pChainTxTypes,
     cChain: cChainTxTypes,
 };
-export { utils };
+
+export { pChainTxTypes, cChainTxTypes };
+
+export { createTxBuilder as createPChainTxBuilder } from "./transactions/p-chain/builder/txBuilder";
+export { createTxBuilder as createCChainTxBuilder } from "./transactions/c-chain/builder/txBuilder";
