@@ -37,7 +37,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.5",
+    version: "0.4.0",
   });
 
   const client = new AvalancheCore({
