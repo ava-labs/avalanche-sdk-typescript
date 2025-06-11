@@ -5,16 +5,7 @@
 ```typescript
 import { GetEvmChainMetricsResponse } from "@avalanche-sdk/metrics/models/operations";
 
-let value: GetEvmChainMetricsResponse = {
-  result: {
-    results: [
-      {
-        value: 4614.79,
-        timestamp: 7805.29,
-      },
-    ],
-  },
-};
+let value: GetEvmChainMetricsResponse = {};
 ```
 
 ## Fields

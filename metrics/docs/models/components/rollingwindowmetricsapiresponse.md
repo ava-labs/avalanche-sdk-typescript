@@ -7,11 +7,11 @@ import { RollingWindowMetricsApiResponse } from "@avalanche-sdk/metrics/models/c
 
 let value: RollingWindowMetricsApiResponse = {
   result: {
-    lastHour: 5288.95,
-    lastDay: 5680.45,
-    lastMonth: 9255.97,
-    lastYear: 710.36,
-    allTime: 871.29,
+    lastHour: 3141.43,
+    lastDay: 8857.92,
+    lastMonth: 2439.17,
+    lastYear: 712.28,
+    allTime: 3194.78,
   },
 };
 ```

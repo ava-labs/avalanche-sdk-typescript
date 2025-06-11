@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
-  docChecksum: 9866175345ab48b104bf10823d646305
-  docVersion: Beta
-  speakeasyVersion: 1.523.2
-  generationVersion: 2.560.1
-  releaseVersion: 0.3.0
-  configChecksum: 39a7627e1eba6dd5e9a20d06af2a612d
+  docChecksum: 367751ce2e2821606b6c9edaba6f9407
+  docVersion: 1.0.0
+  speakeasyVersion: 1.560.1
+  generationVersion: 2.625.0
+  releaseVersion: 0.4.0
+  configChecksum: 4d40e62da31140776eb1cfd83e4bcc0d
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -15,23 +15,23 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.4
+    core: 3.21.11
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
     globalSecurityCallbacks: 0.1.0
-    globalServerURLs: 2.82.4
+    globalServerURLs: 2.82.5
     globals: 2.82.2
     groups: 2.81.2
-    mcpServer: 0.9.0
+    mcpServer: 0.9.2
     nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.2.0
-    unions: 2.85.8
+    sdkHooks: 0.3.0
+    unions: 2.85.9
 generatedFiles:
   - .devcontainer/README.md
   - .devcontainer/devcontainer.json
@@ -95,6 +95,12 @@ generatedFiles:
   - docs/models/operations/getevmchainmetricsresponse.md
   - docs/models/operations/getevmchainrollingwindowmetricsglobals.md
   - docs/models/operations/getevmchainrollingwindowmetricsrequest.md
+  - docs/models/operations/getmetricsbynodeidmetric.md
+  - docs/models/operations/getmetricsbynodeidrequest.md
+  - docs/models/operations/getmetricsbysubnetidmetric.md
+  - docs/models/operations/getmetricsbysubnetidrequest.md
+  - docs/models/operations/getmetricsbyvalidationidmetric.md
+  - docs/models/operations/getmetricsbyvalidationidrequest.md
   - docs/models/operations/getnftholdersbycontractaddressglobals.md
   - docs/models/operations/getnftholdersbycontractaddressrequest.md
   - docs/models/operations/getnftholdersbycontractaddressresponse.md
@@ -103,12 +109,15 @@ generatedFiles:
   - docs/models/operations/getstakingmetricsresponse.md
   - docs/models/operations/getteleportermetricsbychainglobals.md
   - docs/models/operations/getteleportermetricsbychainrequest.md
+  - docs/models/operations/gettotall1validatormetricsmetric.md
+  - docs/models/operations/gettotall1validatormetricsrequest.md
   - docs/models/operations/getvalidatorsbydaterangerequest.md
   - docs/models/operations/getvalidatorsbydaterangeresponse.md
   - docs/models/operations/listchainsrequest.md
   - docs/models/operations/listchainsresponse.md
   - docs/sdks/avalanche/README.md
   - docs/sdks/chains/README.md
+  - docs/sdks/l1validators/README.md
   - docs/sdks/metrics/README.md
   - docs/sdks/networks/README.md
   - docs/sdks/subnets/README.md
@@ -125,6 +134,10 @@ generatedFiles:
   - src/funcs/metricsChainsListNftHolders.ts
   - src/funcs/metricsChainsListTokenHoldersAboveThreshold.ts
   - src/funcs/metricsHealthCheck.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsByNodeId.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsBySubnetId.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsByValidationId.ts
+  - src/funcs/metricsL1ValidatorsListMetrics.ts
   - src/funcs/metricsNetworksGetStakingMetrics.ts
   - src/funcs/metricsSubnetsGetValidators.ts
   - src/hooks/hooks.ts
@@ -168,6 +181,10 @@ generatedFiles:
   - src/mcp-server/tools/metricsChainsListNftHolders.ts
   - src/mcp-server/tools/metricsChainsListTokenHoldersAboveThreshold.ts
   - src/mcp-server/tools/metricsHealthCheck.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsByNodeId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsBySubnetId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsByValidationId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsListMetrics.ts
   - src/mcp-server/tools/metricsNetworksGetStakingMetrics.ts
   - src/mcp-server/tools/metricsSubnetsGetValidators.ts
   - src/models/components/addressdetails.ts
@@ -195,6 +212,7 @@ generatedFiles:
   - src/models/components/teleportermetricsvalue.ts
   - src/models/components/timeintervalgranularity.ts
   - src/models/errors/avalancheapierror.ts
+  - src/models/errors/avalancheerror.ts
   - src/models/errors/badgatewayerror.ts
   - src/models/errors/badrequesterror.ts
   - src/models/errors/forbiddenerror.ts
@@ -202,6 +220,7 @@ generatedFiles:
   - src/models/errors/index.ts
   - src/models/errors/internalservererror.ts
   - src/models/errors/notfounderror.ts
+  - src/models/errors/responsevalidationerror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/errors/serviceunavailableerror.ts
   - src/models/errors/toomanyrequestserror.ts
@@ -211,14 +230,19 @@ generatedFiles:
   - src/models/operations/getchain.ts
   - src/models/operations/getevmchainmetrics.ts
   - src/models/operations/getevmchainrollingwindowmetrics.ts
+  - src/models/operations/getmetricsbynodeid.ts
+  - src/models/operations/getmetricsbysubnetid.ts
+  - src/models/operations/getmetricsbyvalidationid.ts
   - src/models/operations/getnftholdersbycontractaddress.ts
   - src/models/operations/getstakingmetrics.ts
   - src/models/operations/getteleportermetricsbychain.ts
+  - src/models/operations/gettotall1validatormetrics.ts
   - src/models/operations/getvalidatorsbydaterange.ts
   - src/models/operations/index.ts
   - src/models/operations/listchains.ts
   - src/sdk/chains.ts
   - src/sdk/index.ts
+  - src/sdk/l1validators.ts
   - src/sdk/metrics.ts
   - src/sdk/networks.ts
   - src/sdk/sdk.ts
@@ -238,55 +262,7 @@ examples:
     speakeasy-default-metrics-health-check:
       responses:
         "200":
-          application/json: {"info": {"database": {"status": "up"}}, "details": {"database": {"status": "up"}}}
-        "400":
-          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
-        "401":
-          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
-        "403":
-          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
-        "404":
-          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
-        "429":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
-        "500":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
-        "502":
-          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
-        "503":
-          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
-  listChains:
-    "":
-      parameters:
-        query:
-          network: "mainnet"
-      responses:
-        "200":
-          application/json: {"chains": [{"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}, {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "testnet"}]}
-        "400":
-          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
-        "401":
-          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
-        "403":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
-        "404":
-          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
-        "429":
-          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
-        "500":
-          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
-        "502":
-          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
-        "503":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
-  getChain:
-    "":
-      parameters:
-        path:
-          chainId: "43114"
-      responses:
-        "200":
-          application/json: {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}
+          application/json: {"info": {"database": {"status": "up"}}, "error": {}, "details": {"database": {"status": "up"}}}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -300,11 +276,59 @@ examples:
         "500":
           application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+  listChains:
+    speakeasy-default-list-chains:
+      parameters:
+        query:
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"chains": [{"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+  getChain:
+    speakeasy-default-get-chain:
+      parameters:
+        path:
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "testnet"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getEvmChainMetrics:
-    "":
+    speakeasy-default-get-evm-chain-metrics:
       parameters:
         path:
           metric: "activeAddresses"
@@ -313,119 +337,119 @@ examples:
           startTimestamp: 1689541049
           endTimestamp: 1689800249
           timeInterval: "day"
-          pageSize: "10"
+          pageSize: 10
       responses:
         "200":
           application/json: {"results": []}
         "400":
-          application/json: {"message": ["<value>"], "statusCode": 400, "error": "Bad Request"}
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
         "401":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
         "404":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
         "429":
-          application/json: {"message": ["<value>"], "statusCode": 429, "error": "Too Many Requests"}
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
         "500":
-          application/json: {"message": ["<value>"], "statusCode": 500, "error": "Internal Server Error"}
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
-          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getTeleporterMetricsByChain:
-    "":
+    speakeasy-default-get-teleporter-metrics-by-chain:
       parameters:
         path:
           metric: "teleporterSourceTxnCount"
           chainId: "43114"
       responses:
         "200":
-          application/json: {"result": {"value": 2345.82}}
+          application/json: {"result": {"value": 3068.43}}
         "400":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
         "401":
-          application/json: {"message": ["<value>"], "statusCode": 401, "error": "Unauthorized"}
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
         "404":
-          application/json: {"message": ["<value>"], "statusCode": 404, "error": "Not Found"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
         "429":
           application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
         "500":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 500, "error": "Internal Server Error"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
-          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getEvmChainRollingWindowMetrics:
-    "":
+    speakeasy-default-get-evm-chain-rolling-window-metrics:
       parameters:
         path:
           metric: "txCount"
           chainId: "43114"
       responses:
         "200":
-          application/json: {"result": {"lastHour": 7983.08, "lastDay": 371.4, "lastMonth": 1946.22, "lastYear": 5530.22, "allTime": 2030.22}}
+          application/json: {"result": {"lastHour": 7081.1, "lastDay": 2127.7, "lastMonth": 6960.23, "lastYear": 4069.8, "allTime": 1499.54}}
         "400":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
         "401":
           application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
         "404":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
         "429":
           application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
         "500":
           application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
-  getStakingMetrics:
-    "":
-      parameters:
-        path:
-          metric: "validatorCount"
-          network: "mainnet"
-        query:
-          startTimestamp: 1689541049
-          endTimestamp: 1689800249
-          pageSize: "10"
-          subnetId: "11111111111111111111111111111111LpoYY"
-      responses:
-        "200":
-          application/json: {"results": [{"value": 2512.08, "timestamp": 9079.49}, {"value": 5878.55, "timestamp": 471.45}, {"value": 3716.7, "timestamp": 8933.57}]}
-        "400":
-          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
-        "401":
-          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
-        "403":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 403, "error": "Forbidden"}
-        "404":
-          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
-        "429":
-          application/json: {"message": ["<value>"], "statusCode": 429, "error": "Too Many Requests"}
-        "500":
-          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
-        "502":
-          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
-        "503":
-          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
   getNftHoldersByContractAddress:
-    "":
+    speakeasy-default-get-nft-holders-by-contract-address:
       parameters:
         path:
           chainId: "43114"
           address: "0x7a420AEFF902AAa2c85a190D7B91Ce8BEFffFE14"
         query:
-          pageSize: "10"
+          pageSize: 10
       responses:
         "200":
           application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}], "nftCollectionName": ["NFT Project"], "nftSymbol": ["NFTPROJ"], "totalHolders": 10, "totalTokens": 10}
         "400":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 400, "error": "Bad Request"}
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getAddressesByBalanceOverTime:
+    speakeasy-default-get-addresses-by-balance-over-time:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        query:
+          threshold: "1000000"
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
           application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
         "403":
@@ -435,56 +459,167 @@ examples:
         "429":
           application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
         "500":
-          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
-  getAddressesByBalanceOverTime:
-    "":
+  getAddressesByBtcbBridged:
+    speakeasy-default-get-addresses-by-btcb-bridged:
       parameters:
-        path:
-          chainId: "43114"
-          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
         query:
           threshold: "1000000"
-          startTimestamp: 1689541049
-          endTimestamp: 1689800249
-          pageSize: "10"
+          pageSize: 10
       responses:
         "200":
-          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}, {"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getStakingMetrics:
+    speakeasy-default-get-staking-metrics:
+      parameters:
+        path:
+          metric: "validatorCount"
+          network: "mainnet"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getTotalL1ValidatorMetrics:
+    speakeasy-default-get-total-l1-validator-metrics:
+      parameters:
+        path:
+          metric: "totalValidatorFeesDaily"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsByValidationId:
+    speakeasy-default-get-metrics-by-validation-id:
+      parameters:
+        path:
+          l1ValidationId: "2YYCZGHjqnbw1MzQ5fGrTp3SjqUu8y1J1xeW4yuhdXe4LoUVVG"
+          metric: "validationFeesDaily"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": [{"value": 4090.68, "timestamp": 9641.56}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsByNodeId:
+    speakeasy-default-get-metrics-by-node-id:
+      parameters:
+        path:
+          metric: "perNodeDailyFeesPaid"
+          nodeId: "NodeID-JQPadXEMWtRtJyXrisyDNWuXKSjSf9D36"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": [{"value": 5895.61, "timestamp": 1664.44}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
           application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
         "404":
-          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
         "429":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 429, "error": "Too Many Requests"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
         "500":
-          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 503, "error": "Service Unavailable"}
-  getAddressesByBtcbBridged:
-    "":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsBySubnetId:
+    speakeasy-default-get-metrics-by-subnet-id:
       parameters:
+        path:
+          metric: "perSubnetDailyFeesPaid"
+          subnetId: "eYwmVU67LmSfZb1RwqCMhBYkFyG8ftxn6jAwqzFmxC9STBWLC"
         query:
-          threshold: "1000000"
-          pageSize: "10"
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
       responses:
         "200":
-          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}, {"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+          application/json: {"results": []}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 401, "error": "Unauthorized"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": ["<value>"], "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
         "404":
           application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
         "429":
@@ -492,60 +627,37 @@ examples:
         "500":
           application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
-          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getValidatorsByDateRange:
-    "":
+    speakeasy-default-get-validators-by-date-range:
       parameters:
         path:
           subnetId: "11111111111111111111111111111111LpoYY"
         query:
           startTimestamp: 1689541049
           endTimestamp: 1689800249
-          pageSize: "10"
+          pageSize: 10
           network: "mainnet"
       responses:
         "200":
-          application/json: {"addresses": []}
+          application/json: {"addresses": [{"addresses": ["avax1abcdef1234567890abcdef1234567890abcdef"], "sortKey": "123"}]}
         "400":
-          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
         "401":
-          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
         "403":
-          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
         "404":
-          application/json: {"message": ["<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
         "429":
           application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
         "500":
-          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
         "502":
-          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
-  compositeQueryV2:
-    speakeasy-default-composite-query-v2:
-      requestBody:
-        application/json: {"pageSize": 1000, "queries": [{"id": "<id>", "type": "AllTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}, {"id": "<id>", "type": "AnyTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}, {"id": "<id>", "type": "AllTimeStarsArenaBalance", "params": {"firstDate": "<value>", "lastDate": "<value>", "minBalance": "<value>", "subjectAddress": "<value>"}}], "operator": "OR"}
-      responses:
-        "200":
-          application/json: {"subQueryCounts": {"1": 1, "2": 2, "3": 2}, "totalCount": 2, "addresses": ["0x1234567890abcdef1234567890abcdef123456789"]}
-        "400":
-          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
-        "401":
-          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
-        "403":
-          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
-        "404":
-          application/json: {"message": ["<value>", "<value>", "<value>"], "statusCode": 404, "error": "Not Found"}
-        "429":
-          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
-        "500":
-          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
-        "502":
-          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
-        "503":
-          application/json: {"message": ["<value>"], "statusCode": 503, "error": "Service Unavailable"}
-examplesVersion: 1.0.0
+examplesVersion: 1.0.2
 generatedTests: {}

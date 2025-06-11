@@ -8,8 +8,8 @@ import { MetricsApiResponse } from "@avalanche-sdk/metrics/models/components";
 let value: MetricsApiResponse = {
   results: [
     {
-      value: 6458.94,
-      timestamp: 4375.87,
+      value: 6951.97,
+      timestamp: 4829.81,
     },
   ],
 };

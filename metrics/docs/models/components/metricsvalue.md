@@ -6,8 +6,8 @@
 import { MetricsValue } from "@avalanche-sdk/metrics/models/components";
 
 let value: MetricsValue = {
-  value: 8917.73,
-  timestamp: 9636.63,
+  value: 5945.62,
+  timestamp: 7531.57,
 };
 ```
 

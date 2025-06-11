@@ -6,7 +6,7 @@
 import { GetNftHoldersByContractAddressRequest } from "@avalanche-sdk/metrics/models/operations";
 
 let value: GetNftHoldersByContractAddressRequest = {
-  chainId: "43114",
+  pageSize: 10,
   address: "0x7a420AEFF902AAa2c85a190D7B91Ce8BEFffFE14",
 };
 ```
