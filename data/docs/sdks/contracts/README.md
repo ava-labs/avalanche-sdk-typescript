@@ -20,17 +20,14 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.contracts.getDeploymentTransaction({
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     currency: "usd",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -49,24 +46,19 @@ import { dataEvmContractsGetDeploymentTransaction } from "@avalanche-sdk/data/fu
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmContractsGetDeploymentTransaction(avalanche, {
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     currency: "usd",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmContractsGetDeploymentTransaction failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -110,16 +102,13 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.contracts.getMetadata({
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -138,23 +127,18 @@ import { dataEvmContractsGetMetadata } from "@avalanche-sdk/data/funcs/dataEvmCo
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmContractsGetMetadata(avalanche, {
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmContractsGetMetadata failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -198,19 +182,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.contracts.listTransfers({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -230,26 +211,21 @@ import { dataEvmContractsListTransfers } from "@avalanche-sdk/data/funcs/dataEvm
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmContractsListTransfers(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmContractsListTransfers failed:", res.error);
   }
 }
 

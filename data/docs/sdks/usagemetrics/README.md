@@ -21,10 +21,7 @@ Gets metrics for Data API usage over a specified time interval aggregated at the
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.usageMetrics.getUsage({
@@ -34,7 +31,6 @@ async function run() {
     groupBy: "requestPath",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -51,10 +47,7 @@ import { dataUsageMetricsGetUsage } from "@avalanche-sdk/data/funcs/dataUsageMet
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataUsageMetricsGetUsage(avalanche, {
@@ -63,15 +56,12 @@ async function run() {
     timeInterval: "daily",
     groupBy: "requestPath",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataUsageMetricsGetUsage failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -113,10 +103,7 @@ Gets logs for requests made by client over a specified time interval for a speci
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.usageMetrics.getLogs({
@@ -125,7 +112,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -143,26 +129,20 @@ import { dataUsageMetricsGetLogs } from "@avalanche-sdk/data/funcs/dataUsageMetr
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataUsageMetricsGetLogs(avalanche, {
     startTimestamp: 1739507200,
     endTimestamp: 1739664000,
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataUsageMetricsGetLogs failed:", res.error);
   }
 }
 
@@ -205,10 +185,7 @@ Gets metrics for public Subnet RPC usage over a specified time interval aggregat
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.usageMetrics.getSubnetRpcUsage({
@@ -218,7 +195,6 @@ async function run() {
     groupBy: "rpcMethod",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -235,10 +211,7 @@ import { dataUsageMetricsGetSubnetRpcUsage } from "@avalanche-sdk/data/funcs/dat
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataUsageMetricsGetSubnetRpcUsage(avalanche, {
@@ -247,15 +220,12 @@ async function run() {
     endTimestamp: 1739664000,
     groupBy: "rpcMethod",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataUsageMetricsGetSubnetRpcUsage failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -301,10 +271,7 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.usageMetrics.getRpcUsageMetrics({
@@ -314,7 +281,6 @@ async function run() {
     groupBy: "rpcMethod",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -331,10 +297,7 @@ import { dataUsageMetricsGetRpcUsageMetrics } from "@avalanche-sdk/data/funcs/da
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataUsageMetricsGetRpcUsageMetrics(avalanche, {
@@ -343,15 +306,12 @@ async function run() {
     endTimestamp: 1739664000,
     groupBy: "rpcMethod",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataUsageMetricsGetRpcUsageMetrics failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

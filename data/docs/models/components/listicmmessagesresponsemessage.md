@@ -17,12 +17,7 @@ const value: components.PendingIcmMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
+  receipts: [],
   receiptDelivered: false,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
@@ -40,7 +35,7 @@ const value: components.PendingIcmMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 8233.32,
+    timestamp: 6459.73,
     gasSpent: "<value>",
   },
   status: "pending",
@@ -60,14 +55,9 @@ const value: components.DeliveredIcmMessage = {
   messageNonce: "<value>",
   from: "<value>",
   to: "<value>",
-  messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  messageExecuted: true,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -84,12 +74,12 @@ const value: components.DeliveredIcmMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 3705.45,
+    timestamp: 6459.73,
     gasSpent: "<value>",
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 4003.62,
+    timestamp: 8654.52,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",

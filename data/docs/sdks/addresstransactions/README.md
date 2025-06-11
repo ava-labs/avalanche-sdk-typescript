@@ -25,20 +25,17 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.list({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -58,27 +55,22 @@ import { dataEvmAddressTransactionsList } from "@avalanche-sdk/data/funcs/dataEv
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsList(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsList failed:", res.error);
   }
 }
 
@@ -123,19 +115,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.listNative({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -155,26 +144,21 @@ import { dataEvmAddressTransactionsListNative } from "@avalanche-sdk/data/funcs/
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsListNative(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsListNative failed:", res.error);
   }
 }
 
@@ -219,19 +203,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.listErc20({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -251,26 +232,21 @@ import { dataEvmAddressTransactionsListErc20 } from "@avalanche-sdk/data/funcs/d
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsListErc20(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsListErc20 failed:", res.error);
   }
 }
 
@@ -315,19 +291,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.listErc721({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -347,26 +320,21 @@ import { dataEvmAddressTransactionsListErc721 } from "@avalanche-sdk/data/funcs/
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsListErc721(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsListErc721 failed:", res.error);
   }
 }
 
@@ -411,19 +379,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.listErc1155({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -443,26 +408,21 @@ import { dataEvmAddressTransactionsListErc1155 } from "@avalanche-sdk/data/funcs
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsListErc1155(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsListErc1155 failed:", res.error);
   }
 }
 
@@ -509,19 +469,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.transactions.listInternal({
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -541,26 +498,21 @@ import { dataEvmAddressTransactionsListInternal } from "@avalanche-sdk/data/func
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressTransactionsListInternal(avalanche, {
     startBlock: 6479329,
     endBlock: 6479330,
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressTransactionsListInternal failed:", res.error);
   }
 }
 

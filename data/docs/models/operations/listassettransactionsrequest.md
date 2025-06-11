@@ -12,7 +12,6 @@ let value: ListAssetTransactionsRequest = {
   startTimestamp: 1689541049,
   endTimestamp: 1689800249,
   blockchainId: "x-chain",
-  network: "mainnet",
   assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
 };
 ```

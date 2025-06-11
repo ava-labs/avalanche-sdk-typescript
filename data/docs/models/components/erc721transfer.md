@@ -34,9 +34,9 @@ let value: Erc721Transfer = {
     symbol: "WAVAX",
     ercType: "ERC-721",
     tokenId: "<id>",
-    tokenUri: "https://pink-pleasure.net",
+    tokenUri: "https://elliptical-programme.info",
     metadata: {
-      indexStatus: "INVALID_METADATA_JSON",
+      indexStatus: "THROTTLED_TOKEN_URI",
     },
     ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   },

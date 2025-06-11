@@ -6,7 +6,6 @@
 import { GetTransactionRequest } from "@avalanche-sdk/data/models/operations";
 
 let value: GetTransactionRequest = {
-  chainId: "43114",
   txHash: "0x8bf584d7b14b92a32a339872a66b134a70ba3ba7c305823f348db6f860253f45",
 };
 ```

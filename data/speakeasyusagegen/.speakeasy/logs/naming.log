@@ -581,6 +581,7 @@ ListBlockchainsRequest (pageToken: string, pageSize: integer, network: GlobalPar
 ListBlockchainsResponse (Result: ListBlockchainsResponse)
  ListBlockchainsResponse (nextPageToken: string, blockchains: array)
    Blockchain (createBlockTimestamp: number, createBlockNumber: string, blockchainId: string ...)
+    GenesisData (empty)
 GetBlockchainByIdRequest (blockchainId: string, network: GlobalParamNetwork)
 ListSubnetsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
 ListSubnetsResponse (Result: ListSubnetsResponse)

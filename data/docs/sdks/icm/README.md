@@ -18,17 +18,13 @@ Gets an ICM message by teleporter message ID.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.icm.get({
     messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -45,24 +41,18 @@ import { dataIcmGet } from "@avalanche-sdk/data/funcs/dataIcmGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataIcmGet(avalanche, {
     messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataIcmGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -104,10 +94,7 @@ Lists ICM messages. Ordered by timestamp in descending order.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.icm.list({
@@ -119,7 +106,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -137,10 +123,7 @@ import { dataIcmList } from "@avalanche-sdk/data/funcs/dataIcmList.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataIcmList(avalanche, {
@@ -150,16 +133,13 @@ async function run() {
     from: "0x321eDA69247566D662178feE695C7026c604Cd94",
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataIcmList failed:", res.error);
   }
 }
 
@@ -202,10 +182,7 @@ Lists ICM messages by address. Ordered by timestamp in descending order.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.icm.listByAddress({
@@ -213,7 +190,6 @@ async function run() {
     network: "mainnet",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -230,25 +206,19 @@ import { dataIcmListByAddress } from "@avalanche-sdk/data/funcs/dataIcmListByAdd
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataIcmListByAddress(avalanche, {
     address: "0x8578AE7723751446B196bD5124e1bF57B40EB7Bc",
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataIcmListByAddress failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

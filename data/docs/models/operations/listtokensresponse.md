@@ -5,21 +5,7 @@
 ```typescript
 import { ListTokensResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListTokensResponse = {
-  result: {
-    tokens: [
-      {
-        address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-        ercType: "ERC-1155",
-        tokenId: "<id>",
-        tokenUri: "https://oily-awareness.org",
-        metadata: {
-          indexStatus: "INVALID_TOKEN_URI_SCHEME",
-        },
-      },
-    ],
-  },
-};
+let value: ListTokensResponse = {};
 ```
 
 ## Fields

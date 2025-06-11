@@ -6,9 +6,7 @@
 import { EvmNetworkOptions } from "@avalanche-sdk/data/models/components";
 
 let value: EvmNetworkOptions = {
-  addresses: [
-    "<value>",
-  ],
+  addresses: [],
   includeChains: [
     "43114",
   ],

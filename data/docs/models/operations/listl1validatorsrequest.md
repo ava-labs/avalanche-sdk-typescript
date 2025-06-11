@@ -7,7 +7,6 @@ import { ListL1ValidatorsRequest } from "@avalanche-sdk/data/models/operations";
 
 let value: ListL1ValidatorsRequest = {
   l1ValidationId: "BsSpTd1SDvdhaoYAuKJvRj1WnoRyu8mAuMZeuz9g7brGj6KhX",
-  network: "mainnet",
   nodeId: "NodeID-111111111111111111116DBWJs",
   subnetId: "11111111111111111111111111111111LpoYY",
 };

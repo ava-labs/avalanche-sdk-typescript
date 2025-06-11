@@ -27,18 +27,15 @@ Gets asset details corresponding to the given asset id on the X-Chain.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.getAssetDetails({
     blockchainId: "x-chain",
-    network: "mainnet",
     assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -56,25 +53,20 @@ import { dataPrimaryNetworkGetAssetDetails } from "@avalanche-sdk/data/funcs/dat
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkGetAssetDetails(avalanche, {
     blockchainId: "x-chain",
-    network: "mainnet",
     assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkGetAssetDetails failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -117,17 +109,14 @@ Returns Primary Network chains that each address has touched in the form of an a
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.getChainIdsForAddresses({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
-    network: "mainnet",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -145,24 +134,19 @@ import { dataPrimaryNetworkGetChainIdsForAddresses } from "@avalanche-sdk/data/f
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkGetChainIdsForAddresses(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
-    network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkGetChainIdsForAddresses failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -205,16 +189,12 @@ Gets network details such as validator and delegator stats.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.data.primaryNetwork.getNetworkDetails({
-    network: "mainnet",
-  });
+  const result = await avalanche.data.primaryNetwork.getNetworkDetails({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -232,23 +212,17 @@ import { dataPrimaryNetworkGetNetworkDetails } from "@avalanche-sdk/data/funcs/d
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
-  const res = await dataPrimaryNetworkGetNetworkDetails(avalanche, {
-    network: "mainnet",
-  });
-
-  if (!res.ok) {
-    throw res.error;
+  const res = await dataPrimaryNetworkGetNetworkDetails(avalanche, {});
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkGetNetworkDetails failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -291,18 +265,16 @@ Lists all blockchains registered on the network.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.listBlockchains({
-    network: "mainnet",
+    pageSize: 10,
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -321,25 +293,21 @@ import { dataPrimaryNetworkListBlockchains } from "@avalanche-sdk/data/funcs/dat
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkListBlockchains(avalanche, {
-    network: "mainnet",
+    pageSize: 10,
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkListBlockchains failed:", res.error);
   }
 }
 
@@ -383,17 +351,14 @@ Get details of the blockchain registered on the network.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.getBlockchainById({
     blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
-    network: "mainnet",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -411,24 +376,19 @@ import { dataPrimaryNetworkGetBlockchainById } from "@avalanche-sdk/data/funcs/d
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkGetBlockchainById(avalanche, {
     blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
-    network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkGetBlockchainById failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -471,18 +431,16 @@ Lists all subnets registered on the network.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.listSubnets({
-    network: "mainnet",
+    pageSize: 10,
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -501,25 +459,21 @@ import { dataPrimaryNetworkListSubnets } from "@avalanche-sdk/data/funcs/dataPri
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkListSubnets(avalanche, {
-    network: "mainnet",
+    pageSize: 10,
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkListSubnets failed:", res.error);
   }
 }
 
@@ -563,17 +517,14 @@ Get details of the Subnet registered on the network.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.getSubnetById({
-    network: "mainnet",
     subnetId: "11111111111111111111111111111111LpoYY",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -591,24 +542,19 @@ import { dataPrimaryNetworkGetSubnetById } from "@avalanche-sdk/data/funcs/dataP
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkGetSubnetById(avalanche, {
-    network: "mainnet",
     subnetId: "11111111111111111111111111111111LpoYY",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkGetSubnetById failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -651,13 +597,11 @@ Lists details for validators. By default, returns details for all validators.  T
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.listValidators({
-    network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
     sortOrder: "asc",
     validationStatus: "completed",
@@ -673,7 +617,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -692,13 +635,11 @@ import { dataPrimaryNetworkListValidators } from "@avalanche-sdk/data/funcs/data
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkListValidators(avalanche, {
-    network: "mainnet",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
     sortOrder: "asc",
     validationStatus: "completed",
@@ -712,16 +653,13 @@ async function run() {
     maxUptimePerformance: 100,
     subnetId: "11111111111111111111111111111111LpoYY",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkListValidators failed:", res.error);
   }
 }
 
@@ -765,20 +703,17 @@ List validator details for a single validator.  Filterable by validation status.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.getValidatorDetails({
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     validationStatus: "completed",
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -797,27 +732,22 @@ import { dataPrimaryNetworkGetValidatorDetails } from "@avalanche-sdk/data/funcs
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkGetValidatorDetails(avalanche, {
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     validationStatus: "completed",
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkGetValidatorDetails failed:", res.error);
   }
 }
 
@@ -861,21 +791,18 @@ Lists details for delegators.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.listDelegators({
     rewardAddresses: "P-avax1679zrp3z9mf7z4an42ddq47qzj36zv6ga20vwl,P-avax1s7kd0kfndlz6mh3l0etrrcmkg5y366k8e0s6cc",
-    network: "mainnet",
     sortOrder: "asc",
     delegationStatus: "completed",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -894,28 +821,23 @@ import { dataPrimaryNetworkListDelegators } from "@avalanche-sdk/data/funcs/data
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkListDelegators(avalanche, {
     rewardAddresses: "P-avax1679zrp3z9mf7z4an42ddq47qzj36zv6ga20vwl,P-avax1s7kd0kfndlz6mh3l0etrrcmkg5y366k8e0s6cc",
-    network: "mainnet",
     sortOrder: "asc",
     delegationStatus: "completed",
     nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkListDelegators failed:", res.error);
   }
 }
 
@@ -959,20 +881,17 @@ Lists details for L1 validators. By default, returns details for all active L1 v
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.listL1Validators({
     l1ValidationId: "BsSpTd1SDvdhaoYAuKJvRj1WnoRyu8mAuMZeuz9g7brGj6KhX",
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     subnetId: "11111111111111111111111111111111LpoYY",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -991,27 +910,22 @@ import { dataPrimaryNetworkListL1Validators } from "@avalanche-sdk/data/funcs/da
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkListL1Validators(avalanche, {
     l1ValidationId: "BsSpTd1SDvdhaoYAuKJvRj1WnoRyu8mAuMZeuz9g7brGj6KhX",
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
     subnetId: "11111111111111111111111111111111LpoYY",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkListL1Validators failed:", res.error);
   }
 }
 
