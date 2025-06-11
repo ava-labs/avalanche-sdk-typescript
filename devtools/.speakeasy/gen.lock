@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: eb92566eafffaef7cfd21bffcef95ca6
+  docChecksum: 2a628bb85f1ff326d277579fe9d66691
   docVersion: 1.0.0
-  speakeasyVersion: 1.549.1
-  generationVersion: 2.607.1
-  releaseVersion: 0.0.7
-  configChecksum: 8eaddc2df03ac82b6fb4532ca0a2f4e6
+  speakeasyVersion: 1.560.1
+  generationVersion: 2.625.0
+  releaseVersion: 0.1.0
+  configChecksum: ee2d8f2520487b7bebe601978f305090
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: devtools
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
@@ -15,7 +15,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.21.9
+    core: 3.21.11
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     devContainers: 2.90.0
@@ -36,8 +36,8 @@ features:
     pagination: 2.83.0
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.2.0
-    unions: 2.85.8
+    sdkHooks: 0.3.0
+    unions: 2.85.9
     webhooks: 1.5.0
 generatedFiles:
   - .devcontainer/README.md
@@ -145,6 +145,7 @@ generatedFiles:
   - docs/models/components/evmoperationtype.md
   - docs/models/components/evmoutput.md
   - docs/models/components/fullnativetransactiondetails.md
+  - docs/models/components/genesisdata.md
   - docs/models/components/geolocation.md
   - docs/models/components/getchainresponse.md
   - docs/models/components/getchainresponseenabledfeature.md
@@ -429,6 +430,12 @@ generatedFiles:
   - docs/models/operations/getlatestblocksglobals.md
   - docs/models/operations/getlatestblocksrequest.md
   - docs/models/operations/getlatestblocksresponse.md
+  - docs/models/operations/getmetricsbynodeidmetric.md
+  - docs/models/operations/getmetricsbynodeidrequest.md
+  - docs/models/operations/getmetricsbysubnetidmetric.md
+  - docs/models/operations/getmetricsbysubnetidrequest.md
+  - docs/models/operations/getmetricsbyvalidationidmetric.md
+  - docs/models/operations/getmetricsbyvalidationidrequest.md
   - docs/models/operations/getnativebalanceglobals.md
   - docs/models/operations/getnativebalancerequest.md
   - docs/models/operations/getnetworkdetailsglobals.md
@@ -454,6 +461,8 @@ generatedFiles:
   - docs/models/operations/gettokendetailsglobals.md
   - docs/models/operations/gettokendetailsrequest.md
   - docs/models/operations/gettokendetailsresponse.md
+  - docs/models/operations/gettotall1validatormetricsmetric.md
+  - docs/models/operations/gettotall1validatormetricsrequest.md
   - docs/models/operations/gettransactionglobals.md
   - docs/models/operations/gettransactionrequest.md
   - docs/models/operations/gettransactionsforblockglobals.md
@@ -582,7 +591,6 @@ generatedFiles:
   - docs/models/operations/supportedchainsrequest.md
   - docs/models/operations/updatewebhookrequest.md
   - docs/models/operations/updatewebhookresponse.md
-  - docs/sdks/address/README.md
   - docs/sdks/addressbalances/README.md
   - docs/sdks/addresschains/README.md
   - docs/sdks/addresscontracts/README.md
@@ -591,11 +599,11 @@ generatedFiles:
   - docs/sdks/avalanche/README.md
   - docs/sdks/contracts/README.md
   - docs/sdks/data/README.md
-  - docs/sdks/evm/README.md
   - docs/sdks/evmblocks/README.md
   - docs/sdks/evmchains/README.md
   - docs/sdks/evmtransactions/README.md
   - docs/sdks/icm/README.md
+  - docs/sdks/l1validators/README.md
   - docs/sdks/metrics/README.md
   - docs/sdks/metricschains/README.md
   - docs/sdks/networks/README.md
@@ -696,6 +704,10 @@ generatedFiles:
   - src/funcs/metricsChainsListNftHolders.ts
   - src/funcs/metricsChainsListTokenHoldersAboveThreshold.ts
   - src/funcs/metricsHealthCheck.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsByNodeId.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsBySubnetId.ts
+  - src/funcs/metricsL1ValidatorsGetMetricsByValidationId.ts
+  - src/funcs/metricsL1ValidatorsListMetrics.ts
   - src/funcs/metricsNetworksGetStakingMetrics.ts
   - src/funcs/metricsSubnetsGetValidators.ts
   - src/funcs/webhooksAddressesAdd.ts
@@ -820,6 +832,10 @@ generatedFiles:
   - src/mcp-server/tools/metricsChainsListNftHolders.ts
   - src/mcp-server/tools/metricsChainsListTokenHoldersAboveThreshold.ts
   - src/mcp-server/tools/metricsHealthCheck.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsByNodeId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsBySubnetId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsGetMetricsByValidationId.ts
+  - src/mcp-server/tools/metricsL1ValidatorsListMetrics.ts
   - src/mcp-server/tools/metricsNetworksGetStakingMetrics.ts
   - src/mcp-server/tools/metricsSubnetsGetValidators.ts
   - src/mcp-server/tools/webhooksAddressesAdd.ts
@@ -1080,6 +1096,7 @@ generatedFiles:
   - src/models/components/xchaintransactiontype.ts
   - src/models/components/xchainvertex.ts
   - src/models/errors/avalancheapierror.ts
+  - src/models/errors/avalancheerror.ts
   - src/models/errors/badgatewayerror.ts
   - src/models/errors/badrequesterror.ts
   - src/models/errors/forbiddenerror.ts
@@ -1087,6 +1104,7 @@ generatedFiles:
   - src/models/errors/index.ts
   - src/models/errors/internalservererror.ts
   - src/models/errors/notfounderror.ts
+  - src/models/errors/responsevalidationerror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/errors/serviceunavailableerror.ts
   - src/models/errors/toomanyrequestserror.ts
@@ -1118,6 +1136,9 @@ generatedFiles:
   - src/models/operations/getevmchainrollingwindowmetrics.ts
   - src/models/operations/geticmmessage.ts
   - src/models/operations/getlatestblocks.ts
+  - src/models/operations/getmetricsbynodeid.ts
+  - src/models/operations/getmetricsbysubnetid.ts
+  - src/models/operations/getmetricsbyvalidationid.ts
   - src/models/operations/getnativebalance.ts
   - src/models/operations/getnetworkdetails.ts
   - src/models/operations/getnftholdersbycontractaddress.ts
@@ -1131,6 +1152,7 @@ generatedFiles:
   - src/models/operations/getteleportermessage.ts
   - src/models/operations/getteleportermetricsbychain.ts
   - src/models/operations/gettokendetails.ts
+  - src/models/operations/gettotall1validatormetrics.ts
   - src/models/operations/gettransaction.ts
   - src/models/operations/gettransactionsforblock.ts
   - src/models/operations/gettxbyhash.ts
@@ -1198,6 +1220,7 @@ generatedFiles:
   - src/sdk/evmtransactions.ts
   - src/sdk/icm.ts
   - src/sdk/index.ts
+  - src/sdk/l1validators.ts
   - src/sdk/metrics.ts
   - src/sdk/metricschains.ts
   - src/sdk/networks.ts
@@ -1277,8 +1300,54 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-chains:
+      parameters:
+        query:
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"chains": [{"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "mainnet"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getChain:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"evmChainId": 43114, "chainName": "c_chain", "blockchainId": "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5", "subnetId": "11111111111111111111111111111111LpoYY", "network": "testnet"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-chain:
       parameters:
         path:
           chainId: "43114"
@@ -1331,6 +1400,35 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-evm-chain-metrics:
+      parameters:
+        path:
+          metric: "activeAddresses"
+          chainId: "43114"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          timeInterval: "day"
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getTeleporterMetricsByChain:
     "":
       parameters:
@@ -1356,8 +1454,56 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-teleporter-metrics-by-chain:
+      parameters:
+        path:
+          metric: "teleporterSourceTxnCount"
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"result": {"value": 3068.43}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getEvmChainRollingWindowMetrics:
     "":
+      parameters:
+        path:
+          metric: "txCount"
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"result": {"lastHour": 7081.1, "lastDay": 2127.7, "lastMonth": 6960.23, "lastYear": 4069.8, "allTime": 1499.54}}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-evm-chain-rolling-window-metrics:
       parameters:
         path:
           metric: "txCount"
@@ -1408,8 +1554,63 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-nft-holders-by-contract-address:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x7a420AEFF902AAa2c85a190D7B91Ce8BEFffFE14"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}], "nftCollectionName": ["NFT Project"], "nftSymbol": ["NFTPROJ"], "totalHolders": 10, "totalTokens": 10}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getAddressesByBalanceOverTime:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        query:
+          threshold: "1000000"
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-addresses-by-balance-over-time:
       parameters:
         path:
           chainId: "43114"
@@ -1463,8 +1664,61 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-addresses-by-btcb-bridged:
+      parameters:
+        query:
+          threshold: "1000000"
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "0x1234567890abcdef1234567890abcdef123456789", "sortKey": "123"}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getStakingMetrics:
     "":
+      parameters:
+        path:
+          metric: "validatorCount"
+          network: "mainnet"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-staking-metrics:
       parameters:
         path:
           metric: "validatorCount"
@@ -1506,6 +1760,34 @@ examples:
       responses:
         "200":
           application/json: {"addresses": [{"addresses": ["avax1abcdef1234567890abcdef1234567890abcdef"], "sortKey": "123"}, {"addresses": ["avax1abcdef1234567890abcdef1234567890abcdef"], "sortKey": "123"}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-validators-by-date-range:
+      parameters:
+        path:
+          subnetId: "11111111111111111111111111111111LpoYY"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"addresses": [{"addresses": ["avax1abcdef1234567890abcdef1234567890abcdef"], "sortKey": "123"}]}
         "400":
           application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -1567,8 +1849,58 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-address-chains:
+      parameters:
+        path:
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+      responses:
+        "200":
+          application/json: {"indexedChains": [{"chainId": "<id>", "status": "OK", "chainName": "<value>", "description": "faithfully between down whether mostly better but afterwards qua", "vmName": "ETHEREUM", "rpcUrl": "https://funny-going.com", "isTestnet": true, "networkToken": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg"}}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getNativeBalance:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          blockNumber: "6479329"
+          currency: "usd"
+      responses:
+        "200":
+          application/json: {"nativeTokenBalance": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "chainId": "43114", "price": {"currencyCode": "usd", "value": 42.42}, "balance": "2000000000000000000", "balanceValue": {"currencyCode": "usd", "value": 42.42}}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-native-balance:
       parameters:
         path:
           chainId: "43114"
@@ -1626,6 +1958,36 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc20-balances:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          blockNumber: "6479329"
+          pageSize: 10
+          filterSpamTokens: true
+          contractAddresses: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7, 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB"
+          currency: "usd"
+      responses:
+        "200":
+          application/json: {"nativeTokenBalance": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "chainId": "43114", "price": {"currencyCode": "usd", "value": 42.42}, "balance": "2000000000000000000", "balanceValue": {"currencyCode": "usd", "value": 42.42}}, "erc20TokenBalances": [{"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "chainId": "43114", "balance": "2000000000000000000", "balanceValue": {"currencyCode": "usd", "value": 42.42}, "tokenReputation": "Malicious"}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listErc721Balances:
     "":
       parameters:
@@ -1654,6 +2016,33 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc721-balances:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          pageSize: 10
+          contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+      responses:
+        "200":
+          application/json: {"nativeTokenBalance": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "chainId": "43114", "price": {"currencyCode": "usd", "value": 42.42}, "balance": "2000000000000000000", "balanceValue": {"currencyCode": "usd", "value": 42.42}}, "erc721TokenBalances": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   listErc1155Balances:
     "":
       parameters:
@@ -1683,8 +2072,63 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc1155-balances:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          blockNumber: "6479329"
+          pageSize: 10
+          contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+      responses:
+        "200":
+          application/json: {"nativeTokenBalance": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "chainId": "43114", "price": {"currencyCode": "usd", "value": 42.42}, "balance": "2000000000000000000", "balanceValue": {"currencyCode": "usd", "value": 42.42}}, "erc1155TokenBalances": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listCollectibleBalances:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          pageSize: 10
+          contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+      responses:
+        "200":
+          application/json: {"collectibleBalances": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-collectible-balances:
       parameters:
         path:
           chainId: "43114"
@@ -1738,6 +2182,32 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-contract-deployments:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"contracts": [{"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-20", "decimals": 18}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   listTransactions:
     "":
       parameters:
@@ -1768,8 +2238,65 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-transactions:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          pageSize: 10
+          startBlock: 6479329
+          endBlock: 6479330
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"transactions": [{"nativeTransaction": {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "NATIVE_TRANSFER", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}, "erc20Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 5832.05, "value": "10000000000000000000", "erc20Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}}}], "erc721Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 9819.36, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://unlawful-petticoat.com", "metadata": {"indexStatus": "INVALID_METADATA"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}], "erc1155Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 5935.65, "value": "10000000000000000000", "erc1155Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-1155", "tokenId": "<id>", "tokenUri": "https://happy-go-lucky-bog.org/", "metadata": {"indexStatus": "UNREACHABLE_TOKEN_URI"}}}], "internalTransactions": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "internalTxType": "CALL", "value": "10000000000000000000", "isReverted": false, "gasUsed": "<value>", "gasLimit": "<value>"}]}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   listNativeTransactions:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": []}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-native-transactions:
       parameters:
         path:
           chainId: "43114"
@@ -1826,6 +2353,34 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc20-transactions:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listErc721Transactions:
     "":
       parameters:
@@ -1839,6 +2394,34 @@ examples:
       responses:
         "200":
           application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 1403.76, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://upset-orchid.name/", "metadata": {"indexStatus": "UNREACHABLE_TOKEN_URI"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}, {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 1403.76, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://upset-orchid.name/", "metadata": {"indexStatus": "UNREACHABLE_TOKEN_URI"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}]}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc721-transactions:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 1403.76, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://upset-orchid.name/", "metadata": {"indexStatus": "UNREACHABLE_TOKEN_URI"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}]}
         "400":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -1884,6 +2467,34 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-erc1155-transactions:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 3362.41, "value": "10000000000000000000", "erc1155Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-1155", "tokenId": "<id>", "tokenUri": "https://crafty-in-joke.org/", "metadata": {"indexStatus": "INVALID_METADATA"}}}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listInternalTransactions:
     "":
       parameters:
@@ -1913,8 +2524,60 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-internal-transactions:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": [{"from": "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972", "to": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7", "internalTxType": "call", "value": "50000000000000000", "gasUsed": "44038", "gasLimit": "50000", "transactionHash": "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listLatestTransactionsAllChains:
     "":
+      parameters:
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"transactions": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-transactions-all-chains:
       parameters:
         query:
           pageSize: 10
@@ -1963,8 +2626,57 @@ examples:
           application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-transaction:
+      parameters:
+        path:
+          chainId: "43114"
+          txHash: "0x8bf584d7b14b92a32a339872a66b134a70ba3ba7c305823f348db6f860253f45"
+      responses:
+        "200":
+          application/json: {"erc20Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 6482.03, "value": "10000000000000000000", "erc20Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}}}], "erc721Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 9364.08, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://hurtful-cricket.com", "metadata": {"indexStatus": "INVALID_TOKEN_URI_SCHEME"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}], "erc1155Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 8559.93, "value": "10000000000000000000", "erc1155Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-1155", "tokenId": "<id>", "tokenUri": "https://frozen-cake.biz", "metadata": {"indexStatus": "INVALID_TOKEN_URI_SCHEME"}}}], "internalTransactions": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "internalTxType": "STATICCALL", "value": "10000000000000000000", "isReverted": true, "gasUsed": "<value>", "gasLimit": "<value>"}], "networkTokenDetails": {"networkToken": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg"}, "currentPrice": {"currencyCode": "usd", "value": 42.42}, "historicalPrice": {"currencyCode": "usd", "value": 42.42}}, "nativeTransaction": {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "CONTRACT_CREATION", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000", "input": "<value>", "baseFeePerGas": "<value>"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   listLatestTransactions:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-transactions:
       parameters:
         path:
           chainId: "43114"
@@ -2014,6 +2726,30 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-blocks-all-chains:
+      parameters:
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"blocks": [{"chainId": "43114", "blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txCount": 9939.63, "baseFee": "<value>", "gasUsed": "<value>", "gasLimit": "<value>", "gasCost": "<value>", "parentHash": "<value>", "feesSpent": "<value>", "cumulativeTransactions": "<value>"}]}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getLatestBlocks:
     "":
       parameters:
@@ -2040,8 +2776,57 @@ examples:
           application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-latest-blocks:
+      parameters:
+        path:
+          chainId: "43114"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"blocks": []}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getBlock:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c"
+      responses:
+        "200":
+          application/json: {"chainId": "43114", "blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "txCount": 9350.29, "baseFee": "<value>", "gasUsed": "<value>", "gasLimit": "<value>", "gasCost": "<value>", "parentHash": "<value>", "feesSpent": "<value>", "cumulativeTransactions": "<value>"}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-block:
       parameters:
         path:
           chainId: "43114"
@@ -2092,6 +2877,32 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-transactions-for-block:
+      parameters:
+        path:
+          chainId: "43114"
+          blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "CONTRACT_CALL", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}]}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   getDeploymentTransaction:
     "":
       parameters:
@@ -2119,8 +2930,58 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-deployment-transaction:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        query:
+          currency: "usd"
+      responses:
+        "200":
+          application/json: {"erc20Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 6491.9, "value": "10000000000000000000", "erc20Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}}}], "erc721Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 1478.52, "erc721Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://soggy-digestive.org", "metadata": {"indexStatus": "UNREACHABLE_TOKEN_URI"}, "ownerAddress": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}}], "erc1155Transfers": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "logIndex": 9500.08, "value": "10000000000000000000", "erc1155Token": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-1155", "tokenId": "<id>", "tokenUri": "https://polished-legging.info", "metadata": {"indexStatus": "THROTTLED_TOKEN_URI"}}}], "internalTransactions": [{"from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "internalTxType": "CREATE2", "value": "10000000000000000000", "isReverted": true, "gasUsed": "<value>", "gasLimit": "<value>"}], "networkTokenDetails": {"networkToken": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg"}, "currentPrice": {"currencyCode": "usd", "value": 42.42}, "historicalPrice": {"currencyCode": "usd", "value": 42.42}}, "nativeTransaction": {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "CONTRACT_CALL", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000", "input": "<value>", "baseFeePerGas": "<value>"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   getContractMetadata:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+      responses:
+        "200":
+          application/json: {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "ercType": "ERC-721"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-contract-metadata:
       parameters:
         path:
           chainId: "43114"
@@ -2173,8 +3034,60 @@ examples:
           application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-transfers:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+        query:
+          startBlock: 6479329
+          endBlock: 6479330
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transfers": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   supportedChains:
     "":
+      parameters:
+        query:
+          network: "mainnet"
+          feature: "nftIndexing"
+      responses:
+        "200":
+          application/json: {"chains": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-supported-chains:
       parameters:
         query:
           network: "mainnet"
@@ -2222,6 +3135,29 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-chain-info:
+      parameters:
+        path:
+          chainId: "43114"
+      responses:
+        "200":
+          application/json: {"chainId": "<id>", "status": "OK", "chainName": "<value>", "description": "whose save hourly enlightened regarding vice yellow commonly during", "vmName": "EVM", "rpcUrl": "https://wealthy-declaration.info/", "isTestnet": false, "networkToken": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getAddressChains:
     "":
       parameters:
@@ -2246,6 +3182,29 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-address-chains:
+      parameters:
+        path:
+          address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+      responses:
+        "200":
+          application/json: {"indexedChains": [{"chainId": "<id>", "status": "OK", "chainName": "<value>", "description": "authentic ponder circa throbbing considering same prance", "vmName": "ETHEREUM", "rpcUrl": "https://impartial-avalanche.biz", "isTestnet": false, "networkToken": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg"}}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listAllLatestTransactions:
     "":
       parameters:
@@ -2255,6 +3214,30 @@ examples:
       responses:
         "200":
           application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "NATIVE_TRANSFER", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}, {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "NATIVE_TRANSFER", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}, {"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "NATIVE_TRANSFER", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}]}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-all-latest-transactions:
+      parameters:
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"transactions": [{"blockNumber": "339", "blockTimestamp": 1648672486, "blockHash": "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c", "chainId": "43114", "blockIndex": 0, "txHash": "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4", "txStatus": "1", "txType": 1, "gasLimit": "51373", "gasUsed": "51373", "gasPrice": "470000000000", "nonce": "1", "from": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "to": {"name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"}, "method": {"callType": "NATIVE_TRANSFER", "methodHash": "0xa9059cbb", "methodName": "transfer(address,uint256)"}, "value": "10000000000000000000"}]}
         "400":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2296,8 +3279,55 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-all-latest-blocks:
+      parameters:
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"blocks": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   reindexNft:
     "":
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+          tokenId: "145"
+      responses:
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-reindex-nft:
       parameters:
         path:
           chainId: "43114"
@@ -2347,6 +3377,32 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-tokens:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"tokens": []}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getTokenDetails:
     "":
       parameters:
@@ -2373,8 +3429,56 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-token-details:
+      parameters:
+        path:
+          chainId: "43114"
+          address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+          tokenId: "145"
+      responses:
+        "200":
+          application/json: {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "ercType": "ERC-721", "tokenId": "<id>", "tokenUri": "https://energetic-decryption.biz/", "metadata": {"indexStatus": "INVALID_TOKEN_URI_SCHEME"}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getOperationResult:
     "":
+      parameters:
+        path:
+          operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138"
+      responses:
+        "200":
+          application/json: {"operationId": "<id>", "operationType": "TRANSACTION_EXPORT_PRIMARY_NETWORK", "operationStatus": "RUNNING", "createdAtTimestamp": 2175.46, "updatedAtTimestamp": 1060.47}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-operation-result:
       parameters:
         path:
           operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138"
@@ -2446,6 +3550,31 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-asset-details:
+      parameters:
+        path:
+          blockchainId: "x-chain"
+          network: "mainnet"
+          assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof"
+      responses:
+        "200":
+          application/json: {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "createdAtTimestamp": 1675444720, "cap": "variable"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getChainIdsForAddresses:
     "":
       parameters:
@@ -2456,6 +3585,31 @@ examples:
       responses:
         "200":
           application/json: {"addresses": [{"address": "5348 Larson Brook", "blockchainIds": []}, {"address": "5348 Larson Brook", "blockchainIds": []}]}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-chain-ids-for-addresses:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+      responses:
+        "200":
+          application/json: {"addresses": [{"address": "5348 Larson Brook", "blockchainIds": []}]}
         "400":
           application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2496,8 +3650,57 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-network-details:
+      parameters:
+        path:
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"validatorDetails": {"validatorCount": 2222.44, "totalAmountStaked": "<value>", "estimatedAnnualStakingReward": "<value>", "stakingDistributionByVersion": [{"version": "<value>", "amountStaked": "<value>", "validatorCount": 2606.4}], "stakingRatio": "<value>"}, "delegatorDetails": {"delegatorCount": 2068.29, "totalAmountStaked": "<value>"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listBlockchains:
     "":
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"blockchains": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-blockchains:
       parameters:
         path:
           network: "mainnet"
@@ -2548,6 +3751,30 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-blockchain-by-id:
+      parameters:
+        path:
+          blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"createBlockTimestamp": 6647.43, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114, "genesisData": {}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   listSubnets:
     "":
       parameters:
@@ -2575,6 +3802,32 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-subnets:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"subnets": [{"createBlockTimestamp": 7890.03, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value 1>", "<value 2>"], "threshold": 8473.89, "locktime": 598.99, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": []}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getSubnetById:
     "":
       parameters:
@@ -2584,6 +3837,30 @@ examples:
       responses:
         "200":
           application/json: {"createBlockTimestamp": 7868.74, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value 1>", "<value 2>", "<value 3>"], "threshold": 7400.73, "locktime": 5956.21, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"createBlockTimestamp": 6120.58, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}, {"createBlockTimestamp": 6120.58, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-subnet-by-id:
+      parameters:
+        path:
+          network: "mainnet"
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"createBlockTimestamp": 7868.74, "createBlockIndex": "<value>", "subnetId": "<id>", "ownerAddresses": ["<value 1>", "<value 2>", "<value 3>"], "threshold": 7400.73, "locktime": 5956.21, "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}, "isL1": true, "blockchains": [{"createBlockTimestamp": 6120.58, "createBlockNumber": "<value>", "blockchainId": "<id>", "vmId": "<id>", "subnetId": "<id>", "blockchainName": "<value>", "evmChainId": 43114, "genesisData": {}}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2638,8 +3915,73 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-validators:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          pageSize: 10
+          nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs"
+          sortOrder: "asc"
+          validationStatus: "completed"
+          minDelegationCapacity: "0"
+          maxDelegationCapacity: "720000000000000000"
+          minTimeRemaining: 0
+          maxTimeRemaining: 2147483647
+          minFeePercentage: 2
+          maxFeePercentage: 100
+          minUptimePerformance: 90
+          maxUptimePerformance: 100
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"validators": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getSingleValidatorDetails:
     "":
+      parameters:
+        path:
+          network: "mainnet"
+          nodeId: "NodeID-111111111111111111116DBWJs"
+        query:
+          pageSize: 10
+          validationStatus: "completed"
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"validators": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-single-validator-details:
       parameters:
         path:
           network: "mainnet"
@@ -2697,6 +4039,35 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-delegators:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          pageSize: 10
+          rewardAddresses: "P-avax1679zrp3z9mf7z4an42ddq47qzj36zv6ga20vwl,P-avax1s7kd0kfndlz6mh3l0etrrcmkg5y366k8e0s6cc"
+          sortOrder: "asc"
+          delegationStatus: "completed"
+          nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs"
+      responses:
+        "200":
+          application/json: {"delegators": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   listL1Validators:
     "":
       parameters:
@@ -2710,6 +4081,34 @@ examples:
       responses:
         "200":
           application/json: {"validators": [{"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}, {"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}], "blockHeight": "<value>"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-l1-validators:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          pageSize: 10
+          l1ValidationId: "BsSpTd1SDvdhaoYAuKJvRj1WnoRyu8mAuMZeuz9g7brGj6KhX"
+          nodeId: "NodeID-111111111111111111116DBWJs"
+          subnetId: "11111111111111111111111111111111LpoYY"
+      responses:
+        "200":
+          application/json: {"validators": [{"validationId": "<id>", "validationIdHex": "<value>", "nodeId": "<id>", "subnetId": "<id>", "weight": 9741.29, "remainingBalance": 401.23, "creationTimestamp": 9067.99, "blsCredentials": {}, "remainingBalanceOwner": {"addresses": ["<value 1>"], "threshold": 9243.92}, "deactivationOwner": {"addresses": [], "threshold": 488.52}}], "blockHeight": "<value>"}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2752,6 +4151,31 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-tx-by-hash:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+          txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP"
+      responses:
+        "200":
+          application/json: {"txHash": "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c", "chainFormat": "non-linear", "timestamp": 1600762738, "txType": "CreateAssetTx", "memo": "0x546865204176616c616e6368652050726f6a656374", "consumedUtxos": [], "emittedUtxos": [{"addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"], "asset": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "amount": "5001000"}, "consumedOnChainId": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "consumingTxHash": "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c", "createdOnChainId": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "utxoId": "68vLva9kfKUsX88ZPM8jdbf8qHUZRoZSFH6NdpAVTspkfrXDC", "consumingTxTimestamp": 1599696000, "creationTxHash": "FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z", "credentials": [{"signature": "bWWoZUu0Z3STjuk/+2az7M4vP0oqc9NtiA7kOdqINCIE/2+5va5R1KNCWwEX5jE1xVHLvAxU2LHTN5gK8m84HwA", "publicKey": "AdMQOtubgBFFJu++0faHPIIA6KmdZ2ERErMRGzyy6juI"}], "locktime": 0, "outputIndex": "38", "threshold": 1, "timestamp": 1599696000, "utxoType": "mint"}], "amountUnlocked": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000"}], "amountCreated": [], "sourceChain": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "destinationChain": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "assetCreated": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "createdAtTimestamp": 1675444720, "cap": "variable"}, "vertices": []}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   listLatestPrimaryNetworkTransactions:
     "":
       parameters:
@@ -2782,6 +4206,37 @@ examples:
           application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
         "502":
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-primary-network-transactions:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+          txTypes: ["AddValidatorTx"]
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"transactions": [], "chainInfo": {"chainName": "x-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   listActivePrimaryNetworkStakingTransactions:
@@ -2816,6 +4271,37 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-active-primary-network-staking-transactions:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+          txTypes: ["AddValidatorTx"]
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"transactions": [{"txHash": "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP", "txType": "AddPermissionlessDelegatorTx", "blockTimestamp": 1648672486, "blockNumber": "<value>", "blockHash": "<value>", "consumedUtxos": [], "emittedUtxos": [], "sourceChain": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "destinationChain": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "value": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000"}], "amountBurned": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "amount": "5001000"}], "amountStaked": [], "amountL1ValidatorBalanceBurned": [], "subnetOwnershipInfo": {"locktime": 0, "threshold": 1, "addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"]}}], "chainInfo": {"chainName": "x-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listAssetTransactions:
     "":
       parameters:
@@ -2847,6 +4333,36 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-asset-transactions:
+      parameters:
+        path:
+          blockchainId: "x-chain"
+          network: "mainnet"
+          assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof"
+        query:
+          txTypes: ["AddValidatorTx"]
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"transactions": [], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   listPendingPrimaryNetworkRewards:
     "":
       parameters:
@@ -2860,6 +4376,34 @@ examples:
       responses:
         "200":
           application/json: {"pendingRewards": [{"addresses": ["avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"], "txHash": "<value>", "amountStaked": "<value>", "nodeId": "<id>", "startTimestamp": 6291.11, "endTimestamp": 1095.41, "rewardType": "VALIDATOR_FEE", "progress": 6540.83, "estimatedReward": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "amount": "5001000"}}, {"addresses": ["avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"], "txHash": "<value>", "amountStaked": "<value>", "nodeId": "<id>", "startTimestamp": 6291.11, "endTimestamp": 1095.41, "rewardType": "VALIDATOR_FEE", "progress": 6540.83, "estimatedReward": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "amount": "5001000"}}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-pending-primary-network-rewards:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+          pageSize: 10
+          nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs"
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"pendingRewards": [{"addresses": ["avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"], "txHash": "<value>", "amountStaked": "<value>", "nodeId": "<id>", "startTimestamp": 6291.11, "endTimestamp": 1095.41, "rewardType": "VALIDATOR_FEE", "progress": 6540.83, "estimatedReward": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "secp256k1", "amount": "5001000"}}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -2906,6 +4450,35 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-historical-primary-network-rewards:
+      parameters:
+        path:
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+          pageSize: 10
+          nodeIds: "NodeID-111111111111111111116DBWJs,NodeID-222222222222222222227DBWJs"
+          sortOrder: "asc"
+          currency: "usd"
+      responses:
+        "200":
+          application/json: {"historicalRewards": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getUtxosByAddresses:
     "":
       parameters:
@@ -2935,6 +4508,34 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-utxos-by-addresses:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+        query:
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"utxos": [{"addresses": ["avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw"], "asset": {"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000"}, "consumedOnChainId": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "consumingTxHash": "3j9JpF1aGuQtLLbo3YkvvKkWrCZViXZjdeJQWUSEY5hcqUn2c", "createdOnChainId": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "utxoId": "68vLva9kfKUsX88ZPM8jdbf8qHUZRoZSFH6NdpAVTspkfrXDC", "consumingTxTimestamp": 1599696000, "creationTxHash": "FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z", "credentials": [{"signature": "bWWoZUu0Z3STjuk/+2az7M4vP0oqc9NtiA7kOdqINCIE/2+5va5R1KNCWwEX5jE1xVHLvAxU2LHTN5gK8m84HwA", "publicKey": "AdMQOtubgBFFJu++0faHPIIA6KmdZ2ERErMRGzyy6juI"}], "locktime": 0, "outputIndex": "38", "threshold": 1, "timestamp": 1599696000, "utxoType": "mint"}], "chainInfo": {"chainName": "x-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   getBalancesByAddresses:
     "":
       parameters:
@@ -2963,8 +4564,60 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-balances-by-addresses:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+        query:
+          blockTimestamp: 1599696000
+          addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg"
+      responses:
+        "200":
+          application/json: {"balances": {"unlockedUnstaked": [], "unlockedStaked": [], "lockedPlatform": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000", "utxoCount": 1}], "lockedStakeable": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000", "utxoCount": 1}], "lockedStaked": [], "pendingStaked": [], "atomicMemoryUnlocked": [{"assetId": "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof", "name": "Avalanche", "symbol": "AVAX", "denomination": 9, "type": "nft", "amount": "5001000", "utxoCount": 1, "sharedWithChainId": "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM", "status": "<value>"}], "atomicMemoryLocked": []}, "chainInfo": {"chainName": "x-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getBlockById:
     "":
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+          blockId: "5615di9ytxujackzaXNrVuWQy5y8Yrt8chPCscMr5Ku9YxJ1S"
+      responses:
+        "200":
+          application/json: {"blockNumber": "<value>", "blockHash": "<value>", "parentHash": "<value>", "blockTimestamp": 1204.4, "blockType": "<value>", "txCount": 279.32, "transactions": ["<value 1>"], "blockSizeBytes": 6572.63}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-block-by-id:
       parameters:
         path:
           blockchainId: "p-chain"
@@ -3019,6 +4672,35 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-primary-network-blocks-by-node-id:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+          nodeId: "NodeID-111111111111111111116DBWJs"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"blocks": [], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listLatestPrimaryNetworkBlocks:
     "":
       parameters:
@@ -3032,6 +4714,34 @@ examples:
       responses:
         "200":
           application/json: {"blocks": [{"blockNumber": "<value>", "blockHash": "<value>", "parentHash": "<value>", "blockTimestamp": 8370.94, "blockType": "<value>", "txCount": 4028.53, "transactions": ["<value 1>", "<value 2>"], "blockSizeBytes": 3564.54}, {"blockNumber": "<value>", "blockHash": "<value>", "parentHash": "<value>", "blockTimestamp": 8370.94, "blockType": "<value>", "txCount": 4028.53, "transactions": ["<value 1>", "<value 2>"], "blockSizeBytes": 3564.54}, {"blockNumber": "<value>", "blockHash": "<value>", "parentHash": "<value>", "blockTimestamp": 8370.94, "blockType": "<value>", "txCount": 4028.53, "transactions": ["<value 1>", "<value 2>"], "blockSizeBytes": 3564.54}], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-primary-network-blocks:
+      parameters:
+        path:
+          blockchainId: "p-chain"
+          network: "mainnet"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"blocks": [{"blockNumber": "<value>", "blockHash": "<value>", "parentHash": "<value>", "blockTimestamp": 8370.94, "blockType": "<value>", "txCount": 4028.53, "transactions": ["<value 1>", "<value 2>"], "blockSizeBytes": 3564.54}], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -3075,8 +4785,59 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-latest-X-chain-vertices:
+      parameters:
+        path:
+          blockchainId: "x-chain"
+          network: "mainnet"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"vertices": [{"vertexHash": "<value>", "parentHashes": ["<value 1>", "<value 2>"], "vertexHeight": 3651.8, "vertexIndex": 2146.37, "vertexTimestamp": 2588.3, "txCount": 5072.19, "transactions": [], "vertexSizeBytes": 2432.13}], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   getVertexByHash:
     "":
+      parameters:
+        path:
+          vertexHash: "haP1CW56cspZY7aEuqHNrtpvhqCaMTxQaYe6j5u2Mbn4L2Gqr"
+          blockchainId: "x-chain"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"vertexHash": "<value>", "parentHashes": ["<value 1>", "<value 2>", "<value 3>"], "vertexHeight": 9472.04, "vertexIndex": 8056.53, "vertexTimestamp": 8641.27, "txCount": 9098.18, "transactions": [], "vertexSizeBytes": 9344.17}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-vertex-by-hash:
       parameters:
         path:
           vertexHash: "haP1CW56cspZY7aEuqHNrtpvhqCaMTxQaYe6j5u2Mbn4L2Gqr"
@@ -3130,6 +4891,34 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-vertex-by-height:
+      parameters:
+        path:
+          blockchainId: "x-chain"
+          network: "mainnet"
+        query:
+          vertexHeight: 123
+          pageSize: 10
+          sortOrder: "asc"
+      responses:
+        "200":
+          application/json: {"vertices": [{"vertexHash": "<value>", "parentHashes": ["<value 1>", "<value 2>"], "vertexHeight": 9781.82, "vertexIndex": 355.99, "vertexTimestamp": 8221.86, "txCount": 5711.38, "transactions": [], "vertexSizeBytes": 250.41}], "chainInfo": {"chainName": "p-chain", "network": "mainnet"}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getTeleporterMessage:
     "":
       parameters:
@@ -3154,8 +4943,59 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-teleporter-message:
+      parameters:
+        path:
+          messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d"
+      responses:
+        "200":
+          application/json: {"messageId": "<id>", "teleporterContractAddress": "<value>", "sourceBlockchainId": "<id>", "destinationBlockchainId": "<id>", "sourceEvmChainId": "<id>", "destinationEvmChainId": "<id>", "messageNonce": "<value>", "from": "<value>", "to": "<value>", "messageExecuted": false, "receipts": [], "receiptDelivered": true, "rewardDetails": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "value": "<value>"}, "sourceTransaction": {"txHash": "<value>", "timestamp": 4759.29, "gasSpent": "<value>"}, "destinationTransaction": {"txHash": "<value>", "timestamp": 2265.19, "gasSpent": "<value>", "rewardRedeemer": "<value>", "delivererAddress": "<value>"}, "status": "delivered"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   listTeleporterMessages:
     "":
+      parameters:
+        query:
+          pageSize: 10
+          sourceBlockchainId: "2D8RG4UpSXbPbvPCAWppNJyqTG2i2CAXSkTgmTBBvs7GKNZjsY"
+          destinationBlockchainId: "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp"
+          to: "0x664A4Be5Af2cFc824F9C0914CbAc4703396Da2DC"
+          from: "0x321eDA69247566D662178feE695C7026c604Cd94"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"messages": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-teleporter-messages:
       parameters:
         query:
           pageSize: 10
@@ -3210,6 +5050,32 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-teleporter-messages-by-address:
+      parameters:
+        path:
+          address: "0x8578AE7723751446B196bD5124e1bF57B40EB7Bc"
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"messages": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getIcmMessage:
     "":
       parameters:
@@ -3218,6 +5084,29 @@ examples:
       responses:
         "200":
           application/json: {"messageId": "<id>", "icmContractAddress": "<value>", "sourceBlockchainId": "<id>", "destinationBlockchainId": "<id>", "sourceEvmChainId": "<id>", "destinationEvmChainId": "<id>", "messageNonce": "<value>", "from": "<value>", "to": "<value>", "messageExecuted": false, "receipts": [{"receivedMessageNonce": "<value>", "relayerRewardAddress": "<value>"}, {"receivedMessageNonce": "<value>", "relayerRewardAddress": "<value>"}, {"receivedMessageNonce": "<value>", "relayerRewardAddress": "<value>"}], "receiptDelivered": true, "rewardDetails": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "value": "<value>"}, "sourceTransaction": {"txHash": "<value>", "timestamp": 6447.07, "gasSpent": "<value>"}, "status": "pending"}
+        "400":
+          application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-icm-message:
+      parameters:
+        path:
+          messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d"
+      responses:
+        "200":
+          application/json: {"messageId": "<id>", "icmContractAddress": "<value>", "sourceBlockchainId": "<id>", "destinationBlockchainId": "<id>", "sourceEvmChainId": "<id>", "destinationEvmChainId": "<id>", "messageNonce": "<value>", "from": "<value>", "to": "<value>", "messageExecuted": false, "receipts": [{"receivedMessageNonce": "<value>", "relayerRewardAddress": "<value>"}], "receiptDelivered": true, "rewardDetails": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "value": "<value>"}, "sourceTransaction": {"txHash": "<value>", "timestamp": 6447.07, "gasSpent": "<value>"}, "status": "pending"}
         "400":
           application/json: {"message": [], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -3263,6 +5152,34 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-icm-messages:
+      parameters:
+        query:
+          pageSize: 10
+          sourceBlockchainId: "2D8RG4UpSXbPbvPCAWppNJyqTG2i2CAXSkTgmTBBvs7GKNZjsY"
+          destinationBlockchainId: "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp"
+          to: "0x664A4Be5Af2cFc824F9C0914CbAc4703396Da2DC"
+          from: "0x321eDA69247566D662178feE695C7026c604Cd94"
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"messages": [{"messageId": "<id>", "icmContractAddress": "<value>", "sourceBlockchainId": "<id>", "destinationBlockchainId": "<id>", "sourceEvmChainId": "<id>", "destinationEvmChainId": "<id>", "messageNonce": "<value>", "from": "<value>", "to": "<value>", "messageExecuted": true, "receipts": [{"receivedMessageNonce": "<value>", "relayerRewardAddress": "<value>"}], "receiptDelivered": true, "rewardDetails": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "value": "<value>"}, "sourceTransaction": {"txHash": "<value>", "timestamp": 9884.06, "gasSpent": "<value>"}, "status": "pending"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listIcmMessagesByAddress:
     "":
       parameters:
@@ -3290,6 +5207,32 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-icm-messages-by-address:
+      parameters:
+        path:
+          address: "0x8578AE7723751446B196bD5124e1bF57B40EB7Bc"
+        query:
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"messages": [{"messageId": "<id>", "icmContractAddress": "<value>", "sourceBlockchainId": "<id>", "destinationBlockchainId": "<id>", "sourceEvmChainId": "<id>", "destinationEvmChainId": "<id>", "messageNonce": "<value>", "from": "<value>", "to": "<value>", "messageExecuted": true, "receipts": [], "receiptDelivered": true, "rewardDetails": {"address": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F", "name": "Wrapped AVAX", "symbol": "WAVAX", "decimals": 18, "logoUri": "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg", "ercType": "ERC-20", "price": {"currencyCode": "usd", "value": 42.42}, "value": "<value>"}, "sourceTransaction": {"txHash": "<value>", "timestamp": 5752.29, "gasSpent": "<value>"}, "status": "pending"}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 503, "error": "Service Unavailable"}
   getApiUsageMetrics:
     "":
       parameters:
@@ -3301,6 +5244,32 @@ examples:
       responses:
         "200":
           application/json: {"aggregateDuration": "<value>", "orgId": "<id>", "metrics": [{"timestamp": 379.63, "values": [{"groupedBy": "apiKeyId", "totalRequests": 2719.94, "requestsPerSecond": 7296.32, "successRatePercent": 2247.1, "medianResponseTimeMsecs": 3417.94, "invalidRequests": 9312.42, "apiCreditsUsed": 4277.2, "apiCreditsWasted": 9784.91}, {"groupedBy": "apiKeyId", "totalRequests": 2719.94, "requestsPerSecond": 7296.32, "successRatePercent": 2247.1, "medianResponseTimeMsecs": 3417.94, "invalidRequests": 9312.42, "apiCreditsUsed": 4277.2, "apiCreditsWasted": 9784.91}]}, {"timestamp": 379.63, "values": [{"groupedBy": "apiKeyId", "totalRequests": 2719.94, "requestsPerSecond": 7296.32, "successRatePercent": 2247.1, "medianResponseTimeMsecs": 3417.94, "invalidRequests": 9312.42, "apiCreditsUsed": 4277.2, "apiCreditsWasted": 9784.91}, {"groupedBy": "apiKeyId", "totalRequests": 2719.94, "requestsPerSecond": 7296.32, "successRatePercent": 2247.1, "medianResponseTimeMsecs": 3417.94, "invalidRequests": 9312.42, "apiCreditsUsed": 4277.2, "apiCreditsWasted": 9784.91}]}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-api-usage-metrics:
+      parameters:
+        query:
+          startTimestamp: 1739507200
+          endTimestamp: 1739664000
+          timeInterval: "daily"
+          groupBy: "requestPath"
+      responses:
+        "200":
+          application/json: {"aggregateDuration": "<value>", "orgId": "<id>", "metrics": [{"timestamp": 379.63, "values": [{"groupedBy": "apiKeyId", "totalRequests": 2719.94, "requestsPerSecond": 7296.32, "successRatePercent": 2247.1, "medianResponseTimeMsecs": 3417.94, "invalidRequests": 9312.42, "apiCreditsUsed": 4277.2, "apiCreditsWasted": 9784.91}]}]}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -3343,6 +5312,31 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-api-logs:
+      parameters:
+        query:
+          startTimestamp: 1739507200
+          endTimestamp: 1739664000
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"orgId": "<id>", "logs": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
   getSubnetRpcUsageMetrics:
     "":
       parameters:
@@ -3370,6 +5364,32 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-subnet-rpc-usage-metrics:
+      parameters:
+        query:
+          timeInterval: "daily"
+          startTimestamp: 1739507200
+          endTimestamp: 1739664000
+          groupBy: "rpcMethod"
+      responses:
+        "200":
+          application/json: {"aggregateDuration": "<value>", "metrics": [], "chainId": "<id>"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   getRpcUsageMetrics:
     "":
       parameters:
@@ -3397,8 +5417,59 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-rpc-usage-metrics:
+      parameters:
+        query:
+          timeInterval: "daily"
+          startTimestamp: 1739507200
+          endTimestamp: 1739664000
+          groupBy: "rpcMethod"
+      responses:
+        "200":
+          application/json: {"aggregateDuration": "<value>", "metrics": [{"timestamp": 8318.92, "values": []}], "chainId": "<id>"}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   aggregateSignatures:
     "":
+      parameters:
+        path:
+          network: "mainnet"
+      requestBody:
+        application/json: {"message": "000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000003cc0000000000059f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7000003a200000000000100000014253b2784c75e510dd0ff1da844684a1ac0aa5fcf00000380000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000001150000000000000000000000008578ae7723751446b196bd5124e1bf57b40eb7bc7fc93d85c6d62c5b2ac0b519c87010ea5294012d1e407030d6acd0021cac10d50000000000000000000000009660ed66aef60dfba5467afe865f612edbfb5c710000000000000000000000000000000000000000000000000000000000014c080000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000011a00000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011a20000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011b50000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e80000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e90000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000400000000000000000000000001c07f66981b45056e5024eb6d51f9f30aa0d28fd00000000000000000000000000000000000000000000000000038d7ea4c680000000000000000000000000000000000000000000", "justification": "0001abcdabcfff", "signingSubnetId": "7WtoAMPhrmh5KosDUsFL9yTcvw7YSxiKHPpdfs4JsgW47oZT5", "quorumPercentage": 50}
+      responses:
+        "201":
+          application/json: {"signedMessage": "0000000000059f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7000003a200000000000100000014253b2784c75e510dd0ff1da844684a1ac0aa5fcf00000380000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000001150000000000000000000000008578ae7723751446b196bd5124e1bf57b40eb7bc7fc93d85c6d62c5b2ac0b519c87010ea5294012d1e407030d6acd0021cac10d50000000000000000000000009660ed66aef60dfba5467afe865f612edbfb5c710000000000000000000000000000000000000000000000000000000000014c080000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000011a00000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011a20000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011b50000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e80000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e90000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000400000000000000000000000001c07f66981b45056e5024eb6d51f9f30aa0d28fd00000000000000000000000000000000000000000000000000038d7ea4c68000000000000000000103807355b21dd497ecc9f560dfbdefc64aeec72b226c70d3793273db01d1a0c0bfd74d095d6a9e0b4db2dc652245fd28ac032c0f1f6b7f761b912ad58c93cde2e337bef4a4e8175af69f226520cd1baedd2dd7db79bb5752cb50a465531e46e8af"}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-aggregate-signatures:
       parameters:
         path:
           network: "mainnet"
@@ -3448,8 +5519,56 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-aggregated-signatures:
+      parameters:
+        path:
+          network: "mainnet"
+          txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP"
+      responses:
+        "201":
+          application/json: {"signedMessage": "0000000000059f3be606497285d0ffbb5ac9ba24aa60346a9b1812479ed66cb329f394a4b1c7000003a200000000000100000014253b2784c75e510dd0ff1da844684a1ac0aa5fcf00000380000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000001150000000000000000000000008578ae7723751446b196bd5124e1bf57b40eb7bc7fc93d85c6d62c5b2ac0b519c87010ea5294012d1e407030d6acd0021cac10d50000000000000000000000009660ed66aef60dfba5467afe865f612edbfb5c710000000000000000000000000000000000000000000000000000000000014c080000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000011a00000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011a20000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011b50000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e80000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000011e90000000000000000000000007ec2afb0a06a73666adc24983ebdbf2b6f1d708200000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000400000000000000000000000001c07f66981b45056e5024eb6d51f9f30aa0d28fd00000000000000000000000000000000000000000000000000038d7ea4c68000000000000000000103807355b21dd497ecc9f560dfbdefc64aeec72b226c70d3793273db01d1a0c0bfd74d095d6a9e0b4db2dc652245fd28ac032c0f1f6b7f761b912ad58c93cde2e337bef4a4e8175af69f226520cd1baedd2dd7db79bb5752cb50a465531e46e8af"}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   listWebhooks:
     "":
+      parameters:
+        query:
+          pageSize: 10
+          status: "active"
+      responses:
+        "200":
+          application/json: {"webhooks": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-webhooks:
       parameters:
         query:
           pageSize: 10
@@ -3520,6 +5639,29 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://shrill-feather.name", "chainId": "<id>", "status": "active", "createdAt": 3272.52, "name": "<value>", "description": "ah interestingly knuckle helplessly not enrich", "metadata": {"keyType": "subnetId", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   deactivateWebhook:
     "":
       parameters:
@@ -3544,8 +5686,56 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-deactivate-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://orange-igloo.info", "chainId": "<id>", "status": "inactive", "createdAt": 9870.51, "name": "<value>", "description": "ack scary foot", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>", "<value 3>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   updateWebhook:
     "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://puzzled-confusion.com/", "chainId": "<id>", "status": "active", "createdAt": 2194.04, "name": "<value>", "description": "ick athwart mid", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-update-webhook:
       parameters:
         path:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
@@ -3638,8 +5828,58 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-addresses-from-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": [], "totalAddresses": 5926.55}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   removeAddressesFromWebhook:
     "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://ornery-colon.info", "chainId": "<id>", "status": "inactive", "createdAt": 5668.34, "name": "<value>", "description": "colorful emphasise worth intervention wherever onto mill custom for", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-remove-addresses-from-webhook:
       parameters:
         path:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
@@ -3690,5 +5930,141 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-add-addresses-to-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://apprehensive-unit.net/", "chainId": "<id>", "status": "inactive", "createdAt": 9755.42, "name": "<value>", "description": "wetly woot challenge that irresponsible requite rectangular wherever noted", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getTotalL1ValidatorMetrics:
+    speakeasy-default-get-total-l1-validator-metrics:
+      parameters:
+        path:
+          metric: "totalValidatorFeesDaily"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsByValidationId:
+    speakeasy-default-get-metrics-by-validation-id:
+      parameters:
+        path:
+          l1ValidationId: "2YYCZGHjqnbw1MzQ5fGrTp3SjqUu8y1J1xeW4yuhdXe4LoUVVG"
+          metric: "validationFeesDaily"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": [{"value": 4090.68, "timestamp": 9641.56}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsByNodeId:
+    speakeasy-default-get-metrics-by-node-id:
+      parameters:
+        path:
+          metric: "perNodeDailyFeesPaid"
+          nodeId: "NodeID-JQPadXEMWtRtJyXrisyDNWuXKSjSf9D36"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": [{"value": 5895.61, "timestamp": 1664.44}]}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+  getMetricsBySubnetId:
+    speakeasy-default-get-metrics-by-subnet-id:
+      parameters:
+        path:
+          metric: "perSubnetDailyFeesPaid"
+          subnetId: "eYwmVU67LmSfZb1RwqCMhBYkFyG8ftxn6jAwqzFmxC9STBWLC"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.2
 generatedTests: {}

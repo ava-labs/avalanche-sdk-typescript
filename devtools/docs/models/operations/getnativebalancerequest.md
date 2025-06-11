@@ -7,7 +7,6 @@ import { GetNativeBalanceRequest } from "@avalanche-sdk/devtools/models/operatio
 
 let value: GetNativeBalanceRequest = {
   blockNumber: "6479329",
-  chainId: "43114",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   currency: "usd",
 };

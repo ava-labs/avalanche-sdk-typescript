@@ -5,9 +5,7 @@
 ```typescript
 import { GetLatestBlocksRequest } from "@avalanche-sdk/devtools/models/operations";
 
-let value: GetLatestBlocksRequest = {
-  chainId: "43114",
-};
+let value: GetLatestBlocksRequest = {};
 ```
 
 ## Fields

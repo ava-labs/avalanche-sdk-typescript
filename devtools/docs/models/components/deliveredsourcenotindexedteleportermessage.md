@@ -15,7 +15,7 @@ let value: DeliveredSourceNotIndexedTeleporterMessage = {
   messageNonce: "<value>",
   from: "<value>",
   to: "<value>",
-  messageExecuted: false,
+  messageExecuted: true,
   receipts: [
     {
       receivedMessageNonce: "<value>",
@@ -39,7 +39,7 @@ let value: DeliveredSourceNotIndexedTeleporterMessage = {
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 4312.93,
+    timestamp: 4770.43,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",

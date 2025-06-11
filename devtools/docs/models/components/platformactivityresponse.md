@@ -7,17 +7,17 @@ import { PlatformActivityResponse } from "@avalanche-sdk/devtools/models/compone
 
 let value: PlatformActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://square-meatloaf.info",
+  eventType: "validator_activity",
+  url: "https://buttery-importance.org/",
   chainId: "<id>",
   status: "active",
-  createdAt: 1034.49,
+  createdAt: 7013.76,
   name: "<value>",
-  description: "unethically save physical nucleotidase finally",
+  description: "until rapidly instead save deficient headline devise",
   metadata: {
     keyType: "addresses",
     keys: [
-      "<value>",
+      "<value 1>",
     ],
     eventSignatures: [
       "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",

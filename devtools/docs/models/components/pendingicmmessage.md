@@ -16,12 +16,7 @@ let value: PendingIcmMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
+  receipts: [],
   receiptDelivered: false,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
@@ -39,7 +34,7 @@ let value: PendingIcmMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 9224.62,
+    timestamp: 6459.73,
     gasSpent: "<value>",
   },
   status: "pending",

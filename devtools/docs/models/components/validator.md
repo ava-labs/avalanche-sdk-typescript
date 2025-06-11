@@ -27,13 +27,7 @@ const value: components.ActiveValidatorDetails = {
     benchedXChainRequestsPercent: 3074.95,
     benchedCChainRequestsPercent: 4408.25,
   },
-  geolocation: {
-    city: "Lake Destineyborough",
-    country: "Norway",
-    countryCode: "ML",
-    latitude: 8074.03,
-    longitude: 1759.89,
-  },
+  geolocation: null,
 };
 ```
 

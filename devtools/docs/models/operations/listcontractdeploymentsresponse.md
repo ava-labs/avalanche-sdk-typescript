@@ -5,16 +5,7 @@
 ```typescript
 import { ListContractDeploymentsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListContractDeploymentsResponse = {
-  result: {
-    contracts: [
-      {
-        address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-        ercType: "ERC-721",
-      },
-    ],
-  },
-};
+let value: ListContractDeploymentsResponse = {};
 ```
 
 ## Fields

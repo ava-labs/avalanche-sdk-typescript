@@ -11,7 +11,7 @@ let value: Erc1155Token = {
   tokenId: "<id>",
   tokenUri: "https://babyish-adult.name",
   metadata: {
-    indexStatus: "UNKNOWN",
+    indexStatus: "INVALID_METADATA",
   },
 };
 ```

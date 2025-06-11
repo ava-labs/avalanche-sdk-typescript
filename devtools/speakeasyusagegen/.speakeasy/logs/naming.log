@@ -228,6 +228,21 @@ DEBUG	discriminated: Renamed to "WebhookAddressActivityResponse_eventType"
 	 registrationID: "scope:shared refType:Schemas refName:WebhookAddressActivityResponse constProperty:address_activity originalName:eventType"
 DEBUG	
 
+--- Renaming 4 types with name "metric" ---
+DEBUG	discriminated: Renamed to "getTotalL1ValidatorMetrics_metric" 
+	 labels: "original_name:metric operation:getTotalL1ValidatorMetrics operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getTotalL1ValidatorMetrics parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsByValidationId_metric" 
+	 labels: "original_name:metric operation:getMetricsByValidationId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsByValidationId parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsByNodeId_metric" 
+	 labels: "original_name:metric operation:getMetricsByNodeId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsByNodeId parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsBySubnetId_metric" 
+	 labels: "original_name:metric operation:getMetricsBySubnetId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsBySubnetId parameter:pathParam originalName:metric"
+DEBUG	
+
 --- Renaming 2 types with name "requestType" ---
 DEBUG	discriminated: Renamed to "getApiUsageMetrics_requestType" 
 	 labels: "original_name:requestType operation:getApiUsageMetrics operationTag:data.usageMetrics data_type:enum parameter:queryParam" 
@@ -380,6 +395,15 @@ GetStakingMetricsRequest (metric: NetworkMetric, startTimestamp: integer, endTim
  NetworkMetric (enum: delegatorCount, delegatorWeight, validatorCount ...)
  GlobalParamNetwork (enum: mainnet, fuji, testnet)
 GetStakingMetricsResponse (Result: MetricsApiResponse)
+L1Validators (SDK empty)
+GetTotalL1ValidatorMetricsRequest (metric: enum, startTimestamp: integer, endTimestamp: integer)
+ GetTotalL1ValidatorMetricsMetric (enum: totalCumulativeFeesDaily, totalValidatorFeesDaily, totalPayingValidatorsDaily)
+GetMetricsByValidationIdRequest (l1ValidationId: string, metric: enum, startTimestamp: integer ...)
+ GetMetricsByValidationIdMetric (enum: validationCumulativeFeesDaily, validationFeesDaily)
+GetMetricsByNodeIdRequest (metric: enum, startTimestamp: integer, endTimestamp: integer ...)
+ GetMetricsByNodeIdMetric (enum: perNodeCumulativeFeesPaid, perNodeDailyFeesPaid)
+GetMetricsBySubnetIdRequest (metric: enum, startTimestamp: integer, endTimestamp: integer ...)
+ GetMetricsBySubnetIdMetric (enum: perSubnetDailyFeesPaid, perSubnetCumulativeFeesPaid, perSubnetPayingValidators)
 Subnets (SDK empty)
 GetValidatorsByDateRangeRequest (startTimestamp: integer, endTimestamp: integer, pageToken: string ...)
 GetValidatorsByDateRangeResponse (Result: PChainLookingGlassResponse)
@@ -667,6 +691,7 @@ ListBlockchainsRequest (pageToken: string, pageSize: integer, network: GlobalPar
 ListBlockchainsResponse (Result: ListBlockchainsResponse)
  ListBlockchainsResponse (nextPageToken: string, blockchains: array)
    Blockchain (createBlockTimestamp: number, createBlockNumber: string, blockchainId: string ...)
+    GenesisData (empty)
 GetBlockchainByIdRequest (blockchainId: string, network: GlobalParamNetwork)
 ListSubnetsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
 ListSubnetsResponse (Result: ListSubnetsResponse)

@@ -16,15 +16,16 @@ let value: L1ValidatorDetailsFull = {
   blsCredentials: {},
   remainingBalanceOwner: {
     addresses: [
-      "<value>",
+      "<value 1>",
+      "<value 2>",
     ],
-    threshold: 3186.28,
+    threshold: 7038.52,
   },
   deactivationOwner: {
     addresses: [
-      "<value>",
+      "<value 1>",
     ],
-    threshold: 8621.5,
+    threshold: 4642.49,
   },
 };
 ```

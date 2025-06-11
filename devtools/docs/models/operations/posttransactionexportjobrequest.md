@@ -12,7 +12,9 @@ const value: components.CreateEvmTransactionExportRequest = {
   lastDate: "2023-05-02",
   options: {
     addresses: [
-      "<value>",
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
     ],
     includeChains: [
       "43114",

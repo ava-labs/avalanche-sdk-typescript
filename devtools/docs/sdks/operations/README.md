@@ -17,17 +17,13 @@ Gets operation details for the given operation id.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.operations.getResult({
     operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -44,24 +40,18 @@ import { dataOperationsGetResult } from "@avalanche-sdk/devtools/funcs/dataOpera
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataOperationsGetResult(avalanche, {
     operationId: "aa22054a-cb7c-4a4e-9b83-59f2ede74138",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataOperationsGetResult failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -106,10 +96,7 @@ The transaction export operation runs asynchronously in the background. The stat
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.operations.exportTransactions({
@@ -123,7 +110,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -140,10 +126,7 @@ import { dataOperationsExportTransactions } from "@avalanche-sdk/devtools/funcs/
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataOperationsExportTransactions(avalanche, {
@@ -156,15 +139,12 @@ async function run() {
       ],
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataOperationsExportTransactions failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

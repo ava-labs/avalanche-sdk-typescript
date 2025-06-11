@@ -8,7 +8,6 @@ import { ListDelegatorsRequest } from "@avalanche-sdk/devtools/models/operations
 let value: ListDelegatorsRequest = {
   rewardAddresses:
     "P-avax1679zrp3z9mf7z4an42ddq47qzj36zv6ga20vwl,P-avax1s7kd0kfndlz6mh3l0etrrcmkg5y366k8e0s6cc",
-  network: "mainnet",
   sortOrder: "asc",
   delegationStatus: "completed",
   nodeIds:

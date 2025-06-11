@@ -8,7 +8,6 @@ import { ListErc721TransactionsRequest } from "@avalanche-sdk/devtools/models/op
 let value: ListErc721TransactionsRequest = {
   startBlock: 6479329,
   endBlock: 6479330,
-  chainId: "43114",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
 };
 ```

@@ -7,6 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+/**
+ * The genesis data of the blockchain.
+ */
+export type GenesisData = {};
+
 export type Blockchain = {
   createBlockTimestamp: number;
   createBlockNumber: string;
@@ -18,7 +23,55 @@ export type Blockchain = {
    * EVM Chain ID for the EVM-based chains. This field is extracted from genesis data, and may be present for non-EVM chains as well.
    */
   evmChainId: number;
+  /**
+   * The genesis data of the blockchain.
+   */
+  genesisData: GenesisData;
 };
+
+/** @internal */
+export const GenesisData$inboundSchema: z.ZodType<
+  GenesisData,
+  z.ZodTypeDef,
+  unknown
+> = z.object({});
+
+/** @internal */
+export type GenesisData$Outbound = {};
+
+/** @internal */
+export const GenesisData$outboundSchema: z.ZodType<
+  GenesisData$Outbound,
+  z.ZodTypeDef,
+  GenesisData
+> = z.object({});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GenesisData$ {
+  /** @deprecated use `GenesisData$inboundSchema` instead. */
+  export const inboundSchema = GenesisData$inboundSchema;
+  /** @deprecated use `GenesisData$outboundSchema` instead. */
+  export const outboundSchema = GenesisData$outboundSchema;
+  /** @deprecated use `GenesisData$Outbound` instead. */
+  export type Outbound = GenesisData$Outbound;
+}
+
+export function genesisDataToJSON(genesisData: GenesisData): string {
+  return JSON.stringify(GenesisData$outboundSchema.parse(genesisData));
+}
+
+export function genesisDataFromJSON(
+  jsonString: string,
+): SafeParseResult<GenesisData, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GenesisData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GenesisData' from JSON`,
+  );
+}
 
 /** @internal */
 export const Blockchain$inboundSchema: z.ZodType<
@@ -33,6 +86,7 @@ export const Blockchain$inboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
+  genesisData: z.lazy(() => GenesisData$inboundSchema),
 });
 
 /** @internal */
@@ -44,6 +98,7 @@ export type Blockchain$Outbound = {
   subnetId: string;
   blockchainName: string;
   evmChainId: number;
+  genesisData: GenesisData$Outbound;
 };
 
 /** @internal */
@@ -59,6 +114,7 @@ export const Blockchain$outboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
+  genesisData: z.lazy(() => GenesisData$outboundSchema),
 });
 
 /**

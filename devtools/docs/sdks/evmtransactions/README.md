@@ -18,10 +18,7 @@ Lists the most recent transactions from all supported EVM-compatible  chains. Th
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.transactions.listLatestAllChains({
@@ -29,7 +26,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -47,25 +43,19 @@ import { dataEvmTransactionsListLatestAllChains } from "@avalanche-sdk/devtools/
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmTransactionsListLatestAllChains(avalanche, {
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmTransactionsListLatestAllChains failed:", res.error);
   }
 }
 
@@ -111,16 +101,13 @@ import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.transactions.get({
-    chainId: "43114",
     txHash: "0x8bf584d7b14b92a32a339872a66b134a70ba3ba7c305823f348db6f860253f45",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -139,23 +126,18 @@ import { dataEvmTransactionsGet } from "@avalanche-sdk/devtools/funcs/dataEvmTra
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmTransactionsGet(avalanche, {
-    chainId: "43114",
     txHash: "0x8bf584d7b14b92a32a339872a66b134a70ba3ba7c305823f348db6f860253f45",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmTransactionsGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -200,16 +182,12 @@ import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.data.evm.transactions.listLatest({
-    chainId: "43114",
-  });
+  const result = await avalanche.data.evm.transactions.listLatest({});
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -229,23 +207,17 @@ import { dataEvmTransactionsListLatest } from "@avalanche-sdk/devtools/funcs/dat
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const res = await dataEvmTransactionsListLatest(avalanche, {
-    chainId: "43114",
-  });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  const res = await dataEvmTransactionsListLatest(avalanche, {});
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmTransactionsListLatest failed:", res.error);
   }
 }
 

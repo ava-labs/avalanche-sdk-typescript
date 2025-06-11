@@ -7,13 +7,13 @@ import { EVMAddressActivityResponse } from "@avalanche-sdk/devtools/models/compo
 
 let value: EVMAddressActivityResponse = {
   id: "<id>",
-  eventType: "validator_activity",
-  url: "https://wordy-shore.net/",
+  eventType: "platform_address_activity",
+  url: "https://neighboring-knuckle.org/",
   chainId: "<id>",
-  status: "inactive",
-  createdAt: 967.63,
+  status: "active",
+  createdAt: 5958.13,
   name: "<value>",
-  description: "uh-huh scornful scratchy noted issue um",
+  description: "beneath bewail about ornery square",
   metadata: {
     addresses: [
       "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",

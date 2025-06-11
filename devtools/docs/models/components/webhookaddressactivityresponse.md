@@ -37,40 +37,7 @@ let value: WebhookAddressActivityResponse = {
         "0xe5b018c29a77c8a92c4ea2f2d7e58820283041a52e14a0620d90d13b881e1ee3",
       blockTimestamp: 1715621840,
       contractAddress: "0x0000000000000000000000000000000000000000",
-      erc20Transfers: [
-        {
-          transactionHash:
-            "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
-          type: "ERC20",
-          from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
-          to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
-          value: "3331009129",
-          tokenId: "2",
-          blockTimestamp: 1640995200,
-          logIndex: 5,
-          erc20Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-          erc721Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-          erc1155Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-        },
-      ],
+      erc20Transfers: [],
       erc721Transfers: [
         {
           transactionHash:
@@ -105,40 +72,7 @@ let value: WebhookAddressActivityResponse = {
           },
         },
       ],
-      erc1155Transfers: [
-        {
-          transactionHash:
-            "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
-          type: "ERC20",
-          from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
-          to: "0x40E832C3Df9562DfaE5A86A4849F27F687A9B46B",
-          value: "3331009129",
-          tokenId: "2",
-          blockTimestamp: 1640995200,
-          logIndex: 5,
-          erc20Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-          erc721Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-          erc1155Token: {
-            address: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-            name: "TetherToken",
-            symbol: "USDt",
-            decimals: 6,
-            valueWithDecimals: "3331.009129",
-          },
-        },
-      ],
+      erc1155Transfers: [],
       internalTransactions: [
         {
           from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
@@ -155,7 +89,9 @@ let value: WebhookAddressActivityResponse = {
         {
           accessAddresses: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
           storageKeys: [
-            "<value>",
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
           ],
         },
       ],
