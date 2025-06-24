@@ -7,9 +7,9 @@ import { ListWebhookAddressesResponse } from "@avalanche-sdk/webhooks/models/com
 
 let value: ListWebhookAddressesResponse = {
   addresses: [
-    "<value>",
+    "<value 1>",
   ],
-  totalAddresses: 2686.98,
+  totalAddresses: 1978.18,
 };
 ```
 

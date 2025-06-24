@@ -2,10 +2,7 @@
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.create({
@@ -22,7 +19,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 

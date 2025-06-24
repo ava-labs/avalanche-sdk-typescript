@@ -23,15 +23,11 @@ Check the health of the service.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -48,22 +44,16 @@ import { webhooksHealthCheck } from "@avalanche-sdk/webhooks/funcs/webhooksHealt
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksHealthCheck(avalanche);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksHealthCheck failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -104,10 +94,7 @@ Create a new webhook.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.create({
@@ -124,7 +111,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -141,10 +127,7 @@ import { webhooksCreate } from "@avalanche-sdk/webhooks/funcs/webhooksCreate.js"
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksCreate(avalanche, {
@@ -160,15 +143,12 @@ async function run() {
       ],
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksCreate failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -210,10 +190,7 @@ Lists webhooks for the user.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.list({
@@ -221,7 +198,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -239,25 +215,19 @@ import { webhooksList } from "@avalanche-sdk/webhooks/funcs/webhooksList.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksList(avalanche, {
     status: "active",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("webhooksList failed:", res.error);
   }
 }
 
@@ -300,17 +270,13 @@ Retrieves a webhook by ID.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.get({
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -327,24 +293,18 @@ import { webhooksGet } from "@avalanche-sdk/webhooks/funcs/webhooksGet.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksGet(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -386,17 +346,13 @@ Deactivates a webhook by ID.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.deactivate({
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -413,24 +369,18 @@ import { webhooksDeactivate } from "@avalanche-sdk/webhooks/funcs/webhooksDeacti
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksDeactivate(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksDeactivate failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -472,10 +422,7 @@ Updates an existing webhook.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.update({
@@ -483,7 +430,6 @@ async function run() {
     updateWebhookRequest: {},
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -500,25 +446,19 @@ import { webhooksUpdate } from "@avalanche-sdk/webhooks/funcs/webhooksUpdate.js"
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksUpdate(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
     updateWebhookRequest: {},
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksUpdate failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -560,15 +500,11 @@ Generates a new shared secret or rotate an existing one.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.generateOrRotateSharedSecret();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -585,22 +521,16 @@ import { webhooksGenerateOrRotateSharedSecret } from "@avalanche-sdk/webhooks/fu
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksGenerateOrRotateSharedSecret(avalanche);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksGenerateOrRotateSharedSecret failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -641,15 +571,11 @@ Get a previously generated shared secret.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.getSharedSecret();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -666,22 +592,16 @@ import { webhooksGetSharedSecret } from "@avalanche-sdk/webhooks/funcs/webhooksG
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksGetSharedSecret(avalanche);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksGetSharedSecret failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

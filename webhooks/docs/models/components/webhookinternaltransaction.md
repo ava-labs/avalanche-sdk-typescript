@@ -1,11 +1,11 @@
-# InternalTransaction
+# WebhookInternalTransaction
 
 ## Example Usage
 
 ```typescript
-import { InternalTransaction } from "@avalanche-sdk/webhooks/models/components";
+import { WebhookInternalTransaction } from "@avalanche-sdk/webhooks/models/components";
 
-let value: InternalTransaction = {
+let value: WebhookInternalTransaction = {
   from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
   to: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
   internalTxType: "call",

@@ -7,7 +7,7 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
-export type InternalTransaction = {
+export type WebhookInternalTransaction = {
   /**
    * Sender address
    */
@@ -39,8 +39,8 @@ export type InternalTransaction = {
 };
 
 /** @internal */
-export const InternalTransaction$inboundSchema: z.ZodType<
-  InternalTransaction,
+export const WebhookInternalTransaction$inboundSchema: z.ZodType<
+  WebhookInternalTransaction,
   z.ZodTypeDef,
   unknown
 > = z.object({
@@ -54,7 +54,7 @@ export const InternalTransaction$inboundSchema: z.ZodType<
 });
 
 /** @internal */
-export type InternalTransaction$Outbound = {
+export type WebhookInternalTransaction$Outbound = {
   from: string;
   to: string;
   internalTxType: string;
@@ -65,10 +65,10 @@ export type InternalTransaction$Outbound = {
 };
 
 /** @internal */
-export const InternalTransaction$outboundSchema: z.ZodType<
-  InternalTransaction$Outbound,
+export const WebhookInternalTransaction$outboundSchema: z.ZodType<
+  WebhookInternalTransaction$Outbound,
   z.ZodTypeDef,
-  InternalTransaction
+  WebhookInternalTransaction
 > = z.object({
   from: z.string(),
   to: z.string(),
@@ -83,29 +83,29 @@ export const InternalTransaction$outboundSchema: z.ZodType<
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace InternalTransaction$ {
-  /** @deprecated use `InternalTransaction$inboundSchema` instead. */
-  export const inboundSchema = InternalTransaction$inboundSchema;
-  /** @deprecated use `InternalTransaction$outboundSchema` instead. */
-  export const outboundSchema = InternalTransaction$outboundSchema;
-  /** @deprecated use `InternalTransaction$Outbound` instead. */
-  export type Outbound = InternalTransaction$Outbound;
+export namespace WebhookInternalTransaction$ {
+  /** @deprecated use `WebhookInternalTransaction$inboundSchema` instead. */
+  export const inboundSchema = WebhookInternalTransaction$inboundSchema;
+  /** @deprecated use `WebhookInternalTransaction$outboundSchema` instead. */
+  export const outboundSchema = WebhookInternalTransaction$outboundSchema;
+  /** @deprecated use `WebhookInternalTransaction$Outbound` instead. */
+  export type Outbound = WebhookInternalTransaction$Outbound;
 }
 
-export function internalTransactionToJSON(
-  internalTransaction: InternalTransaction,
+export function webhookInternalTransactionToJSON(
+  webhookInternalTransaction: WebhookInternalTransaction,
 ): string {
   return JSON.stringify(
-    InternalTransaction$outboundSchema.parse(internalTransaction),
+    WebhookInternalTransaction$outboundSchema.parse(webhookInternalTransaction),
   );
 }
 
-export function internalTransactionFromJSON(
+export function webhookInternalTransactionFromJSON(
   jsonString: string,
-): SafeParseResult<InternalTransaction, SDKValidationError> {
+): SafeParseResult<WebhookInternalTransaction, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => InternalTransaction$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'InternalTransaction' from JSON`,
+    (x) => WebhookInternalTransaction$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'WebhookInternalTransaction' from JSON`,
   );
 }

@@ -19,8 +19,8 @@ export type GetWebhookRequest = {
  * Successful response
  */
 export type GetWebhookResponse =
-  | components.PlatformActivityResponse
-  | components.EVMAddressActivityResponse;
+  | components.EVMAddressActivityResponse
+  | components.PlatformActivityResponse;
 
 /** @internal */
 export const GetWebhookRequest$inboundSchema: z.ZodType<
@@ -82,14 +82,14 @@ export const GetWebhookResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.PlatformActivityResponse$inboundSchema,
   components.EVMAddressActivityResponse$inboundSchema,
+  components.PlatformActivityResponse$inboundSchema,
 ]);
 
 /** @internal */
 export type GetWebhookResponse$Outbound =
-  | components.PlatformActivityResponse$Outbound
-  | components.EVMAddressActivityResponse$Outbound;
+  | components.EVMAddressActivityResponse$Outbound
+  | components.PlatformActivityResponse$Outbound;
 
 /** @internal */
 export const GetWebhookResponse$outboundSchema: z.ZodType<
@@ -97,8 +97,8 @@ export const GetWebhookResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetWebhookResponse
 > = z.union([
-  components.PlatformActivityResponse$outboundSchema,
   components.EVMAddressActivityResponse$outboundSchema,
+  components.PlatformActivityResponse$outboundSchema,
 ]);
 
 /**
