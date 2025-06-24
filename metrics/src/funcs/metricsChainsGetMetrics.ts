@@ -10,7 +10,7 @@ import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { pathToFunc } from "../lib/url.js";
-import { AvalancheAPIError } from "../models/errors/avalancheapierror.js";
+import { AvalancheError } from "../models/errors/avalancheerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -19,6 +19,7 @@ import {
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
+import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
@@ -34,7 +35,41 @@ import {
  * Get metrics for EVM chains
  *
  * @remarks
- * Gets metrics for an EVM chain over a specified time interval aggregated at the specified time-interval granularity.
+ * EVM chain metrics are available for all Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics by EVM chain ID. See the `/chains` endpoint for all supported chains.
+ *
+ * All metrics are updated several times every hour. Each metric data point has a `value` and `timestamp` (Unix timestamp in seconds). All metric values include data within the duration of the associated timestamp plus the requested `timeInterval`. All timestamps are fixed to the hour. When requesting a timeInterval of **day**, **week**, or **month**, the timestamp will be 0:00 UTC of the day, Monday of the week, or first day of the month, respectively. The latest data point in any response may change on each update.
+ *
+ * ### Metrics
+ *
+ * <ins>activeAddresses</ins>: The number of distinct addresses seen within the selected `timeInterval` starting at the timestamp. Addresses counted are those that appear in the “from” and “to” fields of a transaction or ERC20/ERC721/ERC1155 transfer log event.
+ *
+ * <ins>activeSenders</ins>: This metric follows the same structure as activeAddresses, but instead only counts addresses that appear in the “from” field of the respective transaction or transfer log event.
+ *
+ * <ins>cumulativeTxCount</ins>: The cumulative transaction count from genesis up until 24 hours after the timestamp. This aggregation can be considered a “rolling sum” of the transaction count metric (txCount). Only `timeInterval=day` supported.
+ *
+ * <ins>cumulativeAddresses</ins>: The cumulative count of unique addresses from genesis up until 24 hours after the timestamp. Addresses counted are those that appear in the “from” and “to” fields of a transaction or ERC20/ERC721/ERC1155 transfer log event. Only `timeInterval=day` supported.
+ *
+ * <ins>cumulativeContracts</ins>: The cumulative count of contracts created from genesis up until the timestamp.  Contracts are counted by looking for the CREATE, CREATE2, and CREATE3 call types in all transaction traces (aka internal transactions). Only `timeInterval=day` supported.
+ *
+ * <ins>cumulativeDeployers</ins>: The cumulative count of unique contract deployers from genesis up until 24 hours after the timestamp. Deployers counted are those that appear in the “from” field of transaction traces with the CREATE, CREATE2, and CREATE3 call types. Only `timeInterval=day` supported.
+ *
+ * <ins>gasUsed</ins>: The amount of gas used by transactions within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>txCount</ins>: The amount of transactions within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>avgGps</ins>: The average Gas used Per Second (GPS) within the day beginning at the timestamp.  The average is calculated by taking the sum of gas used by all blocks within the day and dividing it by the time interval between the last block of the previous day and the last block of the day that begins at the timestamp.  Only `timeInterval=day` supported.
+ *
+ * <ins>maxGps</ins>: The max Gas used Per Second (GPS)  measured within the day beginning at the timestamp. Each GPS data point is calculated using the gas used in a single block divided by the time since the last block. Only `timeInterval=day` supported.
+ *
+ * <ins>avgTps</ins>: The average Transactions Per Second (TPS) within the day beginning at the timestamp. The average is calculated by taking the sum of transactions within the day and dividing it by the time interval between the last block of the previous day and the last block of the day that begins at the timestamp. Only `timeInterval=day` supported.
+ *
+ * <ins>maxTps</ins>: The max Transactions Per Second (TPS) measured within the day beginning at the timestamp. Each TPS data point is calculated by taking the number of transactions in a single block and dividing it by the time since the last block. Only `timeInterval=day` supported.
+ *
+ * <ins>avgGasPrice</ins>: The average gas price within the day beginning at the timestamp. The gas price used is the price reported in transaction receipts. Only `timeInterval=day` supported.
+ *
+ * <ins>maxGasPrice</ins>: The max gas price seen within the day beginning at the timestamp. The gas price used is the price reported in transaction receipts. Only `timeInterval=day` supported.
+ *
+ * <ins>feesPaid</ins>: The sum of transaction fees paid within the day beginning at the timestamp. The fee is calculated as the gas used multiplied by the gas price as reported in all transaction receipts. Only `timeInterval=day` supported.
  */
 export function metricsChainsGetMetrics(
   client: AvalancheCore,
@@ -52,13 +87,14 @@ export function metricsChainsGetMetrics(
       | errors.InternalServerError
       | errors.BadGatewayError
       | errors.ServiceUnavailableError
-      | AvalancheAPIError
-      | SDKValidationError
-      | UnexpectedClientError
-      | InvalidRequestError
+      | AvalancheError
+      | ResponseValidationError
+      | ConnectionError
       | RequestAbortedError
       | RequestTimeoutError
-      | ConnectionError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
     >,
     { cursor: string }
   >
@@ -87,13 +123,14 @@ async function $do(
         | errors.InternalServerError
         | errors.BadGatewayError
         | errors.ServiceUnavailableError
-        | AvalancheAPIError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
+        | AvalancheError
+        | ResponseValidationError
+        | ConnectionError
         | RequestAbortedError
         | RequestTimeoutError
-        | ConnectionError
+        | InvalidRequestError
+        | UnexpectedClientError
+        | SDKValidationError
       >,
       { cursor: string }
     >,
@@ -138,6 +175,7 @@ async function $do(
   }));
 
   const context = {
+    options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
     operationID: "getEvmChainMetrics",
     oAuth2Scopes: [],
@@ -168,6 +206,7 @@ async function $do(
     headers: headers,
     query: query,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
@@ -211,13 +250,14 @@ async function $do(
     | errors.InternalServerError
     | errors.BadGatewayError
     | errors.ServiceUnavailableError
-    | AvalancheAPIError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | AvalancheError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.json(200, operations.GetEvmChainMetricsResponse$inboundSchema, {
       key: "Result",
@@ -232,7 +272,7 @@ async function $do(
     M.jsonErr(503, errors.ServiceUnavailableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return [haltIterator(result), {
       status: "complete",
@@ -255,13 +295,14 @@ async function $do(
         | errors.InternalServerError
         | errors.BadGatewayError
         | errors.ServiceUnavailableError
-        | AvalancheAPIError
-        | SDKValidationError
-        | UnexpectedClientError
-        | InvalidRequestError
+        | AvalancheError
+        | ResponseValidationError
+        | ConnectionError
         | RequestAbortedError
         | RequestTimeoutError
-        | ConnectionError
+        | InvalidRequestError
+        | UnexpectedClientError
+        | SDKValidationError
       >
     >;
     "~next"?: { cursor: string };

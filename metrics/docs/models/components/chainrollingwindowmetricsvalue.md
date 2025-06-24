@@ -6,11 +6,11 @@
 import { ChainRollingWindowMetricsValue } from "@avalanche-sdk/metrics/models/components";
 
 let value: ChainRollingWindowMetricsValue = {
-  lastHour: 202.18,
-  lastDay: 8326.2,
-  lastMonth: 7781.57,
-  lastYear: 8700.13,
-  allTime: 9786.19,
+  lastHour: 9866.7,
+  lastDay: 6987.1,
+  lastMonth: 2680.88,
+  lastYear: 8149.01,
+  allTime: 6874.99,
 };
 ```
 

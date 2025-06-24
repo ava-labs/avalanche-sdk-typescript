@@ -27,7 +27,7 @@ export type GetValidatorsByDateRangeRequest = {
    */
   pageSize?: number | undefined;
   /**
-   * The subnet ID to filter by. If not provided, then all subnets will be returned.
+   * The subnet ID to filter by.
    */
   subnetId: string;
   /**

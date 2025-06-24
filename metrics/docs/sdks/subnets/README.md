@@ -16,21 +16,18 @@ Get list of addresses and AddValidatorTx timestamps set to receive awards for va
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.metrics.subnets.getValidators({
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
+    pageSize: 10,
     subnetId: "11111111111111111111111111111111LpoYY",
     network: "mainnet",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -48,28 +45,23 @@ import { metricsSubnetsGetValidators } from "@avalanche-sdk/metrics/funcs/metric
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await metricsSubnetsGetValidators(avalanche, {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
+    pageSize: 10,
     subnetId: "11111111111111111111111111111111LpoYY",
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("metricsSubnetsGetValidators failed:", res.error);
   }
 }
 
