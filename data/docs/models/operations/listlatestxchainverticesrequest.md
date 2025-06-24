@@ -7,7 +7,6 @@ import { ListLatestXChainVerticesRequest } from "@avalanche-sdk/data/models/oper
 
 let value: ListLatestXChainVerticesRequest = {
   blockchainId: "x-chain",
-  network: "mainnet",
 };
 ```
 

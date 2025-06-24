@@ -19,29 +19,29 @@ import {
   Erc721Token$outboundSchema,
 } from "./erc721token.js";
 
-export type Token = Erc1155Token | Erc721Token;
+export type Token = Erc721Token | Erc1155Token;
 
 export type ListNftTokens = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  tokens: Array<Erc1155Token | Erc721Token>;
+  tokens: Array<Erc721Token | Erc1155Token>;
 };
 
 /** @internal */
 export const Token$inboundSchema: z.ZodType<Token, z.ZodTypeDef, unknown> = z
-  .union([Erc1155Token$inboundSchema, Erc721Token$inboundSchema]);
+  .union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]);
 
 /** @internal */
-export type Token$Outbound = Erc1155Token$Outbound | Erc721Token$Outbound;
+export type Token$Outbound = Erc721Token$Outbound | Erc1155Token$Outbound;
 
 /** @internal */
 export const Token$outboundSchema: z.ZodType<
   Token$Outbound,
   z.ZodTypeDef,
   Token
-> = z.union([Erc1155Token$outboundSchema, Erc721Token$outboundSchema]);
+> = z.union([Erc721Token$outboundSchema, Erc1155Token$outboundSchema]);
 
 /**
  * @internal
@@ -78,14 +78,14 @@ export const ListNftTokens$inboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   tokens: z.array(
-    z.union([Erc1155Token$inboundSchema, Erc721Token$inboundSchema]),
+    z.union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]),
   ),
 });
 
 /** @internal */
 export type ListNftTokens$Outbound = {
   nextPageToken?: string | undefined;
-  tokens: Array<Erc1155Token$Outbound | Erc721Token$Outbound>;
+  tokens: Array<Erc721Token$Outbound | Erc1155Token$Outbound>;
 };
 
 /** @internal */
@@ -96,7 +96,7 @@ export const ListNftTokens$outboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   tokens: z.array(
-    z.union([Erc1155Token$outboundSchema, Erc721Token$outboundSchema]),
+    z.union([Erc721Token$outboundSchema, Erc1155Token$outboundSchema]),
   ),
 });
 

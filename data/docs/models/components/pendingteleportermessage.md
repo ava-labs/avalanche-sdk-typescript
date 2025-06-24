@@ -16,13 +16,8 @@ let value: PendingTeleporterMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -39,7 +34,7 @@ let value: PendingTeleporterMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 6399.17,
+    timestamp: 1403.23,
     gasSpent: "<value>",
   },
   status: "pending",

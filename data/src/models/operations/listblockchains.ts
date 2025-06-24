@@ -22,7 +22,7 @@ export type ListBlockchainsRequest = {
    */
   pageToken?: string | undefined;
   /**
-   * The maximum number of items to return. The minimum page size is 1. The maximum pageSize is 100.
+   * The maximum number of items to return. The minimum page size is 1. The maximum pageSize is 10000.
    */
   pageSize?: number | undefined;
   /**
@@ -100,7 +100,7 @@ export const ListBlockchainsRequest$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   pageToken: z.string().optional(),
-  pageSize: z.number().int().default(10),
+  pageSize: z.number().int().default(100),
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
@@ -120,7 +120,7 @@ export const ListBlockchainsRequest$outboundSchema: z.ZodType<
   ListBlockchainsRequest
 > = z.object({
   pageToken: z.string().optional(),
-  pageSize: z.number().int().default(10),
+  pageSize: z.number().int().default(100),
   network: components.GlobalParamNetwork$outboundSchema.optional(),
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });

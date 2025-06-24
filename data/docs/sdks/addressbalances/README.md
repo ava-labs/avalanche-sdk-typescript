@@ -24,18 +24,15 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.balances.getNative({
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     currency: "usd",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -54,25 +51,20 @@ import { dataEvmAddressBalancesGetNative } from "@avalanche-sdk/data/funcs/dataE
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressBalancesGetNative(avalanche, {
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     currency: "usd",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmAddressBalancesGetNative failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -120,20 +112,17 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.balances.listErc20({
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddresses: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7, 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     currency: "usd",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -153,27 +142,22 @@ import { dataEvmAddressBalancesListErc20 } from "@avalanche-sdk/data/funcs/dataE
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressBalancesListErc20(avalanche, {
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddresses: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7, 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     currency: "usd",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressBalancesListErc20 failed:", res.error);
   }
 }
 
@@ -220,18 +204,15 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.balances.listErc721({
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -251,25 +232,20 @@ import { dataEvmAddressBalancesListErc721 } from "@avalanche-sdk/data/funcs/data
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressBalancesListErc721(avalanche, {
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressBalancesListErc721 failed:", res.error);
   }
 }
 
@@ -318,19 +294,16 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.balances.listErc1155({
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -350,26 +323,21 @@ import { dataEvmAddressBalancesListErc1155 } from "@avalanche-sdk/data/funcs/dat
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressBalancesListErc1155(avalanche, {
     blockNumber: "6479329",
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressBalancesListErc1155 failed:", res.error);
   }
 }
 
@@ -416,18 +384,15 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.address.balances.listCollectibles({
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -447,25 +412,20 @@ import { dataEvmAddressBalancesListCollectibles } from "@avalanche-sdk/data/func
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmAddressBalancesListCollectibles(avalanche, {
-    chainId: "43114",
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmAddressBalancesListCollectibles failed:", res.error);
   }
 }
 

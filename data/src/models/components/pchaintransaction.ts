@@ -13,6 +13,12 @@ import {
   AssetAmount$outboundSchema,
 } from "./assetamount.js";
 import {
+  BlockchainInfo,
+  BlockchainInfo$inboundSchema,
+  BlockchainInfo$Outbound,
+  BlockchainInfo$outboundSchema,
+} from "./blockchaininfo.js";
+import {
   BlsCredentials,
   BlsCredentials$inboundSchema,
   BlsCredentials$Outbound,
@@ -145,6 +151,10 @@ export type PChainTransaction = {
    * Public Key and PoP of new validator registrations. Present for AddPermissionlessValidatorTx
    */
   blsCredentials?: BlsCredentials | undefined;
+  /**
+   * Details of the blockchain that was created in the CreateChainTx
+   */
+  blockchainInfo?: BlockchainInfo | undefined;
 };
 
 /** @internal */
@@ -181,6 +191,7 @@ export const PChainTransaction$inboundSchema: z.ZodType<
   stakingTxHash: z.string().optional(),
   subnetOwnershipInfo: SubnetOwnershipInfo$inboundSchema.optional(),
   blsCredentials: BlsCredentials$inboundSchema.optional(),
+  blockchainInfo: BlockchainInfo$inboundSchema.optional(),
 });
 
 /** @internal */
@@ -214,6 +225,7 @@ export type PChainTransaction$Outbound = {
   stakingTxHash?: string | undefined;
   subnetOwnershipInfo?: SubnetOwnershipInfo$Outbound | undefined;
   blsCredentials?: BlsCredentials$Outbound | undefined;
+  blockchainInfo?: BlockchainInfo$Outbound | undefined;
 };
 
 /** @internal */
@@ -251,6 +263,7 @@ export const PChainTransaction$outboundSchema: z.ZodType<
   stakingTxHash: z.string().optional(),
   subnetOwnershipInfo: SubnetOwnershipInfo$outboundSchema.optional(),
   blsCredentials: BlsCredentials$outboundSchema.optional(),
+  blockchainInfo: BlockchainInfo$outboundSchema.optional(),
 });
 
 /**

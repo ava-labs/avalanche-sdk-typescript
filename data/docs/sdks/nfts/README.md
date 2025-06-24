@@ -20,12 +20,10 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   await avalanche.data.nfts.reindex({
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
   });
@@ -48,23 +46,19 @@ import { dataNftsReindex } from "@avalanche-sdk/data/funcs/dataNftsReindex.js";
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataNftsReindex(avalanche, {
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    
+  } else {
+    console.log("dataNftsReindex failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  
 }
 
 run();
@@ -108,17 +102,14 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.nfts.list({
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -138,24 +129,19 @@ import { dataNftsList } from "@avalanche-sdk/data/funcs/dataNftsList.js";
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataNftsList(avalanche, {
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataNftsList failed:", res.error);
   }
 }
 
@@ -200,17 +186,14 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.nfts.get({
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -229,24 +212,19 @@ import { dataNftsGet } from "@avalanche-sdk/data/funcs/dataNftsGet.js";
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataNftsGet(avalanche, {
-    chainId: "43114",
     address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     tokenId: "145",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataNftsGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

@@ -7,6 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+/**
+ * The genesis data of the blockchain.
+ */
+export type BlockchainGenesisData = {};
+
 export type Blockchain = {
   createBlockTimestamp: number;
   createBlockNumber: string;
@@ -18,7 +23,59 @@ export type Blockchain = {
    * EVM Chain ID for the EVM-based chains. This field is extracted from genesis data, and may be present for non-EVM chains as well.
    */
   evmChainId: number;
+  /**
+   * The genesis data of the blockchain.
+   */
+  genesisData?: BlockchainGenesisData | undefined;
 };
+
+/** @internal */
+export const BlockchainGenesisData$inboundSchema: z.ZodType<
+  BlockchainGenesisData,
+  z.ZodTypeDef,
+  unknown
+> = z.object({});
+
+/** @internal */
+export type BlockchainGenesisData$Outbound = {};
+
+/** @internal */
+export const BlockchainGenesisData$outboundSchema: z.ZodType<
+  BlockchainGenesisData$Outbound,
+  z.ZodTypeDef,
+  BlockchainGenesisData
+> = z.object({});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace BlockchainGenesisData$ {
+  /** @deprecated use `BlockchainGenesisData$inboundSchema` instead. */
+  export const inboundSchema = BlockchainGenesisData$inboundSchema;
+  /** @deprecated use `BlockchainGenesisData$outboundSchema` instead. */
+  export const outboundSchema = BlockchainGenesisData$outboundSchema;
+  /** @deprecated use `BlockchainGenesisData$Outbound` instead. */
+  export type Outbound = BlockchainGenesisData$Outbound;
+}
+
+export function blockchainGenesisDataToJSON(
+  blockchainGenesisData: BlockchainGenesisData,
+): string {
+  return JSON.stringify(
+    BlockchainGenesisData$outboundSchema.parse(blockchainGenesisData),
+  );
+}
+
+export function blockchainGenesisDataFromJSON(
+  jsonString: string,
+): SafeParseResult<BlockchainGenesisData, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => BlockchainGenesisData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'BlockchainGenesisData' from JSON`,
+  );
+}
 
 /** @internal */
 export const Blockchain$inboundSchema: z.ZodType<
@@ -33,6 +90,7 @@ export const Blockchain$inboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
+  genesisData: z.lazy(() => BlockchainGenesisData$inboundSchema).optional(),
 });
 
 /** @internal */
@@ -44,6 +102,7 @@ export type Blockchain$Outbound = {
   subnetId: string;
   blockchainName: string;
   evmChainId: number;
+  genesisData?: BlockchainGenesisData$Outbound | undefined;
 };
 
 /** @internal */
@@ -59,6 +118,7 @@ export const Blockchain$outboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
+  genesisData: z.lazy(() => BlockchainGenesisData$outboundSchema).optional(),
 });
 
 /**

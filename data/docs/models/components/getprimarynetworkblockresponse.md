@@ -13,9 +13,10 @@ let value: GetPrimaryNetworkBlockResponse = {
   blockType: "<value>",
   txCount: 8829.08,
   transactions: [
-    "<value>",
+    "<value 1>",
+    "<value 2>",
   ],
-  blockSizeBytes: 5819.41,
+  blockSizeBytes: 1627.99,
 };
 ```
 

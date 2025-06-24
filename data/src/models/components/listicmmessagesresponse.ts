@@ -13,6 +13,12 @@ import {
   DeliveredIcmMessage$outboundSchema,
 } from "./deliveredicmmessage.js";
 import {
+  DeliveredSourceNotIndexedIcmMessage,
+  DeliveredSourceNotIndexedIcmMessage$inboundSchema,
+  DeliveredSourceNotIndexedIcmMessage$Outbound,
+  DeliveredSourceNotIndexedIcmMessage$outboundSchema,
+} from "./deliveredsourcenotindexedicmmessage.js";
+import {
   PendingIcmMessage,
   PendingIcmMessage$inboundSchema,
   PendingIcmMessage$Outbound,
@@ -20,8 +26,11 @@ import {
 } from "./pendingicmmessage.js";
 
 export type ListIcmMessagesResponseMessage =
+  | (DeliveredIcmMessage & { status: "delivered" })
   | (PendingIcmMessage & { status: "pending" })
-  | (DeliveredIcmMessage & { status: "delivered" });
+  | (DeliveredSourceNotIndexedIcmMessage & {
+    status: "delivered_source_not_indexed";
+  });
 
 export type ListIcmMessagesResponse = {
   /**
@@ -29,8 +38,11 @@ export type ListIcmMessagesResponse = {
    */
   nextPageToken?: string | undefined;
   messages: Array<
-    | (PendingIcmMessage & { status: "pending" })
     | (DeliveredIcmMessage & { status: "delivered" })
+    | (PendingIcmMessage & { status: "pending" })
+    | (DeliveredSourceNotIndexedIcmMessage & {
+      status: "delivered_source_not_indexed";
+    })
   >;
 };
 
@@ -40,22 +52,30 @@ export const ListIcmMessagesResponseMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  PendingIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("pending") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
   DeliveredIcmMessage$inboundSchema.and(
     z.object({ status: z.literal("delivered") }).transform((v) => ({
       status: v.status,
     })),
   ),
+  PendingIcmMessage$inboundSchema.and(
+    z.object({ status: z.literal("pending") }).transform((v) => ({
+      status: v.status,
+    })),
+  ),
+  DeliveredSourceNotIndexedIcmMessage$inboundSchema.and(
+    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
+      v,
+    ) => ({ status: v.status })),
+  ),
 ]);
 
 /** @internal */
 export type ListIcmMessagesResponseMessage$Outbound =
+  | (DeliveredIcmMessage$Outbound & { status: "delivered" })
   | (PendingIcmMessage$Outbound & { status: "pending" })
-  | (DeliveredIcmMessage$Outbound & { status: "delivered" });
+  | (DeliveredSourceNotIndexedIcmMessage$Outbound & {
+    status: "delivered_source_not_indexed";
+  });
 
 /** @internal */
 export const ListIcmMessagesResponseMessage$outboundSchema: z.ZodType<
@@ -63,15 +83,20 @@ export const ListIcmMessagesResponseMessage$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListIcmMessagesResponseMessage
 > = z.union([
+  DeliveredIcmMessage$outboundSchema.and(
+    z.object({ status: z.literal("delivered") }).transform((v) => ({
+      status: v.status,
+    })),
+  ),
   PendingIcmMessage$outboundSchema.and(
     z.object({ status: z.literal("pending") }).transform((v) => ({
       status: v.status,
     })),
   ),
-  DeliveredIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
+  DeliveredSourceNotIndexedIcmMessage$outboundSchema.and(
+    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
+      v,
+    ) => ({ status: v.status })),
   ),
 ]);
 
@@ -117,15 +142,19 @@ export const ListIcmMessagesResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   messages: z.array(
     z.union([
+      DeliveredIcmMessage$inboundSchema.and(
+        z.object({ status: z.literal("delivered") }).transform((v) => ({
+          status: v.status,
+        })),
+      ),
       PendingIcmMessage$inboundSchema.and(
         z.object({ status: z.literal("pending") }).transform((v) => ({
           status: v.status,
         })),
       ),
-      DeliveredIcmMessage$inboundSchema.and(
-        z.object({ status: z.literal("delivered") }).transform((v) => ({
-          status: v.status,
-        })),
+      DeliveredSourceNotIndexedIcmMessage$inboundSchema.and(
+        z.object({ status: z.literal("delivered_source_not_indexed") })
+          .transform((v) => ({ status: v.status })),
       ),
     ]),
   ),
@@ -135,8 +164,11 @@ export const ListIcmMessagesResponse$inboundSchema: z.ZodType<
 export type ListIcmMessagesResponse$Outbound = {
   nextPageToken?: string | undefined;
   messages: Array<
-    | (PendingIcmMessage$Outbound & { status: "pending" })
     | (DeliveredIcmMessage$Outbound & { status: "delivered" })
+    | (PendingIcmMessage$Outbound & { status: "pending" })
+    | (DeliveredSourceNotIndexedIcmMessage$Outbound & {
+      status: "delivered_source_not_indexed";
+    })
   >;
 };
 
@@ -149,15 +181,19 @@ export const ListIcmMessagesResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   messages: z.array(
     z.union([
+      DeliveredIcmMessage$outboundSchema.and(
+        z.object({ status: z.literal("delivered") }).transform((v) => ({
+          status: v.status,
+        })),
+      ),
       PendingIcmMessage$outboundSchema.and(
         z.object({ status: z.literal("pending") }).transform((v) => ({
           status: v.status,
         })),
       ),
-      DeliveredIcmMessage$outboundSchema.and(
-        z.object({ status: z.literal("delivered") }).transform((v) => ({
-          status: v.status,
-        })),
+      DeliveredSourceNotIndexedIcmMessage$outboundSchema.and(
+        z.object({ status: z.literal("delivered_source_not_indexed") })
+          .transform((v) => ({ status: v.status })),
       ),
     ]),
   ),

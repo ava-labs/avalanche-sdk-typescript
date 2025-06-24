@@ -7,9 +7,10 @@ import { BalanceOwner } from "@avalanche-sdk/data/models/components";
 
 let value: BalanceOwner = {
   addresses: [
-    "<value>",
+    "<value 1>",
+    "<value 2>",
   ],
-  threshold: 5079.72,
+  threshold: 328.11,
 };
 ```
 

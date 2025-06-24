@@ -23,21 +23,7 @@ let value: ListErc721BalancesResponse = {
       value: 42.42,
     },
   },
-  erc721TokenBalances: [
-    {
-      address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-      name: "Wrapped AVAX",
-      symbol: "WAVAX",
-      ercType: "ERC-721",
-      tokenId: "<id>",
-      tokenUri: "https://qualified-stranger.net/",
-      metadata: {
-        indexStatus: "INVALID_TOKEN_URI",
-      },
-      ownerAddress: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-      chainId: "43114",
-    },
-  ],
+  erc721TokenBalances: [],
 };
 ```
 

@@ -26,10 +26,7 @@ Lists the AvaCloud supported EVM-compatible chains. Filterable by network.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.chains.list({
@@ -37,7 +34,6 @@ async function run() {
     feature: "nftIndexing",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -54,25 +50,19 @@ import { dataEvmChainsList } from "@avalanche-sdk/data/funcs/dataEvmChainsList.j
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmChainsList(avalanche, {
     network: "mainnet",
     feature: "nftIndexing",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmChainsList failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -116,15 +106,11 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.data.evm.chains.get({
-    chainId: "43114",
-  });
+  const result = await avalanche.data.evm.chains.get({});
 
-  // Handle the result
   console.log(result);
 }
 
@@ -143,22 +129,16 @@ import { dataEvmChainsGet } from "@avalanche-sdk/data/funcs/dataEvmChainsGet.js"
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const res = await dataEvmChainsGet(avalanche, {
-    chainId: "43114",
-  });
-
-  if (!res.ok) {
-    throw res.error;
+  const res = await dataEvmChainsGet(avalanche, {});
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmChainsGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -204,17 +184,13 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.chains.getAddressChains({
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -231,24 +207,18 @@ import { dataEvmChainsGetAddressChains } from "@avalanche-sdk/data/funcs/dataEvm
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmChainsGetAddressChains(avalanche, {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmChainsGetAddressChains failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -294,10 +264,7 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.chains.listAllLatestTransactions({
@@ -305,7 +272,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -323,25 +289,19 @@ import { dataEvmChainsListAllLatestTransactions } from "@avalanche-sdk/data/func
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmChainsListAllLatestTransactions(avalanche, {
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmChainsListAllLatestTransactions failed:", res.error);
   }
 }
 
@@ -388,10 +348,7 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.chains.listAllLatestBlocks({
@@ -399,7 +356,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -417,25 +373,19 @@ import { dataEvmChainsListAllLatestBlocks } from "@avalanche-sdk/data/funcs/data
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmChainsListAllLatestBlocks(avalanche, {
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmChainsListAllLatestBlocks failed:", res.error);
   }
 }
 

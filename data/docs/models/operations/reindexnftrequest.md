@@ -6,7 +6,6 @@
 import { ReindexNftRequest } from "@avalanche-sdk/data/models/operations";
 
 let value: ReindexNftRequest = {
-  chainId: "43114",
   address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
   tokenId: "145",
 };
