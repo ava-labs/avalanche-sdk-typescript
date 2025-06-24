@@ -9,7 +9,6 @@ let value: ListLatestPrimaryNetworkBlocksRequest = {
   startTimestamp: 1689541049,
   endTimestamp: 1689800249,
   blockchainId: "p-chain",
-  network: "mainnet",
 };
 ```
 

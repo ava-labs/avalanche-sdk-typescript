@@ -38,8 +38,8 @@ export type GetTokenDetailsRequest = {
  * Successful response
  */
 export type GetTokenDetailsResponse =
-  | (components.Erc1155Token & { ercType: "ERC-1155" })
-  | (components.Erc721Token & { ercType: "ERC-721" });
+  | (components.Erc721Token & { ercType: "ERC-721" })
+  | (components.Erc1155Token & { ercType: "ERC-1155" });
 
 /** @internal */
 export const GetTokenDetailsGlobals$inboundSchema: z.ZodType<
@@ -161,13 +161,13 @@ export const GetTokenDetailsResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.Erc1155Token$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
+  components.Erc721Token$inboundSchema.and(
+    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
       ercType: v.ercType,
     })),
   ),
-  components.Erc721Token$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
+  components.Erc1155Token$inboundSchema.and(
+    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
       ercType: v.ercType,
     })),
   ),
@@ -175,8 +175,8 @@ export const GetTokenDetailsResponse$inboundSchema: z.ZodType<
 
 /** @internal */
 export type GetTokenDetailsResponse$Outbound =
-  | (components.Erc1155Token$Outbound & { ercType: "ERC-1155" })
-  | (components.Erc721Token$Outbound & { ercType: "ERC-721" });
+  | (components.Erc721Token$Outbound & { ercType: "ERC-721" })
+  | (components.Erc1155Token$Outbound & { ercType: "ERC-1155" });
 
 /** @internal */
 export const GetTokenDetailsResponse$outboundSchema: z.ZodType<
@@ -184,13 +184,13 @@ export const GetTokenDetailsResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetTokenDetailsResponse
 > = z.union([
-  components.Erc1155Token$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
+  components.Erc721Token$outboundSchema.and(
+    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
       ercType: v.ercType,
     })),
   ),
-  components.Erc721Token$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
+  components.Erc1155Token$outboundSchema.and(
+    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
       ercType: v.ercType,
     })),
   ),

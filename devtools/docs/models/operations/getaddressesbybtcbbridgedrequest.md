@@ -7,6 +7,7 @@ import { GetAddressesByBtcbBridgedRequest } from "@avalanche-sdk/devtools/models
 
 let value: GetAddressesByBtcbBridgedRequest = {
   threshold: "1000000",
+  pageSize: 10,
 };
 ```
 

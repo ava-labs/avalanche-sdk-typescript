@@ -7,26 +7,7 @@ import { LogsResponseDTO } from "@avalanche-sdk/devtools/models/components";
 
 let value: LogsResponseDTO = {
   orgId: "<id>",
-  logs: [
-    {
-      orgId: "<id>",
-      logId: "<id>",
-      eventTimestamp: 513.76,
-      apiKeyId: "<id>",
-      apiKeyAlias: "<value>",
-      hostRegion: "<value>",
-      requestType: "rpc",
-      requestPath: "<value>",
-      apiCreditsConsumed: 1344.29,
-      requestDurationMsecs: 3453.58,
-      responseCode: 9686.9,
-      metadata: {
-        ipAddress: "3fb0:a69b:d363:bbaa:abae:fee1:95f6:ba52",
-        host: "sticky-tail.com",
-        userAgent: "<value>",
-      },
-    },
-  ],
+  logs: [],
 };
 ```
 

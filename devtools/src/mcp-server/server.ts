@@ -93,6 +93,10 @@ import { tool$metricsChainsListBTCbBridgersAboveThreshold } from "./tools/metric
 import { tool$metricsChainsListNftHolders } from "./tools/metricsChainsListNftHolders.js";
 import { tool$metricsChainsListTokenHoldersAboveThreshold } from "./tools/metricsChainsListTokenHoldersAboveThreshold.js";
 import { tool$metricsHealthCheck } from "./tools/metricsHealthCheck.js";
+import { tool$metricsL1ValidatorsGetMetricsByNodeId } from "./tools/metricsL1ValidatorsGetMetricsByNodeId.js";
+import { tool$metricsL1ValidatorsGetMetricsBySubnetId } from "./tools/metricsL1ValidatorsGetMetricsBySubnetId.js";
+import { tool$metricsL1ValidatorsGetMetricsByValidationId } from "./tools/metricsL1ValidatorsGetMetricsByValidationId.js";
+import { tool$metricsL1ValidatorsListMetrics } from "./tools/metricsL1ValidatorsListMetrics.js";
 import { tool$metricsNetworksGetStakingMetrics } from "./tools/metricsNetworksGetStakingMetrics.js";
 import { tool$metricsSubnetsGetValidators } from "./tools/metricsSubnetsGetValidators.js";
 import { tool$webhooksAddressesAdd } from "./tools/webhooksAddressesAdd.js";
@@ -118,7 +122,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.0.7",
+    version: "0.1.0",
   });
 
   const client = new AvalancheCore({
@@ -168,6 +172,10 @@ export function createMCPServer(deps: {
   tool(tool$metricsChainsListTokenHoldersAboveThreshold);
   tool(tool$metricsChainsListBTCbBridgersAboveThreshold);
   tool(tool$metricsNetworksGetStakingMetrics);
+  tool(tool$metricsL1ValidatorsListMetrics);
+  tool(tool$metricsL1ValidatorsGetMetricsByValidationId);
+  tool(tool$metricsL1ValidatorsGetMetricsByNodeId);
+  tool(tool$metricsL1ValidatorsGetMetricsBySubnetId);
   tool(tool$metricsSubnetsGetValidators);
   tool(tool$dataNftsReindex);
   tool(tool$dataNftsList);

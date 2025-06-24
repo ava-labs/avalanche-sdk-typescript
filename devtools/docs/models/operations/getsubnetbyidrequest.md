@@ -6,7 +6,6 @@
 import { GetSubnetByIdRequest } from "@avalanche-sdk/devtools/models/operations";
 
 let value: GetSubnetByIdRequest = {
-  network: "mainnet",
   subnetId: "11111111111111111111111111111111LpoYY",
 };
 ```

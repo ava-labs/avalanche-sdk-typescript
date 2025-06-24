@@ -19,7 +19,6 @@ C-Chain balances returned are only the shared atomic memory balance. For EVM bal
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -28,10 +27,8 @@ async function run() {
     blockTimestamp: 1599696000,
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    network: "mainnet",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -49,7 +46,6 @@ import { dataPrimaryNetworkBalancesListByAddresses } from "@avalanche-sdk/devtoo
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -58,17 +54,13 @@ async function run() {
     blockTimestamp: 1599696000,
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkBalancesListByAddresses failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

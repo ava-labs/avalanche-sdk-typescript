@@ -5,6 +5,7 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import { AvalancheError } from "./avalancheerror.js";
 import { SDKValidationError } from "./sdkvalidationerror.js";
 
 /**
@@ -27,11 +28,7 @@ export type BadRequestErrorData = {
   error: string;
 };
 
-export class BadRequestError extends Error {
-  /**
-   * The HTTP status code of the response
-   */
-  statusCode: number;
+export class BadRequestError extends AvalancheError {
   /**
    * The type of error
    */
@@ -40,14 +37,15 @@ export class BadRequestError extends Error {
   /** The original data that was passed to this error instance. */
   data$: BadRequestErrorData;
 
-  constructor(err: BadRequestErrorData) {
+  constructor(
+    err: BadRequestErrorData,
+    httpMeta: { response: Response; request: Request; body: string },
+  ) {
     const message = "message" in err && typeof err.message === "string"
       ? err.message
       : `API error occurred: ${JSON.stringify(err)}`;
-    super(message);
+    super(message, httpMeta);
     this.data$ = err;
-
-    this.statusCode = err.statusCode;
     this.error = err.error;
 
     this.name = "BadRequestError";
@@ -111,9 +109,16 @@ export const BadRequestError$inboundSchema: z.ZodType<
   message: z.union([z.string(), z.array(z.string())]),
   statusCode: z.number(),
   error: z.string(),
+  request$: z.instanceof(Request),
+  response$: z.instanceof(Response),
+  body$: z.string(),
 })
   .transform((v) => {
-    return new BadRequestError(v);
+    return new BadRequestError(v, {
+      request: v.request$,
+      response: v.response$,
+      body: v.body$,
+    });
   });
 
 /** @internal */

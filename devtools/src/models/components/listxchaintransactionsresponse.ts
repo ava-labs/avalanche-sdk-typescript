@@ -26,15 +26,15 @@ import {
 } from "./xchainnonlineartransaction.js";
 
 export type ListXChainTransactionsResponseTransaction =
-  | XChainNonLinearTransaction
-  | XChainLinearTransaction;
+  | XChainLinearTransaction
+  | XChainNonLinearTransaction;
 
 export type ListXChainTransactionsResponse = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  transactions: Array<XChainNonLinearTransaction | XChainLinearTransaction>;
+  transactions: Array<XChainLinearTransaction | XChainNonLinearTransaction>;
   chainInfo: PrimaryNetworkChainInfo;
 };
 
@@ -44,14 +44,14 @@ export const ListXChainTransactionsResponseTransaction$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  XChainNonLinearTransaction$inboundSchema,
   XChainLinearTransaction$inboundSchema,
+  XChainNonLinearTransaction$inboundSchema,
 ]);
 
 /** @internal */
 export type ListXChainTransactionsResponseTransaction$Outbound =
-  | XChainNonLinearTransaction$Outbound
-  | XChainLinearTransaction$Outbound;
+  | XChainLinearTransaction$Outbound
+  | XChainNonLinearTransaction$Outbound;
 
 /** @internal */
 export const ListXChainTransactionsResponseTransaction$outboundSchema:
@@ -60,8 +60,8 @@ export const ListXChainTransactionsResponseTransaction$outboundSchema:
     z.ZodTypeDef,
     ListXChainTransactionsResponseTransaction
   > = z.union([
-    XChainNonLinearTransaction$outboundSchema,
     XChainLinearTransaction$outboundSchema,
+    XChainNonLinearTransaction$outboundSchema,
   ]);
 
 /**
@@ -115,8 +115,8 @@ export const ListXChainTransactionsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(
     z.union([
-      XChainNonLinearTransaction$inboundSchema,
       XChainLinearTransaction$inboundSchema,
+      XChainNonLinearTransaction$inboundSchema,
     ]),
   ),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
@@ -126,7 +126,7 @@ export const ListXChainTransactionsResponse$inboundSchema: z.ZodType<
 export type ListXChainTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
   transactions: Array<
-    XChainNonLinearTransaction$Outbound | XChainLinearTransaction$Outbound
+    XChainLinearTransaction$Outbound | XChainNonLinearTransaction$Outbound
   >;
   chainInfo: PrimaryNetworkChainInfo$Outbound;
 };
@@ -140,8 +140,8 @@ export const ListXChainTransactionsResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(
     z.union([
-      XChainNonLinearTransaction$outboundSchema,
       XChainLinearTransaction$outboundSchema,
+      XChainNonLinearTransaction$outboundSchema,
     ]),
   ),
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,

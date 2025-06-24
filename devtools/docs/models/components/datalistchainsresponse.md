@@ -9,12 +9,12 @@ let value: DataListChainsResponse = {
   chains: [
     {
       chainId: "<id>",
-      status: "UNAVAILABLE",
+      status: "OK",
       chainName: "<value>",
-      description: "hydrolyse since even",
+      description: "before baritone eek colorfully usually rigidly yippee",
       vmName: "BITCOIN",
-      rpcUrl: "https://bleak-birdbath.com",
-      isTestnet: false,
+      rpcUrl: "https://grimy-management.name",
+      isTestnet: true,
       networkToken: {
         name: "Wrapped AVAX",
         symbol: "WAVAX",

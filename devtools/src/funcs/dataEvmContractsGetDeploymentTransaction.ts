@@ -11,7 +11,7 @@ import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import * as components from "../models/components/index.js";
-import { AvalancheAPIError } from "../models/errors/avalancheapierror.js";
+import { AvalancheError } from "../models/errors/avalancheerror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -20,6 +20,7 @@ import {
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
+import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import { GetDeploymentTransactionServerList } from "../models/operations/getdeploymenttransaction.js";
 import * as operations from "../models/operations/index.js";
@@ -47,13 +48,14 @@ export function dataEvmContractsGetDeploymentTransaction(
     | errors.InternalServerError
     | errors.BadGatewayError
     | errors.ServiceUnavailableError
-    | AvalancheAPIError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | AvalancheError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >
 > {
   return new APIPromise($do(
@@ -79,13 +81,14 @@ async function $do(
       | errors.InternalServerError
       | errors.BadGatewayError
       | errors.ServiceUnavailableError
-      | AvalancheAPIError
-      | SDKValidationError
-      | UnexpectedClientError
-      | InvalidRequestError
+      | AvalancheError
+      | ResponseValidationError
+      | ConnectionError
       | RequestAbortedError
       | RequestTimeoutError
-      | ConnectionError
+      | InvalidRequestError
+      | UnexpectedClientError
+      | SDKValidationError
     >,
     APICall,
   ]
@@ -136,6 +139,7 @@ async function $do(
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
+    options: client._options,
     baseURL: baseURL ?? "",
     operationID: "getDeploymentTransaction",
     oAuth2Scopes: [],
@@ -167,6 +171,7 @@ async function $do(
     headers: headers,
     query: query,
     body: body,
+    userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
@@ -210,13 +215,14 @@ async function $do(
     | errors.InternalServerError
     | errors.BadGatewayError
     | errors.ServiceUnavailableError
-    | AvalancheAPIError
-    | SDKValidationError
-    | UnexpectedClientError
-    | InvalidRequestError
+    | AvalancheError
+    | ResponseValidationError
+    | ConnectionError
     | RequestAbortedError
     | RequestTimeoutError
-    | ConnectionError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
   >(
     M.json(200, components.GetTransactionResponse$inboundSchema),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
@@ -229,7 +235,7 @@ async function $do(
     M.jsonErr(503, errors.ServiceUnavailableError$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
-  )(response, { extraFields: responseFields });
+  )(response, req, { extraFields: responseFields });
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];
   }

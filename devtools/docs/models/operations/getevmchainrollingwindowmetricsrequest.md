@@ -7,7 +7,6 @@ import { GetEvmChainRollingWindowMetricsRequest } from "@avalanche-sdk/devtools/
 
 let value: GetEvmChainRollingWindowMetricsRequest = {
   metric: "txCount",
-  chainId: "43114",
 };
 ```
 

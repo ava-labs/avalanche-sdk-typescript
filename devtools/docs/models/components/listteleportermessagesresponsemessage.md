@@ -17,13 +17,8 @@ const value: components.PendingTeleporterMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -40,7 +35,7 @@ const value: components.PendingTeleporterMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 9302.08,
+    timestamp: 1403.23,
     gasSpent: "<value>",
   },
   status: "pending",
@@ -61,13 +56,8 @@ const value: components.DeliveredTeleporterMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -84,17 +74,58 @@ const value: components.DeliveredTeleporterMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 1335.44,
+    timestamp: 1403.23,
     gasSpent: "<value>",
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 7711.32,
+    timestamp: 4770.43,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",
   },
   status: "delivered",
+};
+```
+
+### `components.DeliveredSourceNotIndexedIcmMessage`
+
+```typescript
+const value: components.DeliveredSourceNotIndexedIcmMessage = {
+  messageId: "<id>",
+  icmContractAddress: "<value>",
+  sourceBlockchainId: "<id>",
+  destinationBlockchainId: "<id>",
+  sourceEvmChainId: "<id>",
+  destinationEvmChainId: "<id>",
+  messageNonce: "<value>",
+  from: "<value>",
+  to: "<value>",
+  messageExecuted: false,
+  receipts: [],
+  receiptDelivered: false,
+  rewardDetails: {
+    address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    name: "Wrapped AVAX",
+    symbol: "WAVAX",
+    decimals: 18,
+    logoUri:
+      "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg",
+    ercType: "ERC-20",
+    price: {
+      currencyCode: "usd",
+      value: 42.42,
+    },
+    value: "<value>",
+  },
+  destinationTransaction: {
+    txHash: "<value>",
+    timestamp: 8250.11,
+    gasSpent: "<value>",
+    rewardRedeemer: "<value>",
+    delivererAddress: "<value>",
+  },
+  status: "delivered_source_not_indexed",
 };
 ```
 

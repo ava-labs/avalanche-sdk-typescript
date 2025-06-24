@@ -25,14 +25,14 @@ import {
   Erc721Transfer$outboundSchema,
 } from "./erc721transfer.js";
 
-export type Transfer = Erc721Transfer | Erc20Transfer | Erc1155Transfer;
+export type Transfer = Erc20Transfer | Erc1155Transfer | Erc721Transfer;
 
 export type ListTransfersResponse = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  transfers: Array<Erc721Transfer | Erc20Transfer | Erc1155Transfer>;
+  transfers: Array<Erc20Transfer | Erc1155Transfer | Erc721Transfer>;
 };
 
 /** @internal */
@@ -41,16 +41,16 @@ export const Transfer$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  Erc721Transfer$inboundSchema,
   Erc20Transfer$inboundSchema,
   Erc1155Transfer$inboundSchema,
+  Erc721Transfer$inboundSchema,
 ]);
 
 /** @internal */
 export type Transfer$Outbound =
-  | Erc721Transfer$Outbound
   | Erc20Transfer$Outbound
-  | Erc1155Transfer$Outbound;
+  | Erc1155Transfer$Outbound
+  | Erc721Transfer$Outbound;
 
 /** @internal */
 export const Transfer$outboundSchema: z.ZodType<
@@ -58,9 +58,9 @@ export const Transfer$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Transfer
 > = z.union([
-  Erc721Transfer$outboundSchema,
   Erc20Transfer$outboundSchema,
   Erc1155Transfer$outboundSchema,
+  Erc721Transfer$outboundSchema,
 ]);
 
 /**
@@ -99,9 +99,9 @@ export const ListTransfersResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transfers: z.array(
     z.union([
-      Erc721Transfer$inboundSchema,
       Erc20Transfer$inboundSchema,
       Erc1155Transfer$inboundSchema,
+      Erc721Transfer$inboundSchema,
     ]),
   ),
 });
@@ -110,7 +110,7 @@ export const ListTransfersResponse$inboundSchema: z.ZodType<
 export type ListTransfersResponse$Outbound = {
   nextPageToken?: string | undefined;
   transfers: Array<
-    Erc721Transfer$Outbound | Erc20Transfer$Outbound | Erc1155Transfer$Outbound
+    Erc20Transfer$Outbound | Erc1155Transfer$Outbound | Erc721Transfer$Outbound
   >;
 };
 
@@ -123,9 +123,9 @@ export const ListTransfersResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transfers: z.array(
     z.union([
-      Erc721Transfer$outboundSchema,
       Erc20Transfer$outboundSchema,
       Erc1155Transfer$outboundSchema,
+      Erc721Transfer$outboundSchema,
     ]),
   ),
 });

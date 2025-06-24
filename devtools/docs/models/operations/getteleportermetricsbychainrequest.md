@@ -7,7 +7,6 @@ import { GetTeleporterMetricsByChainRequest } from "@avalanche-sdk/devtools/mode
 
 let value: GetTeleporterMetricsByChainRequest = {
   metric: "teleporterSourceTxnCount",
-  chainId: "43114",
 };
 ```
 

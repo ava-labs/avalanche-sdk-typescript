@@ -7,7 +7,6 @@ import { GetTxByHashRequest } from "@avalanche-sdk/devtools/models/operations";
 
 let value: GetTxByHashRequest = {
   blockchainId: "p-chain",
-  network: "mainnet",
   txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
 };
 ```
