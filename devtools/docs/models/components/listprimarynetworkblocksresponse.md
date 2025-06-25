@@ -6,22 +6,9 @@
 import { ListPrimaryNetworkBlocksResponse } from "@avalanche-sdk/devtools/models/components";
 
 let value: ListPrimaryNetworkBlocksResponse = {
-  blocks: [
-    {
-      blockNumber: "<value>",
-      blockHash: "<value>",
-      parentHash: "<value>",
-      blockTimestamp: 524.38,
-      blockType: "<value>",
-      txCount: 5417.02,
-      transactions: [
-        "<value>",
-      ],
-      blockSizeBytes: 224.6,
-    },
-  ],
+  blocks: [],
   chainInfo: {
-    chainName: "p-chain",
+    chainName: "c-chain",
     network: "mainnet",
   },
 };

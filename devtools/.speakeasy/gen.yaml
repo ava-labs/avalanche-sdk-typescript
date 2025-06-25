@@ -7,6 +7,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -18,8 +19,12 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 typescript:
-  version: 0.0.7
+  version: 0.1.0
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
@@ -28,7 +33,9 @@ typescript:
     peerDependencies: {}
   additionalPackageJSON: {}
   author: Avacloud
+  baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
+  constFieldsAlwaysOptional: true
   defaultErrorName: AvalancheAPIError
   enableCustomCodeRegions: false
   enableMCPServer: true

@@ -10,17 +10,17 @@ let value: UsageMetricsResponseDTO = {
   orgId: "<id>",
   metrics: [
     {
-      timestamp: 8551.32,
+      timestamp: 3713.32,
       values: [
         {
-          groupedBy: "chainId",
-          totalRequests: 8920.43,
-          requestsPerSecond: 8703.67,
-          successRatePercent: 8311.07,
-          medianResponseTimeMsecs: 1144.51,
-          invalidRequests: 4238.17,
-          apiCreditsUsed: 1690.43,
-          apiCreditsWasted: 4387.18,
+          groupedBy: "None",
+          totalRequests: 8311.07,
+          requestsPerSecond: 1144.51,
+          successRatePercent: 4238.17,
+          medianResponseTimeMsecs: 1690.43,
+          invalidRequests: 4387.18,
+          apiCreditsUsed: 5704.86,
+          apiCreditsWasted: 7901.21,
         },
       ],
     },

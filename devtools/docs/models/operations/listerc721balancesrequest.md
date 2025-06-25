@@ -6,7 +6,6 @@
 import { ListErc721BalancesRequest } from "@avalanche-sdk/devtools/models/operations";
 
 let value: ListErc721BalancesRequest = {
-  chainId: "43114",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
 };

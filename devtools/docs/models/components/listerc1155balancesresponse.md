@@ -23,19 +23,7 @@ let value: ListErc1155BalancesResponse = {
       value: 42.42,
     },
   },
-  erc1155TokenBalances: [
-    {
-      address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-      ercType: "ERC-1155",
-      tokenId: "<id>",
-      tokenUri: "https://torn-video.org/",
-      metadata: {
-        indexStatus: "INDEXED",
-      },
-      chainId: "43114",
-      balance: "2000000000000000000",
-    },
-  ],
+  erc1155TokenBalances: [],
 };
 ```
 

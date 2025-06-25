@@ -19,27 +19,27 @@ import {
   PlatformActivityResponse$outboundSchema,
 } from "./platformactivityresponse.js";
 
-export type Webhook = PlatformActivityResponse | EVMAddressActivityResponse;
+export type Webhook = EVMAddressActivityResponse | PlatformActivityResponse;
 
 export type ListWebhooksResponse = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  webhooks: Array<PlatformActivityResponse | EVMAddressActivityResponse>;
+  webhooks: Array<EVMAddressActivityResponse | PlatformActivityResponse>;
 };
 
 /** @internal */
 export const Webhook$inboundSchema: z.ZodType<Webhook, z.ZodTypeDef, unknown> =
   z.union([
-    PlatformActivityResponse$inboundSchema,
     EVMAddressActivityResponse$inboundSchema,
+    PlatformActivityResponse$inboundSchema,
   ]);
 
 /** @internal */
 export type Webhook$Outbound =
-  | PlatformActivityResponse$Outbound
-  | EVMAddressActivityResponse$Outbound;
+  | EVMAddressActivityResponse$Outbound
+  | PlatformActivityResponse$Outbound;
 
 /** @internal */
 export const Webhook$outboundSchema: z.ZodType<
@@ -47,8 +47,8 @@ export const Webhook$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Webhook
 > = z.union([
-  PlatformActivityResponse$outboundSchema,
   EVMAddressActivityResponse$outboundSchema,
+  PlatformActivityResponse$outboundSchema,
 ]);
 
 /**
@@ -87,8 +87,8 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   webhooks: z.array(
     z.union([
-      PlatformActivityResponse$inboundSchema,
       EVMAddressActivityResponse$inboundSchema,
+      PlatformActivityResponse$inboundSchema,
     ]),
   ),
 });
@@ -97,7 +97,7 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
 export type ListWebhooksResponse$Outbound = {
   nextPageToken?: string | undefined;
   webhooks: Array<
-    PlatformActivityResponse$Outbound | EVMAddressActivityResponse$Outbound
+    EVMAddressActivityResponse$Outbound | PlatformActivityResponse$Outbound
   >;
 };
 
@@ -110,8 +110,8 @@ export const ListWebhooksResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   webhooks: z.array(
     z.union([
-      PlatformActivityResponse$outboundSchema,
       EVMAddressActivityResponse$outboundSchema,
+      PlatformActivityResponse$outboundSchema,
     ]),
   ),
 });

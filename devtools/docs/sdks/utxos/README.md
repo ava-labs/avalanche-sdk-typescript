@@ -17,7 +17,6 @@ Lists UTXOs on one of the Primary Network chains for the supplied addresses.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -25,12 +24,10 @@ async function run() {
   const result = await avalanche.data.primaryNetwork.utxos.listByAddresses({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -49,7 +46,6 @@ import { dataPrimaryNetworkUtxosListByAddresses } from "@avalanche-sdk/devtools/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -57,19 +53,15 @@ async function run() {
   const res = await dataPrimaryNetworkUtxosListByAddresses(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkUtxosListByAddresses failed:", res.error);
   }
 }
 

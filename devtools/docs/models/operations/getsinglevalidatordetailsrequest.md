@@ -6,7 +6,6 @@
 import { GetSingleValidatorDetailsRequest } from "@avalanche-sdk/devtools/models/operations";
 
 let value: GetSingleValidatorDetailsRequest = {
-  network: "mainnet",
   nodeId: "NodeID-111111111111111111116DBWJs",
   validationStatus: "completed",
   sortOrder: "asc",

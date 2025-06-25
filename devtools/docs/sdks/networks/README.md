@@ -17,7 +17,6 @@ Gets staking metrics for a given subnet.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -26,11 +25,10 @@ async function run() {
     metric: "validatorCount",
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
-    network: "mainnet",
+    pageSize: 10,
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -49,7 +47,6 @@ import { metricsNetworksGetStakingMetrics } from "@avalanche-sdk/devtools/funcs/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -58,18 +55,15 @@ async function run() {
     metric: "validatorCount",
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
-    network: "mainnet",
+    pageSize: 10,
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("metricsNetworksGetStakingMetrics failed:", res.error);
   }
 }
 

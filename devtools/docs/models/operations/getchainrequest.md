@@ -5,9 +5,7 @@
 ```typescript
 import { GetChainRequest } from "@avalanche-sdk/devtools/models/operations";
 
-let value: GetChainRequest = {
-  chainId: "43114",
-};
+let value: GetChainRequest = {};
 ```
 
 ## Fields

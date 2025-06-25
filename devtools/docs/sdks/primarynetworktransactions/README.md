@@ -20,18 +20,15 @@ Gets the details of a single transaction on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.transactions.get({
     blockchainId: "p-chain",
-    network: "mainnet",
     txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -49,25 +46,20 @@ import { dataPrimaryNetworkTransactionsGet } from "@avalanche-sdk/devtools/funcs
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkTransactionsGet(avalanche, {
     blockchainId: "p-chain",
-    network: "mainnet",
     txHash: "3P91K6nuDFvDodcRuJTsgdf9SvYe5pMiKk38HppsoeAiEztCP",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkTransactionsGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -117,7 +109,6 @@ Given that each transaction may return a large number of UTXO objects, bounded o
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -130,12 +121,10 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -154,7 +143,6 @@ import { dataPrimaryNetworkTransactionsListLatest } from "@avalanche-sdk/devtool
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -167,19 +155,15 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkTransactionsListLatest failed:", res.error);
   }
 }
 
@@ -224,7 +208,6 @@ Lists active staking transactions on the P-Chain for the supplied addresses.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -237,12 +220,10 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -261,7 +242,6 @@ import { dataPrimaryNetworkTransactionsListActiveStakingTransactions } from "@av
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -274,19 +254,15 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     sortOrder: "asc",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkTransactionsListActiveStakingTransactions failed:", res.error);
   }
 }
 
@@ -331,7 +307,6 @@ Lists asset transactions corresponding to the given asset id on the X-Chain.
 import { Avalanche } from "@avalanche-sdk/devtools";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -343,12 +318,10 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "x-chain",
-    network: "mainnet",
     assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -367,7 +340,6 @@ import { dataPrimaryNetworkTransactionsListAssetTransactions } from "@avalanche-
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -379,19 +351,15 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "x-chain",
-    network: "mainnet",
     assetId: "th5aLdWLi32yS9ED6uLGoMMubqHjzMsXhKWwzP6yZTYQKYzof",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkTransactionsListAssetTransactions failed:", res.error);
   }
 }
 

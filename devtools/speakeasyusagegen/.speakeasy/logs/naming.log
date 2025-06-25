@@ -49,15 +49,15 @@ DEBUG	discriminated: Renamed to "DeliveredTeleporterMessage_status"
 DEBUG	discriminated: Renamed to "DeliveredSourceNotIndexedTeleporterMessage_status" 
 	 labels: "original_name:status scope:shared data_type:enum refName:DeliveredSourceNotIndexedTeleporterMessage constProperty:DeliveredSourceNotIndexed" 
 	 registrationID: "scope:shared refType:Schemas refName:DeliveredSourceNotIndexedTeleporterMessage constProperty:delivered_source_not_indexed originalName:status"
+DEBUG	discriminated: Renamed to "DeliveredSourceNotIndexedIcmMessage_status" 
+	 labels: "original_name:status scope:shared data_type:enum refName:DeliveredSourceNotIndexedIcmMessage constProperty:DeliveredSourceNotIndexed" 
+	 registrationID: "scope:shared refType:Schemas refName:DeliveredSourceNotIndexedIcmMessage constProperty:delivered_source_not_indexed originalName:status"
 DEBUG	discriminated: Renamed to "PendingIcmMessage_status" 
 	 labels: "original_name:status scope:shared data_type:enum refName:PendingIcmMessage constProperty:Pending" 
 	 registrationID: "scope:shared refType:Schemas refName:PendingIcmMessage constProperty:pending originalName:status"
 DEBUG	discriminated: Renamed to "DeliveredIcmMessage_status" 
 	 labels: "original_name:status scope:shared data_type:enum refName:DeliveredIcmMessage constProperty:Delivered" 
 	 registrationID: "scope:shared refType:Schemas refName:DeliveredIcmMessage constProperty:delivered originalName:status"
-DEBUG	discriminated: Renamed to "DeliveredSourceNotIndexedIcmMessage_status" 
-	 labels: "original_name:status scope:shared data_type:enum refName:DeliveredSourceNotIndexedIcmMessage constProperty:DeliveredSourceNotIndexed" 
-	 registrationID: "scope:shared refType:Schemas refName:DeliveredSourceNotIndexedIcmMessage constProperty:delivered_source_not_indexed originalName:status"
 DEBUG	
 
 --- Renaming 2 types with name "enabledFeature" ---
@@ -133,6 +133,15 @@ DEBUG	discriminated: Renamed to "L1ValidatorDetailsTransaction_blsCredentials"
 DEBUG	discriminated: Renamed to "L1ValidatorDetailsFull_blsCredentials" 
 	 labels: "original_name:blsCredentials scope:shared refName:L1ValidatorDetailsFull" 
 	 registrationID: "scope:shared refType:Schemas refName:L1ValidatorDetailsFull originalName:blsCredentials"
+DEBUG	
+
+--- Renaming 2 types with name "genesisData" ---
+DEBUG	discriminated: Renamed to "BlockchainInfo_genesisData" 
+	 labels: "original_name:genesisData scope:shared refName:BlockchainInfo" 
+	 registrationID: "scope:shared refType:Schemas refName:BlockchainInfo originalName:genesisData"
+DEBUG	discriminated: Renamed to "Blockchain_genesisData" 
+	 labels: "original_name:genesisData scope:shared refName:Blockchain" 
+	 registrationID: "scope:shared refType:Schemas refName:Blockchain originalName:genesisData"
 DEBUG	
 
 --- Renaming 2 types with name "chainFormat" ---
@@ -226,6 +235,21 @@ DEBUG	discriminated: Renamed to "PlatformActivityRequest_eventType"
 DEBUG	discriminated: Renamed to "WebhookAddressActivityResponse_eventType" 
 	 labels: "original_name:eventType scope:shared data_type:enum refName:WebhookAddressActivityResponse constProperty:AddressActivity" 
 	 registrationID: "scope:shared refType:Schemas refName:WebhookAddressActivityResponse constProperty:address_activity originalName:eventType"
+DEBUG	
+
+--- Renaming 4 types with name "metric" ---
+DEBUG	discriminated: Renamed to "getTotalL1ValidatorMetrics_metric" 
+	 labels: "original_name:metric operation:getTotalL1ValidatorMetrics operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getTotalL1ValidatorMetrics parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsByValidationId_metric" 
+	 labels: "original_name:metric operation:getMetricsByValidationId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsByValidationId parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsByNodeId_metric" 
+	 labels: "original_name:metric operation:getMetricsByNodeId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsByNodeId parameter:pathParam originalName:metric"
+DEBUG	discriminated: Renamed to "getMetricsBySubnetId_metric" 
+	 labels: "original_name:metric operation:getMetricsBySubnetId operationTag:metrics.l1Validators data_type:enum parameter:pathParam" 
+	 registrationID: "scope:operations operationTag:metrics.l1Validators operation:getMetricsBySubnetId parameter:pathParam originalName:metric"
 DEBUG	
 
 --- Renaming 2 types with name "requestType" ---
@@ -380,6 +404,15 @@ GetStakingMetricsRequest (metric: NetworkMetric, startTimestamp: integer, endTim
  NetworkMetric (enum: delegatorCount, delegatorWeight, validatorCount ...)
  GlobalParamNetwork (enum: mainnet, fuji, testnet)
 GetStakingMetricsResponse (Result: MetricsApiResponse)
+L1Validators (SDK empty)
+GetTotalL1ValidatorMetricsRequest (metric: enum, startTimestamp: integer, endTimestamp: integer)
+ GetTotalL1ValidatorMetricsMetric (enum: totalCumulativeFeesDaily, totalValidatorFeesDaily, totalPayingValidatorsDaily)
+GetMetricsByValidationIdRequest (l1ValidationId: string, metric: enum, startTimestamp: integer ...)
+ GetMetricsByValidationIdMetric (enum: validationCumulativeFeesDaily, validationFeesDaily)
+GetMetricsByNodeIdRequest (metric: enum, startTimestamp: integer, endTimestamp: integer ...)
+ GetMetricsByNodeIdMetric (enum: perNodeCumulativeFeesPaid, perNodeDailyFeesPaid)
+GetMetricsBySubnetIdRequest (metric: enum, startTimestamp: integer, endTimestamp: integer ...)
+ GetMetricsBySubnetIdMetric (enum: perSubnetDailyFeesPaid, perSubnetCumulativeFeesPaid, perSubnetPayingValidators)
 Subnets (SDK empty)
 GetValidatorsByDateRangeRequest (startTimestamp: integer, endTimestamp: integer, pageToken: string ...)
 GetValidatorsByDateRangeResponse (Result: PChainLookingGlassResponse)
@@ -487,7 +520,7 @@ ListErc1155TransactionsResponse (Result: ListErc1155TransactionsResponse)
 ListInternalTransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
 ListInternalTransactionsResponse (Result: ListInternalTransactionsResponse)
  ListInternalTransactionsResponse (nextPageToken: string, transactions: array)
-   InternalTransaction (from: string, to: string, internalTxType: string ...)
+   InternalTransaction (blockNumber: string, blockTimestamp: number, blockHash: string ...)
 EvmTransactions (SDK empty)
 ListLatestTransactionsAllChainsRequest (pageToken: string, pageSize: integer, network: Network ...)
  TransactionStatus (enum: failed, success)
@@ -573,6 +606,8 @@ GetTxByHashResponse (union)
     L1ValidatorDetailsTransactionBlsCredentials (empty)
   SubnetOwnershipInfo (locktime: number, threshold: number, addresses: array)
   BlsCredentials (publicKey: string, proofOfPossession: string)
+  BlockchainInfo (chainName: string, vmId: string, genesisData: class)
+   BlockchainInfoGenesisData (empty)
  XChainNonLinearTransaction (txHash: string, chainFormat: enum, timestamp: number ...)
   XChainNonLinearTransactionChainFormat (enum: non-linear, linear)
   XChainTransactionType (enum: BaseTx, CreateAssetTx, OperationTx ...)
@@ -667,6 +702,7 @@ ListBlockchainsRequest (pageToken: string, pageSize: integer, network: GlobalPar
 ListBlockchainsResponse (Result: ListBlockchainsResponse)
  ListBlockchainsResponse (nextPageToken: string, blockchains: array)
    Blockchain (createBlockTimestamp: number, createBlockNumber: string, blockchainId: string ...)
+    BlockchainGenesisData (empty)
 GetBlockchainByIdRequest (blockchainId: string, network: GlobalParamNetwork)
 ListSubnetsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
 ListSubnetsResponse (Result: ListSubnetsResponse)
@@ -727,21 +763,21 @@ ListTeleporterMessagesRequest (pageToken: string, pageSize: integer, sourceBlock
 ListTeleporterMessagesResponse (Result: ListTeleporterMessagesResponse)
  ListTeleporterMessagesResponse (nextPageToken: string, messages: array)
    ListTeleporterMessagesResponseMessage (union)
+    DeliveredSourceNotIndexedIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
+      IcmReceipt (receivedMessageNonce: string, relayerRewardAddress: string)
+     IcmRewardDetails (address: string, name: string, symbol: string ...)
+      IcmRewardDetailsErcType (enum: ERC-20)
+     IcmDestinationTransaction (txHash: string, timestamp: number, gasSpent: string ...)
+     DeliveredSourceNotIndexedIcmMessageStatus (enum: delivered_source_not_indexed)
 ListTeleporterMessagesByAddressRequest (pageToken: string, pageSize: integer, address: string ...)
 Icm (SDK empty)
 GetIcmMessageRequest (messageId: string)
 GetIcmMessageResponse (union)
  PendingIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
-   IcmReceipt (receivedMessageNonce: string, relayerRewardAddress: string)
-  IcmRewardDetails (address: string, name: string, symbol: string ...)
-   IcmRewardDetailsErcType (enum: ERC-20)
   IcmSourceTransaction (txHash: string, timestamp: number, gasSpent: string)
   PendingIcmMessageStatus (enum: pending)
  DeliveredIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
-  IcmDestinationTransaction (txHash: string, timestamp: number, gasSpent: string ...)
   DeliveredIcmMessageStatus (enum: delivered)
- DeliveredSourceNotIndexedIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
-  DeliveredSourceNotIndexedIcmMessageStatus (enum: delivered_source_not_indexed)
 ListIcmMessagesRequest (pageToken: string, pageSize: integer, sourceBlockchainId: string ...)
 ListIcmMessagesResponse (Result: ListIcmMessagesResponse)
  ListIcmMessagesResponse (nextPageToken: string, messages: array)
@@ -828,6 +864,7 @@ WebhookAddressActivityResponse (webhookId: string, eventType: enum, messageId: s
   Transaction (blockHash: string, blockNumber: string, from: string ...)
     ErcTransfer (transactionHash: string, type: string, from: string ...)
      ErcToken (address: string, name: string, symbol: string ...)
+    WebhookInternalTransaction (from: string, to: string, internalTxType: string ...)
     AccessListData (accessAddresses: string, storageKeys: array)
    NetworkTokenInfo (tokenName: string, tokenSymbol: string, tokenDecimals: number ...)
    Log (address: string, topic0: string, topic1: string ...)
