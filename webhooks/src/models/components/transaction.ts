@@ -19,17 +19,17 @@ import {
   ERCTransfer$outboundSchema,
 } from "./erctransfer.js";
 import {
-  InternalTransaction,
-  InternalTransaction$inboundSchema,
-  InternalTransaction$Outbound,
-  InternalTransaction$outboundSchema,
-} from "./internaltransaction.js";
-import {
   NetworkTokenInfo,
   NetworkTokenInfo$inboundSchema,
   NetworkTokenInfo$Outbound,
   NetworkTokenInfo$outboundSchema,
 } from "./networktokeninfo.js";
+import {
+  WebhookInternalTransaction,
+  WebhookInternalTransaction$inboundSchema,
+  WebhookInternalTransaction$Outbound,
+  WebhookInternalTransaction$outboundSchema,
+} from "./webhookinternaltransaction.js";
 
 export type Transaction = {
   /**
@@ -135,7 +135,7 @@ export type Transaction = {
   /**
    * Internal transactions (optional)
    */
-  internalTransactions?: Array<InternalTransaction> | undefined;
+  internalTransactions?: Array<WebhookInternalTransaction> | undefined;
   /**
    * Access list (optional)
    */
@@ -177,7 +177,8 @@ export const Transaction$inboundSchema: z.ZodType<
   erc20Transfers: z.array(ERCTransfer$inboundSchema),
   erc721Transfers: z.array(ERCTransfer$inboundSchema),
   erc1155Transfers: z.array(ERCTransfer$inboundSchema),
-  internalTransactions: z.array(InternalTransaction$inboundSchema).optional(),
+  internalTransactions: z.array(WebhookInternalTransaction$inboundSchema)
+    .optional(),
   accessList: z.array(AccessListData$inboundSchema).optional(),
   networkToken: NetworkTokenInfo$inboundSchema.optional(),
 });
@@ -209,7 +210,7 @@ export type Transaction$Outbound = {
   erc20Transfers: Array<ERCTransfer$Outbound>;
   erc721Transfers: Array<ERCTransfer$Outbound>;
   erc1155Transfers: Array<ERCTransfer$Outbound>;
-  internalTransactions?: Array<InternalTransaction$Outbound> | undefined;
+  internalTransactions?: Array<WebhookInternalTransaction$Outbound> | undefined;
   accessList?: Array<AccessListData$Outbound> | undefined;
   networkToken?: NetworkTokenInfo$Outbound | undefined;
 };
@@ -245,7 +246,8 @@ export const Transaction$outboundSchema: z.ZodType<
   erc20Transfers: z.array(ERCTransfer$outboundSchema),
   erc721Transfers: z.array(ERCTransfer$outboundSchema),
   erc1155Transfers: z.array(ERCTransfer$outboundSchema),
-  internalTransactions: z.array(InternalTransaction$outboundSchema).optional(),
+  internalTransactions: z.array(WebhookInternalTransaction$outboundSchema)
+    .optional(),
   accessList: z.array(AccessListData$outboundSchema).optional(),
   networkToken: NetworkTokenInfo$outboundSchema.optional(),
 });

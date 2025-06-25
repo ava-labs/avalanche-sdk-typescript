@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: f2a15845-dc11-48d9-85a3-222c345ff88e
 management:
-  docChecksum: ee933f1c1f76dfd590ea2e05530c3ea2
+  docChecksum: 9efe08f18592dd65ec4c5e5f436850f1
   docVersion: 1.0.0
-  speakeasyVersion: 1.548.3
-  generationVersion: 2.605.6
-  releaseVersion: 0.3.5
-  configChecksum: 09ac4c38f0aa7fa620bac6f72d9c04b1
+  speakeasyVersion: 1.568.2
+  generationVersion: 2.634.2
+  releaseVersion: 0.4.0
+  configChecksum: 6a07e8dc2c277b84058f29f738c69fbb
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: webhooks
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/webhooks
@@ -14,8 +14,8 @@ management:
 features:
   typescript:
     additionalDependencies: 0.1.0
-    constsAndDefaults: 0.1.11
-    core: 3.21.9
+    constsAndDefaults: 0.1.12
+    core: 3.21.11
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -33,8 +33,8 @@ features:
     pagination: 2.83.0
     responseFormat: 0.2.3
     retries: 2.83.0
-    sdkHooks: 0.2.0
-    unions: 2.85.8
+    sdkHooks: 0.3.0
+    unions: 2.85.11
     webhooks: 1.5.0
 generatedFiles:
   - .devcontainer/README.md
@@ -63,7 +63,6 @@ generatedFiles:
   - docs/models/components/healthcheckresultdtostatus.md
   - docs/models/components/healthindicatorresultdto.md
   - docs/models/components/healthindicatorresultdtostatus.md
-  - docs/models/components/internaltransaction.md
   - docs/models/components/listwebhookaddressesresponse.md
   - docs/models/components/listwebhooksresponse.md
   - docs/models/components/log.md
@@ -88,6 +87,7 @@ generatedFiles:
   - docs/models/components/webhook.md
   - docs/models/components/webhookaddressactivityresponse.md
   - docs/models/components/webhookaddressactivityresponseeventtype.md
+  - docs/models/components/webhookinternaltransaction.md
   - docs/models/components/webhookstatus.md
   - docs/models/components/webhookstatustype.md
   - docs/models/errors/badgatewayerror.md
@@ -193,7 +193,6 @@ generatedFiles:
   - src/models/components/healthcheckresultdto.ts
   - src/models/components/healthindicatorresultdto.ts
   - src/models/components/index.ts
-  - src/models/components/internaltransaction.ts
   - src/models/components/listwebhookaddressesresponse.ts
   - src/models/components/listwebhooksresponse.ts
   - src/models/components/log.ts
@@ -212,9 +211,11 @@ generatedFiles:
   - src/models/components/transactionevent.ts
   - src/models/components/updatewebhookrequest.ts
   - src/models/components/webhookaddressactivityresponse.ts
+  - src/models/components/webhookinternaltransaction.ts
   - src/models/components/webhookstatus.ts
   - src/models/components/webhookstatustype.ts
   - src/models/errors/avalancheapierror.ts
+  - src/models/errors/avalancheerror.ts
   - src/models/errors/badgatewayerror.ts
   - src/models/errors/badrequesterror.ts
   - src/models/errors/forbiddenerror.ts
@@ -222,6 +223,7 @@ generatedFiles:
   - src/models/errors/index.ts
   - src/models/errors/internalservererror.ts
   - src/models/errors/notfounderror.ts
+  - src/models/errors/responsevalidationerror.ts
   - src/models/errors/sdkvalidationerror.ts
   - src/models/errors/serviceunavailableerror.ts
   - src/models/errors/toomanyrequestserror.ts
@@ -324,8 +326,55 @@ examples:
           application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-list-webhooks:
+      parameters:
+        query:
+          pageSize: 10
+          status: "active"
+      responses:
+        "200":
+          application/json: {"webhooks": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": [], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
   getWebhook:
     "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://shrill-feather.name", "chainId": "<id>", "status": "active", "createdAt": 3272.52, "name": "<value>", "description": "ah interestingly knuckle helplessly not enrich", "metadata": {"keyType": "subnetId", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": [], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-webhook:
       parameters:
         path:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
@@ -372,8 +421,56 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-deactivate-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://orange-igloo.info", "chainId": "<id>", "status": "inactive", "createdAt": 9870.51, "name": "<value>", "description": "ack scary foot", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>", "<value 3>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": [], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   updateWebhook:
     "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://puzzled-confusion.com/", "chainId": "<id>", "status": "active", "createdAt": 2194.04, "name": "<value>", "description": "ick athwart mid", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-update-webhook:
       parameters:
         path:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
@@ -466,6 +563,31 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-add-addresses-to-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://apprehensive-unit.net/", "chainId": "<id>", "status": "inactive", "createdAt": 9755.42, "name": "<value>", "description": "wetly woot challenge that irresponsible requite rectangular wherever noted", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
   removeAddressesFromWebhook:
     "":
       parameters:
@@ -492,8 +614,58 @@ examples:
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-remove-addresses-from-webhook:
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+      requestBody:
+        application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://ornery-colon.info", "chainId": "<id>", "status": "inactive", "createdAt": 5668.34, "name": "<value>", "description": "colorful emphasise worth intervention wherever onto mill custom for", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": "<value>", "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
   getAddressesFromWebhook:
     "":
+      parameters:
+        path:
+          id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"addresses": [], "totalAddresses": 5926.55}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": [], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+    speakeasy-default-get-addresses-from-webhook:
       parameters:
         path:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"

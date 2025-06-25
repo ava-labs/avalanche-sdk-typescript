@@ -18,10 +18,7 @@ Add addresses to webhook. Only valid for EVM activity webhooks.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.addresses.add({
@@ -33,7 +30,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -50,10 +46,7 @@ import { webhooksAddressesAdd } from "@avalanche-sdk/webhooks/funcs/webhooksAddr
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksAddressesAdd(avalanche, {
@@ -64,15 +57,12 @@ async function run() {
       ],
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksAddressesAdd failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -114,10 +104,7 @@ Remove addresses from webhook. Only valid for EVM activity webhooks.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.addresses.remove({
@@ -129,7 +116,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -146,10 +132,7 @@ import { webhooksAddressesRemove } from "@avalanche-sdk/webhooks/funcs/webhooksA
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksAddressesRemove(avalanche, {
@@ -160,15 +143,12 @@ async function run() {
       ],
     },
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("webhooksAddressesRemove failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -210,10 +190,7 @@ List adresses by webhook. Only valid for EVM activity webhooks.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.webhooks.addresses.list({
@@ -221,7 +198,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -239,25 +215,19 @@ import { webhooksAddressesList } from "@avalanche-sdk/webhooks/funcs/webhooksAdd
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await webhooksAddressesList(avalanche, {
     id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("webhooksAddressesList failed:", res.error);
   }
 }
 

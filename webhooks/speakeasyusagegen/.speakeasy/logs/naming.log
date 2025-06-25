@@ -162,7 +162,7 @@ WebhookAddressActivityResponse (webhookId: string, eventType: enum, messageId: s
   Transaction (blockHash: string, blockNumber: string, from: string ...)
     ErcTransfer (transactionHash: string, type: string, from: string ...)
      ErcToken (address: string, name: string, symbol: string ...)
-    InternalTransaction (from: string, to: string, internalTxType: string ...)
+    WebhookInternalTransaction (from: string, to: string, internalTxType: string ...)
     AccessListData (accessAddresses: string, storageKeys: array)
    NetworkTokenInfo (tokenName: string, tokenSymbol: string, tokenDecimals: number ...)
    Log (address: string, topic0: string, topic1: string ...)
