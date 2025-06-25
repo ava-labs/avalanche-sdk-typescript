@@ -5,9 +5,7 @@
 ```typescript
 import { GetNetworkDetailsRequest } from "@avalanche-sdk/sdk/models/operations";
 
-let value: GetNetworkDetailsRequest = {
-  network: "mainnet",
-};
+let value: GetNetworkDetailsRequest = {};
 ```
 
 ## Fields

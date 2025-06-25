@@ -5,18 +5,7 @@
 ```typescript
 import { GetValidatorsByDateRangeResponse } from "@avalanche-sdk/sdk/models/operations";
 
-let value: GetValidatorsByDateRangeResponse = {
-  result: {
-    addresses: [
-      {
-        addresses: [
-          "avax1abcdef1234567890abcdef1234567890abcdef",
-        ],
-        sortKey: "123",
-      },
-    ],
-  },
-};
+let value: GetValidatorsByDateRangeResponse = {};
 ```
 
 ## Fields

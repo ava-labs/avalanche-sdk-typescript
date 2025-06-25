@@ -5,24 +5,7 @@
 ```typescript
 import { GetNftHoldersByContractAddressResponse } from "@avalanche-sdk/sdk/models/operations";
 
-let value: GetNftHoldersByContractAddressResponse = {
-  result: {
-    addresses: [
-      {
-        address: "0x1234567890abcdef1234567890abcdef123456789",
-        sortKey: "123",
-      },
-    ],
-    nftCollectionName: [
-      "NFT Project",
-    ],
-    nftSymbol: [
-      "NFTPROJ",
-    ],
-    totalHolders: 10,
-    totalTokens: 10,
-  },
-};
+let value: GetNftHoldersByContractAddressResponse = {};
 ```
 
 ## Fields

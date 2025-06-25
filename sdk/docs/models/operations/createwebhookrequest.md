@@ -8,7 +8,7 @@
 ```typescript
 const value: components.EVMAddressActivityRequest = {
   eventType: "address_activity",
-  url: "https://scared-galoshes.name",
+  url: "https://buttery-couch.biz/",
   chainId: "<id>",
   metadata: {
     addresses: [
@@ -26,12 +26,12 @@ const value: components.EVMAddressActivityRequest = {
 ```typescript
 const value: components.PlatformActivityRequest = {
   eventType: "validator_activity",
-  url: "https://self-reliant-scratch.com",
+  url: "https://untrue-parsnip.com",
   chainId: "<id>",
   metadata: {
     keyType: "addresses",
     keys: [
-      "<value>",
+      "<value 1>",
     ],
     eventSignatures: [
       "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",

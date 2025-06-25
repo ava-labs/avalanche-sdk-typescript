@@ -12,24 +12,26 @@ let value: ListL1ValidatorsResponse = {
       validationIdHex: "<value>",
       nodeId: "<id>",
       subnetId: "<id>",
-      weight: 5601.59,
-      remainingBalance: 5368.44,
-      creationTimestamp: 7020.98,
+      weight: 5368.44,
+      remainingBalance: 7020.98,
+      creationTimestamp: 5485.65,
       blsCredentials: {},
       remainingBalanceOwner: {
         addresses: [
-          "<value>",
+          "<value 1>",
+          "<value 2>",
         ],
-        threshold: 5485.65,
+        threshold: 7038.52,
       },
       deactivationOwner: {
         addresses: [
-          "<value>",
+          "<value 1>",
         ],
-        threshold: 6691.95,
+        threshold: 4642.49,
       },
     },
   ],
+  blockHeight: "<value>",
 };
 ```
 
@@ -39,3 +41,4 @@ let value: ListL1ValidatorsResponse = {
 | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `nextPageToken`                                                                                                                        | *string*                                                                                                                               | :heavy_minus_sign:                                                                                                                     | A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages. |
 | `validators`                                                                                                                           | [components.L1ValidatorDetailsFull](../../models/components/l1validatordetailsfull.md)[]                                               | :heavy_check_mark:                                                                                                                     | The list of L1 validations for the given Subnet ID, NodeId or validationId                                                             |
+| `blockHeight`                                                                                                                          | *string*                                                                                                                               | :heavy_check_mark:                                                                                                                     | Block height at which the L1 validator's remaining balance is calculated                                                               |

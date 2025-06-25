@@ -5,16 +5,7 @@
 ```typescript
 import { GetAddressesByBalanceOverTimeResponse } from "@avalanche-sdk/sdk/models/operations";
 
-let value: GetAddressesByBalanceOverTimeResponse = {
-  result: {
-    addresses: [
-      {
-        address: "0x1234567890abcdef1234567890abcdef123456789",
-        sortKey: "123",
-      },
-    ],
-  },
-};
+let value: GetAddressesByBalanceOverTimeResponse = {};
 ```
 
 ## Fields

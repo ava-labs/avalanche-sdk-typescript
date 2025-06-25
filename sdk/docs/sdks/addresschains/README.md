@@ -16,17 +16,13 @@ Lists the chains where the specified address has  participated in transactions o
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.address.chains.list({
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -43,24 +39,18 @@ import { dataEvmAddressChainsList } from "@avalanche-sdk/sdk/funcs/dataEvmAddres
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmAddressChainsList(avalanche, {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmAddressChainsList failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

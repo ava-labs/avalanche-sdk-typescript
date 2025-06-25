@@ -13,7 +13,7 @@ let value: ValidatorsDetails = {
     {
       version: "<value>",
       amountStaked: "<value>",
-      validatorCount: 5216.91,
+      validatorCount: 7680.04,
     },
   ],
   stakingRatio: "<value>",

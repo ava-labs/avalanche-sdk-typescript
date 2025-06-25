@@ -7,11 +7,6 @@ import { AddAddressesToWebhookRequest } from "@avalanche-sdk/sdk/models/operatio
 
 let value: AddAddressesToWebhookRequest = {
   id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
-  addressesChangeRequest: {
-    addresses: [
-      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    ],
-  },
 };
 ```
 

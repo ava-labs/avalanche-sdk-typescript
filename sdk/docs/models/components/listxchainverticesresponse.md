@@ -10,16 +10,17 @@ let value: ListXChainVerticesResponse = {
     {
       vertexHash: "<value>",
       parentHashes: [
-        "<value>",
+        "<value 1>",
+        "<value 2>",
       ],
-      vertexHeight: 9242.87,
-      vertexIndex: 6366.59,
-      vertexTimestamp: 7539.02,
-      txCount: 1786.08,
+      vertexHeight: 7539.02,
+      vertexIndex: 1786.08,
+      vertexTimestamp: 3626.95,
+      txCount: 7721.81,
       transactions: [
-        "<value>",
+        "<value 1>",
       ],
-      vertexSizeBytes: 3626.95,
+      vertexSizeBytes: 3579.84,
     },
   ],
   chainInfo: {
