@@ -7,6 +7,7 @@ import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import { unwrapAsync } from "../types/fp.js";
 import { Chains } from "./chains.js";
+import { L1Validators } from "./l1validators.js";
 import { Networks } from "./networks.js";
 import { Subnets } from "./subnets.js";
 
@@ -19,6 +20,11 @@ export class Metrics extends ClientSDK {
   private _networks?: Networks;
   get networks(): Networks {
     return (this._networks ??= new Networks(this._options));
+  }
+
+  private _l1Validators?: L1Validators;
+  get l1Validators(): L1Validators {
+    return (this._l1Validators ??= new L1Validators(this._options));
   }
 
   private _subnets?: Subnets;

@@ -5,16 +5,7 @@
 ```typescript
 import { GetStakingMetricsResponse } from "@avalanche-sdk/metrics/models/operations";
 
-let value: GetStakingMetricsResponse = {
-  result: {
-    results: [
-      {
-        value: 1182.74,
-        timestamp: 6399.21,
-      },
-    ],
-  },
-};
+let value: GetStakingMetricsResponse = {};
 ```
 
 ## Fields

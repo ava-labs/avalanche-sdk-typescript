@@ -14,7 +14,7 @@ export const tool$metricsChainsList: ToolDefinition<typeof args> = {
   name: "metrics-chains-list",
   description: `Get a list of supported blockchains
 
-Get a list of Metrics API supported blockchains.`,
+Get a list of Metrics API supported blockchains.  This endpoint is paginated and supports a maximum page size of 10000.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await metricsChainsList(

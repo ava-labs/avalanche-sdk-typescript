@@ -6,7 +6,7 @@
 import { TeleporterMetricsValue } from "@avalanche-sdk/metrics/models/components";
 
 let value: TeleporterMetricsValue = {
-  value: 7917.25,
+  value: 6365.16,
 };
 ```
 

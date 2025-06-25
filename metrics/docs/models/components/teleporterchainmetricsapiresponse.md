@@ -7,7 +7,7 @@ import { TeleporterChainMetricsApiResponse } from "@avalanche-sdk/metrics/models
 
 let value: TeleporterChainMetricsApiResponse = {
   result: {
-    value: 3834.41,
+    value: 7509,
   },
 };
 ```

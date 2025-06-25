@@ -13,31 +13,26 @@
 <!-- End Summary [summary] -->
 
 <!-- Start Summary [summary] -->
-
 ## Summary
 
-Metrics API: The Metrics API provides metrics and analytics of on-chain activity. The API is in Beta and may be subject to change.`</br></br>`If you have  feedback or feature requests for the API, please submit them `<a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">`here`</a>`. Bug reports can be submitted `<a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">`here`</a>`, and any potential security issues can be reported `<a href="https://hackenproof.com/avalanche">`here`</a>`.
-
+Metrics API: The Metrics API provides metrics and analytics of on-chain activity. The API is in Beta and may be subject to change.</br></br>If you have feedback or feature requests for the API, please submit them <a href="https://portal.productboard.com/dndv9ahlkdfye4opdm8ksafi/tabs/4-glacier-api">here</a>. Bug reports can be submitted <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJQrcp7QoNiqozMDKrVJGX5wpU827d3cVTgF8qa7t_J1Pb-g/viewform">here</a>, and any potential security issues can be reported <a href="https://hackenproof.com/avalanche">here</a>.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
-
 ## Table of Contents
-
 <!-- $toc-max-depth=2 -->
-
-* [SDK Installation](#sdk-installation)
-* [Requirements](#requirements)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Standalone functions](#standalone-functions)
-* [Global Parameters](#global-parameters)
-* [Pagination](#pagination)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Debugging](#debugging)
+  * [SDK Installation](#sdk-installation)
+  * [Requirements](#requirements)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Standalone functions](#standalone-functions)
+  * [Global Parameters](#global-parameters)
+  * [Pagination](#pagination)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
   * [Contributions](#contributions)
@@ -45,7 +40,6 @@ Metrics API: The Metrics API provides metrics and analytics of on-chain activity
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
-
 ## SDK Installation
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
@@ -79,6 +73,7 @@ yarn add @avalanche-sdk/metrics zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
+
 
 ### Model Context Protocol (MCP) Server
 
@@ -145,6 +140,7 @@ chmod +x mcp-server
 
 If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
 
+
 ```json
 {
   "mcpServers": {
@@ -163,19 +159,15 @@ For a full list of server arguments, run:
 ```sh
 npx -y --package @avalanche-sdk/metrics -- mcp start --help
 ```
-
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
-
 ## Requirements
 
 For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
-
 <!-- End Requirements [requirements] -->
 
 <!-- Start SDK Example Usage [usage] -->
-
 ## SDK Example Usage
 
 ### Example
@@ -183,30 +175,25 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.metrics.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 
 run();
 
 ```
-
 <!-- End SDK Example Usage [usage] -->
 
 <!-- Start Available Resources and Operations [operations] -->
-
 ## Available Resources and Operations
 
 <details open>
 <summary>Available methods</summary>
+
 
 ### [metrics](docs/sdks/metrics/README.md)
 
@@ -223,6 +210,13 @@ run();
 * [listTokenHoldersAboveThreshold](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 * [listBTCbBridgersAboveThreshold](docs/sdks/chains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
 
+#### [metrics.l1Validators](docs/sdks/l1validators/README.md)
+
+* [listMetrics](docs/sdks/l1validators/README.md#listmetrics) - Get given metric for all validators
+* [getMetricsByValidationId](docs/sdks/l1validators/README.md#getmetricsbyvalidationid) - Get metric values with given validation id and timestamp range
+* [getMetricsByNodeId](docs/sdks/l1validators/README.md#getmetricsbynodeid) - Get metric values with given node id and timestamp range
+* [getMetricsBySubnetId](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnet ID and timestamp range
+
 #### [metrics.networks](docs/sdks/networks/README.md)
 
 * [getStakingMetrics](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
@@ -235,7 +229,6 @@ run();
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Standalone functions [standalone-funcs] -->
-
 ## Standalone functions
 
 All the methods listed above are available as standalone functions. These
@@ -259,6 +252,10 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`metricsChainsListNftHolders`](docs/sdks/chains/README.md#listnftholders) - Get NFT holders by contract address
 - [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/chains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 - [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+- [`metricsL1ValidatorsGetMetricsByNodeId`](docs/sdks/l1validators/README.md#getmetricsbynodeid) - Get metric values with given node id and timestamp range
+- [`metricsL1ValidatorsGetMetricsBySubnetId`](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnet ID and timestamp range
+- [`metricsL1ValidatorsGetMetricsByValidationId`](docs/sdks/l1validators/README.md#getmetricsbyvalidationid) - Get metric values with given validation id and timestamp range
+- [`metricsL1ValidatorsListMetrics`](docs/sdks/l1validators/README.md#listmetrics) - Get given metric for all validators
 - [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
 - [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 
@@ -266,12 +263,12 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 <!-- End Standalone functions [standalone-funcs] -->
 
 <!-- Start Global Parameters [global-parameters] -->
-
 ## Global Parameters
 
 Certain parameters are configured globally. These parameters may be set on the SDK client instance itself during initialization. When configured as an option during SDK initialization, These global values will be used as defaults on the operations that use them. When such operations are called, there is a place in each to override the global value, if needed.
 
 For example, you can set `chainId` to `"43114"` at SDK initialization and then you do not have to pass the same value on calls to operations like `list`. But if you want to do so you may, which will locally override the global setting. See the example code below for a demonstration.
+
 
 ### Available Globals
 
@@ -298,7 +295,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -306,27 +302,24 @@ async function run() {
 run();
 
 ```
-
 <!-- End Global Parameters [global-parameters] -->
 
 <!-- Start Pagination [pagination] -->
-
 ## Pagination
 
 Some of the endpoints in this SDK support pagination. To use pagination, you
 make your SDK calls as usual, but the returned response object will also be an
-async iterable that can be consumed using the 
+async iterable that can be consumed using the [`for await...of`][for-await-of]
 syntax.
+
+[for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
 
 Here's an example of one such pagination call:
 
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.metrics.chains.list({
@@ -334,7 +327,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -342,24 +334,18 @@ async function run() {
 run();
 
 ```
-
 <!-- End Pagination [pagination] -->
 
 <!-- Start Retries [retries] -->
-
 ## Retries
 
 Some of the endpoints in this SDK support retries.  If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API.  However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.metrics.healthCheck({
@@ -375,7 +361,6 @@ async function run() {
     },
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -384,7 +369,6 @@ run();
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
@@ -399,122 +383,58 @@ const avalanche = new Avalanche({
     },
     retryConnectionErrors: false,
   },
-  chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.metrics.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 
 run();
 
 ```
-
 <!-- End Retries [retries] -->
 
 <!-- Start Error Handling [errors] -->
-
 ## Error Handling
 
-Some methods specify known errors which can be thrown. All the known errors are enumerated in the `models/errors/errors.ts` module. The known errors for a method are documented under the *Errors* tables in SDK docs. For example, the `healthCheck` method may throw the following errors:
+[`AvalancheError`](./src/models/errors/avalancheerror.ts) is the base class for all HTTP error responses. It has the following properties:
 
-| Error Type                     | Status Code | Content Type     |
-| ------------------------------ | ----------- | ---------------- |
-| errors.BadRequestError         | 400         | application/json |
-| errors.UnauthorizedError       | 401         | application/json |
-| errors.ForbiddenError          | 403         | application/json |
-| errors.NotFoundError           | 404         | application/json |
-| errors.TooManyRequestsError    | 429         | application/json |
-| errors.InternalServerError     | 500         | application/json |
-| errors.BadGatewayError         | 502         | application/json |
-| errors.ServiceUnavailableError | 503         | application/json |
-| errors.AvalancheAPIError       | 4XX, 5XX    | \*/\*            |
+| Property            | Type       | Description                                                                             |
+| ------------------- | ---------- | --------------------------------------------------------------------------------------- |
+| `error.message`     | `string`   | Error message                                                                           |
+| `error.statusCode`  | `number`   | HTTP response status code eg `404`                                                      |
+| `error.headers`     | `Headers`  | HTTP response headers                                                                   |
+| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned.                                  |
+| `error.rawResponse` | `Response` | Raw HTTP response                                                                       |
+| `error.data$`       |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
-If the method throws an error and it is not captured by the known errors, it will default to throwing a `AvalancheAPIError`.
-
+### Example
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
-import {
-  BadGatewayError,
-  BadRequestError,
-  ForbiddenError,
-  InternalServerError,
-  NotFoundError,
-  SDKValidationError,
-  ServiceUnavailableError,
-  TooManyRequestsError,
-  UnauthorizedError,
-} from "@avalanche-sdk/metrics/models/errors";
+import * as errors from "@avalanche-sdk/metrics/models/errors";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
-  let result;
   try {
-    result = await avalanche.metrics.healthCheck();
+    const result = await avalanche.metrics.healthCheck();
 
-    // Handle the result
     console.log(result);
-  } catch (err) {
-    switch (true) {
-      // The server response does not match the expected SDK schema
-      case (err instanceof SDKValidationError): {
-        // Pretty-print will provide a human-readable multi-line error message
-        console.error(err.pretty());
-        // Raw value may also be inspected
-        console.error(err.rawValue);
-        return;
-      }
-      case (err instanceof BadRequestError): {
-        // Handle err.data$: BadRequestErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof UnauthorizedError): {
-        // Handle err.data$: UnauthorizedErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof ForbiddenError): {
-        // Handle err.data$: ForbiddenErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof NotFoundError): {
-        // Handle err.data$: NotFoundErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof TooManyRequestsError): {
-        // Handle err.data$: TooManyRequestsErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof InternalServerError): {
-        // Handle err.data$: InternalServerErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof BadGatewayError): {
-        // Handle err.data$: BadGatewayErrorData
-        console.error(err);
-        return;
-      }
-      case (err instanceof ServiceUnavailableError): {
-        // Handle err.data$: ServiceUnavailableErrorData
-        console.error(err);
-        return;
-      }
-      default: {
-        // Other errors such as network errors, see HTTPClientErrors for more details
-        throw err;
+  } catch (error) {
+    // The base class for HTTP error responses
+    if (error instanceof errors.AvalancheError) {
+      console.log(error.message);
+      console.log(error.statusCode);
+      console.log(error.body);
+      console.log(error.headers);
+
+      // Depending on the method different errors may be thrown
+      if (error instanceof errors.BadRequestError) {
+        console.log(error.data$.message); // errors.BadRequestMessage
+        console.log(error.data$.statusCode); // number
+        console.log(error.data$.error); // string
       }
     }
   }
@@ -524,52 +444,61 @@ run();
 
 ```
 
-Validation errors can also occur when either method arguments or data returned from the server do not match the expected format. The `SDKValidationError` that is thrown as a result will capture the raw value that failed validation in an attribute called `rawValue`. Additionally, a `pretty()` method is available on this error that can be used to log a nicely formatted multi-line string since validation errors can list many issues and the plain error string may be difficult read when debugging.
+### Error Classes
+**Primary errors:**
+* [`AvalancheError`](./src/models/errors/avalancheerror.ts): The base class for HTTP error responses.
+  * [`BadRequestError`](docs/models/errors/badrequesterror.md): Bad requests generally mean the client has passed invalid      or malformed parameters. Error messages in the response could help in      evaluating the error. Status code `400`.
+  * [`UnauthorizedError`](docs/models/errors/unauthorizederror.md): When a client attempts to access resources that require      authorization credentials but the client lacks proper authentication      in the request, the server responds with 401. Status code `401`.
+  * [`ForbiddenError`](docs/models/errors/forbiddenerror.md): When a client attempts to access resources with valid     credentials but doesn't have the privilege to perform that action,      the server responds with 403. Status code `403`.
+  * [`NotFoundError`](docs/models/errors/notfounderror.md): The error is mostly returned when the client requests     with either mistyped URL, or the passed resource is moved or deleted,      or the resource doesn't exist. Status code `404`.
+  * [`TooManyRequestsError`](docs/models/errors/toomanyrequestserror.md): This error is returned when the client has sent too many,     and has hit the rate limit. Status code `429`.
+  * [`InternalServerError`](docs/models/errors/internalservererror.md): The error is a generic server side error that is      returned for any uncaught and unexpected issues on the server side.      This should be very rare, and you may reach out to us if the problem      persists for a longer duration. Status code `500`.
+  * [`BadGatewayError`](docs/models/errors/badgatewayerror.md): This is an internal error indicating invalid response        received by the client-facing proxy or gateway from the upstream server. Status code `502`.
+  * [`ServiceUnavailableError`](docs/models/errors/serviceunavailableerror.md): The error is returned for certain routes on a particular     Subnet. This indicates an internal problem with our Subnet node, and may      not necessarily mean the Subnet is down or affected. Status code `503`.
 
-In some rare cases, the SDK can fail to get a response from the server or even make the request due to unexpected circumstances such as network conditions. These types of errors are captured in the `models/errors/httpclienterrors.ts` module:
+<details><summary>Less common errors (6)</summary>
 
-| HTTP Client Error     | Description                                          |
-| --------------------- | ---------------------------------------------------- |
-| RequestAbortedError   | HTTP request was aborted by the client               |
-| RequestTimeoutError   | HTTP request timed out due to an AbortSignal signal  |
-| ConnectionError       | HTTP client was unable to make a request to a server |
-| InvalidRequestError   | Any input used to create a request is invalid        |
-| UnexpectedClientError | Unrecognised or unexpected error                     |
+<br />
 
+**Network errors:**
+* [`ConnectionError`](./src/models/errors/httpclienterrors.ts): HTTP client was unable to make a request to a server.
+* [`RequestTimeoutError`](./src/models/errors/httpclienterrors.ts): HTTP request timed out due to an AbortSignal signal.
+* [`RequestAbortedError`](./src/models/errors/httpclienterrors.ts): HTTP request was aborted by the client.
+* [`InvalidRequestError`](./src/models/errors/httpclienterrors.ts): Any input used to create a request is invalid.
+* [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
+
+
+**Inherit from [`AvalancheError`](./src/models/errors/avalancheerror.ts)**:
+* [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
+
+</details>
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
-
 ## Server Selection
 
 ### Override Server URL Per-Client
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
-
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 
 const avalanche = new Avalanche({
   serverURL: "https://metrics.avax.network",
-  chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.metrics.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 
 run();
 
 ```
-
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
-
 ## Custom HTTP Client
 
 The TypeScript SDK makes API calls using an `HTTPClient` that wraps the native
@@ -616,11 +545,9 @@ httpClient.addHook("requestError", (error, request) => {
 
 const sdk = new Avalanche({ httpClient });
 ```
-
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Debugging [debug] -->
-
 ## Debugging
 
 You can setup your SDK to emit debug logs for SDK requests and responses.
@@ -635,7 +562,6 @@ import { Avalanche } from "@avalanche-sdk/metrics";
 
 const sdk = new Avalanche({ debugLogger: console });
 ```
-
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

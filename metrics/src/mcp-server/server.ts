@@ -11,7 +11,7 @@ import {
   createRegisterResource,
   createRegisterResourceTemplate,
 } from "./resources.js";
-import { MCPScope, mcpScopes } from "./scopes.js";
+import { MCPScope } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
 import { tool$metricsChainsGet } from "./tools/metricsChainsGet.js";
 import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js";
@@ -22,6 +22,10 @@ import { tool$metricsChainsListBTCbBridgersAboveThreshold } from "./tools/metric
 import { tool$metricsChainsListNftHolders } from "./tools/metricsChainsListNftHolders.js";
 import { tool$metricsChainsListTokenHoldersAboveThreshold } from "./tools/metricsChainsListTokenHoldersAboveThreshold.js";
 import { tool$metricsHealthCheck } from "./tools/metricsHealthCheck.js";
+import { tool$metricsL1ValidatorsGetMetricsByNodeId } from "./tools/metricsL1ValidatorsGetMetricsByNodeId.js";
+import { tool$metricsL1ValidatorsGetMetricsBySubnetId } from "./tools/metricsL1ValidatorsGetMetricsBySubnetId.js";
+import { tool$metricsL1ValidatorsGetMetricsByValidationId } from "./tools/metricsL1ValidatorsGetMetricsByValidationId.js";
+import { tool$metricsL1ValidatorsListMetrics } from "./tools/metricsL1ValidatorsListMetrics.js";
 import { tool$metricsNetworksGetStakingMetrics } from "./tools/metricsNetworksGetStakingMetrics.js";
 import { tool$metricsSubnetsGetValidators } from "./tools/metricsSubnetsGetValidators.js";
 
@@ -36,7 +40,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0",
+    version: "0.4.0",
   });
 
   const client = new AvalancheCore({
@@ -46,7 +50,7 @@ export function createMCPServer(deps: {
     serverIdx: deps.serverIdx,
   });
 
-  const scopes = new Set(deps.scopes ?? mcpScopes);
+  const scopes = new Set(deps.scopes);
 
   const allowedTools = deps.allowedTools && new Set(deps.allowedTools);
   const tool = createRegisterTool(
@@ -77,6 +81,10 @@ export function createMCPServer(deps: {
   tool(tool$metricsChainsListTokenHoldersAboveThreshold);
   tool(tool$metricsChainsListBTCbBridgersAboveThreshold);
   tool(tool$metricsNetworksGetStakingMetrics);
+  tool(tool$metricsL1ValidatorsListMetrics);
+  tool(tool$metricsL1ValidatorsGetMetricsByValidationId);
+  tool(tool$metricsL1ValidatorsGetMetricsByNodeId);
+  tool(tool$metricsL1ValidatorsGetMetricsBySubnetId);
   tool(tool$metricsSubnetsGetValidators);
 
   return server;
