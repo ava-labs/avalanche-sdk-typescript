@@ -16,12 +16,7 @@ let value: DeliveredSourceNotIndexedIcmMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
+  receipts: [],
   receiptDelivered: false,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
@@ -39,7 +34,7 @@ let value: DeliveredSourceNotIndexedIcmMessage = {
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 6750.09,
+    timestamp: 8250.11,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",

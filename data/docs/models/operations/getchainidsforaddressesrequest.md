@@ -7,7 +7,6 @@ import { GetChainIdsForAddressesRequest } from "@avalanche-sdk/data/models/opera
 
 let value: GetChainIdsForAddressesRequest = {
   addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
-  network: "mainnet",
 };
 ```
 

@@ -10,13 +10,7 @@ let value: GetNetworkDetailsResponse = {
     validatorCount: 5215.83,
     totalAmountStaked: "<value>",
     estimatedAnnualStakingReward: "<value>",
-    stakingDistributionByVersion: [
-      {
-        version: "<value>",
-        amountStaked: "<value>",
-        validatorCount: 3120.07,
-      },
-    ],
+    stakingDistributionByVersion: [],
     stakingRatio: "<value>",
   },
   delegatorDetails: {

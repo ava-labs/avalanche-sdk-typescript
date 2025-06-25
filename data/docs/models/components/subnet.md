@@ -10,10 +10,11 @@ let value: Subnet = {
   createBlockIndex: "<value>",
   subnetId: "<id>",
   ownerAddresses: [
-    "<value>",
+    "<value 1>",
+    "<value 2>",
   ],
-  threshold: 6622.16,
-  locktime: 94.67,
+  threshold: 94.67,
+  locktime: 7674.75,
   subnetOwnershipInfo: {
     locktime: 0,
     threshold: 1,
@@ -24,13 +25,14 @@ let value: Subnet = {
   isL1: false,
   blockchains: [
     {
-      createBlockTimestamp: 7674.75,
+      createBlockTimestamp: 4077.57,
       createBlockNumber: "<value>",
       blockchainId: "<id>",
       vmId: "<id>",
       subnetId: "<id>",
       blockchainName: "<value>",
       evmChainId: 43114,
+      genesisData: {},
     },
   ],
 };

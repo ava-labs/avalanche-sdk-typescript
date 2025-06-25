@@ -5,21 +5,7 @@
 ```typescript
 import { ListValidatorsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListValidatorsResponse = {
-  result: {
-    validators: [
-      {
-        txHash: "<value>",
-        nodeId: "<id>",
-        subnetId: "<id>",
-        amountStaked: "<value>",
-        startTimestamp: 9203.18,
-        endTimestamp: 6514.5,
-        validationStatus: "pending",
-      },
-    ],
-  },
-};
+let value: ListValidatorsResponse = {};
 ```
 
 ## Fields

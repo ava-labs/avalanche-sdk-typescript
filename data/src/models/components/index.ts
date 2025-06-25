@@ -12,6 +12,7 @@ export * from "./balanceowner.js";
 export * from "./blockchain.js";
 export * from "./blockchainid.js";
 export * from "./blockchainids.js";
+export * from "./blockchaininfo.js";
 export * from "./blscredentials.js";
 export * from "./cchainatomicbalances.js";
 export * from "./cchainexporttransaction.js";

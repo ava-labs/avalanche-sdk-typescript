@@ -8,16 +8,16 @@ import { XChainVertex } from "@avalanche-sdk/data/models/components";
 let value: XChainVertex = {
   vertexHash: "<value>",
   parentHashes: [
-    "<value>",
+    "<value 1>",
   ],
-  vertexHeight: 4766.24,
-  vertexIndex: 5902.46,
-  vertexTimestamp: 8444.73,
-  txCount: 489.21,
+  vertexHeight: 5902.46,
+  vertexIndex: 8444.73,
+  vertexTimestamp: 489.21,
+  txCount: 3285.61,
   transactions: [
-    "<value>",
+    "<value 1>",
   ],
-  vertexSizeBytes: 3285.61,
+  vertexSizeBytes: 1754.76,
 };
 ```
 

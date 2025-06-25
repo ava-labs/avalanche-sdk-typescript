@@ -2,15 +2,11 @@
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 

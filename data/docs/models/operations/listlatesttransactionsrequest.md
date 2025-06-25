@@ -5,9 +5,7 @@
 ```typescript
 import { ListLatestTransactionsRequest } from "@avalanche-sdk/data/models/operations";
 
-let value: ListLatestTransactionsRequest = {
-  chainId: "43114",
-};
+let value: ListLatestTransactionsRequest = {};
 ```
 
 ## Fields

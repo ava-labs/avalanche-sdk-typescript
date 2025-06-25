@@ -19,18 +19,15 @@ Gets a block by block height or block hash on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.primaryNetwork.blocks.get({
     blockchainId: "p-chain",
-    network: "mainnet",
     blockId: "5615di9ytxujackzaXNrVuWQy5y8Yrt8chPCscMr5Ku9YxJ1S",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -48,25 +45,20 @@ import { dataPrimaryNetworkBlocksGet } from "@avalanche-sdk/data/funcs/dataPrima
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
 async function run() {
   const res = await dataPrimaryNetworkBlocksGet(avalanche, {
     blockchainId: "p-chain",
-    network: "mainnet",
     blockId: "5615di9ytxujackzaXNrVuWQy5y8Yrt8chPCscMr5Ku9YxJ1S",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataPrimaryNetworkBlocksGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -109,7 +101,6 @@ Lists the latest blocks proposed by a given NodeID on one of the Primary Network
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -118,12 +109,10 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -142,7 +131,6 @@ import { dataPrimaryNetworkBlocksListByNodeId } from "@avalanche-sdk/data/funcs/
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -151,19 +139,15 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
     nodeId: "NodeID-111111111111111111116DBWJs",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkBlocksListByNodeId failed:", res.error);
   }
 }
 
@@ -207,7 +191,6 @@ Lists latest blocks on one of the Primary Network chains.
 import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -216,11 +199,9 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -239,7 +220,6 @@ import { dataPrimaryNetworkBlocksListLatest } from "@avalanche-sdk/data/funcs/da
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
-  chainId: "43114",
   network: "mainnet",
 });
 
@@ -248,18 +228,14 @@ async function run() {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     blockchainId: "p-chain",
-    network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataPrimaryNetworkBlocksListLatest failed:", res.error);
   }
 }
 

@@ -28,17 +28,13 @@
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.teleporter.getTeleporterMessage({
     messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -55,24 +51,18 @@ import { dataTeleporterGetTeleporterMessage } from "@avalanche-sdk/data/funcs/da
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataTeleporterGetTeleporterMessage(avalanche, {
     messageId: "acf1c8b06f9aec48e9fcbefbbe576ae8a7ca3b327fcae111396e7cc99956674d",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataTeleporterGetTeleporterMessage failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -118,10 +108,7 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.teleporter.listTeleporterMessages({
@@ -133,7 +120,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -151,10 +137,7 @@ import { dataTeleporterListTeleporterMessages } from "@avalanche-sdk/data/funcs/
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataTeleporterListTeleporterMessages(avalanche, {
@@ -164,16 +147,13 @@ async function run() {
     from: "0x321eDA69247566D662178feE695C7026c604Cd94",
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataTeleporterListTeleporterMessages failed:", res.error);
   }
 }
 
@@ -220,10 +200,7 @@ run();
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.teleporter.listTeleporterMessagesByAddress({
@@ -231,7 +208,6 @@ async function run() {
     network: "mainnet",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -248,25 +224,19 @@ import { dataTeleporterListTeleporterMessagesByAddress } from "@avalanche-sdk/da
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataTeleporterListTeleporterMessagesByAddress(avalanche, {
     address: "0x8578AE7723751446B196bD5124e1bF57B40EB7Bc",
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataTeleporterListTeleporterMessagesByAddress failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

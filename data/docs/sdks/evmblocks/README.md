@@ -19,10 +19,7 @@ Lists the most recent blocks from all supported  EVM-compatible chains. The resu
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.evm.blocks.listLatestAllChains({
@@ -30,7 +27,6 @@ async function run() {
   });
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -48,25 +44,19 @@ import { dataEvmBlocksListLatestAllChains } from "@avalanche-sdk/data/funcs/data
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataEvmBlocksListLatestAllChains(avalanche, {
     network: "mainnet",
   });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmBlocksListLatestAllChains failed:", res.error);
   }
 }
 
@@ -111,16 +101,12 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const result = await avalanche.data.evm.blocks.listLatest({
-    chainId: "43114",
-  });
+  const result = await avalanche.data.evm.blocks.listLatest({});
 
   for await (const page of result) {
-    // Handle the page
     console.log(page);
   }
 }
@@ -140,23 +126,17 @@ import { dataEvmBlocksListLatest } from "@avalanche-sdk/data/funcs/dataEvmBlocks
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
-  const res = await dataEvmBlocksListLatest(avalanche, {
-    chainId: "43114",
-  });
-
-  if (!res.ok) {
-    throw res.error;
-  }
-
-  const { value: result } = res;
-
-  for await (const page of result) {
-    // Handle the page
+  const res = await dataEvmBlocksListLatest(avalanche, {});
+  if (res.ok) {
+    const { value: result } = res;
+    for await (const page of result) {
     console.log(page);
+  }
+  } else {
+    console.log("dataEvmBlocksListLatest failed:", res.error);
   }
 }
 
@@ -201,16 +181,13 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.blocks.get({
-    chainId: "43114",
     blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -229,23 +206,18 @@ import { dataEvmBlocksGet } from "@avalanche-sdk/data/funcs/dataEvmBlocksGet.js"
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmBlocksGet(avalanche, {
-    chainId: "43114",
     blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmBlocksGet failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();
@@ -289,16 +261,14 @@ import { Avalanche } from "@avalanche-sdk/data";
 
 const avalanche = new Avalanche({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const result = await avalanche.data.evm.blocks.listTransactions({
-    chainId: "43114",
+    pageSize: 10,
     blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   });
 
-  // Handle the result
   console.log(result);
 }
 
@@ -317,23 +287,19 @@ import { dataEvmBlocksListTransactions } from "@avalanche-sdk/data/funcs/dataEvm
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore({
   chainId: "43114",
-  network: "mainnet",
 });
 
 async function run() {
   const res = await dataEvmBlocksListTransactions(avalanche, {
-    chainId: "43114",
+    pageSize: 10,
     blockId: "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   });
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataEvmBlocksListTransactions failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

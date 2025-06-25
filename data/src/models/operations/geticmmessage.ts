@@ -19,11 +19,11 @@ export type GetIcmMessageRequest = {
  * Successful response
  */
 export type GetIcmMessageResponse =
+  | (components.DeliveredIcmMessage & { status: "delivered" })
   | (components.PendingIcmMessage & { status: "pending" })
   | (components.DeliveredSourceNotIndexedIcmMessage & {
     status: "delivered_source_not_indexed";
-  })
-  | (components.DeliveredIcmMessage & { status: "delivered" });
+  });
 
 /** @internal */
 export const GetIcmMessageRequest$inboundSchema: z.ZodType<
@@ -85,6 +85,11 @@ export const GetIcmMessageResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
+  components.DeliveredIcmMessage$inboundSchema.and(
+    z.object({ status: z.literal("delivered") }).transform((v) => ({
+      status: v.status,
+    })),
+  ),
   components.PendingIcmMessage$inboundSchema.and(
     z.object({ status: z.literal("pending") }).transform((v) => ({
       status: v.status,
@@ -95,20 +100,15 @@ export const GetIcmMessageResponse$inboundSchema: z.ZodType<
       v,
     ) => ({ status: v.status })),
   ),
-  components.DeliveredIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
 ]);
 
 /** @internal */
 export type GetIcmMessageResponse$Outbound =
+  | (components.DeliveredIcmMessage$Outbound & { status: "delivered" })
   | (components.PendingIcmMessage$Outbound & { status: "pending" })
   | (components.DeliveredSourceNotIndexedIcmMessage$Outbound & {
     status: "delivered_source_not_indexed";
-  })
-  | (components.DeliveredIcmMessage$Outbound & { status: "delivered" });
+  });
 
 /** @internal */
 export const GetIcmMessageResponse$outboundSchema: z.ZodType<
@@ -116,6 +116,11 @@ export const GetIcmMessageResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetIcmMessageResponse
 > = z.union([
+  components.DeliveredIcmMessage$outboundSchema.and(
+    z.object({ status: z.literal("delivered") }).transform((v) => ({
+      status: v.status,
+    })),
+  ),
   components.PendingIcmMessage$outboundSchema.and(
     z.object({ status: z.literal("pending") }).transform((v) => ({
       status: v.status,
@@ -125,11 +130,6 @@ export const GetIcmMessageResponse$outboundSchema: z.ZodType<
     z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
       v,
     ) => ({ status: v.status })),
-  ),
-  components.DeliveredIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
   ),
 ]);
 

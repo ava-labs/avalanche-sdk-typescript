@@ -7,7 +7,6 @@ import { ListErc1155BalancesRequest } from "@avalanche-sdk/data/models/operation
 
 let value: ListErc1155BalancesRequest = {
   blockNumber: "6479329",
-  chainId: "43114",
   address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
   contractAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
 };

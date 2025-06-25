@@ -5,26 +5,7 @@
 ```typescript
 import { ListDelegatorsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListDelegatorsResponse = {
-  result: {
-    delegators: [
-      {
-        txHash: "<value>",
-        nodeId: "<id>",
-        rewardAddresses: [
-          "<value>",
-        ],
-        amountDelegated: "<value>",
-        delegationFee: "<value>",
-        startTimestamp: 4104.55,
-        endTimestamp: 969.58,
-        estimatedGrossReward: "<value>",
-        estimatedNetReward: "<value>",
-        delegationStatus: "pending",
-      },
-    ],
-  },
-};
+let value: ListDelegatorsResponse = {};
 ```
 
 ## Fields
