@@ -12,120 +12,18 @@ import {
   TransactionDirectionType$outboundSchema,
 } from "./transactiondirectiontype.js";
 
-/**
- * chain id of the source chain. valid only for destination transactions
- */
-export type SourceChainId = {};
-
-/**
- * chain id of the destination chain. valid only for source transactions
- */
-export type DestinationChainId = {};
-
 export type TeleporterMessageInfo = {
   teleporterMessageId: string;
   direction: TransactionDirectionType;
   /**
    * chain id of the source chain. valid only for destination transactions
    */
-  sourceChainId?: SourceChainId | undefined;
+  sourceChainId?: string | undefined;
   /**
    * chain id of the destination chain. valid only for source transactions
    */
-  destinationChainId?: DestinationChainId | undefined;
+  destinationChainId?: string | undefined;
 };
-
-/** @internal */
-export const SourceChainId$inboundSchema: z.ZodType<
-  SourceChainId,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type SourceChainId$Outbound = {};
-
-/** @internal */
-export const SourceChainId$outboundSchema: z.ZodType<
-  SourceChainId$Outbound,
-  z.ZodTypeDef,
-  SourceChainId
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SourceChainId$ {
-  /** @deprecated use `SourceChainId$inboundSchema` instead. */
-  export const inboundSchema = SourceChainId$inboundSchema;
-  /** @deprecated use `SourceChainId$outboundSchema` instead. */
-  export const outboundSchema = SourceChainId$outboundSchema;
-  /** @deprecated use `SourceChainId$Outbound` instead. */
-  export type Outbound = SourceChainId$Outbound;
-}
-
-export function sourceChainIdToJSON(sourceChainId: SourceChainId): string {
-  return JSON.stringify(SourceChainId$outboundSchema.parse(sourceChainId));
-}
-
-export function sourceChainIdFromJSON(
-  jsonString: string,
-): SafeParseResult<SourceChainId, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => SourceChainId$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'SourceChainId' from JSON`,
-  );
-}
-
-/** @internal */
-export const DestinationChainId$inboundSchema: z.ZodType<
-  DestinationChainId,
-  z.ZodTypeDef,
-  unknown
-> = z.object({});
-
-/** @internal */
-export type DestinationChainId$Outbound = {};
-
-/** @internal */
-export const DestinationChainId$outboundSchema: z.ZodType<
-  DestinationChainId$Outbound,
-  z.ZodTypeDef,
-  DestinationChainId
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DestinationChainId$ {
-  /** @deprecated use `DestinationChainId$inboundSchema` instead. */
-  export const inboundSchema = DestinationChainId$inboundSchema;
-  /** @deprecated use `DestinationChainId$outboundSchema` instead. */
-  export const outboundSchema = DestinationChainId$outboundSchema;
-  /** @deprecated use `DestinationChainId$Outbound` instead. */
-  export type Outbound = DestinationChainId$Outbound;
-}
-
-export function destinationChainIdToJSON(
-  destinationChainId: DestinationChainId,
-): string {
-  return JSON.stringify(
-    DestinationChainId$outboundSchema.parse(destinationChainId),
-  );
-}
-
-export function destinationChainIdFromJSON(
-  jsonString: string,
-): SafeParseResult<DestinationChainId, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => DestinationChainId$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'DestinationChainId' from JSON`,
-  );
-}
 
 /** @internal */
 export const TeleporterMessageInfo$inboundSchema: z.ZodType<
@@ -135,16 +33,16 @@ export const TeleporterMessageInfo$inboundSchema: z.ZodType<
 > = z.object({
   teleporterMessageId: z.string(),
   direction: TransactionDirectionType$inboundSchema,
-  sourceChainId: z.lazy(() => SourceChainId$inboundSchema).optional(),
-  destinationChainId: z.lazy(() => DestinationChainId$inboundSchema).optional(),
+  sourceChainId: z.string().optional(),
+  destinationChainId: z.string().optional(),
 });
 
 /** @internal */
 export type TeleporterMessageInfo$Outbound = {
   teleporterMessageId: string;
   direction: string;
-  sourceChainId?: SourceChainId$Outbound | undefined;
-  destinationChainId?: DestinationChainId$Outbound | undefined;
+  sourceChainId?: string | undefined;
+  destinationChainId?: string | undefined;
 };
 
 /** @internal */
@@ -155,9 +53,8 @@ export const TeleporterMessageInfo$outboundSchema: z.ZodType<
 > = z.object({
   teleporterMessageId: z.string(),
   direction: TransactionDirectionType$outboundSchema,
-  sourceChainId: z.lazy(() => SourceChainId$outboundSchema).optional(),
-  destinationChainId: z.lazy(() => DestinationChainId$outboundSchema)
-    .optional(),
+  sourceChainId: z.string().optional(),
+  destinationChainId: z.string().optional(),
 });
 
 /**

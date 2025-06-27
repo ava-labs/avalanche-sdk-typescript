@@ -19,15 +19,33 @@ DEBUG	append_error: Renamed component to "BadGateway_error"
 DEBUG	append_error: Renamed component to "ServiceUnavailable_error" 
 	 labels: "original_name:ServiceUnavailable scope:errors data_type:error" 
 	 registrationID: "scope:errors refType:Schemas refName:ServiceUnavailable component:true originalName:ServiceUnavailable"
+DEBUG	prepend_op_id: Renamed to "getTokenDetails_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTokenDetails operationTag:data.nfts requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.nfts operation:getTokenDetails requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: Renamed to "postTransactionExportJob_request" 
 	 labels: "original_name:request operation:postTransactionExportJob operationTag:data.operations data_type:union" 
 	 registrationID: "scope:operations operationTag:data.operations operation:postTransactionExportJob requestResponse:request originalName:RequestBody"
+DEBUG	prepend_op_id: Renamed to "getTxByHash_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTxByHash operationTag:data.primaryNetwork.transactions requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.primaryNetwork.transactions operation:getTxByHash requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: Renamed to "listLatestPrimaryNetworkTransactions_ResponseBody" 
 	 labels: "original_name:ResponseBody operation:listLatestPrimaryNetworkTransactions operationTag:data.primaryNetwork.transactions requestResponse:response data_type:union" 
 	 registrationID: "scope:operations operationTag:data.primaryNetwork.transactions operation:listLatestPrimaryNetworkTransactions requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: Renamed to "getUtxosByAddresses_ResponseBody" 
 	 labels: "original_name:ResponseBody operation:getUtxosByAddresses operationTag:data.primaryNetwork.utxos requestResponse:response data_type:union" 
 	 registrationID: "scope:operations operationTag:data.primaryNetwork.utxos operation:getUtxosByAddresses requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: Renamed to "getBalancesByAddresses_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getBalancesByAddresses operationTag:data.primaryNetwork.balances requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.primaryNetwork.balances operation:getBalancesByAddresses requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: Renamed to "getTeleporterMessage_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTeleporterMessage operationTag:data.teleporter requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.teleporter operation:getTeleporterMessage requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: Renamed to "getIcmMessage_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getIcmMessage operationTag:data.icm requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.icm operation:getIcmMessage requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: Renamed to "getContractMetadata_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getContractMetadata operationTag:data.evm.contracts requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.evm.contracts operation:getContractMetadata requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	
 
 --- Renaming 8 types with name "status" ---
@@ -55,6 +73,39 @@ DEBUG	discriminated: Renamed to "PendingIcmMessage_status"
 DEBUG	discriminated: Renamed to "DeliveredIcmMessage_status" 
 	 labels: "original_name:status scope:shared data_type:enum refName:DeliveredIcmMessage constProperty:Delivered" 
 	 registrationID: "scope:shared refType:Schemas refName:DeliveredIcmMessage constProperty:delivered originalName:status"
+DEBUG	
+
+--- Renaming 10 types with name "message" ---
+DEBUG	discriminated: Renamed to "BadRequest_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:BadRequest" 
+	 registrationID: "scope:shared refType:Schemas refName:BadRequest originalName:message"
+DEBUG	discriminated: Renamed to "Unauthorized_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:Unauthorized" 
+	 registrationID: "scope:shared refType:Schemas refName:Unauthorized originalName:message"
+DEBUG	discriminated: Renamed to "Forbidden_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:Forbidden" 
+	 registrationID: "scope:shared refType:Schemas refName:Forbidden originalName:message"
+DEBUG	discriminated: Renamed to "NotFound_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:NotFound" 
+	 registrationID: "scope:shared refType:Schemas refName:NotFound originalName:message"
+DEBUG	discriminated: Renamed to "TooManyRequests_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:TooManyRequests" 
+	 registrationID: "scope:shared refType:Schemas refName:TooManyRequests originalName:message"
+DEBUG	discriminated: Renamed to "InternalServerError_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:InternalServerError" 
+	 registrationID: "scope:shared refType:Schemas refName:InternalServerError originalName:message"
+DEBUG	discriminated: Renamed to "BadGateway_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:BadGateway" 
+	 registrationID: "scope:shared refType:Schemas refName:BadGateway originalName:message"
+DEBUG	discriminated: Renamed to "ServiceUnavailable_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:ServiceUnavailable" 
+	 registrationID: "scope:shared refType:Schemas refName:ServiceUnavailable originalName:message"
+DEBUG	discriminated: Renamed to "ListTeleporterMessagesResponse_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:ListTeleporterMessagesResponse" 
+	 registrationID: "scope:shared refType:Schemas refName:ListTeleporterMessagesResponse originalName:message"
+DEBUG	discriminated: Renamed to "ListIcmMessagesResponse_message" 
+	 labels: "original_name:message scope:shared data_type:union refName:ListIcmMessagesResponse" 
+	 registrationID: "scope:shared refType:Schemas refName:ListIcmMessagesResponse originalName:message"
 DEBUG	
 
 --- Renaming 2 types with name "enabledFeature" ---
@@ -177,15 +228,6 @@ DEBUG	discriminated: Renamed to "PendingDelegatorDetails_delegationStatus"
 	 registrationID: "scope:shared refType:Schemas refName:PendingDelegatorDetails constProperty:pending originalName:delegationStatus"
 DEBUG	
 
---- Renaming 2 types with name "message" ---
-DEBUG	discriminated: Renamed to "ListTeleporterMessagesResponse_message" 
-	 labels: "original_name:message scope:shared data_type:union refName:ListTeleporterMessagesResponse" 
-	 registrationID: "scope:shared refType:Schemas refName:ListTeleporterMessagesResponse originalName:message"
-DEBUG	discriminated: Renamed to "ListIcmMessagesResponse_message" 
-	 labels: "original_name:message scope:shared data_type:union refName:ListIcmMessagesResponse" 
-	 registrationID: "scope:shared refType:Schemas refName:ListIcmMessagesResponse originalName:message"
-DEBUG	
-
 --- Renaming 2 types with name "groupedBy" ---
 DEBUG	discriminated: Renamed to "UsageMetricsValueDTO_groupedBy" 
 	 labels: "original_name:groupedBy scope:shared data_type:enum refName:UsageMetricsValueDTO" 
@@ -213,97 +255,90 @@ DEBUG	discriminated: Renamed to "getApiLogs_requestType"
 	 registrationID: "scope:operations operationTag:data.usageMetrics operation:getApiLogs parameter:queryParam originalName:requestType"
 DEBUG	
 
---- Renaming 8 types with name "message" ---
-DEBUG	discriminated: Renamed to "BadRequest_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:BadRequest" 
-	 registrationID: "scope:errors refType:Schemas refName:BadRequest originalName:message"
-DEBUG	discriminated: Renamed to "Unauthorized_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:Unauthorized" 
-	 registrationID: "scope:errors refType:Schemas refName:Unauthorized originalName:message"
-DEBUG	discriminated: Renamed to "Forbidden_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:Forbidden" 
-	 registrationID: "scope:errors refType:Schemas refName:Forbidden originalName:message"
-DEBUG	discriminated: Renamed to "NotFound_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:NotFound" 
-	 registrationID: "scope:errors refType:Schemas refName:NotFound originalName:message"
-DEBUG	discriminated: Renamed to "TooManyRequests_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:TooManyRequests" 
-	 registrationID: "scope:errors refType:Schemas refName:TooManyRequests originalName:message"
-DEBUG	discriminated: Renamed to "InternalServerError_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:InternalServerError" 
-	 registrationID: "scope:errors refType:Schemas refName:InternalServerError originalName:message"
-DEBUG	discriminated: Renamed to "BadGateway_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:BadGateway" 
-	 registrationID: "scope:errors refType:Schemas refName:BadGateway originalName:message"
-DEBUG	discriminated: Renamed to "ServiceUnavailable_message" 
-	 labels: "original_name:message scope:errors data_type:union refName:ServiceUnavailable" 
-	 registrationID: "scope:errors refType:Schemas refName:ServiceUnavailable originalName:message"
-DEBUG	
-
 --- Renaming 2 types with name "chains" ---
 DEBUG	discriminated: Renamed to "address_chains" 
-	 labels: "original_name:chains group:address group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm group:address originalName:chains"
+	 labels: "original_name:chains group:address group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm group:address originalName:chains"
 DEBUG	
 
 --- Renaming 3 types with name "transactions" ---
 DEBUG	discriminated: Renamed to "evm_transactions" 
-	 labels: "original_name:transactions group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm originalName:transactions"
+	 labels: "original_name:transactions group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm originalName:transactions"
 DEBUG	discriminated: Renamed to "primaryNetwork_transactions" 
-	 labels: "original_name:transactions group:primaryNetwork group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:primaryNetwork originalName:transactions"
+	 labels: "original_name:transactions group:primaryNetwork group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:primaryNetwork originalName:transactions"
 DEBUG	discriminated: Renamed to "address_transactions" 
-	 labels: "original_name:transactions group:address group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm group:address originalName:transactions"
+	 labels: "original_name:transactions group:address group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm group:address originalName:transactions"
 DEBUG	
 
 --- Renaming 2 types with name "blocks" ---
 DEBUG	discriminated: Renamed to "evm_blocks" 
-	 labels: "original_name:blocks group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm originalName:blocks"
+	 labels: "original_name:blocks group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm originalName:blocks"
 DEBUG	discriminated: Renamed to "primaryNetwork_blocks" 
-	 labels: "original_name:blocks group:primaryNetwork group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:primaryNetwork originalName:blocks"
+	 labels: "original_name:blocks group:primaryNetwork group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:primaryNetwork originalName:blocks"
 DEBUG	
 
 --- Renaming 2 types with name "balances" ---
 DEBUG	discriminated: Renamed to "primaryNetwork_balances" 
-	 labels: "original_name:balances group:primaryNetwork group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:primaryNetwork originalName:balances"
+	 labels: "original_name:balances group:primaryNetwork group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:primaryNetwork originalName:balances"
 DEBUG	discriminated: Renamed to "address_balances" 
-	 labels: "original_name:balances group:address group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm group:address originalName:balances"
+	 labels: "original_name:balances group:address group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm group:address originalName:balances"
 DEBUG	
 
 --- Renaming 2 types with name "contracts" ---
 DEBUG	discriminated: Renamed to "address_contracts" 
-	 labels: "original_name:contracts group:address group:evm group:data data_type:SDK mainSDK:Avalanche" 
-	 registrationID: "scope:sdk mainSDK:Avalanche group:data group:evm group:address originalName:contracts"
+	 labels: "original_name:contracts group:address group:evm group:data data_type:SDK" 
+	 registrationID: "scope:sdk mainSDK:SDK group:data group:evm group:address originalName:contracts"
+DEBUG	prepend_op_id: N/A rename "getTokenDetails_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTokenDetails operationTag:data.nfts requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.nfts operation:getTokenDetails requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: N/A rename "postTransactionExportJob_request" 
 	 labels: "original_name:request operation:postTransactionExportJob operationTag:data.operations data_type:union" 
 	 registrationID: "scope:operations operationTag:data.operations operation:postTransactionExportJob requestResponse:request originalName:RequestBody"
+DEBUG	prepend_op_id: N/A rename "getTxByHash_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTxByHash operationTag:data.primaryNetwork.transactions requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.primaryNetwork.transactions operation:getTxByHash requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: N/A rename "listLatestPrimaryNetworkTransactions_ResponseBody" 
 	 labels: "original_name:ResponseBody operation:listLatestPrimaryNetworkTransactions operationTag:data.primaryNetwork.transactions requestResponse:response data_type:union" 
 	 registrationID: "scope:operations operationTag:data.primaryNetwork.transactions operation:listLatestPrimaryNetworkTransactions requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	prepend_op_id: N/A rename "getUtxosByAddresses_ResponseBody" 
 	 labels: "original_name:ResponseBody operation:getUtxosByAddresses operationTag:data.primaryNetwork.utxos requestResponse:response data_type:union" 
 	 registrationID: "scope:operations operationTag:data.primaryNetwork.utxos operation:getUtxosByAddresses requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: N/A rename "getBalancesByAddresses_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getBalancesByAddresses operationTag:data.primaryNetwork.balances requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.primaryNetwork.balances operation:getBalancesByAddresses requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: N/A rename "getTeleporterMessage_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getTeleporterMessage operationTag:data.teleporter requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.teleporter operation:getTeleporterMessage requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: N/A rename "getIcmMessage_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getIcmMessage operationTag:data.icm requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.icm operation:getIcmMessage requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
+DEBUG	prepend_op_id: N/A rename "getContractMetadata_ResponseBody" 
+	 labels: "original_name:ResponseBody operation:getContractMetadata operationTag:data.evm.contracts requestResponse:response data_type:union" 
+	 registrationID: "scope:operations operationTag:data.evm.contracts operation:getContractMetadata requestResponse:response responseStatusCode:200 responseMediaType:application/json originalName:ResponseBody"
 DEBUG	
 
-Avalanche (SDK empty)
+Sdk (SDK empty)
 Data (SDK empty)
 Evm (SDK empty)
 Address (SDK empty)
 AddressChains (SDK empty)
 ListAddressChainsRequest (address: string)
-ListAddressChainsResponse (indexedChains: array, unindexedChains: array)
-  ChainInfo (chainId: string, status: ChainStatus, chainName: string ...)
-   ChainStatus (enum: OK, UNAVAILABLE)
-   VmName (enum: EVM, BITCOIN, ETHEREUM)
-   UtilityAddresses (multicall: string)
-   NetworkToken (name: string, symbol: string, decimals: number ...)
-    ChainInfoEnabledFeature (enum: nftIndexing, webhooks, teleporter)
+ListAddressChainsResponse (HttpMeta: HTTPMetadata, ListAddressChainsResponse: ListAddressChainsResponse)
+ HttpMetadata (Response: response, Request: request)
+ ListAddressChainsResponse (indexedChains: array, unindexedChains: array)
+   ChainInfo (chainId: string, status: ChainStatus, chainName: string ...)
+    ChainStatus (enum: OK, UNAVAILABLE)
+    VmName (enum: EVM, BITCOIN, ETHEREUM)
+    UtilityAddresses (multicall: string)
+    NetworkToken (name: string, symbol: string, decimals: number ...)
+     ChainInfoEnabledFeature (enum: nftIndexing, webhooks, teleporter)
 BadRequestError (error)
  BadRequestMessage (union)
 UnauthorizedError (error)
@@ -320,40 +355,40 @@ BadGatewayError (error)
  BadGatewayMessage (union)
 ServiceUnavailableError (error)
  ServiceUnavailableMessage (union)
-Security (apiKey: string)
 AddressBalances (SDK empty)
 GetNativeBalanceRequest (blockNumber: string, chainId: string, address: string ...)
  CurrencyCode (enum: usd, eur, aud ...)
-GetNativeBalanceResponse (nativeTokenBalance: NativeTokenBalance)
- NativeTokenBalance (name: string, symbol: string, decimals: number ...)
-  Money (currencyCode: CurrencyCode, value: number)
+GetNativeBalanceResponse (HttpMeta: HTTPMetadata, GetNativeBalanceResponse: GetNativeBalanceResponse)
+ GetNativeBalanceResponse (nativeTokenBalance: NativeTokenBalance)
+  NativeTokenBalance (name: string, symbol: string, decimals: number ...)
+   Money (currencyCode: CurrencyCode, value: number)
 ListErc20BalancesRequest (blockNumber: string, pageToken: string, pageSize: integer ...)
-ListErc20BalancesResponse (Result: ListErc20BalancesResponse)
+ListErc20BalancesResponse (HttpMeta: HTTPMetadata, ListErc20BalancesResponse: ListErc20BalancesResponse)
  ListErc20BalancesResponse (nextPageToken: string, nativeTokenBalance: NativeTokenBalance, erc20TokenBalances: array)
    Erc20TokenBalance (address: string, name: string, symbol: string ...)
     Erc20TokenBalanceErcType (enum: ERC-20)
     TokenReputation (enum: Malicious, Benign)
 ListErc721BalancesRequest (pageToken: string, pageSize: integer, chainId: string ...)
-ListErc721BalancesResponse (Result: ListErc721BalancesResponse)
+ListErc721BalancesResponse (HttpMeta: HTTPMetadata, ListErc721BalancesResponse: ListErc721BalancesResponse)
  ListErc721BalancesResponse (nextPageToken: string, nativeTokenBalance: NativeTokenBalance, erc721TokenBalances: array)
    Erc721TokenBalance (address: string, name: string, symbol: string ...)
     Erc721TokenBalanceErcType (enum: ERC-721)
     Erc721TokenMetadata (indexStatus: NftTokenMetadataStatus, metadataLastUpdatedTimestamp: number, name: string ...)
      NftTokenMetadataStatus (enum: UNKNOWN, MISSING_TOKEN, INVALID_TOKEN_URI ...)
 ListErc1155BalancesRequest (blockNumber: string, pageToken: string, pageSize: integer ...)
-ListErc1155BalancesResponse (Result: ListErc1155BalancesResponse)
+ListErc1155BalancesResponse (HttpMeta: HTTPMetadata, ListErc1155BalancesResponse: ListErc1155BalancesResponse)
  ListErc1155BalancesResponse (nextPageToken: string, nativeTokenBalance: NativeTokenBalance, erc1155TokenBalances: array)
    Erc1155TokenBalance (address: string, ercType: enum, tokenId: string ...)
     Erc1155TokenBalanceErcType (enum: ERC-1155)
     Erc1155TokenMetadata (indexStatus: NftTokenMetadataStatus, metadataLastUpdatedTimestamp: number, name: string ...)
 ListCollectibleBalancesRequest (pageToken: string, pageSize: integer, chainId: string ...)
-ListCollectibleBalancesResponse (Result: ListCollectibleBalancesResponse)
+ListCollectibleBalancesResponse (HttpMeta: HTTPMetadata, ListCollectibleBalancesResponse: ListCollectibleBalancesResponse)
  ListCollectibleBalancesResponse (nextPageToken: string, collectibleBalances: array)
    CollectibleBalance (union)
 ListCollectibleBalancesGlobals (chainId: string)
 AddressContracts (SDK empty)
 ListContractDeploymentsRequest (pageToken: string, pageSize: integer, chainId: string ...)
-ListContractDeploymentsResponse (Result: ListContractsResponse)
+ListContractDeploymentsResponse (HttpMeta: HTTPMetadata, ListContractsResponse: ListContractsResponse)
  ListContractsResponse (nextPageToken: string, contracts: array)
    Contract (union)
     Erc721Contract (name: string, description: string, officialSite: string ...)
@@ -372,7 +407,7 @@ ListContractDeploymentsResponse (Result: ListContractsResponse)
 AddressTransactions (SDK empty)
 ListTransactionsRequest (pageToken: string, pageSize: integer, startBlock: number ...)
  SortOrder (enum: asc, desc)
-ListTransactionsResponse (Result: ListTransactionDetailsResponse)
+ListTransactionsResponse (HttpMeta: HTTPMetadata, ListTransactionDetailsResponse: ListTransactionDetailsResponse)
  ListTransactionDetailsResponse (nextPageToken: string, transactions: array)
    TransactionDetails (nativeTransaction: NativeTransaction, erc20Transfers: array, erc721Transfers: array ...)
     NativeTransaction (blockNumber: string, blockTimestamp: number, blockHash: string ...)
@@ -391,85 +426,94 @@ ListTransactionsResponse (Result: ListTransactionDetailsResponse)
      InternalTransactionDetails (from: RichAddress, to: RichAddress, internalTxType: InternalTransactionOpCall ...)
       InternalTransactionOpCall (enum: UNKNOWN, CALL, CREATE ...)
 ListNativeTransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListNativeTransactionsResponse (Result: ListNativeTransactionsResponse)
+ListNativeTransactionsResponse (HttpMeta: HTTPMetadata, ListNativeTransactionsResponse: ListNativeTransactionsResponse)
  ListNativeTransactionsResponse (nextPageToken: string, transactions: array)
 ListErc20TransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListErc20TransactionsResponse (Result: ListErc20TransactionsResponse)
+ListErc20TransactionsResponse (HttpMeta: HTTPMetadata, ListErc20TransactionsResponse: ListErc20TransactionsResponse)
  ListErc20TransactionsResponse (nextPageToken: string, transactions: array)
    Erc20Transfer (blockNumber: string, blockTimestamp: number, blockHash: string ...)
 ListErc721TransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListErc721TransactionsResponse (Result: ListErc721TransactionsResponse)
+ListErc721TransactionsResponse (HttpMeta: HTTPMetadata, ListErc721TransactionsResponse: ListErc721TransactionsResponse)
  ListErc721TransactionsResponse (nextPageToken: string, transactions: array)
    Erc721Transfer (blockNumber: string, blockTimestamp: number, blockHash: string ...)
 ListErc1155TransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListErc1155TransactionsResponse (Result: ListErc1155TransactionsResponse)
+ListErc1155TransactionsResponse (HttpMeta: HTTPMetadata, ListErc1155TransactionsResponse: ListErc1155TransactionsResponse)
  ListErc1155TransactionsResponse (nextPageToken: string, transactions: array)
    Erc1155Transfer (blockNumber: string, blockTimestamp: number, blockHash: string ...)
 ListInternalTransactionsRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListInternalTransactionsResponse (Result: ListInternalTransactionsResponse)
+ListInternalTransactionsResponse (HttpMeta: HTTPMetadata, ListInternalTransactionsResponse: ListInternalTransactionsResponse)
  ListInternalTransactionsResponse (nextPageToken: string, transactions: array)
    InternalTransaction (blockNumber: string, blockTimestamp: number, blockHash: string ...)
 EvmTransactions (SDK empty)
 ListLatestTransactionsAllChainsRequest (pageToken: string, pageSize: integer, network: Network ...)
  Network (enum: mainnet, fuji, testnet)
  TransactionStatus (enum: failed, success)
-ListLatestTransactionsAllChainsResponse (Result: ListNativeTransactionsResponse)
+ListLatestTransactionsAllChainsResponse (HttpMeta: HTTPMetadata, ListNativeTransactionsResponse: ListNativeTransactionsResponse)
 GetTransactionRequest (chainId: string, txHash: string)
-GetTransactionResponse (erc20Transfers: array, erc721Transfers: array, erc1155Transfers: array ...)
- NetworkTokenDetails (networkToken: NetworkToken, currentPrice: Money, historicalPrice: Money)
- FullNativeTransactionDetails (blockNumber: string, blockTimestamp: number, blockHash: string ...)
- TeleporterMessageInfo (teleporterMessageId: string, direction: TransactionDirectionType, sourceChainId: class ...)
-  TransactionDirectionType (enum: SOURCE_TRANSACTION, DESTINATION_TRANSACTION)
-  SourceChainId (empty)
-  DestinationChainId (empty)
+GetTransactionResponse (HttpMeta: HTTPMetadata, GetTransactionResponse: GetTransactionResponse)
+ GetTransactionResponse (erc20Transfers: array, erc721Transfers: array, erc1155Transfers: array ...)
+  NetworkTokenDetails (networkToken: NetworkToken, currentPrice: Money, historicalPrice: Money)
+  FullNativeTransactionDetails (blockNumber: string, blockTimestamp: number, blockHash: string ...)
+  TeleporterMessageInfo (teleporterMessageId: string, direction: TransactionDirectionType, sourceChainId: string ...)
+   TransactionDirectionType (enum: SOURCE_TRANSACTION, DESTINATION_TRANSACTION)
 ListLatestTransactionsRequest (pageToken: string, pageSize: integer, chainId: string ...)
-ListLatestTransactionsResponse (Result: ListNativeTransactionsResponse)
+ListLatestTransactionsResponse (HttpMeta: HTTPMetadata, ListNativeTransactionsResponse: ListNativeTransactionsResponse)
 EvmBlocks (SDK empty)
 ListLatestBlocksAllChainsRequest (pageToken: string, pageSize: integer, network: Network)
-ListLatestBlocksAllChainsResponse (Result: ListEvmBlocksResponse)
+ListLatestBlocksAllChainsResponse (HttpMeta: HTTPMetadata, ListEvmBlocksResponse: ListEvmBlocksResponse)
  ListEvmBlocksResponse (nextPageToken: string, blocks: array)
    EvmBlock (chainId: string, blockNumber: string, blockTimestamp: number ...)
 GetLatestBlocksRequest (pageToken: string, pageSize: integer, chainId: string)
-GetLatestBlocksResponse (Result: ListEvmBlocksResponse)
+GetLatestBlocksResponse (HttpMeta: HTTPMetadata, ListEvmBlocksResponse: ListEvmBlocksResponse)
 GetBlockRequest (chainId: string, blockId: string)
-GetEvmBlockResponse (chainId: string, blockNumber: string, blockTimestamp: number ...)
+GetBlockResponse (HttpMeta: HTTPMetadata, GetEvmBlockResponse: GetEvmBlockResponse)
+ GetEvmBlockResponse (chainId: string, blockNumber: string, blockTimestamp: number ...)
 GetTransactionsForBlockRequest (pageToken: string, pageSize: integer, chainId: string ...)
+GetTransactionsForBlockResponse (HttpMeta: HTTPMetadata, ListNativeTransactionsResponse: ListNativeTransactionsResponse)
 Contracts (SDK empty)
 GetDeploymentTransactionRequest (chainId: string, address: string, currency: CurrencyCode)
+GetDeploymentTransactionResponse (HttpMeta: HTTPMetadata, GetTransactionResponse: GetTransactionResponse)
 GetContractMetadataRequest (chainId: string, address: string)
-GetContractMetadataResponse (union)
+GetContractMetadataResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetContractMetadataResponseBody (union)
 ListTransfersRequest (startBlock: number, endBlock: number, pageToken: string ...)
-ListTransfersResponse (Result: ListTransfersResponse)
+ListTransfersResponse (HttpMeta: HTTPMetadata, ListTransfersResponse: ListTransfersResponse)
  ListTransfersResponse (nextPageToken: string, transfers: array)
    Transfer (union)
 Chains (SDK empty)
 SupportedChainsRequest (network: Network, feature: ApiFeature)
  ApiFeature (enum: nftIndexing, webhooks, teleporter)
-ListChainsResponse (chains: array)
+SupportedChainsResponse (HttpMeta: HTTPMetadata, ListChainsResponse: ListChainsResponse)
+ ListChainsResponse (chains: array)
 GetChainInfoRequest (chainId: string)
-GetChainResponse (chainId: string, status: ChainStatus, chainName: string ...)
-  GetChainResponseEnabledFeature (enum: nftIndexing, webhooks, teleporter)
+GetChainInfoResponse (HttpMeta: HTTPMetadata, GetChainResponse: GetChainResponse)
+ GetChainResponse (chainId: string, status: ChainStatus, chainName: string ...)
+   GetChainResponseEnabledFeature (enum: nftIndexing, webhooks, teleporter)
 GetAddressChainsRequest (address: string)
+GetAddressChainsResponse (HttpMeta: HTTPMetadata, ListAddressChainsResponse: ListAddressChainsResponse)
 ListAllLatestTransactionsRequest (pageToken: string, pageSize: integer, network: Network ...)
-ListAllLatestTransactionsResponse (Result: ListNativeTransactionsResponse)
+ListAllLatestTransactionsResponse (HttpMeta: HTTPMetadata, ListNativeTransactionsResponse: ListNativeTransactionsResponse)
 ListAllLatestBlocksRequest (pageToken: string, pageSize: integer, network: Network)
-ListAllLatestBlocksResponse (Result: ListEvmBlocksResponse)
+ListAllLatestBlocksResponse (HttpMeta: HTTPMetadata, ListEvmBlocksResponse: ListEvmBlocksResponse)
 Nfts (SDK empty)
 ReindexNftRequest (chainId: string, address: string, tokenId: string)
+ReindexNftResponse (HttpMeta: HTTPMetadata)
 ListTokensRequest (pageToken: string, pageSize: integer, chainId: string ...)
-ListTokensResponse (Result: ListNftTokens)
+ListTokensResponse (HttpMeta: HTTPMetadata, ListNftTokens: ListNftTokens)
  ListNftTokens (nextPageToken: string, tokens: array)
    Token (union)
 GetTokenDetailsRequest (chainId: string, address: string, tokenId: string)
-GetTokenDetailsResponse (union)
+GetTokenDetailsResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetTokenDetailsResponseBody (union)
 Operations (SDK empty)
 GetOperationResultRequest (operationId: string)
-OperationStatusResponse (operationId: string, operationType: OperationType, operationStatus: OperationStatus ...)
- OperationType (enum: TRANSACTION_EXPORT_PRIMARY_NETWORK, TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING, TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE ...)
- OperationStatus (enum: RUNNING, COMPLETED, COMPLETED_WITH_WARNING ...)
- Metadata (union)
-  TransactionExportMetadata (code: OperationStatusCode, downloadUrl: string, nextDate: string)
-   OperationStatusCode (enum: ErrInvalidRequest, ErrInternal, WarnTruncatedExport)
+GetOperationResultResponse (HttpMeta: HTTPMetadata, OperationStatusResponse: OperationStatusResponse)
+ OperationStatusResponse (operationId: string, operationType: OperationType, operationStatus: OperationStatus ...)
+  OperationType (enum: TRANSACTION_EXPORT_PRIMARY_NETWORK, TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING, TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE ...)
+  OperationStatus (enum: RUNNING, COMPLETED, COMPLETED_WITH_WARNING ...)
+  Metadata (union)
+   TransactionExportMetadata (code: OperationStatusCode, downloadUrl: string, nextDate: string)
+    OperationStatusCode (enum: ErrInvalidRequest, ErrInternal, WarnTruncatedExport)
 PostTransactionExportJobRequest (union)
  CreateEvmTransactionExportRequest (type: EVMOperationType, firstDate: string, lastDate: string ...)
   EvmOperationType (enum: TRANSACTION_EXPORT_EVM)
@@ -478,45 +522,47 @@ PostTransactionExportJobRequest (union)
   PrimaryNetworkOperationType (enum: TRANSACTION_EXPORT_PRIMARY_NETWORK, TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING, TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE)
   PrimaryNetworkOptions (addresses: array, cChainEvmAddresses: array, includeChains: array)
     IncludeChain (enum: 11111111111111111111111111111111LpoYY, 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm ...)
+PostTransactionExportJobResponse (HttpMeta: HTTPMetadata, OperationStatusResponse: OperationStatusResponse)
 PrimaryNetwork (SDK empty)
 PrimaryNetworkTransactions (SDK empty)
 GetTxByHashRequest (blockchainId: BlockchainId, network: GlobalParamNetwork, txHash: string)
  BlockchainId (enum: 11111111111111111111111111111111LpoYY, 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm ...)
  GlobalParamNetwork (enum: mainnet, fuji, testnet)
-GetTxByHashResponse (union)
- PChainTransaction (txHash: string, txType: PChainTransactionType, blockTimestamp: number ...)
-  PChainTransactionType (enum: AddValidatorTx, AddSubnetValidatorTx, AddDelegatorTx ...)
-   PChainUtxo (addresses: array, asset: AssetAmount, consumedOnChainId: string ...)
-    AssetAmount (assetId: string, name: string, symbol: string ...)
-     PrimaryNetworkAssetType (enum: secp256k1, nft)
-    RewardType (enum: VALIDATOR, DELEGATOR, VALIDATOR_FEE)
-    UtxoType (enum: STAKE, TRANSFER)
-  L1ValidatorManagerDetails (blockchainId: string, contractAddress: string)
-   L1ValidatorDetailsTransaction (validationId: string, validationIdHex: string, nodeId: string ...)
-    L1ValidatorDetailsTransactionBlsCredentials (empty)
-  SubnetOwnershipInfo (locktime: number, threshold: number, addresses: array)
-  BlsCredentials (publicKey: string, proofOfPossession: string)
-  BlockchainInfo (chainName: string, vmId: string, genesisData: class)
-   BlockchainInfoGenesisData (empty)
- XChainNonLinearTransaction (txHash: string, chainFormat: enum, timestamp: number ...)
-  XChainNonLinearTransactionChainFormat (enum: non-linear, linear)
-  XChainTransactionType (enum: BaseTx, CreateAssetTx, OperationTx ...)
-   Utxo (addresses: array, asset: AssetAmount, consumedOnChainId: string ...)
-     UtxoCredential (signature: string, publicKey: string)
-  XChainAssetDetails (assetId: string, name: string, symbol: string ...)
-   PrimaryNetworkAssetCap (enum: fixed, variable)
-   TransactionVertexDetail (hash: string, height: number, timestamp: number)
- XChainLinearTransaction (txHash: string, chainFormat: enum, timestamp: number ...)
-  XChainLinearTransactionChainFormat (enum: non-linear, linear)
- CChainExportTransaction (txHash: string, blockHeight: number, blockHash: string ...)
-  CChainExportTransactionTxType (enum: ExportTx)
-   EvmInput (fromAddress: string, asset: AssetAmount, credentials: array)
- CChainImportTransaction (txHash: string, blockHeight: number, blockHash: string ...)
-  CChainImportTransactionTxType (enum: ImportTx)
-   EvmOutput (toAddress: string, asset: AssetAmount)
+GetTxByHashResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetTxByHashResponseBody (union)
+  PChainTransaction (txHash: string, txType: PChainTransactionType, blockTimestamp: number ...)
+   PChainTransactionType (enum: AddValidatorTx, AddSubnetValidatorTx, AddDelegatorTx ...)
+    PChainUtxo (addresses: array, asset: AssetAmount, consumedOnChainId: string ...)
+     AssetAmount (assetId: string, name: string, symbol: string ...)
+      PrimaryNetworkAssetType (enum: secp256k1, nft)
+     RewardType (enum: VALIDATOR, DELEGATOR, VALIDATOR_FEE)
+     UtxoType (enum: STAKE, TRANSFER)
+   L1ValidatorManagerDetails (blockchainId: string, contractAddress: string)
+    L1ValidatorDetailsTransaction (validationId: string, validationIdHex: string, nodeId: string ...)
+     L1ValidatorDetailsTransactionBlsCredentials (empty)
+   SubnetOwnershipInfo (locktime: number, threshold: number, addresses: array)
+   BlsCredentials (publicKey: string, proofOfPossession: string)
+   BlockchainInfo (chainName: string, vmId: string, genesisData: class)
+    BlockchainInfoGenesisData (empty)
+  XChainNonLinearTransaction (txHash: string, chainFormat: enum, timestamp: number ...)
+   XChainNonLinearTransactionChainFormat (enum: non-linear, linear)
+   XChainTransactionType (enum: BaseTx, CreateAssetTx, OperationTx ...)
+    Utxo (addresses: array, asset: AssetAmount, consumedOnChainId: string ...)
+      UtxoCredential (signature: string, publicKey: string)
+   XChainAssetDetails (assetId: string, name: string, symbol: string ...)
+    PrimaryNetworkAssetCap (enum: fixed, variable)
+    TransactionVertexDetail (hash: string, height: number, timestamp: number)
+  XChainLinearTransaction (txHash: string, chainFormat: enum, timestamp: number ...)
+   XChainLinearTransactionChainFormat (enum: non-linear, linear)
+  CChainExportTransaction (txHash: string, blockHeight: number, blockHash: string ...)
+   CChainExportTransactionTxType (enum: ExportTx)
+    EvmInput (fromAddress: string, asset: AssetAmount, credentials: array)
+  CChainImportTransaction (txHash: string, blockHeight: number, blockHash: string ...)
+   CChainImportTransactionTxType (enum: ImportTx)
+    EvmOutput (toAddress: string, asset: AssetAmount)
 ListLatestPrimaryNetworkTransactionsRequest (addresses: string, l1ValidationId: string, txTypes: array ...)
   PrimaryNetworkTxType (enum: AddValidatorTx, AddSubnetValidatorTx, AddDelegatorTx ...)
-ListLatestPrimaryNetworkTransactionsResponse (Result: union)
+ListLatestPrimaryNetworkTransactionsResponse (HttpMeta: HTTPMetadata, oneOf: union)
  ListLatestPrimaryNetworkTransactionsResponseBody (union)
   ListPChainTransactionsResponse (nextPageToken: string, transactions: array, chainInfo: PrimaryNetworkChainInfo)
    PrimaryNetworkChainInfo (chainName: PrimaryNetworkChainName, network: Network)
@@ -527,82 +573,90 @@ ListLatestPrimaryNetworkTransactionsResponse (Result: union)
     ListCChainAtomicTransactionsResponseTransaction (union)
 ListActivePrimaryNetworkStakingTransactionsRequest (addresses: string, txTypes: array, startTimestamp: integer ...)
  PChainId (enum: 11111111111111111111111111111111LpoYY, p-chain)
-ListActivePrimaryNetworkStakingTransactionsResponse (Result: ListPChainTransactionsResponse)
+ListActivePrimaryNetworkStakingTransactionsResponse (HttpMeta: HTTPMetadata, ListPChainTransactionsResponse: ListPChainTransactionsResponse)
 ListAssetTransactionsRequest (txTypes: array, startTimestamp: integer, endTimestamp: integer ...)
  XChainId (enum: 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm, 2piQ2AVHCjnduiWXsSY15DtbVuwHE2cwMHYnEXHsLL73BBkdbV ...)
-ListAssetTransactionsResponse (Result: ListXChainTransactionsResponse)
+ListAssetTransactionsResponse (HttpMeta: HTTPMetadata, ListXChainTransactionsResponse: ListXChainTransactionsResponse)
 Rewards (SDK empty)
 ListPendingPrimaryNetworkRewardsRequest (addresses: string, pageToken: string, pageSize: integer ...)
-ListPendingPrimaryNetworkRewardsResponse (Result: ListPendingRewardsResponse)
+ListPendingPrimaryNetworkRewardsResponse (HttpMeta: HTTPMetadata, ListPendingRewardsResponse: ListPendingRewardsResponse)
  ListPendingRewardsResponse (nextPageToken: string, pendingRewards: array)
    PendingReward (addresses: array, txHash: string, amountStaked: string ...)
 ListHistoricalPrimaryNetworkRewardsRequest (addresses: string, pageToken: string, pageSize: integer ...)
-ListHistoricalPrimaryNetworkRewardsResponse (Result: ListHistoricalRewardsResponse)
+ListHistoricalPrimaryNetworkRewardsResponse (HttpMeta: HTTPMetadata, ListHistoricalRewardsResponse: ListHistoricalRewardsResponse)
  ListHistoricalRewardsResponse (nextPageToken: string, historicalRewards: array)
    HistoricalReward (addresses: array, txHash: string, amountStaked: string ...)
     AssetWithPriceInfo (assetId: string, name: string, symbol: string ...)
 Utxos (SDK empty)
 GetUtxosByAddressesRequest (addresses: string, pageToken: string, pageSize: integer ...)
-GetUtxosByAddressesResponse (Result: union)
+GetUtxosByAddressesResponse (HttpMeta: HTTPMetadata, oneOf: union)
  GetUtxosByAddressesResponseBody (union)
   ListPChainUtxosResponse (nextPageToken: string, utxos: array, chainInfo: PrimaryNetworkChainInfo)
   ListUtxosResponse (nextPageToken: string, utxos: array, chainInfo: PrimaryNetworkChainInfo)
 PrimaryNetworkBalances (SDK empty)
 GetBalancesByAddressesRequest (blockTimestamp: integer, addresses: string, blockchainId: BlockchainId ...)
-GetBalancesByAddressesResponse (union)
- ListPChainBalancesResponse (balances: PChainBalance, chainInfo: PrimaryNetworkChainInfo)
-  PChainBalance (unlockedUnstaked: array, unlockedStaked: array, lockedPlatform: array ...)
-    AggregatedAssetAmount (assetId: string, name: string, symbol: string ...)
-    PChainSharedAsset (assetId: string, name: string, symbol: string ...)
- ListXChainBalancesResponse (balances: XChainBalances, chainInfo: PrimaryNetworkChainInfo)
-  XChainBalances (locked: array, unlocked: array, atomicMemoryUnlocked: array ...)
-    XChainSharedAssetBalance (assetId: string, name: string, symbol: string ...)
- ListCChainAtomicBalancesResponse (balances: CChainAtomicBalances, chainInfo: PrimaryNetworkChainInfo)
-  CChainAtomicBalances (atomicMemoryUnlocked: array, atomicMemoryLocked: array)
-    CChainSharedAssetBalance (assetId: string, name: string, symbol: string ...)
+GetBalancesByAddressesResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetBalancesByAddressesResponseBody (union)
+  ListPChainBalancesResponse (balances: PChainBalance, chainInfo: PrimaryNetworkChainInfo)
+   PChainBalance (unlockedUnstaked: array, unlockedStaked: array, lockedPlatform: array ...)
+     AggregatedAssetAmount (assetId: string, name: string, symbol: string ...)
+     PChainSharedAsset (assetId: string, name: string, symbol: string ...)
+  ListXChainBalancesResponse (balances: XChainBalances, chainInfo: PrimaryNetworkChainInfo)
+   XChainBalances (locked: array, unlocked: array, atomicMemoryUnlocked: array ...)
+     XChainSharedAssetBalance (assetId: string, name: string, symbol: string ...)
+  ListCChainAtomicBalancesResponse (balances: CChainAtomicBalances, chainInfo: PrimaryNetworkChainInfo)
+   CChainAtomicBalances (atomicMemoryUnlocked: array, atomicMemoryLocked: array)
+     CChainSharedAssetBalance (assetId: string, name: string, symbol: string ...)
 PrimaryNetworkBlocks (SDK empty)
 GetBlockByIdRequest (blockchainId: BlockchainId, network: GlobalParamNetwork, blockId: string)
-GetPrimaryNetworkBlockResponse (blockNumber: string, blockHash: string, parentHash: string ...)
- ProposerDetails (proposerId: string, proposerParentId: string, proposerNodeId: string ...)
+GetBlockByIdResponse (HttpMeta: HTTPMetadata, GetPrimaryNetworkBlockResponse: GetPrimaryNetworkBlockResponse)
+ GetPrimaryNetworkBlockResponse (blockNumber: string, blockHash: string, parentHash: string ...)
+  ProposerDetails (proposerId: string, proposerParentId: string, proposerNodeId: string ...)
 ListPrimaryNetworkBlocksByNodeIdRequest (startTimestamp: integer, endTimestamp: integer, pageToken: string ...)
-ListPrimaryNetworkBlocksByNodeIdResponse (Result: ListPrimaryNetworkBlocksResponse)
+ListPrimaryNetworkBlocksByNodeIdResponse (HttpMeta: HTTPMetadata, ListPrimaryNetworkBlocksResponse: ListPrimaryNetworkBlocksResponse)
  ListPrimaryNetworkBlocksResponse (nextPageToken: string, blocks: array, chainInfo: PrimaryNetworkChainInfo)
    PrimaryNetworkBlock (blockNumber: string, blockHash: string, parentHash: string ...)
 ListLatestPrimaryNetworkBlocksRequest (startTimestamp: integer, endTimestamp: integer, pageToken: string ...)
-ListLatestPrimaryNetworkBlocksResponse (Result: ListPrimaryNetworkBlocksResponse)
+ListLatestPrimaryNetworkBlocksResponse (HttpMeta: HTTPMetadata, ListPrimaryNetworkBlocksResponse: ListPrimaryNetworkBlocksResponse)
 Vertices (SDK empty)
 ListLatestXChainVerticesRequest (pageToken: string, pageSize: integer, blockchainId: XChainId ...)
-ListLatestXChainVerticesResponse (Result: ListXChainVerticesResponse)
+ListLatestXChainVerticesResponse (HttpMeta: HTTPMetadata, ListXChainVerticesResponse: ListXChainVerticesResponse)
  ListXChainVerticesResponse (nextPageToken: string, vertices: array, chainInfo: PrimaryNetworkChainInfo)
    XChainVertex (vertexHash: string, parentHashes: array, vertexHeight: number ...)
 GetVertexByHashRequest (vertexHash: string, blockchainId: XChainId, network: GlobalParamNetwork)
+GetVertexByHashResponse (HttpMeta: HTTPMetadata, XChainVertex: XChainVertex)
 GetVertexByHeightRequest (vertexHeight: integer, pageToken: string, pageSize: integer ...)
-GetVertexByHeightResponse (Result: ListXChainVerticesResponse)
+GetVertexByHeightResponse (HttpMeta: HTTPMetadata, ListXChainVerticesResponse: ListXChainVerticesResponse)
 GetAssetDetailsRequest (blockchainId: XChainId, network: GlobalParamNetwork, assetId: string)
+GetAssetDetailsResponse (HttpMeta: HTTPMetadata, XChainAssetDetails: XChainAssetDetails)
 GetChainIdsForAddressesRequest (addresses: string, network: GlobalParamNetwork)
-ChainAddressChainIdMapListResponse (addresses: array)
-  ChainAddressChainIdMap (address: string, blockchainIds: array)
-    BlockchainIds (enum: 11111111111111111111111111111111LpoYY, 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm ...)
+GetChainIdsForAddressesResponse (HttpMeta: HTTPMetadata, ChainAddressChainIdMapListResponse: ChainAddressChainIdMapListResponse)
+ ChainAddressChainIdMapListResponse (addresses: array)
+   ChainAddressChainIdMap (address: string, blockchainIds: array)
+     BlockchainIds (enum: 11111111111111111111111111111111LpoYY, 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm ...)
 GetNetworkDetailsRequest (network: GlobalParamNetwork)
-GetNetworkDetailsResponse (validatorDetails: ValidatorsDetails, delegatorDetails: DelegatorsDetails)
- ValidatorsDetails (validatorCount: number, totalAmountStaked: string, estimatedAnnualStakingReward: string ...)
-   StakingDistribution (version: string, amountStaked: string, validatorCount: number)
- DelegatorsDetails (delegatorCount: number, totalAmountStaked: string)
+GetNetworkDetailsResponse (HttpMeta: HTTPMetadata, GetNetworkDetailsResponse: GetNetworkDetailsResponse)
+ GetNetworkDetailsResponse (validatorDetails: ValidatorsDetails, delegatorDetails: DelegatorsDetails)
+  ValidatorsDetails (validatorCount: number, totalAmountStaked: string, estimatedAnnualStakingReward: string ...)
+    StakingDistribution (version: string, amountStaked: string, validatorCount: number)
+  DelegatorsDetails (delegatorCount: number, totalAmountStaked: string)
 ListBlockchainsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
-ListBlockchainsResponse (Result: ListBlockchainsResponse)
+ListBlockchainsResponse (HttpMeta: HTTPMetadata, ListBlockchainsResponse: ListBlockchainsResponse)
  ListBlockchainsResponse (nextPageToken: string, blockchains: array)
    Blockchain (createBlockTimestamp: number, createBlockNumber: string, blockchainId: string ...)
     BlockchainGenesisData (empty)
 GetBlockchainByIdRequest (blockchainId: string, network: GlobalParamNetwork)
+GetBlockchainByIdResponse (HttpMeta: HTTPMetadata, Blockchain: Blockchain)
 ListSubnetsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
-ListSubnetsResponse (Result: ListSubnetsResponse)
+ListSubnetsResponse (HttpMeta: HTTPMetadata, ListSubnetsResponse: ListSubnetsResponse)
  ListSubnetsResponse (nextPageToken: string, subnets: array)
    Subnet (createBlockTimestamp: number, createBlockIndex: string, subnetId: string ...)
 GetSubnetByIdRequest (network: GlobalParamNetwork, subnetId: string)
+GetSubnetByIdResponse (HttpMeta: HTTPMetadata, Subnet: Subnet)
 ListValidatorsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
  SortByOption (enum: blockIndex, delegationCapacity, timeRemaining ...)
  ValidationStatusType (enum: completed, active, pending ...)
-ListValidatorsResponse (Result: ListValidatorDetailsResponse)
+ListValidatorsResponse (HttpMeta: HTTPMetadata, ListValidatorDetailsResponse: ListValidatorDetailsResponse)
  ListValidatorDetailsResponse (nextPageToken: string, validators: array)
    Validator (union)
     CompletedValidatorDetails (txHash: string, nodeId: string, subnetId: string ...)
@@ -617,10 +671,10 @@ ListValidatorsResponse (Result: ListValidatorDetailsResponse)
     RemovedValidatorDetails (txHash: string, nodeId: string, subnetId: string ...)
      RemovedValidatorDetailsValidationStatus (enum: removed)
 GetSingleValidatorDetailsRequest (pageToken: string, pageSize: integer, network: GlobalParamNetwork ...)
-GetSingleValidatorDetailsResponse (Result: ListValidatorDetailsResponse)
+GetSingleValidatorDetailsResponse (HttpMeta: HTTPMetadata, ListValidatorDetailsResponse: ListValidatorDetailsResponse)
 ListDelegatorsRequest (pageToken: string, pageSize: integer, rewardAddresses: string ...)
  DelegationStatusType (enum: completed, active, pending)
-ListDelegatorsResponse (Result: ListDelegatorDetailsResponse)
+ListDelegatorsResponse (HttpMeta: HTTPMetadata, ListDelegatorDetailsResponse: ListDelegatorDetailsResponse)
  ListDelegatorDetailsResponse (nextPageToken: string, delegators: array)
    Delegator (union)
     CompletedDelegatorDetails (txHash: string, nodeId: string, rewardAddresses: array ...)
@@ -630,27 +684,28 @@ ListDelegatorsResponse (Result: ListDelegatorDetailsResponse)
     PendingDelegatorDetails (txHash: string, nodeId: string, rewardAddresses: array ...)
      PendingDelegatorDetailsDelegationStatus (enum: pending)
 ListL1ValidatorsRequest (pageToken: string, pageSize: integer, l1ValidationId: string ...)
-ListL1ValidatorsResponse (Result: ListL1ValidatorsResponse)
+ListL1ValidatorsResponse (HttpMeta: HTTPMetadata, ListL1ValidatorsResponse: ListL1ValidatorsResponse)
  ListL1ValidatorsResponse (nextPageToken: string, validators: array, blockHeight: string)
    L1ValidatorDetailsFull (validationId: string, validationIdHex: string, nodeId: string ...)
     L1ValidatorDetailsFullBlsCredentials (empty)
     BalanceOwner (addresses: array, threshold: number)
 Teleporter (SDK empty)
 GetTeleporterMessageRequest (messageId: string)
-GetTeleporterMessageResponse (union)
- PendingTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
-   TeleporterReceipt (receivedMessageNonce: string, relayerRewardAddress: string)
-  TeleporterRewardDetails (address: string, name: string, symbol: string ...)
-   TeleporterRewardDetailsErcType (enum: ERC-20)
-  TeleporterSourceTransaction (txHash: string, timestamp: number, gasSpent: string)
-  PendingTeleporterMessageStatus (enum: pending)
- DeliveredTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
-  TeleporterDestinationTransaction (txHash: string, timestamp: number, gasSpent: string ...)
-  DeliveredTeleporterMessageStatus (enum: delivered)
- DeliveredSourceNotIndexedTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
-  DeliveredSourceNotIndexedTeleporterMessageStatus (enum: delivered_source_not_indexed)
+GetTeleporterMessageResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetTeleporterMessageResponseBody (union)
+  PendingTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
+    TeleporterReceipt (receivedMessageNonce: string, relayerRewardAddress: string)
+   TeleporterRewardDetails (address: string, name: string, symbol: string ...)
+    TeleporterRewardDetailsErcType (enum: ERC-20)
+   TeleporterSourceTransaction (txHash: string, timestamp: number, gasSpent: string)
+   PendingTeleporterMessageStatus (enum: pending)
+  DeliveredTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
+   TeleporterDestinationTransaction (txHash: string, timestamp: number, gasSpent: string ...)
+   DeliveredTeleporterMessageStatus (enum: delivered)
+  DeliveredSourceNotIndexedTeleporterMessage (messageId: string, teleporterContractAddress: string, sourceBlockchainId: string ...)
+   DeliveredSourceNotIndexedTeleporterMessageStatus (enum: delivered_source_not_indexed)
 ListTeleporterMessagesRequest (pageToken: string, pageSize: integer, sourceBlockchainId: string ...)
-ListTeleporterMessagesResponse (Result: ListTeleporterMessagesResponse)
+ListTeleporterMessagesResponse (HttpMeta: HTTPMetadata, ListTeleporterMessagesResponse: ListTeleporterMessagesResponse)
  ListTeleporterMessagesResponse (nextPageToken: string, messages: array)
    ListTeleporterMessagesResponseMessage (union)
     DeliveredSourceNotIndexedIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
@@ -660,32 +715,36 @@ ListTeleporterMessagesResponse (Result: ListTeleporterMessagesResponse)
      IcmDestinationTransaction (txHash: string, timestamp: number, gasSpent: string ...)
      DeliveredSourceNotIndexedIcmMessageStatus (enum: delivered_source_not_indexed)
 ListTeleporterMessagesByAddressRequest (pageToken: string, pageSize: integer, address: string ...)
+ListTeleporterMessagesByAddressResponse (HttpMeta: HTTPMetadata, ListTeleporterMessagesResponse: ListTeleporterMessagesResponse)
 Icm (SDK empty)
 GetIcmMessageRequest (messageId: string)
-GetIcmMessageResponse (union)
- PendingIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
-  IcmSourceTransaction (txHash: string, timestamp: number, gasSpent: string)
-  PendingIcmMessageStatus (enum: pending)
- DeliveredIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
-  DeliveredIcmMessageStatus (enum: delivered)
+GetIcmMessageResponse (HttpMeta: HTTPMetadata, oneOf: union)
+ GetIcmMessageResponseBody (union)
+  PendingIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
+   IcmSourceTransaction (txHash: string, timestamp: number, gasSpent: string)
+   PendingIcmMessageStatus (enum: pending)
+  DeliveredIcmMessage (messageId: string, icmContractAddress: string, sourceBlockchainId: string ...)
+   DeliveredIcmMessageStatus (enum: delivered)
 ListIcmMessagesRequest (pageToken: string, pageSize: integer, sourceBlockchainId: string ...)
-ListIcmMessagesResponse (Result: ListIcmMessagesResponse)
+ListIcmMessagesResponse (HttpMeta: HTTPMetadata, ListIcmMessagesResponse: ListIcmMessagesResponse)
  ListIcmMessagesResponse (nextPageToken: string, messages: array)
    ListIcmMessagesResponseMessage (union)
 ListIcmMessagesByAddressRequest (pageToken: string, pageSize: integer, address: string ...)
+ListIcmMessagesByAddressResponse (HttpMeta: HTTPMetadata, ListIcmMessagesResponse: ListIcmMessagesResponse)
 UsageMetrics (SDK empty)
 GetApiUsageMetricsRequest (orgId: string, startTimestamp: integer, endTimestamp: integer ...)
  TimeIntervalGranularityExtended (enum: minute, hourly, daily ...)
  UsageMetricsGroupByEnum (enum: requestPath, responseCode, chainId ...)
  GetApiUsageMetricsRequestType (enum: data, rpc)
-UsageMetricsResponseDto (aggregateDuration: string, orgId: string, metrics: array)
-  Metric (timestamp: number, values: array)
-    UsageMetricsValueDto (groupedBy: enum, groupValue: union, totalRequests: number ...)
-     UsageMetricsValueDtoGroupedBy (enum: requestPath, responseCode, chainId ...)
-     UsageMetricsValueDtoGroupValue (union)
+GetApiUsageMetricsResponse (HttpMeta: HTTPMetadata, UsageMetricsResponseDTO: UsageMetricsResponseDTO)
+ UsageMetricsResponseDto (aggregateDuration: string, orgId: string, metrics: array)
+   Metric (timestamp: number, values: array)
+     UsageMetricsValueDto (groupedBy: enum, groupValue: union, totalRequests: number ...)
+      UsageMetricsValueDtoGroupedBy (enum: requestPath, responseCode, chainId ...)
+      UsageMetricsValueDtoGroupValue (union)
 GetApiLogsRequest (orgId: string, startTimestamp: integer, endTimestamp: integer ...)
  GetApiLogsRequestType (enum: data, rpc)
-GetApiLogsResponse (Result: LogsResponseDTO)
+GetApiLogsResponse (HttpMeta: HTTPMetadata, LogsResponseDTO: LogsResponseDTO)
  LogsResponseDto (nextPageToken: string, orgId: string, logs: array)
    LogsFormat (orgId: string, logId: string, eventTimestamp: number ...)
     RequestType (enum: data, rpc)
@@ -693,20 +752,25 @@ GetApiLogsResponse (Result: LogsResponseDTO)
 GetSubnetRpcUsageMetricsRequest (timeInterval: SubnetRpcTimeIntervalGranularity, startTimestamp: integer, endTimestamp: integer ...)
  SubnetRpcTimeIntervalGranularity (enum: hourly, daily, weekly ...)
  RpcUsageMetricsGroupByEnum (enum: rpcMethod, responseCode, rlBypassToken)
-SubnetRpcUsageMetricsResponseDto (aggregateDuration: string, metrics: array, chainId: string)
-  RpcMetrics (timestamp: number, values: array)
-    RpcUsageMetricsValueAggregated (totalRequests: number, apiCreditsUsed: number, requestsPerSecond: number ...)
-     RpcUsageMetricsValueAggregatedGroupedBy (enum: rpcMethod, responseCode, rlBypassToken ...)
-     RpcUsageMetricsValueAggregatedGroupValue (union)
+GetSubnetRpcUsageMetricsResponse (HttpMeta: HTTPMetadata, SubnetRpcUsageMetricsResponseDTO: SubnetRpcUsageMetricsResponseDTO)
+ SubnetRpcUsageMetricsResponseDto (aggregateDuration: string, metrics: array, chainId: string)
+   RpcMetrics (timestamp: number, values: array)
+     RpcUsageMetricsValueAggregated (totalRequests: number, apiCreditsUsed: number, requestsPerSecond: number ...)
+      RpcUsageMetricsValueAggregatedGroupedBy (enum: rpcMethod, responseCode, rlBypassToken ...)
+      RpcUsageMetricsValueAggregatedGroupValue (union)
 GetRpcUsageMetricsRequest (timeInterval: SubnetRpcTimeIntervalGranularity, startTimestamp: integer, endTimestamp: integer ...)
+GetRpcUsageMetricsResponse (HttpMeta: HTTPMetadata, SubnetRpcUsageMetricsResponseDTO: SubnetRpcUsageMetricsResponseDTO)
 SignatureAggregator (SDK empty)
 AggregateSignaturesRequest (network: GlobalParamNetwork, SignatureAggregatorRequest: SignatureAggregatorRequest)
  SignatureAggregatorRequest (message: string, justification: string, signingSubnetId: string ...)
-SignatureAggregationResponse (signedMessage: string)
+AggregateSignaturesResponse (HttpMeta: HTTPMetadata, SignatureAggregationResponse: SignatureAggregationResponse)
+ SignatureAggregationResponse (signedMessage: string)
 GetAggregatedSignaturesRequest (network: GlobalParamNetwork, txHash: string)
-HealthCheckResultDto (status: enum, info: map, error: map ...)
- HealthCheckResultDtoStatus (enum: error, ok, shutting_down)
-  HealthIndicatorResultDto (status: enum)
-   HealthIndicatorResultDtoStatus (enum: up, down)
+GetAggregatedSignaturesResponse (HttpMeta: HTTPMetadata, SignatureAggregationResponse: SignatureAggregationResponse)
+DataHealthCheckResponse (HttpMeta: HTTPMetadata, HealthCheckResultDto: HealthCheckResultDto)
+ HealthCheckResultDto (status: enum, info: map, error: map ...)
+  HealthCheckResultDtoStatus (enum: error, ok, shutting_down)
+   HealthIndicatorResultDto (status: enum)
+    HealthIndicatorResultDtoStatus (enum: up, down)
 Globals (chainId: string, network: GlobalParamNetwork)
 

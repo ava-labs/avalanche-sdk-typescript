@@ -31,6 +31,20 @@ const value: components.ActiveValidatorDetails = {
 };
 ```
 
+### `components.PendingValidatorDetails`
+
+```typescript
+const value: components.PendingValidatorDetails = {
+  txHash: "<value>",
+  nodeId: "<id>",
+  subnetId: "<id>",
+  amountStaked: "<value>",
+  startTimestamp: 9843.29,
+  endTimestamp: 5112.58,
+  validationStatus: "pending",
+};
+```
+
 ### `components.CompletedValidatorDetails`
 
 ```typescript
@@ -63,20 +77,6 @@ const value: components.RemovedValidatorDetails = {
   removeTxHash: "<value>",
   removeTimestamp: 3786.23,
   validationStatus: "removed",
-};
-```
-
-### `components.PendingValidatorDetails`
-
-```typescript
-const value: components.PendingValidatorDetails = {
-  txHash: "<value>",
-  nodeId: "<id>",
-  subnetId: "<id>",
-  amountStaked: "<value>",
-  startTimestamp: 9843.29,
-  endTimestamp: 5112.58,
-  validationStatus: "pending",
 };
 ```
 
