@@ -16,7 +16,6 @@ export type ExportTxParams = CommonTxParams & {
      */
     exportedOutputs: Output[];
 }
-
 export class ExportTx extends Transaction {
     override tx: avmSerial.ExportTx;
 
@@ -42,14 +41,11 @@ export async function newExportTx(
     const exportedOutputs = txPrams.exportedOutputs.map(output => formatOutput(output, context))
 
     const unsignedTx = avm.newExportTx(
-        {
-            context, 
-            destinationChainId: getChainIdFromAlias(txPrams.destinationChain, context.networkID),
-            fromAddressesBytes: commonTxParams.fromAddressesBytes,
-            utxoSet: commonTxParams.utxoSet,
-            outputs: exportedOutputs,
-        },
-        context,
+        context, 
+        getChainIdFromAlias(txPrams.destinationChain, context.networkID),
+        commonTxParams.fromAddressesBytes,
+        commonTxParams.utxoSet,
+        exportedOutputs,
     );
 
     return new ExportTx({

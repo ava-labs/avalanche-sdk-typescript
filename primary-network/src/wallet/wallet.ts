@@ -52,7 +52,6 @@ export class Wallet {
         chainAlias: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS = P_CHAIN_ALIAS,
     ): Promise<Utxo[]> {
         let rpc: pvm.PVMApi | evm.EVMApi | avm.AVMApi;
-
         switch (chainAlias) {
             case C_CHAIN_ALIAS:
                 rpc = this.evmRpc;
@@ -61,7 +60,7 @@ export class Wallet {
                 rpc = this.avmRpc;
                 break;
             default:
-                rpc = this.pvmRpc; // P-Chain default
+                rpc = this.pvmRpc; 
         }
         const utxos = await rpc.getUTXOs({
             addresses: addresses ?? this.getBech32Addresses(chainAlias),
