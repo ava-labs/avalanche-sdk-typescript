@@ -2,21 +2,26 @@ import { Context as ContextType, pvm, evm }  from '@avalabs/avalanchejs';
 import { Wallet } from "./wallet";
 import { getNodeUrlFromChain } from './utils';
 
+export type PrimaryNetworkClientParams = {
+    nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
+    privateKeys?: string[] | undefined,
+};
+
 export class PrimaryNetworkCore {
     nodeUrl: string;
-    wallet: Wallet | undefined;
+    wallet: Wallet;
     context: ContextType.Context | undefined;
     pvmRpc: pvm.PVMApi;
     evmRpc: evm.EVMApi;
 
-    constructor(params: {
-        nodeUrl: `http${'s' | ''}://${string}`,
-        wallet: Wallet | undefined,
-    }) {
-        this.nodeUrl = getNodeUrlFromChain(params.nodeUrl)
-        this.wallet = params.wallet
+    constructor(params: PrimaryNetworkClientParams) {
+        this.nodeUrl = getNodeUrlFromChain(params.nodeUrlOrChain)
         this.pvmRpc = new pvm.PVMApi(this.nodeUrl)
         this.evmRpc = new evm.EVMApi(this.nodeUrl)
+        this.wallet = new Wallet({
+            nodeUrl: this.nodeUrl,
+            privateKeys: params.privateKeys,
+        });
     }
 
     /**
@@ -31,22 +36,10 @@ export class PrimaryNetworkCore {
     }
 
     linkPrivateKeys(privateKeys: string[]) {
-        this.wallet = new Wallet({
-            nodeUrl: this.nodeUrl,
-            privateKeys,
-        })
+        this.wallet.addPrivateKeys(privateKeys);
     }
 }
 
-export function createPrimaryNetworkCoreClient({
-    nodeUrlOrChain,
-    wallet,
-}: {
-    nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
-    wallet?: Wallet,
-}) {
-    return new PrimaryNetworkCore({
-        nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
-        wallet,
-    })
+export function createPrimaryNetworkCoreClient(params: PrimaryNetworkClientParams) {
+    return new PrimaryNetworkCore(params)
 }

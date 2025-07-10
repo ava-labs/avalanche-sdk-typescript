@@ -23,14 +23,15 @@ The SDK provides a structured way to build different types of transactions. Curr
 
 ### Quickstart
 
-Most of the code will require these boilerplate instantiations
+Most of the code will use these boilerplate instantiations
 
 ```typescript
-import { createPrimaryNetworkClient, Wallet } from "@avalanche-sdk/primary-network";
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
 
 export function fetchInstantiatedClients() {
     const pnClient = createPrimaryNetworkClient({
         nodeUrlOrChain: "fuji",
+        privateKeys: ["63e0730edea86f6e9e95db48dbcab18406e60bebae45ad33e099f09d21450ebf"]
     });
 
     // links private keys for signing transaction
@@ -38,17 +39,21 @@ export function fetchInstantiatedClients() {
     // or fetch input UTXOs for building transactions
     pnClient.linkPrivateKeys(["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"]) // this is a common ewoq address used for testing
 
-    return { pnClient, wallet }
+    return { pnClient }
 }
 ```
 
-### P-Chain BaseTx
+### P-Chain BaseTx (with Private Keys)
 
 Let's try to build a simple `BaseTx` that will transfer funds from one address to another on P-Chain.
 
 ```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
+    // provide private keys here or later
+    privateKeys: ["63e0730edea86f6e9e95db48dbcab18406e60bebae45ad33e099f09d21450ebf"]
 });
 
 async function main() {
@@ -70,6 +75,47 @@ async function main() {
 main()
 ```
 
+### P-Chain BaseTx (without Private Keys)
+
+We do not have to link private keys for building transactions. The SDK supports building transactions with
+a lots of customization.
+
+```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
+
+async function main() {
+    const baseTx = await pnClient.pChain.newBaseTx({
+        // Since we don't have any accounts linked, we pass the `fromAddresses` to fetch
+        // utxos from. If we provide `utxos`, then this field is optional as well.
+        fromAddresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+        outputs: [
+            {
+                addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+                amount: 0.00001,
+            }
+        ],
+    })
+
+    // Without the private keys, we cannot sign or issue the transaction.
+    // But we can get the unsigned tx hex, to get it signed later.
+    const unsignedTxHex = baseTx.toHex()
+
+    // sign via Core browser wallet
+    await window.avalanche!.request({
+        method: 'avalanche_sendTransaction',
+        params: {
+            transactionHex: unsignedTxHex,
+            chainAlias: 'P',
+        }
+    })
+}
+main()
+```
+
 There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/primary-network/examples/p-chain) as well for building, signing, and issuing P-Chain transactions.
 
 - `addSubnetValidatorTx.ts` - Adding a validator to a subnet
@@ -85,6 +131,8 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 Let's try to build an ExportTx on the C-Chain, which will export AVAX to the P-Chain.
 
 ```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
 });
@@ -124,6 +172,8 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
 
 ```typescript
+import { createPrimaryNetworkClient, txTypes } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
 });
@@ -140,18 +190,13 @@ console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
 Import the specific transaction builders directly without bundling them with other transaction types. You can do that using the `PrimaryNetworkCoreClient`. See example below.
 
 ```typescript
-import { createPrimaryNetworkCoreClient, Wallet } from "@avalanche-sdk/primary-network";
+import { createPrimaryNetworkCoreClient } from "@avalanche-sdk/primary-network";
 import { newBaseTx } from '@avalanche-sdk/primary-network/transactions/pchain'
 
 async function main() {
-    const wallet = new Wallet({
-        nodeUrl: "https://api.avax-test.network",
-        privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
-    });
-
     const pnClient = createPrimaryNetworkCoreClient({
         nodeUrlOrChain: "fuji",
-        wallet,
+        privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
     });
 
     const baseTx = await newBaseTx(

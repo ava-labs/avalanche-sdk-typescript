@@ -26,7 +26,7 @@ import type { Transaction } from "./transaction";
 import { getTxFromBytes } from "@avalanche-sdk/rpc/utils";
 
 export const errWalletNotFound = (param: string) => {
-    return new Error(`Wallet not found. Link a wallet or provide required parameter: ${param}`)
+    return new Error(`Account not found. Link private keys or provide required parameter: ${param}`)
 }
 
 export function formatOutput(output: Output, context: ContextType.Context) {
@@ -44,7 +44,7 @@ export async function fetchCommonTxParams(
     txParams: CommonTxParams,
     context: ContextType.Context,
     pvmRpc: pvm.PVMApi,
-    wallet?: Wallet,
+    wallet: Wallet,
     sourceChain?: string,
     subnetId?: string,
     l1ValidationId?: string,
@@ -55,7 +55,7 @@ export async function fetchCommonTxParams(
 }> {
     // If fromAddresses is not provided, use wallet addresses
     if (!txParams.fromAddresses) {
-        if (wallet) {
+        if (wallet.hasPrivateKeys()) {
             txParams.fromAddresses = wallet.getBech32Addresses(P_CHAIN_ALIAS, context.networkID);
         } else {
             throw errWalletNotFound('fromAddresses');
@@ -64,11 +64,7 @@ export async function fetchCommonTxParams(
 
     // If utxos are not provided, use wallet to fetch utxos
     if (!txParams.utxos) {
-        if (wallet) {
-            txParams.utxos = await wallet.getUtxos(txParams.fromAddresses, sourceChain)
-        } else {
-            throw errWalletNotFound('utxos');
-        }
+        txParams.utxos = await wallet.getUtxos(txParams.fromAddresses, sourceChain)
     }
 
     // Fetch fee state from api

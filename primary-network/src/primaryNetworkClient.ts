@@ -1,44 +1,28 @@
 import { TxBuilder as PChainTxBuilder } from "./transactions/p-chain/builder/txBuilder";
 import { TxBuilder as CChainTxBuilder } from "./transactions/c-chain/builder/txBuilder";
-import type { Wallet } from "./wallet";
-import { getNodeUrlFromChain } from "./utils";
-import { PrimaryNetworkCore } from "./primaryNetworkCoreClient";
+import { createPrimaryNetworkCoreClient, PrimaryNetworkCore, type PrimaryNetworkClientParams } from "./primaryNetworkCoreClient";
 
 // TODO: Add proper docs for all clients, methods, and params
-export class PrimaryNetwork extends PrimaryNetworkCore {
+export class PrimaryNetwork {
+    coreClient: PrimaryNetworkCore;
     pChain: PChainTxBuilder;
     cChain: CChainTxBuilder;
-    constructor(params: {
-        nodeUrl: `http${'s' | ''}://${string}`,
-        pChain: PChainTxBuilder,
-        cChain: CChainTxBuilder,
-        wallet: Wallet | undefined,
-    }) {
-        super(params)
-        this.pChain = params.pChain
-        this.cChain = params.cChain
+
+    constructor(params: PrimaryNetworkClientParams) {
+        const coreClient = createPrimaryNetworkCoreClient(params)
+        const pChain = PChainTxBuilder.newClient(coreClient)
+        const cChain = CChainTxBuilder.newClient(coreClient)
+
+        this.coreClient = coreClient
+        this.pChain = pChain
+        this.cChain = cChain
+    }
+
+    linkPrivateKeys(privateKeys: string[]) {
+        this.coreClient.linkPrivateKeys(privateKeys)
     }
 }
 
-export function createPrimaryNetworkClient({
-    nodeUrlOrChain,
-    wallet,
-}: {
-    nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
-    wallet?: Wallet,
-}) {
-    const primaryNetworkCore = new PrimaryNetworkCore({
-        nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
-        wallet,
-    })
-
-    const pChain = PChainTxBuilder.newClient(primaryNetworkCore)
-    const cChain = CChainTxBuilder.newClient(primaryNetworkCore)
-
-    return new PrimaryNetwork({
-        nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
-        pChain,
-        cChain,
-        wallet,
-    })
+export function createPrimaryNetworkClient(params: PrimaryNetworkClientParams) {
+    return new PrimaryNetwork(params)
 }

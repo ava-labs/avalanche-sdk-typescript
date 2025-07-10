@@ -1,6 +1,9 @@
-import { fetchInstantiatedClients } from "../boilerPlate";
+import { createPrimaryNetworkClient } from "../../src/primaryNetworkClient";
 
-const { pnClient } = fetchInstantiatedClients()
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+    privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
+});
 
 async function main() {
     const removeSubnetValidatorTx = await pnClient.pChain.newRemoveSubnetValidatorTx({

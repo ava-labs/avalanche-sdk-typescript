@@ -10,11 +10,19 @@ export class Wallet {
 
     constructor(params: {
         nodeUrl: string,
-        privateKeys: string[],
+        privateKeys: string[] | undefined,
     }) {
-        this.privateKeys = params.privateKeys;
+        this.privateKeys = params.privateKeys ?? [];
         this.pvmRpc = new pvm.PVMApi(params.nodeUrl);
         this.evmRpc = new evm.EVMApi(params.nodeUrl);
+    }
+
+    hasPrivateKeys(): boolean {
+        return this.privateKeys.length > 0;
+    }
+
+    addPrivateKeys(privateKeys: string[]) {
+        this.privateKeys.push(...privateKeys);
     }
 
     getBech32Addresses(
