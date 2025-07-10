@@ -390,4 +390,4 @@ export {
     type WriteContractErrorType,
     type WriteContractParameters,
     type WriteContractReturnType,
-} from "@avalanche-sdk/rpc/methods";
+} from "@avalanche-sdk/client/methods";

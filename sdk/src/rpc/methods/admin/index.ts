@@ -9,4 +9,4 @@ export {
     startCPUProfiler, type StartCPUProfilerErrorType,
     stopCPUProfiler, type StopCPUProfilerErrorType,
     lockProfile, type LockProfileErrorType,  
-} from "@avalanche-sdk/rpc/methods/admin";
+} from "@avalanche-sdk/client/methods/admin";

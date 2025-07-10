@@ -55,4 +55,4 @@ export {
     type GetUTXOsErrorType,
     type GetUTXOsParameters,
     type GetUTXOsReturnType,
-} from "@avalanche-sdk/rpc/methods/xChain";
+} from "@avalanche-sdk/client/methods/xChain";

@@ -52,4 +52,4 @@ export {
     uptime,
     type UptimeErrorType,
     type UptimeReturnType,
-} from "@avalanche-sdk/rpc/methods/info";
+} from "@avalanche-sdk/client/methods/info";

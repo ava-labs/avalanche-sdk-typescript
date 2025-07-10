@@ -876,7 +876,7 @@ export {
     type WebSocketTransportErrorType,
     type WithRetryErrorType,
     type WithTimeoutErrorType,
-} from "@avalanche-sdk/rpc";
+} from "@avalanche-sdk/client";
 
 export type {
     AbiEventParametersToPrimitiveTypes,
@@ -1386,7 +1386,7 @@ export type {
     WriteContractErrorType,
     WriteContractParameters,
     WriteContractReturnType,
-} from "@avalanche-sdk/rpc";
+} from "@avalanche-sdk/client";
 
 // ------------- Custom Clients ------------- //
 export {
@@ -1490,4 +1490,4 @@ export {
     type AvalanchePublicRpcSchema,
     type AvalancheWalletRpcSchema,
     type XChainRpcSchema,
-} from "@avalanche-sdk/rpc";
+} from "@avalanche-sdk/client";

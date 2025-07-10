@@ -96,4 +96,4 @@ export {
     parseAvalancheAccount,
     privateKeyToXPAccount,
     type HDKeyToAvalancheAccountOptions,
-} from "@avalanche-sdk/rpc/accounts";
+} from "@avalanche-sdk/client/accounts";

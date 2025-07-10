@@ -5,4 +5,4 @@ export {
     type CreateNonceManagerParameters,
     type NonceManager,
     type NonceManagerSource,
-} from "@avalanche-sdk/rpc/nonce";
+} from "@avalanche-sdk/client/nonce";
