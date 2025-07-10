@@ -15,6 +15,7 @@ describe('disableL1ValidatorTx', () => {
         getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
+        hasPrivateKeys: vi.fn().mockReturnValue(true),
     };
 
     const mockPvmRpc = {
