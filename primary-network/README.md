@@ -26,7 +26,7 @@ The SDK provides a structured way to build different types of transactions. Curr
 Most of the code will use these boilerplate instantiations
 
 ```typescript
-import { createPrimaryNetworkClient, Wallet } from "@avalanche-sdk/primary-network";
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
 
 export function fetchInstantiatedClients() {
     const pnClient = createPrimaryNetworkClient({
@@ -39,7 +39,7 @@ export function fetchInstantiatedClients() {
     // or fetch input UTXOs for building transactions
     pnClient.linkPrivateKeys(["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"]) // this is a common ewoq address used for testing
 
-    return { pnClient, wallet }
+    return { pnClient }
 }
 ```
 
@@ -131,6 +131,8 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 Let's try to build an ExportTx on the C-Chain, which will export AVAX to the P-Chain.
 
 ```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
 });
@@ -170,6 +172,8 @@ There are other [examples](https://github.com/ava-labs/avalanche-sdk-typescript/
 Using the SDK, we can also build structured transaction objects from the signed or unsigned transaction bytes (hex).
 
 ```typescript
+import { createPrimaryNetworkClient, txTypes } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
 });
@@ -186,18 +190,13 @@ console.log(addPermissionlessDelegatorTx.tx.getDelegatorRewardsOwner())
 Import the specific transaction builders directly without bundling them with other transaction types. You can do that using the `PrimaryNetworkCoreClient`. See example below.
 
 ```typescript
-import { createPrimaryNetworkCoreClient, Wallet } from "@avalanche-sdk/primary-network";
+import { createPrimaryNetworkCoreClient } from "@avalanche-sdk/primary-network";
 import { newBaseTx } from '@avalanche-sdk/primary-network/transactions/pchain'
 
 async function main() {
-    const wallet = new Wallet({
-        nodeUrl: "https://api.avax-test.network",
-        privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
-    });
-
     const pnClient = createPrimaryNetworkCoreClient({
         nodeUrlOrChain: "fuji",
-        wallet,
+        privateKeys: ["56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"], // common ewoq address for testing
     });
 
     const baseTx = await newBaseTx(
