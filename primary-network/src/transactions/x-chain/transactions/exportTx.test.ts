@@ -3,7 +3,7 @@ import { avm, pvm, utils } from '@avalabs/avalanchejs';
 import { type ExportTxParams, newExportTx } from './exportTx';
 import type { PrimaryNetworkCore } from '../../../primaryNetworkCoreClient';
 import { feeState, testContext, getValidUtxo } from '../../fixtures/transactions';
-import { pAddressForTest, pAddressForTest2, pAddressForTest3, pAddressForTest4, privateKeyForTest } from '../../fixtures/accounts';
+import { xAddressForTest, xAddressForTest2, xAddressForTest3, xAddressForTest4, privateKeyForTest } from '../../fixtures/accounts';
 import type { Output } from '../../common/types';
 import { checkOutputs } from '../../fixtures/utils';
 import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../../common/utils';
@@ -13,7 +13,7 @@ describe('exportTx', () => {
     
     // mocked wallet always returns 1 avax utxo
     const mockWallet = {
-        getBech32Addresses: vi.fn().mockReturnValue([pAddressForTest]),
+        getBech32Addresses: vi.fn().mockReturnValue([xAddressForTest]),
         getPrivateKeysBuffer: vi.fn().mockReturnValue([utils.hexToBuffer(privateKeyForTest)]),
         getUtxos: vi.fn().mockResolvedValue([getValidUtxo(testInputAmount /* avax */)]),
     };
@@ -36,9 +36,9 @@ describe('exportTx', () => {
     });
 
     it('should create correct outputs and fees', async () => {
-        const receiverAddresses = [pAddressForTest, pAddressForTest3]
-        const receiverAddresses2 = [pAddressForTest4]
-        const changeAddresses = [pAddressForTest2]
+        const receiverAddresses = [xAddressForTest, xAddressForTest3]
+        const receiverAddresses2 = [xAddressForTest4]
+        const changeAddresses = [xAddressForTest2]
 
         const testOutputAmount = 0.1234
         const testOutputAmount2 = 0.2345
@@ -62,7 +62,7 @@ describe('exportTx', () => {
         const outputs = result.getExportedOutputs()
         outputs.push(...result.getOutputs())
 
-        const fee = avm.calculateFee(result.tx, testContext.platformFeeConfig.weights, feeState().price)
+        const fee = (await avm.getTxFee()).txFee
         const expectedChangeAmount = avaxToNanoAvax(testInputAmount) - avaxToNanoAvax(testOutputAmount) - avaxToNanoAvax(testOutputAmount2) - fee
 
         // expected change output
