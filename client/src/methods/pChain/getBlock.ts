@@ -14,9 +14,9 @@ import { GetBlockParameters, GetBlockReturnType } from "./types/getBlock.js";
  *
  * @example
  * ```ts
- * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
- * import { avalanche } from '@avalanche-sdk/rpc/chains'
- * import { getBlock } from '@avalanche-sdk/rpc/methods/pChain'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/client'
+ * import { avalanche } from '@avalanche-sdk/client/chains'
+ * import { getBlock } from '@avalanche-sdk/client/methods/pChain'
  *
  * const client = createAvalancheCoreClient({
  *   chain: avalanche,

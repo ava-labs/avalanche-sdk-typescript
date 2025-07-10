@@ -17,9 +17,9 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * @example
  * ```ts
- * import { createAvalancheCoreClient } from '@avalanche-sdk/rpc'
- * import { avalanche } from '@avalanche-sdk/rpc/chains'
- * import { getTxStatus } from '@avalanche-sdk/rpc/methods/xchain'
+ * import { createAvalancheCoreClient } from '@avalanche-sdk/client'
+ * import { avalanche } from '@avalanche-sdk/client/chains'
+ * import { getTxStatus } from '@avalanche-sdk/client/methods/xchain'
  *
  * const client = createAvalancheCoreClient({
  *   chain: avalanche,
