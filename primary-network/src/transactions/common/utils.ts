@@ -9,9 +9,10 @@ import {
     type Common,
     type Credential,
     evm,
+    avm,
 } from "@avalabs/avalanchejs";
 import type { Wallet } from "../../wallet";
-import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner, TransferableOutputFull } from "./types";
+import type { CommonTxParams, FormattedCommonTxParams, NewTxParams, Output, PChainOwner, TransferableOutputFull, FormattedCommonAvmTxParams } from "./types";
 
 import {
     C_CHAIN_ALIAS, C_CHAIN_FUJI_ID, P_CHAIN_ALIAS, X_CHAIN_ALIAS, X_CHAIN_FUJI_ID,
@@ -37,6 +38,55 @@ export function formatOutput(output: Output, context: ContextType.Context) {
         BigInt(output.locktime ?? 0),
         output.threshold ?? 1,
     )
+}
+
+// temporary function for avm tx params with only necessary outputs for 
+// @GitHub/avalanche-sdk-typescript/primary-network/src/transactions/x-chain/transactions/exportTx.ts
+export async function fetchCommonAvmTxParams(
+    txParams: CommonTxParams,
+    context: ContextType.Context,
+    avmRpc: avm.AVMApi,
+    wallet?: Wallet,
+    sourceChain?: string,
+): Promise<{
+    commonTxParams: FormattedCommonAvmTxParams,
+}> {
+    // If fromAddresses is not provided, use wallet addresses
+    if (!txParams.fromAddresses) {
+        if (wallet) {
+            txParams.fromAddresses = wallet.getBech32Addresses(X_CHAIN_ALIAS, context.networkID);
+        } else {
+            throw errWalletNotFound('fromAddresses');
+        }
+    }
+
+    // If utxos are not provided, use wallet to fetch utxos
+    if (!txParams.utxos) {
+        if (wallet) {
+            txParams.utxos = await wallet.getUtxos(txParams.fromAddresses, sourceChain)
+        } else {
+            throw errWalletNotFound('utxos');
+        }
+    }
+
+    // Fetch fee state from avm api
+    const txFee = await avmRpc.getTxFee()
+
+    const result: FormattedCommonAvmTxParams = {
+        txFee,
+        fromAddressesBytes: txParams.fromAddresses.map(bech32AddressToBytes),
+        utxoSet: txParams.utxos,
+        memo: txParams.memo ? new Uint8Array(Buffer.from(txParams.memo)) : new Uint8Array(),
+    }
+
+    if (txParams.changeAddresses) {
+        result.changeAddressesBytes = txParams.changeAddresses.map(bech32AddressToBytes)
+    }
+    if (txParams.minIssuanceTime) {
+        result.minIssuanceTime = txParams.minIssuanceTime
+    }
+
+    return { commonTxParams: result }
 }
 
 // TODO: try to paralleize API calls within this function
@@ -71,7 +121,7 @@ export async function fetchCommonTxParams(
         }
     }
 
-    // Fetch fee state from api
+    // Fetch fee state from api (this may not be needed for avm)
     const feeState = await pvmRpc.getFeeState()
 
     let subnetOwners: PChainOwner | undefined

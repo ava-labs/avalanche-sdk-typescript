@@ -1,4 +1,4 @@
-import { type Common, type evm, utils, addTxSignatures, type pvm } from "@avalabs/avalanchejs";
+import { type Common, type avm, type evm, utils, addTxSignatures, type pvm } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 import type { Wallet } from "../../wallet";
 import type { NewTxParams } from "./types";
@@ -7,7 +7,7 @@ export class Transaction {
     unsignedTx: Common.UnsignedTx;
     tx: Common.Transaction
     nodeUrl: string;
-    rpc: pvm.PVMApi | evm.EVMApi;
+    rpc: pvm.PVMApi | evm.EVMApi | avm.AVMApi;
     wallet: Wallet | undefined;
 
     constructor(params: NewTxParams) {

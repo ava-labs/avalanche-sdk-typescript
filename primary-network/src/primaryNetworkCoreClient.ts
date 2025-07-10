@@ -1,4 +1,4 @@
-import { Context as ContextType, pvm, evm }  from '@avalabs/avalanchejs';
+import { Context as ContextType, pvm, evm, avm }  from '@avalabs/avalanchejs';
 import { Wallet } from "./wallet";
 import { getNodeUrlFromChain } from './utils';
 
@@ -8,6 +8,7 @@ export class PrimaryNetworkCore {
     context: ContextType.Context | undefined;
     pvmRpc: pvm.PVMApi;
     evmRpc: evm.EVMApi;
+    avmRpc: avm.AVMApi;
 
     constructor(params: {
         nodeUrl: `http${'s' | ''}://${string}`,
@@ -17,6 +18,7 @@ export class PrimaryNetworkCore {
         this.wallet = params.wallet
         this.pvmRpc = new pvm.PVMApi(this.nodeUrl)
         this.evmRpc = new evm.EVMApi(this.nodeUrl)
+        this.avmRpc = new avm.AVMApi(this.nodeUrl)
     }
 
     /**
