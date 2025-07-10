@@ -4,14 +4,14 @@ import { getNodeUrlFromChain } from './utils';
 
 export class PrimaryNetworkCore {
     nodeUrl: string;
-    wallet: Wallet | undefined;
+    wallet: Wallet;
     context: ContextType.Context | undefined;
     pvmRpc: pvm.PVMApi;
     evmRpc: evm.EVMApi;
 
     constructor(params: {
         nodeUrl: `http${'s' | ''}://${string}`,
-        wallet: Wallet | undefined,
+        wallet: Wallet,
     }) {
         this.nodeUrl = getNodeUrlFromChain(params.nodeUrl)
         this.wallet = params.wallet
@@ -40,11 +40,15 @@ export class PrimaryNetworkCore {
 
 export function createPrimaryNetworkCoreClient({
     nodeUrlOrChain,
-    wallet,
+    privateKeys,
 }: {
     nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
-    wallet?: Wallet,
+    privateKeys?: string[] | undefined,
 }) {
+    const wallet = new Wallet({
+        nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
+        privateKeys,
+    });
     return new PrimaryNetworkCore({
         nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
         wallet,

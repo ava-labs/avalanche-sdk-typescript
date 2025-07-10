@@ -1,44 +1,47 @@
 import { TxBuilder as PChainTxBuilder } from "./transactions/p-chain/builder/txBuilder";
 import { TxBuilder as CChainTxBuilder } from "./transactions/c-chain/builder/txBuilder";
-import type { Wallet } from "./wallet";
 import { getNodeUrlFromChain } from "./utils";
-import { PrimaryNetworkCore } from "./primaryNetworkCoreClient";
+import { createPrimaryNetworkCoreClient, PrimaryNetworkCore } from "./primaryNetworkCoreClient";
 
 // TODO: Add proper docs for all clients, methods, and params
-export class PrimaryNetwork extends PrimaryNetworkCore {
+export class PrimaryNetwork {
+    coreClient: PrimaryNetworkCore;
     pChain: PChainTxBuilder;
     cChain: CChainTxBuilder;
     constructor(params: {
+        coreClient: PrimaryNetworkCore,
         nodeUrl: `http${'s' | ''}://${string}`,
         pChain: PChainTxBuilder,
         cChain: CChainTxBuilder,
-        wallet: Wallet | undefined,
     }) {
-        super(params)
+        this.coreClient = params.coreClient
         this.pChain = params.pChain
         this.cChain = params.cChain
+    }
+
+    linkPrivateKeys(privateKeys: string[]) {
+        this.coreClient.linkPrivateKeys(privateKeys)
     }
 }
 
 export function createPrimaryNetworkClient({
     nodeUrlOrChain,
-    wallet,
+    privateKeys,
 }: {
     nodeUrlOrChain: 'mainnet' | 'fuji' | `http${'s' | ''}://${string}`,
-    wallet?: Wallet,
+    privateKeys?: string[] | undefined,
 }) {
-    const primaryNetworkCore = new PrimaryNetworkCore({
-        nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
-        wallet,
+    const primaryNetworkCore = createPrimaryNetworkCoreClient({
+        nodeUrlOrChain,
+        privateKeys,
     })
-
     const pChain = PChainTxBuilder.newClient(primaryNetworkCore)
     const cChain = CChainTxBuilder.newClient(primaryNetworkCore)
 
     return new PrimaryNetwork({
+        coreClient: primaryNetworkCore,
         nodeUrl: getNodeUrlFromChain(nodeUrlOrChain),
         pChain,
         cChain,
-        wallet,
     })
 }

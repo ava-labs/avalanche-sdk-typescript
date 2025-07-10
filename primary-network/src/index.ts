@@ -1,10 +1,6 @@
 export { PrimaryNetwork, createPrimaryNetworkClient } from "./primaryNetworkClient";
 export { PrimaryNetworkCore, createPrimaryNetworkCoreClient } from "./primaryNetworkCoreClient";
 
-export {
-    Wallet,
-} from "./wallet";
-
 import { pChainTxTypes, cChainTxTypes } from "./transactions";
 export const txTypes = {
     pChain: pChainTxTypes,

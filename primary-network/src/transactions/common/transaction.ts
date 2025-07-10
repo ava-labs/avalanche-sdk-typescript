@@ -46,7 +46,7 @@ export class Transaction {
             privateKeysBuffer = privateKeys.map(key => utils.hexToBuffer(key))
         }
 
-        if (!privateKeysBuffer) {
+        if (!privateKeysBuffer || (privateKeysBuffer && privateKeysBuffer.length === 0)) {
             throw new Error('Unable to sign transaction. Either provide private keys or link a wallet')
         }
 

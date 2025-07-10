@@ -23,7 +23,7 @@ The SDK provides a structured way to build different types of transactions. Curr
 
 ### Quickstart
 
-Most of the code will require these boilerplate instantiations
+Most of the code will use these boilerplate instantiations
 
 ```typescript
 import { createPrimaryNetworkClient, Wallet } from "@avalanche-sdk/primary-network";
@@ -31,6 +31,7 @@ import { createPrimaryNetworkClient, Wallet } from "@avalanche-sdk/primary-netwo
 export function fetchInstantiatedClients() {
     const pnClient = createPrimaryNetworkClient({
         nodeUrlOrChain: "fuji",
+        privateKeys: ["63e0730edea86f6e9e95db48dbcab18406e60bebae45ad33e099f09d21450ebf"]
     });
 
     // links private keys for signing transaction
@@ -42,13 +43,17 @@ export function fetchInstantiatedClients() {
 }
 ```
 
-### P-Chain BaseTx
+### P-Chain BaseTx (with Private Keys)
 
 Let's try to build a simple `BaseTx` that will transfer funds from one address to another on P-Chain.
 
 ```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
 const pnClient = createPrimaryNetworkClient({
     nodeUrlOrChain: "fuji",
+    // provide private keys here or later
+    privateKeys: ["63e0730edea86f6e9e95db48dbcab18406e60bebae45ad33e099f09d21450ebf"]
 });
 
 async function main() {
@@ -66,6 +71,47 @@ async function main() {
 
     await baseTx.sign()
     console.log(await baseTx.issue())
+}
+main()
+```
+
+### P-Chain BaseTx (without Private Keys)
+
+We do not have to link private keys for building transactions. The SDK supports building transactions with
+a lots of customization.
+
+```typescript
+import { createPrimaryNetworkClient } from "@avalanche-sdk/primary-network";
+
+const pnClient = createPrimaryNetworkClient({
+    nodeUrlOrChain: "fuji",
+});
+
+async function main() {
+    const baseTx = await pnClient.pChain.newBaseTx({
+        // Since we don't have any accounts linked, we pass the `fromAddresses` to fetch
+        // utxos from. If we provide `utxos`, then this field is optional as well.
+        fromAddresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+        outputs: [
+            {
+                addresses: ['P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t'],
+                amount: 0.00001,
+            }
+        ],
+    })
+
+    // Without the private keys, we cannot sign or issue the transaction.
+    // But we can get the unsigned tx hex, to get it signed later.
+    const unsignedTxHex = baseTx.toHex()
+
+    // sign via Core browser wallet
+    await window.avalanche!.request({
+        method: 'avalanche_sendTransaction',
+        params: {
+            transactionHex: unsignedTxHex,
+            chainAlias: 'P',
+        }
+    })
 }
 main()
 ```
