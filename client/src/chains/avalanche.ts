@@ -9,7 +9,7 @@ export const avalanche = /*#__PURE__*/ defineChain({
     symbol: "AVAX",
   },
   rpcUrls: {
-    default: { http: ["https://api.avax.network/ext/bc/C/client"] },
+    default: { http: ["https://api.avax.network/ext/bc/C/rpc"] },
   },
   blockExplorers: {
     default: {
