@@ -11,7 +11,7 @@ export function checkOutputs(expectedOutputs: Output[], actualOutputs: (Transfer
         expect(actual?.amount().valueOf(), `output amount did not match for index ${index}`).toBe(BigInt(expected.amount * 1e9))
 
         // check owners
-        const expectedOwners = expected.addresses.map(address => address.replace('P-', ''))
+        const expectedOwners = expected.addresses.map(address => address.replace(/^[PX]-/, ''))
         let actualOwners: string[] = []
         if (actual) {
             if (utils.isTransferOut(actual)) {

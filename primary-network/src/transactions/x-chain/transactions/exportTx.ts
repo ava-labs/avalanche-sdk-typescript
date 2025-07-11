@@ -46,6 +46,11 @@ export async function newExportTx(
         commonTxParams.fromAddressesBytes,
         commonTxParams.utxoSet,
         exportedOutputs,
+        {
+            ...(commonTxParams.changeAddressesBytes && { changeAddresses: commonTxParams.changeAddressesBytes }),
+            ...(commonTxParams.minIssuanceTime && { minIssuanceTime: commonTxParams.minIssuanceTime }),
+            ...(commonTxParams.memo && { memo: commonTxParams.memo }),
+        },
     );
 
     return new ExportTx({

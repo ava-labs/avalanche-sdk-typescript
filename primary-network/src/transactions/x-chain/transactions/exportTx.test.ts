@@ -7,6 +7,7 @@ import { xAddressForTest, xAddressForTest2, xAddressForTest3, xAddressForTest4, 
 import type { Output } from '../../common/types';
 import { checkOutputs } from '../../fixtures/utils';
 import { avaxToNanoAvax, getChainIdFromAlias, nanoAvaxToAvax } from '../../common/utils';
+import { mock } from 'node:test';
 
 describe('exportTx', () => {
     const testInputAmount = 1
@@ -20,11 +21,12 @@ describe('exportTx', () => {
 
     const mockAvmRpc = {
         getFeeState: vi.fn().mockResolvedValue(feeState()),
+        getTxFee: vi.fn().mockResolvedValue({ txFee: testContext.baseTxFee, createAssetTxFee: testContext.createAssetTxFee }),
     };
     
     const mockPrimaryNetworkCoreClient = {
         initializeContextIfNot: vi.fn().mockResolvedValue(testContext),
-        AvmRpc: mockAvmRpc,
+        avmRpc: mockAvmRpc,
         wallet: mockWallet,
         nodeUrl: 'http://localhost:9650',
     } as unknown as PrimaryNetworkCore;
@@ -62,7 +64,7 @@ describe('exportTx', () => {
         const outputs = result.getExportedOutputs()
         outputs.push(...result.getOutputs())
 
-        const fee = (await avm.getTxFee()).txFee
+        const fee = (await mockAvmRpc.getTxFee()).txFee
         const expectedChangeAmount = avaxToNanoAvax(testInputAmount) - avaxToNanoAvax(testOutputAmount) - avaxToNanoAvax(testOutputAmount2) - fee
 
         // expected change output
@@ -81,8 +83,8 @@ describe('exportTx', () => {
     });
 
     it('should create correct export tx details', async () => {
-        const receiverAddresses = [pAddressForTest, pAddressForTest3]
-        const changeAddresses = [pAddressForTest2]
+        const receiverAddresses = [xAddressForTest, xAddressForTest3]
+        const changeAddresses = [xAddressForTest2]
 
         const testOutputAmount = 0.1234
         const testOutputs: Output[] = [{
@@ -115,8 +117,8 @@ describe('exportTx', () => {
     });
 
     it('should create correct tx hash', async () => {
-        const receiverAddresses = [pAddressForTest, pAddressForTest3]
-        const changeAddresses = [pAddressForTest2]
+        const receiverAddresses = [xAddressForTest, xAddressForTest3]
+        const changeAddresses = [xAddressForTest2]
 
         const testOutputAmount = 0.1234
         const testOutputs: Output[] = [{
@@ -142,11 +144,11 @@ describe('exportTx', () => {
         expect(
             cChainExportTx.getId(),
             'expected c-chain export tx hash mismatch',
-        ).toBe('29d94GvoD5dLnZUuLD5uv8HaKwwGNGCrpGWtGR7ZbwrtwzaaHp')
+        ).toBe('2oy8wE7wXtDhmEwW61RyEp2BjN66ZnvAWZKZWeENWheyacdgQp')
 
         expect(
             pChainExportTx.getId(),
             'expected p-chain export tx hash mismatch',
-        ).toBe('297fxqPXUbThB9EqDVVvXhE5bNYifpnqhXvMPtZsk9vTtA7Lg9')
+        ).toBe('2BJxkJ4mbf1Pwvm6m4KaVUU73NvNX5gzdUZ8kRcvpBM1AHzBN2')
     });
 }); 
