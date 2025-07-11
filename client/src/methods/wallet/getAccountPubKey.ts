@@ -22,7 +22,7 @@ import { GetAccountPubKeyReturnType } from "./types/getAccountPubKey.js";
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
- *     url: "https://api.avax.network/ext/bc/C/client",
+ *     url: "https://api.avax.network/ext/bc/C/rpc",
  *   },
  *   account,
  * })
