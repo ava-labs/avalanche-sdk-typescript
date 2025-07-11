@@ -64,15 +64,15 @@ export async function newImportTx(
     const unsignedTx = avm.newImportTx(
         context,
         getChainIdFromAlias(txParams.sourceChain, context.networkID),
-        commonTxParams.fromAddressesBytes,
         commonTxParams.utxoSet,
         txParams.importedOutput.addresses.map(utils.bech32ToBytes),
+        commonTxParams.fromAddressesBytes,
         {
             ...(commonTxParams.memo && { memo: commonTxParams.memo }),
             ...(commonTxParams.minIssuanceTime && { minIssuanceTime: commonTxParams.minIssuanceTime }),
-            locktime: BigInt(txParams.importedOutput.locktime ?? 0),
-            threshold: txParams.importedOutput.threshold ?? 1,
         },
+        txParams.importedOutput.threshold ?? 1,
+        BigInt(txParams.importedOutput.locktime ?? 0),
     );
 
     return new ImportTx({
