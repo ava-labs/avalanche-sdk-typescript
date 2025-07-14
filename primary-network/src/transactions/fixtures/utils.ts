@@ -5,10 +5,11 @@ import { utils } from "@avalabs/avalanchejs"
 export function checkOutputs(expectedOutputs: Output[], actualOutputs: (TransferableOutputFull | StakeableOutputFull)[]) {
     expect(actualOutputs.length, 'expected and actual outputs length mismatch').toBe(expectedOutputs.length)
     expectedOutputs.forEach((expected, index) => {
+        console.log("expected", expected.amount)
         const actual = actualOutputs[index]?.output
 
         // check amount
-        expect(actual?.amount().valueOf(), `output amount did not match for index ${index}`).toBe(BigInt(expected.amount * 1e9))
+        expect(actual?.amount().valueOf(), `output amount did not match for index ${index}`).toBe(BigInt(Math.round(expected.amount * 1e9)))
 
         // check owners
         const expectedOwners = expected.addresses.map(address => address.replace(/^[PX]-/, ''))

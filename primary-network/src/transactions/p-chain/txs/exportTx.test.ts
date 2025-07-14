@@ -71,10 +71,6 @@ describe('exportTx', () => {
             addresses: changeAddresses,
         })
 
-        console.log("attention")
-        console.log(outputs)
-
-
         // check outputs
         checkOutputs(testOutputs, outputs)
 

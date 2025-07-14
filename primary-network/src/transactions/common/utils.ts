@@ -40,7 +40,7 @@ export function formatOutput(output: Output, context: ContextType.Context) {
     )
 }
 
-// temporary function for avm tx params with only necessary outputs for 
+// Provide Avm tx params with only necessary outputs for 
 // @GitHub/avalanche-sdk-typescript/primary-network/src/transactions/x-chain/transactions/exportTx.ts
 export async function fetchCommonAvmTxParams(
     txParams: CommonTxParams,
