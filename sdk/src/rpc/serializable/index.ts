@@ -34,4 +34,4 @@ export {
     Utxo,
     ValidVMs,
     type VM,
-} from "@avalanche-sdk/rpc/serializable";
+} from "@avalanche-sdk/client/serializable";

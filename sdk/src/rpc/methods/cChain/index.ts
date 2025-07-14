@@ -18,4 +18,4 @@ export {
     type IssueTxErrorType,
     type IssueTxParameters,
     type IssueTxReturnType,
-} from "@avalanche-sdk/rpc/methods/cChain";
+} from "@avalanche-sdk/client/methods/cChain";

@@ -23,4 +23,4 @@ export {
     type GetActiveRulesAtErrorType,
     type GetActiveRulesAtMethod,
     type GetActiveRulesAtReturnType,
-} from "@avalanche-sdk/rpc/methods/public";
+} from "@avalanche-sdk/client/methods/public";

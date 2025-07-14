@@ -136,4 +136,4 @@ export {
     type ValidatedByErrorType,
     type ValidatedByParameters,
     type ValidatedByReturnType,
-} from "@avalanche-sdk/rpc/methods/pChain";
+} from "@avalanche-sdk/client/methods/pChain";

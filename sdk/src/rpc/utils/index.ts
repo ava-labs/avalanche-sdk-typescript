@@ -418,4 +418,4 @@ export {
     type WebSocketErrorType,
     type WebSocketOptions,
     type WebSocketReturnType,
-} from "@avalanche-sdk/rpc/utils";
+} from "@avalanche-sdk/client/utils";

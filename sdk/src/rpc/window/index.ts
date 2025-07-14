@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/rpc/window";
+export * from "@avalanche-sdk/client/window";

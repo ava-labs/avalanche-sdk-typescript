@@ -638,4 +638,4 @@ export {
     zora,
     zoraSepolia,
     zoraTestnet,
-} from "@avalanche-sdk/rpc/chains";
+} from "@avalanche-sdk/client/chains";

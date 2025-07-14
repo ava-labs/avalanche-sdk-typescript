@@ -28,4 +28,4 @@ export {
     type IsAcceptedErrorType,
     type IsAcceptedParameters,
     type IsAcceptedReturnType,
-} from "@avalanche-sdk/rpc/methods/index";
+} from "@avalanche-sdk/client/methods/index";

@@ -15,4 +15,4 @@ export {
     type VerifySiweMessageErrorType,
     type VerifySiweMessageParameters,
     type VerifySiweMessageReturnType,
-} from "@avalanche-sdk/rpc/siwe";
+} from "@avalanche-sdk/client/siwe";

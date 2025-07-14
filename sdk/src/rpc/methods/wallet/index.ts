@@ -19,4 +19,4 @@ export {
     type SignXPTransactionErrorType,
     type SignXPTransactionParameters,
     type SignXPTransactionReturnType,
-} from "@avalanche-sdk/rpc/methods/wallet";
+} from "@avalanche-sdk/client/methods/wallet";

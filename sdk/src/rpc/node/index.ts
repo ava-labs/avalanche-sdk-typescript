@@ -6,4 +6,4 @@ export {
     type IpcTransport,
     type IpcTransportConfig,
     type IpcTransportErrorType,
-} from "@avalanche-sdk/rpc/node";
+} from "@avalanche-sdk/client/node";

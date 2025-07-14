@@ -12,4 +12,4 @@ export {
     type ReadinessErrorType,
     type ReadinessParameters,
     type ReadinessReturnType,
-} from "@avalanche-sdk/rpc/methods/health";
+} from "@avalanche-sdk/client/methods/health";
