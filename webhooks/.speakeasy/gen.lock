@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: f2a15845-dc11-48d9-85a3-222c345ff88e
 management:
-  docChecksum: 9efe08f18592dd65ec4c5e5f436850f1
+  docChecksum: f24e0b462614546c1c9669c9b1421ddf
   docVersion: 1.0.0
-  speakeasyVersion: 1.568.2
-  generationVersion: 2.634.2
-  releaseVersion: 0.4.0
-  configChecksum: 6a07e8dc2c277b84058f29f738c69fbb
+  speakeasyVersion: 1.582.0
+  generationVersion: 2.657.1
+  releaseVersion: 0.5.0
+  configChecksum: 1ef07be154a01d09c91df8e78346c99b
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: webhooks
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/webhooks
@@ -15,19 +15,19 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.11
+    core: 3.21.14
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
-    examples: 2.81.5
+    examples: 2.82.1
     globalSecurity: 2.82.13
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.5
     globals: 2.82.2
     groups: 2.81.2
-    mcpServer: 0.9.2
+    mcpServer: 0.9.3
     nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
@@ -47,17 +47,16 @@ generatedFiles:
   - USAGE.md
   - docs/lib/utils/retryconfig.md
   - docs/models/components/accesslistdata.md
+  - docs/models/components/addressactivityeventtype.md
   - docs/models/components/addressactivitymetadata.md
   - docs/models/components/addresseschangerequest.md
   - docs/models/components/commonbalancetype.md
   - docs/models/components/erctoken.md
   - docs/models/components/erctransfer.md
-  - docs/models/components/eventtype.md
   - docs/models/components/evmaddressactivityrequest.md
   - docs/models/components/evmaddressactivityrequesteventtype.md
   - docs/models/components/evmaddressactivityrequestmetadata.md
   - docs/models/components/evmaddressactivityresponse.md
-  - docs/models/components/evmaddressactivityresponsemetadata.md
   - docs/models/components/globalparamnetwork.md
   - docs/models/components/healthcheckresultdto.md
   - docs/models/components/healthcheckresultdtostatus.md
@@ -67,23 +66,31 @@ generatedFiles:
   - docs/models/components/listwebhooksresponse.md
   - docs/models/components/log.md
   - docs/models/components/networktokeninfo.md
-  - docs/models/components/platformactivitykeytype.md
-  - docs/models/components/platformactivitymetadata.md
-  - docs/models/components/platformactivityrequest.md
-  - docs/models/components/platformactivityrequesteventtype.md
-  - docs/models/components/platformactivityrequestmetadata.md
-  - docs/models/components/platformactivityresponse.md
-  - docs/models/components/platformactivityresponsemetadata.md
-  - docs/models/components/platformactivitysubevents.md
-  - docs/models/components/platformaddressactivitysubeventtype.md
-  - docs/models/components/platformbalancethresholdfilter.md
+  - docs/models/components/platformaddressactivitykeytype.md
+  - docs/models/components/primarynetworkaddressactivityeventtype.md
+  - docs/models/components/primarynetworkaddressactivitymetadata.md
+  - docs/models/components/primarynetworkaddressactivityrequest.md
+  - docs/models/components/primarynetworkaddressactivityrequesteventtype.md
+  - docs/models/components/primarynetworkaddressactivityrequestmetadata.md
+  - docs/models/components/primarynetworkaddressactivityresponse.md
+  - docs/models/components/primarynetworkaddressactivitysubevents.md
+  - docs/models/components/primarynetworkaddressactivitysubeventtype.md
+  - docs/models/components/primarynetworkbalancethresholdfilter.md
   - docs/models/components/primarynetworktype.md
   - docs/models/components/security.md
   - docs/models/components/sharedsecretsresponse.md
   - docs/models/components/transaction.md
   - docs/models/components/transactionevent.md
   - docs/models/components/updatewebhookrequest.md
+  - docs/models/components/validatoractivityeventtype.md
+  - docs/models/components/validatoractivitykeytype.md
+  - docs/models/components/validatoractivitymetadata.md
+  - docs/models/components/validatoractivityrequest.md
+  - docs/models/components/validatoractivityrequesteventtype.md
+  - docs/models/components/validatoractivityrequestmetadata.md
+  - docs/models/components/validatoractivityresponse.md
   - docs/models/components/validatoractivitysubevent.md
+  - docs/models/components/validatoractivitysubevents.md
   - docs/models/components/webhook.md
   - docs/models/components/webhookaddressactivityresponse.md
   - docs/models/components/webhookaddressactivityresponseeventtype.md
@@ -124,6 +131,10 @@ generatedFiles:
   - docs/sdks/avalanche/README.md
   - docs/sdks/webhooks/README.md
   - eslint.config.mjs
+  - examples/.env.template
+  - examples/README.md
+  - examples/package.json
+  - examples/webhooksCreate.example.ts
   - package.json
   - src/core.ts
   - src/funcs/webhooksAddressesAdd.ts
@@ -181,12 +192,12 @@ generatedFiles:
   - src/mcp-server/tools/webhooksList.ts
   - src/mcp-server/tools/webhooksUpdate.ts
   - src/models/components/accesslistdata.ts
+  - src/models/components/addressactivityeventtype.ts
   - src/models/components/addressactivitymetadata.ts
   - src/models/components/addresseschangerequest.ts
   - src/models/components/commonbalancetype.ts
   - src/models/components/erctoken.ts
   - src/models/components/erctransfer.ts
-  - src/models/components/eventtype.ts
   - src/models/components/evmaddressactivityrequest.ts
   - src/models/components/evmaddressactivityresponse.ts
   - src/models/components/globalparamnetwork.ts
@@ -197,19 +208,26 @@ generatedFiles:
   - src/models/components/listwebhooksresponse.ts
   - src/models/components/log.ts
   - src/models/components/networktokeninfo.ts
-  - src/models/components/platformactivitykeytype.ts
-  - src/models/components/platformactivitymetadata.ts
-  - src/models/components/platformactivityrequest.ts
-  - src/models/components/platformactivityresponse.ts
-  - src/models/components/platformactivitysubevents.ts
-  - src/models/components/platformaddressactivitysubeventtype.ts
-  - src/models/components/platformbalancethresholdfilter.ts
+  - src/models/components/platformaddressactivitykeytype.ts
+  - src/models/components/primarynetworkaddressactivityeventtype.ts
+  - src/models/components/primarynetworkaddressactivitymetadata.ts
+  - src/models/components/primarynetworkaddressactivityrequest.ts
+  - src/models/components/primarynetworkaddressactivityresponse.ts
+  - src/models/components/primarynetworkaddressactivitysubevents.ts
+  - src/models/components/primarynetworkaddressactivitysubeventtype.ts
+  - src/models/components/primarynetworkbalancethresholdfilter.ts
   - src/models/components/primarynetworktype.ts
   - src/models/components/security.ts
   - src/models/components/sharedsecretsresponse.ts
   - src/models/components/transaction.ts
   - src/models/components/transactionevent.ts
   - src/models/components/updatewebhookrequest.ts
+  - src/models/components/validatoractivityeventtype.ts
+  - src/models/components/validatoractivitykeytype.ts
+  - src/models/components/validatoractivitymetadata.ts
+  - src/models/components/validatoractivityrequest.ts
+  - src/models/components/validatoractivityresponse.ts
+  - src/models/components/validatoractivitysubevents.ts
   - src/models/components/webhookaddressactivityresponse.ts
   - src/models/components/webhookinternaltransaction.ts
   - src/models/components/webhookstatus.ts
@@ -281,10 +299,10 @@ examples:
   createWebhook:
     speakeasy-default-create-webhook:
       requestBody:
-        application/json: {"eventType": "address_activity", "url": "https://sophisticated-exterior.org/", "chainId": "<id>", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+        application/json: {"eventType": "address_activity", "url": "https://sophisticated-exterior.org/", "chainId": "<id>", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}}
       responses:
         "201":
-          application/json: {"id": "<id>", "eventType": "address_activity", "url": "https://staid-noon.org/", "chainId": "<id>", "status": "inactive", "createdAt": 9478.09, "name": "<value>", "description": "bonnet failing which officially thankfully naturally cruel", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://staid-noon.org/", "chainId": "<id>", "status": "inactive", "createdAt": 9478.09, "name": "<value>", "description": "bonnet failing which officially thankfully naturally cruel", "eventType": "address_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}}
         "400":
           application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -380,7 +398,7 @@ examples:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
       responses:
         "200":
-          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://shrill-feather.name", "chainId": "<id>", "status": "active", "createdAt": 3272.52, "name": "<value>", "description": "ah interestingly knuckle helplessly not enrich", "metadata": {"keyType": "subnetId", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://shrill-feather.name", "chainId": "<id>", "status": "active", "createdAt": 3272.52, "name": "<value>", "description": "ah interestingly knuckle helplessly not enrich", "eventType": "validator_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "keyType": "subnetId", "keys": ["<value 1>", "<value 2>"], "subEvents": {"validatorActivitySubEvents": ["l1_validator_balance_threshold"]}}}
         "400":
           application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -427,7 +445,7 @@ examples:
           id: "f33de69c-d13b-4691-908f-870d6e2e6b04"
       responses:
         "200":
-          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://orange-igloo.info", "chainId": "<id>", "status": "inactive", "createdAt": 9870.51, "name": "<value>", "description": "ack scary foot", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>", "<value 3>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://orange-igloo.info", "chainId": "<id>", "status": "inactive", "createdAt": 9870.51, "name": "<value>", "description": "ack scary foot", "eventType": "validator_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "keyType": "subnetId", "keys": ["<value 1>", "<value 2>", "<value 3>"], "subEvents": {"validatorActivitySubEvents": ["l1_validator_disabled"]}}}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -478,7 +496,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://puzzled-confusion.com/", "chainId": "<id>", "status": "active", "createdAt": 2194.04, "name": "<value>", "description": "ick athwart mid", "metadata": {"keyType": "addresses", "keys": ["<value 1>", "<value 2>"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://puzzled-confusion.com/", "chainId": "<id>", "status": "active", "createdAt": 2194.04, "name": "<value>", "description": "ick athwart mid", "eventType": "validator_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "keyType": "subnetId", "keys": ["<value 1>", "<value 2>"], "subEvents": {"validatorActivitySubEvents": []}}}
         "400":
           application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -571,7 +589,7 @@ examples:
         application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
       responses:
         "200":
-          application/json: {"id": "<id>", "eventType": "platform_address_activity", "url": "https://apprehensive-unit.net/", "chainId": "<id>", "status": "inactive", "createdAt": 9755.42, "name": "<value>", "description": "wetly woot challenge that irresponsible requite rectangular wherever noted", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://apprehensive-unit.net/", "chainId": "<id>", "status": "inactive", "createdAt": 9755.42, "name": "<value>", "description": "wetly woot challenge that irresponsible requite rectangular wherever noted", "eventType": "address_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":
@@ -622,7 +640,7 @@ examples:
         application/json: {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}
       responses:
         "200":
-          application/json: {"id": "<id>", "eventType": "validator_activity", "url": "https://ornery-colon.info", "chainId": "<id>", "status": "inactive", "createdAt": 5668.34, "name": "<value>", "description": "colorful emphasise worth intervention wherever onto mill custom for", "metadata": {"addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"], "eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"]}}
+          application/json: {"id": "<id>", "url": "https://ornery-colon.info", "chainId": "<id>", "status": "inactive", "createdAt": 5668.34, "name": "<value>", "description": "colorful emphasise worth intervention wherever onto mill custom for", "eventType": "address_activity", "metadata": {"eventSignatures": ["0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64"], "addresses": ["0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"]}}
         "400":
           application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
         "401":

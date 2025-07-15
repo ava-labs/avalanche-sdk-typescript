@@ -5,7 +5,16 @@
 ```typescript
 import { GetAddressesFromWebhookResponse } from "@avalanche-sdk/webhooks/models/operations";
 
-let value: GetAddressesFromWebhookResponse = {};
+let value: GetAddressesFromWebhookResponse = {
+  result: {
+    addresses: [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+    totalAddresses: 1227.61,
+  },
+};
 ```
 
 ## Fields

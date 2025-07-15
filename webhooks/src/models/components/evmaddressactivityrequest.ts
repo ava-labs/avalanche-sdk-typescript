@@ -13,11 +13,6 @@ import {
   AddressActivityMetadata$Outbound,
   AddressActivityMetadata$outboundSchema,
 } from "./addressactivitymetadata.js";
-import {
-  PrimaryNetworkType,
-  PrimaryNetworkType$inboundSchema,
-  PrimaryNetworkType$outboundSchema,
-} from "./primarynetworktype.js";
 
 export const EVMAddressActivityRequestEventType = {
   AddressActivity: "address_activity",
@@ -31,10 +26,10 @@ export type EVMAddressActivityRequestMetadata = AddressActivityMetadata;
 export type EVMAddressActivityRequest = {
   eventType: EVMAddressActivityRequestEventType;
   url: string;
-  chainId: string;
-  network?: PrimaryNetworkType | undefined;
   name?: string | undefined;
   description?: string | undefined;
+  chainId: string;
+  metadata: AddressActivityMetadata;
   /**
    * Whether to include traces in the webhook payload. Traces are only available for C-Chain on chainId 43113 and 43114.
    */
@@ -43,7 +38,6 @@ export type EVMAddressActivityRequest = {
    * Whether to include logs in the webhook payload.
    */
   includeLogs?: boolean | undefined;
-  metadata: AddressActivityMetadata;
 };
 
 /** @internal */
@@ -128,26 +122,24 @@ export const EVMAddressActivityRequest$inboundSchema: z.ZodType<
 > = z.object({
   eventType: EVMAddressActivityRequestEventType$inboundSchema,
   url: z.string(),
-  chainId: z.string(),
-  network: PrimaryNetworkType$inboundSchema.optional(),
   name: z.string().optional(),
   description: z.string().optional(),
+  chainId: z.string(),
+  metadata: AddressActivityMetadata$inboundSchema,
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),
-  metadata: AddressActivityMetadata$inboundSchema,
 });
 
 /** @internal */
 export type EVMAddressActivityRequest$Outbound = {
   eventType: string;
   url: string;
-  chainId: string;
-  network?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
+  chainId: string;
+  metadata: AddressActivityMetadata$Outbound;
   includeInternalTxs?: boolean | undefined;
   includeLogs?: boolean | undefined;
-  metadata: AddressActivityMetadata$Outbound;
 };
 
 /** @internal */
@@ -158,13 +150,12 @@ export const EVMAddressActivityRequest$outboundSchema: z.ZodType<
 > = z.object({
   eventType: EVMAddressActivityRequestEventType$outboundSchema,
   url: z.string(),
-  chainId: z.string(),
-  network: PrimaryNetworkType$outboundSchema.optional(),
   name: z.string().optional(),
   description: z.string().optional(),
+  chainId: z.string(),
+  metadata: AddressActivityMetadata$outboundSchema,
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),
-  metadata: AddressActivityMetadata$outboundSchema,
 });
 
 /**
