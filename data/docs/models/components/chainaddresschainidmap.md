@@ -8,7 +8,7 @@ import { ChainAddressChainIdMap } from "@avalanche-sdk/data/models/components";
 let value: ChainAddressChainIdMap = {
   address: "52144 Wendy Hills",
   blockchainIds: [
-    "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
+    "11111111111111111111111111111111LpoYY",
   ],
 };
 ```

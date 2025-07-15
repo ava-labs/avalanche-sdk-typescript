@@ -5,7 +5,12 @@
 ```typescript
 import { GetApiLogsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: GetApiLogsResponse = {};
+let value: GetApiLogsResponse = {
+  result: {
+    orgId: "<id>",
+    logs: [],
+  },
+};
 ```
 
 ## Fields

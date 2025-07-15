@@ -5,7 +5,11 @@
 ```typescript
 import { ListCollectibleBalancesResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListCollectibleBalancesResponse = {};
+let value: ListCollectibleBalancesResponse = {
+  result: {
+    collectibleBalances: [],
+  },
+};
 ```
 
 ## Fields

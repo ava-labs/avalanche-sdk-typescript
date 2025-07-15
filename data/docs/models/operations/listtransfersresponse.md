@@ -5,7 +5,11 @@
 ```typescript
 import { ListTransfersResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListTransfersResponse = {};
+let value: ListTransfersResponse = {
+  result: {
+    transfers: [],
+  },
+};
 ```
 
 ## Fields
