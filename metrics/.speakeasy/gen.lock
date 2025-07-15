@@ -3,10 +3,10 @@ id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
   docChecksum: 367751ce2e2821606b6c9edaba6f9407
   docVersion: 1.0.0
-  speakeasyVersion: 1.568.2
-  generationVersion: 2.634.2
-  releaseVersion: 0.4.0
-  configChecksum: 9111ea41c36ead2507f4698e2cea4d2e
+  speakeasyVersion: 1.582.0
+  generationVersion: 2.657.1
+  releaseVersion: 0.4.1
+  configChecksum: 45087192b8a75bbf77a7967743e6d1c0
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -15,7 +15,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.11
+    core: 3.21.14
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -24,7 +24,7 @@ features:
     globalServerURLs: 2.82.5
     globals: 2.82.2
     groups: 2.81.2
-    mcpServer: 0.9.2
+    mcpServer: 0.9.3
     nameOverrides: 2.81.2
     nullables: 0.1.1
     pagination: 2.83.0
@@ -122,6 +122,10 @@ generatedFiles:
   - docs/sdks/networks/README.md
   - docs/sdks/subnets/README.md
   - eslint.config.mjs
+  - examples/.env.template
+  - examples/README.md
+  - examples/metricsHealthCheck.example.ts
+  - examples/package.json
   - jsr.json
   - package.json
   - src/core.ts

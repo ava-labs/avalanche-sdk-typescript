@@ -5,7 +5,11 @@
 ```typescript
 import { GetValidatorsByDateRangeResponse } from "@avalanche-sdk/metrics/models/operations";
 
-let value: GetValidatorsByDateRangeResponse = {};
+let value: GetValidatorsByDateRangeResponse = {
+  result: {
+    addresses: [],
+  },
+};
 ```
 
 ## Fields
