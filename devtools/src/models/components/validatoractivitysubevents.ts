@@ -7,11 +7,6 @@ import { safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  PlatformAddressActivitySubEventType,
-  PlatformAddressActivitySubEventType$inboundSchema,
-  PlatformAddressActivitySubEventType$outboundSchema,
-} from "./platformaddressactivitysubeventtype.js";
 
 export const ValidatorActivitySubEvent = {
   ValidatorStake: "validator_stake",
@@ -26,14 +21,11 @@ export type ValidatorActivitySubEvent = ClosedEnum<
   typeof ValidatorActivitySubEvent
 >;
 
-export type PlatformActivitySubEvents = {
+export type ValidatorActivitySubEvents = {
   /**
    * Array of validator activity sub-event types
    */
-  validatorActivitySubEvents?: Array<ValidatorActivitySubEvent> | undefined;
-  addressActivitySubEvents?:
-    | Array<PlatformAddressActivitySubEventType>
-    | undefined;
+  validatorActivitySubEvents: Array<ValidatorActivitySubEvent>;
 };
 
 /** @internal */
@@ -58,64 +50,55 @@ export namespace ValidatorActivitySubEvent$ {
 }
 
 /** @internal */
-export const PlatformActivitySubEvents$inboundSchema: z.ZodType<
-  PlatformActivitySubEvents,
+export const ValidatorActivitySubEvents$inboundSchema: z.ZodType<
+  ValidatorActivitySubEvents,
   z.ZodTypeDef,
   unknown
 > = z.object({
-  validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$inboundSchema)
-    .optional(),
-  addressActivitySubEvents: z.array(
-    PlatformAddressActivitySubEventType$inboundSchema,
-  ).optional(),
+  validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$inboundSchema),
 });
 
 /** @internal */
-export type PlatformActivitySubEvents$Outbound = {
-  validatorActivitySubEvents?: Array<string> | undefined;
-  addressActivitySubEvents?: Array<string> | undefined;
+export type ValidatorActivitySubEvents$Outbound = {
+  validatorActivitySubEvents: Array<string>;
 };
 
 /** @internal */
-export const PlatformActivitySubEvents$outboundSchema: z.ZodType<
-  PlatformActivitySubEvents$Outbound,
+export const ValidatorActivitySubEvents$outboundSchema: z.ZodType<
+  ValidatorActivitySubEvents$Outbound,
   z.ZodTypeDef,
-  PlatformActivitySubEvents
+  ValidatorActivitySubEvents
 > = z.object({
-  validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$outboundSchema)
-    .optional(),
-  addressActivitySubEvents: z.array(
-    PlatformAddressActivitySubEventType$outboundSchema,
-  ).optional(),
+  validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$outboundSchema),
 });
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace PlatformActivitySubEvents$ {
-  /** @deprecated use `PlatformActivitySubEvents$inboundSchema` instead. */
-  export const inboundSchema = PlatformActivitySubEvents$inboundSchema;
-  /** @deprecated use `PlatformActivitySubEvents$outboundSchema` instead. */
-  export const outboundSchema = PlatformActivitySubEvents$outboundSchema;
-  /** @deprecated use `PlatformActivitySubEvents$Outbound` instead. */
-  export type Outbound = PlatformActivitySubEvents$Outbound;
+export namespace ValidatorActivitySubEvents$ {
+  /** @deprecated use `ValidatorActivitySubEvents$inboundSchema` instead. */
+  export const inboundSchema = ValidatorActivitySubEvents$inboundSchema;
+  /** @deprecated use `ValidatorActivitySubEvents$outboundSchema` instead. */
+  export const outboundSchema = ValidatorActivitySubEvents$outboundSchema;
+  /** @deprecated use `ValidatorActivitySubEvents$Outbound` instead. */
+  export type Outbound = ValidatorActivitySubEvents$Outbound;
 }
 
-export function platformActivitySubEventsToJSON(
-  platformActivitySubEvents: PlatformActivitySubEvents,
+export function validatorActivitySubEventsToJSON(
+  validatorActivitySubEvents: ValidatorActivitySubEvents,
 ): string {
   return JSON.stringify(
-    PlatformActivitySubEvents$outboundSchema.parse(platformActivitySubEvents),
+    ValidatorActivitySubEvents$outboundSchema.parse(validatorActivitySubEvents),
   );
 }
 
-export function platformActivitySubEventsFromJSON(
+export function validatorActivitySubEventsFromJSON(
   jsonString: string,
-): SafeParseResult<PlatformActivitySubEvents, SDKValidationError> {
+): SafeParseResult<ValidatorActivitySubEvents, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => PlatformActivitySubEvents$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'PlatformActivitySubEvents' from JSON`,
+    (x) => ValidatorActivitySubEvents$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ValidatorActivitySubEvents' from JSON`,
   );
 }

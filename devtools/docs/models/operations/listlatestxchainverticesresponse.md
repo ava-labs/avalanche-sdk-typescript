@@ -5,7 +5,15 @@
 ```typescript
 import { ListLatestXChainVerticesResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListLatestXChainVerticesResponse = {};
+let value: ListLatestXChainVerticesResponse = {
+  result: {
+    vertices: [],
+    chainInfo: {
+      chainName: "c-chain",
+      network: "mainnet",
+    },
+  },
+};
 ```
 
 ## Fields

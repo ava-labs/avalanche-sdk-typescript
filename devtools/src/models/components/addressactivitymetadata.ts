@@ -9,13 +9,13 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type AddressActivityMetadata = {
   /**
-   * Ethereum address(es) for the address_activity event type
-   */
-  addresses: Array<string>;
-  /**
    * Array of hexadecimal strings of the event signatures.
    */
   eventSignatures?: Array<string> | undefined;
+  /**
+   * Ethereum address(es) for the address_activity event type
+   */
+  addresses: Array<string>;
 };
 
 /** @internal */
@@ -24,14 +24,14 @@ export const AddressActivityMetadata$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  addresses: z.array(z.string()),
   eventSignatures: z.array(z.string()).optional(),
+  addresses: z.array(z.string()),
 });
 
 /** @internal */
 export type AddressActivityMetadata$Outbound = {
-  addresses: Array<string>;
   eventSignatures?: Array<string> | undefined;
+  addresses: Array<string>;
 };
 
 /** @internal */
@@ -40,8 +40,8 @@ export const AddressActivityMetadata$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   AddressActivityMetadata
 > = z.object({
-  addresses: z.array(z.string()),
   eventSignatures: z.array(z.string()).optional(),
+  addresses: z.array(z.string()),
 });
 
 /**

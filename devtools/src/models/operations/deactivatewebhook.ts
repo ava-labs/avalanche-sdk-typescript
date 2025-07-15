@@ -24,7 +24,8 @@ export type DeactivateWebhookRequest = {
  */
 export type DeactivateWebhookResponse =
   | components.EVMAddressActivityResponse
-  | components.PlatformActivityResponse;
+  | components.PrimaryNetworkAddressActivityResponse
+  | components.ValidatorActivityResponse;
 
 /** @internal */
 export const DeactivateWebhookRequest$inboundSchema: z.ZodType<
@@ -87,13 +88,15 @@ export const DeactivateWebhookResponse$inboundSchema: z.ZodType<
   unknown
 > = z.union([
   components.EVMAddressActivityResponse$inboundSchema,
-  components.PlatformActivityResponse$inboundSchema,
+  components.PrimaryNetworkAddressActivityResponse$inboundSchema,
+  components.ValidatorActivityResponse$inboundSchema,
 ]);
 
 /** @internal */
 export type DeactivateWebhookResponse$Outbound =
   | components.EVMAddressActivityResponse$Outbound
-  | components.PlatformActivityResponse$Outbound;
+  | components.PrimaryNetworkAddressActivityResponse$Outbound
+  | components.ValidatorActivityResponse$Outbound;
 
 /** @internal */
 export const DeactivateWebhookResponse$outboundSchema: z.ZodType<
@@ -102,7 +105,8 @@ export const DeactivateWebhookResponse$outboundSchema: z.ZodType<
   DeactivateWebhookResponse
 > = z.union([
   components.EVMAddressActivityResponse$outboundSchema,
-  components.PlatformActivityResponse$outboundSchema,
+  components.PrimaryNetworkAddressActivityResponse$outboundSchema,
+  components.ValidatorActivityResponse$outboundSchema,
 ]);
 
 /**
