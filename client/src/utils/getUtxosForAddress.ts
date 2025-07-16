@@ -40,12 +40,12 @@ export async function getUtxosForAddress(
   }
 ) {
   // Get the correct UTXO function based on the chain alias
-  const getUTXOs =
+  const getUTXOs = (args: any) =>
     params.chainAlias === "P"
-      ? getPChainUTXOs
+      ? getPChainUTXOs(client.pChainClient, args)
       : params.chainAlias === "X"
-      ? getXChainUTXOs
-      : getCChainUTXOs;
+      ? getXChainUTXOs(client.xChainClient, args)
+      : getCChainUTXOs(client.cChainClient, args);
 
   // Initialize the UTXOs array and start index
   const utxos: Utxo[] = [];
@@ -61,7 +61,7 @@ export async function getUtxosForAddress(
 
   // Fetch UTXOs until there are no more
   do {
-    const utxosRes = (await getUTXOs(client.pChainClient, {
+    const utxosRes = (await getUTXOs({
       addresses: [params.address],
       ...(params.sourceChain ? { sourceChain: params.sourceChain } : {}),
       ...(startIndex === undefined ? {} : { startIndex }),
