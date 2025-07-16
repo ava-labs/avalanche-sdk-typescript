@@ -79,3 +79,13 @@ Based on:
 - [typescript v0.4.0] webhooks
 ### Releases
 - [NPM v0.4.0] https://www.npmjs.com/package/@avalanche-sdk/webhooks/v/0.4.0 - webhooks
+
+## 2025-07-15 18:45:12
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.582.0 (2.657.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.5.0] webhooks
+### Releases
+- [NPM v0.5.0] https://www.npmjs.com/package/@avalanche-sdk/webhooks/v/0.5.0 - webhooks

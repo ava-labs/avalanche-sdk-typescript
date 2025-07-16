@@ -5,7 +5,11 @@
 ```typescript
 import { ListWebhooksResponse } from "@avalanche-sdk/webhooks/models/operations";
 
-let value: ListWebhooksResponse = {};
+let value: ListWebhooksResponse = {
+  result: {
+    webhooks: [],
+  },
+};
 ```
 
 ## Fields
