@@ -1,4 +1,4 @@
-import { UnsignedTx } from "@avalabs/avalanchejs";
+import { PChainOwner, UnsignedTx } from "@avalabs/avalanchejs";
 import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
 import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
@@ -6,15 +6,23 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 /**
  * The parameters for the signXPTransaction method
  * @property account - Optional, the account to use for the transaction. {@link AvalancheAccount}, {@link Address}
- * @property txOrTxHex - The transaction to sign, either a hex string or an UnsignedTx object. {@link string} or {@link UnsignedTx}
+ * @property tx - The transaction to sign, either a hex string or an UnsignedTx object. {@link string} or {@link UnsignedTx}
  * @property chainAlias - The chain to sign the transaction on. {@link "X"} or {@link "P"}
  * @property utxoIds - Optional, the utxo ids to use for the transaction. {@link string[]}
+ * @property subnetAuth - Optional, the subnet auth to use for the transaction. {@link number[]}
+ * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
+ * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
+ * @property disableAuth - Optional, the disable auth to use for the transaction. {@link number[]}
  */
 export type SignXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
-  txOrTxHex: string | UnsignedTx;
-  chainAlias: "X" | "P";
+  tx: string | UnsignedTx;
+  chainAlias: "X" | "P" | "C";
   utxoIds?: string[] | undefined;
+  subnetAuth?: number[] | undefined;
+  subnetOwners?: PChainOwner | undefined;
+  disableOwners?: PChainOwner | undefined;
+  disableAuth?: number[] | undefined;
 };
 
 /**

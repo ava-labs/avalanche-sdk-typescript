@@ -1473,6 +1473,11 @@ export {
   type CChainActions,
 } from "./clients/decorators/cChain.js";
 export {
+  cChainWalletActions,
+  type CChainWalletActions,
+} from "./clients/decorators/cChainWallet.js";
+export { erc20Actions, type Erc20Actions } from "./clients/decorators/erc20.js";
+export {
   healthAPIActions,
   type HealthAPIActions,
 } from "./clients/decorators/healthApi.js";
@@ -1497,7 +1502,6 @@ export {
   type AvalancheClientConfig,
   type CreateAvalancheClientErrorType,
 } from "./clients/types/createAvalancheClient.js";
-
 export { type AvalancheTransportConfig } from "./clients/types/types.js";
 export { createAvalancheTransportClient } from "./clients/utils.js";
 export { type AdminRpcSchema } from "./methods/admin/adminRpcSchema.js";

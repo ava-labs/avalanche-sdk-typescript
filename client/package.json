@@ -66,6 +66,11 @@
       "import": "./dist/methods/wallet/index.js",
       "require": "./dist/methods/wallet/index.js"
     },
+    "./methods/wallet/cChain": {
+      "types": "./dist/methods/wallet/cChain/index.d.ts",
+      "import": "./dist/methods/wallet/cChain/index.js",
+      "require": "./dist/methods/wallet/cChain/index.js"
+    },
     "./methods/public": {
       "types": "./dist/methods/public/index.d.ts",
       "import": "./dist/methods/public/index.js",

@@ -49,7 +49,21 @@ export async function sendXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SendXPTransactionParameters
 ): Promise<SendXPTransactionReturnType> {
-  const { txOrTxHex, chainAlias, account, utxoIds, ...rest } = params;
+  const {
+    tx: txOrTxHex,
+    chainAlias,
+    account,
+    utxoIds,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    subnetAuth,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    subnetOwners,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    disableOwners,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    disableAuth,
+    ...rest
+  } = params;
 
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
@@ -58,7 +72,7 @@ export async function sendXPTransaction(
     switch (chainAlias) {
       case "P":
         let signedTxRes = await signXPTransaction(client, {
-          txOrTxHex: txOrTxHex,
+          tx: txOrTxHex,
           chainAlias: chainAlias as "X" | "P",
         });
 
@@ -123,7 +137,7 @@ export async function sendXPTransaction(
         }
       case "X":
         signedTxRes = await signXPTransaction(client, {
-          txOrTxHex: txOrTxHex,
+          tx: txOrTxHex,
           chainAlias: chainAlias as "X" | "P",
         });
         const issueTxXChainResponse = await issueTxXChain(client.xChainClient, {
@@ -144,7 +158,13 @@ export async function sendXPTransaction(
       method: "avalanche_sendTransaction";
       params: Omit<
         SendXPTransactionParameters,
-        "account" | "txOrTxHex" | "utxoIds"
+        | "account"
+        | "tx"
+        | "utxoIds"
+        | "subnetAuth"
+        | "subnetOwners"
+        | "disableOwners"
+        | "disableAuth"
       > & {
         transactionHex: string;
         utxos: string[] | undefined;

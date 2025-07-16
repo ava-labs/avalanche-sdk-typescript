@@ -15,7 +15,7 @@ import { Common, Credential, utils } from "@avalabs/avalanchejs";
  */
 export function getTxFromBytes(
   txBytes: string,
-  chainAlias: string
+  chainAlias: "P" | "X" | "C"
 ): [Common.Transaction, Credential[]] {
   const strippedTxBytes = utils.strip0x(txBytes);
   const manager = utils.getManagerForVM(

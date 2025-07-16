@@ -1,5 +1,6 @@
 import { Utxo } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../clients/createAvalancheWalletCoreClient.js";
+import { getUTXOs as getCChainUTXOs } from "../methods/cChain/getUTXOs.js";
 import { getUTXOs as getPChainUTXOs } from "../methods/pChain/getUTXOs.js";
 import { getUTXOs as getXChainUTXOs } from "../methods/xChain/getUTXOs.js";
 import { GetUTXOsReturnType } from "../methods/xChain/types/getUTXOs.js";
@@ -34,11 +35,17 @@ export async function getUtxosForAddress(
   client: AvalancheWalletCoreClient,
   params: {
     address: string;
-    chainAlias: "P" | "X";
+    chainAlias: "P" | "X" | "C";
+    sourceChain?: string;
   }
 ) {
   // Get the correct UTXO function based on the chain alias
-  const getUTXOs = params.chainAlias === "P" ? getPChainUTXOs : getXChainUTXOs;
+  const getUTXOs =
+    params.chainAlias === "P"
+      ? getPChainUTXOs
+      : params.chainAlias === "X"
+      ? getXChainUTXOs
+      : getCChainUTXOs;
 
   // Initialize the UTXOs array and start index
   const utxos: Utxo[] = [];
@@ -56,6 +63,7 @@ export async function getUtxosForAddress(
   do {
     const utxosRes = (await getUTXOs(client.pChainClient, {
       addresses: [params.address],
+      ...(params.sourceChain ? { sourceChain: params.sourceChain } : {}),
       ...(startIndex === undefined ? {} : { startIndex }),
     })) as GetUTXOsReturnType;
 

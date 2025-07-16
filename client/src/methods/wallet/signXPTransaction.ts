@@ -26,7 +26,7 @@ import {
  * @returns The formatted address with chain alias prefix
  */
 export function formatChainAddress(
-  chainAlias: "X" | "P",
+  chainAlias: "X" | "P" | "C",
   address: string
 ): string {
   return `${chainAlias}-${address}`;
@@ -62,7 +62,20 @@ export async function signXPTransaction(
   client: AvalancheWalletCoreClient,
   params: SignXPTransactionParameters
 ): Promise<SignXPTransactionReturnType> {
-  const { txOrTxHex, chainAlias, account, utxoIds } = params;
+  const {
+    tx: txOrTxHex,
+    chainAlias,
+    account,
+    utxoIds,
+    // @ts-ignore
+    subnetAuth,
+    // @ts-ignore
+    subnetOwners,
+    // @ts-ignore
+    disableOwners,
+    // @ts-ignore
+    disableAuth,
+  } = params;
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
   const isTestnet = client.chain?.testnet;
@@ -177,7 +190,13 @@ export async function signXPTransaction(
       method: "avalanche_signTransaction";
       params: Omit<
         SignXPTransactionParameters,
-        "account" | "txOrTxHex" | "utxoIds"
+        | "account"
+        | "tx"
+        | "utxoIds"
+        | "subnetAuth"
+        | "subnetOwners"
+        | "disableOwners"
+        | "disableAuth"
       > & {
         transactionHex: string;
         utxos: string[] | undefined;

@@ -1,0 +1,44 @@
+import {
+  Common,
+  Context as ContextType,
+  type Utxo,
+} from "@avalabs/avalanchejs";
+import { Address } from "viem";
+import { AvalancheAccount } from "../../../../accounts/avalancheAccount.js";
+import { P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts.js";
+
+export type PrepareImportTxnParameters = {
+  /**
+   * The account to use for the transaction. {@link AvalancheAccount} or {@link Address}
+   * If not provided, the account will be fetched from the client.
+   */
+  account?: AvalancheAccount | Address | undefined;
+  /**
+   * The chain alias to import the funds from.
+   */
+  sourceChain: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS;
+  /**
+   * The EVM address to import the funds to.
+   */
+  toAddress: string;
+  /**
+   * The addresses to import the funds from. If not provided, the wallet will be used to fetch the addresses.
+   */
+  fromAddresses?: string[];
+  /**
+   * Optional. UTXOs to use as inputs for the transaction. These UTXOs
+   * must be in the atomic memory i.e. should already have been exported
+   * from the source chain. If not provided, utxos will be fetched from
+   * the `fromAddresses`. Preference would be given to `utxos` array.
+   */
+  utxos?: Utxo[];
+  /**
+   * Optional. The context to use for the transaction. If not provided, the context will be fetched.
+   */
+  context?: ContextType.Context;
+};
+
+export type PrepareImportTxnReturnType = {
+  tx: Common.UnsignedTx;
+  chainAlias: "C";
+};

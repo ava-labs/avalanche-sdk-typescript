@@ -4,6 +4,11 @@ export { sendXPTransaction } from "./sendXPTransaction.js";
 export { signXPMessage } from "./signXPMessage.js";
 export { signXPTransaction } from "./signXPTransaction.js";
 export type {
+  CommonTxParams,
+  FormattedCommonTxParams,
+  Output,
+} from "./types/common.js";
+export type {
   GetAccountPubKeyErrorType,
   GetAccountPubKeyReturnType,
 } from "./types/getAccountPubKey.js";
