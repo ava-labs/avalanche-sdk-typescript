@@ -14,6 +14,9 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
  * @property utxoIds - Optional, the utxo ids to use for the transaction. {@link string[]}
  * @property feeTolerance - Optional, the fee tolerance to use for the transaction. {@link number}
  * @property subnetAuth - Optional, the subnet auth to use for the transaction. {@link number[]}
+ * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
+ * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
+ * @property disableAuth - Optional, the disable auth to use for the transaction. {@link number[]}
  */
 export type SendXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
