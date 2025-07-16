@@ -8,7 +8,7 @@ import { AccessListData } from "@avalanche-sdk/sdk/models/components";
 let value: AccessListData = {
   accessAddresses: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
   storageKeys: [
-    "<value>",
+    "<value 1>",
   ],
 };
 ```

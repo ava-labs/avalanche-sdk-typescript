@@ -1,12 +1,12 @@
-# PlatformBalanceThresholdFilter
+# PrimaryNetworkBalanceThresholdFilter
 
 ## Example Usage
 
 ```typescript
-import { PlatformBalanceThresholdFilter } from "@avalanche-sdk/sdk/models/components";
+import { PrimaryNetworkBalanceThresholdFilter } from "@avalanche-sdk/sdk/models/components";
 
-let value: PlatformBalanceThresholdFilter = {
-  balanceType: "lockedPlatform",
+let value: PrimaryNetworkBalanceThresholdFilter = {
+  balanceType: "unlockedStaked",
   balanceThreshold: "<value>",
 };
 ```

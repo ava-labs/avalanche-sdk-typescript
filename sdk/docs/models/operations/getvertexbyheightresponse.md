@@ -7,24 +7,9 @@ import { GetVertexByHeightResponse } from "@avalanche-sdk/sdk/models/operations"
 
 let value: GetVertexByHeightResponse = {
   result: {
-    vertices: [
-      {
-        vertexHash: "<value>",
-        parentHashes: [
-          "<value>",
-        ],
-        vertexHeight: 1434.93,
-        vertexIndex: 3077,
-        vertexTimestamp: 6042.85,
-        txCount: 2759.13,
-        transactions: [
-          "<value>",
-        ],
-        vertexSizeBytes: 4352.8,
-      },
-    ],
+    vertices: [],
     chainInfo: {
-      chainName: "x-chain",
+      chainName: "c-chain",
       network: "mainnet",
     },
   },

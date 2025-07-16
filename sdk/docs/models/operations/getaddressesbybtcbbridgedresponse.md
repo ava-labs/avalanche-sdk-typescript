@@ -7,12 +7,7 @@ import { GetAddressesByBtcbBridgedResponse } from "@avalanche-sdk/sdk/models/ope
 
 let value: GetAddressesByBtcbBridgedResponse = {
   result: {
-    addresses: [
-      {
-        address: "0x1234567890abcdef1234567890abcdef123456789",
-        sortKey: "123",
-      },
-    ],
+    addresses: [],
   },
 };
 ```

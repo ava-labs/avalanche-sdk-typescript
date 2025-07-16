@@ -7,24 +7,9 @@ import { ListLatestXChainVerticesResponse } from "@avalanche-sdk/sdk/models/oper
 
 let value: ListLatestXChainVerticesResponse = {
   result: {
-    vertices: [
-      {
-        vertexHash: "<value>",
-        parentHashes: [
-          "<value>",
-        ],
-        vertexHeight: 73,
-        vertexIndex: 9760.52,
-        vertexTimestamp: 6597.12,
-        txCount: 3151.37,
-        transactions: [
-          "<value>",
-        ],
-        vertexSizeBytes: 8710.52,
-      },
-    ],
+    vertices: [],
     chainInfo: {
-      chainName: "p-chain",
+      chainName: "c-chain",
       network: "mainnet",
     },
   },

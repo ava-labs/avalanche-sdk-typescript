@@ -7,18 +7,7 @@ import { ListInternalTransactionsResponse } from "@avalanche-sdk/sdk/models/oper
 
 let value: ListInternalTransactionsResponse = {
   result: {
-    transactions: [
-      {
-        from: "0x737F6b0b8A04e8462d0fC7076451298F0dA9a972",
-        to: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-        internalTxType: "call",
-        value: "50000000000000000",
-        gasUsed: "44038",
-        gasLimit: "50000",
-        transactionHash:
-          "0xfd91150d236ec5c3b1ee325781affad5b0b4d7eb0187c84c220ab115eaa563e8",
-      },
-    ],
+    transactions: [],
   },
 };
 ```
