@@ -10,8 +10,6 @@ export const XChainId = {
     "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
   TwoJVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm:
     "2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm",
-  TwopiQ2AVHCjnduiWXsSy15DtbVuwHe2cwMHYnEXHsLl73BBkdbV:
-    "2piQ2AVHCjnduiWXsSY15DtbVuwHE2cwMHYnEXHsLL73BBkdbV",
   XChain: "x-chain",
 } as const;
 export type XChainId = ClosedEnum<typeof XChainId>;

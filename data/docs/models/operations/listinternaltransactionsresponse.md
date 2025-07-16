@@ -5,7 +5,11 @@
 ```typescript
 import { ListInternalTransactionsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListInternalTransactionsResponse = {};
+let value: ListInternalTransactionsResponse = {
+  result: {
+    transactions: [],
+  },
+};
 ```
 
 ## Fields

@@ -5,7 +5,15 @@
 ```typescript
 import { ListActivePrimaryNetworkStakingTransactionsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListActivePrimaryNetworkStakingTransactionsResponse = {};
+let value: ListActivePrimaryNetworkStakingTransactionsResponse = {
+  result: {
+    transactions: [],
+    chainInfo: {
+      chainName: "c-chain",
+      network: "mainnet",
+    },
+  },
+};
 ```
 
 ## Fields
