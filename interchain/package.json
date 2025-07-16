@@ -1,0 +1,30 @@
+{
+  "name": "interchain",
+  "version": "0.0.1",
+  "description": "Interchain package for handling ICM/ICTT messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git",
+    "directory": "interchain"
+  },
+  "keywords": [
+    "icm",
+    "ictt",
+    "teleporter",
+    "cross-chain"
+  ],
+  "author": "Raj Ranjan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
+  },
+  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript#readme",
+  "dependencies": {
+    "@avalanche-sdk/rpc": "^0.0.4-alpha.1",
+    "viem": "^2.31.7"
+  }
+}
