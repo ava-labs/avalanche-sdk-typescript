@@ -5,7 +5,11 @@
 ```typescript
 import { ListTeleporterMessagesResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListTeleporterMessagesResponse = {};
+let value: ListTeleporterMessagesResponse = {
+  result: {
+    messages: [],
+  },
+};
 ```
 
 ## Fields

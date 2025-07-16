@@ -5,7 +5,11 @@
 ```typescript
 import { ListBlockchainsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListBlockchainsResponse = {};
+let value: ListBlockchainsResponse = {
+  result: {
+    blockchains: [],
+  },
+};
 ```
 
 ## Fields

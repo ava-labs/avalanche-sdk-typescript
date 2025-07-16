@@ -5,7 +5,11 @@
 ```typescript
 import { ListValidatorsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListValidatorsResponse = {};
+let value: ListValidatorsResponse = {
+  result: {
+    validators: [],
+  },
+};
 ```
 
 ## Fields

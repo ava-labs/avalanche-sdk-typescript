@@ -12,14 +12,10 @@ export const BlockchainId = {
     "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
   TwoJVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm:
     "2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm",
-  TwopiQ2AVHCjnduiWXsSy15DtbVuwHe2cwMHYnEXHsLl73BBkdbV:
-    "2piQ2AVHCjnduiWXsSY15DtbVuwHE2cwMHYnEXHsLL73BBkdbV",
   Twoq9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAx5UQxse55x1Q5:
     "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
   YH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp:
     "yH8D7ThNJkxmtkuv2jgBa4P1Rn3Qpr4pPr7QYNfcdoS6k6HWp",
-  VV3cui1DsEpc3nLcgh9rorwo8s6BYxM2Hz4Qfe5gEYjwTqAu:
-    "vV3cui1DsEPC3nLCGH9rorwo8s6BYxM2Hz4QFE5gEYjwTqAu",
   PChain: "p-chain",
   XChain: "x-chain",
   CChain: "c-chain",

@@ -7,33 +7,31 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  AddressActivityEventType,
+  AddressActivityEventType$inboundSchema,
+  AddressActivityEventType$outboundSchema,
+} from "./addressactivityeventtype.js";
+import {
   AddressActivityMetadata,
   AddressActivityMetadata$inboundSchema,
   AddressActivityMetadata$Outbound,
   AddressActivityMetadata$outboundSchema,
 } from "./addressactivitymetadata.js";
 import {
-  EventType,
-  EventType$inboundSchema,
-  EventType$outboundSchema,
-} from "./eventtype.js";
-import {
   WebhookStatusType,
   WebhookStatusType$inboundSchema,
   WebhookStatusType$outboundSchema,
 } from "./webhookstatustype.js";
 
-export type EVMAddressActivityResponseMetadata = AddressActivityMetadata;
-
 export type EVMAddressActivityResponse = {
   id: string;
-  eventType: EventType;
   url: string;
   chainId: string;
   status: WebhookStatusType;
   createdAt: number;
   name: string;
   description: string;
+  eventType: AddressActivityEventType;
   metadata: AddressActivityMetadata;
   /**
    * Whether to include traces in the webhook payload.
@@ -46,72 +44,19 @@ export type EVMAddressActivityResponse = {
 };
 
 /** @internal */
-export const EVMAddressActivityResponseMetadata$inboundSchema: z.ZodType<
-  EVMAddressActivityResponseMetadata,
-  z.ZodTypeDef,
-  unknown
-> = AddressActivityMetadata$inboundSchema;
-
-/** @internal */
-export type EVMAddressActivityResponseMetadata$Outbound =
-  AddressActivityMetadata$Outbound;
-
-/** @internal */
-export const EVMAddressActivityResponseMetadata$outboundSchema: z.ZodType<
-  EVMAddressActivityResponseMetadata$Outbound,
-  z.ZodTypeDef,
-  EVMAddressActivityResponseMetadata
-> = AddressActivityMetadata$outboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EVMAddressActivityResponseMetadata$ {
-  /** @deprecated use `EVMAddressActivityResponseMetadata$inboundSchema` instead. */
-  export const inboundSchema = EVMAddressActivityResponseMetadata$inboundSchema;
-  /** @deprecated use `EVMAddressActivityResponseMetadata$outboundSchema` instead. */
-  export const outboundSchema =
-    EVMAddressActivityResponseMetadata$outboundSchema;
-  /** @deprecated use `EVMAddressActivityResponseMetadata$Outbound` instead. */
-  export type Outbound = EVMAddressActivityResponseMetadata$Outbound;
-}
-
-export function evmAddressActivityResponseMetadataToJSON(
-  evmAddressActivityResponseMetadata: EVMAddressActivityResponseMetadata,
-): string {
-  return JSON.stringify(
-    EVMAddressActivityResponseMetadata$outboundSchema.parse(
-      evmAddressActivityResponseMetadata,
-    ),
-  );
-}
-
-export function evmAddressActivityResponseMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<EVMAddressActivityResponseMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      EVMAddressActivityResponseMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'EVMAddressActivityResponseMetadata' from JSON`,
-  );
-}
-
-/** @internal */
 export const EVMAddressActivityResponse$inboundSchema: z.ZodType<
   EVMAddressActivityResponse,
   z.ZodTypeDef,
   unknown
 > = z.object({
   id: z.string(),
-  eventType: EventType$inboundSchema,
   url: z.string(),
   chainId: z.string(),
   status: WebhookStatusType$inboundSchema,
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
+  eventType: AddressActivityEventType$inboundSchema,
   metadata: AddressActivityMetadata$inboundSchema,
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),
@@ -120,13 +65,13 @@ export const EVMAddressActivityResponse$inboundSchema: z.ZodType<
 /** @internal */
 export type EVMAddressActivityResponse$Outbound = {
   id: string;
-  eventType: string;
   url: string;
   chainId: string;
   status: string;
   createdAt: number;
   name: string;
   description: string;
+  eventType: string;
   metadata: AddressActivityMetadata$Outbound;
   includeInternalTxs?: boolean | undefined;
   includeLogs?: boolean | undefined;
@@ -139,13 +84,13 @@ export const EVMAddressActivityResponse$outboundSchema: z.ZodType<
   EVMAddressActivityResponse
 > = z.object({
   id: z.string(),
-  eventType: EventType$outboundSchema,
   url: z.string(),
   chainId: z.string(),
   status: WebhookStatusType$outboundSchema,
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
+  eventType: AddressActivityEventType$outboundSchema,
   metadata: AddressActivityMetadata$outboundSchema,
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),

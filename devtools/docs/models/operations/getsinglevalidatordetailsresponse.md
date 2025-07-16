@@ -5,7 +5,11 @@
 ```typescript
 import { GetSingleValidatorDetailsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: GetSingleValidatorDetailsResponse = {};
+let value: GetSingleValidatorDetailsResponse = {
+  result: {
+    validators: [],
+  },
+};
 ```
 
 ## Fields

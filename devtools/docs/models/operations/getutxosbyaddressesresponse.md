@@ -5,7 +5,15 @@
 ```typescript
 import { GetUtxosByAddressesResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: GetUtxosByAddressesResponse = {};
+let value: GetUtxosByAddressesResponse = {
+  result: {
+    utxos: [],
+    chainInfo: {
+      chainName: "c-chain",
+      network: "mainnet",
+    },
+  },
+};
 ```
 
 ## Fields

@@ -5,7 +5,11 @@
 ```typescript
 import { ListAllLatestTransactionsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListAllLatestTransactionsResponse = {};
+let value: ListAllLatestTransactionsResponse = {
+  result: {
+    transactions: [],
+  },
+};
 ```
 
 ## Fields

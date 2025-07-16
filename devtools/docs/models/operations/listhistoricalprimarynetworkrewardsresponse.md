@@ -5,7 +5,11 @@
 ```typescript
 import { ListHistoricalPrimaryNetworkRewardsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListHistoricalPrimaryNetworkRewardsResponse = {};
+let value: ListHistoricalPrimaryNetworkRewardsResponse = {
+  result: {
+    historicalRewards: [],
+  },
+};
 ```
 
 ## Fields

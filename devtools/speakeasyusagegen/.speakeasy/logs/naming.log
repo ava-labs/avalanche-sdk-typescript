@@ -108,22 +108,19 @@ DEBUG	discriminated: Renamed to "UnknownContract_ercType"
 	 registrationID: "scope:shared refType:Schemas refName:UnknownContract constProperty:UNKNOWN originalName:ercType"
 DEBUG	
 
---- Renaming 5 types with name "metadata" ---
+--- Renaming 4 types with name "metadata" ---
 DEBUG	discriminated: Renamed to "OperationStatusResponse_metadata" 
 	 labels: "original_name:metadata scope:shared data_type:union refName:OperationStatusResponse" 
 	 registrationID: "scope:shared refType:Schemas refName:OperationStatusResponse originalName:metadata"
-DEBUG	discriminated: Renamed to "EVMAddressActivityResponse_metadata" 
-	 labels: "original_name:metadata scope:shared data_type:union refName:EVMAddressActivityResponse" 
-	 registrationID: "scope:shared refType:Schemas refName:EVMAddressActivityResponse originalName:metadata"
-DEBUG	discriminated: Renamed to "PlatformActivityResponse_metadata" 
-	 labels: "original_name:metadata scope:shared data_type:union refName:PlatformActivityResponse" 
-	 registrationID: "scope:shared refType:Schemas refName:PlatformActivityResponse originalName:metadata"
 DEBUG	discriminated: Renamed to "EVMAddressActivityRequest_metadata" 
 	 labels: "original_name:metadata scope:shared data_type:union refName:EVMAddressActivityRequest" 
 	 registrationID: "scope:shared refType:Schemas refName:EVMAddressActivityRequest originalName:metadata"
-DEBUG	discriminated: Renamed to "PlatformActivityRequest_metadata" 
-	 labels: "original_name:metadata scope:shared data_type:union refName:PlatformActivityRequest" 
-	 registrationID: "scope:shared refType:Schemas refName:PlatformActivityRequest originalName:metadata"
+DEBUG	discriminated: Renamed to "PrimaryNetworkAddressActivityRequest_metadata" 
+	 labels: "original_name:metadata scope:shared data_type:union refName:PrimaryNetworkAddressActivityRequest" 
+	 registrationID: "scope:shared refType:Schemas refName:PrimaryNetworkAddressActivityRequest originalName:metadata"
+DEBUG	discriminated: Renamed to "ValidatorActivityRequest_metadata" 
+	 labels: "original_name:metadata scope:shared data_type:union refName:ValidatorActivityRequest" 
+	 registrationID: "scope:shared refType:Schemas refName:ValidatorActivityRequest originalName:metadata"
 DEBUG	
 
 --- Renaming 3 types with name "blsCredentials" ---
@@ -225,13 +222,16 @@ DEBUG	discriminated: Renamed to "RpcUsageMetricsValueAggregated_groupValue"
 	 registrationID: "scope:shared refType:Schemas refName:RpcUsageMetricsValueAggregated originalName:groupValue"
 DEBUG	
 
---- Renaming 4 types with name "EventType" ---
+--- Renaming 4 types with name "eventType" ---
 DEBUG	discriminated: Renamed to "EVMAddressActivityRequest_eventType" 
 	 labels: "original_name:eventType scope:shared data_type:enum refName:EVMAddressActivityRequest constProperty:AddressActivity" 
 	 registrationID: "scope:shared refType:Schemas refName:EVMAddressActivityRequest constProperty:address_activity originalName:eventType"
-DEBUG	discriminated: Renamed to "PlatformActivityRequest_eventType" 
-	 labels: "original_name:eventType scope:shared data_type:enum refName:PlatformActivityRequest" 
-	 registrationID: "scope:shared refType:Schemas refName:PlatformActivityRequest originalName:eventType"
+DEBUG	discriminated: Renamed to "PrimaryNetworkAddressActivityRequest_eventType" 
+	 labels: "original_name:eventType scope:shared data_type:enum refName:PrimaryNetworkAddressActivityRequest constProperty:PrimaryNetworkAddressActivity" 
+	 registrationID: "scope:shared refType:Schemas refName:PrimaryNetworkAddressActivityRequest constProperty:primary_network_address_activity originalName:eventType"
+DEBUG	discriminated: Renamed to "ValidatorActivityRequest_eventType" 
+	 labels: "original_name:eventType scope:shared data_type:enum refName:ValidatorActivityRequest constProperty:ValidatorActivity" 
+	 registrationID: "scope:shared refType:Schemas refName:ValidatorActivityRequest constProperty:validator_activity originalName:eventType"
 DEBUG	discriminated: Renamed to "WebhookAddressActivityResponse_eventType" 
 	 labels: "original_name:eventType scope:shared data_type:enum refName:WebhookAddressActivityResponse constProperty:AddressActivity" 
 	 registrationID: "scope:shared refType:Schemas refName:WebhookAddressActivityResponse constProperty:address_activity originalName:eventType"
@@ -529,10 +529,8 @@ GetTransactionRequest (chainId: string, txHash: string)
 GetTransactionResponse (erc20Transfers: array, erc721Transfers: array, erc1155Transfers: array ...)
  NetworkTokenDetails (networkToken: NetworkToken, currentPrice: Money, historicalPrice: Money)
  FullNativeTransactionDetails (blockNumber: string, blockTimestamp: number, blockHash: string ...)
- TeleporterMessageInfo (teleporterMessageId: string, direction: TransactionDirectionType, sourceChainId: class ...)
+ TeleporterMessageInfo (teleporterMessageId: string, direction: TransactionDirectionType, sourceChainId: string ...)
   TransactionDirectionType (enum: SOURCE_TRANSACTION, DESTINATION_TRANSACTION)
-  SourceChainId (empty)
-  DestinationChainId (empty)
 ListLatestTransactionsRequest (pageToken: string, pageSize: integer, chainId: string ...)
 ListLatestTransactionsResponse (Result: ListNativeTransactionsResponse)
 EvmBlocks (SDK empty)
@@ -639,7 +637,7 @@ ListActivePrimaryNetworkStakingTransactionsRequest (addresses: string, txTypes: 
  PChainId (enum: 11111111111111111111111111111111LpoYY, p-chain)
 ListActivePrimaryNetworkStakingTransactionsResponse (Result: ListPChainTransactionsResponse)
 ListAssetTransactionsRequest (txTypes: array, startTimestamp: integer, endTimestamp: integer ...)
- XChainId (enum: 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm, 2piQ2AVHCjnduiWXsSY15DtbVuwHE2cwMHYnEXHsLL73BBkdbV ...)
+ XChainId (enum: 2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM, 2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm, x-chain)
 ListAssetTransactionsResponse (Result: ListXChainTransactionsResponse)
 Rewards (SDK empty)
 ListPendingPrimaryNetworkRewardsRequest (addresses: string, pageToken: string, pageSize: integer ...)
@@ -821,34 +819,41 @@ GetAddressesFromWebhookResponse (Result: ListWebhookAddressesResponse)
  ListWebhookAddressesResponse (nextPageToken: string, addresses: array, totalAddresses: number)
 RemoveAddressesFromWebhookRequest (id: string, AddressesChangeRequest: AddressesChangeRequest)
  AddressesChangeRequest (addresses: array)
-EvmAddressActivityResponse (id: string, eventType: EventType, url: string ...)
- EventType (enum: address_activity, platform_address_activity, validator_activity)
+EvmAddressActivityResponse (id: string, url: string, chainId: string ...)
  WebhookStatusType (enum: active, inactive)
- EvmAddressActivityResponseMetadata (union)
-  AddressActivityMetadata (addresses: array, eventSignatures: array)
+ AddressActivityEventType (enum: address_activity)
+ AddressActivityMetadata (eventSignatures: array, addresses: array)
 AddAddressesToWebhookRequest (id: string, AddressesChangeRequest: AddressesChangeRequest)
 ListWebhooksRequest (pageToken: string, pageSize: integer, status: WebhookStatus)
  WebhookStatus (enum: active, inactive)
 ListWebhooksResponse (Result: ListWebhooksResponse)
  ListWebhooksResponse (nextPageToken: string, webhooks: array)
    Webhook (union)
-    PlatformActivityResponse (id: string, eventType: EventType, url: string ...)
-     PlatformActivityResponseMetadata (union)
-      PlatformActivityMetadata (keyType: PlatformActivityKeyType, keys: array, subEvents: PlatformActivitySubEvents ...)
-       PlatformActivityKeyType (enum: addresses, nodeId, subnetId)
-       PlatformActivitySubEvents (validatorActivitySubEvents: array, addressActivitySubEvents: array)
-         ValidatorActivitySubEvent (enum: validator_stake, delegator_stake, reward_distribution ...)
-         PlatformAddressActivitySubEventType (enum: balance_change_platform, balance_threshold_platform, reward_distribution)
-       PlatformBalanceThresholdFilter (balanceType: CommonBalanceType, balanceThreshold: string)
-        CommonBalanceType (enum: unlockedUnstaked, unlockedStaked, lockedPlatform ...)
+    PrimaryNetworkAddressActivityResponse (id: string, url: string, chainId: string ...)
+     PrimaryNetworkAddressActivityEventType (enum: primary_network_address_activity)
+     PrimaryNetworkAddressActivityMetadata (eventSignatures: array, keyType: PlatformAddressActivityKeyType, keys: array ...)
+      PlatformAddressActivityKeyType (enum: addresses)
+      PrimaryNetworkAddressActivitySubEvents (addressActivitySubEvents: array)
+        PrimaryNetworkAddressActivitySubEventType (enum: balance_change, balance_threshold, reward_distribution)
+      PrimaryNetworkBalanceThresholdFilter (balanceType: CommonBalanceType, balanceThreshold: string)
+       CommonBalanceType (enum: unlockedUnstaked, unlockedStaked, lockedPlatform ...)
+    ValidatorActivityResponse (id: string, url: string, chainId: string ...)
+     ValidatorActivityEventType (enum: validator_activity)
+     ValidatorActivityMetadata (eventSignatures: array, keyType: ValidatorActivityKeyType, keys: array ...)
+      ValidatorActivityKeyType (enum: nodeId, subnetId)
+      ValidatorActivitySubEvents (validatorActivitySubEvents: array)
+        ValidatorActivitySubEvent (enum: validator_stake, delegator_stake, reward_distribution ...)
 CreateWebhookRequest (union)
- EvmAddressActivityRequest (eventType: enum, url: string, chainId: string ...)
+ EvmAddressActivityRequest (eventType: enum, url: string, name: string ...)
   EvmAddressActivityRequestEventType (enum: address_activity)
-  PrimaryNetworkType (enum: mainnet, fuji)
   EvmAddressActivityRequestMetadata (union)
- PlatformActivityRequest (eventType: enum, url: string, chainId: string ...)
-  PlatformActivityRequestEventType (enum: platform_address_activity, validator_activity)
-  PlatformActivityRequestMetadata (union)
+ PrimaryNetworkAddressActivityRequest (eventType: enum, url: string, name: string ...)
+  PrimaryNetworkAddressActivityRequestEventType (enum: primary_network_address_activity)
+  PrimaryNetworkType (enum: mainnet, fuji)
+  PrimaryNetworkAddressActivityRequestMetadata (union)
+ ValidatorActivityRequest (eventType: enum, url: string, name: string ...)
+  ValidatorActivityRequestEventType (enum: validator_activity)
+  ValidatorActivityRequestMetadata (union)
 CreateWebhookResponse (union)
 GetWebhookRequest (id: string)
 GetWebhookResponse (union)
