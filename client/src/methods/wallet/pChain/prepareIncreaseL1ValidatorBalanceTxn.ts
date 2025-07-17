@@ -1,7 +1,7 @@
 import { Context, pvm } from "@avalabs/avalanchejs";
-import { AvalancheWalletCoreClient } from "src/clients/createAvalancheWalletCoreClient";
-import { P_CHAIN_ALIAS } from "src/methods/consts";
-import { avaxToNanoAvax, fetchCommonTxParams, getBaseUrl } from "../utils";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { P_CHAIN_ALIAS } from "../../consts.js";
+import { avaxToNanoAvax, fetchCommonTxParams, getBaseUrl } from "../utils.js";
 import {
   PrepareIncreaseL1ValidatorBalanceTxnParameters,
   PrepareIncreaseL1ValidatorBalanceTxnReturnType,

@@ -6,8 +6,8 @@ import {
   pvmSerial,
   utils,
 } from "@avalabs/avalanchejs";
-import { AvalancheWalletCoreClient } from "src/clients/createAvalancheWalletCoreClient.js";
-import { P_CHAIN_ALIAS } from "src/methods/consts.js";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { P_CHAIN_ALIAS } from "../../consts.js";
 import {
   avaxToNanoAvax,
   bech32AddressToBytes,

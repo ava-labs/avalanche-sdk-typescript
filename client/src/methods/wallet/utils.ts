@@ -12,7 +12,6 @@ import {
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { getUtxosForAddress } from "src/utils/index.js";
 import { Address as AddressType } from "viem";
 import {
   AvalancheAccount,
@@ -20,6 +19,7 @@ import {
   publicKeyToXPAddress,
 } from "../../accounts/index.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
+import { getUtxosForAddress } from "../../utils/index.js";
 import {
   C_CHAIN_ALIAS,
   C_CHAIN_FUJI_ID,

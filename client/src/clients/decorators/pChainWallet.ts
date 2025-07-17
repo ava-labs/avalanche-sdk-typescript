@@ -1,3 +1,4 @@
+import { Chain, Transport } from "viem";
 import {
   PrepareAddPermissionlessDelegatorTxnParameters,
   PrepareAddPermissionlessDelegatorTxnReturnType,
@@ -30,19 +31,18 @@ import {
   prepareExportTxn,
   prepareImportTxn,
   prepareSetL1ValidatorWeightTxn,
-} from "src/methods/wallet/pChain/index.js";
-import { prepareAddPermissionlessDelegatorTxn } from "src/methods/wallet/pChain/prepareAddPermissionlessDelegatorTxn.js";
-import { prepareAddPermissionlessValidatorTxn } from "src/methods/wallet/pChain/prepareAddPermissionlessValidatorTxn.js";
-import { prepareAddSubnetValidatorTxn } from "src/methods/wallet/pChain/prepareAddSubnetValidatorTxn.js";
-import { prepareBaseTxn } from "src/methods/wallet/pChain/prepareBaseTxn.js";
-import { prepareConvertSubnetToL1Txn } from "src/methods/wallet/pChain/prepareConvertSubnetToL1Txn.js";
-import { prepareCreateChainTxn } from "src/methods/wallet/pChain/prepareCreateChainTxn.js";
-import { prepareCreateSubnetTxn } from "src/methods/wallet/pChain/prepareCreateSubnetTxn.js";
-import { prepareDisableL1ValidatorTxn } from "src/methods/wallet/pChain/prepareDisableL1ValidatorTxn.js";
-import { prepareIncreaseL1ValidatorBalanceTxn } from "src/methods/wallet/pChain/prepareIncreaseL1ValidatorBalanceTxn.js";
-import { prepareRegisterL1ValidatorTxn } from "src/methods/wallet/pChain/prepareRegisterL1ValidatorTxn.js";
-import { prepareRemoveSubnetValidatorTxn } from "src/methods/wallet/pChain/prepareRemoveSubnetValidatorTxn.js";
-import { Chain, Transport } from "viem";
+} from "../../methods/wallet/pChain/index.js";
+import { prepareAddPermissionlessDelegatorTxn } from "../../methods/wallet/pChain/prepareAddPermissionlessDelegatorTxn.js";
+import { prepareAddPermissionlessValidatorTxn } from "../../methods/wallet/pChain/prepareAddPermissionlessValidatorTxn.js";
+import { prepareAddSubnetValidatorTxn } from "../../methods/wallet/pChain/prepareAddSubnetValidatorTxn.js";
+import { prepareBaseTxn } from "../../methods/wallet/pChain/prepareBaseTxn.js";
+import { prepareConvertSubnetToL1Txn } from "../../methods/wallet/pChain/prepareConvertSubnetToL1Txn.js";
+import { prepareCreateChainTxn } from "../../methods/wallet/pChain/prepareCreateChainTxn.js";
+import { prepareCreateSubnetTxn } from "../../methods/wallet/pChain/prepareCreateSubnetTxn.js";
+import { prepareDisableL1ValidatorTxn } from "../../methods/wallet/pChain/prepareDisableL1ValidatorTxn.js";
+import { prepareIncreaseL1ValidatorBalanceTxn } from "../../methods/wallet/pChain/prepareIncreaseL1ValidatorBalanceTxn.js";
+import { prepareRegisterL1ValidatorTxn } from "../../methods/wallet/pChain/prepareRegisterL1ValidatorTxn.js";
+import { prepareRemoveSubnetValidatorTxn } from "../../methods/wallet/pChain/prepareRemoveSubnetValidatorTxn.js";
 import { AvalancheWalletCoreClient } from "../createAvalancheWalletCoreClient.js";
 
 export type PChainWalletActions = {
