@@ -10,7 +10,7 @@ import { getUtxoFromBytes } from "./getUtxoFromBytes.js";
  * @description Get the UTXOs for an address.
  *
  * @param client - The client to use. {@link AvalancheWalletCoreClient}
- * @param params - The parameters. {@link { address: string, chainAlias: "P" | "X" }}
+ * @param params - The parameters. {@link { address: string, chainAlias: "P" | "X" | "C" }}
  * @returns The array of UTXOs. May contain duplicates. {@link [Utxo]}
  *
  * @example

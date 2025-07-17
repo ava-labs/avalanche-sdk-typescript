@@ -1,11 +1,15 @@
 import {
   Address,
   avaxSerial,
+  Common,
   Context as ContextType,
   Int,
   PChainOwner,
   pvmSerial,
+  secp256k1,
   TransferableOutput,
+  TypeSymbols,
+  UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
 import { getUtxosForAddress } from "src/utils/index.js";
@@ -176,7 +180,9 @@ export async function fetchCommonTxParams(
       encoding: "hex",
     });
     const strippedTxBytes = utils.strip0x(subnetTx.tx as string);
-    const manager = utils.getManagerForVM(sourceChain === "X" ? "AVM" : "PVM");
+    const manager = utils.getManagerForVM(
+      chainAlias === "X" ? "AVM" : chainAlias === "C" ? "EVM" : "PVM"
+    );
     const txn = manager.unpack(
       utils.hexToBuffer(strippedTxBytes),
       avaxSerial.SignedTx
@@ -244,3 +250,41 @@ export type PChainOwnerJSON = {
    */
   threshold?: number;
 };
+
+export function isTxImportExport(tx: Common.Transaction) {
+  return (
+    tx._type === TypeSymbols.AvmExportTx ||
+    tx._type === TypeSymbols.AvmImportTx ||
+    tx._type === TypeSymbols.EvmExportTx ||
+    tx._type === TypeSymbols.EvmImportTx ||
+    tx._type === TypeSymbols.PvmImportTx ||
+    tx._type === TypeSymbols.PvmExportTx
+  );
+}
+
+export async function addPChainOwnerAuthSignature(
+  unsignedTx: UnsignedTx,
+  owners: PChainOwner,
+  authIndices: number[],
+  signature: Uint8Array<ArrayBufferLike>,
+  publicKey: string
+) {
+  // Get the addresses that need to sign based on subnetAuth indices
+  const signingOwners = owners.addresses.filter((_, index) =>
+    authIndices.includes(index)
+  );
+
+  // Last credential index is for the subnet auth signatures
+  const credentialIndex = unsignedTx.getCredentials().length - 1;
+  const address = new Address(
+    secp256k1.publicKeyBytesToAddress(utils.hexToBuffer(publicKey))
+  );
+
+  const signerIndex = signingOwners.findIndex(
+    (owner) => owner.value() === address.value()
+  );
+
+  if (signerIndex !== -1) {
+    unsignedTx.addSignatureAt(signature, credentialIndex, signerIndex);
+  }
+}

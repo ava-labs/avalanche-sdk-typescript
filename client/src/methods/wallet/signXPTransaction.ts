@@ -18,6 +18,11 @@ import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "./types/signXPTransaction.js";
+import {
+  addPChainOwnerAuthSignature,
+  getChainIdFromAlias,
+  isTxImportExport,
+} from "./utils.js";
 
 /**
  * Formats an XP address with the chain alias prefix
@@ -79,6 +84,7 @@ export async function signXPTransaction(
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
   const isTestnet = client.chain?.testnet;
+  const networkId = isTestnet ? 5 : 1;
 
   if (xpAccount) {
     const xpAddress = publicKeyToXPAddress(
@@ -116,6 +122,9 @@ export async function signXPTransaction(
       const utxos = await getUtxosForAddress(client, {
         address: formatChainAddress(chainAlias, xpAddress),
         chainAlias,
+        ...(isTxImportExport(tx) && {
+          sourceChain: getChainIdFromAlias(chainAlias, networkId),
+        }),
       });
 
       // If no utxos are found, throw an error
@@ -150,6 +159,27 @@ export async function signXPTransaction(
         credentials[sigIndex]?.setSignature(addrIndex, signature);
       });
 
+      if ((subnetOwners && subnetAuth) || (disableOwners && disableAuth)) {
+        const owners = (subnetOwners ?? disableOwners)!;
+        const authIndices = (subnetAuth ?? disableAuth) || [];
+
+        // Get the addresses that need to sign based on subnetAuth indices
+        const signingOwners = owners.addresses.filter((_, index) =>
+          authIndices.includes(index)
+        );
+
+        // Last credential index is for the subnet auth signatures
+        const credentialIndex = credentials.length - 1;
+
+        const signerIndex = signingOwners.findIndex(
+          (owner) => owner.value() === xpAddress
+        );
+
+        if (signerIndex !== -1) {
+          credentials[credentialIndex]?.setSignature(signerIndex, signature);
+        }
+      }
+
       // Serialize the signed tx
       const signedTx = utils.bufferToHex(
         utils.addChecksum(new avaxSerial.SignedTx(tx, credentials).toBytes())
@@ -168,6 +198,17 @@ export async function signXPTransaction(
       const tx = txOrTxHex as UnsignedTx;
       const signature = await xpAccount.signTransaction(txOrTxHex.toBytes());
       tx.addSignature(utils.hexToBuffer(signature));
+
+      if ((subnetOwners && subnetAuth) || (disableOwners && disableAuth)) {
+        addPChainOwnerAuthSignature(
+          tx,
+          (subnetOwners ?? disableOwners)!,
+          (subnetAuth ?? disableAuth) || [],
+          utils.hexToBuffer(signature),
+          xpAccount.publicKey
+        );
+      }
+
       return {
         signedTxHex: utils.bufferToHex(
           utils.addChecksum(tx.getSignedTx().toBytes())
