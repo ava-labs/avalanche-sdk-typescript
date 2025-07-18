@@ -1,4 +1,8 @@
-import { PChainOwner, UnsignedTx } from "@avalabs/avalanchejs";
+import {
+  Context as ContextType,
+  PChainOwner,
+  UnsignedTx,
+} from "@avalabs/avalanchejs";
 import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
 import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
@@ -13,6 +17,7 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
  * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
  * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
  * @property disableAuth - Optional, the disable auth to use for the transaction. {@link number[]}
+ * @property context - Optional, the context to use for the transaction. {@link ContextType.Context}
  */
 export type SignXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
@@ -23,6 +28,7 @@ export type SignXPTransactionParameters = {
   subnetOwners?: PChainOwner | undefined;
   disableOwners?: PChainOwner | undefined;
   disableAuth?: number[] | undefined;
+  context?: ContextType.Context | undefined;
 };
 
 /**

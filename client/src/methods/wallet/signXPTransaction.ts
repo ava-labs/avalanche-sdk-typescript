@@ -13,6 +13,7 @@ import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { getUtxosForAddress } from "../../utils/getUtxosForAddress.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import { SepkSignatureLength } from "./constants.js";
+import { getContextFromURI } from "./getContextFromURI.js";
 import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
@@ -71,19 +72,23 @@ export async function signXPTransaction(
     chainAlias,
     account,
     utxoIds,
-    // @ts-ignore
     subnetAuth,
-    // @ts-ignore
     subnetOwners,
-    // @ts-ignore
     disableOwners,
-    // @ts-ignore
     disableAuth,
   } = params;
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
-  const isTestnet = client.chain?.testnet;
-  const networkId = isTestnet ? 5 : 1;
+
+  let isTestnet, networkId;
+  if (client.chain?.testnet) {
+    isTestnet = client.chain?.testnet;
+    networkId = isTestnet ? 5 : 1;
+  } else {
+    const context = params.context || (await getContextFromURI(client));
+    isTestnet = context.networkID === 5;
+    networkId = context.networkID;
+  }
 
   if (xpAccount) {
     const xpAddress = publicKeyToXPAddress(
