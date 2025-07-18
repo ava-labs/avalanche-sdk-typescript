@@ -1,7 +1,8 @@
-import { Context, pvm, pvmSerial } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
-import { fetchCommonTxParams, getBaseUrl } from "../utils.js";
+import { getContextFromURI } from "../getContextFromURI.js";
+import { fetchCommonTxParams } from "../utils.js";
 import {
   PrepareDisableL1ValidatorTxnParameters,
   PrepareDisableL1ValidatorTxnReturnType,
@@ -11,16 +12,12 @@ export async function prepareDisableL1ValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareDisableL1ValidatorTxnParameters
 ): Promise<PrepareDisableL1ValidatorTxnReturnType> {
-  const baseUrl = getBaseUrl(client);
-  const context = params.context || (await Context.getContextFromURI(baseUrl));
-  const { commonTxParams, disableOwners } = await fetchCommonTxParams(
-    client,
-    params,
-    undefined,
-    undefined,
-    undefined,
-    params.validationId
-  );
+  const context = params.context || (await getContextFromURI(client));
+  const { commonTxParams, disableOwners } = await fetchCommonTxParams(client, {
+    txParams: params,
+    context,
+    l1ValidationId: params.validationId,
+  });
 
   if (!disableOwners) {
     throw new Error(

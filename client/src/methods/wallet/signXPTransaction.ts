@@ -1,5 +1,4 @@
 import {
-  Address,
   avaxSerial,
   Credential,
   Signature,
@@ -91,6 +90,7 @@ export async function signXPTransaction(
       xpAccount.publicKey,
       isTestnet ? "fuji" : "avax"
     );
+
     if (typeof txOrTxHex === "string") {
       // Get the tx and credentials from the txHex
       let [tx, credentials] = getTxFromBytes(txOrTxHex, chainAlias);
@@ -208,14 +208,13 @@ export async function signXPTransaction(
           xpAccount.publicKey
         );
       }
-
       return {
         signedTxHex: utils.bufferToHex(
           utils.addChecksum(tx.getSignedTx().toBytes())
         ),
         signatures: tx
-          .getSigIndicesForAddress(new Address(utils.hexToBuffer(xpAddress)))
-          .map((sig) => {
+          .getSigIndicesForPubKey(utils.hexToBuffer(xpAccount.publicKey))
+          ?.map((sig) => {
             return {
               signature: signature,
               sigIndices: sig,

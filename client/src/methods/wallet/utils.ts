@@ -55,6 +55,10 @@ export function getBaseUrl(client: AvalancheWalletCoreClient): string {
 export function getBech32AddressFromAccountOrClient(
   client: AvalancheWalletCoreClient, // TODO: use this to fetch the default account
   account: AvalancheAccount | AddressType | undefined,
+  chainAlias:
+    | typeof P_CHAIN_ALIAS
+    | typeof X_CHAIN_ALIAS
+    | typeof C_CHAIN_ALIAS,
   hrp: string
 ): string {
   const xpAcc = parseAvalancheAccount(account)?.xpAccount || client.xpAccount;
@@ -64,7 +68,7 @@ export function getBech32AddressFromAccountOrClient(
     throw new Error("Account is not an XP account");
   }
 
-  return publicKeyToXPAddress(xpAcc.publicKey, hrp);
+  return `${chainAlias}-${publicKeyToXPAddress(xpAcc.publicKey, hrp)}`;
 }
 
 export function evmAddressToBytes(address: string) {
@@ -134,28 +138,40 @@ export function getChainIdFromAlias(
 // TODO: try to paralleize API calls within this function
 export async function fetchCommonTxParams(
   client: AvalancheWalletCoreClient,
-  txParams: CommonTxParams,
-  sourceChain?: string,
-  chainAlias?:
-    | typeof P_CHAIN_ALIAS
-    | typeof X_CHAIN_ALIAS
-    | typeof C_CHAIN_ALIAS,
-  subnetId?: string,
-  l1ValidationId?: string,
-  account?: AvalancheAccount | AddressType | undefined
+  params: {
+    txParams: CommonTxParams;
+    sourceChain?: string;
+    chainAlias?:
+      | typeof P_CHAIN_ALIAS
+      | typeof X_CHAIN_ALIAS
+      | typeof C_CHAIN_ALIAS;
+    subnetId?: string;
+    l1ValidationId?: string;
+    account?: AvalancheAccount | AddressType | undefined;
+    context: ContextType.Context;
+  }
 ): Promise<{
   commonTxParams: FormattedCommonTxParams;
   subnetOwners: PChainOwner | undefined;
   disableOwners: PChainOwner | undefined;
 }> {
+  const {
+    txParams,
+    sourceChain,
+    chainAlias,
+    subnetId,
+    l1ValidationId,
+    account,
+    context,
+  } = params;
   // If fromAddresses is not provided, use wallet addresses
   const address = getBech32AddressFromAccountOrClient(
     client,
     account,
-    chainAlias || P_CHAIN_ALIAS
+    chainAlias || P_CHAIN_ALIAS,
+    context.hrp
   );
   const fromAddresses = txParams.fromAddresses || [address];
-
   const utxos =
     txParams.utxos ||
     (

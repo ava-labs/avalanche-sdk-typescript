@@ -1,7 +1,8 @@
-import { Context, pvm, pvmSerial } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
-import { fetchCommonTxParams, getBaseUrl } from "../utils.js";
+import { getContextFromURI } from "../getContextFromURI.js";
+import { fetchCommonTxParams } from "../utils.js";
 import {
   PrepareAddSubnetValidatorTxnParameters,
   PrepareAddSubnetValidatorTxnReturnType,
@@ -11,21 +12,17 @@ export async function prepareAddSubnetValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareAddSubnetValidatorTxnParameters
 ): Promise<PrepareAddSubnetValidatorTxnReturnType> {
-  const { commonTxParams, subnetOwners } = await fetchCommonTxParams(
-    client,
-    params,
-    undefined,
-    P_CHAIN_ALIAS,
-    params.subnetId
-  );
+  const context = params.context || (await getContextFromURI(client));
+  const { commonTxParams, subnetOwners } = await fetchCommonTxParams(client, {
+    txParams: params,
+    context,
+    chainAlias: P_CHAIN_ALIAS,
+    subnetId: params.subnetId,
+  });
 
   if (!subnetOwners) {
     throw new Error("Subnet owners not found for a Subnet tx");
   }
-
-  const baseUrl = getBaseUrl(client);
-  const context = params.context || (await Context.getContextFromURI(baseUrl));
-
   const unsignedTx = pvm.newAddSubnetValidatorTx(
     {
       ...commonTxParams,

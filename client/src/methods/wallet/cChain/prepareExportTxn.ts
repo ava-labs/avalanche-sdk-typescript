@@ -1,11 +1,11 @@
-import { Context, evm, utils } from "@avalabs/avalanchejs";
+import { evm, utils } from "@avalabs/avalanchejs";
 import { getTransactionCount } from "viem/actions";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { baseFee as getBaseFee } from "../../public/index.js";
+import { getContextFromURI } from "../getContextFromURI.js";
 import {
   avaxToNanoAvax,
   bech32AddressToBytes,
-  getBaseUrl,
   getChainIdFromAlias,
 } from "../utils.js";
 import {
@@ -17,9 +17,7 @@ export async function prepareExportTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareExportTxnParameters
 ): Promise<PrepareExportTxnReturnType> {
-  const baseUrl = getBaseUrl(client);
-
-  const context = params.context || (await Context.getContextFromURI(baseUrl));
+  const context = params.context || (await getContextFromURI(client));
   const [txCount, baseFee] = await Promise.all([
     getTransactionCount(client, {
       address: `0x${utils.strip0x(params.fromAddress)}`,

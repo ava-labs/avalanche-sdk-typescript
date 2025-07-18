@@ -55,6 +55,7 @@ export type AvalancheWalletCoreClient<
   pChainClient: AvalancheCoreClient;
   cChainClient: AvalancheCoreClient;
   xChainClient: AvalancheCoreClient;
+  infoClient: AvalancheCoreClient;
 };
 
 export type CreateAvalancheWalletCoreClientErrorType =
@@ -129,6 +130,10 @@ export function createAvalancheWalletCoreClient<
     xChainClient: createAvalancheCoreClient({
       ...parameters,
       clientType: "xChain",
+    }),
+    infoClient: createAvalancheCoreClient({
+      ...parameters,
+      clientType: "info",
     }),
   } as AvalancheWalletCoreClient<
     transport,

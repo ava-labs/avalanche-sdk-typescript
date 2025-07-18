@@ -1,5 +1,4 @@
 import {
-  Context,
   L1Validator as FormattedL1Validator,
   PChainOwner as FormattedPChainOwner,
   pvm,
@@ -8,11 +7,11 @@ import {
 } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
+import { getContextFromURI } from "../getContextFromURI.js";
 import {
   avaxToNanoAvax,
   bech32AddressToBytes,
   fetchCommonTxParams,
-  getBaseUrl,
 } from "../utils.js";
 import {
   PrepareConvertSubnetToL1TxnParameters,
@@ -23,20 +22,17 @@ export async function prepareConvertSubnetToL1Txn(
   client: AvalancheWalletCoreClient,
   params: PrepareConvertSubnetToL1TxnParameters
 ): Promise<PrepareConvertSubnetToL1TxnReturnType> {
-  const { commonTxParams, subnetOwners } = await fetchCommonTxParams(
-    client,
-    params,
-    undefined,
-    P_CHAIN_ALIAS,
-    params.subnetId
-  );
+  const context = params.context || (await getContextFromURI(client));
+  const { commonTxParams, subnetOwners } = await fetchCommonTxParams(client, {
+    txParams: params,
+    context,
+    chainAlias: P_CHAIN_ALIAS,
+    subnetId: params.subnetId,
+  });
 
   if (!subnetOwners) {
     throw new Error("Subnet owners not found for a Subnet tx");
   }
-
-  const baseUrl = getBaseUrl(client);
-  const context = params.context || (await Context.getContextFromURI(baseUrl));
 
   const validators: FormattedL1Validator[] = params.validators.map(
     (validator) =>

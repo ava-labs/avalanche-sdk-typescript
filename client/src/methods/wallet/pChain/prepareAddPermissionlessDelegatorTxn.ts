@@ -1,11 +1,8 @@
-import { Context, pvm } from "@avalabs/avalanchejs";
+import { pvm } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
-import {
-  bech32AddressToBytes,
-  fetchCommonTxParams,
-  getBaseUrl,
-} from "../utils.js";
+import { getContextFromURI } from "../getContextFromURI.js";
+import { bech32AddressToBytes, fetchCommonTxParams } from "../utils.js";
 import {
   PrepareAddPermissionlessDelegatorTxnParameters,
   PrepareAddPermissionlessDelegatorTxnReturnType,
@@ -15,9 +12,12 @@ export async function prepareAddPermissionlessDelegatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareAddPermissionlessDelegatorTxnParameters
 ): Promise<PrepareAddPermissionlessDelegatorTxnReturnType> {
-  const { commonTxParams } = await fetchCommonTxParams(client, params);
-  const baseUrl = getBaseUrl(client);
-  const context = params.context || (await Context.getContextFromURI(baseUrl));
+  const context = params.context || (await getContextFromURI(client));
+
+  const { commonTxParams } = await fetchCommonTxParams(client, {
+    txParams: params,
+    context,
+  });
 
   const unsignedTx = pvm.newAddPermissionlessDelegatorTx(
     {
