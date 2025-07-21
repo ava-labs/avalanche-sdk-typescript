@@ -8,6 +8,39 @@ import {
   PrepareCreateChainTxnReturnType,
 } from "./types/prepareCreateChainTxn.js";
 
+/**
+ * Prepares a create chain transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareCreateChainTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareCreateChainTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-create-chain-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareCreateChainTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareCreateChainTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainCreateChainTxnRequest = await prepareCreateChainTxn(walletClient, {
+ *   subnetId: "..",
+ *   vmId: "..",
+ *   chainName: "My Chain",
+ *   genesisData: "0x1234567890123456789012345678901234567890",
+ *   subnetAuth: [1],
+ * });
+ *
+ * console.log(pChainCreateChainTxnRequest);
+ * ```
+ */
 export async function prepareCreateChainTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareCreateChainTxnParameters

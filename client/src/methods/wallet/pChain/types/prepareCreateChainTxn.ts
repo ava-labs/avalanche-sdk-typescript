@@ -38,8 +38,20 @@ export type PrepareCreateChainTxnParameters = CommonTxParams & {
 };
 
 export type PrepareCreateChainTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The subnet owners.
+   */
   subnetOwners: PChainOwner;
+  /**
+   * The subnet auth.
+   */
   subnetAuth: number[];
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

@@ -14,7 +14,7 @@ export type CChainWalletActions = {
    * Prepare an export transaction from C-Chain to another chain (X-Chain or P-Chain).
    * This method creates the transaction data needed to export AVAX from the C-Chain.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/c-chain/txn-format#exporttx
+   * @see https://build.avax.network/docs/api-reference/c-chain/txn-format#exporttx
    *
    * @param args - {@link PrepareExportTxnParameters}
    * @returns Export transaction data. {@link PrepareExportTxnReturnType}
@@ -45,7 +45,7 @@ export type CChainWalletActions = {
    * Prepare an import transaction from another chain (X-Chain or P-Chain) to C-Chain.
    * This method creates the transaction data needed to import AVAX to the C-Chain.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/c-chain/txn-format#importtx
+   * @see https://build.avax.network/docs/api-reference/c-chain/txn-format#importtx
    *
    * @param args - {@link PrepareImportTxParameters}
    * @returns Import transaction data. {@link PrepareImportTxnReturnType}

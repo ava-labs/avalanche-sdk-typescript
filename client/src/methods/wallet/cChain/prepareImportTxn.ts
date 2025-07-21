@@ -15,6 +15,36 @@ import {
   PrepareImportTxnReturnType,
 } from "./types/prepareImportTxn.js";
 
+/**
+ * Prepares an import transaction for the C-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareImportTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareImportTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/c-chain/txn-format#importtx
+ *
+ * @example
+ * ```ts
+ * import { prepareImportTxn } from "@avalanche-sdk/client/methods/wallet/cChain/prepareImportTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const cChainImportTxnRequest = await prepareImportTxn(walletClient, {
+ *   sourceChain: "P",
+ *   toAddress: "0x1234567890123456789012345678901234567890",
+ * });
+ *
+ * console.log(cChainImportTxnRequest);
+ * ```
+ */
 export async function prepareImportTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareImportTxnParameters

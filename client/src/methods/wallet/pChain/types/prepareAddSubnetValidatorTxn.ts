@@ -36,8 +36,21 @@ export type PrepareAddSubnetValidatorTxnParameters = CommonTxParams & {
 };
 
 export type PrepareAddSubnetValidatorTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The subnet owners.
+   */
   subnetOwners: PChainOwner;
+  /**
+   * Array of indices from the subnet's owners array
+   * who will sign this `AddSubnetValidatorTx`.
+   */
   subnetAuth: number[];
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

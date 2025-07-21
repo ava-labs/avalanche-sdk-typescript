@@ -15,12 +15,27 @@ export type PrepareCreateSubnetTxnParameters = CommonTxParams & {
 };
 
 export type SubnetOwners = {
+  /**
+   * A list of unique addresses that correspond to the private keys that can be used to spend this output. Addresses must be sorted lexicographically.
+   */
   addresses: string[];
+  /**
+   * An int that names the number of unique signatures required to spend the output. Must be less than or equal to the length of Addresses. If Addresses is empty, must be 0.
+   */
   threshold?: number;
+  /**
+   *  Contains the Unix timestamp that this output can be spent after. The Unix timestamp is specific to the second.
+   */
   locktime?: bigint;
 };
 
 export type PrepareCreateSubnetTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

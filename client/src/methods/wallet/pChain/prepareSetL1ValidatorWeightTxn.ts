@@ -8,6 +8,37 @@ import {
   PrepareSetL1ValidatorWeightTxnReturnType,
 } from "./types/prepareSetL1ValidatorWeightTxn.js";
 
+/**
+ * Prepares a set L1 validator weight transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareSetL1ValidatorWeightTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareSetL1ValidatorWeightTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-set-l1-validator-weight-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareSetL1ValidatorWeightTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareSetL1ValidatorWeightTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainSetL1ValidatorWeightTxnRequest = await prepareSetL1ValidatorWeightTxn(walletClient, {
+ *   weight: 1,
+ *   validationId: "11111111111111111111111111111111LpoYY",
+ *   setWeightAuth: [1],
+ * });
+ *
+ * console.log(pChainSetL1ValidatorWeightTxnRequest);
+ * ```
+ */
 export async function prepareSetL1ValidatorWeightTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareSetL1ValidatorWeightTxnParameters

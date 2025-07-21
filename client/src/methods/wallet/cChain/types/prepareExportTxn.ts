@@ -11,7 +11,7 @@ export type PrepareExportTxnParameters = {
    */
   fromAddress: string;
   /**
-   * The conslidated exported output (UTXO)
+   * The consolidated exported output (UTXO)
    */
   exportedOutput: {
     /**
@@ -38,6 +38,12 @@ export type PrepareExportTxnParameters = {
 };
 
 export type PrepareExportTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "C";
 };

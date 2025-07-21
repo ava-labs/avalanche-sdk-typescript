@@ -50,7 +50,7 @@ export type PChainWalletActions = {
    * Prepare an add permissionless delegator transaction.
    * This method creates the transaction data needed to delegate AVAX to a permissionless validator.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#addpermissionlessdelegatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-delegator-tx
    *
    * @param args - {@link PrepareAddPermissionlessDelegatorTxnParameters}
    * @returns Delegator transaction data. {@link PrepareAddPermissionlessDelegatorTxnReturnType}
@@ -83,7 +83,7 @@ export type PChainWalletActions = {
    * Prepare an add permissionless validator transaction.
    * This method creates the transaction data needed to add a permissionless validator.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#addpermissionlessvalidatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-validator-tx
    *
    * @param args - {@link PrepareAddPermissionlessValidatorTxnParameters}
    * @returns Validator transaction data. {@link PrepareAddPermissionlessValidatorTxnReturnType}
@@ -118,7 +118,7 @@ export type PChainWalletActions = {
    * Prepare an add subnet validator transaction.
    * This method creates the transaction data needed to add a validator to a subnet.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#addsubnetvalidatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-subnet-validator-tx
    *
    * @param args - {@link PrepareAddSubnetValidatorTxnParameters}
    * @returns Subnet validator transaction data. {@link PrepareAddSubnetValidatorTxnReturnType}
@@ -152,7 +152,7 @@ export type PChainWalletActions = {
    * Prepare a base transaction.
    * This method creates the transaction data for a basic P-Chain transaction.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#basetx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-base-tx
    *
    * @param args - {@link PrepareBaseTxnParameters}
    * @returns Base transaction data. {@link PrepareBaseTxnReturnType}
@@ -217,7 +217,7 @@ export type PChainWalletActions = {
    * Prepare a create chain transaction.
    * This method creates the transaction data needed to create a new chain on a subnet.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#createchaintx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-create-chain-tx
    *
    * @param args - {@link PrepareCreateChainTxnParameters}
    * @returns Create chain transaction data. {@link PrepareCreateChainTxnReturnType}
@@ -252,7 +252,7 @@ export type PChainWalletActions = {
    * Prepare a create subnet transaction.
    * This method creates the transaction data needed to create a new subnet.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#createsubnettx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-create-subnet-tx
    *
    * @param args - {@link PrepareCreateSubnetTxnParameters}
    * @returns Create subnet transaction data. {@link PrepareCreateSubnetTxnReturnType}
@@ -285,7 +285,7 @@ export type PChainWalletActions = {
    * Prepare a disable L1 validator transaction.
    * This method creates the transaction data needed to disable an L1 validator.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#disablel1validatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-disable-l1-validator-tx
    *
    * @param args - {@link PrepareDisableL1ValidatorTxnParameters}
    * @returns Disable L1 validator transaction data. {@link PrepareDisableL1ValidatorTxnReturnType}
@@ -316,7 +316,7 @@ export type PChainWalletActions = {
    * Prepare an export transaction from P-Chain to another chain (X-Chain or C-Chain).
    * This method creates the transaction data needed to export AVAX from the P-Chain.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#exporttx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-export-tx
    *
    * @param args - {@link PrepareExportTxnParameters}
    * @returns Export transaction data. {@link PrepareExportTxnReturnType}
@@ -350,7 +350,7 @@ export type PChainWalletActions = {
    * Prepare an import transaction from another chain (X-Chain or C-Chain) to P-Chain.
    * This method creates the transaction data needed to import AVAX to the P-Chain.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#importtx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-import-tx
    *
    * @param args - {@link PrepareImportTxnParameters}
    * @returns Import transaction data. {@link PrepareImportTxnReturnType}
@@ -383,7 +383,7 @@ export type PChainWalletActions = {
    * Prepare an increase L1 validator balance transaction.
    * This method creates the transaction data needed to increase an L1 validator's balance.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#increasel1validatorbalancetx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-increase-l1-validator-balance-tx
    *
    * @param args - {@link PrepareIncreaseL1ValidatorBalanceTxnParameters}
    * @returns Increase L1 validator balance transaction data. {@link PrepareIncreaseL1ValidatorBalanceTxnReturnType}
@@ -414,7 +414,7 @@ export type PChainWalletActions = {
    * Prepare a register L1 validator transaction.
    * This method creates the transaction data needed to register an L1 validator.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#registerl1validatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-register-l1-validator-tx
    *
    * @param args - {@link PrepareRegisterL1ValidatorTxnParameters}
    * @returns Register L1 validator transaction data. {@link PrepareRegisterL1ValidatorTxnReturnType}
@@ -445,7 +445,7 @@ export type PChainWalletActions = {
    * Prepare a remove subnet validator transaction.
    * This method creates the transaction data needed to remove a validator from a subnet.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#removesubnetvalidatortx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-remove-subnet-validator-tx
    *
    * @param args - {@link PrepareRemoveSubnetValidatorTxnParameters}
    * @returns Remove subnet validator transaction data. {@link PrepareRemoveSubnetValidatorTxnReturnType}
@@ -477,7 +477,7 @@ export type PChainWalletActions = {
    * Prepare a set L1 validator weight transaction.
    * This method creates the transaction data needed to set an L1 validator's weight.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/txn-format#setl1validatorweighttx
+   * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-set-l1-validator-weight-tx
    *
    * @param args - {@link PrepareSetL1ValidatorWeightTxParameters}
    * @returns Set L1 validator weight transaction data. {@link PrepareSetL1ValidatorWeightTxReturnType}

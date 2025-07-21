@@ -14,6 +14,12 @@ export type PrepareBaseTxnParameters = CommonTxParams & {
 };
 
 export type PrepareBaseTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

@@ -39,6 +39,12 @@ export type PrepareImportTxnParameters = {
 };
 
 export type PrepareImportTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "C";
 };

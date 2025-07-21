@@ -42,6 +42,12 @@ export type PrepareAddPermissionlessDelegatorTxnParameters = CommonTxParams & {
 };
 
 export type PrepareAddPermissionlessDelegatorTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

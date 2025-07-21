@@ -1,4 +1,4 @@
-import { Account } from "viem";
+import { Account, Address } from "viem";
 
 /**
  * XPAddress is a type that represents an X or P chain address.
@@ -29,6 +29,23 @@ export type LocalXPAccount = {
  * It can be a combination of an EVM account and an XP account.
  */
 export type AvalancheAccount = {
+  /**
+   * The EVM account.
+   */
   evmAccount: Account;
+  /**
+   * The XP account.
+   */
   xpAccount?: XPAccount;
+  /**
+   * Get the XP address for the account.
+   */
+  getXPAddress: (
+    chain?: "X" | "P" | "C" | undefined,
+    hrp?: string | undefined
+  ) => XPAddress;
+  /**
+   * Get the EVM address for the account.
+   */
+  getEVMAddress: () => Address;
 };

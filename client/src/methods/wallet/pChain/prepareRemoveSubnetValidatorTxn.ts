@@ -8,6 +8,37 @@ import {
   PrepareRemoveSubnetValidatorTxnReturnType,
 } from "./types/prepareRemoveSubnetValidatorTxn.js";
 
+/**
+ * Prepares a remove subnet validator transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareRemoveSubnetValidatorTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareRemoveSubnetValidatorTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-remove-avalanche-l1-validator-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareRemoveSubnetValidatorTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareRemoveSubnetValidatorTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainRemoveSubnetValidatorTxnRequest = await prepareRemoveSubnetValidatorTxn(walletClient, {
+ *   subnetId: "11111111111111111111111111111111LpoYY",
+ *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+ *   subnetAuth: [1],
+ * });
+ *
+ * console.log(pChainRemoveSubnetValidatorTxnRequest);
+ * ```
+ */
 export async function prepareRemoveSubnetValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareRemoveSubnetValidatorTxnParameters

@@ -63,6 +63,12 @@ export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
 };
 
 export type PrepareAddPermissionlessValidatorTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

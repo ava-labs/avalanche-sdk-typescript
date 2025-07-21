@@ -18,6 +18,38 @@ import {
   PrepareConvertSubnetToL1TxnReturnType,
 } from "./types/prepareConvertSubnetToL1Txn.js";
 
+/**
+ * Prepares a convert subnet to L1 transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareConvertSubnetToL1TxnParameters}
+ * @returns The unsigned transaction. {@link PrepareConvertSubnetToL1TxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-convert-subnet-to-l1-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareConvertSubnetToL1Txn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareConvertSubnetToL1Txn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainConvertSubnetToL1TxnRequest = await prepareConvertSubnetToL1Txn(walletClient, {
+ *   subnetId: "11111111111111111111111111111111LpoYY",
+ *   blockchainId: 1,
+ *   managerContractAddress: "0x1234567890123456789012345678901234567890",
+ *   subnetAuth: [1],
+ * });
+ *
+ * console.log(pChainConvertSubnetToL1TxnRequest);
+ * ```
+ */
 export async function prepareConvertSubnetToL1Txn(
   client: AvalancheWalletCoreClient,
   params: PrepareConvertSubnetToL1TxnParameters

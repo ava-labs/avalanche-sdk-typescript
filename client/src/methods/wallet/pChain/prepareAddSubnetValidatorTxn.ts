@@ -8,6 +8,39 @@ import {
   PrepareAddSubnetValidatorTxnReturnType,
 } from "./types/prepareAddSubnetValidatorTxn.js";
 
+/**
+ * Prepares an add subnet validator transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareAddSubnetValidatorTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareAddSubnetValidatorTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-validator-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareAddSubnetValidatorTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareAddSubnetValidatorTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainAddSubnetValidatorTxnRequest = await prepareAddSubnetValidatorTxn(walletClient, {
+ *   subnetId: "11111111111111111111111111111111LpoYY",
+ *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+ *   weight: 1n,
+ *   end: 1716441600n,
+ *   subnetAuth: [1],
+ * });
+ *
+ * console.log(pChainAddSubnetValidatorTxnRequest);
+ * ```
+ */
 export async function prepareAddSubnetValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareAddSubnetValidatorTxnParameters

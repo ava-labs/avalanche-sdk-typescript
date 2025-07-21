@@ -8,6 +8,39 @@ import {
   PrepareAddPermissionlessValidatorTxnReturnType,
 } from "./types/prepareAddPermissionlessValidatorTxn.js";
 
+/**
+ * Prepares an add permissionless validator transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareAddPermissionlessValidatorTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareAddPermissionlessValidatorTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-validator-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareAddPermissionlessValidatorTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareAddPermissionlessValidatorTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainAddPermissionlessValidatorTxnRequest = await prepareAddPermissionlessValidatorTxn(walletClient, {
+ *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+ *   stakeInAvax: 1,
+ *   end: 1716441600,
+ *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+ *   threshold: 1,
+ * });
+ *
+ * console.log(pChainAddPermissionlessValidatorTxnRequest);
+ * ```
+ */
 export async function prepareAddPermissionlessValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareAddPermissionlessValidatorTxnParameters

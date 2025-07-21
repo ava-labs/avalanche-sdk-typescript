@@ -8,6 +8,36 @@ import {
   PrepareDisableL1ValidatorTxnReturnType,
 } from "./types/prepareDisableL1ValidatorTxn.js";
 
+/**
+ * Prepares a disable L1 validator transaction for the P-chain.
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareDisableL1ValidatorTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareDisableL1ValidatorTxnReturnType}
+ *
+ * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-disable-l1-validator-tx
+ *
+ * @example
+ * ```ts
+ * import { prepareDisableL1ValidatorTxn } from "@avalanche-sdk/client/methods/wallet/pChain/prepareDisableL1ValidatorTxn";
+ * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
+ * const walletClient = createAvalancheWalletClient({
+ *   account,
+ *   chain: avalanche,
+ * });
+ *
+ * const pChainDisableL1ValidatorTxnRequest = await prepareDisableL1ValidatorTxn(walletClient, {
+ *   validationId: "11111111111111111111111111111111LpoYY",
+ *   disableAuth: [1],
+ * });
+ *
+ * console.log(pChainDisableL1ValidatorTxnRequest);
+ * ```
+ */
 export async function prepareDisableL1ValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareDisableL1ValidatorTxnParameters

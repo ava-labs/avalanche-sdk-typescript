@@ -91,8 +91,20 @@ export type L1Validator = {
 };
 
 export type PrepareConvertSubnetToL1TxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The subnet owners.
+   */
   subnetOwners: PChainOwner;
+  /**
+   * The subnet auth.
+   */
   subnetAuth: number[];
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };
