@@ -11,7 +11,7 @@ async function run() {
     "0x56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"
   );
 
-  const client = createAvalancheWalletClient({
+  const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
     transport: {
       type: "http",
@@ -21,25 +21,25 @@ async function run() {
   });
 
   const removeSubnetValidatorTxnRequest =
-    await client.pChain.prepareRemoveSubnetValidatorTxn({
+    await walletClient.pChain.prepareRemoveSubnetValidatorTxn({
       subnetId: "SLomSuJLyG9qk7KLcWevdcZ1i7kN2qTLNUytJLhkwPdxAAgoa",
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       subnetAuth: [0],
     });
 
   // sign the txn with account1
-  const partiallySignedTxn = await client.signXPTransaction(
+  const partiallySignedTxn = await walletClient.signXPTransaction(
     removeSubnetValidatorTxnRequest
   );
 
   // sign the txn with account2
-  const signedTxn = await client.signXPTransaction({
+  const signedTxn = await walletClient.signXPTransaction({
     ...partiallySignedTxn,
     account: account2,
   });
 
   // issue the txn
-  const issuedTxnResponse = await issuePChainTx(client.pChainClient, {
+  const issuedTxnResponse = await issuePChainTx(walletClient.pChainClient, {
     tx: signedTxn.signedTxHex,
     encoding: "hex",
   });

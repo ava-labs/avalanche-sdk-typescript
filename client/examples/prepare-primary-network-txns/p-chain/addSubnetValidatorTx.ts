@@ -11,7 +11,7 @@ async function run() {
     "0x56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"
   );
 
-  const client = createAvalancheWalletClient({
+  const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
     transport: {
       type: "http",
@@ -21,7 +21,7 @@ async function run() {
   });
 
   const addSubnetValidatorTxnRequest =
-    await client.pChain.prepareAddSubnetValidatorTxn({
+    await walletClient.pChain.prepareAddSubnetValidatorTxn({
       subnetId: "SLomSuJLyG9qk7KLcWevdcZ1i7kN2qTLNUytJLhkwPdxAAgoa",
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 2), // 2 days
@@ -30,18 +30,18 @@ async function run() {
     });
 
   // sign the txn with account1
-  const partiallySignedTxn = await client.signXPTransaction(
+  const partiallySignedTxn = await walletClient.signXPTransaction(
     addSubnetValidatorTxnRequest
   );
 
   // sign the txn with account2
-  const signedTxn = await client.signXPTransaction({
+  const signedTxn = await walletClient.signXPTransaction({
     ...partiallySignedTxn,
     account: account2,
   });
 
   // issue the txn
-  const issuedTxnResponse = await issuePChainTx(client.pChainClient, {
+  const issuedTxnResponse = await issuePChainTx(walletClient.pChainClient, {
     tx: signedTxn.signedTxHex,
     encoding: "hex",
   });

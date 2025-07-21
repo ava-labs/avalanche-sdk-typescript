@@ -8,7 +8,7 @@ async function run() {
     "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
   );
 
-  const client = createAvalancheWalletClient({
+  const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
     transport: {
       type: "http",
@@ -22,18 +22,19 @@ async function run() {
     locktime: BigInt(123),
     threshold: 1,
   };
-  const createSubnetTxnRequest = await client.pChain.prepareCreateSubnetTxn({
-    subnetOwners: customSubnetOwners,
-  });
+  const createSubnetTxnRequest =
+    await walletClient.pChain.prepareCreateSubnetTxn({
+      subnetOwners: customSubnetOwners,
+    });
 
   // To sign and issue the txn, you can use one of the following code:
   // 1. Sign the txn and issue it manually
 
   // sign the txn
-  const signedTx = await client.signXPTransaction(createSubnetTxnRequest);
+  const signedTx = await walletClient.signXPTransaction(createSubnetTxnRequest);
 
   // issue the txn
-  const issuedTxnResponse = await issuePChainTx(client.pChainClient, {
+  const issuedTxnResponse = await issuePChainTx(walletClient.pChainClient, {
     tx: signedTx.signedTxHex,
     encoding: "hex",
   });
@@ -41,7 +42,7 @@ async function run() {
   console.log("issuedTxnResponse", issuedTxnResponse);
 
   // 2. Sign the txn and issue it in one go
-  const sendTxnResponse = await client.sendXPTransaction(
+  const sendTxnResponse = await walletClient.sendXPTransaction(
     createSubnetTxnRequest
   );
 

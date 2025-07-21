@@ -8,7 +8,7 @@ async function run() {
     "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
   );
 
-  const client = createAvalancheWalletClient({
+  const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
     transport: {
       type: "http",
@@ -17,7 +17,7 @@ async function run() {
     account,
   });
 
-  const cChainImportTxnRequest = await client.cChain.prepareImportTxn({
+  const cChainImportTxnRequest = await walletClient.cChain.prepareImportTxn({
     sourceChain: "P",
     toAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
   });
@@ -26,10 +26,10 @@ async function run() {
   // 1. Sign the txn and issue it manually
 
   // sign the txn
-  const signedTx = await client.signXPTransaction(cChainImportTxnRequest);
+  const signedTx = await walletClient.signXPTransaction(cChainImportTxnRequest);
 
   // issue the txn
-  const issuedTxnResponse = await issueCChainTx(client.cChainClient, {
+  const issuedTxnResponse = await issueCChainTx(walletClient.cChainClient, {
     tx: signedTx.signedTxHex,
     encoding: "hex",
   });
@@ -37,7 +37,7 @@ async function run() {
   console.log("issuedTxnResponse", issuedTxnResponse);
 
   // 2. Sign the txn and issue it in one go
-  const sendTxnResponse = await client.sendXPTransaction(
+  const sendTxnResponse = await walletClient.sendXPTransaction(
     cChainImportTxnRequest
   );
 
