@@ -47,13 +47,9 @@ export async function sendXPTransaction(
     chainAlias,
     account,
     utxoIds,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     subnetAuth,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     subnetOwners,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     disableOwners,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     disableAuth,
     ...rest
   } = params;
