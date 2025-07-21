@@ -1,0 +1,13 @@
+/node_modules
+/index.*
+/core.*
+/bin
+/cjs
+/esm
+/dist
+/.tsbuildinfo
+/.eslintcache
+/.tshy
+/.tshy-*
+/__tests__
+.DS_Store
