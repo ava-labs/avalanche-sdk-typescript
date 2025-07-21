@@ -35,7 +35,7 @@ export async function prepareImportTxn(
     );
     fromAddresses.push(address);
   }
-  console.log("fromAddresses", fromAddresses);
+
   const fromAddressesBytes = fromAddresses.map((address) =>
     bech32AddressToBytes(address)
   );
@@ -58,7 +58,6 @@ export async function prepareImportTxn(
       )
     ).flat();
   }
-  console.log("utxos", utxos);
   const unsignedTx = evm.newImportTxFromBaseFee(
     context,
     utils.hexToBuffer(params.toAddress),

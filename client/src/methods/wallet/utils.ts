@@ -172,22 +172,6 @@ export async function fetchCommonTxParams(
     context.hrp
   );
   const fromAddresses = txParams.fromAddresses || [address];
-  const utxos =
-    txParams.utxos ||
-    (
-      await Promise.all(
-        fromAddresses.map((address) =>
-          getUtxosForAddress(client, {
-            address,
-            chainAlias: chainAlias || P_CHAIN_ALIAS,
-            ...(sourceChain ? { sourceChain } : {}),
-          })
-        )
-      )
-    ).flat();
-
-  // Fetch fee state from api
-  const feeState = await getFeeState(client.pChainClient);
 
   let subnetOwners: PChainOwner | undefined;
   if (subnetId) {
@@ -209,6 +193,11 @@ export async function fetchCommonTxParams(
         new Int(txn.unsignedTx.getSubnetOwners().threshold.value()),
         txn.unsignedTx.getSubnetOwners().addrs
       );
+      fromAddresses.push(
+        ...txn.unsignedTx
+          .getSubnetOwners()
+          .addrs.map((addr) => `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`)
+      );
     }
   }
 
@@ -223,7 +212,28 @@ export async function fetchCommonTxParams(
         (addr) => new Address(utils.hexToBuffer(addr))
       )
     );
+    fromAddresses.push(
+      ...disableTx.deactivationOwner.addresses.map(
+        (addr) => `${P_CHAIN_ALIAS}-${addr}`
+      )
+    );
   }
+  const utxos =
+    txParams.utxos ||
+    (
+      await Promise.all(
+        fromAddresses.map((address) =>
+          getUtxosForAddress(client, {
+            address,
+            chainAlias: chainAlias || P_CHAIN_ALIAS,
+            ...(sourceChain ? { sourceChain } : {}),
+          })
+        )
+      )
+    ).flat();
+
+  // Fetch fee state from api
+  const feeState = await getFeeState(client.pChainClient);
 
   const result: FormattedCommonTxParams = {
     feeState,

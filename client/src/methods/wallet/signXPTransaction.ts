@@ -68,7 +68,8 @@ export async function signXPTransaction(
   params: SignXPTransactionParameters
 ): Promise<SignXPTransactionReturnType> {
   const {
-    tx: txOrTxHex,
+    tx,
+    signedTxHex,
     chainAlias,
     account,
     utxoIds,
@@ -77,6 +78,13 @@ export async function signXPTransaction(
     disableOwners,
     disableAuth,
   } = params;
+
+  const txOrTxHex = tx || signedTxHex;
+
+  if (!txOrTxHex) {
+    throw new Error("Either tx or signedTxHex must be provided");
+  }
+
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
 
@@ -98,10 +106,9 @@ export async function signXPTransaction(
 
     if (typeof txOrTxHex === "string") {
       // Get the tx and credentials from the txHex
-      let [tx, credentials] = getTxFromBytes(txOrTxHex, chainAlias);
-
+      let [txn, credentials] = getTxFromBytes(txOrTxHex, chainAlias);
       // If there are no credentials, create empty credentials for all the inputs
-      const txSigIndices = tx.getSigIndices();
+      const txSigIndices = txn.getSigIndices();
       if (credentials.length === 0) {
         credentials = txSigIndices.map((sigs) => {
           const signatures = sigs.map((_) => {
@@ -115,11 +122,18 @@ export async function signXPTransaction(
 
       // Sign the tx and get the signature
       const signature = utils.hexToBuffer(
-        await xpAccount.signTransaction(txOrTxHex as Hex)
+        await xpAccount.signTransaction(
+          new UnsignedTx(
+            txn,
+            [],
+            new utils.AddressMaps(),
+            credentials
+          ).toBytes()
+        )
       );
 
       // Fetch the utxoIds from all the inputs
-      const utxoIds = ((tx as any).baseTx as avaxSerial.BaseTx).inputs.map(
+      const utxoIds = ((txn as any).baseTx as avaxSerial.BaseTx).inputs.map(
         (input) => input.utxoID
       );
 
@@ -127,7 +141,7 @@ export async function signXPTransaction(
       const utxos = await getUtxosForAddress(client, {
         address: formatChainAddress(chainAlias, xpAddress),
         chainAlias,
-        ...(isTxImportExport(tx) && {
+        ...(isTxImportExport(txn) && {
           sourceChain: getChainIdFromAlias(chainAlias, networkId),
         }),
       });
@@ -177,17 +191,18 @@ export async function signXPTransaction(
         const credentialIndex = credentials.length - 1;
 
         const signerIndex = signingOwners.findIndex(
-          (owner) => owner.value() === xpAddress
+          (owner) => owner.toString(isTestnet ? "fuji" : "avax") === xpAddress
         );
 
         if (signerIndex !== -1) {
+          addrSigIndices.push([credentialIndex, signerIndex]);
           credentials[credentialIndex]?.setSignature(signerIndex, signature);
         }
       }
 
       // Serialize the signed tx
       const signedTx = utils.bufferToHex(
-        utils.addChecksum(new avaxSerial.SignedTx(tx, credentials).toBytes())
+        utils.addChecksum(new avaxSerial.SignedTx(txn, credentials).toBytes())
       ) as Hex;
 
       return {
@@ -198,18 +213,25 @@ export async function signXPTransaction(
             sigIndices: sig,
           };
         }),
+        subnetAuth,
+        subnetOwners,
+        disableOwners,
+        disableAuth,
+        chainAlias,
       };
     } else {
       const tx = txOrTxHex as UnsignedTx;
-      const signature = await xpAccount.signTransaction(txOrTxHex.toBytes());
-      tx.addSignature(utils.hexToBuffer(signature));
+      const signature = utils.hexToBuffer(
+        await xpAccount.signTransaction(txOrTxHex.toBytes())
+      );
+      tx.addSignature(signature);
 
       if ((subnetOwners && subnetAuth) || (disableOwners && disableAuth)) {
         addPChainOwnerAuthSignature(
           tx,
           (subnetOwners ?? disableOwners)!,
           (subnetAuth ?? disableAuth) || [],
-          utils.hexToBuffer(signature),
+          signature,
           xpAccount.publicKey
         );
       }
@@ -221,42 +243,54 @@ export async function signXPTransaction(
           .getSigIndicesForPubKey(utils.hexToBuffer(xpAccount.publicKey))
           ?.map((sig) => {
             return {
-              signature: signature,
+              signature: utils.bufferToHex(signature),
               sigIndices: sig,
             };
           }),
+        subnetAuth,
+        subnetOwners,
+        disableOwners,
+        disableAuth,
+        chainAlias,
       };
     }
   }
 
-  return client.request<
-    AvalancheWalletRpcSchema,
-    {
-      method: "avalanche_signTransaction";
-      params: Omit<
-        SignXPTransactionParameters,
-        | "account"
-        | "tx"
-        | "utxoIds"
-        | "subnetAuth"
-        | "subnetOwners"
-        | "disableOwners"
-        | "disableAuth"
-      > & {
-        transactionHex: string;
-        utxos: string[] | undefined;
-      };
-    },
-    SignXPTransactionReturnType
-  >({
-    method: "avalanche_signTransaction",
-    params: {
-      transactionHex:
-        typeof txOrTxHex === "string"
-          ? txOrTxHex
-          : utils.bufferToHex(txOrTxHex.toBytes()),
-      chainAlias,
-      utxos: utxoIds,
-    },
-  });
+  return {
+    ...(await client.request<
+      AvalancheWalletRpcSchema,
+      {
+        method: "avalanche_signTransaction";
+        params: Omit<
+          SignXPTransactionParameters,
+          | "account"
+          | "tx"
+          | "utxoIds"
+          | "subnetAuth"
+          | "subnetOwners"
+          | "disableOwners"
+          | "disableAuth"
+        > & {
+          transactionHex: string;
+          utxos: string[] | undefined;
+        };
+      },
+      SignXPTransactionReturnType
+    >({
+      method: "avalanche_signTransaction",
+      params: {
+        transactionHex:
+          typeof txOrTxHex === "string"
+            ? txOrTxHex
+            : utils.bufferToHex(txOrTxHex.toBytes()),
+        chainAlias,
+        utxos: utxoIds,
+      },
+    })),
+    subnetAuth,
+    subnetOwners,
+    disableOwners,
+    disableAuth,
+    chainAlias,
+  };
 }
