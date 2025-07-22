@@ -32,17 +32,17 @@ export class ExportTx extends Transaction {
 
 export async function newExportTx(
     primaryNetworkCoreClient: PrimaryNetworkCore,
-    txPrams: ExportTxParams,
+    txParams: ExportTxParams,
 ): Promise<ExportTx> {
     // added -avmRpc: avm.AVMApi- feild to primaryNetworkCoreClient
     const context = await primaryNetworkCoreClient.initializeContextIfNot()
-    const { commonTxParams } = await fetchCommonAvmTxParams(txPrams, context, primaryNetworkCoreClient.avmRpc, primaryNetworkCoreClient.wallet)
+    const { commonTxParams } = await fetchCommonAvmTxParams(txParams, context, primaryNetworkCoreClient.avmRpc, primaryNetworkCoreClient.wallet)
 
-    const exportedOutputs = txPrams.exportedOutputs.map(output => formatOutput(output, context))
+    const exportedOutputs = txParams.exportedOutputs.map(output => formatOutput(output, context))
 
     const unsignedTx = avm.newExportTx(
         context, 
-        getChainIdFromAlias(txPrams.destinationChain, context.networkID),
+        getChainIdFromAlias(txParams.destinationChain, context.networkID),
         commonTxParams.fromAddressesBytes,
         commonTxParams.utxoSet,
         exportedOutputs,

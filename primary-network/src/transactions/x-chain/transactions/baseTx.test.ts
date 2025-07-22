@@ -149,12 +149,7 @@ describe('newBaseTx', () => {
         const outputs = result.getOutputs()
 
         const fee = (await mockAvmRpc.getTxFee()).txFee
-        // // Use integer arithmetic in nanoAvax to avoid precision issues
-        // const testSpentAmountNano = avaxToNanoAvax(testSpentAmount)
-        // const testOutputAmountNano = avaxToNanoAvax(testOutputAmount)
-        // const expectedChangeAmountNano = testSpentAmountNano - testOutputAmountNano - fee
         const expectedChangeAmount = testSpentAmount - testOutputAmount - (Number(fee) / 1e9)
-        // const expectedChangeAmount = nanoAvaxToAvax(expectedChangeAmountNano)
 
         // expected change output
         testOutputs.push({
