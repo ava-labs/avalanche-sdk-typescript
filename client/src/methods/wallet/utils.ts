@@ -171,7 +171,8 @@ export async function fetchCommonTxParams(
     chainAlias || P_CHAIN_ALIAS,
     context.hrp
   );
-  const fromAddresses = txParams.fromAddresses || [address];
+
+  const fromAddressesSet = new Set(txParams.fromAddresses || [address]);
 
   let subnetOwners: PChainOwner | undefined;
   if (subnetId) {
@@ -193,11 +194,9 @@ export async function fetchCommonTxParams(
         new Int(txn.unsignedTx.getSubnetOwners().threshold.value()),
         txn.unsignedTx.getSubnetOwners().addrs
       );
-      fromAddresses.push(
-        ...txn.unsignedTx
-          .getSubnetOwners()
-          .addrs.map((addr) => `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`)
-      );
+      txn.unsignedTx.getSubnetOwners().addrs.forEach((addr) => {
+        fromAddressesSet.add(`${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`);
+      });
     }
   }
 
@@ -212,12 +211,15 @@ export async function fetchCommonTxParams(
         (addr) => new Address(utils.hexToBuffer(addr))
       )
     );
-    fromAddresses.push(
-      ...disableTx.deactivationOwner.addresses.map(
-        (addr) => `${P_CHAIN_ALIAS}-${addr}`
-      )
-    );
+
+    disableTx.deactivationOwner.addresses.forEach((addr) => {
+      const address = `${P_CHAIN_ALIAS}-${addr}`;
+      fromAddressesSet.add(address);
+    });
   }
+
+  const fromAddresses = Array.from(fromAddressesSet);
+
   const utxos =
     txParams.utxos ||
     (
