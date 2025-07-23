@@ -8,6 +8,7 @@ import {
   pvmSerial,
   secp256k1,
   TransferableOutput,
+  TransferOutput,
   TypeSymbols,
   UnsignedTx,
   utils,
@@ -40,6 +41,7 @@ import {
   CommonTxParams,
   FormattedCommonTxParams,
   Output,
+  TransferableOutputFull,
 } from "./types/common.js";
 export function getBaseUrl(client: AvalancheWalletCoreClient): string {
   const { chain } = client;
@@ -315,4 +317,16 @@ export async function addPChainOwnerAuthSignature(
   if (signerIndex !== -1) {
     unsignedTx.addSignatureAt(signature, credentialIndex, signerIndex);
   }
+}
+
+// AvalancheJS exports output as Amounter instead of TransferOutput,
+// so we cast them here.
+export function toTransferableOutput(
+  output: TransferableOutput
+): TransferableOutputFull {
+  return {
+    ...output,
+    // Amounter to TransferOutput
+    output: output.output as unknown as TransferOutput,
+  };
 }
