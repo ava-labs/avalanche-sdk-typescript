@@ -1,3 +1,20 @@
+## 2025-07-23 18:41:49
+
+### Changes
+
+Based on:
+- @avalanche-sdk/devtools bumped from 0.0.4 to 0.2.0
+
+### Generated
+
+- [typescript v1.3.0] sdk
+
+### Releases
+
+- [NPM v1.3.0] https://www.npmjs.com/package/@avalanche-sdk/sdk/v/1.3.0 - sdk
+
+---
+
 ## 2025-04-01 21:48:12
 
 ### Changes
