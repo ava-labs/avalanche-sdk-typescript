@@ -13,7 +13,7 @@ export type AddressActivityMetadata = {
    */
   eventSignatures?: Array<string> | undefined;
   /**
-   * Ethereum address(es) for the address_activity event type
+   * Ethereum address(es) for the address_activity event type. The maximum number of 'addresses' you can track depends  on the Data API plan you are subscribed to.
    */
   addresses: Array<string>;
 };
