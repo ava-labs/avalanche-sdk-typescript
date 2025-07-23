@@ -38,6 +38,7 @@ export type SendXPTransactionParameters = {
  */
 export type SendXPTransactionReturnType = {
   txHash: string;
+  chainAlias: "X" | "P" | "C";
 };
 
 export type SendXPTransactionErrorType = RequestErrorType;
