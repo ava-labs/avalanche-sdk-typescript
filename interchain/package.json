@@ -26,5 +26,9 @@
   "dependencies": {
     "@avalanche-sdk/rpc": "^0.0.4-alpha.1",
     "viem": "^2.31.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   }
 }
