@@ -34,7 +34,7 @@ export type PrimaryNetworkAddressActivityMetadata = {
    */
   keyType: PlatformAddressActivityKeyType;
   /**
-   * Array of keys like addresses corresponding to the keyType being monitored. For PlatformAddressActivity event, an array of multiple addresses can be provided.
+   * Array of keys like addresses corresponding to the keyType being monitored. For PrimaryNetworkAddressActivity event, an array of multiple addresses can be provided. The maximum number of 'addresses' you can track depends on the Data API plan you are subscribed to.
    */
   keys: Array<string>;
   /**
