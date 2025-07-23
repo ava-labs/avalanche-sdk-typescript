@@ -12,8 +12,8 @@ export class ICM {
 
     // Default hoisted values
     defaultRecipient: '0x0000000000000000000000000000000000000000';
-    sourceChain?: ChainConfig;
-    destinationChain?: ChainConfig;
+    sourceChain: ChainConfig | undefined;
+    destinationChain: ChainConfig | undefined;
     feeInfo = {
         feeTokenAddress: '0x0000000000000000000000000000000000000000',
         amount: 0n
