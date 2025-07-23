@@ -32,7 +32,7 @@ import {
  *
  * const pChainBaseTxnRequest = await prepareBaseTxn(walletClient, {
  *   outputs: [{
- *     address: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+ *     addresses: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
  *     amount: 1,
  *   }],
  * });

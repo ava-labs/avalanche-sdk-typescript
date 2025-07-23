@@ -36,6 +36,11 @@ import {
  *   end: 1716441600,
  *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   threshold: 1,
+ *   publicKey: "0x1234567890123456789012345678901234567890",
+ *   signature: "0x1234567890123456789012345678901234567890",
+ *   locktime: 1716441600,
+ *   delegatorRewardPercentage: 2.5,
+ *   delegatorRewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  * });
  *
  * console.log(pChainAddPermissionlessValidatorTxnRequest);

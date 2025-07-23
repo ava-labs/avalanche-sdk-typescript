@@ -32,7 +32,7 @@ import {
  *
  * const pChainDisableL1ValidatorTxnRequest = await prepareDisableL1ValidatorTxn(walletClient, {
  *   validationId: "11111111111111111111111111111111LpoYY",
- *   disableAuth: [1],
+ *   disableAuth: [0],
  * });
  *
  * console.log(pChainDisableL1ValidatorTxnRequest);

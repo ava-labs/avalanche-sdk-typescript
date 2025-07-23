@@ -45,6 +45,25 @@ import {
  *   blockchainId: 1,
  *   managerContractAddress: "0x1234567890123456789012345678901234567890",
  *   subnetAuth: [1],
+ *   validators: [
+ *     {
+ *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+ *       weight: 1n,
+ *       initialBalanceInAvax: 1,
+ *       nodePoP: {
+ *         publicKey: "0x1234567890123456789012345678901234567890",
+ *         proofOfPossession: "0x1234567890123456789012345678901234567890",
+ *       },
+ *       remainingBalanceOwner: {
+ *         addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+ *         threshold: 1,
+ *       },
+ *       deactivationOwner: {
+ *         addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+ *         threshold: 1,
+ *       },
+ *     },
+ *   ],
  * });
  *
  * console.log(pChainConvertSubnetToL1TxnRequest);

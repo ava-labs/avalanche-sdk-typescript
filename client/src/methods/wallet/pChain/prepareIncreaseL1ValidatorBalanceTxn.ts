@@ -31,7 +31,8 @@ import {
  * });
  *
  * const pChainIncreaseL1ValidatorBalanceTxnRequest = await prepareIncreaseL1ValidatorBalanceTxn(walletClient, {
-
+ *   balanceInAvax: 1,
+ *   validationId: "11111111111111111111111111111111LpoYY",
  * });
  *
  * console.log(pChainIncreaseL1ValidatorBalanceTxnRequest);

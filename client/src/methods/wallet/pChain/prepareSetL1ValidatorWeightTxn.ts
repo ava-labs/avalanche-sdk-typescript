@@ -31,9 +31,7 @@ import {
  * });
  *
  * const pChainSetL1ValidatorWeightTxnRequest = await prepareSetL1ValidatorWeightTxn(walletClient, {
- *   weight: 1,
- *   validationId: "11111111111111111111111111111111LpoYY",
- *   setWeightAuth: [1],
+ *   message: "0x1234567890123456789012345678901234567890",
  * });
  *
  * console.log(pChainSetL1ValidatorWeightTxnRequest);

@@ -36,11 +36,10 @@ import {
  *
  * const pChainExportTxnRequest = await prepareExportTxn(walletClient, {
  *   destinationChain: "P",
- *   fromAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
- *   exportedOutput: {
+ *   exportedOutputs: [{
  *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
- *     amountInAvax: 0.0001,
- *   },
+ *     amount: 0.0001,
+ *   }],
  * });
  */
 export async function prepareExportTxn(
