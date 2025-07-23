@@ -1,0 +1,52 @@
+import { avm, avmSerial, utils } from "@avalabs/avalanchejs";
+import { AvalancheWalletCoreClient } from "src/clients/createAvalancheWalletCoreClient.js";
+import { X_CHAIN_ALIAS } from "src/methods/consts.js";
+import { getContextFromURI } from "../getContextFromURI.js";
+import { fetchCommonAVMTxParams, getChainIdFromAlias } from "../utils";
+import {
+  PrepareImportTxnParameters,
+  PrepareImportTxnReturnType,
+} from "./types/prepareImportTxn.js";
+
+/**
+ * Prepares an import transaction for the X-chain.
+ *
+ * @see https://build.avax.network/docs/api-reference/x-chain/txn-format#unsigned-importtx
+ *
+ * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
+ * @param params - The parameters for the transaction. {@link PrepareImportTxnParameters}
+ * @returns The unsigned transaction. {@link PrepareImportTxnReturnType}
+ */
+export async function prepareImportTxn(
+  client: AvalancheWalletCoreClient,
+  params: PrepareImportTxnParameters
+): Promise<PrepareImportTxnReturnType> {
+  const context = params.context || (await getContextFromURI(client));
+  const { commonTxParams } = await fetchCommonAVMTxParams(client, {
+    txParams: params,
+    context,
+    sourceChain: getChainIdFromAlias(params.sourceChain, context.networkID),
+  });
+
+  const unsignedTx = avm.newImportTx(
+    context,
+    getChainIdFromAlias(params.sourceChain, context.networkID),
+    commonTxParams.utxos,
+    params.importedOutput.addresses.map(utils.bech32ToBytes),
+    commonTxParams.fromAddressesBytes,
+    {
+      ...(commonTxParams.memo && { memo: commonTxParams.memo }),
+      ...(commonTxParams.minIssuanceTime && {
+        minIssuanceTime: commonTxParams.minIssuanceTime,
+      }),
+    },
+    params.importedOutput.threshold ?? 1,
+    BigInt(params.importedOutput.locktime ?? 0)
+  );
+
+  return {
+    tx: unsignedTx,
+    importTx: unsignedTx.getTx() as avmSerial.ImportTx,
+    chainAlias: X_CHAIN_ALIAS,
+  };
+}

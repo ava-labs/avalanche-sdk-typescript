@@ -5,6 +5,8 @@ export { signXPMessage } from "./signXPMessage.js";
 export { signXPTransaction } from "./signXPTransaction.js";
 export type {
   CommonTxParams,
+  FormattedCommonAVMTxParams,
+  FormattedCommonPVMTxParams,
   FormattedCommonTxParams,
   Output,
 } from "./types/common.js";

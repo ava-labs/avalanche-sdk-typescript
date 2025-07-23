@@ -2,7 +2,7 @@ import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonTxParams } from "../utils.js";
+import { fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareDisableL1ValidatorTxnParameters,
   PrepareDisableL1ValidatorTxnReturnType,
@@ -43,11 +43,14 @@ export async function prepareDisableL1ValidatorTxn(
   params: PrepareDisableL1ValidatorTxnParameters
 ): Promise<PrepareDisableL1ValidatorTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams, disableOwners } = await fetchCommonTxParams(client, {
-    txParams: params,
-    context,
-    l1ValidationId: params.validationId,
-  });
+  const { commonTxParams, disableOwners } = await fetchCommonPVMTxParams(
+    client,
+    {
+      txParams: params,
+      context,
+      l1ValidationId: params.validationId,
+    }
+  );
 
   if (!disableOwners) {
     throw new Error(
@@ -66,6 +69,7 @@ export async function prepareDisableL1ValidatorTxn(
 
   return {
     tx: unsignedTx,
+    disableL1ValidatorTx: unsignedTx.getTx() as pvmSerial.DisableL1ValidatorTx,
     disableOwners,
     disableAuth: (unsignedTx.getTx() as pvmSerial.DisableL1ValidatorTx)
       .getDisableAuth()

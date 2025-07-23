@@ -1,6 +1,7 @@
 import {
   Common,
   Context as ContextType,
+  evmSerial,
   type Utxo,
 } from "@avalabs/avalanchejs";
 import { Address } from "viem";
@@ -43,6 +44,10 @@ export type PrepareImportTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The import transaction instance.
+   */
+  importTx: evmSerial.ImportTx;
   /**
    * The chain alias.
    */

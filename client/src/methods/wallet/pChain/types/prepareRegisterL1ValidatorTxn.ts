@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  pvmSerial,
+} from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
 export type PrepareRegisterL1ValidatorTxnParameters = CommonTxParams & {
@@ -24,6 +28,16 @@ export type PrepareRegisterL1ValidatorTxnParameters = CommonTxParams & {
 };
 
 export type PrepareRegisterL1ValidatorTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The register L1 validator transaction instance.
+   */
+  registerL1ValidatorTx: pvmSerial.RegisterL1ValidatorTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

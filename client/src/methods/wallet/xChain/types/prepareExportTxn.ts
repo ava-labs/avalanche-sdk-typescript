@@ -1,21 +1,22 @@
 import {
+  avmSerial,
   Common,
   Context as ContextType,
-  pvmSerial,
 } from "@avalabs/avalanchejs";
-import { CommonTxParams, Output } from "../../types/common.js";
+import { C_CHAIN_ALIAS, P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts";
+import { CommonTxParams, Output } from "../../types/common";
 
 export type PrepareExportTxnParameters = CommonTxParams & {
   /**
    * The chain to export the funds to.
    */
-  destinationChain: "X" | "C";
+  destinationChain: typeof P_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
   /**
    * The outputs to export.
    */
   exportedOutputs: Output[];
   /**
-   * Optional. The context to use for the transaction. If not provided, the context will be fetched.
+   * The context to use for the transaction.
    */
   context?: ContextType.Context;
 };
@@ -28,9 +29,9 @@ export type PrepareExportTxnReturnType = {
   /**
    * The export transaction instance.
    */
-  exportTx: pvmSerial.ExportTx;
+  exportTx: avmSerial.ExportTx;
   /**
    * The chain alias.
    */
-  chainAlias: "P";
+  chainAlias: typeof X_CHAIN_ALIAS;
 };

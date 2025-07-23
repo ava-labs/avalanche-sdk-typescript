@@ -1,8 +1,8 @@
-import { pvm, utils } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonTxParams } from "../utils.js";
+import { fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareSetL1ValidatorWeightTxnParameters,
   PrepareSetL1ValidatorWeightTxnReturnType,
@@ -44,7 +44,7 @@ export async function prepareSetL1ValidatorWeightTxn(
   params: PrepareSetL1ValidatorWeightTxnParameters
 ): Promise<PrepareSetL1ValidatorWeightTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
   });
@@ -59,6 +59,8 @@ export async function prepareSetL1ValidatorWeightTxn(
 
   return {
     tx: unsignedTx,
+    setL1ValidatorWeightTx:
+      unsignedTx.getTx() as pvmSerial.SetL1ValidatorWeightTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

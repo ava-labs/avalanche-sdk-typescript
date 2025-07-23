@@ -11,7 +11,7 @@ import { getContextFromURI } from "../getContextFromURI.js";
 import {
   avaxToNanoAvax,
   bech32AddressToBytes,
-  fetchCommonTxParams,
+  fetchCommonPVMTxParams,
 } from "../utils.js";
 import {
   PrepareConvertSubnetToL1TxnParameters,
@@ -55,12 +55,15 @@ export async function prepareConvertSubnetToL1Txn(
   params: PrepareConvertSubnetToL1TxnParameters
 ): Promise<PrepareConvertSubnetToL1TxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams, subnetOwners } = await fetchCommonTxParams(client, {
-    txParams: params,
-    context,
-    chainAlias: P_CHAIN_ALIAS,
-    subnetId: params.subnetId,
-  });
+  const { commonTxParams, subnetOwners } = await fetchCommonPVMTxParams(
+    client,
+    {
+      txParams: params,
+      context,
+      chainAlias: P_CHAIN_ALIAS,
+      subnetId: params.subnetId,
+    }
+  );
 
   if (!subnetOwners) {
     throw new Error("Subnet owners not found for a Subnet tx");
@@ -105,6 +108,7 @@ export async function prepareConvertSubnetToL1Txn(
 
   return {
     tx: unsignedTx,
+    convertSubnetToL1Tx: unsignedTx.getTx() as pvmSerial.ConvertSubnetToL1Tx,
     subnetOwners,
     subnetAuth: (unsignedTx.getTx() as pvmSerial.ConvertSubnetToL1Tx)
       .getSubnetAuth()

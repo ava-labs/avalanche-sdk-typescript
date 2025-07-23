@@ -38,7 +38,8 @@ import { getL1Validator } from "../pChain/getL1Validator.js";
 import { getTx } from "../pChain/getTx.js";
 import {
   CommonTxParams,
-  FormattedCommonTxParams,
+  FormattedCommonAVMTxParams,
+  FormattedCommonPVMTxParams,
   Output,
 } from "./types/common.js";
 export function getBaseUrl(client: AvalancheWalletCoreClient): string {
@@ -136,7 +137,7 @@ export function getChainIdFromAlias(
 }
 
 // TODO: try to paralleize API calls within this function
-export async function fetchCommonTxParams(
+export async function fetchCommonPVMTxParams(
   client: AvalancheWalletCoreClient,
   params: {
     txParams: CommonTxParams;
@@ -151,7 +152,7 @@ export async function fetchCommonTxParams(
     context: ContextType.Context;
   }
 ): Promise<{
-  commonTxParams: FormattedCommonTxParams;
+  commonTxParams: FormattedCommonPVMTxParams;
   subnetOwners: PChainOwner | undefined;
   disableOwners: PChainOwner | undefined;
 }> {
@@ -237,7 +238,7 @@ export async function fetchCommonTxParams(
   // Fetch fee state from api
   const feeState = await getFeeState(client.pChainClient);
 
-  const result: FormattedCommonTxParams = {
+  const result: FormattedCommonPVMTxParams = {
     feeState,
     fromAddressesBytes: fromAddresses.map(bech32AddressToBytes),
     utxos: utxos,
@@ -255,6 +256,72 @@ export async function fetchCommonTxParams(
   }
 
   return { commonTxParams: result, subnetOwners, disableOwners };
+}
+
+// TODO: try to paralleize API calls within this function
+export async function fetchCommonAVMTxParams(
+  client: AvalancheWalletCoreClient,
+  params: {
+    txParams: CommonTxParams;
+    sourceChain?: string;
+    chainAlias?:
+      | typeof P_CHAIN_ALIAS
+      | typeof X_CHAIN_ALIAS
+      | typeof C_CHAIN_ALIAS;
+    account?: AvalancheAccount | AddressType | undefined;
+    context: ContextType.Context;
+  }
+): Promise<{
+  commonTxParams: FormattedCommonAVMTxParams;
+}> {
+  const { txParams, sourceChain, chainAlias, account, context } = params;
+
+  // If fromAddresses is not provided, use wallet addresses
+  const address = getBech32AddressFromAccountOrClient(
+    client,
+    account,
+    chainAlias || X_CHAIN_ALIAS,
+    context.hrp
+  );
+
+  const fromAddressesSet = new Set(txParams.fromAddresses || [address]);
+  const fromAddresses = Array.from(fromAddressesSet);
+
+  const utxos =
+    txParams.utxos ||
+    (
+      await Promise.all(
+        fromAddresses.map((address) =>
+          getUtxosForAddress(client, {
+            address,
+            chainAlias: chainAlias || X_CHAIN_ALIAS,
+            ...(sourceChain ? { sourceChain } : {}),
+          })
+        )
+      )
+    ).flat();
+
+  const result: FormattedCommonAVMTxParams = {
+    txFee: {
+      txFee: context.baseTxFee,
+      createAssetTxFee: context.createAssetTxFee,
+    },
+    fromAddressesBytes: fromAddresses.map(bech32AddressToBytes),
+    utxos: utxos,
+    memo: txParams.memo
+      ? new Uint8Array(Buffer.from(txParams.memo))
+      : new Uint8Array(),
+  };
+
+  if (txParams.changeAddresses) {
+    result.changeAddressesBytes =
+      txParams.changeAddresses.map(bech32AddressToBytes);
+  }
+  if (txParams.minIssuanceTime) {
+    result.minIssuanceTime = txParams.minIssuanceTime;
+  }
+
+  return { commonTxParams: result };
 }
 
 export function formatOutput(output: Output, context: ContextType.Context) {

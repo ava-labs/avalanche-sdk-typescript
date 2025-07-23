@@ -1,9 +1,10 @@
 import {
+  avmSerial,
   Common,
   Context as ContextType,
-  pvmSerial,
 } from "@avalabs/avalanchejs";
-import { CommonTxParams } from "../../types/common.js";
+import { C_CHAIN_ALIAS, P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts";
+import { CommonTxParams } from "../../types/common";
 
 export type ImportedOutput = {
   /**
@@ -29,7 +30,7 @@ export type PrepareImportTxnParameters = Omit<
   /**
    * The chain to import the funds from.
    */
-  sourceChain: "X" | "C";
+  sourceChain: typeof P_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
   /**
    * Consolidated imported output from the atomic memory (source chain). Users
    * cannot specify the amount, as it will be consolidation of all the UTXOs
@@ -37,7 +38,7 @@ export type PrepareImportTxnParameters = Omit<
    */
   importedOutput: ImportedOutput;
   /**
-   * Optional. The context to use for the transaction. If not provided, the context will be fetched.
+   * The context to use for the transaction.
    */
   context?: ContextType.Context;
 };
@@ -50,9 +51,9 @@ export type PrepareImportTxnReturnType = {
   /**
    * The import transaction instance.
    */
-  importTx: pvmSerial.ImportTx;
+  importTx: avmSerial.ImportTx;
   /**
    * The chain alias.
    */
-  chainAlias: "P";
+  chainAlias: typeof X_CHAIN_ALIAS;
 };

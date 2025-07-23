@@ -1,8 +1,8 @@
-import { pvm, utils } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { avaxToNanoAvax, fetchCommonTxParams } from "../utils.js";
+import { avaxToNanoAvax, fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareRegisterL1ValidatorTxnParameters,
   PrepareRegisterL1ValidatorTxnReturnType,
@@ -44,7 +44,7 @@ export async function prepareRegisterL1ValidatorTxn(
   params: PrepareRegisterL1ValidatorTxnParameters
 ): Promise<PrepareRegisterL1ValidatorTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
   });
@@ -61,6 +61,8 @@ export async function prepareRegisterL1ValidatorTxn(
 
   return {
     tx: unsignedTx,
+    registerL1ValidatorTx:
+      unsignedTx.getTx() as pvmSerial.RegisterL1ValidatorTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

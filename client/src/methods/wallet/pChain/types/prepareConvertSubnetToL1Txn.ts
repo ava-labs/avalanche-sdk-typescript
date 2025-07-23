@@ -2,6 +2,7 @@ import {
   Common,
   Context as ContextType,
   PChainOwner,
+  pvmSerial,
 } from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 import { PChainOwnerJSON } from "../../utils.js";
@@ -95,6 +96,10 @@ export type PrepareConvertSubnetToL1TxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The convert subnet to L1 transaction instance.
+   */
+  convertSubnetToL1Tx: pvmSerial.ConvertSubnetToL1Tx;
   /**
    * The subnet owners.
    */
