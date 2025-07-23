@@ -20,12 +20,12 @@ export function privateKeyToAvalancheAccount(
     xpAccount: privateKeyToXPAccount(privateKey),
     getXPAddress: (
       chain?: "X" | "P" | "C" | undefined,
-      hrp?: string | undefined
+      hrp: string = "avax"
     ): XPAddress => {
       if (chain) {
-        return `${chain}-${privateKeyToXPAddress(privateKey, hrp || "avax")}`;
+        return `${chain}-${privateKeyToXPAddress(privateKey, hrp)}`;
       }
-      return privateKeyToXPAddress(privateKey, hrp || "avax");
+      return privateKeyToXPAddress(privateKey, hrp);
     },
     getEVMAddress: () =>
       privateKeyToAccount(privateKey as Hex, options).address,

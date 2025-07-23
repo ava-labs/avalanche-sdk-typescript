@@ -68,15 +68,12 @@ export function hdKeyToAvalancheAccount(
     } as LocalXPAccount,
     getXPAddress: (
       chain?: "X" | "P" | "C" | undefined,
-      hrp?: string | undefined
+      hrp: string = "avax"
     ) => {
       if (chain) {
-        return `${chain}-${publicKeyToXPAddress(
-          pChainAccount.publicKey,
-          hrp || "avax"
-        )}`;
+        return `${chain}-${publicKeyToXPAddress(pChainAccount.publicKey, hrp)}`;
       }
-      return publicKeyToXPAddress(pChainAccount.publicKey, hrp || "avax");
+      return publicKeyToXPAddress(pChainAccount.publicKey, hrp);
     },
     getEVMAddress: () => cChainAccount.address,
   };

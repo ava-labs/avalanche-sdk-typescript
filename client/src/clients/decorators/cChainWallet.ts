@@ -32,7 +32,7 @@ export type CChainWalletActions = {
    * })
    *
    * const exportTxn = await client.cChain.prepareExportTxn({
-   *   to: "X-fuji1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
+   *   to: "P-fuji1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
    *   amount: "1", // 1 AVAX
    *   destinationChain: "X"
    * })
