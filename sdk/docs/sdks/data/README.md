@@ -16,15 +16,11 @@ Check the health of the service.
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
-const avalanche = new Avalanche({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new Avalanche();
 
 async function run() {
   const result = await avalanche.data.healthCheck();
 
-  // Handle the result
   console.log(result);
 }
 
@@ -41,22 +37,16 @@ import { dataHealthCheck } from "@avalanche-sdk/sdk/funcs/dataHealthCheck.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const avalanche = new AvalancheCore({
-  chainId: "43114",
-  network: "mainnet",
-});
+const avalanche = new AvalancheCore();
 
 async function run() {
   const res = await dataHealthCheck(avalanche);
-
-  if (!res.ok) {
-    throw res.error;
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("dataHealthCheck failed:", res.error);
   }
-
-  const { value: result } = res;
-
-  // Handle the result
-  console.log(result);
 }
 
 run();

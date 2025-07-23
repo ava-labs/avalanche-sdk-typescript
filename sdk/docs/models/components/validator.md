@@ -27,27 +27,7 @@ const value: components.ActiveValidatorDetails = {
     benchedXChainRequestsPercent: 3074.95,
     benchedCChainRequestsPercent: 4408.25,
   },
-  geolocation: {
-    city: "Lake Destineyborough",
-    country: "Norway",
-    countryCode: "ML",
-    latitude: 8074.03,
-    longitude: 1759.89,
-  },
-};
-```
-
-### `components.PendingValidatorDetails`
-
-```typescript
-const value: components.PendingValidatorDetails = {
-  txHash: "<value>",
-  nodeId: "<id>",
-  subnetId: "<id>",
-  amountStaked: "<value>",
-  startTimestamp: 9843.29,
-  endTimestamp: 5112.58,
-  validationStatus: "pending",
+  geolocation: null,
 };
 ```
 
@@ -83,6 +63,20 @@ const value: components.RemovedValidatorDetails = {
   removeTxHash: "<value>",
   removeTimestamp: 3786.23,
   validationStatus: "removed",
+};
+```
+
+### `components.PendingValidatorDetails`
+
+```typescript
+const value: components.PendingValidatorDetails = {
+  txHash: "<value>",
+  nodeId: "<id>",
+  subnetId: "<id>",
+  amountStaked: "<value>",
+  startTimestamp: 9843.29,
+  endTimestamp: 5112.58,
+  validationStatus: "pending",
 };
 ```
 

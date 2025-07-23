@@ -6,14 +6,7 @@
 import { ChainAddressChainIdMapListResponse } from "@avalanche-sdk/sdk/models/components";
 
 let value: ChainAddressChainIdMapListResponse = {
-  addresses: [
-    {
-      address: "79218 Bessie Village",
-      blockchainIds: [
-        "2piQ2AVHCjnduiWXsSY15DtbVuwHE2cwMHYnEXHsLL73BBkdbV",
-      ],
-    },
-  ],
+  addresses: [],
 };
 ```
 

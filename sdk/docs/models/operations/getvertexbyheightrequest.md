@@ -8,7 +8,6 @@ import { GetVertexByHeightRequest } from "@avalanche-sdk/sdk/models/operations";
 let value: GetVertexByHeightRequest = {
   vertexHeight: 123,
   blockchainId: "x-chain",
-  network: "mainnet",
   sortOrder: "asc",
 };
 ```

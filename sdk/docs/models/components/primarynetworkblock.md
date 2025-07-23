@@ -13,9 +13,11 @@ let value: PrimaryNetworkBlock = {
   blockType: "<value>",
   txCount: 8198.34,
   transactions: [
-    "<value>",
+    "<value 1>",
+    "<value 2>",
+    "<value 3>",
   ],
-  blockSizeBytes: 8364.21,
+  blockSizeBytes: 8383.87,
 };
 ```
 

@@ -8,7 +8,6 @@ import { GetVertexByHashRequest } from "@avalanche-sdk/sdk/models/operations";
 let value: GetVertexByHashRequest = {
   vertexHash: "haP1CW56cspZY7aEuqHNrtpvhqCaMTxQaYe6j5u2Mbn4L2Gqr",
   blockchainId: "x-chain",
-  network: "mainnet",
 };
 ```
 

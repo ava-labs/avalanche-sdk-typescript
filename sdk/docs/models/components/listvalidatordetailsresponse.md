@@ -6,17 +6,7 @@
 import { ListValidatorDetailsResponse } from "@avalanche-sdk/sdk/models/components";
 
 let value: ListValidatorDetailsResponse = {
-  validators: [
-    {
-      txHash: "<value>",
-      nodeId: "<id>",
-      subnetId: "<id>",
-      amountStaked: "<value>",
-      startTimestamp: 9262.83,
-      endTimestamp: 7276.2,
-      validationStatus: "pending",
-    },
-  ],
+  validators: [],
 };
 ```
 
