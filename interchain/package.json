@@ -1,6 +1,6 @@
 {
-  "name": "interchain",
-  "version": "0.0.1",
+  "name": "@avalanche-sdk/interchain",
+  "version": "0.0.1-alpha.1",
   "description": "Interchain package for handling ICM/ICTT messages",
   "main": "index.js",
   "scripts": {
