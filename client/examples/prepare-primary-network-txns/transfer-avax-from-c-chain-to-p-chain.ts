@@ -38,11 +38,11 @@ async function run() {
 
   // Logging the export transaction response
   console.log(
-    "Avax exported to Atomic Memory for C-chain to P-chain",
+    "Avax exported to Atomic Memory for C-chain to P-chain transfer",
     sendTxnResponse
   );
 
-  // Creating a import transaction request from the P-chain to the C-chain
+  // Creating a import transaction request in P-chain
   const pChainImportTxnRequest = await walletClient.pChain.prepareImportTxn({
     sourceChain: "C",
     importedOutput: {
@@ -60,7 +60,7 @@ async function run() {
 
   // Logging the import transaction response
   console.log(
-    "Avax imported from Atomic Memory to C-chain to P-chain",
+    "Avax imported from Atomic Memory from C-chain to P-chain transfer",
     sendTxnResponse2
   );
 }
