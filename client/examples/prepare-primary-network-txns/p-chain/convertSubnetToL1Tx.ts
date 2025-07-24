@@ -3,6 +3,7 @@ import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
 
 async function run() {
+  // The account that will be used to sign the transaction
   const account = privateKeyToAvalancheAccount(
     "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
   );
@@ -18,12 +19,17 @@ async function run() {
 
   const pChainConvertSubnetToL1TxnRequest =
     await walletClient.pChain.prepareConvertSubnetToL1Txn({
+      // The subnet that will be converted to an L1
+      // You can find the subnetId in the createSubnetTx
       subnetId: "2qYCjAVYAtmmi2NnFSXmXHCzs99fWxAfxYQY2b6L9Agduf3Syd",
+      // You can find the blockchainId in the createChainTx txHash
+      //
       blockchainId: "2cgxZU4DpYPSim7R4hTUQ7LavoeVYWki4LYKhrCiN27DZzkmoa",
       // You can pre deploy a proxy contract for the validator manager contract in the createChainTx
       managerContractAddress: "0xfacade0000000000000000000000000000000000",
       validators: [
         {
+          // You can find the nodeId and nodePoP details from the info.getNodeID() route or Data APIs
           nodeId: "NodeID-CMpZrrUoevB2qPYD3w1TncAzdqQ8qdk4x",
           nodePoP: {
             publicKey:
@@ -46,6 +52,7 @@ async function run() {
       subnetAuth: [0],
     });
 
+  // Signing and sending the convert subnet to L1 transaction request to the P-chain with account
   const sendTxnResponse = await walletClient.sendXPTransaction(
     pChainConvertSubnetToL1TxnRequest
   );
