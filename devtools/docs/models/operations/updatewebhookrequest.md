@@ -7,6 +7,7 @@ import { UpdateWebhookRequest } from "@avalanche-sdk/devtools/models/operations"
 
 let value: UpdateWebhookRequest = {
   id: "f33de69c-d13b-4691-908f-870d6e2e6b04",
+  updateWebhookRequest: {},
 };
 ```
 

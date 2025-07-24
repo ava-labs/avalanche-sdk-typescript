@@ -5,6 +5,8 @@ export { signXPMessage } from "./signXPMessage.js";
 export { signXPTransaction } from "./signXPTransaction.js";
 export type {
   CommonTxParams,
+  FormattedCommonAVMTxParams,
+  FormattedCommonPVMTxParams,
   FormattedCommonTxParams,
   Output,
 } from "./types/common.js";
@@ -27,3 +29,8 @@ export type {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "./types/signXPTransaction.js";
+export type {
+  WaitForTxnErrorType,
+  WaitForTxnParameters,
+} from "./types/waitForTxn.js";
+export { waitForTxn } from "./waitForTxn.js";

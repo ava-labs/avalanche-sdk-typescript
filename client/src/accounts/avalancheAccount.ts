@@ -30,17 +30,19 @@ export type LocalXPAccount = {
  */
 export type AvalancheAccount = {
   /**
-   * The EVM account.
+   * The EVM account used for C-chain or any EVM chain operations.
+   * Type: {@link Account}
    */
   evmAccount: Account;
   /**
-   * The XP account.
+   * The AVM and PVM account used for X and P chain operations.
+   * Type: {@link XPAccount}
    */
   xpAccount?: XPAccount;
   /**
-   * Get the XP address for the account.
+   * Get the XP address for the X and P chain account.
    * @param chain - The chain to get the XP address for. {@link "X"} or {@link "P"} or {@link "C"}
-   * @param hrp - The human readable prefix to use for the XP address. {@link "avax"} or {@link "fuji"} or any custom hrp
+   * @param hrp - The human readable prefix to use for the XP address. Default to {@link "avax"}. {@link "avax"} or {@link "fuji"} or any custom hrp
    * @returns The XP address for the account. {@link XPAddress}
    */
   getXPAddress: (

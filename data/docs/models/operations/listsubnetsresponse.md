@@ -5,7 +5,11 @@
 ```typescript
 import { ListSubnetsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListSubnetsResponse = {};
+let value: ListSubnetsResponse = {
+  result: {
+    subnets: [],
+  },
+};
 ```
 
 ## Fields

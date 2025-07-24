@@ -1,8 +1,8 @@
-import { pvm } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { avaxToNanoAvax, fetchCommonTxParams } from "../utils.js";
+import { avaxToNanoAvax, fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareIncreaseL1ValidatorBalanceTxnParameters,
   PrepareIncreaseL1ValidatorBalanceTxnReturnType,
@@ -33,7 +33,6 @@ import {
  * const pChainIncreaseL1ValidatorBalanceTxnRequest = await prepareIncreaseL1ValidatorBalanceTxn(walletClient, {
  *   balanceInAvax: 1,
  *   validationId: "11111111111111111111111111111111LpoYY",
- *   increaseAuth: [1],
  * });
  *
  * console.log(pChainIncreaseL1ValidatorBalanceTxnRequest);
@@ -44,7 +43,7 @@ export async function prepareIncreaseL1ValidatorBalanceTxn(
   params: PrepareIncreaseL1ValidatorBalanceTxnParameters
 ): Promise<PrepareIncreaseL1ValidatorBalanceTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
   });
@@ -60,6 +59,8 @@ export async function prepareIncreaseL1ValidatorBalanceTxn(
 
   return {
     tx: unsignedTx,
+    increaseL1ValidatorBalanceTx:
+      unsignedTx.getTx() as pvmSerial.IncreaseL1ValidatorBalanceTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

@@ -1,8 +1,8 @@
-import { pvm, utils } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonTxParams, getChainIdFromAlias } from "../utils.js";
+import { fetchCommonPVMTxParams, getChainIdFromAlias } from "../utils.js";
 import {
   PrepareImportTxnParameters,
   PrepareImportTxnReturnType,
@@ -31,8 +31,10 @@ import {
  * });
  *
  * const pChainImportTxnRequest = await prepareImportTxn(walletClient, {
- *   sourceChain: "P",
- *   toAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
+ *   sourceChain: "C",
+ *   importedOutput: {
+ *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+ *   },
  * });
  *
  * console.log(pChainImportTxnRequest);
@@ -43,7 +45,7 @@ export async function prepareImportTxn(
   params: PrepareImportTxnParameters
 ): Promise<PrepareImportTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
     sourceChain: getChainIdFromAlias(params.sourceChain, context.networkID),
@@ -64,6 +66,7 @@ export async function prepareImportTxn(
 
   return {
     tx: unsignedTx,
+    importTx: unsignedTx.getTx() as pvmSerial.ImportTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

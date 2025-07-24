@@ -185,11 +185,11 @@ async function run() {
     url: "https://sophisticated-exterior.org/",
     chainId: "<id>",
     metadata: {
-      addresses: [
-        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-      ],
       eventSignatures: [
         "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+      ],
+      addresses: [
+        "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
       ],
     },
   });
@@ -756,14 +756,14 @@ run();
 ### Error Classes
 **Primary errors:**
 * [`AvalancheError`](./src/models/errors/avalancheerror.ts): The base class for HTTP error responses.
-  * [`BadRequestError`](docs/models/errors/badrequesterror.md): Bad requests generally mean the client has passed invalid      or malformed parameters. Error messages in the response could help in      evaluating the error. Status code `400`.
-  * [`UnauthorizedError`](docs/models/errors/unauthorizederror.md): When a client attempts to access resources that require      authorization credentials but the client lacks proper authentication      in the request, the server responds with 401. Status code `401`.
-  * [`ForbiddenError`](docs/models/errors/forbiddenerror.md): When a client attempts to access resources with valid     credentials but doesn't have the privilege to perform that action,      the server responds with 403. Status code `403`.
-  * [`NotFoundError`](docs/models/errors/notfounderror.md): The error is mostly returned when the client requests     with either mistyped URL, or the passed resource is moved or deleted,      or the resource doesn't exist. Status code `404`.
-  * [`TooManyRequestsError`](docs/models/errors/toomanyrequestserror.md): This error is returned when the client has sent too many,     and has hit the rate limit. Status code `429`.
-  * [`InternalServerError`](docs/models/errors/internalservererror.md): The error is a generic server side error that is      returned for any uncaught and unexpected issues on the server side.      This should be very rare, and you may reach out to us if the problem      persists for a longer duration. Status code `500`.
-  * [`BadGatewayError`](docs/models/errors/badgatewayerror.md): This is an internal error indicating invalid response        received by the client-facing proxy or gateway from the upstream server. Status code `502`.
-  * [`ServiceUnavailableError`](docs/models/errors/serviceunavailableerror.md): The error is returned for certain routes on a particular     Subnet. This indicates an internal problem with our Subnet node, and may      not necessarily mean the Subnet is down or affected. Status code `503`.
+  * [`BadRequestError`](./src/models/errors/badrequesterror.ts): Bad requests generally mean the client has passed invalid      or malformed parameters. Error messages in the response could help in      evaluating the error. Status code `400`.
+  * [`UnauthorizedError`](./src/models/errors/unauthorizederror.ts): When a client attempts to access resources that require      authorization credentials but the client lacks proper authentication      in the request, the server responds with 401. Status code `401`.
+  * [`ForbiddenError`](./src/models/errors/forbiddenerror.ts): When a client attempts to access resources with valid     credentials but doesn't have the privilege to perform that action,      the server responds with 403. Status code `403`.
+  * [`NotFoundError`](./src/models/errors/notfounderror.ts): The error is mostly returned when the client requests     with either mistyped URL, or the passed resource is moved or deleted,      or the resource doesn't exist. Status code `404`.
+  * [`TooManyRequestsError`](./src/models/errors/toomanyrequestserror.ts): This error is returned when the client has sent too many,     and has hit the rate limit. Status code `429`.
+  * [`InternalServerError`](./src/models/errors/internalservererror.ts): The error is a generic server side error that is      returned for any uncaught and unexpected issues on the server side.      This should be very rare, and you may reach out to us if the problem      persists for a longer duration. Status code `500`.
+  * [`BadGatewayError`](./src/models/errors/badgatewayerror.ts): This is an internal error indicating invalid response        received by the client-facing proxy or gateway from the upstream server. Status code `502`.
+  * [`ServiceUnavailableError`](./src/models/errors/serviceunavailableerror.ts): The error is returned for certain routes on a particular     Subnet. This indicates an internal problem with our Subnet node, and may      not necessarily mean the Subnet is down or affected. Status code `503`.
 
 <details><summary>Less common errors (6)</summary>
 

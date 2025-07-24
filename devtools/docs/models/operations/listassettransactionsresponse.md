@@ -5,7 +5,15 @@
 ```typescript
 import { ListAssetTransactionsResponse } from "@avalanche-sdk/devtools/models/operations";
 
-let value: ListAssetTransactionsResponse = {};
+let value: ListAssetTransactionsResponse = {
+  result: {
+    transactions: [],
+    chainInfo: {
+      chainName: "c-chain",
+      network: "mainnet",
+    },
+  },
+};
 ```
 
 ## Fields

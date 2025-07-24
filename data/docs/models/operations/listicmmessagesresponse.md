@@ -5,7 +5,11 @@
 ```typescript
 import { ListIcmMessagesResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListIcmMessagesResponse = {};
+let value: ListIcmMessagesResponse = {
+  result: {
+    messages: [],
+  },
+};
 ```
 
 ## Fields

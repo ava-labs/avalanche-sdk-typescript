@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  pvmSerial,
+} from "@avalabs/avalanchejs";
 import { CommonTxParams, Output } from "../../types/common.js";
 
 export type PrepareExportTxnParameters = CommonTxParams & {
@@ -17,6 +21,16 @@ export type PrepareExportTxnParameters = CommonTxParams & {
 };
 
 export type PrepareExportTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The export transaction instance.
+   */
+  exportTx: pvmSerial.ExportTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

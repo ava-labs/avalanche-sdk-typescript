@@ -2,6 +2,7 @@ import {
   Common,
   Context as ContextType,
   PChainOwner,
+  pvmSerial,
 } from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
@@ -42,6 +43,10 @@ export type PrepareCreateChainTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The create chain transaction instance.
+   */
+  createChainTx: pvmSerial.CreateChainTx;
   /**
    * The subnet owners.
    */

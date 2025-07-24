@@ -5,7 +5,11 @@
 ```typescript
 import { ListErc721TransactionsResponse } from "@avalanche-sdk/data/models/operations";
 
-let value: ListErc721TransactionsResponse = {};
+let value: ListErc721TransactionsResponse = {
+  result: {
+    transactions: [],
+  },
+};
 ```
 
 ## Fields

@@ -58,9 +58,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -68,10 +71,11 @@ export type PChainWalletActions = {
    * })
    *
    * const delegatorTx = await client.pChain.prepareAddPermissionlessDelegatorTxn({
-   *   stakeInAvax: 1000,
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   end: 1735689600,
-   *   rewardAddresses: ["P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8"]
+   *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+   *   stakeInAvax: 1,
+   *   end: 1716441600,
+   *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *   threshold: 1,
    * })
    * ```
    */
@@ -91,9 +95,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -101,12 +108,16 @@ export type PChainWalletActions = {
    * })
    *
    * const validatorTx = await client.pChain.prepareAddPermissionlessValidatorTxn({
-   *   stakeInAvax: 2000,
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   end: 1735689600,
-   *   rewardAddresses: ["P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8"],
-   *   delegatorRewardAddresses: ["P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8"],
-   *   delegatorRewardPercentage: 2
+   *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+   *   stakeInAvax: 1,
+   *   end: 1716441600,
+   *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *   threshold: 1,
+   *   publicKey: "0x1234567890123456789012345678901234567890",
+   *   signature: "0x1234567890123456789012345678901234567890",
+   *   locktime: 1716441600,
+   *   delegatorRewardPercentage: 2.5,
+   *   delegatorRewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
    * })
    * ```
    */
@@ -126,9 +137,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -136,11 +150,11 @@ export type PChainWalletActions = {
    * })
    *
    * const subnetValidatorTx = await client.pChain.prepareAddSubnetValidatorTxn({
-   *   subnetId: "2bRCr6B4MiEfSiSjC8P7gQipqQK3VKQwNqsTq5QfbVS6qPfrjR",
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   weight: 1000000000000n,
-   *   end: 1735689600n,
-   *   subnetAuth: [0]
+   *   subnetId: "11111111111111111111111111111111LpoYY",
+   *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+   *   weight: 1n,
+   *   end: 1716441600n,
+   *   subnetAuth: [1],
    * })
    * ```
    */
@@ -160,9 +174,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -171,10 +188,9 @@ export type PChainWalletActions = {
    *
    * const baseTx = await client.pChain.prepareBaseTxn({
    *   outputs: [{
-   *     address: "P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
-   *     amount: 1000000000n,
-   *     assetId: "AVAX"
-   *   }]
+   *     addresses: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+   *     amount: 1,
+   *   }],
    * })
    * ```
    */
@@ -194,9 +210,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -204,8 +223,29 @@ export type PChainWalletActions = {
    * })
    *
    * const convertSubnetTx = await client.pChain.prepareConvertSubnetToL1Txn({
-   *   subnetId: "2bRCr6B4MiEfSiSjC8P7gQipqQK3VKQwNqsTq5QfbVS6qPfrjR",
-   *   subnetAuth: [0]
+   *   subnetId: "11111111111111111111111111111111LpoYY",
+   *   blockchainId: 1,
+   *   managerContractAddress: "0x1234567890123456789012345678901234567890",
+   *   subnetAuth: [1],
+   *   validators: [
+   *     {
+   *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+   *       weight: 1n,
+   *       initialBalanceInAvax: 1,
+   *       nodePoP: {
+   *         publicKey: "0x1234567890123456789012345678901234567890",
+   *         proofOfPossession: "0x1234567890123456789012345678901234567890",
+   *       },
+   *       remainingBalanceOwner: {
+   *         addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *         threshold: 1,
+   *       },
+   *       deactivationOwner: {
+   *         addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *         threshold: 1,
+   *       },
+   *     },
+   *   ],
    * })
    * ```
    */
@@ -225,9 +265,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -260,9 +303,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -271,9 +317,9 @@ export type PChainWalletActions = {
    *
    * const createSubnetTx = await client.pChain.prepareCreateSubnetTxn({
    *   subnetOwners: {
-   *     addresses: ["P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8"],
-   *     threshold: 1
-   *   }
+   *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *     threshold: 1,
+   *   },
    * })
    * ```
    */
@@ -293,9 +339,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -303,8 +352,8 @@ export type PChainWalletActions = {
    * })
    *
    * const disableValidatorTx = await client.pChain.prepareDisableL1ValidatorTxn({
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   subnetAuth: [0]
+   *   validationId: "11111111111111111111111111111111LpoYY",
+   *   disableAuth: [0],
    * })
    * ```
    */
@@ -324,9 +373,12 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
@@ -334,11 +386,11 @@ export type PChainWalletActions = {
    * })
    *
    * const exportTx = await client.pChain.prepareExportTxn({
-   *   destinationChain: "X",
+   *   destinationChain: "P",
    *   exportedOutputs: [{
-   *     address: "X-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
-   *     amount: 1
-   *   }]
+   *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *     amount: 0.0001,
+   *   }],
    * })
    * ```
    */
@@ -358,20 +410,23 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
    *   },
    * })
    *
-   * const importTx = await client.pChain.prepareImportTxn({
-   *   sourceChain: "X",
+   * const pChainImportTxnRequest = await client.pChain.prepareImportTxn({
+   *   sourceChain: "C",
    *   importedOutput: {
-   *     addresses: ["P-avax1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8"]
-   *   }
+   *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+   *   },
    * })
    * ```
    */
@@ -391,18 +446,21 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
    *   },
    * })
    *
-   * const increaseBalanceTx = await client.pChain.prepareIncreaseL1ValidatorBalanceTxn({
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   subnetAuth: [0]
+   * const pChainIncreaseL1ValidatorBalanceTxnRequest = await client.pChain.prepareIncreaseL1ValidatorBalanceTxn({
+   *   balanceInAvax: 1,
+   *   validationId: "11111111111111111111111111111111LpoYY",
    * })
    * ```
    */
@@ -422,18 +480,22 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
    *   },
    * })
    *
-   * const registerValidatorTx = await client.pChain.prepareRegisterL1ValidatorTx({
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   subnetAuth: [0]
+   * const pChainRegisterL1ValidatorTxnRequest = await client.pChain.prepareRegisterL1ValidatorTxn({
+   *   initialBalanceInAvax: 1,
+   *   blsSignature: "0x1234567890123456789012345678901234567890",
+   *   message: "0x1234567890123456789012345678901234567890",
    * })
    * ```
    */
@@ -453,18 +515,21 @@ export type PChainWalletActions = {
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
    *   },
    * })
    *
-   * const removeValidatorTx = await client.pChain.prepareRemoveSubnetValidatorTx({
+   * const pChainRemoveSubnetValidatorTxnRequest = await client.pChain.prepareRemoveSubnetValidatorTxn({
    *   subnetId: "2bRCr6B4MiEfSiSjC8P7gQipqQK3VKQwNqsTq5QfbVS6qPfrjR",
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
+   *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
    *   subnetAuth: [0]
    * })
    * ```
@@ -479,25 +544,26 @@ export type PChainWalletActions = {
    *
    * @see https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-set-l1-validator-weight-tx
    *
-   * @param args - {@link PrepareSetL1ValidatorWeightTxParameters}
-   * @returns Set L1 validator weight transaction data. {@link PrepareSetL1ValidatorWeightTxReturnType}
+   * @param args - {@link PrepareSetL1ValidatorWeightTxnParameters}
+   * @returns Set L1 validator weight transaction data. {@link PrepareSetL1ValidatorWeightTxnReturnType}
    *
    * @example
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
    *
+   * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
+   *   account,
    *   chain: avalanche,
    *   transport: {
    *     type: "http",
    *   },
    * })
    *
-   * const setWeightTx = await client.pChain.prepareSetL1ValidatorWeightTxn
-   *   nodeId: "NodeID-P7oB2McjBGgW2NXXWVYjV8JEDFoW9xDE5",
-   *   weight: 1000000000000n,
-   *   subnetAuth: [0]
+   * const pChainSetL1ValidatorWeightTxnRequest = await client.pChain.prepareSetL1ValidatorWeightTxn({
+   *   message: "0x1234567890123456789012345678901234567890",
    * })
    * ```
    */

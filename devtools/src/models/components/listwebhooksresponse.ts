@@ -13,33 +13,48 @@ import {
   EVMAddressActivityResponse$outboundSchema,
 } from "./evmaddressactivityresponse.js";
 import {
-  PlatformActivityResponse,
-  PlatformActivityResponse$inboundSchema,
-  PlatformActivityResponse$Outbound,
-  PlatformActivityResponse$outboundSchema,
-} from "./platformactivityresponse.js";
+  PrimaryNetworkAddressActivityResponse,
+  PrimaryNetworkAddressActivityResponse$inboundSchema,
+  PrimaryNetworkAddressActivityResponse$Outbound,
+  PrimaryNetworkAddressActivityResponse$outboundSchema,
+} from "./primarynetworkaddressactivityresponse.js";
+import {
+  ValidatorActivityResponse,
+  ValidatorActivityResponse$inboundSchema,
+  ValidatorActivityResponse$Outbound,
+  ValidatorActivityResponse$outboundSchema,
+} from "./validatoractivityresponse.js";
 
-export type Webhook = EVMAddressActivityResponse | PlatformActivityResponse;
+export type Webhook =
+  | EVMAddressActivityResponse
+  | PrimaryNetworkAddressActivityResponse
+  | ValidatorActivityResponse;
 
 export type ListWebhooksResponse = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  webhooks: Array<EVMAddressActivityResponse | PlatformActivityResponse>;
+  webhooks: Array<
+    | EVMAddressActivityResponse
+    | PrimaryNetworkAddressActivityResponse
+    | ValidatorActivityResponse
+  >;
 };
 
 /** @internal */
 export const Webhook$inboundSchema: z.ZodType<Webhook, z.ZodTypeDef, unknown> =
   z.union([
     EVMAddressActivityResponse$inboundSchema,
-    PlatformActivityResponse$inboundSchema,
+    PrimaryNetworkAddressActivityResponse$inboundSchema,
+    ValidatorActivityResponse$inboundSchema,
   ]);
 
 /** @internal */
 export type Webhook$Outbound =
   | EVMAddressActivityResponse$Outbound
-  | PlatformActivityResponse$Outbound;
+  | PrimaryNetworkAddressActivityResponse$Outbound
+  | ValidatorActivityResponse$Outbound;
 
 /** @internal */
 export const Webhook$outboundSchema: z.ZodType<
@@ -48,7 +63,8 @@ export const Webhook$outboundSchema: z.ZodType<
   Webhook
 > = z.union([
   EVMAddressActivityResponse$outboundSchema,
-  PlatformActivityResponse$outboundSchema,
+  PrimaryNetworkAddressActivityResponse$outboundSchema,
+  ValidatorActivityResponse$outboundSchema,
 ]);
 
 /**
@@ -88,7 +104,8 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
   webhooks: z.array(
     z.union([
       EVMAddressActivityResponse$inboundSchema,
-      PlatformActivityResponse$inboundSchema,
+      PrimaryNetworkAddressActivityResponse$inboundSchema,
+      ValidatorActivityResponse$inboundSchema,
     ]),
   ),
 });
@@ -97,7 +114,9 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
 export type ListWebhooksResponse$Outbound = {
   nextPageToken?: string | undefined;
   webhooks: Array<
-    EVMAddressActivityResponse$Outbound | PlatformActivityResponse$Outbound
+    | EVMAddressActivityResponse$Outbound
+    | PrimaryNetworkAddressActivityResponse$Outbound
+    | ValidatorActivityResponse$Outbound
   >;
 };
 
@@ -111,7 +130,8 @@ export const ListWebhooksResponse$outboundSchema: z.ZodType<
   webhooks: z.array(
     z.union([
       EVMAddressActivityResponse$outboundSchema,
-      PlatformActivityResponse$outboundSchema,
+      PrimaryNetworkAddressActivityResponse$outboundSchema,
+      ValidatorActivityResponse$outboundSchema,
     ]),
   ),
 });

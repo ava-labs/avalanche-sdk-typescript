@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  pvmSerial,
+} from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
 export type PrepareCreateSubnetTxnParameters = CommonTxParams & {
@@ -34,6 +38,10 @@ export type PrepareCreateSubnetTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The create subnet transaction instance.
+   */
+  createSubnetTx: pvmSerial.CreateSubnetTx;
   /**
    * The chain alias.
    */

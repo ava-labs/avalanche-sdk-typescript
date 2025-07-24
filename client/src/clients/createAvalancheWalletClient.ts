@@ -32,6 +32,10 @@ import {
   pChainWalletActions,
   PChainWalletActions,
 } from "./decorators/pChainWallet.js";
+import {
+  xChainWalletActions,
+  XChainWalletActions,
+} from "./decorators/xChainWallet.js";
 
 export type AvalancheWalletClientConfig<
   transport extends Transport = Transport,
@@ -83,6 +87,13 @@ export type AvalancheWalletClient<
       account,
       rpcSchema,
       PChainWalletActions
+    >;
+    xChain: AvalancheWalletCoreClient<
+      transport,
+      chain,
+      account,
+      rpcSchema,
+      XChainWalletActions
     >;
   }
 >;
@@ -144,10 +155,15 @@ export function createAvalancheWalletClient<
     .extend(walletActions)
     .extend(pChainWalletActions as any);
 
+  const xChainClient = client
+    .extend(walletActions)
+    .extend(xChainWalletActions as any);
+
   return {
     ...(avalancheWalletClient as any),
     erc20: erc20Client,
     cChain: cChainClient,
     pChain: pChainClient,
+    xChain: xChainClient,
   } as AvalancheWalletClient<transport, chain, account, rpcSchema>;
 }

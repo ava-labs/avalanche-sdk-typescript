@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  pvmSerial,
+} from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common";
 
 export type PrepareIncreaseL1ValidatorBalanceTxnParameters = CommonTxParams & {
@@ -17,6 +21,16 @@ export type PrepareIncreaseL1ValidatorBalanceTxnParameters = CommonTxParams & {
 };
 
 export type PrepareIncreaseL1ValidatorBalanceTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The increase L1 validator balance transaction instance.
+   */
+  increaseL1ValidatorBalanceTx: pvmSerial.IncreaseL1ValidatorBalanceTx;
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

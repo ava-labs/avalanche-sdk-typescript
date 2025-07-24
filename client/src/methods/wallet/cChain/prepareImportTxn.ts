@@ -1,4 +1,4 @@
-import { evm, utils } from "@avalabs/avalanchejs";
+import { evm, evmSerial, utils } from "@avalabs/avalanchejs";
 import { parseAvalancheAccount } from "../../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { getUtxosForAddress } from "../../../utils/getUtxosForAddress.js";
@@ -99,6 +99,7 @@ export async function prepareImportTxn(
 
   return {
     tx: unsignedTx,
+    importTx: unsignedTx.getTx() as evmSerial.ImportTx,
     chainAlias: C_CHAIN_ALIAS,
   };
 }

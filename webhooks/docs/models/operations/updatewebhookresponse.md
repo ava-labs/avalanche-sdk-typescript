@@ -10,45 +10,76 @@ Successful response
 ```typescript
 const value: components.EVMAddressActivityResponse = {
   id: "<id>",
-  eventType: "validator_activity",
-  url: "https://wordy-shore.net/",
+  url: "https://gruesome-waterspout.net",
   chainId: "<id>",
   status: "inactive",
-  createdAt: 967.63,
+  createdAt: 8215.82,
   name: "<value>",
-  description: "uh-huh scornful scratchy noted issue um",
+  description: "inventory which regarding",
+  eventType: "address_activity",
   metadata: {
-    addresses: [
-      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    ],
     eventSignatures: [
       "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+    ],
+    addresses: [
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     ],
   },
 };
 ```
 
-### `components.PlatformActivityResponse`
+### `components.PrimaryNetworkAddressActivityResponse`
 
 ```typescript
-const value: components.PlatformActivityResponse = {
+const value: components.PrimaryNetworkAddressActivityResponse = {
   id: "<id>",
-  eventType: "address_activity",
-  url: "https://square-meatloaf.info",
+  url: "https://general-babushka.biz/",
   chainId: "<id>",
-  status: "active",
-  createdAt: 1034.49,
+  status: "inactive",
+  createdAt: 6579.99,
   name: "<value>",
-  description: "unethically save physical nucleotidase finally",
+  description: "mmm tabulate especially under inside youthfully since word",
+  eventType: "primary_network_address_activity",
   metadata: {
-    keyType: "addresses",
-    keys: [
-      "<value 1>",
-      "<value 2>",
-    ],
     eventSignatures: [
       "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
     ],
+    keyType: "addresses",
+    keys: [
+      "<value 1>",
+    ],
+    subEvents: {
+      addressActivitySubEvents: [],
+    },
+  },
+};
+```
+
+### `components.ValidatorActivityResponse`
+
+```typescript
+const value: components.ValidatorActivityResponse = {
+  id: "<id>",
+  url: "https://juvenile-abacus.info/",
+  chainId: "<id>",
+  status: "inactive",
+  createdAt: 5002.48,
+  name: "<value>",
+  description: "stiffen but behind flat supposing realistic",
+  eventType: "validator_activity",
+  metadata: {
+    eventSignatures: [
+      "0x61cbb2a3dee0b6064c2e681aadd61677fb4ef319f0b547508d495626f5a62f64",
+    ],
+    keyType: "subnetId",
+    keys: [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+    subEvents: {
+      validatorActivitySubEvents: [],
+    },
   },
 };
 ```

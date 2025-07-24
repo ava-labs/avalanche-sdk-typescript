@@ -2,6 +2,7 @@ import {
   Common,
   Context as ContextType,
   PChainOwner,
+  pvmSerial,
 } from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
@@ -40,6 +41,10 @@ export type PrepareAddSubnetValidatorTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The add subnet validator transaction instance.
+   */
+  addSubnetValidatorTx: pvmSerial.AddSubnetValidatorTx;
   /**
    * The subnet owners.
    */

@@ -1,4 +1,5 @@
 import {
+  avm,
   Id,
   pvm,
   pvmSerial,
@@ -40,13 +41,20 @@ export type CommonTxParams = {
 };
 
 export type FormattedCommonTxParams = {
-  feeState: pvm.FeeState;
   fromAddressesBytes: Uint8Array[];
   changeAddressesBytes?: Uint8Array[];
   utxos: Utxo[];
   memo?: Uint8Array;
   minIssuanceTime?: bigint;
 };
+
+export type FormattedCommonPVMTxParams = {
+  feeState: pvm.FeeState;
+} & FormattedCommonTxParams;
+
+export type FormattedCommonAVMTxParams = {
+  txFee: avm.TxFee;
+} & FormattedCommonTxParams;
 
 export type Output = {
   /**

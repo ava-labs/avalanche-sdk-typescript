@@ -1,4 +1,4 @@
-import { evm, utils } from "@avalabs/avalanchejs";
+import { evm, evmSerial, utils } from "@avalabs/avalanchejs";
 import { getTransactionCount } from "viem/actions";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { baseFee as getBaseFee } from "../../public/index.js";
@@ -74,6 +74,7 @@ export async function prepareExportTxn(
 
   return {
     tx: unsignedTx,
+    exportTx: unsignedTx.getTx() as evmSerial.ExportTx,
     chainAlias: "C",
   };
 }

@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  pvmSerial,
+} from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
 export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
@@ -67,6 +71,10 @@ export type PrepareAddPermissionlessValidatorTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The add permissionless validator transaction instance.
+   */
+  addPermissionlessValidatorTx: pvmSerial.AddPermissionlessValidatorTx;
   /**
    * The chain alias.
    */

@@ -1,8 +1,8 @@
-import { pvm, utils } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { bech32AddressToBytes, fetchCommonTxParams } from "../utils.js";
+import { bech32AddressToBytes, fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareAddPermissionlessValidatorTxnParameters,
   PrepareAddPermissionlessValidatorTxnReturnType,
@@ -36,6 +36,11 @@ import {
  *   end: 1716441600,
  *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   threshold: 1,
+ *   publicKey: "0x1234567890123456789012345678901234567890",
+ *   signature: "0x1234567890123456789012345678901234567890",
+ *   locktime: 1716441600,
+ *   delegatorRewardPercentage: 2.5,
+ *   delegatorRewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  * });
  *
  * console.log(pChainAddPermissionlessValidatorTxnRequest);
@@ -46,7 +51,7 @@ export async function prepareAddPermissionlessValidatorTxn(
   params: PrepareAddPermissionlessValidatorTxnParameters
 ): Promise<PrepareAddPermissionlessValidatorTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
   });
@@ -79,6 +84,8 @@ export async function prepareAddPermissionlessValidatorTxn(
 
   return {
     tx: unsignedTx,
+    addPermissionlessValidatorTx:
+      unsignedTx.getTx() as pvmSerial.AddPermissionlessValidatorTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

@@ -1,8 +1,8 @@
-import { pvm } from "@avalabs/avalanchejs";
+import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonTxParams, formatOutput } from "../utils.js";
+import { fetchCommonPVMTxParams, formatOutput } from "../utils.js";
 import {
   PrepareBaseTxnParameters,
   PrepareBaseTxnReturnType,
@@ -32,7 +32,7 @@ import {
  *
  * const pChainBaseTxnRequest = await prepareBaseTxn(walletClient, {
  *   outputs: [{
- *     address: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+ *     addresses: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
  *     amount: 1,
  *   }],
  * });
@@ -45,7 +45,7 @@ export async function prepareBaseTxn(
   params: PrepareBaseTxnParameters
 ): Promise<PrepareBaseTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const { commonTxParams } = await fetchCommonTxParams(client, {
+  const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
   });
@@ -65,6 +65,7 @@ export async function prepareBaseTxn(
 
   return {
     tx: unsignedTx,
+    baseTx: unsignedTx.getTx() as pvmSerial.BaseTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }

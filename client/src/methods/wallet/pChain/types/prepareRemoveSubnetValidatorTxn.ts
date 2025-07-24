@@ -2,6 +2,7 @@ import {
   Common,
   Context as ContextType,
   PChainOwner,
+  pvmSerial,
 } from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
@@ -26,8 +27,24 @@ export type PrepareRemoveSubnetValidatorTxnParameters = CommonTxParams & {
 };
 
 export type PrepareRemoveSubnetValidatorTxnReturnType = {
+  /**
+   * The unsigned transaction.
+   */
   tx: Common.UnsignedTx;
+  /**
+   * The remove subnet validator transaction instance.
+   */
+  removeSubnetValidatorTx: pvmSerial.RemoveSubnetValidatorTx;
+  /**
+   * The subnet owners.
+   */
   subnetOwners: PChainOwner;
+  /**
+   * The subnet auth.
+   */
   subnetAuth: number[];
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

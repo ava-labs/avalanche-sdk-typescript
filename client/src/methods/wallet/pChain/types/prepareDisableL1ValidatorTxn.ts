@@ -2,6 +2,7 @@ import {
   Common,
   Context as ContextType,
   PChainOwner,
+  pvmSerial,
 } from "@avalabs/avalanchejs";
 import { CommonTxParams } from "../../types/common.js";
 
@@ -23,7 +24,20 @@ export type PrepareDisableL1ValidatorTxnParameters = CommonTxParams & {
 
 export type PrepareDisableL1ValidatorTxnReturnType = {
   tx: Common.UnsignedTx;
+  /**
+   * The disable L1 validator transaction instance.
+   */
+  disableL1ValidatorTx: pvmSerial.DisableL1ValidatorTx;
+  /**
+   * The disable owners.
+   */
   disableOwners: PChainOwner;
+  /**
+   * The disable auth.
+   */
   disableAuth: number[];
+  /**
+   * The chain alias.
+   */
   chainAlias: "P";
 };

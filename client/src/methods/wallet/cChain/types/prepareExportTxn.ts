@@ -1,4 +1,8 @@
-import { Common, Context as ContextType } from "@avalabs/avalanchejs";
+import {
+  Common,
+  Context as ContextType,
+  evmSerial,
+} from "@avalabs/avalanchejs";
 import { P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts.js";
 
 export type PrepareExportTxnParameters = {
@@ -42,6 +46,10 @@ export type PrepareExportTxnReturnType = {
    * The unsigned transaction.
    */
   tx: Common.UnsignedTx;
+  /**
+   * The export transaction instance.
+   */
+  exportTx: evmSerial.ExportTx;
   /**
    * The chain alias.
    */
