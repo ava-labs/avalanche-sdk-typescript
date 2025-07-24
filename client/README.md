@@ -1,4 +1,4 @@
-# Avalanche SDK RPC
+# Avalanche SDK Client
 
 A TypeScript SDK for interacting with the Avalanche network through JSON-RPC APIs. This SDK provides a comprehensive set of tools to interact with all Avalanche chains (P-Chain, X-Chain, C-Chain) and various APIs.
 

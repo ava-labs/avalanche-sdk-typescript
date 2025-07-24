@@ -1,5 +1,6 @@
 import { Utxo } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../clients/createAvalancheWalletCoreClient.js";
+import { getUTXOs as getCChainUTXOs } from "../methods/cChain/getUTXOs.js";
 import { getUTXOs as getPChainUTXOs } from "../methods/pChain/getUTXOs.js";
 import { getUTXOs as getXChainUTXOs } from "../methods/xChain/getUTXOs.js";
 import { GetUTXOsReturnType } from "../methods/xChain/types/getUTXOs.js";
@@ -9,7 +10,7 @@ import { getUtxoFromBytes } from "./getUtxoFromBytes.js";
  * @description Get the UTXOs for an address.
  *
  * @param client - The client to use. {@link AvalancheWalletCoreClient}
- * @param params - The parameters. {@link { address: string, chainAlias: "P" | "X" }}
+ * @param params - The parameters. {@link { address: string, chainAlias: "P" | "X" | "C" }}
  * @returns The array of UTXOs. May contain duplicates. {@link [Utxo]}
  *
  * @example
@@ -34,11 +35,17 @@ export async function getUtxosForAddress(
   client: AvalancheWalletCoreClient,
   params: {
     address: string;
-    chainAlias: "P" | "X";
+    chainAlias: "P" | "X" | "C";
+    sourceChain?: string;
   }
 ) {
   // Get the correct UTXO function based on the chain alias
-  const getUTXOs = params.chainAlias === "P" ? getPChainUTXOs : getXChainUTXOs;
+  const getUTXOs = (args: any) =>
+    params.chainAlias === "P"
+      ? getPChainUTXOs(client.pChainClient, args)
+      : params.chainAlias === "X"
+      ? getXChainUTXOs(client.xChainClient, args)
+      : getCChainUTXOs(client.cChainClient, args);
 
   // Initialize the UTXOs array and start index
   const utxos: Utxo[] = [];
@@ -54,8 +61,9 @@ export async function getUtxosForAddress(
 
   // Fetch UTXOs until there are no more
   do {
-    const utxosRes = (await getUTXOs(client.pChainClient, {
+    const utxosRes = (await getUTXOs({
       addresses: [params.address],
+      ...(params.sourceChain ? { sourceChain: params.sourceChain } : {}),
       ...(startIndex === undefined ? {} : { startIndex }),
     })) as GetUTXOsReturnType;
 

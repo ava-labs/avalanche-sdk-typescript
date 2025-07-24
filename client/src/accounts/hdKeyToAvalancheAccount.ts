@@ -3,6 +3,7 @@ import { toHex } from "viem";
 import { HDKeyToAccountOptions, privateKeyToAccount } from "viem/accounts";
 import { AvalancheAccount, LocalXPAccount } from "./avalancheAccount";
 import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
+import { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress";
 
 /**
  * Options for the hdKeyToAvalancheAccount function.
@@ -65,5 +66,15 @@ export function hdKeyToAvalancheAccount(
       source: "hdKey",
       getHdKey: () => xpChainHdKey,
     } as LocalXPAccount,
+    getXPAddress: (
+      chain?: "X" | "P" | "C" | undefined,
+      hrp: string = "avax"
+    ) => {
+      if (chain) {
+        return `${chain}-${publicKeyToXPAddress(pChainAccount.publicKey, hrp)}`;
+      }
+      return publicKeyToXPAddress(pChainAccount.publicKey, hrp);
+    },
+    getEVMAddress: () => cChainAccount.address,
   };
 }

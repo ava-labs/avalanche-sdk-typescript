@@ -15,7 +15,7 @@ import { utils, Utxo } from "@avalabs/avalanchejs";
  */
 export function getUtxoFromBytes(
   utxoBytesOrHex: string | Uint8Array,
-  chainAlias: "P" | "X"
+  chainAlias: "P" | "X" | "C"
 ): Utxo {
   let utxoBytes;
   if (typeof utxoBytesOrHex === "string") {
@@ -23,7 +23,9 @@ export function getUtxoFromBytes(
   } else {
     utxoBytes = utxoBytesOrHex;
   }
-  const manager = utils.getManagerForVM(chainAlias === "P" ? "PVM" : "AVM");
+  const manager = utils.getManagerForVM(
+    chainAlias === "P" ? "PVM" : chainAlias === "X" ? "AVM" : "EVM"
+  );
 
   const utxo = manager.unpack(utxoBytes, Utxo);
   return utxo;

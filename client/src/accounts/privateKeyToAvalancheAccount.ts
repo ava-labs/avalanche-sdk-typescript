@@ -1,7 +1,8 @@
 import { Hex } from "viem";
 import { privateKeyToAccount, PrivateKeyToAccountOptions } from "viem/accounts";
-import { AvalancheAccount } from "./avalancheAccount";
+import { AvalancheAccount, XPAddress } from "./avalancheAccount";
 import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
+import { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress";
 
 /**
  * Converts a private key to an Avalanche account.
@@ -17,5 +18,16 @@ export function privateKeyToAvalancheAccount(
   return {
     evmAccount: privateKeyToAccount(privateKey as Hex, options),
     xpAccount: privateKeyToXPAccount(privateKey),
+    getXPAddress: (
+      chain?: "X" | "P" | "C" | undefined,
+      hrp: string = "avax"
+    ): XPAddress => {
+      if (chain) {
+        return `${chain}-${privateKeyToXPAddress(privateKey, hrp)}`;
+      }
+      return privateKeyToXPAddress(privateKey, hrp);
+    },
+    getEVMAddress: () =>
+      privateKeyToAccount(privateKey as Hex, options).address,
   };
 }

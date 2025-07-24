@@ -16,6 +16,8 @@ import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "../../methods/wallet/types/signXPTransaction.js";
+import { WaitForTxnParameters } from "../../methods/wallet/types/waitForTxn.js";
+import { waitForTxn } from "../../methods/wallet/waitForTxn.js";
 import { AvalancheWalletCoreClient } from "../createAvalancheWalletCoreClient.js";
 
 export type AvalancheWalletActions = {
@@ -34,25 +36,25 @@ export type AvalancheWalletActions = {
    *
    * // You can pass a local account otherwise a custom provider can be used
    * const account = privateKeyToAvalancheAccount("0x...")
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   account,
    *   chain: avalanche,
    *   transport: { type: "http" },
    * })
    *
-   * const result = await client.sendXPTransaction({
+   * const result = await walletClient.sendXPTransaction({
    *   amount: "1000000000",
    *   to: "X-avax1...",
    *   assetID: "AVAX"
    * })
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   chain: avalanche,
    *   transport: { type: "custom", provider: window.avalanche! },
    * })
    *
-   * const result = await client.sendXPTransaction({
+   * const result = await walletClient.sendXPTransaction({
    *   amount: "1000000000",
    *   to: "X-avax1...",
    *   assetID: "AVAX"
@@ -78,24 +80,24 @@ export type AvalancheWalletActions = {
    *
    * // You can pass a local account otherwise a custom provider can be used
    * const account = privateKeyToAvalancheAccount("0x...")
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   account,
    *   chain: avalanche,
    *   transport: { type: "http" },
    * })
    *
-   * const signedMessage = await client.signXPMessage({
+   * const signedMessage = await walletClient.signXPMessage({
    *   message: "Hello Avalanche",
    *   address: "X-avax1..."
    * })
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   chain: avalanche,
    *   transport: { type: "custom", provider: window.avalanche! },
    * })
    *
-   * const signedMessage = await client.signXPMessage({
+   * const signedMessage = await walletClient.signXPMessage({
    *   message: "Hello Avalanche",
    *   address: "X-avax1..."
    * })
@@ -120,24 +122,24 @@ export type AvalancheWalletActions = {
    *
    * // You can pass a local account otherwise a custom provider can be used
    * const account = privateKeyToAvalancheAccount("0x...")
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   account,
    *   chain: avalanche,
    *   transport: { type: "http" },
    * })
    *
-   * const signedTx = await client.signXPTransaction({
+   * const signedTx = await walletClient.signXPTransaction({
    *   tx: "0x...",
    *   address: "X-avax1..."
    * })
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   chain: avalanche,
    *   transport: { type: "custom", provider: window.avalanche! },
    * })
    *
-   * const signedTx = await client.signXPTransaction({
+   * const signedTx = await walletClient.signXPTransaction({
    *   tx: "0x...",
    *   address: "X-avax1..."
    * })
@@ -161,24 +163,50 @@ export type AvalancheWalletActions = {
    *
    * // You can pass a local account otherwise a custom provider can be used
    * const account = privateKeyToAvalancheAccount("0x...")
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   account,
    *   chain: avalanche,
    *   transport: { type: "http" },
    * })
    *
-   * const pubKey = await client.getAccountPubKey()
+   * const pubKey = await walletClient.getAccountPubKey()
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
-   * const client = createAvalancheWalletClient({
+   * const walletClient = createAvalancheWalletClient({
    *   chain: avalanche,
    *   transport: { type: "custom", provider: window.avalanche! },
    * })
    *
-   * const pubKey = await client.getAccountPubKey()
+   * const pubKey = await walletClient.getAccountPubKey()
    * ```
    */
   getAccountPubKey: () => Promise<GetAccountPubKeyReturnType>;
+
+  /**
+   * Waits for a transaction to be confirmed on the network.
+   *
+   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_waittx
+   *
+   * @param args - The parameters for waiting for the transaction. {@link WaitForTxnParameters}
+   * @returns A promise that resolves when the transaction is confirmed.
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { avalanche } from '@avalanche-sdk/client/chains'
+   *
+   * const walletClient = createAvalancheWalletClient({
+   *   chain: avalanche,
+   *   transport: { type: "http" },
+   * })
+   *
+   * const result = await walletClient.waitForTxn({
+   *   txID: "0x...",
+   *   chainAlias: "P"
+   * })
+   * ```
+   */
+  waitForTxn: (args: WaitForTxnParameters) => Promise<void>;
 };
 
 export function avalancheWalletActions<
@@ -189,5 +217,6 @@ export function avalancheWalletActions<
     signXPMessage: (args) => signXPMessage(client, args),
     signXPTransaction: (args) => signXPTransaction(client, args),
     getAccountPubKey: () => getAccountPubKey(client),
+    waitForTxn: (args) => waitForTxn(client, args),
   };
 }

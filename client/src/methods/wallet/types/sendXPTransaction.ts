@@ -1,11 +1,11 @@
-import { UnsignedTx } from "@avalabs/avalanchejs";
+import { PChainOwner, UnsignedTx } from "@avalabs/avalanchejs";
 import { Address } from "viem";
 import { RequestErrorType } from "viem/utils";
 import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
 
 /**
  * The parameters for the sendXPTransaction method
- * @property txOrTxHex - The transaction to send, either a hex string or an UnsignedTx object. {@link string} or {@link UnsignedTx}
+ * @property tx - The transaction to send, either a hex string or an UnsignedTx object. {@link string} or {@link UnsignedTx}
  * @property chainAlias - The chain to send the transaction to. {@link "X"} or {@link "P"} or {@link "C"}
  * @property account - Optional, the account to use for the transaction. {@link AvalancheAccount} or {@link Address}
  * @property accountIndex - Optional, the account index to use for the transaction from custom transport (eg: core extension). {@link number}
@@ -13,15 +13,23 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
  * @property internalIndices - Optional, the internal indices to use for the transaction. {@link number[]}
  * @property utxoIds - Optional, the utxo ids to use for the transaction. {@link string[]}
  * @property feeTolerance - Optional, the fee tolerance to use for the transaction. {@link number}
+ * @property subnetAuth - Optional, the subnet auth to use for the transaction. {@link number[]}
+ * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
+ * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
+ * @property disableAuth - Optional, the disable auth to use for the transaction. {@link number[]}
  */
 export type SendXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
-  txOrTxHex: string | UnsignedTx;
+  tx: string | UnsignedTx;
   chainAlias: "X" | "P" | "C";
   externalIndices?: number[] | undefined;
   internalIndices?: number[] | undefined;
   utxoIds?: string[] | undefined;
   feeTolerance?: number | undefined;
+  subnetAuth?: number[] | undefined;
+  subnetOwners?: PChainOwner | undefined;
+  disableOwners?: PChainOwner | undefined;
+  disableAuth?: number[] | undefined;
 };
 
 /**
@@ -30,6 +38,7 @@ export type SendXPTransactionParameters = {
  */
 export type SendXPTransactionReturnType = {
   txHash: string;
+  chainAlias: "X" | "P" | "C";
 };
 
 export type SendXPTransactionErrorType = RequestErrorType;

@@ -102,7 +102,7 @@ function getClientURL(
     case "xChain":
       return `${origin}/ext/bc/X`;
     case "cChain":
-      return `${origin}/ext/bc/C/rpc`;
+      return `${origin}/ext/bc/C/avax`;
     case "admin":
       return `${origin}/ext/admin`;
     case "info":
