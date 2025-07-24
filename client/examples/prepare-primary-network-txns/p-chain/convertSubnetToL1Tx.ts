@@ -34,11 +34,11 @@ async function run() {
           weight: 100n,
           initialBalanceInAvax: 0.1,
           remainingBalanceOwner: {
-            addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+            addresses: [account.getXPAddress("P", "fuji")],
             threshold: 1,
           },
           deactivationOwner: {
-            addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+            addresses: [account.getXPAddress("P", "fuji")],
             threshold: 1,
           },
         },
