@@ -1,92 +1,24 @@
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { pvm, pvmSerial } from "@avalabs/avalanchejs";
-import { privateKeyToAvalancheAccount } from "src/accounts";
 import { avalancheFuji } from "src/chains";
 import { createAvalancheWalletClient } from "src/clients/createAvalancheWalletClient";
 import { testContext } from "../fixtures/testContext";
 import {
+  account1,
+  account2,
+  account3,
   feeState,
-  getUTXOStrings,
-  privateKey1ForTest,
-  privateKey2ForTest,
-  privateKey3ForTest,
+  getPChainMockServer,
 } from "../fixtures/txns";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";
 const testInputAmount = 1;
 
-const pChainWorker = setupServer(
-  http.post("https://api.avax-test.network/ext/bc/P", async ({ request }) => {
-    const reqBody = await request.json();
-    if (typeof reqBody === "object") {
-      switch (reqBody?.["method"]) {
-        case "platform.getUTXOs":
-          return HttpResponse.json({
-            jsonrpc: "2.0",
-            result: {
-              numFetched: "1",
-              utxos: getUTXOStrings(
-                testInputAmount,
-                testContext.avaxAssetID,
-                ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
-                0,
-                1
-              ),
-              endIndex: {
-                address:
-                  reqBody?.["params"]?.["addresses"]?.[0] ||
-                  "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
-                utxo: "2iz1aRvPX2XPW7XLs6Nay9ECqtsWHVt1iEUnMKHskrsguZ14hi",
-              },
-              encoding: "hex",
-            },
-            id: reqBody?.["id"] || 1,
-          });
-        case "platform.getFeeState":
-          const feeStateData = feeState();
-          return HttpResponse.json({
-            jsonrpc: "2.0",
-            result: {
-              capacity: feeStateData.capacity.toString(),
-              excess: feeStateData.excess.toString(),
-              price: feeStateData.price.toString(),
-              timestamp: feeStateData.timestamp,
-            },
-            id: reqBody?.["id"] || 1,
-          });
-        default:
-          return HttpResponse.json(
-            {
-              message: "Mocked response",
-            },
-            {
-              status: 202,
-              statusText: "Mocked status",
-            }
-          );
-      }
-    }
-    return HttpResponse.json(
-      {
-        message: "Mocked response",
-      },
-      {
-        status: 202,
-        statusText: "Mocked status",
-      }
-    );
-  })
-);
+const pChainWorker = getPChainMockServer({});
 
 describe("prepareAddPermissionlessDelegatorTxn", () => {
-  const account1 = privateKeyToAvalancheAccount(privateKey1ForTest);
-  const account2 = privateKeyToAvalancheAccount(privateKey2ForTest);
-  const account3 = privateKeyToAvalancheAccount(privateKey3ForTest);
-
   const walletClient = createAvalancheWalletClient({
     account: account1,
     chain: avalancheFuji,

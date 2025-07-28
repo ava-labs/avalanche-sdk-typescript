@@ -210,13 +210,10 @@ export async function fetchCommonPVMTxParams(
     });
     disableOwners = new PChainOwner(
       new Int(Number(disableTx.deactivationOwner.threshold)),
-      disableTx.deactivationOwner.addresses.map(
-        (addr) => new Address(utils.hexToBuffer(addr))
-      )
+      disableTx.deactivationOwner.addresses.map(Address.fromString)
     );
-
     disableTx.deactivationOwner.addresses.forEach((addr) => {
-      const address = `${P_CHAIN_ALIAS}-${addr}`;
+      const address = addr.startsWith("P-") ? addr : `${P_CHAIN_ALIAS}-${addr}`;
       fromAddressesSet.add(address);
     });
   }
