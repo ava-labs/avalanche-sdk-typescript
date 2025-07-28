@@ -4,12 +4,8 @@ import { createAvalancheWalletClient } from "src/clients/createAvalancheWalletCl
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrepareCreateChainTxnParameters } from ".";
 import { testContext } from "../fixtures/testContext";
-import {
-  account1,
-  account2,
-  feeState,
-  getPChainMockServer,
-} from "../fixtures/txns";
+import { account1, account2, feeState } from "../fixtures/transactions/common";
+import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";

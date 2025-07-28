@@ -9,12 +9,13 @@ import {
   account2,
   account3,
   feeState,
-  getPChainMockServer,
   signedWarpMsgL1ValidatorWeightHex,
-} from "../fixtures/txns";
+} from "../fixtures/transactions/common";
+import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+
 const testInputAmount = 1;
 
 const pChainWorker = getPChainMockServer({});

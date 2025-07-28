@@ -25,7 +25,7 @@ export type PrepareExportTxnParameters = {
     /**
      * The amount (in AVAX) held by this exported output.
      */
-    amountInAvax: number;
+    amount: number;
     /**
      * Optional. Timestamp in seconds after which this UTXO can be consumed.
      */

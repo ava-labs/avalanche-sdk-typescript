@@ -20,6 +20,31 @@ import {
  * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
  * @param params - The parameters for the transaction. {@link PrepareExportTxnParameters}
  * @returns The unsigned transaction. {@link PrepareExportTxnReturnType}
+ *
+ * @example
+ * ```ts
+ * import { prepareExportTxn } from "@avalanche-sdk/client/methods/wallet/xChain";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount(privateKeyForTest);
+ * const walletClient = new AvalancheWalletCoreClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     url: "https://api.avax.network/ext/bc/C/rpc",
+ *   },
+ *   account,
+ * });
+ *
+ * const xChainExportTxnRequest = await prepareExportTxn(walletClient, {
+ *   destinationChain: "P",
+ *   exportedOutputs: [
+ *     {
+ *       amount: 1000000000000000000,
+ *       to: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+ *     },
+ *   ],
+ * });
  */
 export async function prepareExportTxn(
   client: AvalancheWalletCoreClient,

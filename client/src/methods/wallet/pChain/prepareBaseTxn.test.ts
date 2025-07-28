@@ -16,9 +16,11 @@ import {
   account3,
   account4,
   feeState,
+} from "../fixtures/transactions/common";
+import {
   getPChainMockServer,
   getValidUTXO,
-} from "../fixtures/txns";
+} from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";

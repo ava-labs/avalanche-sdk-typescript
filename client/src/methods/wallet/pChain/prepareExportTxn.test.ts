@@ -10,8 +10,8 @@ import {
   account3,
   account4,
   feeState,
-  getPChainMockServer,
-} from "../fixtures/txns";
+} from "../fixtures/transactions/common";
+import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import {
@@ -20,6 +20,7 @@ import {
   nanoAvaxToAvax,
   toTransferableOutput,
 } from "../utils";
+
 const testInputAmount = 1;
 
 const pChainWorker = getPChainMockServer({});

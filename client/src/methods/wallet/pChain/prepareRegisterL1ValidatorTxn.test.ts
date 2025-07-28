@@ -1,6 +1,3 @@
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
-
 import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { avalancheFuji } from "src/chains";
 import { createAvalancheWalletClient } from "src/clients/createAvalancheWalletClient";
@@ -12,114 +9,17 @@ import {
   account2,
   account3,
   feeState,
-  getUTXOStrings,
   popSignatureHex,
   signedWarpMsgRegisterL1ValidatorHex,
-} from "../fixtures/txns";
+} from "../fixtures/transactions/common";
+import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+
 const testInputAmount = 1;
 
-const pChainWorker = setupServer(
-  http.post("https://api.avax-test.network/ext/bc/P", async ({ request }) => {
-    const reqBody = await request.json();
-    if (typeof reqBody === "object") {
-      switch (reqBody?.["method"]) {
-        case "platform.getUTXOs":
-          return HttpResponse.json({
-            jsonrpc: "2.0",
-            result: {
-              numFetched: "1",
-              utxos: getUTXOStrings(
-                testInputAmount,
-                testContext.avaxAssetID,
-                reqBody?.["params"]?.["addresses"] || [
-                  "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
-                ],
-                0,
-                1
-              ),
-              endIndex: {
-                address:
-                  reqBody?.["params"]?.["addresses"]?.[0] ||
-                  "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
-                utxo: "2iz1aRvPX2XPW7XLs6Nay9ECqtsWHVt1iEUnMKHskrsguZ14hi",
-              },
-              encoding: "hex",
-            },
-            id: reqBody?.["id"] || 1,
-          });
-        case "platform.getFeeState":
-          const feeStateData = feeState();
-          return HttpResponse.json({
-            jsonrpc: "2.0",
-            result: {
-              capacity: feeStateData.capacity.toString(),
-              excess: feeStateData.excess.toString(),
-              price: feeStateData.price.toString(),
-              timestamp: feeStateData.timestamp,
-            },
-            id: reqBody?.["id"] || 1,
-          });
-        case "platform.getTx":
-          if (
-            reqBody?.["params"]?.["txID"] ===
-            "2CDLCyFr7x4LcxaJ82rE38gnSk4gcVTeFdJeFbwZRd5fgM1gDH"
-          ) {
-            return HttpResponse.json({
-              jsonrpc: "2.0",
-              result: {
-                tx: "0x000000000010000000050000000000000000000000000000000000000000000000000000000000000000000000013d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa0000000700000000001e1d26000000000000000000000001000000012a705f0a71d8b6e19d5e955b19d683ca6d68237000000001e24544f6fd3abaa362b4c635d5c5dec16ac57a853477a1be41ae8e464d82005d000000003d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa0000000500000000001e31390000000100000000000000000000000b000000000000007b00000001000000012a705f0a71d8b6e19d5e955b19d683ca6d6823700000000100000009000000012df65b239996df9eaaeb235223a9e571832270e718a4be27317656965917d2080450e9aaf2141073bb1c4dab959fec0e8bb9dcb5dbf9f372160d0cb8c000f01401509d618f",
-                encoding: "hex",
-              },
-              id: reqBody?.["id"] || 1,
-            });
-          } else if (
-            reqBody?.["params"]?.["txID"] ===
-            "SLomSuJLyG9qk7KLcWevdcZ1i7kN2qTLNUytJLhkwPdxAAgoa"
-          ) {
-            return HttpResponse.json({
-              jsonrpc: "2.0",
-              result: {
-                tx: "0x000000000010000000050000000000000000000000000000000000000000000000000000000000000000000000013d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa00000007000000000000ef54000000000000000000000001000000012a705f0a71d8b6e19d5e955b19d683ca6d682370000000012677461b127dc02dfc789c599fd38917089842c4f043a98786b1db07fea6e09e000000003d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa0000000500000000000103670000000100000000000000000000000b000000000000007b00000001000000013cb7d3842e8cee6a0ebd09f1fe884f6861e1b29c000000010000000900000001115afe7403829dd5dde8d6d15702543feeb9bb689c2e611515677cfa3d7bc51038d0c99d77ee06af450318f0e343cb414c3419758f0e12cafb24abb4f16c53c10081b39a2b",
-                encoding: "hex",
-              },
-              id: reqBody?.["id"] || 1,
-            });
-          }
-
-          return HttpResponse.json({
-            jsonrpc: "2.0",
-            result: {
-              tx: "0x00", // empty tx
-              encoding: "hex",
-            },
-            id: reqBody?.["id"] || 1,
-          });
-        default:
-          return HttpResponse.json(
-            {
-              message: "Mocked response",
-            },
-            {
-              status: 202,
-              statusText: "Mocked status",
-            }
-          );
-      }
-    }
-    return HttpResponse.json(
-      {
-        message: "Mocked response",
-      },
-      {
-        status: 202,
-        statusText: "Mocked status",
-      }
-    );
-  })
-);
+const pChainWorker = getPChainMockServer({});
 
 describe("prepareRegisterL1ValidatorTxn", () => {
   const walletClient = createAvalancheWalletClient({

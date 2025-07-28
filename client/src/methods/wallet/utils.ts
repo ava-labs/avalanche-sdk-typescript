@@ -385,6 +385,7 @@ export async function addPChainOwnerAuthSignature(
 
 // AvalancheJS exports output as Amounter instead of TransferOutput,
 // so we cast them here.
+
 export function toTransferableOutput(
   output: TransferableOutput
 ): TransferableOutputFull {

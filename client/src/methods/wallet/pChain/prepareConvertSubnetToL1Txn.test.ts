@@ -10,11 +10,12 @@ import {
   account3,
   account4,
   feeState,
-  getPChainMockServer,
-} from "../fixtures/txns";
+} from "../fixtures/transactions/common";
+import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+
 const testInputAmount = 1;
 const popPublicKeyHex =
   "0x94ab445df7ca4158cf63b66b6c463e9995b380441863f89231d3cd468ecdf7a96b080d3e96e20d74d9f2cd4f96d9dc40";
