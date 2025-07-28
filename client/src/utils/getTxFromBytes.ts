@@ -1,4 +1,4 @@
-import { Common, Credential, utils } from "@avalabs/avalanchejs";
+import { Common, Credential, UnsignedTx, utils } from "@avalabs/avalanchejs";
 
 /**
  * @description Get a transaction from a buffer or hex string
@@ -54,4 +54,25 @@ export function getTxFromBytes(
     remainingBytes = rest;
   }
   return [parsedTx, credentials];
+}
+
+/**
+ * @description Get an unsigned transaction from a buffer or hex string
+ * @param txBytes - The buffer or hex string to get the transaction from {@link string | Uint8Array}
+ * @param chainAlias - The chain alias to get the transaction from {@link "P" | "X" | "C"}
+ * @returns An unsigned transaction {@link UnsignedTx}
+ *
+ * @example
+ * ```ts
+ * import { getUnsignedTxFromBytes } from "@avalanche-sdk/client/utils";
+ *
+ * const unsignedTx = getUnsignedTxFromBytes("0x1234567890abcdef", "P");
+ * ```
+ */
+export function getUnsignedTxFromBytes(
+  txBytes: string,
+  chainAlias: "P" | "X" | "C"
+): UnsignedTx {
+  const [tx, credentials] = getTxFromBytes(txBytes, chainAlias);
+  return new UnsignedTx(tx, [], new utils.AddressMaps(), credentials);
 }

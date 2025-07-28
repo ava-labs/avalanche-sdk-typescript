@@ -10,7 +10,6 @@ import {
 } from "../fixtures/transactions/cChain";
 import { account1, account2, account3 } from "../fixtures/transactions/common";
 import { checkOutputs } from "../fixtures/utils";
-import { Output } from "../types/common";
 import { getChainIdFromAlias, toTransferableOutput } from "../utils";
 
 const cChainWorker = getCChainMockServer({});
@@ -142,15 +141,7 @@ describe("prepareExportTxn", () => {
       account2.getXPAddress("P", "fuji"),
       account3.getXPAddress("P", "fuji"),
     ];
-    const changeAddresses = [account2.getXPAddress("P", "fuji")];
-
     const testOutputAmount = 0.1234;
-    const testOutputs: Output[] = [
-      {
-        amount: testOutputAmount,
-        addresses: receiverAddresses,
-      },
-    ];
     const mockTxParamsPChain: PrepareExportTxnParameters = {
       fromAddress: account1.getEVMAddress(),
       exportedOutput: {
