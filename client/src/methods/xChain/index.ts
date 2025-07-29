@@ -78,3 +78,10 @@ export {
   type GetUTXOsParameters,
   type GetUTXOsReturnType,
 } from "./types/getUTXOs.js";
+
+export { issueTx } from "./issueTx.js";
+export {
+  type IssueTxErrorType,
+  type IssueTxParameters,
+  type IssueTxReturnType,
+} from "./types/issueTx.js";

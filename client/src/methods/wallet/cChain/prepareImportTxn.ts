@@ -93,7 +93,7 @@ export async function prepareImportTxn(
     utils.hexToBuffer(params.toAddress),
     fromAddressesBytes,
     utxos,
-    params.sourceChain,
+    getChainIdFromAlias(params.sourceChain, context.networkID),
     BigInt(baseFee)
   );
 
