@@ -72,6 +72,16 @@
       "import": "./dist/methods/wallet/cChain/index.js",
       "require": "./dist/methods/wallet/cChain/index.js"
     },
+    "./methods/wallet/pChain": {
+      "types": "./dist/methods/wallet/pChain/index.d.ts",
+      "import": "./dist/methods/wallet/pChain/index.js",
+      "require": "./dist/methods/wallet/pChain/index.js"
+    },
+    "./methods/wallet/xChain": {
+      "types": "./dist/methods/wallet/xChain/index.d.ts",
+      "import": "./dist/methods/wallet/xChain/index.js",
+      "require": "./dist/methods/wallet/xChain/index.js"
+    },
     "./methods/public": {
       "types": "./dist/methods/public/index.d.ts",
       "import": "./dist/methods/public/index.js",

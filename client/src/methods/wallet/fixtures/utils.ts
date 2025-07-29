@@ -25,7 +25,7 @@ export function checkOutputs(
 
     // check owners
     const expectedOwners = expected.addresses.map((address) =>
-      address.replace("P-", "")
+      address.replace("P-", "").replace("X-", "")
     );
     let actualOwners: string[] = [];
     if (actual) {
