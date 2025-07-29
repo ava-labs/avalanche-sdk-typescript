@@ -11,7 +11,7 @@ import {
 } from "@avalabs/avalanchejs";
 import { DefaultRequestMultipartBody, http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { privateKeyToAvalancheAccount } from "src/accounts";
+import { privateKeyToAvalancheAccount } from "../../../../accounts";
 import { testContext } from "../testContext";
 import {
   account1,

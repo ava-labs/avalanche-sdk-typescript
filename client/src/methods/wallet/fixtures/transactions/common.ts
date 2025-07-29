@@ -1,5 +1,5 @@
 import { pvm, utils } from "@avalabs/avalanchejs";
-import { privateKeyToAvalancheAccount } from "src/accounts";
+import { privateKeyToAvalancheAccount } from "../../../../accounts";
 
 export const privateKey1ForTest =
   "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce";
