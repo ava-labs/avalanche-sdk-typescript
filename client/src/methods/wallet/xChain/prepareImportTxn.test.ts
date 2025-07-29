@@ -1,8 +1,8 @@
 import { pvmSerial } from "@avalabs/avalanchejs";
-import { avalancheFuji } from "src/chains";
-import { createAvalancheWalletClient } from "src/clients/createAvalancheWalletClient";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrepareImportTxnParameters } from ".";
+import { avalancheFuji } from "../../../chains";
+import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
 import { testContext } from "../fixtures/testContext";
 import { account1, account3 } from "../fixtures/transactions/common";
 import { getXChainMockServer } from "../fixtures/transactions/xChain";
