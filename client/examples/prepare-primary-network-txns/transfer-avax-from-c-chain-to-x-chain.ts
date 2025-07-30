@@ -3,12 +3,12 @@ import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
 
 async function run() {
-  // This is the private key of the account that will be used to export the avax from the C-chain to the P-chain
+  // This is the private key of the account that will be used to export the avax from the C-chain to the X-chain
   const account = privateKeyToAvalancheAccount(
     "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
   );
 
-  // This is the wallet client that will be used to export the avax from the C-chain to the P-chain
+  // This is the wallet client that will be used to export the avax from the C-chain to the X-chain
   const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
     transport: {
@@ -18,13 +18,13 @@ async function run() {
     account,
   });
 
-  // Creating a export transaction request from the C-chain to the P-chain
+  // Creating a export transaction request from the C-chain to the X-chain
   const cChainExportTxnRequest = await walletClient.cChain.prepareExportTxn({
-    destinationChain: "P",
+    destinationChain: "X",
     fromAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
     exportedOutput: {
-      addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
-      amount: 0.0001,
+      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      amount: 0.0011,
     },
   });
 
@@ -38,21 +38,21 @@ async function run() {
 
   // Logging the export transaction response
   console.log(
-    "Avax exported to Atomic Memory for C-chain to P-chain transfer",
+    "Avax exported to Atomic Memory for C-chain to X-chain transfer",
     sendTxnResponse
   );
 
-  // Creating a import transaction request in P-chain
-  const pChainImportTxnRequest = await walletClient.pChain.prepareImportTxn({
+  // Creating a import transaction request in X-chain
+  const xChainImportTxnRequest = await walletClient.xChain.prepareImportTxn({
     sourceChain: "C",
     importedOutput: {
-      addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
     },
   });
 
   // Signing and sending the import transaction request to the P-chain
   const sendTxnResponse2 = await walletClient.sendXPTransaction(
-    pChainImportTxnRequest
+    xChainImportTxnRequest
   );
 
   // Waiting for the import transaction to be confirmed on the P-chain
@@ -60,7 +60,7 @@ async function run() {
 
   // Logging the import transaction response
   console.log(
-    "Avax imported from Atomic Memory from C-chain to P-chain transfer",
+    "Avax imported from Atomic Memory from C-chain to X-chain transfer",
     sendTxnResponse2
   );
 }

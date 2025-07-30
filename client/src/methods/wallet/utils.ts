@@ -8,6 +8,7 @@ import {
   pvmSerial,
   secp256k1,
   TransferableOutput,
+  TransferOutput,
   TypeSymbols,
   UnsignedTx,
   utils,
@@ -36,11 +37,13 @@ import {
 import { getFeeState } from "../pChain/getFeeState.js";
 import { getL1Validator } from "../pChain/getL1Validator.js";
 import { getTx } from "../pChain/getTx.js";
+import { getAccountPubKey } from "./getAccountPubKey.js";
 import {
   CommonTxParams,
   FormattedCommonAVMTxParams,
   FormattedCommonPVMTxParams,
   Output,
+  TransferableOutputFull,
 } from "./types/common.js";
 export function getBaseUrl(client: AvalancheWalletCoreClient): string {
   const { chain } = client;
@@ -53,7 +56,7 @@ export function getBaseUrl(client: AvalancheWalletCoreClient): string {
   return new URL(configUrl).origin;
 }
 
-export function getBech32AddressFromAccountOrClient(
+export async function getBech32AddressFromAccountOrClient(
   client: AvalancheWalletCoreClient, // TODO: use this to fetch the default account
   account: AvalancheAccount | AddressType | undefined,
   chainAlias:
@@ -61,12 +64,13 @@ export function getBech32AddressFromAccountOrClient(
     | typeof X_CHAIN_ALIAS
     | typeof C_CHAIN_ALIAS,
   hrp: string
-): string {
+): Promise<string> {
   const xpAcc = parseAvalancheAccount(account)?.xpAccount || client.xpAccount;
 
   // TODO: if no account provided or xpAccount is not provided, fetch from wallet the default account
   if (!xpAcc) {
-    throw new Error("Account is not an XP account");
+    const { xp } = await getAccountPubKey(client);
+    return `${chainAlias}-${publicKeyToXPAddress(xp, hrp)}`;
   }
 
   return `${chainAlias}-${publicKeyToXPAddress(xpAcc.publicKey, hrp)}`;
@@ -166,7 +170,7 @@ export async function fetchCommonPVMTxParams(
     context,
   } = params;
   // If fromAddresses is not provided, use wallet addresses
-  const address = getBech32AddressFromAccountOrClient(
+  const address = await getBech32AddressFromAccountOrClient(
     client,
     account,
     chainAlias || P_CHAIN_ALIAS,
@@ -208,13 +212,10 @@ export async function fetchCommonPVMTxParams(
     });
     disableOwners = new PChainOwner(
       new Int(Number(disableTx.deactivationOwner.threshold)),
-      disableTx.deactivationOwner.addresses.map(
-        (addr) => new Address(utils.hexToBuffer(addr))
-      )
+      disableTx.deactivationOwner.addresses.map(Address.fromString)
     );
-
     disableTx.deactivationOwner.addresses.forEach((addr) => {
-      const address = `${P_CHAIN_ALIAS}-${addr}`;
+      const address = addr.startsWith("P-") ? addr : `${P_CHAIN_ALIAS}-${addr}`;
       fromAddressesSet.add(address);
     });
   }
@@ -277,7 +278,7 @@ export async function fetchCommonAVMTxParams(
   const { txParams, sourceChain, chainAlias, account, context } = params;
 
   // If fromAddresses is not provided, use wallet addresses
-  const address = getBech32AddressFromAccountOrClient(
+  const address = await getBech32AddressFromAccountOrClient(
     client,
     account,
     chainAlias || X_CHAIN_ALIAS,
@@ -382,4 +383,16 @@ export async function addPChainOwnerAuthSignature(
   if (signerIndex !== -1) {
     unsignedTx.addSignatureAt(signature, credentialIndex, signerIndex);
   }
+}
+
+// AvalancheJS exports output as Amounter instead of TransferOutput,
+// so we cast them here.
+export function toTransferableOutput(
+  output: TransferableOutput
+): TransferableOutputFull {
+  return {
+    ...output,
+    // Amounter to TransferOutput
+    output: output.output as unknown as TransferOutput,
+  };
 }

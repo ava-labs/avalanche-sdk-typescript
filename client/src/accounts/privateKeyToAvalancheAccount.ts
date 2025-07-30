@@ -1,8 +1,8 @@
 import { Hex } from "viem";
 import { privateKeyToAccount, PrivateKeyToAccountOptions } from "viem/accounts";
-import { AvalancheAccount, XPAddress } from "./avalancheAccount";
-import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
-import { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress";
+import { AvalancheAccount, XPAddress } from "./avalancheAccount.js";
+import { privateKeyToXPAccount } from "./privateKeyToXPAccount.js";
+import { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress.js";
 
 /**
  * Converts a private key to an Avalanche account.

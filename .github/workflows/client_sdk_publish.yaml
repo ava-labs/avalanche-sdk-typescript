@@ -48,7 +48,7 @@ jobs:
         run: |
           cd client
           npm install
-          npm run build --if-present
+          npm run build:all --if-present
 
       - name: Publish package
         run: |

@@ -7,7 +7,6 @@ import {
   Transport,
   webSocket,
 } from "viem";
-import { ipc } from "viem/node";
 import { commonHeaders } from "./common.js";
 import { AvalancheTransportConfig, ClientType } from "./types/types.js";
 
@@ -64,7 +63,9 @@ export function createAvalancheTransportClient<
         transportConfig.config
       ) as transport;
     case "ipc":
-      return ipc(transportConfig.path, transportConfig.config) as transport;
+      throw new Error(
+        "IPC transport is not available in browser environments. Use HTTP or WebSocket transport instead."
+      );
     case "fallback":
       return fallback(
         transportConfig.transports,

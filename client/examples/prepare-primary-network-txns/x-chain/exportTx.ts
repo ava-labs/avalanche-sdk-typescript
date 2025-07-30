@@ -1,7 +1,7 @@
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
-import { issueTx as issueCChainTx } from "@avalanche-sdk/client/methods/cChain";
+import { issueTx as issueXChainTx } from "@avalanche-sdk/client/methods/xChain";
 
 async function run() {
   const account = privateKeyToAvalancheAccount(
@@ -17,23 +17,24 @@ async function run() {
     account,
   });
 
-  const cChainExportTxnRequest = await walletClient.cChain.prepareExportTxn({
-    destinationChain: "P",
-    fromAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
-    exportedOutput: {
-      addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
-      amount: 0.0001,
-    },
+  const xChainExportTxnRequest = await walletClient.xChain.prepareExportTxn({
+    exportedOutputs: [
+      {
+        addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+        amount: 0.00001,
+      },
+    ],
+    destinationChain: "C",
   });
 
   // To sign and issue the txn, you can use one of the following code:
   // 1. Sign the txn and issue it manually
 
   // sign the txn
-  const signedTx = await walletClient.signXPTransaction(cChainExportTxnRequest);
+  const signedTx = await walletClient.signXPTransaction(xChainExportTxnRequest);
 
   // issue the txn
-  const issuedTxnResponse = await issueCChainTx(walletClient.cChainClient, {
+  const issuedTxnResponse = await issueXChainTx(walletClient.xChainClient, {
     tx: signedTx.signedTxHex,
     encoding: "hex",
   });
@@ -42,7 +43,7 @@ async function run() {
 
   // 2. Sign the txn and issue it in one go
   const sendTxnResponse = await walletClient.sendXPTransaction(
-    cChainExportTxnRequest
+    xChainExportTxnRequest
   );
 
   console.log("sendTxnResponse", sendTxnResponse);

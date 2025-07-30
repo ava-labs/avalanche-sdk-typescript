@@ -1,12 +1,12 @@
 import { Account } from "viem";
 import { deployContract, waitForTransactionReceipt } from "viem/actions";
-import { parseAvalancheAccount } from "../../../accounts/utils/parseAvalancheAccount";
-import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient";
-import { erc20ABI, erc20Bytecode } from "../abis/erc20";
+import { parseAvalancheAccount } from "../../../accounts/utils/parseAvalancheAccount.js";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { erc20ABI, erc20Bytecode } from "../abis/erc20.js";
 import {
   DeployErc20Parameters,
   DeployErc20ReturnType,
-} from "./types/deployErc20";
+} from "./types/deployErc20.js";
 
 export async function deployErc20(
   client: AvalancheWalletCoreClient,

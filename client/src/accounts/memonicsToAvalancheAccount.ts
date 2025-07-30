@@ -1,8 +1,8 @@
 import { HDKey } from "@scure/bip32";
 import { mnemonicToSeedSync } from "@scure/bip39";
 import { MnemonicToAccountOptions } from "viem/accounts";
-import { AvalancheAccount } from "./avalancheAccount";
-import { hdKeyToAvalancheAccount } from "./hdKeyToAvalancheAccount";
+import { AvalancheAccount } from "./avalancheAccount.js";
+import { hdKeyToAvalancheAccount } from "./hdKeyToAvalancheAccount.js";
 
 /**
  * Converts a mnemonic to an Avalanche account.

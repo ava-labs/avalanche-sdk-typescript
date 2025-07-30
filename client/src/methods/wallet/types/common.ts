@@ -1,4 +1,12 @@
-import { avm, pvm, Utxo } from "@avalabs/avalanchejs";
+import {
+  avm,
+  Id,
+  pvm,
+  pvmSerial,
+  TransferOutput,
+  TypeSymbols,
+  Utxo,
+} from "@avalabs/avalanchejs";
 
 export type CommonTxParams = {
   /**
@@ -69,4 +77,16 @@ export type Output = {
    * Optional. Threshold of `addresses`' signatures required to consume this UTXO.
    */
   threshold?: number;
+};
+
+export type TransferableOutputFull = {
+  output: TransferOutput;
+  assetId: Id;
+  _type: TypeSymbols;
+};
+
+export type StakeableOutputFull = {
+  output: pvmSerial.StakeableLockOut;
+  assetId: Id;
+  _type: TypeSymbols;
 };

@@ -1,8 +1,8 @@
 import { avm, avmSerial, utils } from "@avalabs/avalanchejs";
-import { AvalancheWalletCoreClient } from "src/clients/createAvalancheWalletCoreClient.js";
-import { X_CHAIN_ALIAS } from "src/methods/consts.js";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { X_CHAIN_ALIAS } from "../../../methods/consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonAVMTxParams, getChainIdFromAlias } from "../utils";
+import { fetchCommonAVMTxParams, getChainIdFromAlias } from "../utils.js";
 import {
   PrepareImportTxnParameters,
   PrepareImportTxnReturnType,
@@ -16,6 +16,29 @@ import {
  * @param client - The client to use for the transaction. {@link AvalancheWalletCoreClient}
  * @param params - The parameters for the transaction. {@link PrepareImportTxnParameters}
  * @returns The unsigned transaction. {@link PrepareImportTxnReturnType}
+ *
+ * @example
+ * ```ts
+ * import { prepareImportTxn } from "@avalanche-sdk/client/methods/wallet/xChain";
+ * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { avalanche } from "@avalanche-sdk/client/chains";
+ *
+ * const account = privateKeyToAvalancheAccount(privateKeyForTest);
+ * const walletClient = new AvalancheWalletCoreClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     url: "https://api.avax.network/ext/bc/C/rpc",
+ *   },
+ *   account,
+ * });
+ *
+ * const xChainImportTxnRequest = await prepareImportTxn(walletClient, {
+ *   sourceChain: "P",
+ *   importedOutput: {
+ *     amount: 1000000000000000000,
+ *     to: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+ *   },
+ * });
  */
 export async function prepareImportTxn(
   client: AvalancheWalletCoreClient,
