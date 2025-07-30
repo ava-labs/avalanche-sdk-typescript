@@ -89,38 +89,40 @@ export async function sendXPTransaction(
     };
   }
 
+  const response = await client.request<
+    AvalancheWalletRpcSchema,
+    {
+      method: "avalanche_sendTransaction";
+      params: Omit<
+        SendXPTransactionParameters,
+        | "account"
+        | "tx"
+        | "utxoIds"
+        | "subnetAuth"
+        | "subnetOwners"
+        | "disableOwners"
+        | "disableAuth"
+      > & {
+        transactionHex: string;
+        utxos: string[] | undefined;
+      };
+    },
+    string
+  >({
+    method: "avalanche_sendTransaction",
+    params: {
+      ...rest,
+      transactionHex:
+        typeof txOrTxHex === "string"
+          ? txOrTxHex
+          : utils.bufferToHex(txOrTxHex.toBytes()),
+      chainAlias,
+      utxos: utxoIds,
+    },
+  });
+
   return {
-    ...(await client.request<
-      AvalancheWalletRpcSchema,
-      {
-        method: "avalanche_sendTransaction";
-        params: Omit<
-          SendXPTransactionParameters,
-          | "account"
-          | "tx"
-          | "utxoIds"
-          | "subnetAuth"
-          | "subnetOwners"
-          | "disableOwners"
-          | "disableAuth"
-        > & {
-          transactionHex: string;
-          utxos: string[] | undefined;
-        };
-      },
-      SendXPTransactionReturnType
-    >({
-      method: "avalanche_sendTransaction",
-      params: {
-        ...rest,
-        transactionHex:
-          typeof txOrTxHex === "string"
-            ? txOrTxHex
-            : utils.bufferToHex(txOrTxHex.toBytes()),
-        chainAlias,
-        utxos: utxoIds,
-      },
-    })),
+    txHash: response,
     chainAlias,
   };
 }
