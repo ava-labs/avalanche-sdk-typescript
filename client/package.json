@@ -70,7 +70,6 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "browser": "./dist/avalanche-sdk-client.js",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
