@@ -1,9 +1,9 @@
 import { HDKey } from "@scure/bip32";
 import { toHex } from "viem";
 import { HDKeyToAccountOptions, privateKeyToAccount } from "viem/accounts";
-import { AvalancheAccount, LocalXPAccount } from "./avalancheAccount";
-import { privateKeyToXPAccount } from "./privateKeyToXPAccount";
-import { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress";
+import { AvalancheAccount, LocalXPAccount } from "./avalancheAccount.js";
+import { privateKeyToXPAccount } from "./privateKeyToXPAccount.js";
+import { publicKeyToXPAddress } from "./utils/publicKeyToXPAddress.js";
 
 /**
  * Options for the hdKeyToAvalancheAccount function.

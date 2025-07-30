@@ -1,10 +1,10 @@
 import { readContract } from "viem/actions";
-import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient";
-import { erc20ABI } from "../abis/erc20";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { erc20ABI } from "../abis/erc20.js";
 import {
   GetErc20SymbolParameters,
   GetErc20SymbolReturnType,
-} from "./types/getErc20Symbol";
+} from "./types/getErc20Symbol.js";
 
 export async function getErc20Symbol(
   client: AvalancheWalletCoreClient,

@@ -11,9 +11,9 @@ import {
 } from "@avalabs/avalanchejs";
 import { DefaultRequestMultipartBody, http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { privateKeyToAvalancheAccount } from "../../../../accounts";
-import { testContext } from "../testContext";
-import { privateKey1ForTest, privateKey2ForTest } from "./common";
+import { privateKeyToAvalancheAccount } from "../../../../accounts/privateKeyToAvalancheAccount.js";
+import { testContext } from "../testContext.js";
+import { privateKey1ForTest, privateKey2ForTest } from "./common.js";
 
 export const TEST_BASE_FEE = "0x2BF2";
 

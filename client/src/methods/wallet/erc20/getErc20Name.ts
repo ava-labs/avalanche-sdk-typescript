@@ -1,10 +1,10 @@
 import { readContract } from "viem/actions";
-import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient";
-import { erc20ABI } from "../abis/erc20";
+import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
+import { erc20ABI } from "../abis/erc20.js";
 import {
   GetErc20NameParameters,
   GetErc20NameReturnType,
-} from "./types/getErc20Name";
+} from "./types/getErc20Name.js";
 
 export async function getErc20Name(
   client: AvalancheWalletCoreClient,

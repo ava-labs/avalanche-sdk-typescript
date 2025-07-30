@@ -1,0 +1,92 @@
+const path = require('path');
+
+module.exports = {
+  mode: 'production',
+  entry: './src/index.ts',
+  target: 'web',
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      // Handle node: prefixed imports
+      'node:path': 'path-browserify',
+      'node:url': 'url',
+      'node:util': 'util',
+      'node:net': false,
+      'node:fs': false,
+      'node:os': 'os-browserify/browser',
+      'node:crypto': 'crypto-browserify',
+      'node:stream': 'stream-browserify',
+      'node:buffer': 'buffer',
+      'node:http': 'stream-http',
+      'node:https': 'https-browserify',
+      'node:zlib': 'browserify-zlib',
+      'node:querystring': 'querystring-es3',
+      'node:assert': 'assert',
+      'node:constants': 'constants-browserify',
+      'node:events': 'events',
+      'node:punycode': 'punycode',
+      'node:string_decoder': 'string_decoder',
+      'node:timers': 'timers-browserify',
+      'node:tty': 'tty-browserify',
+      'node:vm': 'vm-browserify',
+      'node:domain': 'domain-browser',
+      'node:process': 'process/browser',
+    },
+    // Handle .js extensions in TypeScript imports
+    extensionAlias: {
+      '.js': ['.ts', '.js'],
+      '.mjs': ['.mts', '.mjs'],
+    },
+    fallback: {
+      "util": require.resolve("util/"),
+      "path": require.resolve("path-browserify"),
+      "url": require.resolve("url/"),
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "buffer": require.resolve("buffer/"),
+      "os": require.resolve("os-browserify/browser"),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify"),
+      "zlib": require.resolve("browserify-zlib"),
+      "querystring": require.resolve("querystring-es3"),
+      "assert": require.resolve("assert/"),
+      "constants": require.resolve("constants-browserify"),
+      "events": require.resolve("events/"),
+      "punycode": require.resolve("punycode/"),
+      "string_decoder": require.resolve("string_decoder/"),
+      "timers": require.resolve("timers-browserify"),
+      "tty": require.resolve("tty-browserify"),
+      "vm": require.resolve("vm-browserify"),
+      "domain": require.resolve("domain-browser"),
+      "process": require.resolve("process/browser"),
+      "fs": false,
+      "net": false,
+      "tls": false,
+      "child_process": false,
+    },
+  },
+  output: {
+    filename: 'avalanche-sdk-client.js',
+    path: path.resolve(__dirname, 'dist'),
+    library: {
+      type: 'umd',
+      name: 'AvalancheSDKClient',
+    },
+    globalObject: 'this',
+  },
+  plugins: [
+    new (require('webpack')).ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
+    }),
+  ],
+}; 

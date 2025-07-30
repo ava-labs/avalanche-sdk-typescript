@@ -1,8 +1,8 @@
-import { XPAccount } from "./avalancheAccount";
-import { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey";
-import { xpSignMessage } from "./utils/xpSignMessage";
-import { xpSignTransaction } from "./utils/xpSignTransaction";
-import { xpVerifySignature } from "./utils/xpVerifySignature";
+import { XPAccount } from "./avalancheAccount.js";
+import { privateKeyToXPPublicKey } from "./utils/privateKeyToXPPublicKey.js";
+import { xpSignMessage } from "./utils/xpSignMessage.js";
+import { xpSignTransaction } from "./utils/xpSignTransaction.js";
+import { xpVerifySignature } from "./utils/xpVerifySignature.js";
 
 /**
  * Converts a private key to an XP account.

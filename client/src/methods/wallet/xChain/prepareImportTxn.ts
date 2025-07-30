@@ -2,7 +2,7 @@ import { avm, avmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { X_CHAIN_ALIAS } from "../../../methods/consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { fetchCommonAVMTxParams, getChainIdFromAlias } from "../utils";
+import { fetchCommonAVMTxParams, getChainIdFromAlias } from "../utils.js";
 import {
   PrepareImportTxnParameters,
   PrepareImportTxnReturnType,

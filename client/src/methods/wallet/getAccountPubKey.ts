@@ -46,12 +46,12 @@ export async function getAccountPubKey(
   return client.request<
     AvalancheWalletRpcSchema,
     {
-      method: "avalance_getAccountPubKey";
+      method: "avalanche_getAccountPubKey";
       params: {};
     },
     GetAccountPubKeyReturnType
   >({
-    method: "avalance_getAccountPubKey",
+    method: "avalanche_getAccountPubKey",
     params: {},
   });
 }
