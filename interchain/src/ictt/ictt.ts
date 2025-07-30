@@ -1,8 +1,11 @@
-import { WalletClient } from "viem";
+import { Address, WalletClient } from "viem";
 import { ChainConfig } from "../icm/types/chainConfig";
 import { tokenHomeABI } from "../abis/tokenHomeABI";
 import { erc20ABI } from "../abis/erc20ABI";
+import { DEFAULT_TELEPORTER_ADDRESS } from "../icm/consts";
+import { tokenRemoteABI } from "../abis/tokenRemoteABI";
 
+// TODO: Add dev docs
 export class ICTT {
     private walletClient: WalletClient;
     private sourceChain: ChainConfig | undefined;
@@ -39,11 +42,65 @@ export class ICTT {
         return approveTxHash;
     }
 
+    async deployTokenHomeContract(
+        sourceChain: ChainConfig | undefined,
+        teleporterRegistry: Address,
+        erc20TokenAddress: Address,
+        erc20TokenDecimals: number,
+        minimumTeleporterVersion: number,
+    ) {
+        return await this.walletClient.deployContract({
+            abi: tokenHomeABI.abi,
+            bytecode: tokenHomeABI.bytecode as `0x${string}`,
+            args: [
+                teleporterRegistry,
+                DEFAULT_TELEPORTER_ADDRESS,
+                minimumTeleporterVersion,
+                erc20TokenAddress,
+                erc20TokenDecimals,
+            ],
+            chain: sourceChain ?? this.sourceChain ?? null,
+            account: this.walletClient.account ?? null,
+        });
+    }
+
+    async deployTokenRemoteContract(
+        destinationChain: ChainConfig | undefined,
+        teleporterRegistry: Address,
+        minimumTeleporterVersion: number,
+        tokenHomeBlockchainID: string,
+        tokenHomeAddress: Address,
+        tokenHomeDecimals: number,
+        tokenName: string,
+        tokenSymbol: string,
+        destinationTokenDecimals: number,
+    ) {
+        return await this.walletClient.deployContract({
+            abi: tokenRemoteABI.abi,
+            bytecode: tokenRemoteABI.bytecode as `0x${string}`,
+            args: [
+                {
+                    teleporterRegistryAddress: teleporterRegistry,
+                    teleporterManager: DEFAULT_TELEPORTER_ADDRESS,
+                    minTeleporterVersion: BigInt(minimumTeleporterVersion),
+                    tokenHomeBlockchainID: tokenHomeBlockchainID,
+                    tokenHomeAddress: tokenHomeAddress,
+                    tokenHomeDecimals: Number(tokenHomeDecimals), // uint8
+                },
+                tokenName,
+                tokenSymbol,
+                Number(destinationTokenDecimals)
+            ],
+            chain: destinationChain ?? this.destinationChain ?? null,
+            account: this.walletClient.account ?? null,
+        });
+    }
+
     async sendToken(
-        tokenHomeContract: `0x${string}`,
-        tokenRemoteContract: `0x${string}`,
-        recipient: `0x${string}`,
-        tokenAddress: `0x${string}`,
+        tokenHomeContract: Address,
+        tokenRemoteContract: Address,
+        recipient: Address,
+        tokenAddress: Address,
         amountInBaseUnit: number,
         sourceChain: ChainConfig | undefined,
         destinationChain: ChainConfig | undefined,
