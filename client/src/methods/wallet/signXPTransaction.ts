@@ -256,37 +256,48 @@ export async function signXPTransaction(
     }
   }
 
+  if (chainAlias === "C") {
+    throw new Error(
+      "Signing transactions for C-chain is not supported in Core right now"
+    );
+  }
+
+  const response = await client.request<
+    AvalancheWalletRpcSchema,
+    {
+      method: "avalanche_signTransaction";
+      params: Omit<
+        SignXPTransactionParameters,
+        | "account"
+        | "tx"
+        | "utxoIds"
+        | "subnetAuth"
+        | "subnetOwners"
+        | "disableOwners"
+        | "disableAuth"
+      > & {
+        transactionHex: string;
+        utxos: string[] | undefined;
+      };
+    },
+    SignXPTransactionReturnType & {
+      signedTransactionHex: string;
+    }
+  >({
+    method: "avalanche_signTransaction",
+    params: {
+      transactionHex:
+        typeof txOrTxHex === "string"
+          ? txOrTxHex
+          : utils.bufferToHex(txOrTxHex.toBytes()),
+      chainAlias,
+      utxos: utxoIds,
+    },
+  });
+
   return {
-    ...(await client.request<
-      AvalancheWalletRpcSchema,
-      {
-        method: "avalanche_signTransaction";
-        params: Omit<
-          SignXPTransactionParameters,
-          | "account"
-          | "tx"
-          | "utxoIds"
-          | "subnetAuth"
-          | "subnetOwners"
-          | "disableOwners"
-          | "disableAuth"
-        > & {
-          transactionHex: string;
-          utxos: string[] | undefined;
-        };
-      },
-      SignXPTransactionReturnType
-    >({
-      method: "avalanche_signTransaction",
-      params: {
-        transactionHex:
-          typeof txOrTxHex === "string"
-            ? txOrTxHex
-            : utils.bufferToHex(txOrTxHex.toBytes()),
-        chainAlias,
-        utxos: utxoIds,
-      },
-    })),
+    signedTxHex: response.signedTransactionHex,
+    signatures: response.signatures,
     subnetAuth,
     subnetOwners,
     disableOwners,
