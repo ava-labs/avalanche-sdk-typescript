@@ -1,9 +1,14 @@
 import { Chain, Transport } from "viem";
 import { getAccountPubKey } from "../../methods/wallet/getAccountPubKey.js";
+import { send } from "../../methods/wallet/send.js";
 import { sendXPTransaction } from "../../methods/wallet/sendXPTransaction.js";
 import { signXPMessage } from "../../methods/wallet/signXPMessage.js";
 import { signXPTransaction } from "../../methods/wallet/signXPTransaction.js";
 import { GetAccountPubKeyReturnType } from "../../methods/wallet/types/getAccountPubKey.js";
+import {
+  SendParameters,
+  SendReturnType,
+} from "../../methods/wallet/types/send.js";
 import {
   SendXPTransactionParameters,
   SendXPTransactionReturnType,
@@ -207,6 +212,29 @@ export type AvalancheWalletActions = {
    * ```
    */
   waitForTxn: (args: WaitForTxnParameters) => Promise<void>;
+
+  /**
+   * Sends tokens from the source chain to the destination chain.
+   *
+   * @param args - The parameters for the transaction. {@link SendParameters}
+   * @returns The hashes of the transactions. {@link SendReturnType}
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
+   * import { avalanche } from '@avalanche-sdk/client/chains'
+   *
+   * const walletClient = createAvalancheWalletClient({
+   *   chain: avalanche,
+   *   transport: { type: "http" },
+   * })
+   *
+   * const result = await walletClient.send({
+   *   amount: 1,
+   *   to: "0x0000000000000000000000000000000000000000",
+   * });
+   */
+  send: (args: SendParameters) => Promise<SendReturnType>;
 };
 
 export function avalancheWalletActions<
@@ -218,5 +246,6 @@ export function avalancheWalletActions<
     signXPTransaction: (args) => signXPTransaction(client, args),
     getAccountPubKey: () => getAccountPubKey(client),
     waitForTxn: (args) => waitForTxn(client, args),
+    send: (args) => send(client, args),
   };
 }

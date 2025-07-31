@@ -24,7 +24,7 @@ async function run() {
   const pChainExportTxnRequest = await walletClient.pChain.prepareExportTxn({
     exportedOutputs: [
       {
-        addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+        addresses: [account.getXPAddress("P", "fuji")], // P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
         amount: 0.0111,
       },
     ],
@@ -46,7 +46,7 @@ async function run() {
   const xChainImportTxnRequest = await walletClient.xChain.prepareImportTxn({
     sourceChain: "P",
     importedOutput: {
-      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
     },
   });
 

@@ -13,7 +13,8 @@ import {
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { Address as AddressType } from "viem";
+import { Account, Address as AddressType } from "viem";
+import { getAddresses } from "viem/actions";
 import {
   AvalancheAccount,
   parseAvalancheAccount,
@@ -57,7 +58,7 @@ export function getBaseUrl(client: AvalancheWalletCoreClient): string {
 }
 
 export async function getBech32AddressFromAccountOrClient(
-  client: AvalancheWalletCoreClient, // TODO: use this to fetch the default account
+  client: AvalancheWalletCoreClient,
   account: AvalancheAccount | AddressType | undefined,
   chainAlias:
     | typeof P_CHAIN_ALIAS
@@ -67,13 +68,34 @@ export async function getBech32AddressFromAccountOrClient(
 ): Promise<string> {
   const xpAcc = parseAvalancheAccount(account)?.xpAccount || client.xpAccount;
 
-  // TODO: if no account provided or xpAccount is not provided, fetch from wallet the default account
   if (!xpAcc) {
     const { xp } = await getAccountPubKey(client);
     return `${chainAlias}-${publicKeyToXPAddress(xp, hrp)}`;
   }
 
   return `${chainAlias}-${publicKeyToXPAddress(xpAcc.publicKey, hrp)}`;
+}
+
+export async function getEVMAddressFromAccountOrClient(
+  client: AvalancheWalletCoreClient,
+  account: AvalancheAccount | undefined
+): Promise<string> {
+  let currentAccountEVMAddress =
+    account?.getEVMAddress() || (client.account as never as Account)?.address;
+
+  if (!currentAccountEVMAddress) {
+    const getAddressesResponse = await getAddresses(client);
+    if (getAddressesResponse.length === 0) {
+      throw new Error("No EVM address found from wallet");
+    }
+    if (getAddressesResponse.length > 1) {
+      throw new Error(
+        "Multiple EVM addresses found from wallet, pass the from address"
+      );
+    }
+    currentAccountEVMAddress = getAddressesResponse[0] as `0x${string}`;
+  }
+  return currentAccountEVMAddress;
 }
 
 export function evmAddressToBytes(address: string) {
@@ -395,4 +417,33 @@ export function toTransferableOutput(
     // Amounter to TransferOutput
     output: output.output as unknown as TransferOutput,
   };
+}
+
+function addOrModifyXPAddressAliasUtil(
+  address: string | undefined,
+  alias: string
+) {
+  if (!address) {
+    return undefined;
+  }
+  if (address.startsWith(alias)) {
+    return address;
+  }
+
+  const strippedAddress =
+    address.split("-").length === 1 ? address : address.split("-")[1];
+
+  return `${alias}-${strippedAddress}`;
+}
+
+export function addOrModifyXPAddressesAlias(
+  address: string[] | undefined,
+  alias: string
+) {
+  if (!address) {
+    return undefined;
+  }
+  return address
+    .map((addr) => addOrModifyXPAddressAliasUtil(addr, alias))
+    .filter((addr) => addr !== undefined);
 }
