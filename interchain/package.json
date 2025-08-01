@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript#readme",
   "dependencies": {
+    "@avalabs/avalanchejs": "5.1.0-alpha.1",
     "@avalanche-sdk/rpc": "^0.0.4-alpha.1"
   },
   "peerDependencies": {
@@ -49,7 +50,8 @@
     ".": "./dist/index.js",
     "./chains": "./dist/chains/index.js",
     "./icm": "./dist/icm/index.js",
-    "./ictt": "./dist/ictt/index.js"
+    "./ictt": "./dist/ictt/index.js",
+    "./warp": "./dist/warp/index.js"
   },
   "typesVersions": {
     "*": {
@@ -61,6 +63,9 @@
       ],
       "ictt": [
         "dist/ictt/index.d.ts"
+      ],
+      "warp": [
+        "dist/warp/index.d.ts"
       ]
     }
   }
