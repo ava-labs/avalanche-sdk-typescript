@@ -22,7 +22,7 @@ export async function transferCtoCChain(
   params: TransferCtoCChainParameters
 ): Promise<TransferCtoCChainReturnType> {
   const isAccountProvided = !!params.account || !!client.account;
-  console.log("isAccountProvided", isAccountProvided);
+
   // Get the current account C chain address
   const currentAccountEVMAddress =
     params.from ||
