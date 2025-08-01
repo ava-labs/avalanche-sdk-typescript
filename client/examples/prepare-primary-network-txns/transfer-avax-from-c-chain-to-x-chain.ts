@@ -21,9 +21,9 @@ async function run() {
   // Creating a export transaction request from the C-chain to the X-chain
   const cChainExportTxnRequest = await walletClient.cChain.prepareExportTxn({
     destinationChain: "X",
-    fromAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
+    fromAddress: account.getEVMAddress(), // 0x76Dd3d7b2f635c2547B861e55aE8A374E587742D
     exportedOutput: {
-      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
       amount: 0.0011,
     },
   });
@@ -46,7 +46,7 @@ async function run() {
   const xChainImportTxnRequest = await walletClient.xChain.prepareImportTxn({
     sourceChain: "C",
     importedOutput: {
-      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
     },
   });
 

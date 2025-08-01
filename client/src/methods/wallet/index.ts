@@ -1,5 +1,6 @@
 export type { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 export { getAccountPubKey } from "./getAccountPubKey.js";
+export { send } from "./send.js";
 export { sendXPTransaction } from "./sendXPTransaction.js";
 export { signXPMessage } from "./signXPMessage.js";
 export { signXPTransaction } from "./signXPTransaction.js";
@@ -14,6 +15,11 @@ export type {
   GetAccountPubKeyErrorType,
   GetAccountPubKeyReturnType,
 } from "./types/getAccountPubKey.js";
+export type {
+  SendErrorType,
+  SendParameters,
+  SendReturnType,
+} from "./types/send.js";
 export type {
   SendXPTransactionErrorType,
   SendXPTransactionParameters,
@@ -33,4 +39,5 @@ export type {
   WaitForTxnErrorType,
   WaitForTxnParameters,
 } from "./types/waitForTxn.js";
+export { addOrModifyXPAddressesAlias as addOrModifyXPAddressAlias } from "./utils.js";
 export { waitForTxn } from "./waitForTxn.js";
