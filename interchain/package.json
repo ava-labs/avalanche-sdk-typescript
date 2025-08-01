@@ -2,7 +2,12 @@
   "name": "@avalanche-sdk/interchain",
   "version": "0.0.1-alpha.1",
   "description": "Interchain package for handling ICM/ICTT messages",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "npx tsc"
   },
@@ -24,11 +29,33 @@
   },
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript#readme",
   "dependencies": {
-    "@avalanche-sdk/rpc": "^0.0.4-alpha.1",
-    "viem": "^2.31.7"
+    "@avalanche-sdk/rpc": "^0.0.4-alpha.1"
+  },
+  "peerDependencies": {
+    "viem": "^2.33.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./chains": "./dist/chains/index.js",
+    "./icm": "./dist/icm/index.js",
+    "./ictt": "./dist/ictt/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "chains": [
+        "dist/chains/index.d.ts"
+      ],
+      "icm": [
+        "dist/icm/index.d.ts"
+      ],
+      "ictt": [
+        "dist/ictt/index.d.ts"
+      ]
+    }
   }
 }

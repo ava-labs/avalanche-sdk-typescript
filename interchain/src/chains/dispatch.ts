@@ -1,4 +1,5 @@
 import { defineChain } from "viem";
+import { ChainConfig } from "./types/chainConfig";
 
 export const dispatch = defineChain({
   id: 779672,
@@ -22,5 +23,9 @@ export const dispatch = defineChain({
       address: '0x083e276d96ce818f2225d901b44e358dcfc5d606'
     }
   },
+  interchainContracts: {
+    teleporterRegistry: '0xF86Cb19Ad8405AEFa7d09C778215D2Cb6eBfB228',
+    teleporterManager: '0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf',
+  },
   testnet: true
-}); 
+}) as ChainConfig;
