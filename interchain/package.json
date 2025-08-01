@@ -11,6 +11,12 @@
   "scripts": {
     "build": "npx tsc"
   },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/fixtures/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ava-labs/avalanche-sdk-typescript.git",
