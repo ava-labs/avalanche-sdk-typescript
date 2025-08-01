@@ -75,8 +75,10 @@ Here's a demo to do that with the Interchain SDK.
 ```typescript
 import { http, createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { avalancheFuji, dispatch } from "@avalanche-sdk/interchain/chains";
 import { createICTTClient } from "@avalanche-sdk/interchain";
+
+// These will be made available in separate SDK
+import { avalancheFuji, dispatch } from "@avalanche-sdk/interchain/chains";
 
 const account = privateKeyToAccount('0x63e0730edea86f6e9e95db48dbcab18406e60bebae45ad33e099f09d21450ebf');
 
