@@ -13,6 +13,7 @@ const avalancheWalletClient = avalancheWalletActions(client);
 test("default", async () => {
   expect(avalancheWalletClient).toMatchInlineSnapshot(`{
   "getAccountPubKey": [Function],
+  "send": [Function],
   "sendXPTransaction": [Function],
   "signXPMessage": [Function],
   "signXPTransaction": [Function],
