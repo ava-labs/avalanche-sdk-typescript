@@ -55,6 +55,10 @@ import { avalanche } from '@avalanche-sdk/client/chains'
 // Create an account from private key
 const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890123456789012345678901234")
 
+// Get P chain Address and Evm Address
+const evmAddress = account.getEVMAddress()
+const pchainAddress = account.getXPAddress("P", "fuji")
+
 // Create a wallet client
 const walletClient = createAvalancheWalletClient({
   account,
@@ -64,17 +68,23 @@ const walletClient = createAvalancheWalletClient({
   },
 })
 
+// Prepare a txn request
+const xChainExportTxnRequest = await walletClient.xChain.prepareExportTxn({
+  exportedOutputs: [
+    {
+      addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
+      amount: 0.001,
+    },
+  ],
+  destinationChain: "P",
+});
+
 // Send an XP transaction
-const result = await walletClient.sendXPTransaction({
-  amount: "1000000000", // 1 AVAX in nAVAX
-  to: "X-avax1tnuesf6cqwnjw7fxjyk7lhch0vhf0v95wj5jvy",
-  assetID: "AVAX"
-})
+const result = await walletClient.sendXPTransaction(xChainExportTxnRequest)
 
 // Sign a message
 const signedMessage = await walletClient.signXPMessage({
   message: "Hello Avalanche",
-  address: "X-avax1tnuesf6cqwnjw7fxjyk7lhch0vhf0v95wj5jvy"
 })
 
 // Get account public key
