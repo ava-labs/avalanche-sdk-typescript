@@ -1,4 +1,4 @@
-name: Primary Network SDK CI
+name: Client SDK CI
 
 on:
   push:
