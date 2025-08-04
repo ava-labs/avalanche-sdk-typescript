@@ -15,14 +15,9 @@ let value: DeliveredIcmMessage = {
   messageNonce: "<value>",
   from: "<value>",
   to: "<value>",
-  messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  messageExecuted: true,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -39,12 +34,12 @@ let value: DeliveredIcmMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 4248.74,
+    timestamp: 6459.73,
     gasSpent: "<value>",
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 3498.1,
+    timestamp: 8250.11,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",

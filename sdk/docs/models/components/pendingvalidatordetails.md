@@ -10,8 +10,8 @@ let value: PendingValidatorDetails = {
   nodeId: "<id>",
   subnetId: "<id>",
   amountStaked: "<value>",
-  startTimestamp: 9284.04,
-  endTimestamp: 5123.7,
+  startTimestamp: 9843.29,
+  endTimestamp: 5112.58,
   validationStatus: "pending",
 };
 ```

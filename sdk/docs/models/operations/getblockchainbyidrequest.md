@@ -7,7 +7,6 @@ import { GetBlockchainByIdRequest } from "@avalanche-sdk/sdk/models/operations";
 
 let value: GetBlockchainByIdRequest = {
   blockchainId: "2q9e4r6Mu3U68nU1fYjgbR6JvwrRx36CohpAX5UQxse55x1Q5",
-  network: "mainnet",
 };
 ```
 

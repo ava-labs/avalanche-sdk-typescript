@@ -16,13 +16,8 @@ let value: DeliveredTeleporterMessage = {
   from: "<value>",
   to: "<value>",
   messageExecuted: false,
-  receipts: [
-    {
-      receivedMessageNonce: "<value>",
-      relayerRewardAddress: "<value>",
-    },
-  ],
-  receiptDelivered: false,
+  receipts: [],
+  receiptDelivered: true,
   rewardDetails: {
     address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     name: "Wrapped AVAX",
@@ -39,12 +34,12 @@ let value: DeliveredTeleporterMessage = {
   },
   sourceTransaction: {
     txHash: "<value>",
-    timestamp: 7991.01,
+    timestamp: 1403.23,
     gasSpent: "<value>",
   },
   destinationTransaction: {
     txHash: "<value>",
-    timestamp: 4500.29,
+    timestamp: 4770.43,
     gasSpent: "<value>",
     rewardRedeemer: "<value>",
     delivererAddress: "<value>",

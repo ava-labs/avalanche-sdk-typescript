@@ -33,7 +33,7 @@ let value: ListPChainUtxosResponse = {
     },
   ],
   chainInfo: {
-    chainName: "p-chain",
+    chainName: "c-chain",
     network: "mainnet",
   },
 };

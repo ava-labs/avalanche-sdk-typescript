@@ -23,7 +23,7 @@ let value: Erc20TokenBalance = {
     currencyCode: "usd",
     value: 42.42,
   },
-  tokenReputation: null,
+  tokenReputation: "Malicious",
 };
 ```
 

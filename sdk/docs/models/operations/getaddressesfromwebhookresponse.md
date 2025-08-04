@@ -8,9 +8,11 @@ import { GetAddressesFromWebhookResponse } from "@avalanche-sdk/sdk/models/opera
 let value: GetAddressesFromWebhookResponse = {
   result: {
     addresses: [
-      "<value>",
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
     ],
-    totalAddresses: 7578.19,
+    totalAddresses: 1227.61,
   },
 };
 ```

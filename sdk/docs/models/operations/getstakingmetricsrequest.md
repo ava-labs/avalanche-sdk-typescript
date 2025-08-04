@@ -9,7 +9,7 @@ let value: GetStakingMetricsRequest = {
   metric: "validatorCount",
   startTimestamp: 1689541049,
   endTimestamp: 1689800249,
-  network: "mainnet",
+  pageSize: 10,
 };
 ```
 
