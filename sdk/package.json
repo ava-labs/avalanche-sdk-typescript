@@ -43,10 +43,6 @@
       "./models/errors": "./src/models/errors/index.ts",
       "./models/components": "./src/models/components/index.ts",
       "./models/operations": "./src/models/operations/index.ts",
-      "./primary-network": "./src/primary-network/index.ts",
-      "./primary-network/transactions/pchain": "./src/primary-network/transactions/p-chain/index.ts",
-      "./primary-network/transactions/cchain": "./src/primary-network/transactions/c-chain/index.ts",
-      "./primary-network/warp": "./src/primary-network/warp/index.ts",
       "./client": "./src/client/index.ts",
       "./client/accounts": "./src/client/accounts/index.ts",
       "./client/chains": "./src/client/chains/index.ts",
@@ -59,6 +55,9 @@
       "./client/methods/pChain": "./src/client/methods/pChain/index.ts",
       "./client/methods/public": "./src/client/methods/public/index.ts",
       "./client/methods/wallet": "./src/client/methods/wallet/index.ts",
+      "./client/methods/wallet/cChain": "./src/client/methods/wallet/cChain/index.ts",
+      "./client/methods/wallet/pChain": "./src/client/methods/wallet/pChain/index.ts",
+      "./client/methods/wallet/xChain": "./src/client/methods/wallet/xChain/index.ts",
       "./client/methods/xChain": "./src/client/methods/xChain/index.ts",
       "./client/node": "./src/client/node/index.ts",
       "./client/nonce": "./src/client/nonce/index.ts",
@@ -125,50 +124,6 @@
       "require": {
         "types": "./dist/commonjs/models/operations/index.d.ts",
         "default": "./dist/commonjs/models/operations/index.js"
-      }
-    },
-    "./primary-network": {
-      "import": {
-        "@avalanche-sdk/sdk/source": "./src/primary-network/index.ts",
-        "types": "./dist/esm/primary-network/index.d.ts",
-        "default": "./dist/esm/primary-network/index.js"
-      },
-      "require": {
-        "types": "./dist/commonjs/primary-network/index.d.ts",
-        "default": "./dist/commonjs/primary-network/index.js"
-      }
-    },
-    "./primary-network/transactions/pchain": {
-      "import": {
-        "@avalanche-sdk/sdk/source": "./src/primary-network/transactions/p-chain/index.ts",
-        "types": "./dist/esm/primary-network/transactions/p-chain/index.d.ts",
-        "default": "./dist/esm/primary-network/transactions/p-chain/index.js"
-      },
-      "require": {
-        "types": "./dist/commonjs/primary-network/transactions/p-chain/index.d.ts",
-        "default": "./dist/commonjs/primary-network/transactions/p-chain/index.js"
-      }
-    },
-    "./primary-network/transactions/cchain": {
-      "import": {
-        "@avalanche-sdk/sdk/source": "./src/primary-network/transactions/c-chain/index.ts",
-        "types": "./dist/esm/primary-network/transactions/c-chain/index.d.ts",
-        "default": "./dist/esm/primary-network/transactions/c-chain/index.js"
-      },
-      "require": {
-        "types": "./dist/commonjs/primary-network/transactions/c-chain/index.d.ts",
-        "default": "./dist/commonjs/primary-network/transactions/c-chain/index.js"
-      }
-    },
-    "./primary-network/warp": {
-      "import": {
-        "@avalanche-sdk/sdk/source": "./src/primary-network/warp/index.ts",
-        "types": "./dist/esm/primary-network/warp/index.d.ts",
-        "default": "./dist/esm/primary-network/warp/index.js"
-      },
-      "require": {
-        "types": "./dist/commonjs/primary-network/warp/index.d.ts",
-        "default": "./dist/commonjs/primary-network/warp/index.js"
       }
     },
     "./client": {
@@ -303,6 +258,39 @@
         "default": "./dist/commonjs/client/methods/wallet/index.js"
       }
     },
+    "./client/methods/wallet/cChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/client/methods/wallet/cChain/index.ts",
+        "types": "./dist/esm/client/methods/wallet/cChain/index.d.ts",
+        "default": "./dist/esm/client/methods/wallet/cChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/client/methods/wallet/cChain/index.d.ts",
+        "default": "./dist/commonjs/client/methods/wallet/cChain/index.js"
+      }
+    },
+    "./client/methods/wallet/pChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/client/methods/wallet/pChain/index.ts",
+        "types": "./dist/esm/client/methods/wallet/pChain/index.d.ts",
+        "default": "./dist/esm/client/methods/wallet/pChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/client/methods/wallet/pChain/index.d.ts",
+        "default": "./dist/commonjs/client/methods/wallet/pChain/index.js"
+      }
+    },
+    "./client/methods/wallet/xChain": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/client/methods/wallet/xChain/index.ts",
+        "types": "./dist/esm/client/methods/wallet/xChain/index.d.ts",
+        "default": "./dist/esm/client/methods/wallet/xChain/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/client/methods/wallet/xChain/index.d.ts",
+        "default": "./dist/commonjs/client/methods/wallet/xChain/index.js"
+      }
+    },
     "./client/methods/xChain": {
       "import": {
         "@avalanche-sdk/sdk/source": "./src/client/methods/xChain/index.ts",
@@ -378,6 +366,17 @@
       "require": {
         "types": "./dist/commonjs/client/window/index.d.ts",
         "default": "./dist/commonjs/client/window/index.js"
+      }
+    },
+    "./*.js": {
+      "import": {
+        "@avalanche-sdk/sdk/source": "./src/*.ts",
+        "types": "./dist/esm/*.d.ts",
+        "default": "./dist/esm/*.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/*.d.ts",
+        "default": "./dist/commonjs/*.js"
       }
     },
     "./*": {
