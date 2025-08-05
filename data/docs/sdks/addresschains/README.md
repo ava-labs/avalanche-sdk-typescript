@@ -13,6 +13,7 @@ Lists the chains where the specified address has  participated in transactions o
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listAddressChains" method="get" path="/v1/address/{address}/chains" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
