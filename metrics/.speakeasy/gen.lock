@@ -3,10 +3,10 @@ id: 08752bf2-e791-41ce-8509-32ac5e1c0179
 management:
   docChecksum: 367751ce2e2821606b6c9edaba6f9407
   docVersion: 1.0.0
-  speakeasyVersion: 1.597.0
-  generationVersion: 2.673.2
-  releaseVersion: 0.4.2
-  configChecksum: edd539e30be1002b9ed6acff9dc7a62b
+  speakeasyVersion: 1.598.2
+  generationVersion: 2.674.3
+  releaseVersion: 0.4.3
+  configChecksum: 91a419d5ae509d645033e93ef9369cb7
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: metrics
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/metrics
@@ -15,7 +15,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.19
+    core: 3.21.20
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
