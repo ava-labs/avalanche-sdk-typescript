@@ -20,6 +20,7 @@ Check the health of the service.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="data-health-check" method="get" path="/v1/health-check" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -91,6 +92,7 @@ Create a new webhook.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="createWebhook" method="post" path="/v1/webhooks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -187,6 +189,7 @@ Lists webhooks for the user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listWebhooks" method="get" path="/v1/webhooks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -267,6 +270,7 @@ Retrieves a webhook by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getWebhook" method="get" path="/v1/webhooks/{id}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -343,6 +347,7 @@ Deactivates a webhook by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="deactivateWebhook" method="delete" path="/v1/webhooks/{id}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -419,6 +424,7 @@ Updates an existing webhook.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="updateWebhook" method="patch" path="/v1/webhooks/{id}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -497,6 +503,7 @@ Generates a new shared secret or rotate an existing one.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="generateOrRotateSharedSecret" method="post" path="/v1/webhooks:generateOrRotateSharedSecret" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -568,6 +575,7 @@ Get a previously generated shared secret.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getSharedSecret" method="get" path="/v1/webhooks:getSharedSecret" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 

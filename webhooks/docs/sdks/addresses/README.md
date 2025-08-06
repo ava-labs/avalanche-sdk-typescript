@@ -15,6 +15,7 @@ Add addresses to webhook. Only valid for EVM activity webhooks.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="addAddressesToWebhook" method="patch" path="/v1/webhooks/{id}/addresses" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -101,6 +102,7 @@ Remove addresses from webhook. Only valid for EVM activity webhooks.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="removeAddressesFromWebhook" method="delete" path="/v1/webhooks/{id}/addresses" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
@@ -187,6 +189,7 @@ List adresses by webhook. Only valid for EVM activity webhooks.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAddressesFromWebhook" method="get" path="/v1/webhooks/{id}/addresses" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/webhooks";
 
