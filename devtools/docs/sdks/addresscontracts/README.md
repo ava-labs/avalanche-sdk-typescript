@@ -13,6 +13,7 @@ Lists all contracts deployed by the given address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listContractDeployments" method="get" path="/v1/chains/{chainId}/contracts/{address}/deployments" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

@@ -13,6 +13,7 @@ Gets staking metrics for a given subnet.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getStakingMetrics" method="get" path="/v2/networks/{network}/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

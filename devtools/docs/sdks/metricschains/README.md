@@ -20,6 +20,7 @@ Get a list of Metrics API supported blockchains.  This endpoint is paginated and
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listChains" method="get" path="/v2/chains" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -101,6 +102,7 @@ Get chain information for Metrics API supported blockchain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getChain" method="get" path="/v2/chains/{chainId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -212,6 +214,7 @@ All metrics are updated several times every hour. Each metric data point has a `
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getEvmChainMetrics" method="get" path="/v2/chains/{chainId}/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -305,6 +308,7 @@ Gets teleporter metrics for an EVM chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTeleporterMetricsByChain" method="get" path="/v2/chains/{chainId}/teleporterMetrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -386,6 +390,7 @@ Gets the rolling window metrics for an EVM chain for the last hour, day, month, 
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getEvmChainRollingWindowMetrics" method="get" path="/v2/chains/{chainId}/rollingWindowMetrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -467,6 +472,7 @@ Get list of NFT holders and number of NFTs held by contract address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getNftHoldersByContractAddress" method="get" path="/v2/chains/{chainId}/contracts/{address}/nfts:listHolders" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -554,6 +560,7 @@ Get list of addresses and their latest balances that have held more than a certa
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAddressesByBalanceOverTime" method="get" path="/v2/chains/{chainId}/contracts/{address}/balances" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -647,6 +654,7 @@ Get list of addresses and their net bridged amounts that have bridged more than 
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAddressesByBtcbBridged" method="get" path="/v2/chains/43114/btcb/bridged:getAddresses" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

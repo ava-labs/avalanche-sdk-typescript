@@ -15,6 +15,7 @@ If the address is a smart contract, returns the transaction in which it was depl
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getDeploymentTransaction" method="get" path="/v1/chains/{chainId}/contracts/{address}/transactions:getDeployment" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -98,6 +99,7 @@ Gets metadata about the contract at the given address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getContractMetadata" method="get" path="/v1/chains/{chainId}/addresses/{address}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -179,6 +181,7 @@ Lists ERC transfers for an ERC-20, ERC-721, or ERC-1155 contract address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listTransfers" method="get" path="/v1/chains/{chainId}/tokens/{address}/transfers" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

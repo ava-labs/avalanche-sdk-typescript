@@ -15,6 +15,7 @@ C-Chain balances returned are only the shared atomic memory balance. For EVM bal
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getBalancesByAddresses" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/balances" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

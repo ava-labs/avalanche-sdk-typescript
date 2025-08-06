@@ -20,6 +20,7 @@ Filterable by block ranges.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listTransactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -111,6 +112,7 @@ Lists native transactions for an address. Filterable by block range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listNativeTransactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions:listNative" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -200,6 +202,7 @@ Lists ERC-20 transfers for an address. Filterable by block range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc20Transactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions:listErc20" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -289,6 +292,7 @@ Lists ERC-721 transfers for an address. Filterable by block range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc721Transactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions:listErc721" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -378,6 +382,7 @@ Lists ERC-1155 transfers for an address. Filterable by block range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc1155Transactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions:listErc1155" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -469,6 +474,7 @@ Note that the internal transactions list only contains `CALL` or `CALLCODE` tran
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listInternalTransactions" method="get" path="/v1/chains/{chainId}/addresses/{address}/transactions:listInternals" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
