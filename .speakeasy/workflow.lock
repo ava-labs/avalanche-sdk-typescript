@@ -1,4 +1,4 @@
-speakeasyVersion: 1.597.0
+speakeasyVersion: 1.598.2
 sources:
     data-source:
         sourceNamespace: avalanche-sdk-data-typescript
@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:2148c2ffe68732a9227a87fa96eff44710c3ef27501c2036e84f8809e2ced5a5
         tags:
             - latest
-            - speakeasy-sdk-regen-1754419564
+            - speakeasy-sdk-regen-1754505903
             - 1.0.0
     devtools-source:
         sourceNamespace: avalanche-sdk-devtools-typescript
@@ -46,7 +46,7 @@ targets:
         sourceRevisionDigest: sha256:c792081798068b290365f34d8260c725a3fc8b21fbd29bee4d138b26b039924e
         sourceBlobDigest: sha256:2148c2ffe68732a9227a87fa96eff44710c3ef27501c2036e84f8809e2ced5a5
         codeSamplesNamespace: avalanche-sdk-data-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:8c8fc7f437550f6c3eaec52d101f7728c5002d81773f01f0b94b7223815c3fc5
+        codeSamplesRevisionDigest: sha256:8f593f99cb1f1ce88d0b5653c1e21637136219d96e87a5f4bd776bc7a253e76e
     devtools-sdk:
         source: devtools-source
         sourceNamespace: avalanche-sdk-devtools-typescript

@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/data",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "author": "Avacloud",
   "type": "module",
   "bin": {
@@ -53,7 +53,7 @@
     "globals": "^15.14.0",
     "tshy": "^2.0.0",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.22.0"
+    "typescript-eslint": "^8.26.0"
   },
   "dependencies": {
     "zod": "^3.20.0"
