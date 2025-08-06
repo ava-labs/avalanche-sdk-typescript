@@ -23,6 +23,7 @@ Gets asset details corresponding to the given asset id on the X-Chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAssetDetails" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/assets/{assetId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -106,6 +107,7 @@ Returns Primary Network chains that each address has touched in the form of an a
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getChainIdsForAddresses" method="get" path="/v1/networks/{network}/addresses:listChainIds" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -187,6 +189,7 @@ Gets network details such as validator and delegator stats.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getNetworkDetails" method="get" path="/v1/networks/{network}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -264,6 +267,7 @@ Lists all blockchains registered on the network.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listBlockchains" method="get" path="/v1/networks/{network}/blockchains" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -351,6 +355,7 @@ Get details of the blockchain registered on the network.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getBlockchainById" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -432,6 +437,7 @@ Lists all subnets registered on the network.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listSubnets" method="get" path="/v1/networks/{network}/subnets" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -519,6 +525,7 @@ Get details of the Subnet registered on the network.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getSubnetById" method="get" path="/v1/networks/{network}/subnets/{subnetId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -600,6 +607,7 @@ Lists details for validators. By default, returns details for all validators.  T
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listValidators" method="get" path="/v1/networks/{network}/validators" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -707,6 +715,7 @@ List validator details for a single validator.  Filterable by validation status.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getSingleValidatorDetails" method="get" path="/v1/networks/{network}/validators/{nodeId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -796,6 +805,7 @@ Lists details for delegators.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listDelegators" method="get" path="/v1/networks/{network}/delegators" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -887,6 +897,7 @@ Lists details for L1 validators. By default, returns details for all active L1 v
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listL1Validators" method="get" path="/v1/networks/{network}/l1Validators" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
