@@ -79,3 +79,13 @@ Based on:
 - [typescript v0.2.1] devtools
 ### Releases
 - [NPM v0.2.1] https://www.npmjs.com/package/@avalanche-sdk/devtools/v/0.2.1 - devtools
+
+## 2025-08-06 18:42:19
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.598.2 (2.674.3) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.2.2] devtools
+### Releases
+- [NPM v0.2.2] https://www.npmjs.com/package/@avalanche-sdk/devtools/v/0.2.2 - devtools

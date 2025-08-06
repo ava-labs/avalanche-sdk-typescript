@@ -16,6 +16,7 @@ Lists the most recent blocks from all supported  EVM-compatible chains. The resu
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestBlocksAllChains" method="get" path="/v1/blocks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -97,6 +98,7 @@ Lists the latest indexed blocks on the EVM-compatible chain sorted in descending
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getLatestBlocks" method="get" path="/v1/chains/{chainId}/blocks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -178,6 +180,7 @@ Gets the details of an individual block on the EVM-compatible chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getBlock" method="get" path="/v1/chains/{chainId}/blocks/{blockId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -259,6 +262,7 @@ Lists the transactions that occured in a given block.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTransactionsForBlock" method="get" path="/v1/chains/{chainId}/blocks/{blockId}/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

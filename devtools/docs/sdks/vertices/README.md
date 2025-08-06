@@ -15,6 +15,7 @@ Lists latest vertices on the X-Chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestXChainVertices" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/vertices" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -100,6 +101,7 @@ Gets a single vertex on the X-Chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getVertexByHash" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/vertices/{vertexHash}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
@@ -183,6 +185,7 @@ Lists vertices at the given vertex height on the X-Chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getVertexByHeight" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/vertices:listByHeight" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 

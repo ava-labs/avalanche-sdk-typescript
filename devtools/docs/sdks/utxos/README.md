@@ -13,6 +13,7 @@ Lists UTXOs on one of the Primary Network chains for the supplied addresses.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getUtxosByAddresses" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/utxos" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/devtools";
 
