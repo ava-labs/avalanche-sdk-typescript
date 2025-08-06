@@ -14,6 +14,7 @@ Lists pending rewards on the Primary Network for the supplied addresses.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listPendingPrimaryNetworkRewards" method="get" path="/v1/networks/{network}/rewards:listPending" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -102,6 +103,7 @@ Lists historical rewards on the Primary Network for the supplied addresses.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listHistoricalPrimaryNetworkRewards" method="get" path="/v1/networks/{network}/rewards" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 

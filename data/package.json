@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/data",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "Avacloud",
   "type": "module",
   "bin": {
@@ -34,8 +34,7 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0",
-    "zod": "^3"
+    "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0"
   },
   "peerDependenciesMeta": {
     "@modelcontextprotocol/sdk": {
@@ -53,11 +52,12 @@
     "express": "^4.21.2",
     "globals": "^15.14.0",
     "tshy": "^2.0.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^8.22.0",
-    "zod": "^3.25.17"
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.22.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "zod": "^3.20.0"
+  },
   "exports": {
     ".": {
       "import": {

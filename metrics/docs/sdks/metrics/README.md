@@ -13,6 +13,7 @@ Check the health of the service.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="metrics-health-check" method="get" path="/v2/health-check" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/metrics";
 

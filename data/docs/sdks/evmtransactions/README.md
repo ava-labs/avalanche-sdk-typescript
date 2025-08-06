@@ -15,6 +15,7 @@ Lists the most recent transactions from all supported EVM-compatible  chains. Th
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestTransactionsAllChains" method="get" path="/v1/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -95,6 +96,7 @@ Gets the details of a single transaction.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTransaction" method="get" path="/v1/chains/{chainId}/transactions/{txHash}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -175,6 +177,7 @@ Lists the latest transactions. Filterable by status.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestTransactions" method="get" path="/v1/chains/{chainId}/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 

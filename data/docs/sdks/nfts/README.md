@@ -15,6 +15,7 @@ Triggers reindexing of token metadata for an NFT token. Reindexing can only be c
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="reindexNft" method="post" path="/v1/chains/{chainId}/nfts/collections/{address}/tokens/{tokenId}:reindex" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -97,6 +98,7 @@ Lists tokens for an NFT contract.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listTokens" method="get" path="/v1/chains/{chainId}/nfts/collections/{address}/tokens" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -181,6 +183,7 @@ Gets token details for a specific token of an NFT contract.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTokenDetails" method="get" path="/v1/chains/{chainId}/nfts/collections/{address}/tokens/{tokenId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 

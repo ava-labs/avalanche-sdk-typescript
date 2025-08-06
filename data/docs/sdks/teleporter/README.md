@@ -25,6 +25,7 @@
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTeleporterMessage" method="get" path="/v1/teleporter/messages/{messageId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -105,6 +106,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listTeleporterMessages" method="get" path="/v1/teleporter/messages" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -197,6 +199,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listTeleporterMessagesByAddress" method="get" path="/v1/teleporter/addresses/{address}/messages" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 

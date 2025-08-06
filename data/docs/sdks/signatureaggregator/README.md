@@ -14,6 +14,7 @@ Aggregates Signatures for a Warp message from Subnet validators.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="aggregateSignatures" method="post" path="/v1/signatureAggregator/{network}/aggregateSignatures" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
@@ -104,6 +105,7 @@ Get Aggregated Signatures for a P-Chain L1 related Warp Message.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAggregatedSignatures" method="get" path="/v1/signatureAggregator/{network}/aggregateSignatures/{txHash}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/data";
 
