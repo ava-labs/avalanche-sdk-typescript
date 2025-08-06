@@ -3,10 +3,10 @@ id: f2a15845-dc11-48d9-85a3-222c345ff88e
 management:
   docChecksum: 0f00e872cc004f6fc18bfadcda5f1fe2
   docVersion: 1.0.0
-  speakeasyVersion: 1.587.1
-  generationVersion: 2.662.0
-  releaseVersion: 0.5.1
-  configChecksum: 402c0da04c8bd1e526cfc311a4ca0f5d
+  speakeasyVersion: 1.598.2
+  generationVersion: 2.674.3
+  releaseVersion: 0.5.2
+  configChecksum: 218f94d7f2a4f1a10ef66b56ee7c61d1
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: webhooks
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/webhooks
@@ -15,7 +15,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.15
+    core: 3.21.20
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
