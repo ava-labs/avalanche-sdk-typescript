@@ -1,6 +1,5 @@
 {
   "name": "@avalanche-sdk/client",
-  "version": "0.0.4-alpha.0",
   "scripts": {
     "update-version": "node scripts/update-version.js",
     "build": "rm -rf dist && rm -f .tsbuildinfo && npx tsc",
@@ -64,7 +63,7 @@
     "ts-loader": "^9.5.1",
     "tty-browserify": "^0.0.1",
     "typedoc": "^0.28.9",
-    "typedoc-theme-hierarchy": "^6.0.0",
+    "typedoc-github-theme": "^0.3.0",
     "typescript": "^5.8.3",
     "url": "^0.11.3",
     "vitest": "^3.1.3",

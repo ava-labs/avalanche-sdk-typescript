@@ -17,14 +17,9 @@
     "src/methods/health/index.ts",
     "src/methods/index/index.ts",
     "src/methods/info/index.ts",
-    "src/node/index.ts",
-    "src/nonce/index.ts",
-    "src/serializable/index.ts",
-    "src/siwe/index.ts",
     "src/utils/index.ts"
   ],
   "out": "docs",
-  "theme": "default",
   "name": "Avalanche SDK Client",
   "excludePrivate": true,
   "excludeProtected": true,
@@ -42,7 +37,7 @@
   ],
   "defaultCategory": "Other",
   "readme": "README.md",
-  "plugin": [],
+  "plugin": ["typedoc-github-theme"],
   "logLevel": "Verbose",
   "validation": {
     "invalidLink": true,
