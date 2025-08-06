@@ -6,7 +6,7 @@ import {
   XPAddress,
 } from "../../../accounts/avalancheAccount.js";
 /**
- * @description The parameters for the send method.
+ *  The parameters for the send method.
  */
 export type SendParameters = {
   /**
@@ -46,7 +46,7 @@ export type SendParameters = {
 export type SendErrorType = RequestErrorType;
 
 /**
- * @description The details of a transaction.
+ *  The details of a transaction.
  */
 export type TransactionDetails = {
   /**
@@ -61,7 +61,7 @@ export type TransactionDetails = {
 
 export type SendReturnType = {
   /**
-   * The hashes of the transactions.
+   * The hashes of the transactions. {@link TransactionDetails[]}
    */
   txHashes: TransactionDetails[];
 };

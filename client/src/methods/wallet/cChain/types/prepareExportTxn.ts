@@ -3,11 +3,15 @@ import {
   Context as ContextType,
   evmSerial,
 } from "@avalabs/avalanchejs";
-import { P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts.js";
+import {
+  C_CHAIN_ALIAS,
+  P_CHAIN_ALIAS,
+  X_CHAIN_ALIAS,
+} from "../../../consts.js";
 
 export type PrepareExportTxnParameters = {
   /**
-   * The chain alias to export the funds to.
+   * The chain alias to export the funds to. {@link P_CHAIN_ALIAS} | {@link X_CHAIN_ALIAS}
    */
   destinationChain: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS;
   /**
@@ -51,7 +55,7 @@ export type PrepareExportTxnReturnType = {
    */
   exportTx: evmSerial.ExportTx;
   /**
-   * The chain alias.
+   * The chain alias. {@link C_CHAIN_ALIAS}
    */
-  chainAlias: "C";
+  chainAlias: typeof C_CHAIN_ALIAS;
 };

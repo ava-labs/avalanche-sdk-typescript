@@ -55,7 +55,7 @@ export type CreateCChainClientErrorType = CreateAvalancheCoreClientErrorType;
  * - UTXO management
  * - Dynamic fee calculations
  *
- * @param config - {@link CChainClientConfig}
+ * @param parameters - {@link CChainClientConfig}
  * @returns A C-Chain Client. {@link CChainClient}
  *
  * @example

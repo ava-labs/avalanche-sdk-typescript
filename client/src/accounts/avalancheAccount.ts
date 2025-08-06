@@ -41,8 +41,8 @@ export type AvalancheAccount = {
   xpAccount?: XPAccount;
   /**
    * Get the XP address for the X and P chain account.
-   * @param chain - The chain to get the XP address for. {@link "X"} or {@link "P"} or {@link "C"}
-   * @param hrp - The human readable prefix to use for the XP address. Default to {@link "avax"}. {@link "avax"} or {@link "fuji"} or any custom hrp
+   * @param chain - The chain to get the XP address for. `"X" | "P" | "C"`
+   * @param hrp - The human readable prefix to use for the XP address. Default to `"avax"`. `"avax" | "fuji" | any custom hrp`
    * @returns The XP address for the account. {@link XPAddress}
    */
   getXPAddress: (

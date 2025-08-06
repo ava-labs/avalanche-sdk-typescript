@@ -1,9 +1,9 @@
 import { utils, Utxo } from "@avalabs/avalanchejs";
 
 /**
- * @description Get a Utxo from a buffer or hex string
- * @param utxoBytesOrHex - The buffer or hex string to get the Utxo from {@link string | Uint8Array}
- * @param chainAlias - The chain alias to get the Utxo from {@link "P" | "X"}
+ *  Get a Utxo from a buffer or hex string
+ * @param utxoBytesOrHex - The buffer or hex string to get the Utxo from `string` or `Uint8Array`
+ * @param chainAlias - The chain alias to get the Utxo from `"P" | "X" | "C"`
  * @returns The Utxo {@link Utxo}
  *
  * @example

@@ -4,6 +4,9 @@
   "scripts": {
     "update-version": "node scripts/update-version.js",
     "build": "rm -rf dist && rm -f .tsbuildinfo && npx tsc",
+    "generate-docs": "typedoc",
+    "generate-docs:markdown": "typedoc --theme markdown --out docs-markdown",
+    "generate-docs:json": "typedoc --json docs.json",
     "build:webpack": "npx webpack --config webpack.config.cjs",
     "build:all": "npm run build && npm run build:webpack",
     "lint": "eslint --cache --max-warnings=0 src",
@@ -60,6 +63,8 @@
     "timers-browserify": "^2.0.12",
     "ts-loader": "^9.5.1",
     "tty-browserify": "^0.0.1",
+    "typedoc": "^0.28.9",
+    "typedoc-theme-hierarchy": "^6.0.0",
     "typescript": "^5.8.3",
     "url": "^0.11.3",
     "vitest": "^3.1.3",

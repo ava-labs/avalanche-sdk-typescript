@@ -27,4 +27,9 @@ export type XChainMethods = [
   IssueTxMethod
 ];
 
+/**
+ * The RPC schema for the X-Chain methods.
+ *
+ * @see {@link XChainMethods}
+ */
 export type XChainRpcSchema = RpcSchemaOverride & XChainMethods;

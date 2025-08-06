@@ -11,5 +11,10 @@ export type AvalancheWalletMethods = [
   GetAccountPubKeyMethod
 ];
 
+/**
+ * The RPC schema for the Avalanche Wallet methods.
+ *
+ * @see {@link AvalancheWalletMethods}
+ */
 export type AvalancheWalletRpcSchema = RpcSchemaOverride &
   AvalancheWalletMethods;

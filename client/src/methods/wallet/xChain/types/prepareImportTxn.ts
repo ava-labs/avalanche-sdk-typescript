@@ -3,8 +3,12 @@ import {
   Common,
   Context as ContextType,
 } from "@avalabs/avalanchejs";
-import { C_CHAIN_ALIAS, P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts";
-import { CommonTxParams } from "../../types/common";
+import {
+  C_CHAIN_ALIAS,
+  P_CHAIN_ALIAS,
+  X_CHAIN_ALIAS,
+} from "../../../consts.js";
+import { CommonTxParams } from "../../types/common.js";
 
 export type ImportedOutput = {
   /**
@@ -28,7 +32,7 @@ export type PrepareImportTxnParameters = Omit<
   "changeAddresses"
 > & {
   /**
-   * The chain to import the funds from.
+   * The chain to import the funds from. {@link P_CHAIN_ALIAS} | {@link C_CHAIN_ALIAS}
    */
   sourceChain: typeof P_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
   /**
@@ -53,7 +57,7 @@ export type PrepareImportTxnReturnType = {
    */
   importTx: avmSerial.ImportTx;
   /**
-   * The chain alias.
+   * The chain alias. {@link X_CHAIN_ALIAS}
    */
   chainAlias: typeof X_CHAIN_ALIAS;
 };

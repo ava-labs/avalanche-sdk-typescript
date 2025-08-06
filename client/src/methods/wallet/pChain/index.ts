@@ -46,6 +46,7 @@ export type {
 export type {
   PrepareCreateSubnetTxnParameters,
   PrepareCreateSubnetTxnReturnType,
+  SubnetOwners,
 } from "./types/prepareCreateSubnetTxn.js";
 export type {
   PrepareDisableL1ValidatorTxnParameters,
@@ -56,6 +57,7 @@ export type {
   PrepareExportTxnReturnType,
 } from "./types/prepareExportTxn.js";
 export type {
+  ImportedOutput,
   PrepareImportTxnParameters,
   PrepareImportTxnReturnType,
 } from "./types/prepareImportTxn.js";

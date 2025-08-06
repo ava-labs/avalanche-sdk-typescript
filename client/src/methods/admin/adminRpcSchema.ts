@@ -23,4 +23,9 @@ export type AdminMethods = [
   StopCPUProfilerMethod
 ];
 
+/**
+ * The RPC schema for the Admin methods.
+ *
+ * @see {@link AdminMethods}
+ */
 export type AdminRpcSchema = RpcSchemaOverride & AdminMethods;

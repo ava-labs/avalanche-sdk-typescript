@@ -6,12 +6,18 @@ import { getUTXOs as getXChainUTXOs } from "../methods/xChain/getUTXOs.js";
 import { GetUTXOsReturnType } from "../methods/xChain/types/getUTXOs.js";
 import { getUtxoFromBytes } from "./getUtxoFromBytes.js";
 
+export type GetUtxosForAddressParams = {
+  address: string;
+  chainAlias: "P" | "X" | "C";
+  sourceChain?: string;
+};
+
 /**
- * @description Get the UTXOs for an address.
+ *  Get the UTXOs for an address.
  *
  * @param client - The client to use. {@link AvalancheWalletCoreClient}
- * @param params - The parameters. {@link { address: string, chainAlias: "P" | "X" | "C" }}
- * @returns The array of UTXOs. May contain duplicates. {@link [Utxo]}
+ * @param params - The parameters. {@link GetUtxosForAddressParams}
+ * @returns The array of UTXOs. May contain duplicates. {@link Utxo[]}
  *
  * @example
  * ```ts
@@ -38,7 +44,7 @@ export async function getUtxosForAddress(
     chainAlias: "P" | "X" | "C";
     sourceChain?: string;
   }
-) {
+): Promise<Utxo[]> {
   // Get the correct UTXO function based on the chain alias
   const getUTXOs = (args: any) =>
     params.chainAlias === "P"

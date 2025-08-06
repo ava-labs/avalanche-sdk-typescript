@@ -55,7 +55,7 @@ export type CreatePChainClientErrorType = CreateAvalancheCoreClientErrorType;
  * - Creating and managing blockchains
  * - Handling staking operations
  *
- * @param config - {@link PChainClientConfig}
+ * @param parameters - {@link PChainClientConfig}
  * @returns A P-Chain Client. {@link PChainClient}
  *
  * @example

@@ -19,6 +19,7 @@ export type {
   SendErrorType,
   SendParameters,
   SendReturnType,
+  TransactionDetails,
 } from "./types/send.js";
 export type {
   SendXPTransactionErrorType,
@@ -31,6 +32,7 @@ export type {
   SignXPMessageReturnType,
 } from "./types/signXPMessage.js";
 export type {
+  Signatures,
   SignXPTransactionErrorType,
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
@@ -41,3 +43,5 @@ export type {
 } from "./types/waitForTxn.js";
 export { addOrModifyXPAddressesAlias as addOrModifyXPAddressAlias } from "./utils.js";
 export { waitForTxn } from "./waitForTxn.js";
+
+export * from "./types/common.js";

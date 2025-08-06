@@ -9,11 +9,11 @@ export type PrepareCreateSubnetTxnParameters = CommonTxParams & {
   /**
    * Subnet owners of the subnet being created. Signatures
    * from these addresses will be required to any Subnet related
-   * transactions.
+   * transactions. {@link SubnetOwners}
    */
   subnetOwners: SubnetOwners;
   /**
-   * Optional. The context to use for the transaction. If not provided, the context will be fetched.
+   * Optional. The context to use for the transaction. If not provided, the context will be fetched. {@link ContextType.Context}
    */
   context?: ContextType.Context;
 };

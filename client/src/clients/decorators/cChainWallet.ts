@@ -47,7 +47,7 @@ export type CChainWalletActions = {
    *
    * @see https://build.avax.network/docs/api-reference/c-chain/txn-format#importtx
    *
-   * @param args - {@link PrepareImportTxParameters}
+   * @param args - {@link PrepareImportTxnParameters}
    * @returns Import transaction data. {@link PrepareImportTxnReturnType}
    *
    * @example

@@ -2,7 +2,7 @@ import { utils } from "@avalabs/avalanchejs";
 import { Hex } from "viem";
 
 /**
- * @description Encodes a hex string (0x...) into CB58.
+ *  Encodes a hex string (0x...) into CB58.
  *
  * @param hex - The hex string to encode.
  * @returns The CB58 encoded string.
@@ -19,7 +19,7 @@ export function hexToCB58(hex: Hex): string {
 }
 
 /**
- * @description Decodes a CB58 string into a hex string (0x...).
+ *  Decodes a CB58 string into a hex string (0x...).
  *
  * @param cb58 - The CB58 string to decode.
  * @returns The hex string.

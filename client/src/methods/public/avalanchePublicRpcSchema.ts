@@ -13,5 +13,10 @@ export type AvalanchePublicMethods = [
   GetActiveRulesAtMethod
 ];
 
+/**
+ * The RPC schema for the Avalanche Public methods.
+ *
+ * @see {@link AvalanchePublicMethods}
+ */
 export type AvalanchePublicRpcSchema = RpcSchemaOverride &
   AvalanchePublicMethods;

@@ -13,7 +13,7 @@ export type GetAtomicTxStatusParameters = {
 /**
  * The return type for the `avax.getAtomicTxStatus` method.
  *
- * @param status - The status of the atomic transaction.
+ * @param status - The status of the atomic transaction. {@link CChainAtomicTxStatus}
  * @param blockHeight - The height of the block which the transaction was included in.
  */
 export type GetAtomicTxStatusReturnType = {

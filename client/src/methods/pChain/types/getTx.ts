@@ -14,7 +14,7 @@ export type GetTxParameters = {
 
 /**
  * Return type for the `platform.getTx` method.
- * Returns the transaction encoded to the specified format
+ * Returns the transaction encoded to the specified format {@link PChainTransactionType}
  */
 export type GetTxReturnType = PChainTransactionType;
 

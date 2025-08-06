@@ -23,6 +23,7 @@ export { feeConfig } from "./feeConfig.js";
 export type {
   FeeConfigErrorType,
   FeeConfigMethod,
+  FeeConfigParameters,
   FeeConfigReturnType,
 } from "./types/feeConfig.js";
 
@@ -30,5 +31,6 @@ export { getActiveRulesAt } from "./getActiveRulesAt.js";
 export type {
   GetActiveRulesAtErrorType,
   GetActiveRulesAtMethod,
+  GetActiveRulesAtParameters,
   GetActiveRulesAtReturnType,
 } from "./types/getActiveRulesAt.js";

@@ -10,6 +10,7 @@ export {
   type PrepareExportTxnReturnType,
 } from "./types/prepareExportTxn.js";
 export {
+  type ImportedOutput,
   type PrepareImportTxnParameters,
   type PrepareImportTxnReturnType,
 } from "./types/prepareImportTxn.js";

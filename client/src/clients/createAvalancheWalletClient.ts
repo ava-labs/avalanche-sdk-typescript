@@ -106,7 +106,7 @@ export type CreateAvalancheWalletClientErrorType = CreatePublicClientErrorType;
  * The Avalanche Wallet Client is an interface to interact with the Core Wallet API through Avalanche-specific JSON-RPC API methods.
  * @see https://docs.core.app/docs/reference/json-rpc-api
  *
- * @param config - {@link AvalancheWalletClientConfig}
+ * @param parameters - {@link AvalancheWalletClientConfig}
  * @returns A Avalanche Wallet Client. {@link AvalancheWalletClient}
  *
  * @example
