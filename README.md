@@ -24,29 +24,6 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 | **Development Tools** | `@avalanche-sdk/devtools` | Testing and debugging utilities |
 | **Network Monitoring** | `@avalanche-sdk/metrics` | Performance and health metrics |
 
-## 📦 Package Architecture
-
-```mermaid
-graph TD
-    A[Avalanche SDK TypeScript] --> B[@avalanche-sdk/sdk<br/>Unified SDK]
-    A --> C[@avalanche-sdk/client<br/>Core Client]
-    A --> D[@avalanche-sdk/data<br/>Data Analytics]
-    A --> E[@avalanche-sdk/devtools<br/>Dev Tools]
-    A --> F[@avalanche-sdk/interchain<br/>Cross-Chain]
-    A --> G[@avalanche-sdk/metrics<br/>Network Metrics]
-    A --> H[@avalanche-sdk/webhooks<br/>Real-time Events]
-    
-    B -.-> C
-    B -.-> D
-    B -.-> E
-    B -.-> F
-    B -.-> G
-    B -.-> H
-    
-    style A fill:#e84142,stroke:#333,stroke-width:4px,color:#fff
-    style B fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff
-```
-
 ## 📊 Package Status
 
 | Package | Version | Status | npm |
