@@ -4,9 +4,9 @@
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
 
   <p align="center">
-    <a href="https://opensource.org/licenses/MIT">
-      <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
-    </a>
+      <a href="https://opensource.org/licenses/BSD-3-Clause">
+    <img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License: BSD-3-Clause" />
+  </a>
     <a href="https://nodejs.org">
       <img src="https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen" alt="Node Version" />
     </a>
@@ -372,7 +372,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed version history.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
