@@ -54,20 +54,29 @@ The main Avalanche client SDK for interacting with Avalanche nodes and building 
 
 **Features:**
 - Complete API coverage for P-Chain, X-Chain, and C-Chain
-- Wallet integration and transaction management
-- Cross-chain transfer capabilities
-- Comprehensive method coverage for all Avalanche APIs
+- Full [viem](https://viem.sh) compatibility - anything you can do with viem works here
 - TypeScript-first design with full type safety
+- Abstractions over the JSON-RPC API to make your life easier
+- Wallet integration and transaction management
+- First-class APIs for interacting with Smart Contracts
+- Retrieve balances and UTXOs for addresses
+- Build, sign, and issue transactions to any chain
+- Perform cross-chain transfers between X, P and C chains
+- Add validators and delegators
+- Create subnets and blockchains, convert subnets to L1s
+
 
 ### [Data SDK](./data/)
 SDK for accessing and analyzing Avalanche blockchain data.
 
 **Features:**
-- Historical transaction data
-- Address balance tracking
-- Contract interaction data
-- Real-time blockchain analytics
-- Comprehensive data APIs
+- Retrieve transaction and UTXO details from the Primary Network (P/X/C-Chain) and Avalanche L1s
+- Get latest blocks and detailed block information
+- Fetch native, ERC-20, ERC-721, and ERC-1155 token balances with metadata
+- Token Reputation Analysis for ERC-20 tokens to identify security risks (benign, malicious, or unknown)
+- Augment user experience with comprehensive token and asset details
+- Access active and historical validator staking information
+- Real-time blockchain analytics and historical data
 
 ### [DevTools SDK](./devtools/)
 Development tools and utilities for Avalanche developers.
@@ -352,9 +361,9 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 - [Code Examples](./examples)
 
 ### 👥 Community & Help
-- 💬 [Discord](https://discord.gg/avax) - Get real-time help
-- 📱 [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
-- 🐦 [Twitter](https://x.com/AvaxDevelopers) - Stay updated
+- [Discord](https://discord.gg/avax) - Get real-time help
+- [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
+- [Twitter](https://x.com/AvaxDevelopers) - Stay updated
 
 ### 🐛 Issue Tracking
 - [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
