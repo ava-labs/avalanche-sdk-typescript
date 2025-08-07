@@ -16,15 +16,16 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 ### 🎯 Which SDK Should I Use?
 
-| Use Case | Recommended SDK | Description |
-|----------|----------------|-------------|
-| **Building on Avalanche** | `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
-| **Querying Blockchain Data** | `@avalanche-sdk/data` | Historical data, token balances, NFTs, transaction history |
-| **Cross-Chain Communication** | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
-| **Real-time Notifications** | `@avalanche-sdk/webhooks` | Subscribe to on-chain events and receive webhooks |
-| **Network Analytics** | `@avalanche-sdk/metrics` | Chain performance, validator stats, network health |
-| **All-in-One Analytics** | `@avalanche-sdk/sdk` | Complete suite: Data + Metrics + Webhooks |
-| **Development Environment** | `@avalanche-sdk/devtools` | Same as SDK package, optimized for development |
+| SDK | Description |
+|-----|-------------|
+| `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
+| `@avalanche-sdk/data` | Historical data, token balances, NFTs, transaction history |
+| `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
+| `@avalanche-sdk/webhooks` | Subscribe to on-chain events and receive webhooks |
+| `@avalanche-sdk/metrics` | Chain performance, validator stats, network health |
+| `@avalanche-sdk/sdk` | Complete suite: Data + Metrics + Webhooks |
+| `@avalanche-sdk/devtools` | Same as SDK package, optimized for development |
+ 
 
 ## 📊 Package Status
 
