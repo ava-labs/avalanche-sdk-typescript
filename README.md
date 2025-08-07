@@ -1,18 +1,26 @@
-# Avalanche SDK TypeScript
 
 <div align="center">
+  <h1>Avalanche SDK Typescript</h1>
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Node Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org/)
+
+  <p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+      <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
+    </a>
+    <a href="https://nodejs.org">
+      <img src="https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen" alt="Node Version" />
+    </a>
+    <a href="https://www.typescriptlang.org/">
+      <img src="https://img.shields.io/badge/TypeScript-5.0%2B-blue" alt="TypeScript" />
+    </a>
+  </p>
 </div>
 
 ## Overview
 
 Avalanche SDK TypeScript provides a complete set of tools and libraries for developers to interact with the Avalanche blockchain ecosystem. This monorepo includes multiple specialized SDKs, each designed for specific use cases while maintaining consistency and interoperability.
 
-> ⚠️ **Developer Preview**: This SDK is currently in beta and is subject to change. Use in production at your own risk.
+> ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. Use in production at your own risk.
 
 ### 🎯 Which SDK Should I Use?
 
@@ -20,12 +28,12 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 |-----|-------------|
 | `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
 | `@avalanche-sdk/data` | Historical data, token balances, NFTs, transaction history |
+| `@avalanche-sdk/devtools` | Complete suite: Data + Metrics + Webhooks |
 | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
-| `@avalanche-sdk/webhooks` | Subscribe to on-chain events and receive webhooks |
 | `@avalanche-sdk/metrics` | Chain performance, validator stats, network health |
-| `@avalanche-sdk/sdk` | Complete suite: Data + Metrics + Webhooks |
-| `@avalanche-sdk/devtools` | Same as SDK package, optimized for development |
- 
+| `@avalanche-sdk/sdk` | Complete suite: Devtools + Client |
+| `@avalanche-sdk/webhooks` | Subscribe to on-chain events and receive webhooks |
+
 
 ## 📊 Package Status
 
@@ -318,6 +326,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 # Clone the repository
 git clone https://github.com/ava-labs/avalanche-sdk-typescript.git
 cd avalanche-sdk-typescript
+
+# Move to the SDK directory you want to work on
+cd client
 
 # Install dependencies
 npm install

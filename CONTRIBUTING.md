@@ -33,8 +33,9 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 We welcome pull requests! Here's how to contribute code:
 
 1. **Fork the repository** and create your branch from `main`
-2. **Install dependencies** in the root directory:
+2. **Open a directory and Install dependencies** in the directory:
    ```bash
+   cd client
    npm install
    ```
 3. **Make your changes** in the appropriate package directory
@@ -57,19 +58,19 @@ This is a monorepo containing multiple packages. To get started:
    cd avalanche-sdk-typescript
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Navigate to the package you want to work on:
+2. Navigate to the package you want to work on:
    ```bash
    cd client  # or data, devtools, sdk, etc.
    ```
 
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
 4. Build the package:
    ```bash
-   npm run build
+   npm run build:all
    ```
 
 ### Package Structure
@@ -89,7 +90,7 @@ This is a monorepo containing multiple packages. To get started:
 - Use TypeScript for all new code
 - Follow existing code style and patterns
 - Write clear, self-documenting code
-- Add JSDoc comments for public APIs
+- Add TSDoc comments for public APIs/Methods
 - Keep functions small and focused
 - Write unit tests for new functionality
 
@@ -134,7 +135,7 @@ Closes #123
 ### Documentation
 
 - Update README.md files when adding new features
-- Add JSDoc comments for public APIs
+- Add TSDoc comments for public APIs/Methods
 - Include code examples where helpful
 - Keep documentation up-to-date with code changes
 
