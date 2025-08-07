@@ -307,7 +307,6 @@ Each SDK is:
 | Transaction failures | Verify gas settings and account balance |
 | Type mismatches | Ensure all SDKs are on compatible versions |
 
-For more help, see our [troubleshooting guide](https://github.com/ava-labs/avalanche-sdk-typescript/wiki/Troubleshooting).
 
 ## 🤝 Contributing
 
@@ -337,7 +336,7 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 ### 📖 Documentation & Resources
 - [API Reference](https://build.avax.network/docs/api-reference)
 - [Developer Docs](https://docs.avax.network)
-- [Video Tutorials](https://www.youtube.com/@Avalanche)
+- [Video Tutorials](https://www.youtube.com/Avalancheavax)
 - [Code Examples](./examples)
 
 ### 👥 Community & Help
