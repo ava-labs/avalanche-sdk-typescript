@@ -16,13 +16,13 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 | Use Case | Recommended SDK | Description |
 |----------|----------------|-------------|
-| **Getting Started / General Use** | `@avalanche-sdk/sdk` | Unified SDK with all features |
-| **Node Interaction Only** | `@avalanche-sdk/client` | Lightweight client for RPC calls |
-| **Data Analytics** | `@avalanche-sdk/data` | Historical data and analytics |
-| **Cross-Chain Apps** | `@avalanche-sdk/interchain` | ICM/Teleporter messaging |
-| **Real-time Events** | `@avalanche-sdk/webhooks` | Event streaming and notifications |
-| **Development Tools** | `@avalanche-sdk/devtools` | Testing and debugging utilities |
-| **Network Monitoring** | `@avalanche-sdk/metrics` | Performance and health metrics |
+| **Node Interaction & Blockchain Ops** | `@avalanche-sdk/client` | Core RPC client for P/X/C-Chain operations |
+| **Blockchain Data & Analytics** | `@avalanche-sdk/data` | Historical data, balances, and analytics via AvaCloud |
+| **Cross-Chain Messaging** | `@avalanche-sdk/interchain` | ICM/Teleporter for cross-L1 communication |
+| **Real-time Events** | `@avalanche-sdk/webhooks` | Webhook management for blockchain events |
+| **Network Metrics** | `@avalanche-sdk/metrics` | Network performance and validator statistics |
+| **All AvaCloud APIs** | `@avalanche-sdk/sdk` | Combined Data, Metrics, and Webhooks APIs |
+| **Development Tools** | `@avalanche-sdk/devtools` | Data, Metrics, and Webhooks for development |
 
 ## 📊 Package Status
 
@@ -30,11 +30,11 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 |---------|---------|--------|-----|
 | `@avalanche-sdk/sdk` | 1.3.0 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/sdk)](https://www.npmjs.com/package/@avalanche-sdk/sdk) |
 | `@avalanche-sdk/data` | 0.5.3 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/data)](https://www.npmjs.com/package/@avalanche-sdk/data) |
+| `@avalanche-sdk/webhooks` | 0.5.2 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/webhooks)](https://www.npmjs.com/package/@avalanche-sdk/webhooks) |
+| `@avalanche-sdk/metrics` | 0.4.3 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/metrics)](https://www.npmjs.com/package/@avalanche-sdk/metrics) |
 | `@avalanche-sdk/devtools` | 0.2.1 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/devtools)](https://www.npmjs.com/package/@avalanche-sdk/devtools) |
 | `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
 | `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
-| `@avalanche-sdk/metrics` | - | Development | Coming Soon |
-| `@avalanche-sdk/webhooks` | - | Development | Coming Soon |
 
 ## Available SDKs
 
