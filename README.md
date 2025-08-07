@@ -12,6 +12,8 @@
 
 Avalanche SDK TypeScript provides a complete set of tools and libraries for developers to interact with the Avalanche blockchain ecosystem. This monorepo includes multiple specialized SDKs, each designed for specific use cases while maintaining consistency and interoperability.
 
+> ⚠️ **Developer Preview**: This SDK is currently in beta and is subject to change. Use in production at your own risk.
+
 ### 🎯 Which SDK Should I Use?
 
 | Use Case | Recommended SDK | Description |
@@ -138,7 +140,9 @@ pnpm add @avalanche-sdk/sdk
 npm install @avalanche-sdk/client        # Core RPC functionality
 npm install @avalanche-sdk/data          # Data analytics
 npm install @avalanche-sdk/interchain    # Cross-chain messaging
-# ... etc
+npm install @avalanche-sdk/metrics       # Network metrics
+npm install @avalanche-sdk/webhooks      # Real-time events
+npm install @avalanche-sdk/devtools      # Development tools
 ```
 
 ### Quick Examples
@@ -155,11 +159,14 @@ const client = createAvalancheClient({
   }
 })
 
+
 // Get account balance
 const balance = await client.getBalance({ 
   address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
 })
 ```
+
+[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/helius-node-js-sdk-xbw7t6?file=index.js)
 
 #### 📊 Data Analytics
 ```typescript
@@ -194,59 +201,83 @@ await icmClient.sendMessage({
 })
 ```
 
-## 💡 Common Use Cases
+## 💡 What You Can Build
 
-### DeFi Applications
-- Swap interfaces and DEX integration
-- Lending protocol development
-- Yield farming applications
-- Liquidity pool management
+### Blockchain Infrastructure
+- Custom RPC endpoints and API gateways
+- Transaction broadcasting services
+- Multi-chain wallet backends
+- Account management systems
 
-### NFT Marketplaces
-- NFT minting and trading
-- Metadata management
-- Cross-chain NFT bridges
-- Collection analytics
+### Data Analytics & Monitoring
+- Portfolio tracking applications
+- Transaction history explorers
+- Token balance dashboards
+- Network health monitoring tools
+- Validator performance trackers
 
-### Cross-Chain Applications
-- Token bridges
-- Message passing between L1s
-- Interchain governance
-- Cross-chain DeFi
+### Real-Time Applications
+- Price alert systems
+- Transaction notification services
+- Smart contract event monitors
+- Blockchain activity feeds
 
-### Analytics Dashboards
-- Portfolio tracking
-- Network statistics
-- Validator monitoring
-- Transaction analysis
+### Cross-Chain Communication
+- ICM message relayers
+- Cross-L1 notification systems
+- Interchain data synchronization
+- Multi-chain coordination tools
 
-### Infrastructure & Tools
-- Block explorers
-- Wallet applications
-- Network monitoring
-- Development tools
+### Developer Tools
+- Smart contract debugging interfaces
+- Transaction simulation tools
+- Network testing utilities
+- Blockchain data indexers
 
-## 📚 Documentation
+## Documentation
 
-### API References
-- **[Client SDK API](./client/README.md)** - Complete RPC method reference
-- **[Data SDK API](./data/README.md)** - Data endpoints and queries
-- **[Interchain SDK API](./interchain/README.md)** - Cross-chain messaging APIs
-- **[Unified SDK API](./sdk/README.md)** - Combined API reference
+Each SDK includes comprehensive documentation:
 
-### Guides & Tutorials
-- [Getting Started Guide](https://docs.avax.network/build/avalanche-starter-kit)
-- [Building on Avalanche](https://docs.avax.network/build)
-- [Cross-Chain Development](https://docs.avax.network/build/cross-chain)
+- **[Client SDK Documentation](./client/README.md)** - Complete API reference and usage examples
+- **[Data SDK Documentation](./data/README.md)** - Data access and analytics guide
+- **[DevTools SDK Documentation](./devtools/README.md)** - Development utilities guide
+- **[Interchain SDK Documentation](./interchain/README.md)** - Cross-chain development guide
+- **[Metrics SDK Documentation](./metrics/README.md)** - Metrics and monitoring guide
+- **[SDK Documentation](./sdk/README.md)** - Unified SDK
+- **[Webhooks SDK Documentation](./webhooks/README.md)** - Real-time events guide
 
-### Examples
+## Examples
 
-| Example | Description | SDK Used |
-|---------|-------------|----------|
-| [Token Transfers](./client/examples/transfer-avax.ts) | Send AVAX between accounts | Client |
-| [Transaction History](./data/examples/dataHealthCheck.example.ts) | Query transaction data | Data |
-| [ICM Messaging](./interchain/examples/sendICM.ts) | Cross-chain communication | Interchain |
-| [Webhook Setup](./webhooks/examples/) | Real-time event handling | Webhooks |
+Each SDK includes practical examples demonstrating common use cases:
+
+- **Client SDK Examples** - [View Examples](./client/examples/)
+- **Data SDK Examples** - [View Examples](./data/examples/)
+- **DevTools SDK Examples** - [View Examples](./devtools/examples/)
+- **Interchain SDK Examples** - [View Examples](./interchain/examples/)
+- **Metrics SDK Examples** - [View Examples](./metrics/examples/)
+- **Core SDK Examples** - [View Examples](./sdk/examples/)
+- **Webhooks SDK Examples** - [View Examples](./webhooks/examples/)
+
+## Architecture
+
+The Avalanche SDK TypeScript suite is designed with modularity in mind:
+
+```
+avalanche-sdk-typescript/
+├── client/          # Main client SDK
+├── data/            # Data access SDK
+├── devtools/        # Development tools
+├── interchain/      # Cross-chain SDK
+├── metrics/         # Metrics and monitoring
+├── sdk/             # Unified SDK
+└── webhooks/        # Real-time events
+```
+
+Each SDK is:
+- **Independent** - Can be used standalone
+- **Modular** - Import only what you need
+- **Type-safe** - Full TypeScript support
+- **Well-documented** - Comprehensive guides and examples
 
 ## ⚡ Performance & Best Practices
 
@@ -310,11 +341,9 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 - [Code Examples](./examples)
 
 ### 👥 Community & Help
-- 💬 [Discord](https://chat.avax.network/) - Get real-time help
+- 💬 [Discord](https://discord.gg/avax) - Get real-time help
 - 📱 [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
 - 🐦 [Twitter](https://x.com/AvaxDevelopers) - Stay updated
-- 🏛️ [Forum](https://forum.avax.network/) - Deep discussions
-- 🎓 [Developer Office Hours](https://calendar.avax.network) - Weekly Q&A
 
 ### 🐛 Issue Tracking
 - [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
