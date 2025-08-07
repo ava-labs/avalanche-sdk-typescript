@@ -29,7 +29,7 @@
     "cross-chain"
   ],
   "author": "Raj Ranjan",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
