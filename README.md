@@ -27,7 +27,7 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 | SDK | Description |
 |-----|-------------|
 | `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
-| `@avalanche-sdk/devtools` | Complete suite: Data and Metrics API |
+| `@avalanche-sdk/devtools` | Complete suite: Data, Metrics and Webhooks API |
 | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
 | `@avalanche-sdk/sdk` | Complete suite: Devtools + Client |
 
