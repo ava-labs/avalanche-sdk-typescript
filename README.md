@@ -18,13 +18,13 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 | Use Case | Recommended SDK | Description |
 |----------|----------------|-------------|
-| **Node Interaction & Blockchain Ops** | `@avalanche-sdk/client` | Core RPC client for P/X/C-Chain operations |
-| **Blockchain Data & Analytics** | `@avalanche-sdk/data` | Historical data, balances, and analytics via AvaCloud |
-| **Cross-Chain Messaging** | `@avalanche-sdk/interchain` | ICM/Teleporter for cross-L1 communication |
-| **Real-time Events** | `@avalanche-sdk/webhooks` | Webhook management for blockchain events |
-| **Network Metrics** | `@avalanche-sdk/metrics` | Network performance and validator statistics |
-| **All AvaCloud APIs** | `@avalanche-sdk/sdk` | Combined Data, Metrics, and Webhooks APIs |
-| **Development Tools** | `@avalanche-sdk/devtools` | Data, Metrics, and Webhooks for development |
+| **Building on Avalanche** | `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
+| **Querying Blockchain Data** | `@avalanche-sdk/data` | Historical data, token balances, NFTs, transaction history |
+| **Cross-Chain Communication** | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
+| **Real-time Notifications** | `@avalanche-sdk/webhooks` | Subscribe to on-chain events and receive webhooks |
+| **Network Analytics** | `@avalanche-sdk/metrics` | Chain performance, validator stats, network health |
+| **All-in-One Analytics** | `@avalanche-sdk/sdk` | Complete suite: Data + Metrics + Webhooks |
+| **Development Environment** | `@avalanche-sdk/devtools` | Same as SDK package, optimized for development |
 
 ## 📊 Package Status
 
