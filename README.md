@@ -146,8 +146,6 @@ const balance = await client.getBalance({
 })
 ```
 
-[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/helius-node-js-sdk-xbw7t6?file=index.js)
-
 #### 📊 Data Analytics
 ```typescript
 import { AvaCloudSDK } from '@avalanche-sdk/data'
