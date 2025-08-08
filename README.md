@@ -217,24 +217,18 @@ await icmClient.sendMessage({
 Each SDK includes comprehensive documentation:
 
 - **[Client SDK Documentation](./client/README.md)** - Complete API reference and usage examples
-- **[Data SDK Documentation](./data/README.md)** - Data access and analytics guide
 - **[DevTools SDK Documentation](./devtools/README.md)** - Development utilities guide
 - **[Interchain SDK Documentation](./interchain/README.md)** - Cross-chain development guide
-- **[Metrics SDK Documentation](./metrics/README.md)** - Metrics and monitoring guide
 - **[SDK Documentation](./sdk/README.md)** - Unified SDK
-- **[Webhooks SDK Documentation](./webhooks/README.md)** - Real-time events guide
 
 ## Examples
 
 Each SDK includes practical examples demonstrating common use cases:
 
 - **Client SDK Examples** - [View Examples](./client/examples/)
-- **Data SDK Examples** - [View Examples](./data/examples/)
 - **DevTools SDK Examples** - [View Examples](./devtools/examples/)
 - **Interchain SDK Examples** - [View Examples](./interchain/examples/)
-- **Metrics SDK Examples** - [View Examples](./metrics/examples/)
 - **Core SDK Examples** - [View Examples](./sdk/examples/)
-- **Webhooks SDK Examples** - [View Examples](./webhooks/examples/)
 
 ## Architecture
 
@@ -243,12 +237,9 @@ The Avalanche SDK TypeScript suite is designed with modularity in mind:
 ```
 avalanche-sdk-typescript/
 ├── client/          # Main client SDK
-├── data/            # Data access SDK
 ├── devtools/        # Development tools
 ├── interchain/      # Cross-chain SDK
-├── metrics/         # Metrics and monitoring
-├── sdk/             # Unified SDK
-└── webhooks/        # Real-time events
+└── sdk/             # Unified SDK
 ```
 
 Each SDK is:
