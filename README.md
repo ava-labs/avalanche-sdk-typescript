@@ -317,15 +317,15 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 ## 📞 Support
 
 ### 📖 Documentation & Resources
-- [API Reference](https://build.avax.network/docs/api-reference)
-- [Developer Docs](https://docs.avax.network)
-- [Video Tutorials](https://www.youtube.com/Avalancheavax)
-- [Code Examples](./examples)
+- <a href="https://build.avax.network/docs/api-reference" target="_blank" rel="noopener noreferrer">API Reference</a>
+- <a href="https://docs.avax.network" target="_blank" rel="noopener noreferrer">Developer Docs</a>
+- <a href="https://www.youtube.com/Avalancheavax" target="_blank" rel="noopener noreferrer">Video Tutorials</a>
+- <a href="./examples">Code Examples</a>
 
 ### 👥 Community & Help
-- 💬 [Discord](https://discord.gg/avax) - Get real-time help
-- 📱 [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
-- 🐦 [Twitter](https://x.com/AvaxDevelopers) - Stay updated
+- <a href="https://discord.gg/avax" target="_blank" rel="noopener noreferrer">Discord</a> - Get real-time help
+- <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
+- <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
 ### 🐛 Issue Tracking
 - [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
@@ -351,7 +351,7 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
   <h3>🏔️ Built with ❤️ by the Avalanche Team</h3>
   
   [Website](https://www.avax.network/) • 
-  [Documentation](https://docs.avax.network/) • 
+  <a href="https://docs.avax.network/" target="_blank" rel="noopener noreferrer">Documentation</a> • 
   [Blog](https://medium.com/@avaxdevelopers) • 
   [GitHub](https://github.com/ava-labs)
 </div>
