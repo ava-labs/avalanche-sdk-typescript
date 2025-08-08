@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/metricsChainsListNftHolders.js";
+export * from "@avalanche-sdk/chainkit/funcs/metricsChainsListNftHolders.js";

@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataEvmChainsList.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataEvmChainsList.js";

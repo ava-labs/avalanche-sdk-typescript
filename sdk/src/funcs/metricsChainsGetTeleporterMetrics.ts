@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/metricsChainsGetTeleporterMetrics.js";
+export * from "@avalanche-sdk/chainkit/funcs/metricsChainsGetTeleporterMetrics.js";

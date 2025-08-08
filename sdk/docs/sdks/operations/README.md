@@ -14,6 +14,7 @@ Gets operation details for the given operation id.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getOperationResult" method="get" path="/v1/operations/{operationId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -93,6 +94,7 @@ The transaction export operation runs asynchronously in the background. The stat
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="postTransactionExportJob" method="post" path="/v1/operations/transactions:export" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

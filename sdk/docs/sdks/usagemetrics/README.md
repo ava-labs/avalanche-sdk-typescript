@@ -18,6 +18,7 @@ Gets metrics for Data API usage over a specified time interval aggregated at the
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getApiUsageMetrics" method="get" path="/v1/apiUsageMetrics" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -101,6 +102,7 @@ Gets logs for requests made by client over a specified time interval for a speci
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getApiLogs" method="get" path="/v1/apiLogs" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -184,6 +186,7 @@ Gets metrics for public Subnet RPC usage over a specified time interval aggregat
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getSubnetRpcUsageMetrics" method="get" path="/v1/subnetRpcUsageMetrics" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -271,6 +274,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getRpcUsageMetrics" method="get" path="/v1/rpcUsageMetrics" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

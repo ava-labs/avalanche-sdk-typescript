@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataOperationsGetResult.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataOperationsGetResult.js";

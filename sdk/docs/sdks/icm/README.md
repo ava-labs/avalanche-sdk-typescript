@@ -15,6 +15,7 @@ Gets an ICM message by teleporter message ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getIcmMessage" method="get" path="/v1/icm/messages/{messageId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -92,6 +93,7 @@ Lists ICM messages. Ordered by timestamp in descending order.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listIcmMessages" method="get" path="/v1/icm/messages" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -181,6 +183,7 @@ Lists ICM messages by address. Ordered by timestamp in descending order.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listIcmMessagesByAddress" method="get" path="/v1/icm/addresses/{address}/messages" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

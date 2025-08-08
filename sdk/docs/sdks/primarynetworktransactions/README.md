@@ -16,6 +16,7 @@ Gets the details of a single transaction on one of the Primary Network chains.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTxByHash" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/transactions/{txHash}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -105,6 +106,7 @@ Given that each transaction may return a large number of UTXO objects, bounded o
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestPrimaryNetworkTransactions" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -204,6 +206,7 @@ Lists active staking transactions on the P-Chain for the supplied addresses.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listActivePrimaryNetworkStakingTransactions" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/transactions:listStaking" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -303,6 +306,7 @@ Lists asset transactions corresponding to the given asset id on the X-Chain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listAssetTransactions" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/assets/{assetId}/transactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

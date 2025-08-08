@@ -19,6 +19,7 @@ Balance at a given block can be retrieved with the `blockNumber` parameter.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getNativeBalance" method="get" path="/v1/chains/{chainId}/addresses/{address}/balances:getNative" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -108,6 +109,7 @@ Balance for specific contracts can be retrieved with the `contractAddresses` par
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc20Balances" method="get" path="/v1/chains/{chainId}/addresses/{address}/balances:listErc20" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -201,6 +203,7 @@ Balance for a specific contract can be retrieved with the `contractAddress` para
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc721Balances" method="get" path="/v1/chains/{chainId}/addresses/{address}/balances:listErc721" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -292,6 +295,7 @@ Balance for a specific contract can be retrieved with the `contractAddress` para
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listErc1155Balances" method="get" path="/v1/chains/{chainId}/addresses/{address}/balances:listErc1155" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -383,6 +387,7 @@ Balance for a specific contract can be retrieved with the `contractAddress` para
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listCollectibleBalances" method="get" path="/v1/chains/{chainId}/addresses/{address}/balances:listCollectibles" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
