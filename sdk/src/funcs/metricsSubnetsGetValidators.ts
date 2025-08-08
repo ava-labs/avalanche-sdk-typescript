@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/metricsSubnetsGetValidators.js";
+export * from "@avalanche-sdk/chainkit/funcs/metricsSubnetsGetValidators.js";

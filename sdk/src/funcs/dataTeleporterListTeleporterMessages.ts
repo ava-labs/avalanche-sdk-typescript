@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataTeleporterListTeleporterMessages.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataTeleporterListTeleporterMessages.js";

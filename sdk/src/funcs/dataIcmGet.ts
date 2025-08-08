@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataIcmGet.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataIcmGet.js";

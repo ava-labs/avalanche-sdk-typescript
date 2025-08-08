@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataUsageMetricsGetUsage.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataUsageMetricsGetUsage.js";

@@ -16,6 +16,7 @@ Get given metric's value for all validators.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getTotalL1ValidatorMetrics" method="get" path="/v2/validators/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -97,6 +98,7 @@ Get given metric values for a given validation id with or without a timestamp ra
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getMetricsByValidationId" method="get" path="/v2/validation/{l1ValidationId}/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -180,6 +182,7 @@ Get given metric values for a given node id with or without a timestamp range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getMetricsByNodeId" method="get" path="/v2/validator/{nodeId}/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -263,6 +266,7 @@ Get given metric values for a given subnet ID with or without a timestamp range.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getMetricsBySubnetId" method="get" path="/v2/subnet/{subnetId}/metrics/{metric}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

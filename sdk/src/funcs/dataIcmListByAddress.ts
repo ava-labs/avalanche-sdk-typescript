@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataIcmListByAddress.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataIcmListByAddress.js";

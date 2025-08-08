@@ -23,6 +23,7 @@ Lists the AvaCloud supported EVM-compatible chains. Filterable by network.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="supportedChains" method="get" path="/v1/chains" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -102,6 +103,7 @@ Gets chain information for the EVM-compatible chain if supported by AvaCloud.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getChainInfo" method="get" path="/v1/chains/{chainId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -183,6 +185,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getAddressChains" method="get" path="/v1/chains/address/{address}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -264,6 +267,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listAllLatestTransactions" method="get" path="/v1/chains/allTransactions" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -349,6 +353,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listAllLatestBlocks" method="get" path="/v1/chains/allBlocks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

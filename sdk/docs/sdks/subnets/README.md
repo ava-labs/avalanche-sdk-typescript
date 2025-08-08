@@ -13,6 +13,7 @@ Get list of addresses and AddValidatorTx timestamps set to receive awards for va
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getValidatorsByDateRange" method="get" path="/v2/subnets/{subnetId}/validators:getAddresses" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 

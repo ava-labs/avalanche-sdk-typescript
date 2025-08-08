@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkGetChainIdsForAddresses.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataPrimaryNetworkGetChainIdsForAddresses.js";

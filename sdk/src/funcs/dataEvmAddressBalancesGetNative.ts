@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataEvmAddressBalancesGetNative.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataEvmAddressBalancesGetNative.js";
