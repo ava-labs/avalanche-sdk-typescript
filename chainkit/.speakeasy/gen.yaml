@@ -21,7 +21,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.2.3
+  version: 0.3.0
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
