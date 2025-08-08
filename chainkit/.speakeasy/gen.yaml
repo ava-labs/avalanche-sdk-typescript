@@ -1,8 +1,5 @@
 configVersion: 2.0.0
 generation:
-  devContainers:
-    enabled: true
-    schemaPath: https://glacier-api.avax.network/api-json
   sdkClassName: Avalanche
   maintainOpenAPIOrder: true
   usageSnippets:
