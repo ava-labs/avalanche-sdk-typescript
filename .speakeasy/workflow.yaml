@@ -1,25 +1,25 @@
 workflowVersion: 1.0.0
 speakeasyVersion: latest
 sources:
-    devtools-source:
+    chainkit-source:
         inputs:
             - location: https://popsicle-api.avax.network/api-json
             - location: https://glacier-api.avax.network/api-json
         overlays:
-            - location: devtools/overlays/overlay.yaml
+            - location: chainkit/overlays/overlay.yaml
         registry:
-            location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript
+            location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-chainkit-typescript
 targets:
-    devtools-sdk:
+    chainkit-sdk:
         target: typescript
-        source: devtools-source
-        output: devtools
+        source: chainkit-source
+        output: chainkit
         publish:
             npm:
                 token: $npm_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript-code-samples
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-chainkit-typescript-code-samples
             langOverride: javascript
             labelOverride:
                 fixedValue: JavaScript

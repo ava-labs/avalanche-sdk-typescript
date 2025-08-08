@@ -1,16 +1,18 @@
 import os
-import shutil
 import re
+import shutil
 from pathlib import Path
 
 # Define source and destination mapping
 mappings = {
-    "devtools/docs": "sdk/docs/",
+    "chainkit/docs": "sdk/docs/",
 }
 
 funcs_dst = "sdk/src/funcs/"
 
 # Function to delete old files and folders
+
+
 def delete_old_doc_files(directory):
     """Deletes all files and folders in the specified directory."""
     if os.path.exists(directory):
@@ -19,6 +21,8 @@ def delete_old_doc_files(directory):
     os.makedirs(directory, exist_ok=True)
 
 # Function to copy files and preserve the internal folder structure
+
+
 def copy_and_replace(src, dst, search_text, replace_text):
     """
     Recursively copies files from src to dst, maintaining structure.
@@ -27,11 +31,11 @@ def copy_and_replace(src, dst, search_text, replace_text):
     for root, dirs, files in os.walk(src):
         # Create the corresponding destination path
         rel_path = os.path.relpath(root, src)
-        
+
         # Handle SDK folders separately
         if rel_path.startswith("sdks"):
             extract_and_create_func_files(root, files)
-        
+
         # Create target directory
         target_dir = os.path.join(dst, rel_path)
 
@@ -57,6 +61,7 @@ def copy_and_replace(src, dst, search_text, replace_text):
 
             print(f"📄 Copied and replaced in: {dst_file}")
 
+
 def extract_and_create_func_files(root, files):
     """
     Scans files for specific SDK function imports and creates corresponding .ts files in sdk/src/func/.
@@ -66,7 +71,7 @@ def extract_and_create_func_files(root, files):
     - files: List of files to process.
     """
     # Regex pattern to find SDK imports
-    pattern = re.compile(r'@avalanche-sdk/(devtools)/funcs/(\w+)\.js')
+    pattern = re.compile(r'@avalanche-sdk/(chainkit)/funcs/(\w+)\.js')
 
     for file in files:
         src_file = os.path.join(root, file)
@@ -89,7 +94,9 @@ def extract_and_create_func_files(root, files):
             with open(func_file, "w", encoding="utf-8") as f:
                 f.write(export_statement)
 
-            print(f"✅ Created {func_file} with export: {export_statement.strip()}")
+            print(
+                f"✅ Created {func_file} with export: {export_statement.strip()}")
+
 
 def copy_file_with_replacements(
     src_path: str,
@@ -117,7 +124,8 @@ def copy_file_with_replacements(
         print(f"📄 Reading from: {src_path}")
     else:
         content = default_content
-        print(f"⚠️ Source file not found: {src_path}. Creating destination with default content.")
+        print(
+            f"⚠️ Source file not found: {src_path}. Creating destination with default content.")
 
     # Apply replacements
     for old, new in replacements.items():
@@ -132,28 +140,30 @@ def copy_file_with_replacements(
     with open(dst_path, "w", encoding=encoding) as f:
         f.write(content)
 
-    print(f"✅ File written to {dst_path} with {len(replacements)} replacements.")
+    print(
+        f"✅ File written to {dst_path} with {len(replacements)} replacements.")
+
 
 # Perform the cleanup, copy, and replace operation for each mapping
-search_text = "@avalanche-sdk/devtools"
+search_text = "@avalanche-sdk/chainkit"
 replace_text = "@avalanche-sdk/sdk"
 
 delete_old_doc_files(funcs_dst)
 for src, dst in mappings.items():
     print(f"\n🔥 Deleting old files in {dst}...")
     delete_old_doc_files(dst)
-    
+
     print(f"📂 Copying from {src} to {dst}...")
     copy_and_replace(src, dst, search_text, replace_text)
 
 copy_file_with_replacements(
-        src_path="devtools/README.md",
-        dst_path="sdk/README.md",
-        replacements={
-            "@avalanche-sdk/devtools": "@avalanche-sdk/sdk",
-            "Devtools": "SDK",
-        },
-        default_content="# SDK README\n\nGenerated because the source was missing."
-    )
+    src_path="chainkit/README.md",
+    dst_path="sdk/README.md",
+    replacements={
+        "@avalanche-sdk/chainkit": "@avalanche-sdk/sdk",
+        "ChainKit": "SDK",
+    },
+    default_content="# SDK README\n\nGenerated because the source was missing."
+)
 
 print("\n✅ All files copied, old files deleted, and text replaced successfully!")

@@ -16,10 +16,8 @@ assignees: ''
 <!-- Check all that apply -->
 
 - [ ] `@avalanche-sdk/client` (Core RPC functionality)
-- [ ] `@avalanche-sdk/data` (Data analytics and historical data)
-- [ ] `@avalanche-sdk/devtools` (Development tools and utilities)
+- [ ] `@avalanche-sdk/chainkit` (All Data, Metrics and Webhooks API support)
 - [ ] `@avalanche-sdk/interchain` (Cross-chain messaging)
-- [ ] `@avalanche-sdk/metrics` (Network metrics and monitoring)
 - [ ] `@avalanche-sdk/sdk` (Unified SDK - all features)
 - [ ] Documentation improvements
 - [ ] Examples and tutorials
