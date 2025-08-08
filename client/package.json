@@ -16,7 +16,7 @@
     "src"
   ],
   "author": "Sayan Kar",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",

@@ -4,9 +4,9 @@
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
 
   <p align="center">
-    <a href="https://opensource.org/licenses/MIT">
-      <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
-    </a>
+      <a href="https://opensource.org/licenses/BSD-3-Clause">
+    <img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License: BSD-3-Clause" />
+  </a>
     <a href="https://nodejs.org">
       <img src="https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen" alt="Node Version" />
     </a>
@@ -23,8 +23,24 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 > ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. Use in production at your own risk.
 
 ### 🎯 Which SDK Should I Use?
- 
- 
+
+| SDK | Description |
+|-----|-------------|
+| `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
+| `@avalanche-sdk/devtools` | Complete suite: Data, Metrics and Webhooks API |
+| `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
+| `@avalanche-sdk/sdk` | Complete suite: Devtools + Client |
+
+
+## 📊 Package Status
+
+| Package | Version | Status | npm |
+|---------|---------|--------|-----|
+| `@avalanche-sdk/sdk` | 1.3.0 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/sdk)](https://www.npmjs.com/package/@avalanche-sdk/sdk) |
+| `@avalanche-sdk/devtools` | 0.2.1 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/devtools)](https://www.npmjs.com/package/@avalanche-sdk/devtools) |
+| `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
+| `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
+
 ## Available SDKs
 
 ### [Client SDK](./client/)
@@ -43,21 +59,19 @@ The main Avalanche client SDK for interacting with Avalanche nodes and building 
 - Add validators and delegators
 - Create subnets and blockchains, convert subnets to L1s
 
-
-### [Data SDK](./data/)
-SDK for accessing and analyzing Avalanche blockchain data.
+### [DevTools SDK](./devtools/)
+Combined SDK with full typed coverage of Avalanche Data (Glacier) and Metrics APIs.
 
 **Features:**
-- Retrieve transaction and UTXO details from the Primary Network (P/X/C-Chain) and Avalanche L1s
-- Get latest blocks and detailed block information
-- Fetch native, ERC-20, ERC-721, and ERC-1155 token balances with metadata
-- Token Reputation Analysis for ERC-20 tokens to identify security risks (benign, malicious, or unknown)
-- Augment user experience with comprehensive token and asset details
-- Access active and historical validator staking information
-- Real-time blockchain analytics and historical data
-SDK for collecting and analyzing Avalanche network metrics.
-
- 
+- Full endpoint coverage for Glacier Data API and Metrics API
+  - Glacier API: https://glacier-api.avax.network/api
+  - Metrics API: https://metrics.avax.network/api
+- Strongly-typed models, pagination helpers, and automatic retries/backoff
+- High-level helpers for transactions, blocks, addresses, tokens, NFTs, and logs
+- Metrics: network health, validator stats, throughput, latency, and block production analytics
+- Webhooks-compatible payload shapes and utilities for signature verification
+- Configurable base URL and API key authentication
+- Request logging and middleware hooks for observability
 
 ### [Interchain SDK](./interchain/)
 SDK for building cross-L1 applications and bridges.
@@ -66,24 +80,6 @@ SDK for building cross-L1 applications and bridges.
 - Type-safe ICM client for sending cross-chain messages
 - Works seamlessly with wallet clients
 - Built-in support for Avalanche C-Chain and custom subnets
-
- 
-**Features:**
-- Network performance metrics
-- Validator statistics
-- Transaction analytics
-- Network health monitoring
-- Performance benchmarking
-
-### [Webhooks SDK](./webhooks/)
-SDK for handling real-time blockchain events and notifications.
-
-**Features:**
-- Real-time event streaming
-- Webhook management
-- Event filtering and routing
-- Notification systems
-- Automated response handling
 
 ### [Unified SDK](./sdk/)
 SDK providing a unified experience of all the SDKs
@@ -125,10 +121,7 @@ pnpm add @avalanche-sdk/sdk
 ```bash
 # Install only what you need
 npm install @avalanche-sdk/client        # Core RPC functionality
-npm install @avalanche-sdk/data          # Data analytics
 npm install @avalanche-sdk/interchain    # Cross-chain messaging
-npm install @avalanche-sdk/metrics       # Network metrics
-npm install @avalanche-sdk/webhooks      # Real-time events
 npm install @avalanche-sdk/devtools      # Development tools
 ```
 
@@ -330,9 +323,9 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 - [Code Examples](./examples)
 
 ### 👥 Community & Help
-- [Discord](https://discord.gg/avax) - Get real-time help
-- [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
-- [Twitter](https://x.com/AvaxDevelopers) - Stay updated
+- 💬 [Discord](https://discord.gg/avax) - Get real-time help
+- 📱 [Telegram](https://t.me/+KDajA4iToKY2ZjBk) - Join discussions
+- 🐦 [Twitter](https://x.com/AvaxDevelopers) - Stay updated
 
 ### 🐛 Issue Tracking
 - [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
@@ -350,7 +343,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed version history.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
