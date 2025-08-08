@@ -5,11 +5,11 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.600.2
   generationVersion: 2.677.3
-  releaseVersion: 0.2.3
-  configChecksum: 17821f6f8da51541fa40b0c3ad0ae389
+  releaseVersion: 0.3.0
+  configChecksum: 0f5dbd2c664cdc0e971d8c6d0d7e8fa9
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
-  repoSubDirectory: devtools
-  installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
+  repoSubDirectory: chainkit
+  installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
   published: true
 features:
   typescript:
@@ -18,7 +18,6 @@ features:
     core: 3.21.20
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
-    devContainers: 2.90.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
     examples: 2.82.2
@@ -40,9 +39,6 @@ features:
     unions: 2.85.11
     webhooks: 1.5.0
 generatedFiles:
-  - .devcontainer/README.md
-  - .devcontainer/devcontainer.json
-  - .devcontainer/setup.sh
   - .gitattributes
   - .npmignore
   - FUNCTIONS.md

@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/chainkit",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "author": "Avacloud",
   "type": "module",
   "bin": {
@@ -25,7 +25,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
-    "directory": "devtools"
+    "directory": "chainkit"
   },
   "scripts": {
     "lint": "eslint --cache --max-warnings=0 src",
