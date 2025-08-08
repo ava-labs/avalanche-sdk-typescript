@@ -5,7 +5,7 @@ name: Generate SDK Docs
     branches:
       - main
     paths:
-      - devtools/RELEASES.md
+      - chainkit/RELEASES.md
   workflow_dispatch: # Allows manual triggering from GitHub Actions
 
 permissions:

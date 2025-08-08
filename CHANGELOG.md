@@ -4,10 +4,10 @@
 
 Initial release with multiple packages in monorepo structure:
 
-- Add `@avalanche-sdk/sdk` package - Main SDK combining client and devtools functionality
+- Add `@avalanche-sdk/sdk` package - Main SDK combining client and chainkit functionality
 - Add `@avalanche-sdk/client` package - Core RPC client with C-Chain, P-Chain, and X-Chain support
 - Add `@avalanche-sdk/interchain` package - ICM/ICTT messaging and Teleporter integration
-- Add `@avalanche-sdk/devtools` package - Development tools and utilities
+- Add `@avalanche-sdk/chainkit` package
 - Add TypeScript support across all packages
 - Add comprehensive documentation
 - Add Code of Conduct

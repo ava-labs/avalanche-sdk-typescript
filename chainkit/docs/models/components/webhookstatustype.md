@@ -1,0 +1,15 @@
+# WebhookStatusType
+
+## Example Usage
+
+```typescript
+import { WebhookStatusType } from "@avalanche-sdk/chainkit/models/components";
+
+let value: WebhookStatusType = "inactive";
+```
+
+## Values
+
+```typescript
+"active" | "inactive"
+```
