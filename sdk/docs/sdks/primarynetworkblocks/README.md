@@ -15,6 +15,7 @@ Gets a block by block height or block hash on one of the Primary Network chains.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getBlockById" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/blocks/{blockId}" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -98,6 +99,7 @@ Lists the latest blocks proposed by a given NodeID on one of the Primary Network
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listPrimaryNetworkBlocksByNodeId" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/nodes/{nodeId}/blocks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
@@ -189,6 +191,7 @@ Lists latest blocks on one of the Primary Network chains.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listLatestPrimaryNetworkBlocks" method="get" path="/v1/networks/{network}/blockchains/{blockchainId}/blocks" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/sdk";
 
