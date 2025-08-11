@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataNftsList.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataNftsList.js";

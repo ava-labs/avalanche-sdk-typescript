@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/types";
+export * from "@avalanche-sdk/chainkit/types";

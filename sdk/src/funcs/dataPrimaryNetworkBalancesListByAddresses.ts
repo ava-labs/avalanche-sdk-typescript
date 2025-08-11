@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkBalancesListByAddresses.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataPrimaryNetworkBalancesListByAddresses.js";

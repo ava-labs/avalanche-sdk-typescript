@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/lib/http";
+export * from "@avalanche-sdk/chainkit/lib/http";

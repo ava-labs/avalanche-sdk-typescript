@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataUsageMetricsGetSubnetRpcUsage.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataUsageMetricsGetSubnetRpcUsage.js";

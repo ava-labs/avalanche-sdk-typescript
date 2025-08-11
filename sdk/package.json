@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@avalanche-sdk/client": "^0.0.4-alpha.10",
-    "@avalanche-sdk/devtools": "^0.2.1"
+    "@avalanche-sdk/chainkit": "^0.3.0"
   },
   "devDependencies": {
     "eslint": "^9.22.0",

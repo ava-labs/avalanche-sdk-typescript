@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/models/components";
+export * from "@avalanche-sdk/chainkit/models/components";

@@ -1,2 +1,1 @@
-export * from "@avalanche-sdk/devtools/core.js";
-
+export * from "@avalanche-sdk/chainkit/core.js";
