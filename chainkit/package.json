@@ -25,7 +25,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
-    "directory": "devtools"
+    "directory": "chainkit"
   },
   "scripts": {
     "lint": "eslint --cache --max-warnings=0 src",

@@ -8,8 +8,8 @@ management:
   releaseVersion: 0.2.3
   configChecksum: 17821f6f8da51541fa40b0c3ad0ae389
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
-  repoSubDirectory: devtools
-  installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/devtools
+  repoSubDirectory: chainkit
+  installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
   published: true
 features:
   typescript:

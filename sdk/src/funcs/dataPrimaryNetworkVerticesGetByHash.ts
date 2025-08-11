@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkVerticesGetByHash.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataPrimaryNetworkVerticesGetByHash.js";

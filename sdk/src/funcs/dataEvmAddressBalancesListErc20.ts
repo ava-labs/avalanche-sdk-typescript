@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataEvmAddressBalancesListErc20.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataEvmAddressBalancesListErc20.js";

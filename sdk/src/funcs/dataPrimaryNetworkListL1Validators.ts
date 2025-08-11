@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/funcs/dataPrimaryNetworkListL1Validators.js";
+export * from "@avalanche-sdk/chainkit/funcs/dataPrimaryNetworkListL1Validators.js";

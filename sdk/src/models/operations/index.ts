@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/models/operations";
+export * from "@avalanche-sdk/chainkit/models/operations";

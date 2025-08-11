@@ -1,1 +1,1 @@
-export * from "@avalanche-sdk/devtools/lib/retries"; 
+export * from "@avalanche-sdk/chainkit/lib/retries";

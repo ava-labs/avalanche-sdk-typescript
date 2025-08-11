@@ -1,21 +1,26 @@
-import { Avalanche as AvalancheDevtools, SDKOptions as DevtoolsSDKOptions } from "@avalanche-sdk/devtools";
+import {
+  Avalanche as Avalanchechainkit,
+  SDKOptions as chainkitSDKOptions,
+} from "@avalanche-sdk/chainkit";
 
 export class Avalanche {
-  public devtoolsInstance: AvalancheDevtools;
+  public chainkitInstance: Avalanchechainkit;
 
-  constructor(config: DevtoolsSDKOptions) {
-    this.devtoolsInstance = new AvalancheDevtools(config as unknown as DevtoolsSDKOptions);
+  constructor(config: chainkitSDKOptions) {
+    this.chainkitInstance = new Avalanchechainkit(
+      config as unknown as chainkitSDKOptions
+    );
   }
 
   public get data() {
-    return this.devtoolsInstance.data;
+    return this.chainkitInstance.data;
   }
 
   public get webhooks() {
-    return this.devtoolsInstance.webhooks;
+    return this.chainkitInstance.webhooks;
   }
 
   public get metrics() {
-    return this.devtoolsInstance.metrics;
+    return this.chainkitInstance.metrics;
   }
 }
