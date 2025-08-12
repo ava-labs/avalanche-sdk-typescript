@@ -111,7 +111,9 @@ export async function sendXPTransaction(
   >({
     method: "avalanche_sendTransaction",
     params: {
-      ...rest,
+      externalIndices: rest.externalIndices,
+      internalIndices: rest.internalIndices,
+      feeTolerance: rest.feeTolerance,
       transactionHex:
         typeof txOrTxHex === "string"
           ? txOrTxHex
