@@ -56,6 +56,75 @@ This directory contains practical examples demonstrating how to use the `@avalan
 ### Basic Examples
 - **`sendAvax.ts`** - Basic AVAX transfer example
 
+### React Web Application Examples
+Located in `react-show-balance-and-cross-chain-transfers/`:
+
+#### Overview
+The React examples demonstrate how to build a modern web application that integrates with the Avalanche blockchain using the SDK. These examples showcase:
+
+- **Wallet Integration**: Connecting to Core browser extension via EIP-1193 provider
+- **Balance Display**: Real-time P-Chain and C-Chain AVAX balance monitoring
+- **Cross-Chain Transfers**: Seamless AVAX transfers between Platform and Contract chains
+- **Network Switching**: Dynamic switching between Fuji testnet and Mainnet
+- **Modern UI**: Built with Material-UI and React 18, featuring responsive design
+
+#### Key Features
+- **Real-time Balance Updates**: Automatic balance refresh every 20 seconds
+- **Chain-Specific Logic**: Different handling for P-Chain (Platform) vs C-Chain (Contract)
+- **Error Handling**: Comprehensive error states and user feedback
+- **Responsive Design**: Mobile-friendly interface with adaptive layouts
+- **Type Safety**: Full TypeScript implementation with proper type definitions
+
+#### Required Polyfills
+Due to the Node.js environment assumptions in the Avalanche SDK, several polyfills are required for browser compatibility:
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    // Polyfill Node.js globals for browser environment
+    global: "globalThis",
+    "process.env": {},
+  },
+  resolve: {
+    alias: {
+      // Polyfill Node.js modules
+      process: "process/browser",
+      util: "util",
+    },
+  },
+  optimizeDeps: {
+    include: ["process", "util"],
+  },
+});
+```
+
+**Dependencies to install:**
+```bash
+npm install process util
+npm install --save-dev @types/node
+```
+
+**What are Polyfills?**
+Polyfills are code that implements a feature on web browsers that do not support that feature. In this case, some dependencies in the Avalanche SDK was designed for Node.js environments and uses Node.js-specific modules like `process` and `util`. Since browsers don't have these modules, we need to provide browser-compatible versions. Learn more about polyfills in the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Glossary/Polyfill) and [web.dev](https://web.dev/polyfills/).
+
+#### Running the React Examples
+1. **Navigate to the React examples directory:**
+   ```bash
+   cd react-show-balance-and-cross-chain-transfers
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
 ### Primary Network Transaction Examples
 Located in `prepare-primary-network-txns/`:
 
@@ -87,6 +156,7 @@ Most examples require configuration before running:
 - **Testnet Usage**: Examples are configured for Fuji testnet by default. Use testnet AVAX for experimentation.
 - **Security**: Never commit private keys or sensitive information to version control.
 - **Node Version**: Ensure you're using Node.js version 20 or higher for compatibility.
+- **Browser Compatibility**: React examples require modern browsers with ES2020+ support.
 
 ## Troubleshooting
 
@@ -105,10 +175,28 @@ Most examples require configuration before running:
    - Verify the RPC endpoint is accessible
    - Consider using a different RPC provider
 
+4. **React examples not working in browser:**
+   - Ensure all polyfills are properly configured
+   - Check browser console for polyfill-related errors
+   - Verify that `process` and `util` packages are installed
+
+### React-Specific Issues
+
+1. **"process is not defined" errors:**
+   - Ensure polyfills are properly configured in `vite.config.ts`
+   - Check that `process` package is installed
+
+2. **"global is not defined" errors:**
+   - Verify `global: "globalThis"` is set in Vite config
+   - This is required for Node.js compatibility in browsers
+
 ## Additional Resources
 
 - [Avalanche Network Documentation](https://build.avax.network/docs)
 - [GitHub Repository](https://github.com/ava-labs/avalanche-sdk-typescript)
+- [Understanding Polyfills](https://developer.mozilla.org/en-US/docs/Glossary/Polyfill)
+- [Vite Configuration Guide](https://vitejs.dev/config/)
+- [React with TypeScript](https://react.dev/learn/typescript)
 
 ## Contributing
 
