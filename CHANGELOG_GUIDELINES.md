@@ -66,7 +66,6 @@ When adding new entries to the changelog, please follow these guidelines:
 
 The changelog is organized by SDK package:
 
-- `@avalanche-sdk/sdk` - Unified SDK
 - `@avalanche-sdk/chainkit` - chainkit SDK
 - `@avalanche-sdk/client` - Avalanche RPC Client SDK
 - `@avalanche-sdk/interchain` - Cross-Chain Messaging SDK

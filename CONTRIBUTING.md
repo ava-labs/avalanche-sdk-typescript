@@ -78,7 +78,6 @@ This is a monorepo containing multiple packages. To get started:
 
 - **client/** - Core Avalanche client SDK
 - **chainkit/** - Development tools (contains generated code)
-- **sdk/** - Main SDK package combining client and chainkit
 - **interchain/** - Interchain messaging SDK
 
 **Note:** Some packages contain generated code. For these packages, we do not accept direct changes to the generated files. Instead, please report issues and we'll address them in the upstream source.
