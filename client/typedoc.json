@@ -19,7 +19,7 @@
     "src/methods/info/index.ts",
     "src/utils/index.ts"
   ],
-  "out": "docs",
+  "out": "docs/typedoc",
   "name": "Avalanche SDK Client",
   "excludePrivate": true,
   "excludeProtected": true,
