@@ -1,12 +1,11 @@
 {
   "name": "@avalanche-sdk/chainkit",
-  "version": "0.3.0",
+  "version": "0.3.0-alpha.0",
   "author": "Avacloud",
   "type": "module",
   "bin": {
     "mcp": "bin/mcp-server.js"
   },
-  "license": "BSD-3-Clause",
   "tshy": {
     "sourceDialects": [
       "@avalanche-sdk/chainkit/source"
