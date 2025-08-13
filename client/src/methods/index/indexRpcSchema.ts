@@ -15,4 +15,9 @@ export type IndexMethods = [
   IsAcceptedMethod
 ];
 
+/**
+ * The RPC schema for the Index methods.
+ *
+ * @see {@link IndexMethods}
+ */
 export type IndexRpcSchema = RpcSchemaOverride & IndexMethods;

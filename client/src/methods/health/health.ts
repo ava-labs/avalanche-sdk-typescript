@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { HealthRpcSchema } from "./healthRpcSchema.js";
 import { HealthParameters, HealthReturnType } from "./types/health.js";
 
@@ -10,7 +13,7 @@ import { HealthParameters, HealthReturnType } from "./types/health.js";
  * - Docs: https://build.avax.network/docs/api-reference/health-api#healthhealth
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - Optional tags to filter health checks. {@link HealthParameters}
+ * @param params - Optional tags to filter health checks. {@link HealthParameters}
  * @returns The health check results. {@link HealthReturnType}
  *
  * @example

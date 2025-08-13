@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { HealthRpcSchema } from "./healthRpcSchema.js";
 import { LivenessReturnType } from "./types/liveness.js";
 

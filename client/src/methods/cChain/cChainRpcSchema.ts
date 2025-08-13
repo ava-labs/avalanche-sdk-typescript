@@ -17,4 +17,9 @@ export type CChainMethods = [
   IssueTxMethod
 ];
 
+/**
+ * The RPC schema for the C-Chain methods.
+ *
+ * @see {@link CChainMethods}
+ */
 export type CChainRpcSchema = RpcSchemaOverride & CChainMethods;

@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { IndexRpcSchema } from "./indexRpcSchema.js";
 import {
   GetContainerRangeParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/index-api#indexgetcontainerrange
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The start index, end index, and encoding. {@link GetContainerRangeParameters}
+ * @param params - The start index, end index, and encoding. {@link GetContainerRangeParameters}
  * @returns The container details. {@link GetContainerRangeReturnType}
  *
  * @example

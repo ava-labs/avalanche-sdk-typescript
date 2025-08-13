@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { GetTxParameters, GetTxReturnType } from "./types/getTx.js";
 import { XChainRpcSchema } from "./xChainRpcSchema.js";
 
@@ -9,7 +12,7 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettx
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The transaction ID and encoding format. {@link GetTxParameters}
+ * @param params - The transaction ID and encoding format. {@link GetTxParameters}
  * @returns The transaction data. {@link GetTxReturnType}
  *
  * @example

@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { AdminRpcSchema } from "./adminRpcSchema.js";
 import { AliasParameters } from "./types/alias.js";
 
@@ -10,7 +13,7 @@ import { AliasParameters } from "./types/alias.js";
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminalias
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The endpoint and alias. {@link AliasParameters}
+ * @param params - The endpoint and alias. {@link AliasParameters}
  * @returns Promise that resolves when the alias is set
  *
  * @example

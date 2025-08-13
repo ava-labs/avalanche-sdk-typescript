@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import {
   GetCurrentSupplyParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetcurrentsupply
  *
  * @param client - The client to use to make the request {@link AvalancheCoreClient}
- * @param parameters - The asset ID {@link GetCurrentSupplyParameters}
+ * @param params - The asset ID {@link GetCurrentSupplyParameters}
  * @returns The current supply. {@link GetCurrentSupplyReturnType}
  *
  * @example

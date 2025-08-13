@@ -42,11 +42,11 @@ export async function acps<chain extends Chain | undefined>(
     (acc, curr) => {
       const key = parseInt(curr);
       acc.acps.set(key, {
-        supportWeight: BigInt(acps.acps.get(key)?.supportWeight || 0n),
-        supporters: new Set(acps.acps.get(key)?.supporters || []),
-        objectWeight: BigInt(acps.acps.get(key)?.objectWeight || 0n),
-        objectors: new Set(acps.acps.get(key)?.objectors || []),
-        abstainWeight: BigInt(acps.acps.get(key)?.abstainWeight || 0n),
+        supportWeight: BigInt((acps.acps as any)?.[key]?.supportWeight || 0n),
+        supporters: new Set((acps.acps as any)?.[key]?.supporters || []),
+        objectWeight: BigInt((acps.acps as any)?.[key]?.objectWeight || 0n),
+        objectors: new Set((acps.acps as any)?.[key]?.objectors || []),
+        abstainWeight: BigInt((acps.acps as any)?.[key]?.abstainWeight || 0n),
       });
       return acc;
     },

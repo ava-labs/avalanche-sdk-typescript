@@ -48,7 +48,7 @@ export type CreateAdminApiClientErrorType = CreateAvalancheCoreClientErrorType;
 /**
  * Creates an Admin API Client with a given transport configured for a Chain.
  *
- * @param config - {@link  AdminApiClientConfig}
+ * @param parameters - {@link  AdminApiClientConfig}
  * @returns An Admin API Client. {@link AdminApiClient}
  *
  * @example

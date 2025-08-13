@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetStakeParameters, GetStakeReturnType } from "./types/getStake.js";
 
@@ -9,7 +12,7 @@ import { GetStakeParameters, GetStakeReturnType } from "./types/getStake.js";
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The addresses and subnet ID {@link GetStakeParameters}
+ * @param params - The addresses and subnet ID {@link GetStakeParameters}
  * @returns The stake amount. {@link GetStakeReturnType}
  *
  * @example

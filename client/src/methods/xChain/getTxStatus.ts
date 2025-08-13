@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import {
   GetTxStatusParameters,
   GetTxStatusReturnType,
@@ -12,7 +15,7 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The transaction ID. {@link GetTxStatusParameters}
+ * @param params - The transaction ID. {@link GetTxStatusParameters}
  * @returns The transaction status. {@link GetTxStatusReturnType}
  *
  * @example

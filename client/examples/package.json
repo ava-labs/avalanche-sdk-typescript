@@ -6,9 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "description": "",
   "dependencies": {
-    "@avalanche-sdk/client": "^0.0.4-alpha.0"
+    "@avalanche-sdk/client": "^0.0.4-alpha.8"
   }
 }

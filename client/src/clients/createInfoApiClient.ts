@@ -50,7 +50,7 @@ export type CreateInfoApiClientErrorType = CreateAvalancheCoreClientErrorType;
  *
  * The Info API Client is an interface to interact with the Info API through Avalanche-specific JSON-RPC API methods.
  *
- * @param config - {@link InfoApiClientConfig}
+ * @param parameters - {@link InfoApiClientConfig}
  * @returns An Info API Client. {@link InfoApiClient}
  *
  * @example

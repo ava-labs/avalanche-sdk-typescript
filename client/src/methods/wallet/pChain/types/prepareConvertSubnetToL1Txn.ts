@@ -36,6 +36,7 @@ export type PrepareConvertSubnetToL1TxnParameters = CommonTxParams & {
   managerContractAddress: string;
   /**
    * Initial set of L1 validators after the conversion.
+   * {@link L1Validator[]}
    */
   validators: L1Validator[];
   /**

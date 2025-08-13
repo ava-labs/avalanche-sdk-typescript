@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetTxParameters, GetTxReturnType } from "./types/getTx.js";
 
@@ -9,7 +12,7 @@ import { GetTxParameters, GetTxReturnType } from "./types/getTx.js";
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgettx
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The transaction ID and encoding {@link GetTxParameters}
+ * @param params - The transaction ID and encoding {@link GetTxParameters}
  * @returns The transaction data. {@link GetTxReturnType}
  *
  * @example

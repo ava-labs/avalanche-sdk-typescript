@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { IssueTxParameters, IssueTxReturnType } from "./types/issueTx.js";
 import { XChainRpcSchema } from "./xChainRpcSchema.js";
 
@@ -9,7 +12,7 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmissuetx
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The transaction to issue. {@link IssueTxParameters}
+ * @param params - The transaction to issue. {@link IssueTxParameters}
  * @returns The transaction ID. {@link IssueTxReturnType}
  *
  * @example

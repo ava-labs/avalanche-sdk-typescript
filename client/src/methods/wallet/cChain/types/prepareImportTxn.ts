@@ -6,7 +6,11 @@ import {
 } from "@avalabs/avalanchejs";
 import { Address } from "viem";
 import { AvalancheAccount } from "../../../../accounts/avalancheAccount.js";
-import { P_CHAIN_ALIAS, X_CHAIN_ALIAS } from "../../../consts.js";
+import {
+  C_CHAIN_ALIAS,
+  P_CHAIN_ALIAS,
+  X_CHAIN_ALIAS,
+} from "../../../consts.js";
 
 export type PrepareImportTxnParameters = {
   /**
@@ -15,7 +19,7 @@ export type PrepareImportTxnParameters = {
    */
   account?: AvalancheAccount | Address | undefined;
   /**
-   * The chain alias to import the funds from.
+   * The chain alias to import the funds from. {@link P_CHAIN_ALIAS} | {@link X_CHAIN_ALIAS}
    */
   sourceChain: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS;
   /**
@@ -49,7 +53,7 @@ export type PrepareImportTxnReturnType = {
    */
   importTx: evmSerial.ImportTx;
   /**
-   * The chain alias.
+   * The chain alias. {@link C_CHAIN_ALIAS}
    */
-  chainAlias: "C";
+  chainAlias: typeof C_CHAIN_ALIAS;
 };

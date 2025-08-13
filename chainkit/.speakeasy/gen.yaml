@@ -1,0 +1,64 @@
+configVersion: 2.0.0
+generation:
+  sdkClassName: Avalanche
+  maintainOpenAPIOrder: true
+  usageSnippets:
+    optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
+  useClassNamesForArrayFields: true
+  fixes:
+    nameResolutionDec2023: true
+    nameResolutionFeb2025: true
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: true
+    securityFeb2025: true
+    sharedErrorComponentsApr2025: false
+  auth:
+    oAuth2ClientCredentialsEnabled: false
+    oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
+typescript:
+  version: 0.3.0-alpha.1
+  additionalDependencies:
+    dependencies:
+      json-canonicalize: ^1.0.6
+    devDependencies:
+      '@types/node': ^22.4.1
+    peerDependencies: {}
+  additionalPackageJSON:
+    author: Sayan Kar
+    license: BSD-3-Clause
+  author: Speakeasy
+  baseErrorName: AvalancheError
+  clientServerStatusCodesAsErrors: true
+  constFieldsAlwaysOptional: true
+  defaultErrorName: AvalancheAPIError
+  enableCustomCodeRegions: false
+  enableMCPServer: true
+  enableReactQuery: false
+  enumFormat: union
+  flattenGlobalSecurity: true
+  flatteningOrder: parameters-first
+  generateExamples: true
+  imports:
+    option: openapi
+    paths:
+      callbacks: models/callbacks
+      errors: models/errors
+      operations: models/operations
+      shared: models/components
+      webhooks: models/webhooks
+  inputModelSuffix: input
+  jsonpath: rfc9535
+  maxMethodParams: 0
+  methodArguments: require-security-and-request
+  moduleFormat: dual
+  outputModelSuffix: output
+  packageName: '@avalanche-sdk/chainkit'
+  responseFormat: flat
+  templateVersion: v2
+  usageSDKInitImports: []
+  useIndexModules: true

@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import {
   GetBlockchainIDParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/info-api#infogetblockchainid
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The blockchain alias. {@link GetBlockchainIDParameters}
+ * @param params - The blockchain alias. {@link GetBlockchainIDParameters}
  * @returns The blockchain ID. {@link GetBlockchainIDReturnType}
  *
  * @example

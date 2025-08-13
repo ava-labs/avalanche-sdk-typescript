@@ -3,6 +3,11 @@ import {
   Context as ContextType,
   pvmSerial,
 } from "@avalabs/avalanchejs";
+import {
+  C_CHAIN_ALIAS,
+  P_CHAIN_ALIAS,
+  X_CHAIN_ALIAS,
+} from "../../../consts.js";
 import { CommonTxParams } from "../../types/common.js";
 
 export type ImportedOutput = {
@@ -27,9 +32,9 @@ export type PrepareImportTxnParameters = Omit<
   "changeAddresses"
 > & {
   /**
-   * The chain to import the funds from.
+   * The chain to import the funds from. {@link X_CHAIN_ALIAS} | {@link C_CHAIN_ALIAS}
    */
-  sourceChain: "X" | "C";
+  sourceChain: typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS;
   /**
    * Consolidated imported output from the atomic memory (source chain). Users
    * cannot specify the amount, as it will be consolidation of all the UTXOs
@@ -52,7 +57,7 @@ export type PrepareImportTxnReturnType = {
    */
   importTx: pvmSerial.ImportTx;
   /**
-   * The chain alias.
+   * The chain alias. {@link P_CHAIN_ALIAS}
    */
-  chainAlias: "P";
+  chainAlias: typeof P_CHAIN_ALIAS;
 };

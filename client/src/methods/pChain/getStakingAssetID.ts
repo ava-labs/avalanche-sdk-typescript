@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import {
   GetStakingAssetIDParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetstakingassetid
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The subnet ID {@link GetStakingAssetIDParameters}
+ * @param params - The subnet ID {@link GetStakingAssetIDParameters}
  * @returns The staking asset ID. {@link GetStakingAssetIDReturnType}
  *
  * @example

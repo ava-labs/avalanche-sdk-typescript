@@ -54,7 +54,7 @@ export type CreateAvalancheCoreClientErrorType =
  * The Avalanche Core Client is a base client that can be used to create other
  * Avalanche clients or make rpc requests.
  *
- * @param config - {@link AvalancheCoreClientConfig}
+ * @param parameters - {@link AvalancheCoreClientConfig}
  * @returns A Avalanche Core Client. {@link AvalancheCoreClient}
  *
  * @example

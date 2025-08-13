@@ -55,7 +55,7 @@ export type CreateXChainClientErrorType = CreateAvalancheCoreClientErrorType;
  * - Handling atomic swaps
  * - Creating and managing custom assets
  *
- * @param config - {@link XChainClientConfig}
+ * @param parameters - {@link XChainClientConfig}
  * @returns An X-Chain Client. {@link XChainClient}
  *
  * @example

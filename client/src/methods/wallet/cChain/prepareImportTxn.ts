@@ -6,6 +6,7 @@ import { C_CHAIN_ALIAS } from "../../consts.js";
 import { baseFee as getBaseFee } from "../../public/index.js";
 import { getContextFromURI } from "../getContextFromURI.js";
 import {
+  addOrModifyXPAddressesAlias,
   bech32AddressToBytes,
   getBech32AddressFromAccountOrClient,
   getChainIdFromAlias,
@@ -53,8 +54,9 @@ export async function prepareImportTxn(
   const context = params.context || (await getContextFromURI(client));
   const baseFee = await getBaseFee(client);
 
-  const fromAddresses = params.fromAddresses || [];
-
+  const fromAddresses =
+    addOrModifyXPAddressesAlias(params.fromAddresses, C_CHAIN_ALIAS) || [];
+  console.log("fromAddresses", fromAddresses);
   if (fromAddresses.length === 0) {
     const paramAc = parseAvalancheAccount(account);
     const address = await getBech32AddressFromAccountOrClient(

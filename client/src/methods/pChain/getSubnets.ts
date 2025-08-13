@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import {
   GetSubnetsParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnets
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - Optional parameters {@link GetSubnetsParameters}
+ * @param params - Optional parameters {@link GetSubnetsParameters}
  * @returns The list of subnets. {@link GetSubnetsReturnType}
  *
  * @example

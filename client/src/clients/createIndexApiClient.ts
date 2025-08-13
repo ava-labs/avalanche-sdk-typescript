@@ -56,7 +56,7 @@ export type CreateIndexApiClientErrorType = CreateAvalancheCoreClientErrorType;
  *
  * The Index API Client is an interface to interact with the Index API through Avalanche-specific JSON-RPC API methods.
  *
- * @param config - {@link IndexApiClientConfig}
+ * @param parameters - {@link IndexApiClientConfig}
  * @returns An Index API Client. {@link IndexApiClient}
  *
  * @example

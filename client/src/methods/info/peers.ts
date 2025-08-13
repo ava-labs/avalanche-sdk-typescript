@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { InfoRpcSchema } from "./infoRpcSchema.js";
 import { PeersParameters, PeersReturnType } from "./types/peers.js";
 
@@ -9,7 +12,7 @@ import { PeersParameters, PeersReturnType } from "./types/peers.js";
  * - Docs: https://build.avax.network/docs/api-reference/info-api#infopeers
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - Optional node IDs to filter peers. {@link PeersParameters}
+ * @param params - Optional node IDs to filter peers. {@link PeersParameters}
  * @returns Information about connected peers. {@link PeersReturnType}
  *
  * @example

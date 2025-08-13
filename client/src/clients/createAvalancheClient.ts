@@ -42,7 +42,7 @@ import { createAvalancheTransportClient } from "./utils.js";
  * - Health API
  * - Index API
  *
- * @param config - {@link AvalancheClientConfig}
+ * @param parameters - {@link AvalancheClientConfig}
  * @returns An Avalanche Client with access to all sub-clients. {@link AvalancheClient}
  *
  * @example

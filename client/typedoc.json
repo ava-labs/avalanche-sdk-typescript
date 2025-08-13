@@ -1,0 +1,94 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/index.ts",
+    "src/accounts/index.ts",
+    "src/chains/index.ts",
+    "src/methods/index.ts",
+    "src/methods/wallet/index.ts",
+    "src/methods/wallet/cChain/index.ts",
+    "src/methods/wallet/pChain/index.ts",
+    "src/methods/wallet/xChain/index.ts",
+    "src/methods/public/index.ts",
+    "src/methods/pChain/index.ts",
+    "src/methods/admin/index.ts",
+    "src/methods/cChain/index.ts",
+    "src/methods/xChain/index.ts",
+    "src/methods/health/index.ts",
+    "src/methods/index/index.ts",
+    "src/methods/info/index.ts",
+    "src/utils/index.ts"
+  ],
+  "out": "docs",
+  "name": "Avalanche SDK Client",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "categoryOrder": [
+    "Clients",
+    "Methods",
+    "Wallet",
+    "Chains",
+    "Types",
+    "Utilities",
+    "*"
+  ],
+  "defaultCategory": "Other",
+  "readme": "TYPEDOC.md",
+  "plugin": ["typedoc-github-theme"],
+  "logLevel": "Verbose",
+  "validation": {
+    "invalidLink": true,
+    "notExported": true
+  },
+  "navigation": {
+    "includeGroups": true
+  },
+  "sidebarLinks": {
+    "GitHub": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/README.md",
+    "Avalanche Docs": "https://build.avax.network/"
+  },
+  "searchInComments": true,
+  "searchGroupBoosts": {
+    "Functions": 1.5,
+    "Variables": 1
+  },
+  "maxTypeConversionDepth": 3,
+  "typePrintWidth": 180,
+  "groupReferencesByType": true,
+  "useFirstParagraphOfCommentAsSummary": true,
+  "externalSymbolLinkMappings": {
+    "@avalanche-sdk/client": {
+      "AvalancheCoreClient": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/clients/createAvalancheCoreClient.ts",
+      "AvalancheWalletClient": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/clients/createAvalancheWalletClient.ts",
+      "AdminMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/admin/adminRpcSchema.ts",
+      "AvalanchePublicMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/public/avalanchePublicRpcSchema.ts",
+      "AvalancheWalletMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/wallet/avalancheWalletRPCSchema.ts",
+      "CChainMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/cChain/cChainRpcSchema.ts",
+      "HealthMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/health/healthRpcSchema.ts",
+      "IndexMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/index/indexRpcSchema.ts",
+      "InfoMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/info/infoRpcSchema.ts",
+      "PChainMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/pChain/pChainRpcSchema.ts",
+      "XChainMethods": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/src/methods/xChain/xChainRpcSchema.ts"
+    },
+    "@avalabs/avalanchejs": {
+      "Credential": "https://github.com/ava-labs/avalanchejs/blob/master/src/serializable/fxs/secp256k1/credential.ts",
+      "PChainOwner": "https://github.com/ava-labs/avalanchejs/blob/master/src/serializable/fxs/pvm/pChainOwner.ts",
+      "Context": "https://github.com/ava-labs/avalanchejs/blob/master/src/vms/context/model.ts",
+      "UnsignedTx": "https://github.com/ava-labs/avalanchejs/blob/master/src/vms/common/unsignedTx.ts",
+      "Utxo": "https://github.com/ava-labs/avalanchejs/blob/master/src/serializable/avax/utxo.ts",
+      "Transaction": "https://github.com/ava-labs/avalanchejs/blob/master/src/vms/common/transaction.ts"
+    },
+    "viem": {
+      "PrivateKeyToAccountOptions": "https://github.com/wevm/viem/blob/main/src/accounts/privateKeyToAccount.ts",
+      "MnemonicToAccountOptions": "https://github.com/wevm/viem/blob/main/src/accounts/mnemonicToAccount.ts",
+      "Account": "https://github.com/wevm/viem/blob/main/src/types/account.ts"
+    },
+    "@scure/bip32": {
+      "HDKey": "https://github.com/paulmillr/scure-bip32/blob/982bd3b125e9b162a34269713c7bb4e8a230d5b6/index.ts#L73"
+    },
+    "abitype": { "Address": "#" }
+  }
+}

@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import {
   GetBlockByHeightParameters,
   GetBlockByHeightReturnType,
@@ -12,7 +15,7 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetblockbyheight
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The block height and encoding format. {@link GetBlockByHeightParameters}
+ * @param params - The block height and encoding format. {@link GetBlockByHeightParameters}
  * @returns The block data. {@link GetBlockByHeightReturnType}
  *
  * @example

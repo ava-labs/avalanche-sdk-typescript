@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { AdminRpcSchema } from "./adminRpcSchema.js";
 import { SetLoggerLevelParameters } from "./types/setLoggerLevel.js";
 
@@ -9,7 +12,7 @@ import { SetLoggerLevelParameters } from "./types/setLoggerLevel.js";
  * - Docs: https://build.avax.network/docs/api-reference/admin-api#adminsetloggerlevel
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The logger name, log level, and display level. {@link SetLoggerLevelParameters}
+ * @param params - The logger name, log level, and display level. {@link SetLoggerLevelParameters}
  * @returns Promise that resolves when the logger levels are set
  *
  * @example

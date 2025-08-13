@@ -1,9 +1,9 @@
 import { Common, Credential, UnsignedTx, utils } from "@avalabs/avalanchejs";
 
 /**
- * @description Get a transaction from a buffer or hex string
- * @param txBytes - The buffer or hex string to get the transaction from {@link string | Uint8Array}
- * @param chainAlias - The chain alias to get the transaction from {@link "P" | "X" | "C"}
+ *  Get a transaction from a buffer or hex string
+ * @param txBytes - The buffer or hex string to get the transaction from `string` or `Uint8Array`
+ * @param chainAlias - The chain alias to get the transaction from `"P" | "X" | "C"`
  * @returns A array with the transaction {@link Common.Transaction} and credentials {@link Credential[]}
  *
  * @example
@@ -57,9 +57,9 @@ export function getTxFromBytes(
 }
 
 /**
- * @description Get an unsigned transaction from a buffer or hex string
- * @param txBytes - The buffer or hex string to get the transaction from {@link string | Uint8Array}
- * @param chainAlias - The chain alias to get the transaction from {@link "P" | "X" | "C"}
+ *  Get an unsigned transaction from a buffer or hex string
+ * @param txBytes - The buffer or hex string to get the transaction from `string` or `Uint8Array`
+ * @param chainAlias - The chain alias to get the transaction from `"P" | "X" | "C"`
  * @returns An unsigned transaction {@link UnsignedTx}
  *
  * @example

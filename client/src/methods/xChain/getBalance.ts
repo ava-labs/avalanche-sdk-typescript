@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import {
   GetBalanceParameters,
   GetBalanceReturnType,
@@ -12,7 +15,7 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetbalance
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The addresses and asset ID. {@link GetBalanceParameters}
+ * @param params - The addresses and asset ID. {@link GetBalanceParameters}
  * @returns The balance of the asset. {@link GetBalanceReturnType}
  *
  * @example

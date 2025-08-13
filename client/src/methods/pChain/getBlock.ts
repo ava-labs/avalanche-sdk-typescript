@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { PChainRpcSchema } from "./pChainRpcSchema.js";
 import { GetBlockParameters, GetBlockReturnType } from "./types/getBlock.js";
 
@@ -9,7 +12,7 @@ import { GetBlockParameters, GetBlockReturnType } from "./types/getBlock.js";
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetblock
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The block ID and encoding format {@link GetBlockParameters}
+ * @param params - The block ID and encoding format {@link GetBlockParameters}
  * @returns The block data. {@link GetBlockReturnType}
  *
  * @example

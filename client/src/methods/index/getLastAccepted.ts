@@ -1,5 +1,8 @@
 import { Chain, Transport } from "viem";
-import { AvalancheCoreClient as Client } from "../../clients/createAvalancheCoreClient.js";
+import {
+  AvalancheCoreClient,
+  AvalancheCoreClient as Client,
+} from "../../clients/createAvalancheCoreClient.js";
 import { IndexRpcSchema } from "./indexRpcSchema.js";
 import {
   GetLastAcceptedParameters,
@@ -12,7 +15,7 @@ import {
  * - Docs: https://build.avax.network/docs/api-reference/index-api#indexgetlastaccepted
  *
  * @param client - The client to use. {@link AvalancheCoreClient}
- * @param parameters - The encoding. {@link GetLastAcceptedParameters}
+ * @param params - The encoding. {@link GetLastAcceptedParameters}
  * @returns The last accepted container. {@link GetLastAcceptedReturnType}
  *
  * @example

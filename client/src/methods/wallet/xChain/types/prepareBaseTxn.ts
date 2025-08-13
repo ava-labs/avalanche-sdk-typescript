@@ -29,7 +29,7 @@ export type PrepareBaseTxnReturnType = {
    */
   baseTx: avmSerial.BaseTx;
   /**
-   * The chain alias.
+   * The chain alias. {@link X_CHAIN_ALIAS}
    */
   chainAlias: typeof X_CHAIN_ALIAS;
 };

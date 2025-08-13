@@ -1,159 +1,44 @@
-speakeasyVersion: 1.587.1
+speakeasyVersion: 1.603.0
 sources:
-    data-source:
-        sourceNamespace: avalanche-sdk-data-typescript
-        sourceRevisionDigest: sha256:c792081798068b290365f34d8260c725a3fc8b21fbd29bee4d138b26b039924e
-        sourceBlobDigest: sha256:2148c2ffe68732a9227a87fa96eff44710c3ef27501c2036e84f8809e2ced5a5
+    chainkit-source:
+        sourceNamespace: avalanche-sdk-chainkit-typescript
+        sourceRevisionDigest: sha256:9c3c1c9bededfb64c85c874865db9b8bf4621b0aa65f9a5bf4abababe387ec24
+        sourceBlobDigest: sha256:214dff750535e03d96c20a978cfa47a413d04c88d47f996ae148473b45c669df
         tags:
             - latest
-            - speakeasy-sdk-regen-1753296255
-            - 1.0.0
-    devtools-source:
-        sourceNamespace: avalanche-sdk-devtools-typescript
-        sourceRevisionDigest: sha256:b4f1a31e1e21059d077232a7cb4f8ef1f77b5ff88fe7dde795d2e576f6cb68ed
-        sourceBlobDigest: sha256:0ecd1a04976d32bcfa1940cbf80a15793bf778f6134ab718a4ecc70c15f840d0
-        tags:
-            - latest
-            - speakeasy-sdk-regen-1753296115
-            - 1.0.0
-    metrics-source:
-        sourceNamespace: avalanche-sdk-metrics-typescript
-        sourceRevisionDigest: sha256:faad3b1fcc9d848d72808beb7bbc53e4fccc7e82b17701fdc9c93874aed55264
-        sourceBlobDigest: sha256:087b853f5d79fc9f4ea4457e76054eb44d72a27de770ef1cfe76b192c0a532a2
-        tags:
-            - latest
-            - speakeasy-sdk-regen-1752172852
-            - 1.0.0
-    webhooks-source:
-        sourceNamespace: avalanche-sdk-webhooks-typescript
-        sourceRevisionDigest: sha256:a243a6c417686cc0d74eff745b675a100037d32af228bdfe4f3f9f99a9a5a1eb
-        sourceBlobDigest: sha256:ffaa2f386cd834d338af7b35e9098351f5efbaa356ff27791447b566316cfe5e
-        tags:
-            - latest
-            - speakeasy-sdk-regen-1753296327
+            - speakeasy-sdk-regen-1755082739
             - 1.0.0
 targets:
-    avalanche:
-        source: metrics-source
-        sourceNamespace: avalanche-sdk-metrics-typescript
-        sourceRevisionDigest: sha256:a03cf954b8a9ab411af917229e651e87630a12703271f87b13a84eb915444486
-        sourceBlobDigest: sha256:fb4668172f91d4f38dc51bc8bc7c0bee11c924c63c8aba6d22d9b4d66302acb1
-        codeSamplesNamespace: avalanche-sdk-metrics-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:14d9f387e3c309a88f573d5775768b039b089c94117ac33ac188d0b9066898cd
-    data-sdk:
-        source: data-source
-        sourceNamespace: avalanche-sdk-data-typescript
-        sourceRevisionDigest: sha256:c792081798068b290365f34d8260c725a3fc8b21fbd29bee4d138b26b039924e
-        sourceBlobDigest: sha256:2148c2ffe68732a9227a87fa96eff44710c3ef27501c2036e84f8809e2ced5a5
-        codeSamplesNamespace: avalanche-sdk-data-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:56a9993f59db4ba43b88460571c137cb2b0ac668b3acf8db28f97b0a3fa00041
-    devtools-sdk:
-        source: devtools-source
-        sourceNamespace: avalanche-sdk-devtools-typescript
-        sourceRevisionDigest: sha256:b4f1a31e1e21059d077232a7cb4f8ef1f77b5ff88fe7dde795d2e576f6cb68ed
-        sourceBlobDigest: sha256:0ecd1a04976d32bcfa1940cbf80a15793bf778f6134ab718a4ecc70c15f840d0
-        codeSamplesNamespace: avalanche-sdk-devtools-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:78bfa099d87b7fd4e19bdce4a0517a43a9461679f72dae3bdcbaad2c8ff8f152
-    metrics-sdk:
-        source: metrics-source
-        sourceNamespace: avalanche-sdk-metrics-typescript
-        sourceRevisionDigest: sha256:faad3b1fcc9d848d72808beb7bbc53e4fccc7e82b17701fdc9c93874aed55264
-        sourceBlobDigest: sha256:087b853f5d79fc9f4ea4457e76054eb44d72a27de770ef1cfe76b192c0a532a2
-        codeSamplesNamespace: avalanche-sdk-metrics-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:2f784c87105b1802b1911735ccc0830524032711d5ceb28125f69760ad666c83
-    webhooks-sdk:
-        source: webhooks-source
-        sourceNamespace: avalanche-sdk-webhooks-typescript
-        sourceRevisionDigest: sha256:a243a6c417686cc0d74eff745b675a100037d32af228bdfe4f3f9f99a9a5a1eb
-        sourceBlobDigest: sha256:ffaa2f386cd834d338af7b35e9098351f5efbaa356ff27791447b566316cfe5e
-        codeSamplesNamespace: avalanche-sdk-webhooks-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:08a0c0e3627687f6ba8e959fa0251e0398f86025019c00768c5ddebd3f9e2569
+    chainkit-sdk:
+        source: chainkit-source
+        sourceNamespace: avalanche-sdk-chainkit-typescript
+        sourceRevisionDigest: sha256:9c3c1c9bededfb64c85c874865db9b8bf4621b0aa65f9a5bf4abababe387ec24
+        sourceBlobDigest: sha256:214dff750535e03d96c20a978cfa47a413d04c88d47f996ae148473b45c669df
+        codeSamplesNamespace: avalanche-sdk-chainkit-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:cde3cfb732969a7feae707afe9c0d8f13c6fa8dc66ed649ac06dc58ca983595d
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
-        data-source:
-            inputs:
-                - location: https://glacier-api.avax.network/api-json
-            overlays:
-                - location: data/overlays/overlay.yaml
-            registry:
-                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-data-typescript
-        devtools-source:
+        chainkit-source:
             inputs:
                 - location: https://popsicle-api.avax.network/api-json
                 - location: https://glacier-api.avax.network/api-json
             overlays:
-                - location: devtools/overlays/overlay.yaml
+                - location: chainkit/overlays/overlay.yaml
             registry:
-                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript
-        metrics-source:
-            inputs:
-                - location: https://popsicle-api.avax.network/api-json
-            overlays:
-                - location: metrics/overlays/overlay.yaml
-            registry:
-                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript
-        webhooks-source:
-            inputs:
-                - location: https://glacier-api.avax.network/api-json
-            overlays:
-                - location: webhooks/overlays/overlay.yaml
-            registry:
-                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript
+                location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-chainkit-typescript
     targets:
-        data-sdk:
+        chainkit-sdk:
             target: typescript
-            source: data-source
-            output: data
+            source: chainkit-source
+            output: chainkit
             publish:
                 npm:
                     token: $npm_token
             codeSamples:
                 registry:
-                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-data-typescript-code-samples
-                langOverride: javascript
-                labelOverride:
-                    fixedValue: JavaScript
-                blocking: false
-        devtools-sdk:
-            target: typescript
-            source: devtools-source
-            output: devtools
-            publish:
-                npm:
-                    token: $npm_token
-            codeSamples:
-                registry:
-                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-devtools-typescript-code-samples
-                langOverride: javascript
-                labelOverride:
-                    fixedValue: JavaScript
-                blocking: false
-        metrics-sdk:
-            target: typescript
-            source: metrics-source
-            output: metrics
-            publish:
-                npm:
-                    token: $npm_token
-            codeSamples:
-                registry:
-                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-metrics-typescript-code-samples
-                langOverride: javascript
-                labelOverride:
-                    fixedValue: JavaScript
-                blocking: false
-        webhooks-sdk:
-            target: typescript
-            source: webhooks-source
-            output: webhooks
-            publish:
-                npm:
-                    token: $npm_token
-            codeSamples:
-                registry:
-                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-webhooks-typescript-code-samples
+                    location: registry.speakeasyapi.dev/avalabs/avalabs/avalanche-sdk-chainkit-typescript-code-samples
                 langOverride: javascript
                 labelOverride:
                     fixedValue: JavaScript

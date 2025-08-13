@@ -50,7 +50,7 @@ export type CreateHealthApiClientErrorType = CreateAvalancheCoreClientErrorType;
  *
  * The Health API Client is an interface to interact with the Health API through Avalanche-specific JSON-RPC API methods.
  *
- * @param config - {@link HealthApiClientConfig}
+ * @param parameters - {@link HealthApiClientConfig}
  * @returns A Health API Client. {@link HealthApiClient}
  *
  * @example

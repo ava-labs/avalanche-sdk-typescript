@@ -29,14 +29,14 @@
     "cross-chain"
   ],
   "author": "Raj Ranjan",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
   },
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript#readme",
   "dependencies": {
     "@avalabs/avalanchejs": "5.1.0-alpha.1",
-    "@avalanche-sdk/rpc": "^0.0.4-alpha.1"
+    "@avalanche-sdk/client": "^0.0.4-alpha.12"
   },
   "peerDependencies": {
     "viem": "^2.33.1"
