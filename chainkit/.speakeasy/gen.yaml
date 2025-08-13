@@ -21,7 +21,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0-alpha.0
+  version: 0.3.0-alpha.1
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
@@ -31,6 +31,7 @@ typescript:
   additionalPackageJSON:
     author: Sayan Kar
     license: BSD-3-Clause
+  author: Speakeasy
   baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
   constFieldsAlwaysOptional: true
