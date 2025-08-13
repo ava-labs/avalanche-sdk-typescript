@@ -20,9 +20,9 @@
 
 Avalanche SDK TypeScript provides a complete set of tools and libraries for developers to interact with the Avalanche blockchain ecosystem. This monorepo includes multiple specialized SDKs, each designed for specific use cases while maintaining consistency and interoperability.
 
-> ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. Use in production at your own risk.
+> **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. Use in production at your own risk.
 
-### 🎯 Which SDK Should I Use?
+### Which SDK Should I Use?
 
 | SDK | Description |
 |-----|-------------|
@@ -31,13 +31,13 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
 
 
-## 📊 Package Status
+## Package Status
 
 | Package | Version | Status | npm |
 |---------|---------|--------|-----|
-| `@avalanche-sdk/chainkit` | 0.2.1 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/chainkit)](https://www.npmjs.com/package/@avalanche-sdk/chainkit) |
-| `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
-| `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
+| `@avalanche-sdk/chainkit` | 0.3.0-alpha.0 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/chainkit)](https://www.npmjs.com/package/@avalanche-sdk/chainkit) |
+| `@avalanche-sdk/client` | 0.0.4-alpha.12 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
+| `@avalanche-sdk/interchain` | 0.0.1-alpha.2 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
 
 ## Available SDKs
 
@@ -79,7 +79,7 @@ SDK for building cross-L1 applications and bridges.
 - Works seamlessly with wallet clients
 - Built-in support for Avalanche C-Chain and custom subnets
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -99,7 +99,7 @@ npm install @avalanche-sdk/chainkit      # Development tools
 
 ### Quick Examples
 
-#### 🔗 Basic Client Usage
+#### Basic Client Usage
 ```typescript
 import { createAvalancheClient } from '@avalanche-sdk/client'
 import { avalanche } from '@avalanche-sdk/client/chains'
@@ -118,24 +118,24 @@ const balance = await client.getBalance({
 })
 ```
 
-#### 📊 Data Analytics
+#### Data Analytics
 ```typescript
-import { AvaCloudSDK } from '@avalanche-sdk/data'
+import { Avalanche } from '@avalanche-sdk/chainkit'
 
-const avaCloudSDK = new AvaCloudSDK({
+const avalancheSDK = new Avalanche({
   apiKey: '<YOUR_API_KEY_HERE>',
   chainId: '43114',
   network: 'mainnet',
 })
 
 // Get transaction history
-const transactions = await avaCloudSDK.data.evm.transactions.getTransactionsByAddress({
+const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByAddress({
   address: '0x...',
   pageSize: 10
 })
 ```
 
-#### 🌉 Cross-Chain Messaging
+#### Cross-Chain Messaging
 ```typescript
 import { createICMClient } from '@avalanche-sdk/interchain'
 
@@ -151,7 +151,7 @@ await icmClient.sendMessage({
 })
 ```
 
-## 💡 What You Can Build
+## What You Can Build
 
 ### Blockchain Infrastructure
 - Custom RPC endpoints and API gateways
@@ -217,7 +217,7 @@ Each SDK is:
 - **Type-safe** - Full TypeScript support
 - **Well-documented** - Comprehensive guides and examples
 
-## ⚡ Performance & Best Practices
+## Performance & Best Practices
 
 ### Optimization Tips
 - Use the unified SDK for better tree-shaking when using multiple features
@@ -233,7 +233,7 @@ Each SDK is:
 - Implement proper access controls
 - Follow [security best practices](https://docs.avax.network/build/references/security)
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -246,7 +246,7 @@ Each SDK is:
 | Type mismatches | Ensure all SDKs are on compatible versions |
 
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -272,41 +272,41 @@ npm run build
 ### Looking for Good First Issues?
 Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-typescript/labels/good%20first%20issue) to get started!
 
-## 📞 Support
+## Support
 
-### 📖 Documentation & Resources
+### Documentation & Resources
 - <a href="https://build.avax.network/docs/api-reference" target="_blank" rel="noopener noreferrer">API Reference</a>
 - <a href="https://docs.avax.network" target="_blank" rel="noopener noreferrer">Developer Docs</a>
 - <a href="https://www.youtube.com/Avalancheavax" target="_blank" rel="noopener noreferrer">Video Tutorials</a>
 - <a href="./examples">Code Examples</a>
 
-### 👥 Community & Help
+### Community & Help
 - <a href="https://discord.gg/avax" target="_blank" rel="noopener noreferrer">Discord</a> - Get real-time help
 - <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
-### 🐛 Issue Tracking
+### Issue Tracking
 - [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
 - [Request a Feature](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md)
 - [View All Issues](https://github.com/ava-labs/avalanche-sdk-typescript/issues)
 
-### 📮 Direct Support
+### Direct Support
 - Technical Issues: [GitHub Issues](https://github.com/ava-labs/avalanche-sdk-typescript/issues)
 - Security Issues: security@avalabs.org
 - General Inquiries: data-platform@avalabs.org
 
-## 🔄 Release Notes
+## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) for a detailed version history.
 
-## 📄 License
+## License
 
 This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-  <h3>🏔️ Built with ❤️ by the Avalanche Team</h3>
+  <h3> Built with ❤️ by the Avalanche Team</h3>
   
   [Website](https://www.avax.network/) • 
   <a href="https://docs.avax.network/" target="_blank" rel="noopener noreferrer">Documentation</a> • 

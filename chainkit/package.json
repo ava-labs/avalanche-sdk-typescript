@@ -6,6 +6,7 @@
   "bin": {
     "mcp": "bin/mcp-server.js"
   },
+  "license": "BSD-3-Clause",
   "tshy": {
     "sourceDialects": [
       "@avalanche-sdk/chainkit/source"
