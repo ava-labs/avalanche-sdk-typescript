@@ -1,0 +1,12 @@
+{
+  "buildCommand": "cd client && npm i && npm run generate-docs",
+  "outputDirectory": "client/docs",
+  "installCommand": "echo 'Dependencies installed during build'",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
