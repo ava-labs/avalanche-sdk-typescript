@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run generate-docs",
+  "buildCommand": "cd client && npm run generate-docs",
   "outputDirectory": "client/docs",
   "installCommand": "cd client && npm install",
   "framework": null,
