@@ -27,7 +27,10 @@
     "wallet",
     "client",
     "avalanche",
-    "avalanche-sdk"
+    "avalanche-sdk",
+    "pchain",
+    "xchain",
+    "cchain"
   ],
   "bugs": {
     "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
