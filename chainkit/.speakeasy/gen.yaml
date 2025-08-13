@@ -28,8 +28,9 @@ typescript:
     devDependencies:
       '@types/node': ^22.4.1
     peerDependencies: {}
-  additionalPackageJSON: {}
-  author: Avacloud
+  additionalPackageJSON:
+    author: Sayan Kar
+    license: BSD-3-Clause
   baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
   constFieldsAlwaysOptional: true
