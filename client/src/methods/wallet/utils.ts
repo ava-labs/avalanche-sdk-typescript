@@ -128,10 +128,20 @@ export function evmOrBech32AddressToBytes(address: string) {
   }
 }
 
+/**
+ * Convert AVAX to nanoAVAX
+ * @param amount - The amount of AVAX to convert
+ * @returns The amount in nanoAVAX
+ */
 export function avaxToNanoAvax(amount: number) {
   return BigInt(amount * 1e9);
 }
 
+/**
+ * Convert nanoAVAX to AVAX
+ * @param amount - The amount of nanoAVAX to convert
+ * @returns The amount in AVAX
+ */
 export function nanoAvaxToAvax(amount: bigint) {
   return Number(amount) / 1e9;
 }
