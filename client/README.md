@@ -194,11 +194,175 @@ const client = createAvalancheClient({
   transport: {
     type: "<transportType>", // Transport type
     url: "<url>",
+    config: {
+      // Transport-specific configuration
+    }
   },
   apiKey: "", // Optional API key
   rlToken: "", // Optional rate limit token
 })
 ```
+
+### Transport Configuration
+
+The SDK supports multiple transport types for connecting to Avalanche nodes. Each transport type has specific configuration options:
+
+#### HTTP Transport (Recommended)
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "http",
+    url: "https://api.avax.network/ext/bc/C/rpc", // Optional custom RPC URL
+    config: {
+      // HTTP-specific configuration
+      fetchOptions: {
+        headers: {
+          "Custom-Header": "value"
+        },
+      }
+      retryCount: 3,
+      retryDelay: 1000,
+      timeout: 5000
+    }
+  }
+})
+```
+
+**HTTP Transport Features:**
+- **Automatic URL Resolution**: If no URL is provided, uses the chain's default RPC endpoint
+- **Custom Headers**: Support for custom HTTP headers via `fetchOptions.headers`
+- **API Key Support**: Automatically adds `x-glacier-api-key` header when `apiKey` is provided
+- **Rate Limit Support**: Automatically adds `rlToken` header when `rlToken` is provided
+
+#### WebSocket Transport
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "ws",
+    url: "wss://api.avax.network/ext/bc/C/ws", // Optional custom WebSocket URL
+    config: {
+      // WebSocket-specific configuration
+      retryCount: 3,
+      retryDelay: 1000
+    }
+  }
+})
+```
+
+**WebSocket Transport Features:**
+- **Real-time Updates**: Supports WebSocket connections for live data
+- **Automatic Reconnection**: Built-in retry logic with configurable retry count and delay
+- **Event-driven**: Ideal for subscribing to blockchain events and real-time updates
+
+#### Custom Transport
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "custom",
+    provider: window.avalanche, // Custom provider implementation
+    config: {
+      // Custom transport configuration
+    }
+  }
+})
+```
+
+**Custom Transport Features:**
+- **Provider Integration**: Integrate with custom RPC providers or middleware
+- **Flexible Configuration**: Full control over transport behavior
+- **Wallet Support**: Special handling for wallet clients
+
+#### Fallback Transport
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "fallback",
+    transports: [
+      { type: "http", url: "https://primary-rpc.com" },
+      { type: "http", url: "https://backup-rpc.com" }
+    ],
+    config: {
+      // Fallback configuration
+      retryCount: 3,
+      retryDelay: 1000
+    }
+  }
+})
+```
+
+**Fallback Transport Features:**
+- **High Availability**: Automatic failover between multiple RPC endpoints
+
+### Advanced Configuration Examples
+
+#### Custom HTTP Headers and Timeouts
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "http",
+    config: {
+      fetchOptions: {
+        headers: {
+          "X-Custom-Header": "custom-value"
+        },
+      }
+    }
+  }
+})
+```
+
+#### Multiple Fallback Endpoints
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "fallback",
+    transports: [
+      { type: "http", url: "https://api.avax.network/ext/bc/C/rpc" },
+      { type: "http", url: "https://rpc.ankr.com/avalanche" },
+      { type: "http", url: "https://avalanche.public-rpc.com" }
+    ],
+    config: {
+      retryCount: 5,
+      retryDelay: 2000
+    }
+  }
+})
+```
+
+#### WebSocket with Custom Configuration
+```typescript
+const client = createAvalancheClient({
+  chain: avalanche,
+  transport: {
+    type: "ws",
+    config: {
+      retryCount: 5,
+      retryDelay: 2000,
+      maxRetryDelay: 30000
+    }
+  }
+})
+```
+
+### Transport Selection Guidelines
+
+- **HTTP Transport**: Best for most use cases, simple configuration, wide compatibility
+- **WebSocket Transport**: Ideal for real-time applications, event subscriptions, live updates
+- **Custom Transport**: Use when integrating with specific providers or middleware
+- **Fallback Transport**: Recommended for production applications requiring high availability
+
+### Environment Considerations
+
+- **Browser**: HTTP and WebSocket transports are fully supported
+- **Node.js**: All transport types are supported
+- **Mobile**: HTTP transport is recommended for mobile applications
+- **Production**: Consider using fallback transport with multiple RPC endpoints for reliability
 
 ## Exported Modules and Utilities
 
