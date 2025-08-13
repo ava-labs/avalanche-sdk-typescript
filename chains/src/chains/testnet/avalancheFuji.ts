@@ -24,11 +24,13 @@ export const avalancheFuji = defineChain({
             address: '0xca11bde05977b3631167028862be2a173976ca11',
             blockCreated: 7096959,
         },
+        teleporterRegistry: {
+            address: '0xF86Cb19Ad8405AEFa7d09C778215D2Cb6eBfB228',
+        },
+        teleporterManager: {
+            address: '0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf',
+        },
     },
     testnet: true,
     blockchainId: '0x7fc93d85c6d62c5b2ac0b519c87010ea5294012d1e407030d6acd0021cac10d5',
-    interchainContracts: {
-        teleporterRegistry: '0xF86Cb19Ad8405AEFa7d09C778215D2Cb6eBfB228',
-        teleporterManager: '0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf',
-    }
 }) as ChainConfig;

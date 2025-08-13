@@ -25,18 +25,24 @@ console.log(avalancheFuji.id);
 
 ## ChainConfig
 
-The `ChainConfig` interface extends `viem`'s [official config](https://viem.sh/docs/chains/introduction) by enforcing the following Teleporter related
-properties.
+The `ChainConfig` interface extends `viem`'s [official config](https://viem.sh/docs/chains/introduction) by enforcing the following Teleporter related properties.
 
 This config is used in other Avalanche SDKs like `interchain` and `client`.
 
 ```typescript
 export interface ChainConfig extends Chain {
-    blockchainId: string;
-    interchainContracts: {
-        teleporterRegistry: Address;
-        teleporterManager: Address;
-    }
+  blockchainId: string;
+  contracts: {
+    [key: string]: {
+      address: Address;
+    };
+    teleporterRegistry: {
+      address: Address;
+    };
+    teleporterManager: {
+      address: Address;
+    };
+  }
 }
 ```
 
@@ -69,12 +75,14 @@ export const zora = defineChain({
       address: '0xcA11bde05977b3631167028862bE2a173976CA11',
       blockCreated: 5882,
     },
+    teleporterRegistry: {
+      address: '0xF86Cb19Ad8405AEFa7d09C778215D2Cb6eBfB228',
+    },
+    teleporterManager: {
+      address: '0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf',
+    },
   },
   blockchainId: 'abc';
-  interchainContracts: {
-    teleporterRegistry: '0x0000000';
-    teleporterManager: '0x000000';
-  }
 })
 ```
 
