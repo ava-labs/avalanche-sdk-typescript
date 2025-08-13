@@ -3,6 +3,12 @@ import { parseAddressedCallPayload } from "../addressedCallPayload";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a L1ValidatorRegistrationMessage (AddressedCall payload) from a hex string.
+ *
+ * @param l1ValidatorRegistrationMessageHex - The hex string representing the L1ValidatorRegistrationMessage.
+ * @returns The parsed L1ValidatorRegistrationMessage instance. {@link L1ValidatorRegistrationMessage}
+ */
 export function parseL1ValidatorRegistrationMessage(
     l1ValidatorRegistrationMessageHex: string,
 ): L1ValidatorRegistrationMessage {
@@ -24,6 +30,13 @@ export function parseL1ValidatorRegistrationMessage(
     }
 }
 
+/**
+ * Creates a new L1ValidatorRegistrationMessage from values.
+ *
+ * @param validationId - The validation ID (base58check encoded).
+ * @param registered - The registration status as a boolean.
+ * @returns A new L1ValidatorRegistrationMessage instance. {@link L1ValidatorRegistrationMessage}
+ */
 export function newL1ValidatorRegistrationMessage(
     validationId: string,
     registered: boolean,
@@ -35,6 +48,11 @@ export function newL1ValidatorRegistrationMessage(
     );
 }
 
+/**
+ * L1ValidatorRegistrationMessage class provides utility methods to build
+ * and parse L1ValidatorRegistrationMessage from hex strings or values, and
+ * access its properties.
+ */
 export class L1ValidatorRegistrationMessage extends pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage {
     static fromHex(l1ValidatorRegistrationMessageHex: string) {
         return parseL1ValidatorRegistrationMessage(l1ValidatorRegistrationMessageHex);

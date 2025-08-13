@@ -4,6 +4,12 @@ import { sha256 } from "@noble/hashes/sha2";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a ConversionData (SubnetToL1Conversion) from a hex string.
+ *
+ * @param conversionDataHex - The hex string representing the ConversionData.
+ * @returns The parsed ConversionData instance. {@link ConversionData}
+ */
 export function parseConversionData(
     conversionDataHex: string,
 ): ConversionData {
@@ -19,6 +25,18 @@ export function parseConversionData(
     );
 }
 
+/**
+ * Creates a new ConversionData from values.
+ *
+ * @param subnetId - The subnet ID (base58check encoded).
+ * @param managerChainId - The manager chain ID (base58check encoded).
+ * @param managerAddress - The manager address in Bech32 format.
+ * @param validators - An array of validator data.
+ * @param validators.nodeId - The node ID (base58check encoded).
+ * @param validators.blsPublicKey - The BLS public key in hex format.
+ * @param validators.weight - The weight of the validator as a bigint.
+ * @returns A new ConversionData instance. {@link ConversionData}
+ */
 export function newConversionData(
     subnetId: string,
     managerChainId: string,
@@ -40,6 +58,11 @@ export function newConversionData(
     );
 }
 
+/**
+ * ConversionData class provides utility methods to build
+ * and parse ConversionData from hex strings or values, and
+ * access its properties.
+ */
 export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.ConversionData {
     static fromHex(conversionDataHex: string) {
         return parseConversionData(conversionDataHex);

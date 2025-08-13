@@ -3,6 +3,12 @@ import { parseAddressedCallPayload } from "../addressedCallPayload";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a SubnetToL1ConversionMessage (AddressedCall payload) from a hex string.
+ *
+ * @param subnetToL1ConversionMessageHex - The hex string representing the SubnetToL1ConversionMessage.
+ * @returns The parsed SubnetToL1ConversionMessage instance. {@link SubnetToL1ConversionMessage}
+ */
 export function parseSubnetToL1ConversionMessage(
     subnetToL1ConversionMessageHex: string,
 ): SubnetToL1ConversionMessage {
@@ -23,6 +29,12 @@ export function parseSubnetToL1ConversionMessage(
     }
 }
 
+/**
+ * Creates a new SubnetToL1ConversionMessage from a conversion ID.
+ *
+ * @param conversionId - The conversion ID (base58check encoded).
+ * @returns A new SubnetToL1ConversionMessage instance. {@link SubnetToL1ConversionMessage}
+ */
 export function newSubnetToL1ConversionMessage(
     conversionId: string,
 ) {
@@ -32,6 +44,11 @@ export function newSubnetToL1ConversionMessage(
     )
 }
 
+/**
+ * SubnetToL1ConversionMessage class provides utility methods to build
+ * and parse SubnetToL1ConversionMessage from hex strings or values, and
+ * access its properties.
+ */
 export class SubnetToL1ConversionMessage extends pvmSerial.warp.AddressedCallPayloads.SubnetToL1ConversionMessage {
     static fromHex(subnetToL1ConversionMessageHex: string) {
         return parseSubnetToL1ConversionMessage(subnetToL1ConversionMessageHex);

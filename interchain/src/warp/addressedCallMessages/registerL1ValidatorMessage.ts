@@ -14,6 +14,12 @@ import type { PChainOwner as PChainOwnerRaw } from "../types";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a RegisterL1ValidatorMessage (AddressedCall payload) from a hex string.
+ *
+ * @param registerL1ValidatorMessageHex - The hex string representing the RegisterL1ValidatorMessage.
+ * @returns The parsed RegisterL1ValidatorMessage instance. {@link RegisterL1ValidatorMessage}
+ */
 export function parseRegisterL1ValidatorMessage(
     registerL1ValidatorMessageHex: string,
 ): RegisterL1ValidatorMessage {
@@ -40,6 +46,18 @@ export function parseRegisterL1ValidatorMessage(
     }
 }
 
+/**
+ * Creates a new RegisterL1ValidatorMessage from values.
+ *
+ * @param subnetId - The subnet ID (base58check encoded).
+ * @param nodeId - The node ID (base58check encoded).
+ * @param blsPublicKey - The BLS public key in hex format.
+ * @param expiry - The expiry time as a bigint.
+ * @param remainingBalanceOwner - The remaining balance owner details.
+ * @param disableOwner - The disable owner details.
+ * @param weight - The weight of the validator as a bigint.
+ * @returns A new RegisterL1ValidatorMessage instance. {@link RegisterL1ValidatorMessage}
+ */
 export function newRegisterL1ValidatorMessage(
     subnetId: string,
     nodeId: string,
@@ -70,6 +88,11 @@ export function newRegisterL1ValidatorMessage(
     )
 }
 
+/**
+ * RegisterL1ValidatorMessage class provides utility methods to build
+ * and parse RegisterL1ValidatorMessage from hex strings or values, and
+ * access its properties.
+ */
 export class RegisterL1ValidatorMessage extends pvmSerial.warp.AddressedCallPayloads.RegisterL1ValidatorMessage {
     static fromHex(registerL1ValidatorMessageHex: string) {
         return parseRegisterL1ValidatorMessage(registerL1ValidatorMessageHex);

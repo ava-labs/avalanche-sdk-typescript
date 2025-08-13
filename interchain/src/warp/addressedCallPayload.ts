@@ -4,6 +4,12 @@ import { evmOrBech32AddressToBytes } from "./utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a Warp AddressedCall payload from a hex string.
+ *
+ * @param addressedCallPayloadHex - The hex string representing the AddressedCall payload.
+ * @returns The parsed AddressedCall instance. {@link AddressedCall}
+ */
 export function parseAddressedCallPayload(
     addressedCallPayloadHex: string,
 ): AddressedCall {
@@ -25,12 +31,24 @@ export function parseAddressedCallPayload(
     }
 }
 
+/**
+ * Creates a new AddressedCall from values.
+ *
+ * @param sourceAddress - The source address (EVM or Bech32 format).
+ * @param payloadHex - The payload as a hex string.
+ * @returns A new AddressedCall instance. {@link AddressedCall}
+ */
 export function newAddressedCallPayload(sourceAddress: string, payloadHex: string) {
     const sourceAddressBytes = evmOrBech32AddressToBytes(sourceAddress);
     const payloadBytes = utils.hexToBuffer(payloadHex);
     return new AddressedCall(new Address(sourceAddressBytes), new Bytes(payloadBytes));
 }
 
+/**
+ * AddressedCall class provides utility methods to build
+ * and parse AddressedCall payloads from hex strings or values, and
+ * access its properties.
+ */
 export class AddressedCall extends pvmSerial.warp.AddressedCallPayloads.AddressedCall {
     static fromHex(addressedCallPayloadHex: string): AddressedCall {
         return parseAddressedCallPayload(addressedCallPayloadHex);

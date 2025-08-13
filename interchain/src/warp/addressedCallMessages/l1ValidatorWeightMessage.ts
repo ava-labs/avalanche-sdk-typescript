@@ -3,6 +3,12 @@ import { parseAddressedCallPayload } from "../addressedCallPayload";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a L1ValidatorWeightMessage (AddressedCall payload) from a hex string.
+ *
+ * @param l1ValidatorWeightMessageHex - The hex string representing the L1ValidatorWeightMessage.
+ * @returns The parsed L1ValidatorWeightMessage instance. {@link L1ValidatorWeightMessage}
+ */
 export function parseL1ValidatorWeightMessage(
     l1ValidatorWeightMessageHex: string,
 ): L1ValidatorWeightMessage {
@@ -25,6 +31,14 @@ export function parseL1ValidatorWeightMessage(
     }
 }
 
+/**
+ * Creates a new L1ValidatorWeightMessage from values.
+ *
+ * @param validationId - The validation ID (base58check encoded).
+ * @param nonce - The nonce as a bigint.
+ * @param weight - The weight of the validator as a bigint.
+ * @returns A new L1ValidatorWeightMessage instance. {@link L1ValidatorWeightMessage}
+ */
 export function newL1ValidatorWeightMessage(validationId: string, nonce: bigint, weight: bigint) {
     const validationIdBytes = utils.base58check.decode(validationId);
     return new L1ValidatorWeightMessage(
@@ -34,6 +48,11 @@ export function newL1ValidatorWeightMessage(validationId: string, nonce: bigint,
     );
 }
 
+/**
+ * L1ValidatorWeightMessage class provides utility methods to build
+ * and parse L1ValidatorWeightMessage from hex strings or values, and
+ * access its properties.
+ */
 export class L1ValidatorWeightMessage extends pvmSerial.warp.AddressedCallPayloads.L1ValidatorWeightMessage {
     static fromHex(l1ValidatorWeightMessageHex: string) {
         return parseL1ValidatorWeightMessage(l1ValidatorWeightMessageHex);

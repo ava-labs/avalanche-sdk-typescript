@@ -2,6 +2,12 @@ import { pvmSerial, Short, utils } from "@avalabs/avalanchejs";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
+/**
+ * Parses a Warp signed message from a hex string.
+ *
+ * @param warpMsgHex - The hex string representing the signed message.
+ * @returns The parsed WarpSignedMessage instance. {@link WarpMessage}
+*/
 export function parseWarpMessage(warpMsgHex: string): WarpMessage {
     const parsedWarpMsg = warpManager.unpack(
         utils.hexToBuffer(warpMsgHex),
@@ -14,6 +20,11 @@ export function parseWarpMessage(warpMsgHex: string): WarpMessage {
     );
 }
 
+/**
+ * WarpSignedMessage class provides utility methods to build
+ * and parse signed warp message from hex strings or values, and
+ * access its properties.
+ */
 export class WarpMessage extends pvmSerial.warp.WarpMessage {
     static fromHex(warpMsgHex: string) {
         return parseWarpMessage(warpMsgHex);
