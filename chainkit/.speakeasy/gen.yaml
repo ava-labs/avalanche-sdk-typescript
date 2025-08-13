@@ -21,7 +21,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0
+  version: 0.3.0-alpha.0
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
@@ -58,4 +58,5 @@ typescript:
   packageName: '@avalanche-sdk/chainkit'
   responseFormat: flat
   templateVersion: v2
+  usageSDKInitImports: []
   useIndexModules: true

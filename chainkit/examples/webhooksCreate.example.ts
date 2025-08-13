@@ -8,7 +8,7 @@ dotenv.config();
  * Example usage of the @avalanche-sdk/chainkit SDK
  *
  * To run this example from the examples directory:
- * npm run build && npx tsx webhooksCreate.ts
+ * npm run build && npx tsx webhooksCreate.example.ts
  */
 
 import { Avalanche } from "@avalanche-sdk/chainkit";
