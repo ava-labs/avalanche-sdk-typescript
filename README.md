@@ -41,6 +41,13 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 ## Available SDKs
 
+### [Chains SDK](./chains/)
+
+The `Chains` module provides a collection of Avalanche Layer 1 (L1) chain configurations in a standardized format. These configurations are useful for interacting with Avalanche networks in a consistent and type-safe way, and is compatible with libraries like [viem](https://viem.sh/).
+
+- ChainConfig compatible with libraries like `viem`
+- Can be used with other Avalanche SDKs like `client` and `interchain`
+
 ### [Client SDK](./client/)
 The main Avalanche client SDK for interacting with Avalanche nodes and building blockchain applications.
 
