@@ -33,11 +33,11 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 ## Package Status
 
-| Package | Version | Status | npm |
-|---------|---------|--------|-----|
-| `@avalanche-sdk/chainkit` | 0.3.0-alpha.0 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/chainkit)](https://www.npmjs.com/package/@avalanche-sdk/chainkit) |
-| `@avalanche-sdk/client` | 0.0.4-alpha.12 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
-| `@avalanche-sdk/interchain` | 0.0.1-alpha.2 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
+| Package |  Status | npm |
+|---------|--------|-----|
+| `@avalanche-sdk/chainkit` | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/chainkit)](https://www.npmjs.com/package/@avalanche-sdk/chainkit) |
+| `@avalanche-sdk/client` | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
+| `@avalanche-sdk/interchain` | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
 
 ## Available SDKs
 
