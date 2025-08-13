@@ -11,3 +11,4 @@
 /.tshy-*
 /__tests__
 .DS_Store
+/docs/typedoc

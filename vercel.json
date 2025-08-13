@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd client && npm i && npm run generate-docs",
-  "outputDirectory": "client/docs",
-  "installCommand": "echo 'Dependencies installed during build'",
+  "buildCommand": "cd client && npm run generate-docs",
+  "outputDirectory": "client/docs/typedoc",
+  "installCommand": "cd client && npm install",
   "framework": null,
   "rewrites": [
     {
