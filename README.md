@@ -93,12 +93,12 @@ SDK for building cross-L1 applications and bridges.
 # Install only what you need
 npm install @avalanche-sdk/client        # Core RPC functionality
 npm install @avalanche-sdk/interchain    # Cross-chain messaging
-npm install @avalanche-sdk/chainkit      # Development tools
+npm install @avalanche-sdk/chainkit      # Indexed data, metrics, and webhooks
 ```
 
 ### Quick Examples
 
-#### 🔗 Basic Client Usage
+#### Client: Get AVAX Balance
 ```typescript
 import { createAvalancheClient } from '@avalanche-sdk/client'
 import { avalanche } from '@avalanche-sdk/client/chains'
@@ -110,16 +110,17 @@ const client = createAvalancheClient({
   }
 })
 
-
 // Get account balance
 const balance = await client.getBalance({ 
   address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
 })
 ```
 
-<a href="https://stackblitz.com/edit/helius-node-js-sdk-xbw7t6?file=index.js" target="_blank" rel="noopener noreferrer"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Try it out"></a>
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples" target="_blank" rel="noopener noreferrer">View more Client SDK examples →</a>
 
-#### 📊 Data Analytics
+
+#### ChainKit: Get Transaction History
+
 ```typescript
 import { Avalanche } from '@avalanche-sdk/chainkit'
 
@@ -136,7 +137,9 @@ const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByA
 })
 ```
 
-#### 🌉 Cross-Chain Messaging
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/chainkit/examples" target="_blank" rel="noopener noreferrer">View more ChainKit SDK examples →</a>
+
+#### Cross-Chain Messaging
 ```typescript
 import { createICMClient } from '@avalanche-sdk/interchain'
 
@@ -151,6 +154,8 @@ await icmClient.sendMessage({
   destinationAddress: '0x...'
 })
 ```
+
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples" target="_blank" rel="noopener noreferrer">View more Interchain SDK examples →</a>
 
 ## 💡 What You Can Build
 
