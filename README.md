@@ -120,18 +120,22 @@ const balance = await client.getBalance({
 
 #### ChainKit SDK Usage
 ```typescript
-import { Avalanche } from '@avalanche-sdk/chainkit'
+import { Avalanche } from "@avalanche-sdk/chainkit";
 
-const avalancheSDK = new Avalanche({
-  apiKey: '<YOUR_API_KEY_HERE>',
-  chainId: '43114',
-  network: 'mainnet',
-})
-
-// Get chains supported by metrics API
-const result = await avalanche.metrics.chains.list({
-  network: "mainnet",
+const avalanche = new Avalanche({
+  chainId: "43114",
 });
+
+async function run() {
+  // Get the transaction by hash
+  const result = await avalanche.data.evm.transactions.get({
+    txHash: "0x8bf584d7b14b92a32a339872a66b134a70ba3ba7c305823f348db6f860253f45",
+  });
+
+  console.log(result);
+}
+
+run();
 ```
 
 #### Cross-Chain Messaging
