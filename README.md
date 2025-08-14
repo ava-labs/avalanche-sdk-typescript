@@ -118,7 +118,7 @@ const balance = await client.getBalance({
 })
 ```
 
-#### Data Analytics
+#### ChainKit SDK Usage
 ```typescript
 import { Avalanche } from '@avalanche-sdk/chainkit'
 
@@ -128,11 +128,10 @@ const avalancheSDK = new Avalanche({
   network: 'mainnet',
 })
 
-// Get transaction history
-const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByAddress({
-  address: '0x...',
-  pageSize: 10
-})
+// Get chains supported by metrics API
+const result = await avalanche.metrics.chains.list({
+  network: "mainnet",
+});
 ```
 
 #### Cross-Chain Messaging
