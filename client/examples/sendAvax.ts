@@ -8,6 +8,11 @@ async function run() {
   // This is the private key of the account that will be used to export the avax from the X-chain to the P-chain
   const account = privateKeyToAvalancheAccount(config.privateKeyAccount1);
 
+  // These are the addresses of the accounts that will receive the avax
+  // Modify these addresses to your own addresses
+  const CChainReceiverAddress = "0x909d71Ed4090ac6e57E3645dcF2042f8c6548664";
+  const PChainReceiverAddress = "P-fuji1apmh7wxg3js48fhacfv5y9md9065jxuf8rtns7";
+
   // This is the wallet client that will be used to export the avax from the X-chain to the P-chain
   const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
@@ -21,7 +26,7 @@ async function run() {
   // Creates a transaction, signs, sends and waits for the transaction to
   // be confirmed on C-chain
   const sendC2CResponse = await walletClient.send({
-    to: "0x909d71Ed4090ac6e57E3645dcF2042f8c6548664",
+    to: CChainReceiverAddress,
     amount: 0.001,
   });
   console.log("sendC2CResponse", sendC2CResponse);
@@ -30,7 +35,7 @@ async function run() {
   // Creates a export and import transaction, signs, sends and waits for
   // the transaction to be confirmed on C-chain and P-chain
   const sendC2PResponse = await walletClient.send({
-    to: "P-fuji1apmh7wxg3js48fhacfv5y9md9065jxuf8rtns7",
+    to: PChainReceiverAddress,
     amount: 0.001,
     destinationChain: "P",
   });
@@ -40,7 +45,7 @@ async function run() {
   // Creates a export and import transaction, signs, sends and waits for
   // the transaction to be confirmed on C-chain and P-chain
   const sendP2CResponse = await walletClient.send({
-    to: "0x909d71Ed4090ac6e57E3645dcF2042f8c6548664",
+    to: CChainReceiverAddress,
     amount: 0.001,
     sourceChain: "P",
     destinationChain: "C",
@@ -49,7 +54,7 @@ async function run() {
 
   // 4. Send avax to another address on P-chain from P-chain
   const sendP2PResponse = await walletClient.send({
-    to: "P-fuji1apmh7wxg3js48fhacfv5y9md9065jxuf8rtns7",
+    to: PChainReceiverAddress,
     amount: 0.001,
     sourceChain: "P",
     destinationChain: "P",

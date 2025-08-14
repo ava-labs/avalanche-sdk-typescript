@@ -20,7 +20,7 @@ async function run() {
   const baseTxnRequest = await walletClient.pChain.prepareBaseTxn({
     outputs: [
       {
-        addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+        addresses: [account.getXPAddress("P", "fuji")], // P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
         amount: 0.00001,
       },
     ],

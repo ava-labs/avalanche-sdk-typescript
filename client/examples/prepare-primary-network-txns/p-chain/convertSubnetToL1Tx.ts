@@ -23,7 +23,6 @@ async function run() {
       // You can find the subnetId in the createSubnetTx
       subnetId: "2qYCjAVYAtmmi2NnFSXmXHCzs99fWxAfxYQY2b6L9Agduf3Syd",
       // You can find the blockchainId in the createChainTx txHash
-      //
       blockchainId: "2cgxZU4DpYPSim7R4hTUQ7LavoeVYWki4LYKhrCiN27DZzkmoa",
       // You can pre deploy a proxy contract for the validator manager contract in the createChainTx
       managerContractAddress: "0xfacade0000000000000000000000000000000000",

@@ -20,7 +20,7 @@ async function run() {
   const xChainImportTxnRequest = await walletClient.xChain.prepareImportTxn({
     sourceChain: "C",
     importedOutput: {
-      addresses: ["X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
+      addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
     },
   });
 

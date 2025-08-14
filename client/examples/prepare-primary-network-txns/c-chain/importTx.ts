@@ -19,7 +19,7 @@ async function run() {
 
   const cChainImportTxnRequest = await walletClient.cChain.prepareImportTxn({
     sourceChain: "P",
-    toAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
+    toAddress: account.getEVMAddress(), // 0x76Dd3d7b2f635c2547B861e55aE8A374E587742D
   });
 
   // To sign and issue the txn, you can use one of the following code:

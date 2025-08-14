@@ -24,8 +24,8 @@ async function run() {
       vmId: "mDtV8ES8wRL1j2m6Kvc1qRFAvnpq4kufhueAY1bwbzVhk336o",
       chainName: "test chain avalanche sdk",
       fromAddresses: [
-        "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
-        "P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t",
+        account1.getXPAddress("P", "fuji"), // P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
+        account2.getXPAddress("P", "fuji"), // P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t
       ],
       genesisData: {},
       subnetAuth: [0],
