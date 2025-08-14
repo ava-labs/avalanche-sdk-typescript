@@ -2,14 +2,12 @@ import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
 import { issueTx as issuePChainTx } from "@avalanche-sdk/client/methods/pChain";
+import { loadConfig } from "../../config";
 
 async function run() {
-  const account1 = privateKeyToAvalancheAccount(
-    "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
-  );
-  const account2 = privateKeyToAvalancheAccount(
-    "0x56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"
-  );
+  const { privateKeyAccount1, privateKeyAccount2 } = loadConfig();
+  const account1 = privateKeyToAvalancheAccount(privateKeyAccount1);
+  const account2 = privateKeyToAvalancheAccount(privateKeyAccount2);
 
   const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
