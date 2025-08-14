@@ -4,13 +4,13 @@
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
 
   <p align="center">
-      <a href="https://opensource.org/licenses/BSD-3-Clause">
+      <a href="https://opensource.org/licenses/BSD-3-Clause" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="License: BSD-3-Clause" />
   </a>
-    <a href="https://nodejs.org">
+    <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen" alt="Node Version" />
     </a>
-    <a href="https://www.typescriptlang.org/">
+    <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/TypeScript-5.0%2B-blue" alt="TypeScript" />
     </a>
   </p>
@@ -36,10 +36,10 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 
 | Package | Version | Status | npm |
 |---------|---------|--------|-----|
-| `@avalanche-sdk/sdk` | 1.3.0 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/sdk)](https://www.npmjs.com/package/@avalanche-sdk/sdk) |
-| `@avalanche-sdk/devtools` | 0.2.1 | **Stable** | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/devtools)](https://www.npmjs.com/package/@avalanche-sdk/devtools) |
-| `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/client)](https://www.npmjs.com/package/@avalanche-sdk/client) |
-| `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | [![npm](https://img.shields.io/npm/v/@avalanche-sdk/interchain)](https://www.npmjs.com/package/@avalanche-sdk/interchain) |
+| `@avalanche-sdk/sdk` | 1.3.0 | **Stable** | <a href="https://www.npmjs.com/package/@avalanche-sdk/sdk" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/sdk" alt="npm"></a> |
+| `@avalanche-sdk/devtools` | 0.2.1 | **Stable** | <a href="https://www.npmjs.com/package/@avalanche-sdk/devtools" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/devtools" alt="npm"></a> |
+| `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/client" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/client" alt="npm"></a> |
+| `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/interchain" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/interchain" alt="npm"></a> |
 
 ## Available SDKs
 
@@ -48,7 +48,7 @@ The main Avalanche client SDK for interacting with Avalanche nodes and building 
 
 **Features:**
 - Complete API coverage for P-Chain, X-Chain, and C-Chain
-- Full [viem](https://viem.sh) compatibility - anything you can do with viem works here
+- Full <a href="https://viem.sh" target="_blank" rel="noopener noreferrer">viem</a> compatibility - anything you can do with viem works here
 - TypeScript-first design with full type safety
 - Abstractions over the JSON-RPC API to make your life easier
 - Wallet integration and transaction management
@@ -64,8 +64,8 @@ Combined SDK with full typed coverage of Avalanche Data (Glacier) and Metrics AP
 
 **Features:**
 - Full endpoint coverage for Glacier Data API and Metrics API
-  - Glacier API: https://glacier-api.avax.network/api
-  - Metrics API: https://metrics.avax.network/api
+  - Glacier API: <a href="https://glacier-api.avax.network/api" target="_blank" rel="noopener noreferrer">https://glacier-api.avax.network/api</a>
+  - Metrics API: <a href="https://metrics.avax.network/api" target="_blank" rel="noopener noreferrer">https://metrics.avax.network/api</a>
 - Strongly-typed models, pagination helpers, and automatic retries/backoff
 - High-level helpers for transactions, blocks, addresses, tokens, NFTs, and logs
 - Metrics: network health, validator stats, throughput, latency, and block production analytics
@@ -146,7 +146,7 @@ const balance = await client.getBalance({
 })
 ```
 
-[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/helius-node-js-sdk-xbw7t6?file=index.js)
+<a href="https://stackblitz.com/edit/helius-node-js-sdk-xbw7t6?file=index.js" target="_blank" rel="noopener noreferrer"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Try it out"></a>
 
 #### 📊 Data Analytics
 ```typescript
@@ -273,7 +273,7 @@ Each SDK is:
 - Use environment variables for sensitive data
 - Validate all inputs before blockchain interactions
 - Implement proper access controls
-- Follow [security best practices](https://docs.avax.network/build/references/security)
+- Follow <a href="https://docs.avax.network/build/references/security" target="_blank" rel="noopener noreferrer">security best practices</a>
 
 ## 🔧 Troubleshooting
 
@@ -312,7 +312,7 @@ npm run build
 ```
 
 ### Looking for Good First Issues?
-Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-typescript/labels/good%20first%20issue) to get started!
+Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labels/good%20first%20issue" target="_blank" rel="noopener noreferrer">good first issues</a> to get started!
 
 ## 📞 Support
 
@@ -328,12 +328,12 @@ Check out our [good first issues](https://github.com/ava-labs/avalanche-sdk-type
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
 ### 🐛 Issue Tracking
-- [Report a Bug](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md)
-- [Request a Feature](https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md)
-- [View All Issues](https://github.com/ava-labs/avalanche-sdk-typescript/issues)
+- <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md" target="_blank" rel="noopener noreferrer">Report a Bug</a>
+- <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md" target="_blank" rel="noopener noreferrer">Request a Feature</a>
+- <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">View All Issues</a>
 
 ### 📮 Direct Support
-- Technical Issues: [GitHub Issues](https://github.com/ava-labs/avalanche-sdk-typescript/issues)
+- Technical Issues: <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
 - Security Issues: security@avalabs.org
 - General Inquiries: data-platform@avalabs.org
 
@@ -350,8 +350,8 @@ This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICE
 <div align="center">
   <h3>🏔️ Built with ❤️ by the Avalanche Team</h3>
   
-  [Website](https://www.avax.network/) • 
+  <a href="https://www.avax.network/" target="_blank" rel="noopener noreferrer">Website</a> • 
   <a href="https://docs.avax.network/" target="_blank" rel="noopener noreferrer">Documentation</a> • 
-  [Blog](https://medium.com/@avaxdevelopers) • 
-  [GitHub](https://github.com/ava-labs)
+  <a href="https://medium.com/@avaxdevelopers" target="_blank" rel="noopener noreferrer">Blog</a> • 
+  <a href="https://github.com/ava-labs" target="_blank" rel="noopener noreferrer">GitHub</a>
 </div>
