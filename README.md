@@ -116,7 +116,7 @@ const balance = await client.getBalance({
 })
 ```
 
-<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples" target="_blank" rel="noopener noreferrer">View more Client SDK examples →</a>
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples">View more Client SDK examples →</a>
 
 
 #### ChainKit: Get Transaction History
@@ -137,7 +137,7 @@ const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByA
 })
 ```
 
-<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/chainkit/examples" target="_blank" rel="noopener noreferrer">View more ChainKit SDK examples →</a>
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/chainkit/examples">View more ChainKit SDK examples →</a>
 
 #### Cross-Chain Messaging
 ```typescript
@@ -155,7 +155,7 @@ await icmClient.sendMessage({
 })
 ```
 
-<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples" target="_blank" rel="noopener noreferrer">View more Interchain SDK examples →</a>
+<a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples">View more Interchain SDK examples →</a>
 
 ## 💡 What You Can Build
 
