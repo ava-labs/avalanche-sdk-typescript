@@ -51,7 +51,7 @@ This directory contains practical examples demonstrating how to use the `@avalan
    npx tsx <example-file.ts>
    ```
 
-> Note: Make sure to create your own `.env` file by copying the `.env.example` file and modifying the env path in `config.ts` file. By default the example uses the values in .env.example and the address mentioned are from these private key values.
+> **Note:** Make sure to create your own `.env` file by copying the `.env.example` file and updating the values. You'll also need to modify the `config.ts` file to point to your `.env` file path. By default, the examples use the values from `.env.example`, and the test addresses mentioned in the examples as comments (like `0x76Dd3d7b2f635c2547B861e55aE8A374E587742D` and `X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz`) are derived from the private key values in that file.
 
 ## Available Examples
 
