@@ -53,22 +53,23 @@ We welcome pull requests! Here's how to contribute code:
 This is a monorepo containing multiple packages. To get started:
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/ava-labs/avalanche-sdk-typescript.git
    cd avalanche-sdk-typescript
    ```
-
 2. Navigate to the package you want to work on:
-   ```bash
-   cd client  # or data, devtools, sdk, etc.
-   ```
 
+   ```bash
+   cd client  # or data, chainkit, sdk, etc.
+   ```
 3. Install dependencies:
+
    ```bash
    npm install
    ```
-
 4. Build the package:
+
    ```bash
    npm run build:all
    ```
@@ -76,12 +77,8 @@ This is a monorepo containing multiple packages. To get started:
 ### Package Structure
 
 - **client/** - Core Avalanche client SDK
-- **data/** - Data API SDK (contains generated code)
-- **devtools/** - Development tools (contains generated code)
-- **sdk/** - Main SDK package combining client and devtools
+- **chainkit/** - Development tools (contains generated code)
 - **interchain/** - Interchain messaging SDK
-- **metrics/** - Metrics SDK (contains generated code)
-- **webhooks/** - Webhooks SDK (contains generated code)
 
 **Note:** Some packages contain generated code. For these packages, we do not accept direct changes to the generated files. Instead, please report issues and we'll address them in the upstream source.
 
@@ -107,6 +104,7 @@ footer
 ```
 
 Types:
+
 - **feat**: New feature
 - **fix**: Bug fix
 - **docs**: Documentation changes
@@ -116,6 +114,7 @@ Types:
 - **chore**: Maintenance tasks
 
 Example:
+
 ```
 feat(client): add support for subnet validation
 

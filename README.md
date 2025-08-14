@@ -1,4 +1,3 @@
-
 <div align="center">
   <h1>Avalanche SDK Typescript</h1>
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
@@ -27,19 +26,17 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 | SDK | Description |
 |-----|-------------|
 | `@avalanche-sdk/client` | Direct blockchain interaction - transactions, wallets, RPC calls |
-| `@avalanche-sdk/devtools` | Complete suite: Data, Metrics and Webhooks API |
+| `@avalanche-sdk/chainkit` | Complete suite: Data, Metrics and Webhooks API |
 | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
-| `@avalanche-sdk/sdk` | Complete suite: Devtools + Client |
 
 
 ## 📊 Package Status
 
-| Package | Version | Status | npm |
-|---------|---------|--------|-----|
-| `@avalanche-sdk/sdk` | 1.3.0 | **Stable** | <a href="https://www.npmjs.com/package/@avalanche-sdk/sdk" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/sdk" alt="npm"></a> |
-| `@avalanche-sdk/devtools` | 0.2.1 | **Stable** | <a href="https://www.npmjs.com/package/@avalanche-sdk/devtools" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/devtools" alt="npm"></a> |
-| `@avalanche-sdk/client` | 0.0.4-alpha.10 | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/client" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/client" alt="npm"></a> |
-| `@avalanche-sdk/interchain` | 0.0.1-alpha.1 | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/interchain" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/interchain" alt="npm"></a> |
+| Package |  Status | npm |
+|---------|--------|-----|
+| `@avalanche-sdk/chainkit` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/chainkit" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/chainkit" alt="npm"></a> |
+| `@avalanche-sdk/client` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/client" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/client" alt="npm"></a> |
+| `@avalanche-sdk/interchain` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/interchain" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/interchain" alt="npm"></a> |
 
 ## Available SDKs
 
@@ -59,7 +56,7 @@ The main Avalanche client SDK for interacting with Avalanche nodes and building 
 - Add validators and delegators
 - Create subnets and blockchains, convert subnets to L1s
 
-### [DevTools SDK](./devtools/)
+### [ChainKit SDK](./chainkit/)
 Combined SDK with full typed coverage of Avalanche Data (Glacier) and Metrics APIs.
 
 **Features:**
@@ -81,20 +78,6 @@ SDK for building cross-L1 applications and bridges.
 - Works seamlessly with wallet clients
 - Built-in support for Avalanche C-Chain and custom subnets
 
-### [Unified SDK](./sdk/)
-SDK providing a unified experience of all the SDKs
-
-**Features:**
-- **Complete API Coverage** - All P-Chain, X-Chain, and C-Chain APIs from Client SDK
-- **Data Analytics** - Historical transaction data and blockchain analytics from Data SDK
-- **Development Tools** - Testing frameworks, debugging tools, and utilities from DevTools SDK
-- **Cross-Chain Operations** - Interchain communication and bridge functionality from Interchain SDK
-- **Network Metrics** - Performance monitoring and validator statistics from Metrics SDK
-- **Real-Time Events** - Webhook management and event streaming from Webhooks SDK
-- **Type-Safe Design** - Full TypeScript support across all functionality
-- **Modular Architecture** - Import only the features you need
-- **Comprehensive Examples** - Complete examples for all use cases
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -105,24 +88,12 @@ SDK providing a unified experience of all the SDKs
 
 ### Installation
 
-#### Option 1: Install the Unified SDK (Recommended)
-```bash
-# npm
-npm install @avalanche-sdk/sdk
-
-# yarn
-yarn add @avalanche-sdk/sdk
-
-# pnpm
-pnpm add @avalanche-sdk/sdk
-```
-
-#### Option 2: Install Individual SDKs
+#### Install SDKs
 ```bash
 # Install only what you need
 npm install @avalanche-sdk/client        # Core RPC functionality
 npm install @avalanche-sdk/interchain    # Cross-chain messaging
-npm install @avalanche-sdk/devtools      # Development tools
+npm install @avalanche-sdk/chainkit      # Development tools
 ```
 
 ### Quick Examples
@@ -150,16 +121,16 @@ const balance = await client.getBalance({
 
 #### 📊 Data Analytics
 ```typescript
-import { AvaCloudSDK } from '@avalanche-sdk/data'
+import { Avalanche } from '@avalanche-sdk/chainkit'
 
-const avaCloudSDK = new AvaCloudSDK({
+const avalancheSDK = new Avalanche({
   apiKey: '<YOUR_API_KEY_HERE>',
   chainId: '43114',
   network: 'mainnet',
 })
 
 // Get transaction history
-const transactions = await avaCloudSDK.data.evm.transactions.getTransactionsByAddress({
+const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByAddress({
   address: '0x...',
   pageSize: 10
 })
@@ -219,24 +190,16 @@ await icmClient.sendMessage({
 Each SDK includes comprehensive documentation:
 
 - **[Client SDK Documentation](./client/README.md)** - Complete API reference and usage examples
-- **[Data SDK Documentation](./data/README.md)** - Data access and analytics guide
-- **[DevTools SDK Documentation](./devtools/README.md)** - Development utilities guide
+- **[ChainKit SDK Documentation](./chainkit/README.md)** - Development utilities guide
 - **[Interchain SDK Documentation](./interchain/README.md)** - Cross-chain development guide
-- **[Metrics SDK Documentation](./metrics/README.md)** - Metrics and monitoring guide
-- **[SDK Documentation](./sdk/README.md)** - Unified SDK
-- **[Webhooks SDK Documentation](./webhooks/README.md)** - Real-time events guide
 
 ## Examples
 
 Each SDK includes practical examples demonstrating common use cases:
 
 - **Client SDK Examples** - [View Examples](./client/examples/)
-- **Data SDK Examples** - [View Examples](./data/examples/)
-- **DevTools SDK Examples** - [View Examples](./devtools/examples/)
+- **ChainKit SDK Examples** - [View Examples](./chainkit/examples/)
 - **Interchain SDK Examples** - [View Examples](./interchain/examples/)
-- **Metrics SDK Examples** - [View Examples](./metrics/examples/)
-- **Core SDK Examples** - [View Examples](./sdk/examples/)
-- **Webhooks SDK Examples** - [View Examples](./webhooks/examples/)
 
 ## Architecture
 
@@ -245,12 +208,8 @@ The Avalanche SDK TypeScript suite is designed with modularity in mind:
 ```
 avalanche-sdk-typescript/
 ├── client/          # Main client SDK
-├── data/            # Data access SDK
-├── devtools/        # Development tools
-├── interchain/      # Cross-chain SDK
-├── metrics/         # Metrics and monitoring
-├── sdk/             # Unified SDK
-└── webhooks/        # Real-time events
+├── chainkit/        # Development tools
+└── interchain/      # Cross-chain SDK
 ```
 
 Each SDK is:

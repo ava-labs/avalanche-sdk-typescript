@@ -1,0 +1,33 @@
+# Erc20Token
+
+## Example Usage
+
+```typescript
+import { Erc20Token } from "@avalanche-sdk/chainkit/models/components";
+
+let value: Erc20Token = {
+  address: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+  name: "Wrapped AVAX",
+  symbol: "WAVAX",
+  decimals: 18,
+  logoUri:
+    "https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg",
+  ercType: "ERC-20",
+  price: {
+    currencyCode: "usd",
+    value: 42.42,
+  },
+};
+```
+
+## Fields
+
+| Field                                                                                                                                 | Type                                                                                                                                  | Required                                                                                                                              | Description                                                                                                                           | Example                                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `address`                                                                                                                             | *string*                                                                                                                              | :heavy_check_mark:                                                                                                                    | A wallet or contract address in mixed-case checksum encoding.                                                                         | 0x71C7656EC7ab88b098defB751B7401B5f6d8976F                                                                                            |
+| `name`                                                                                                                                | *string*                                                                                                                              | :heavy_check_mark:                                                                                                                    | The contract name.                                                                                                                    | Wrapped AVAX                                                                                                                          |
+| `symbol`                                                                                                                              | *string*                                                                                                                              | :heavy_check_mark:                                                                                                                    | The contract symbol.                                                                                                                  | WAVAX                                                                                                                                 |
+| `decimals`                                                                                                                            | *number*                                                                                                                              | :heavy_check_mark:                                                                                                                    | The number of decimals the token uses. For example `6`, means to divide the token amount by `1000000` to get its user representation. | 18                                                                                                                                    |
+| `logoUri`                                                                                                                             | *string*                                                                                                                              | :heavy_minus_sign:                                                                                                                    | The logo uri for the address.                                                                                                         | https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg             |
+| `ercType`                                                                                                                             | [components.Erc20TokenErcType](../../models/components/erc20tokenerctype.md)                                                          | :heavy_check_mark:                                                                                                                    | N/A                                                                                                                                   |                                                                                                                                       |
+| `price`                                                                                                                               | [components.Money](../../models/components/money.md)                                                                                  | :heavy_minus_sign:                                                                                                                    | The token price, if available.                                                                                                        |                                                                                                                                       |

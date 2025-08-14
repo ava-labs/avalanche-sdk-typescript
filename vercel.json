@@ -1,0 +1,12 @@
+{
+  "buildCommand": "cd client && npm run generate-docs",
+  "outputDirectory": "client/docs/typedoc",
+  "installCommand": "cd client && npm install",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
