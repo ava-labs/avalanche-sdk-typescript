@@ -1,12 +1,11 @@
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
+import { loadConfig } from "../config";
 
 async function run() {
-  // This is the private key of the account that will be used to export the avax from the X-chain to the C-chain
-  const account = privateKeyToAvalancheAccount(
-    "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
-  );
+  const { privateKeyAccount1 } = loadConfig();
+  const account = privateKeyToAvalancheAccount(privateKeyAccount1);
 
   // This is the wallet client that will be used to export the avax from the X-chain to the C-chain
   const walletClient = createAvalancheWalletClient({

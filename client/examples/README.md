@@ -51,6 +51,8 @@ This directory contains practical examples demonstrating how to use the `@avalan
    npx tsx <example-file.ts>
    ```
 
+> **Note:** Make sure to create your own `.env` file by copying the `.env.example` file and updating the values. You'll also need to modify the `config.ts` file to point to your `.env` file path. By default, the examples use the values from `.env.example`, and the test addresses mentioned in the examples as comments (like `0x76Dd3d7b2f635c2547B861e55aE8A374E587742D` and `X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz`) are derived from the private key values in that file.
+
 ## Available Examples
 
 ### Basic Examples
@@ -147,9 +149,15 @@ Most examples require configuration before running:
 
 1. **Network Selection**: Examples default to Fuji testnet. Modify the network configuration in each example file to use mainnet or local network.
 
-2. **Private Keys**: Replace placeholder private keys with your actual keys for testing.
+2. **Private Keys**: Copy the example environment file in .env and edit with your actual values
 
 3. **Addresses**: Update recipient addresses to valid Avalanche addresses.
+
+## Security Notes
+
+- **Never commit your `.env` file** - it contains sensitive private keys
+- **Use testnet keys** for development and testing
+- **Keep your mainnet private keys secure** and offline
 
 ## Important Notes
 

@@ -2,11 +2,12 @@ import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
 import { issueTx as issuePChainTx } from "@avalanche-sdk/client/methods/pChain";
+import { loadConfig } from "../../config";
 
 async function run() {
-  const account = privateKeyToAvalancheAccount(
-    "0x67d127b32d4c3dccba8a4493c9d6506e6e1c7e0f08fd45aace29c9973c7fc2ce"
-  );
+  const { privateKeyAccount1, privateKeyAccount2 } = loadConfig();
+  const account1 = privateKeyToAvalancheAccount(privateKeyAccount1);
+  const account2 = privateKeyToAvalancheAccount(privateKeyAccount2);
 
   const walletClient = createAvalancheWalletClient({
     chain: avalancheFuji,
@@ -14,11 +15,11 @@ async function run() {
       type: "http",
       url: "https://api.avax-test.network/ext/bc/C/rpc",
     },
-    account,
+    account: account1,
   });
 
   const customSubnetOwners = {
-    addresses: ["P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t"], // This is another ewoq address for testing
+    addresses: [account2.getXPAddress("P", "fuji")], // P-fuji18jma8ppw3nhx5r4ap8clazz0dps7rv5u6wmu4t
     locktime: BigInt(123),
     threshold: 1,
   };
