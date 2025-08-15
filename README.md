@@ -30,14 +30,6 @@ Avalanche SDK TypeScript provides a complete set of tools and libraries for deve
 | `@avalanche-sdk/interchain` | Send messages between Avalanche L1s using ICM/Teleporter |
 
 
-## 📊 Package Status
-
-| Package |  Status | npm |
-|---------|--------|-----|
-| `@avalanche-sdk/chainkit` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/chainkit" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/chainkit" alt="npm"></a> |
-| `@avalanche-sdk/client` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/client" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/client" alt="npm"></a> |
-| `@avalanche-sdk/interchain` | Alpha | <a href="https://www.npmjs.com/package/@avalanche-sdk/interchain" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/@avalanche-sdk/interchain" alt="npm"></a> |
-
 ## Available SDKs
 
 ### [Client SDK](./client/)
@@ -119,40 +111,74 @@ const balance = await client.getBalance({
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples">View more Client SDK examples →</a>
 
 
-#### ChainKit: Get Transaction History
+#### ChainKit: Get ERC20 balances
 
 ```typescript
-import { Avalanche } from '@avalanche-sdk/chainkit'
+import { Avalanche } from "@avalanche-sdk/chainkit";
 
-const avalancheSDK = new Avalanche({
-  apiKey: '<YOUR_API_KEY_HERE>',
-  chainId: '43114',
-  network: 'mainnet',
-})
+const avalanche = new Avalanche({
+  chainId: "43114",
+});
 
-// Get transaction history
-const transactions = await avalancheSDK.data.evm.transactions.getTransactionsByAddress({
-  address: '0x...',
-  pageSize: 10
-})
+async function run() {
+  const result = await avalanche.data.evm.address.balances.listErc20({
+    address: "0x8ae323046633A07FB162043f28Cea39FFc23B50A",
+  });
+  console.log(JSON.stringify(result, null, 2));
+}
+
+run();
 ```
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/chainkit/examples">View more ChainKit SDK examples →</a>
 
-#### Cross-Chain Messaging
+#### Interchain: Send cross-chain message
 ```typescript
-import { createICMClient } from '@avalanche-sdk/interchain'
+import { createWalletClient, http } from "viem";
+import { createICMClient } from "@avalanche-sdk/interchain";
+import { privateKeyToAccount } from "viem/accounts";
+import * as dotenv from 'dotenv';
 
-const icmClient = createICMClient({
-  sourceChain: avalanche,
-  destinationChain: customSubnet,
-})
+// Load environment variables
+dotenv.config();
 
-// Send cross-chain message
-await icmClient.sendMessage({
-  message: 'Hello from C-Chain!',
-  destinationAddress: '0x...'
-})
+// these will be made available in a separate SDK soon
+import { avalancheFuji, dispatch } from "@avalanche-sdk/interchain/chains";
+
+// Get private key from environment
+const privateKey = process.env.PRIVATE_KEY;
+if (!privateKey) {
+  throw new Error("PRIVATE_KEY not found in environment variables");
+}
+
+// Load your signer/account
+const account = privateKeyToAccount(privateKey as `0x${string}`);
+
+// Create a viem wallet client connected to Avalanche Fuji
+const wallet = createWalletClient({
+  transport: http('https://api.avax-test.network/ext/bc/C/rpc'),
+  account,
+});
+
+// Initialize the ICM client
+const icmClient = createICMClient(wallet);
+
+// Send a message across chains
+async function main() {
+  try {
+    const hash = await icmClient.sendMsg({
+      sourceChain: avalancheFuji,
+      destinationChain: dispatch,
+      message: 'Hello from Avalanche Fuji to Dispatch Fuji!',
+    });
+    console.log('Message sent with hash:', hash);
+  } catch (error) {
+    console.error('Error sending message:', error);
+    process.exit(1);
+  }
+}
+
+main();
 ```
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples">View more Interchain SDK examples →</a>
