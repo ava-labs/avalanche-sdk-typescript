@@ -5,16 +5,16 @@ import { getBalance as getCChainBalance } from "@avalanche-sdk/client/methods";
 import { getBalance as getPChainBalance } from "@avalanche-sdk/client/methods/pChain";
 import { AccountBalance, CurrencyExchange, Refresh } from '@mui/icons-material';
 import {
-    Avatar,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Chip,
-    CircularProgress,
-    LinearProgress,
-    Stack,
-    Typography
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
+  LinearProgress,
+  Stack,
+  Typography
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

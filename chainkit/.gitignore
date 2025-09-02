@@ -30,3 +30,4 @@
 /.tshy-*
 /__tests__
 /.speakeasy/reports
+/docs/typedoc

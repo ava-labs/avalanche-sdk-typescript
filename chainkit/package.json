@@ -32,7 +32,9 @@
     "lint": "eslint --cache --max-warnings=0 src",
     "build:mcp": "bun src/mcp-server/build.mts",
     "build": "npm run build:mcp && tshy",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "generate-docs": "typedoc",
+    "build:docs": "npm run generate-docs"
   },
   "peerDependencies": {
     "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0"
@@ -54,6 +56,9 @@
     "express": "^4.21.2",
     "globals": "^15.14.0",
     "tshy": "^2.0.0",
+    "typedoc": "^0.28.10",
+    "typedoc-github-theme": "^0.3.0",
+    "typedoc-plugin-markdown": "^4.8.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.26.0"
   },

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/index.ts",
+    "src/core.ts",
+    "src/hooks/index.ts",
+    "src/funcs/*",
+    "src/models/index.ts",
+    "src/lib/index.ts",
+    "src/types/index.ts"
+  ],
+  "projectDocuments": ["docs/sdks/*/*.md", "docs/models/*/*.md", "docs/SDK.md"],
+  "out": "docs/typedoc",
+  "name": "Avalanche SDK Chainkit",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "categoryOrder": ["SDK", "Functions", "Models", "Utilities", "*"],
+  "defaultCategory": "Other",
+  "readme": "README.md",
+  "plugin": ["typedoc-github-theme"],
+  "sidebarLinks": {
+    "GitHub": "https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/chainkit/README.md",
+    "Avalanche Docs": "https://build.avax.network/"
+  }
+}
