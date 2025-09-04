@@ -25,6 +25,5 @@ export function publicKeyToXPAddress(
   const compressedPubKey = new Uint8Array(point.toBytes(true));
 
   const address = secp256k1.publicKeyBytesToAddress(compressedPubKey);
-  const xpAddress = utils.formatBech32(hrp, address) as XPAddress;
-  return xpAddress;
+  return utils.formatBech32(hrp, address) as XPAddress;
 }
