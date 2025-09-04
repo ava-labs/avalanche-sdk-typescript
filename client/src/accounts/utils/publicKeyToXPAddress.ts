@@ -1,4 +1,5 @@
 import { secp256k1, utils } from "@avalabs/avalanchejs";
+import { Point } from "@noble/secp256k1";
 import { XPAddress } from "../avalancheAccount.js";
 
 /**
@@ -20,8 +21,9 @@ export function publicKeyToXPAddress(
   publicKey: string,
   hrp: string
 ): XPAddress {
-  const address = secp256k1.publicKeyBytesToAddress(
-    utils.hexToBuffer(publicKey)
-  );
+  const point = Point.fromHex(utils.strip0x(publicKey));
+  const compressedPubKey = new Uint8Array(point.toBytes(true));
+
+  const address = secp256k1.publicKeyBytesToAddress(compressedPubKey);
   return utils.formatBech32(hrp, address) as XPAddress;
 }
