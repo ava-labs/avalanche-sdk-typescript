@@ -1,3 +1,5 @@
+<img src="./images/avalanche-sdk.jpg" alt="Avalanche SDK" width="100%" />
+
 <div align="center">
   <h1>Avalanche SDK Typescript</h1>
   <h3>The official TypeScript SDK suite for building on Avalanche</h3>
@@ -16,10 +18,14 @@
 </div>
 
 ## Overview
+Avalanche SDK for TypeScript is a modular suite for building on the Avalanche ecosystem. It covers:
+- Direct chain access (RPC, wallets, transactions)
+- Indexed data + metrics (Glacier Data API & Metrics API)
+- Interchain messaging (ICM/Teleporter for cross–L1 apps)
 
-Avalanche SDK TypeScript provides a complete set of tools and libraries for developers to interact with the Avalanche blockchain ecosystem. This monorepo includes multiple specialized SDKs, each designed for specific use cases while maintaining consistency and interoperability.
+This monorepo includes multiple specialized SDKs, each designed for specific use cases while maintaining consistency and interoperability.
 
-> ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. Use in production at your own risk.
+> ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. We'd love to hear about your experience! **[Please share your feedback here](https://forms.gle/kpunVSkA9nuCa1wM9).** Use in production at your own risk.
 
 ### 🎯 Which SDK Should I Use?
 
