@@ -116,7 +116,6 @@ const balance = await client.getBalance({
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples">View more Client SDK examples →</a>
 
-
 #### ChainKit: Get ERC20 balances
 
 ```typescript
@@ -189,7 +188,7 @@ main();
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples">View more Interchain SDK examples →</a>
 
-## 💡 What You Can Build
+## What You Can Build
 
 ### Blockchain Infrastructure
 - Custom RPC endpoints and API gateways
@@ -323,7 +322,7 @@ Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labe
 - <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
-### 🐛 Issue Tracking
+### Issue Tracking
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md" target="_blank" rel="noopener noreferrer">Report a Bug</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md" target="_blank" rel="noopener noreferrer">Request a Feature</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">View All Issues</a>

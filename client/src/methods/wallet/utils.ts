@@ -67,13 +67,24 @@ export async function getBech32AddressFromAccountOrClient(
   hrp: string
 ): Promise<string> {
   const xpAcc = parseAvalancheAccount(account)?.xpAccount || client.xpAccount;
+  const evmAcc = parseAvalancheAccount(account)?.evmAccount || client.account;
 
-  if (!xpAcc) {
-    const { xp } = await getAccountPubKey(client);
-    return `${chainAlias}-${publicKeyToXPAddress(xp, hrp)}`;
+  if (!xpAcc || !evmAcc) {
+    const { xp, evm } = await getAccountPubKey(client);
+    return `${chainAlias}-${publicKeyToXPAddress(
+      chainAlias === C_CHAIN_ALIAS ? evm : xp,
+      hrp
+    )}`;
   }
 
-  return `${chainAlias}-${publicKeyToXPAddress(xpAcc.publicKey, hrp)}`;
+  if (chainAlias === C_CHAIN_ALIAS && !evmAcc.publicKey) {
+    throw new Error("EVM public key not found for evm account");
+  }
+
+  return `${chainAlias}-${publicKeyToXPAddress(
+    chainAlias === C_CHAIN_ALIAS ? evmAcc.publicKey! : xpAcc.publicKey,
+    hrp
+  )}`;
 }
 
 export async function getEVMAddressFromAccountOrClient(

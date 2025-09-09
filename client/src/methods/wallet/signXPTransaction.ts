@@ -256,12 +256,6 @@ export async function signXPTransaction(
     }
   }
 
-  if (chainAlias === "C") {
-    throw new Error(
-      "Signing transactions for C-chain is not supported in Core right now"
-    );
-  }
-
   const response = await client.request<
     AvalancheWalletRpcSchema,
     {

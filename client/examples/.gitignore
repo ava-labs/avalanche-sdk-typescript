@@ -11,3 +11,10 @@
 /.tshy-*
 /__tests__
 .DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
