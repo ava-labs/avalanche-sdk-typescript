@@ -27,7 +27,7 @@ This monorepo includes multiple specialized SDKs, each designed for specific use
 
 > ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. We'd love to hear about your experience! **[Please share your feedback here](https://forms.gle/kpunVSkA9nuCa1wM9).** Use in production at your own risk.
 
-### 🎯 Which SDK Should I Use?
+### Which SDK Should I Use?
 
 | SDK | Description |
 |-----|-------------|
@@ -76,7 +76,7 @@ SDK for building cross-L1 applications and bridges.
 - Works seamlessly with wallet clients
 - Built-in support for Avalanche C-Chain and custom subnets
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -188,7 +188,7 @@ main();
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/interchain/examples">View more Interchain SDK examples →</a>
 
-## 💡 What You Can Build
+## What You Can Build
 
 ### Blockchain Infrastructure
 - Custom RPC endpoints and API gateways
@@ -254,7 +254,7 @@ Each SDK is:
 - **Type-safe** - Full TypeScript support
 - **Well-documented** - Comprehensive guides and examples
 
-## ⚡ Performance & Best Practices
+## Performance & Best Practices
 
 ### Optimization Tips
 - Use the unified SDK for better tree-shaking when using multiple features
@@ -270,7 +270,7 @@ Each SDK is:
 - Implement proper access controls
 - Follow <a href="https://docs.avax.network/build/references/security" target="_blank" rel="noopener noreferrer">security best practices</a>
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -283,7 +283,7 @@ Each SDK is:
 | Type mismatches | Ensure all SDKs are on compatible versions |
 
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -309,41 +309,41 @@ npm run build
 ### Looking for Good First Issues?
 Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labels/good%20first%20issue" target="_blank" rel="noopener noreferrer">good first issues</a> to get started!
 
-## 📞 Support
+## Support
 
-### 📖 Documentation & Resources
+### Documentation & Resources
 - <a href="https://build.avax.network/docs/api-reference" target="_blank" rel="noopener noreferrer">API Reference</a>
 - <a href="https://docs.avax.network" target="_blank" rel="noopener noreferrer">Developer Docs</a>
 - <a href="https://www.youtube.com/Avalancheavax" target="_blank" rel="noopener noreferrer">Video Tutorials</a>
 - <a href="./examples">Code Examples</a>
 
-### 👥 Community & Help
+### Community & Help
 - <a href="https://discord.gg/avax" target="_blank" rel="noopener noreferrer">Discord</a> - Get real-time help
 - <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
-### 🐛 Issue Tracking
+### Issue Tracking
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md" target="_blank" rel="noopener noreferrer">Report a Bug</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md" target="_blank" rel="noopener noreferrer">Request a Feature</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">View All Issues</a>
 
-### 📮 Direct Support
+### Direct Support
 - Technical Issues: <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
 - Security Issues: security@avalabs.org
 - General Inquiries: data-platform@avalabs.org
 
-## 🔄 Release Notes
+## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) for a detailed version history.
 
-## 📄 License
+## License
 
 This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-  <h3>🏔️ Built with ❤️ by the Avalanche Team</h3>
+  <h3> Built with ❤️ by the Avalanche Team</h3>
   
   <a href="https://www.avax.network/" target="_blank" rel="noopener noreferrer">Website</a> • 
   <a href="https://docs.avax.network/" target="_blank" rel="noopener noreferrer">Documentation</a> • 
