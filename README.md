@@ -27,7 +27,7 @@ This monorepo includes multiple specialized SDKs, each designed for specific use
 
 > ⚠️ **Developer Preview**: This suite of SDKs is currently in beta and is subject to change. We'd love to hear about your experience! **[Please share your feedback here](https://forms.gle/kpunVSkA9nuCa1wM9).** Use in production at your own risk.
 
-### 🎯 Which SDK Should I Use?
+### Which SDK Should I Use?
 
 | SDK | Description |
 |-----|-------------|
@@ -76,7 +76,7 @@ SDK for building cross-L1 applications and bridges.
 - Works seamlessly with wallet clients
 - Built-in support for Avalanche C-Chain and custom subnets
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -284,7 +284,7 @@ Each SDK is:
 | Type mismatches | Ensure all SDKs are on compatible versions |
 
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -328,7 +328,7 @@ Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labe
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md" target="_blank" rel="noopener noreferrer">Request a Feature</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">View All Issues</a>
 
-### 📮 Direct Support
+### Direct Support
 - Technical Issues: <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
 - Security Issues: security@avalabs.org
 - General Inquiries: data-platform@avalabs.org
