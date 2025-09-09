@@ -56,7 +56,6 @@ export async function prepareImportTxn(
 
   const fromAddresses =
     addOrModifyXPAddressesAlias(params.fromAddresses, C_CHAIN_ALIAS) || [];
-  console.log("fromAddresses", fromAddresses);
   if (fromAddresses.length === 0) {
     const paramAc = parseAvalancheAccount(account);
     const address = await getBech32AddressFromAccountOrClient(

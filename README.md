@@ -116,7 +116,6 @@ const balance = await client.getBalance({
 
 <a href="https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/client/examples">View more Client SDK examples →</a>
 
-
 #### ChainKit: Get ERC20 balances
 
 ```typescript
