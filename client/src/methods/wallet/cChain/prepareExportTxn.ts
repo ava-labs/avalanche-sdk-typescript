@@ -1,4 +1,4 @@
-import { evm, evmSerial, utils } from "@avalabs/avalanchejs";
+import { evmSerial, utils } from "@avalabs/avalanchejs";
 import { getTransactionCount } from "viem/actions";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { baseFee as getBaseFee } from "../../public/index.js";
@@ -12,6 +12,7 @@ import {
   PrepareExportTxnParameters,
   PrepareExportTxnReturnType,
 } from "./types/prepareExportTxn.js";
+import { newExportTxFromBaseFee } from "./utils.js";
 
 /**
  * Prepares an export transaction for the C-chain.
@@ -52,7 +53,7 @@ export async function prepareExportTxn(
   params: PrepareExportTxnParameters
 ): Promise<PrepareExportTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const [txCount, baseFee] = await Promise.all([
+  const [txCount, baseFeeInWei] = await Promise.all([
     getTransactionCount(client, {
       address: `0x${utils.strip0x(params.fromAddress)}`,
     }),
@@ -62,9 +63,9 @@ export async function prepareExportTxn(
     bech32AddressToBytes(address)
   );
 
-  const unsignedTx = evm.newExportTxFromBaseFee(
+  const unsignedTx = newExportTxFromBaseFee(
     context,
-    BigInt(baseFee),
+    BigInt(baseFeeInWei),
     avaxToNanoAvax(params.exportedOutput.amount),
     getChainIdFromAlias(params.destinationChain, context.networkID),
     utils.hexToBuffer(params.fromAddress),
