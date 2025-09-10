@@ -1,4 +1,4 @@
-import { evm, evmSerial, utils } from "@avalabs/avalanchejs";
+import { evmSerial, utils } from "@avalabs/avalanchejs";
 import { parseAvalancheAccount } from "../../../accounts/utils/parseAvalancheAccount.js";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { getUtxosForAddress } from "../../../utils/getUtxosForAddress.js";
@@ -10,12 +10,12 @@ import {
   bech32AddressToBytes,
   getBech32AddressFromAccountOrClient,
   getChainIdFromAlias,
-  weiToNanoAvax,
 } from "../utils.js";
 import {
   PrepareImportTxnParameters,
   PrepareImportTxnReturnType,
 } from "./types/prepareImportTxn.js";
+import { newImportTxFromBaseFee } from "./utils.js";
 
 /**
  * Prepares an import transaction for the C-chain.
@@ -54,11 +54,6 @@ export async function prepareImportTxn(
   const { account } = params;
   const context = params.context || (await getContextFromURI(client));
   const baseFeeInWei = await getBaseFee(client);
-  
-  let baseFeeInNanoAvax = weiToNanoAvax(BigInt(baseFeeInWei));
-  if (baseFeeInNanoAvax === 0n) {
-    baseFeeInNanoAvax = 1n;
-  }
 
   const fromAddresses =
     addOrModifyXPAddressesAlias(params.fromAddresses, C_CHAIN_ALIAS) || [];
@@ -95,13 +90,13 @@ export async function prepareImportTxn(
       )
     ).flat();
   }
-  const unsignedTx = evm.newImportTxFromBaseFee(
+  const unsignedTx = newImportTxFromBaseFee(
     context,
     utils.hexToBuffer(params.toAddress),
     fromAddressesBytes,
     utxos,
     getChainIdFromAlias(params.sourceChain, context.networkID),
-    baseFeeInNanoAvax
+    BigInt(baseFeeInWei),
   );
 
   return {
