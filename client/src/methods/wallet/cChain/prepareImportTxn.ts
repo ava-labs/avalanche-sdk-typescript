@@ -10,6 +10,7 @@ import {
   bech32AddressToBytes,
   getBech32AddressFromAccountOrClient,
   getChainIdFromAlias,
+  weiToNanoAvax,
 } from "../utils.js";
 import {
   PrepareImportTxnParameters,
@@ -52,7 +53,12 @@ export async function prepareImportTxn(
 ): Promise<PrepareImportTxnReturnType> {
   const { account } = params;
   const context = params.context || (await getContextFromURI(client));
-  const baseFee = await getBaseFee(client);
+  const baseFeeInWei = await getBaseFee(client);
+  
+  let baseFeeInNanoAvax = weiToNanoAvax(BigInt(baseFeeInWei));
+  if (baseFeeInNanoAvax === 0n) {
+    baseFeeInNanoAvax = 1n;
+  }
 
   const fromAddresses =
     addOrModifyXPAddressesAlias(params.fromAddresses, C_CHAIN_ALIAS) || [];
@@ -95,7 +101,7 @@ export async function prepareImportTxn(
     fromAddressesBytes,
     utxos,
     getChainIdFromAlias(params.sourceChain, context.networkID),
-    BigInt(baseFee)
+    baseFeeInNanoAvax
   );
 
   return {

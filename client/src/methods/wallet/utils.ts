@@ -149,6 +149,15 @@ export function avaxToNanoAvax(amount: number) {
 }
 
 /**
+ * Convert wei to nanoAVAX
+ * @param amount - The amount of wei to convert
+ * @returns The amount in nanoAVAX
+ */
+export function weiToNanoAvax(amount: bigint) {
+  return amount / BigInt(1e9);
+}
+
+/**
  * Convert nanoAVAX to AVAX
  * @param amount - The amount of nanoAVAX to convert
  * @returns The amount in AVAX

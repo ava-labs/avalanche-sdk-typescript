@@ -7,6 +7,7 @@ import {
   avaxToNanoAvax,
   bech32AddressToBytes,
   getChainIdFromAlias,
+  weiToNanoAvax,
 } from "../utils.js";
 import {
   PrepareExportTxnParameters,
@@ -52,7 +53,7 @@ export async function prepareExportTxn(
   params: PrepareExportTxnParameters
 ): Promise<PrepareExportTxnReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const [txCount, baseFee] = await Promise.all([
+  const [txCount, baseFeeInWei] = await Promise.all([
     getTransactionCount(client, {
       address: `0x${utils.strip0x(params.fromAddress)}`,
     }),
@@ -62,9 +63,14 @@ export async function prepareExportTxn(
     bech32AddressToBytes(address)
   );
 
+  let baseFeeInNanoAvax = weiToNanoAvax(BigInt(baseFeeInWei));
+  if (baseFeeInNanoAvax === 0n) {
+    baseFeeInNanoAvax = 1n;
+  }
+
   const unsignedTx = evm.newExportTxFromBaseFee(
     context,
-    BigInt(baseFee),
+    baseFeeInNanoAvax,
     avaxToNanoAvax(params.exportedOutput.amount),
     getChainIdFromAlias(params.destinationChain, context.networkID),
     utils.hexToBuffer(params.fromAddress),
