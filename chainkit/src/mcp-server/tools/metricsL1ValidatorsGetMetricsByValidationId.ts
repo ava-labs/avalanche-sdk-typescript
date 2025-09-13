@@ -14,9 +14,9 @@ export const tool$metricsL1ValidatorsGetMetricsByValidationId: ToolDefinition<
   typeof args
 > = {
   name: "metrics-l1-validators-get-metrics-by-validation-id",
-  description: `Get metric values with given validation id and timestamp range
+  description: `Get metric values with given validationId and timestamp range
 
-Get given metric values for a given validation id with or without a timestamp range.`,
+Get given metric values for a given validationId with or without a timestamp range.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await metricsL1ValidatorsGetMetricsByValidationId(

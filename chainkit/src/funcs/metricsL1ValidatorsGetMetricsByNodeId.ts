@@ -28,10 +28,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get metric values with given node id and timestamp range
+ * Get metric values with given nodeId and timestamp range
  *
  * @remarks
- * Get given metric values for a given node id with or without a timestamp range.
+ * Get given metric values for a given nodeId with or without a timestamp range.
  */
 export function metricsL1ValidatorsGetMetricsByNodeId(
   client: AvalancheCore,

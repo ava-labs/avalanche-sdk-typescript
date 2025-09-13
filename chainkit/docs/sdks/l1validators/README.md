@@ -6,9 +6,9 @@
 ### Available Operations
 
 * [listMetrics](#listmetrics) - Get given metric for all validators
-* [getMetricsByValidationId](#getmetricsbyvalidationid) - Get metric values with given validation id and timestamp range
-* [getMetricsByNodeId](#getmetricsbynodeid) - Get metric values with given node id and timestamp range
-* [getMetricsBySubnetId](#getmetricsbysubnetid) - Get metric values with given subnet ID and timestamp range
+* [getMetricsByValidationId](#getmetricsbyvalidationid) - Get metric values with given validationId and timestamp range
+* [getMetricsByNodeId](#getmetricsbynodeid) - Get metric values with given nodeId and timestamp range
+* [getMetricsBySubnetId](#getmetricsbysubnetid) - Get metric values with given subnetId and timestamp range
 
 ## listMetrics
 
@@ -94,7 +94,7 @@ run();
 
 ## getMetricsByValidationId
 
-Get given metric values for a given validation id with or without a timestamp range.
+Get given metric values for a given validationId with or without a timestamp range.
 
 ### Example Usage
 
@@ -178,7 +178,7 @@ run();
 
 ## getMetricsByNodeId
 
-Get given metric values for a given node id with or without a timestamp range.
+Get given metric values for a given nodeId with or without a timestamp range.
 
 ### Example Usage
 
@@ -262,7 +262,7 @@ run();
 
 ## getMetricsBySubnetId
 
-Get given metric values for a given subnet ID with or without a timestamp range.
+Get given metric values for a given subnetId with or without a timestamp range.
 
 ### Example Usage
 

@@ -1,21 +1,21 @@
-speakeasyVersion: 1.603.0
+speakeasyVersion: 1.615.2
 sources:
     chainkit-source:
         sourceNamespace: avalanche-sdk-chainkit-typescript
-        sourceRevisionDigest: sha256:9c3c1c9bededfb64c85c874865db9b8bf4621b0aa65f9a5bf4abababe387ec24
-        sourceBlobDigest: sha256:214dff750535e03d96c20a978cfa47a413d04c88d47f996ae148473b45c669df
+        sourceRevisionDigest: sha256:32d3c813fb373df46852339688c124daa0d8675c371065ac069a933016338564
+        sourceBlobDigest: sha256:43c7a45c5d1dbb3d739799d7b2b505cd01696e5dd3c7ee3d30ddac33b2bcb1f3
         tags:
             - latest
-            - speakeasy-sdk-regen-1755082739
+            - speakeasy-sdk-regen-1757788697
             - 1.0.0
 targets:
     chainkit-sdk:
         source: chainkit-source
         sourceNamespace: avalanche-sdk-chainkit-typescript
-        sourceRevisionDigest: sha256:9c3c1c9bededfb64c85c874865db9b8bf4621b0aa65f9a5bf4abababe387ec24
-        sourceBlobDigest: sha256:214dff750535e03d96c20a978cfa47a413d04c88d47f996ae148473b45c669df
+        sourceRevisionDigest: sha256:32d3c813fb373df46852339688c124daa0d8675c371065ac069a933016338564
+        sourceBlobDigest: sha256:43c7a45c5d1dbb3d739799d7b2b505cd01696e5dd3c7ee3d30ddac33b2bcb1f3
         codeSamplesNamespace: avalanche-sdk-chainkit-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:cde3cfb732969a7feae707afe9c0d8f13c6fa8dc66ed649ac06dc58ca983595d
+        codeSamplesRevisionDigest: sha256:73fe36d601c4260474c6dbce12e648c0348e44cce6aab2ac69ca6457fdd8a828
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
