@@ -3,7 +3,7 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeSimple } from "../lib/encodings.js";
+import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -22,24 +22,34 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import { GetTeleporterMetricsByChainServerList } from "../models/operations/getteleportermetricsbychain.js";
+import { GetICMMetricsByChainServerList } from "../models/operations/geticmmetricsbychain.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get teleporter metrics for EVM chains
+ * Get Interchain Message (ICM) metrics
  *
  * @remarks
- * Gets teleporter metrics for an EVM chain.
+ * Interchain Message (ICM) metrics are available for all Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics by source and/or destination blockchainId. Metrics are available on an hourly, daily, weekly, monthly, and yearly basis. See the `/chains` endpoint for all  supported chains. You can also request metrics grouped by mainnet or testnet.
+ *
+ * ### Metrics
+ *
+ * <ins>ICMSrcDestMsgCount</ins>: The number of ICM messages sent from the source blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>ICMDestMsgCount</ins>: The number of ICM messages received from any blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
  */
-export function metricsChainsGetTeleporterMetrics(
+export function metricsChainsGetICMMetrics(
   client: AvalancheCore,
-  request: operations.GetTeleporterMetricsByChainRequest,
+  request: operations.GetICMMetricsByChainRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.TeleporterChainMetricsApiResponse,
+    components.ICMMetricsApiResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -67,12 +77,12 @@ export function metricsChainsGetTeleporterMetrics(
 
 async function $do(
   client: AvalancheCore,
-  request: operations.GetTeleporterMetricsByChainRequest,
+  request: operations.GetICMMetricsByChainRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      components.TeleporterChainMetricsApiResponse,
+      components.ICMMetricsApiResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -96,7 +106,7 @@ async function $do(
   const parsed = safeParse(
     request,
     (value) =>
-      operations.GetTeleporterMetricsByChainRequest$outboundSchema.parse(value),
+      operations.GetICMMetricsByChainRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -106,25 +116,29 @@ async function $do(
   const body = null;
 
   const baseURL = options?.serverURL
-    || pathToFunc(GetTeleporterMetricsByChainServerList[0], {
+    || pathToFunc(GetICMMetricsByChainServerList[0], {
       charEncoding: "percent",
     })();
 
   const pathParams = {
-    chainId: encodeSimple(
-      "chainId",
-      payload.chainId ?? client._options.chainId,
-      { explode: false, charEncoding: "percent" },
-    ),
     metric: encodeSimple("metric", payload.metric, {
       explode: false,
       charEncoding: "percent",
     }),
   };
 
-  const path = pathToFunc("/v2/chains/{chainId}/teleporterMetrics/{metric}")(
-    pathParams,
-  );
+  const path = pathToFunc("/v2/icm/metrics/{metric}")(pathParams);
+
+  const query = encodeFormQuery({
+    "destBlockchainId": payload.destBlockchainId,
+    "endTimestamp": payload.endTimestamp,
+    "network": payload.network,
+    "pageSize": payload.pageSize,
+    "pageToken": payload.pageToken,
+    "srcBlockchainId": payload.srcBlockchainId,
+    "startTimestamp": payload.startTimestamp,
+    "timeInterval": payload.timeInterval,
+  });
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
@@ -137,7 +151,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: baseURL ?? "",
-    operationID: "getTeleporterMetricsByChain",
+    operationID: "getICMMetricsByChain",
     oAuth2Scopes: [],
 
     resolvedSecurity: requestSecurity,
@@ -165,6 +179,7 @@ async function $do(
     baseURL: baseURL,
     path: path,
     headers: headers,
+    query: query,
     body: body,
     userAgent: client._options.userAgent,
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
@@ -201,7 +216,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.TeleporterChainMetricsApiResponse,
+    components.ICMMetricsApiResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -219,7 +234,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.TeleporterChainMetricsApiResponse$inboundSchema),
+    M.json(200, components.ICMMetricsApiResponse$inboundSchema),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),

@@ -3,9 +3,10 @@
  */
 
 import { metricsChainsGet } from "../funcs/metricsChainsGet.js";
+import { metricsChainsGetICMMetrics } from "../funcs/metricsChainsGetICMMetrics.js";
+import { metricsChainsGetICMRollingWindowMetrics } from "../funcs/metricsChainsGetICMRollingWindowMetrics.js";
 import { metricsChainsGetMetrics } from "../funcs/metricsChainsGetMetrics.js";
 import { metricsChainsGetRollingWindowMetrics } from "../funcs/metricsChainsGetRollingWindowMetrics.js";
-import { metricsChainsGetTeleporterMetrics } from "../funcs/metricsChainsGetTeleporterMetrics.js";
 import { metricsChainsList } from "../funcs/metricsChainsList.js";
 import { metricsChainsListBTCbBridgersAboveThreshold } from "../funcs/metricsChainsListBTCbBridgersAboveThreshold.js";
 import { metricsChainsListNftHolders } from "../funcs/metricsChainsListNftHolders.js";
@@ -105,23 +106,6 @@ export class MetricsChains extends ClientSDK {
   }
 
   /**
-   * Get teleporter metrics for EVM chains
-   *
-   * @remarks
-   * Gets teleporter metrics for an EVM chain.
-   */
-  async getTeleporterMetrics(
-    request: operations.GetTeleporterMetricsByChainRequest,
-    options?: RequestOptions,
-  ): Promise<components.TeleporterChainMetricsApiResponse> {
-    return unwrapAsync(metricsChainsGetTeleporterMetrics(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * Get rolling window metrics for EVM chains
    *
    * @remarks
@@ -132,6 +116,60 @@ export class MetricsChains extends ClientSDK {
     options?: RequestOptions,
   ): Promise<components.RollingWindowMetricsApiResponse> {
     return unwrapAsync(metricsChainsGetRollingWindowMetrics(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Get Interchain Message (ICM) metrics
+   *
+   * @remarks
+   * Interchain Message (ICM) metrics are available for all Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics by source and/or destination blockchainId. Metrics are available on an hourly, daily, weekly, monthly, and yearly basis. See the `/chains` endpoint for all  supported chains. You can also request metrics grouped by mainnet or testnet.
+   *
+   * ### Metrics
+   *
+   * <ins>ICMSrcDestMsgCount</ins>: The number of ICM messages sent from the source blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+   *
+   * <ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
+   *
+   * <ins>ICMDestMsgCount</ins>: The number of ICM messages received from any blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+   *
+   * <ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
+   */
+  async getICMMetrics(
+    request: operations.GetICMMetricsByChainRequest,
+    options?: RequestOptions,
+  ): Promise<components.ICMMetricsApiResponse> {
+    return unwrapAsync(metricsChainsGetICMMetrics(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Get Interchain Message (ICM) rolling window metrics
+   *
+   * @remarks
+   * Interchain Message (ICM) rolling window metrics are available for all  Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics  by source and/or destination blockchainId. Rolling window metrics are available for the last hour, day, month, year, and all time. You can also request metrics grouped by mainnet or testnet.
+   *
+   * ### Metrics
+   *
+   * <ins>ICMSrcDestRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to the destination blockchain within the last hour, day, month, year, and all time.
+   *
+   * <ins>ICMSrcRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to any destination blockchain within the last hour, day, month, year, and all time.
+   *
+   * <ins>ICMDestRollingWindowMsgCount</ins>: The number of ICM  messages received from any blockchain to the destination blockchain within the last hour, day, month, year, and all time.
+   *
+   * <ins>ICMNetworkRollingWindowMsgCount</ins>: The number of ICM  messages sent from any blockchain to any destination blockchain within the last hour, day, month, year, and all time.
+   */
+  async getICMRollingWindowMetrics(
+    request: operations.GetICMRollingWindowMetricsByChainRequest,
+    options?: RequestOptions,
+  ): Promise<components.RollingWindowMetricsApiResponse> {
+    return unwrapAsync(metricsChainsGetICMRollingWindowMetrics(
       this,
       request,
       options,
