@@ -322,6 +322,9 @@ Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labe
 - <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
+### Feedback Sessions
+- <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1RkNFpny9hBimkOmBXghLkGJ8RXV0GgHZb2tfrIRoZ9Su3s1wYZOP2R_OjXpwG2aQw_zlHf2JQ?gv=true" target="_blank" rel="noopener noreferrer">Book a Google Meet Feedback Session</a> - Schedule a 1-on-1 session to share your feedback and suggestions
+
 ### Issue Tracking
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=bug_report.md" target="_blank" rel="noopener noreferrer">Report a Bug</a>
 - <a href="https://github.com/ava-labs/avalanche-sdk-typescript/issues/new?template=feature_request.md" target="_blank" rel="noopener noreferrer">Request a Feature</a>
