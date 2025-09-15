@@ -318,7 +318,7 @@ Check out our <a href="https://github.com/ava-labs/avalanche-sdk-typescript/labe
 - <a href="./examples">Code Examples</a>
 
 ### Community & Help
-- <a href="https://discord.gg/avax" target="_blank" rel="noopener noreferrer">Discord</a> - Get real-time help
+- <a href="https://discord.gg/avax" target="_blank" rel="noopener noreferrer">Discord</a> - Get real-time help in the #avalanche-sdk channel
 - <a href="https://t.me/+KDajA4iToKY2ZjBk" target="_blank" rel="noopener noreferrer">Telegram</a> - Join discussions
 - <a href="https://x.com/AvaxDevelopers" target="_blank" rel="noopener noreferrer">Twitter</a> - Stay updated
 
