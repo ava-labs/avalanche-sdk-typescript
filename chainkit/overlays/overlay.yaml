@@ -28,6 +28,11 @@ actions:
     update:
       x-speakeasy-usage-example: true
 
+  - target: $.paths['/v1/avax/supply'].get
+    description: Rename the method name for /v1/avax/supply GET endpoint
+    update:
+      x-speakeasy-name-override: get
+
   - target: $.paths.*.*[?(@['tags'][0] == 'Notifications')]
     description: Remove all paths that are tagged with 'notifications' if they somehow exist
     update:
