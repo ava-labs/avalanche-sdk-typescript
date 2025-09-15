@@ -13,6 +13,7 @@ import {
 } from "./resources.js";
 import { MCPScope } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
+import { tool$avaxSupplyGet } from "./tools/avaxSupplyGet.js";
 import { tool$dataEvmAddressBalancesGetNative } from "./tools/dataEvmAddressBalancesGetNative.js";
 import { tool$dataEvmAddressBalancesListCollectibles } from "./tools/dataEvmAddressBalancesListCollectibles.js";
 import { tool$dataEvmAddressBalancesListErc1155 } from "./tools/dataEvmAddressBalancesListErc1155.js";
@@ -85,9 +86,10 @@ import { tool$dataUsageMetricsGetRpcUsageMetrics } from "./tools/dataUsageMetric
 import { tool$dataUsageMetricsGetSubnetRpcUsage } from "./tools/dataUsageMetricsGetSubnetRpcUsage.js";
 import { tool$dataUsageMetricsGetUsage } from "./tools/dataUsageMetricsGetUsage.js";
 import { tool$metricsChainsGet } from "./tools/metricsChainsGet.js";
+import { tool$metricsChainsGetICMMetrics } from "./tools/metricsChainsGetICMMetrics.js";
+import { tool$metricsChainsGetICMRollingWindowMetrics } from "./tools/metricsChainsGetICMRollingWindowMetrics.js";
 import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js";
 import { tool$metricsChainsGetRollingWindowMetrics } from "./tools/metricsChainsGetRollingWindowMetrics.js";
-import { tool$metricsChainsGetTeleporterMetrics } from "./tools/metricsChainsGetTeleporterMetrics.js";
 import { tool$metricsChainsList } from "./tools/metricsChainsList.js";
 import { tool$metricsChainsListBTCbBridgersAboveThreshold } from "./tools/metricsChainsListBTCbBridgersAboveThreshold.js";
 import { tool$metricsChainsListNftHolders } from "./tools/metricsChainsListNftHolders.js";
@@ -122,7 +124,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.1",
+    version: "0.3.0-alpha.2",
   });
 
   const client = new AvalancheCore({
@@ -163,11 +165,13 @@ export function createMCPServer(deps: {
   tool(tool$webhooksUpdate);
   tool(tool$webhooksGenerateOrRotateSharedSecret);
   tool(tool$webhooksGetSharedSecret);
+  tool(tool$avaxSupplyGet);
   tool(tool$metricsChainsList);
   tool(tool$metricsChainsGet);
   tool(tool$metricsChainsGetMetrics);
-  tool(tool$metricsChainsGetTeleporterMetrics);
   tool(tool$metricsChainsGetRollingWindowMetrics);
+  tool(tool$metricsChainsGetICMMetrics);
+  tool(tool$metricsChainsGetICMRollingWindowMetrics);
   tool(tool$metricsChainsListNftHolders);
   tool(tool$metricsChainsListTokenHoldersAboveThreshold);
   tool(tool$metricsChainsListBTCbBridgersAboveThreshold);

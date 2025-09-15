@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 60adc85286a12e81b3781800dd5d6fa2
+  docChecksum: 479a52111fec3db2812074b39b435d3f
   docVersion: 1.0.0
-  speakeasyVersion: 1.603.0
-  generationVersion: 2.681.1
-  releaseVersion: 0.3.0-alpha.1
-  configChecksum: 28874e88240934b6878a4c3b3e31e4c9
+  speakeasyVersion: 1.615.2
+  generationVersion: 2.698.4
+  releaseVersion: 0.3.0-alpha.2
+  configChecksum: 3133161de03981e4684a6e6d384f6441
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: chainkit
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
@@ -15,13 +15,13 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.20
+    core: 3.21.22
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
     examples: 2.82.3
-    globalSecurity: 2.82.13
+    globalSecurity: 2.82.14
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.5
@@ -157,9 +157,13 @@ generatedFiles:
   - docs/models/components/healthindicatorresultdtostatus.md
   - docs/models/components/historicalreward.md
   - docs/models/components/icmdestinationtransaction.md
+  - docs/models/components/icmmetric.md
+  - docs/models/components/icmmetricsapiresponse.md
+  - docs/models/components/icmmetricsvalue.md
   - docs/models/components/icmreceipt.md
   - docs/models/components/icmrewarddetails.md
   - docs/models/components/icmrewarddetailserctype.md
+  - docs/models/components/icmrollingwindowmetric.md
   - docs/models/components/icmsourcetransaction.md
   - docs/models/components/imageasset.md
   - docs/models/components/includechain.md
@@ -300,11 +304,8 @@ generatedFiles:
   - docs/models/components/subnetownershipinfo.md
   - docs/models/components/subnetrpctimeintervalgranularity.md
   - docs/models/components/subnetrpcusagemetricsresponsedto.md
-  - docs/models/components/teleporterchainmetricsapiresponse.md
   - docs/models/components/teleporterdestinationtransaction.md
   - docs/models/components/teleportermessageinfo.md
-  - docs/models/components/teleportermetric.md
-  - docs/models/components/teleportermetricsvalue.md
   - docs/models/components/teleporterreceipt.md
   - docs/models/components/teleporterrewarddetails.md
   - docs/models/components/teleporterrewarddetailserctype.md
@@ -431,6 +432,8 @@ generatedFiles:
   - docs/models/operations/getevmchainrollingwindowmetricsrequest.md
   - docs/models/operations/geticmmessagerequest.md
   - docs/models/operations/geticmmessageresponse.md
+  - docs/models/operations/geticmmetricsbychainrequest.md
+  - docs/models/operations/geticmrollingwindowmetricsbychainrequest.md
   - docs/models/operations/getlatestblocksglobals.md
   - docs/models/operations/getlatestblocksrequest.md
   - docs/models/operations/getlatestblocksresponse.md
@@ -460,8 +463,6 @@ generatedFiles:
   - docs/models/operations/getsubnetrpcusagemetricsrequest.md
   - docs/models/operations/getteleportermessagerequest.md
   - docs/models/operations/getteleportermessageresponse.md
-  - docs/models/operations/getteleportermetricsbychainglobals.md
-  - docs/models/operations/getteleportermetricsbychainrequest.md
   - docs/models/operations/gettokendetailsglobals.md
   - docs/models/operations/gettokendetailsrequest.md
   - docs/models/operations/gettokendetailsresponse.md
@@ -601,6 +602,7 @@ generatedFiles:
   - docs/sdks/addresses/README.md
   - docs/sdks/addresstransactions/README.md
   - docs/sdks/avalanche/README.md
+  - docs/sdks/avaxsupply/README.md
   - docs/sdks/contracts/README.md
   - docs/sdks/data/README.md
   - docs/sdks/evmblocks/README.md
@@ -632,6 +634,7 @@ generatedFiles:
   - examples/webhooksCreate.example.ts
   - package.json
   - src/core.ts
+  - src/funcs/avaxSupplyGet.ts
   - src/funcs/dataEvmAddressBalancesGetNative.ts
   - src/funcs/dataEvmAddressBalancesListCollectibles.ts
   - src/funcs/dataEvmAddressBalancesListErc1155.ts
@@ -704,9 +707,10 @@ generatedFiles:
   - src/funcs/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/funcs/dataUsageMetricsGetUsage.ts
   - src/funcs/metricsChainsGet.ts
+  - src/funcs/metricsChainsGetICMMetrics.ts
+  - src/funcs/metricsChainsGetICMRollingWindowMetrics.ts
   - src/funcs/metricsChainsGetMetrics.ts
   - src/funcs/metricsChainsGetRollingWindowMetrics.ts
-  - src/funcs/metricsChainsGetTeleporterMetrics.ts
   - src/funcs/metricsChainsList.ts
   - src/funcs/metricsChainsListBTCbBridgersAboveThreshold.ts
   - src/funcs/metricsChainsListNftHolders.ts
@@ -760,6 +764,7 @@ generatedFiles:
   - src/mcp-server/server.ts
   - src/mcp-server/shared.ts
   - src/mcp-server/tools.ts
+  - src/mcp-server/tools/avaxSupplyGet.ts
   - src/mcp-server/tools/dataEvmAddressBalancesGetNative.ts
   - src/mcp-server/tools/dataEvmAddressBalancesListCollectibles.ts
   - src/mcp-server/tools/dataEvmAddressBalancesListErc1155.ts
@@ -832,9 +837,10 @@ generatedFiles:
   - src/mcp-server/tools/dataUsageMetricsGetSubnetRpcUsage.ts
   - src/mcp-server/tools/dataUsageMetricsGetUsage.ts
   - src/mcp-server/tools/metricsChainsGet.ts
+  - src/mcp-server/tools/metricsChainsGetICMMetrics.ts
+  - src/mcp-server/tools/metricsChainsGetICMRollingWindowMetrics.ts
   - src/mcp-server/tools/metricsChainsGetMetrics.ts
   - src/mcp-server/tools/metricsChainsGetRollingWindowMetrics.ts
-  - src/mcp-server/tools/metricsChainsGetTeleporterMetrics.ts
   - src/mcp-server/tools/metricsChainsList.ts
   - src/mcp-server/tools/metricsChainsListBTCbBridgersAboveThreshold.ts
   - src/mcp-server/tools/metricsChainsListNftHolders.ts
@@ -937,8 +943,12 @@ generatedFiles:
   - src/models/components/healthindicatorresultdto.ts
   - src/models/components/historicalreward.ts
   - src/models/components/icmdestinationtransaction.ts
+  - src/models/components/icmmetric.ts
+  - src/models/components/icmmetricsapiresponse.ts
+  - src/models/components/icmmetricsvalue.ts
   - src/models/components/icmreceipt.ts
   - src/models/components/icmrewarddetails.ts
+  - src/models/components/icmrollingwindowmetric.ts
   - src/models/components/icmsourcetransaction.ts
   - src/models/components/imageasset.ts
   - src/models/components/index.ts
@@ -1063,11 +1073,8 @@ generatedFiles:
   - src/models/components/subnetownershipinfo.ts
   - src/models/components/subnetrpctimeintervalgranularity.ts
   - src/models/components/subnetrpcusagemetricsresponsedto.ts
-  - src/models/components/teleporterchainmetricsapiresponse.ts
   - src/models/components/teleporterdestinationtransaction.ts
   - src/models/components/teleportermessageinfo.ts
-  - src/models/components/teleportermetric.ts
-  - src/models/components/teleportermetricsvalue.ts
   - src/models/components/teleporterreceipt.ts
   - src/models/components/teleporterrewarddetails.ts
   - src/models/components/teleportersourcetransaction.ts
@@ -1140,6 +1147,7 @@ generatedFiles:
   - src/models/operations/getapilogs.ts
   - src/models/operations/getapiusagemetrics.ts
   - src/models/operations/getassetdetails.ts
+  - src/models/operations/getavaxsupply.ts
   - src/models/operations/getbalancesbyaddresses.ts
   - src/models/operations/getblock.ts
   - src/models/operations/getblockbyid.ts
@@ -1152,6 +1160,8 @@ generatedFiles:
   - src/models/operations/getevmchainmetrics.ts
   - src/models/operations/getevmchainrollingwindowmetrics.ts
   - src/models/operations/geticmmessage.ts
+  - src/models/operations/geticmmetricsbychain.ts
+  - src/models/operations/geticmrollingwindowmetricsbychain.ts
   - src/models/operations/getlatestblocks.ts
   - src/models/operations/getmetricsbynodeid.ts
   - src/models/operations/getmetricsbysubnetid.ts
@@ -1167,7 +1177,6 @@ generatedFiles:
   - src/models/operations/getsubnetbyid.ts
   - src/models/operations/getsubnetrpcusagemetrics.ts
   - src/models/operations/getteleportermessage.ts
-  - src/models/operations/getteleportermetricsbychain.ts
   - src/models/operations/gettokendetails.ts
   - src/models/operations/gettotall1validatormetrics.ts
   - src/models/operations/gettransaction.ts
@@ -1229,6 +1238,7 @@ generatedFiles:
   - src/sdk/addresscontracts.ts
   - src/sdk/addresses.ts
   - src/sdk/addresstransactions.ts
+  - src/sdk/avaxsupply.ts
   - src/sdk/contracts.ts
   - src/sdk/data.ts
   - src/sdk/evm.ts
@@ -6083,5 +6093,86 @@ examples:
           application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
         "503":
           application/json: {"message": [], "statusCode": 503, "error": "Service Unavailable"}
+  getICMMetricsByChain:
+    speakeasy-default-get-ICM-metrics-by-chain:
+      parameters:
+        path:
+          metric: "ICMSrcDestMsgCount"
+        query:
+          startTimestamp: 1689541049
+          endTimestamp: 1689800249
+          timeInterval: "day"
+          pageSize: 10
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"results": []}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": [], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": [], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getICMRollingWindowMetricsByChain:
+    speakeasy-default-get-ICM-rolling-window-metrics-by-chain:
+      parameters:
+        path:
+          metric: "ICMSrcRollingWindowMsgCount"
+        query:
+          network: "mainnet"
+      responses:
+        "200":
+          application/json: {"result": {"lastHour": 7520.96, "lastDay": 8824.98, "lastMonth": 2965.88, "lastYear": 8586.91, "allTime": 697.64}}
+        "400":
+          application/json: {"message": "<value>", "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": "<value>", "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": "<value>", "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
+  getAvaxSupply:
+    speakeasy-default-get-avax-supply:
+      responses:
+        "400":
+          application/json: {"message": ["<value 1>"], "statusCode": 400, "error": "Bad Request"}
+        "401":
+          application/json: {"message": "<value>", "statusCode": 401, "error": "Unauthorized"}
+        "403":
+          application/json: {"message": "<value>", "statusCode": 403, "error": "Forbidden"}
+        "404":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 404, "error": "Not Found"}
+        "429":
+          application/json: {"message": "<value>", "statusCode": 429, "error": "Too Many Requests"}
+        "500":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 500, "error": "Internal Server Error"}
+        "502":
+          application/json: {"message": ["<value 1>", "<value 2>", "<value 3>"], "statusCode": 502, "error": "Bad Gateway"}
+        "503":
+          application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: |
+  ## Typescript SDK Changes Detected:
+  * `avalanche.metrics.chains.getIcmMetrics()`: **Added**
+  * `avalanche.metrics.chains.getIcmRollingWindowMetrics()`: **Added**
+  * `avalanche.avaxSupply.get()`: **Added**
+  * `avalanche.metrics.chains.getTeleporterMetrics()`: **Deleted** **Breaking** :warning:

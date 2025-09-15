@@ -30,10 +30,10 @@ export class L1Validators extends ClientSDK {
   }
 
   /**
-   * Get metric values with given validation id and timestamp range
+   * Get metric values with given validationId and timestamp range
    *
    * @remarks
-   * Get given metric values for a given validation id with or without a timestamp range.
+   * Get given metric values for a given validationId with or without a timestamp range.
    */
   async getMetricsByValidationId(
     request: operations.GetMetricsByValidationIdRequest,
@@ -47,10 +47,10 @@ export class L1Validators extends ClientSDK {
   }
 
   /**
-   * Get metric values with given node id and timestamp range
+   * Get metric values with given nodeId and timestamp range
    *
    * @remarks
-   * Get given metric values for a given node id with or without a timestamp range.
+   * Get given metric values for a given nodeId with or without a timestamp range.
    */
   async getMetricsByNodeId(
     request: operations.GetMetricsByNodeIdRequest,
@@ -64,10 +64,10 @@ export class L1Validators extends ClientSDK {
   }
 
   /**
-   * Get metric values with given subnet ID and timestamp range
+   * Get metric values with given subnetId and timestamp range
    *
    * @remarks
-   * Get given metric values for a given subnet ID with or without a timestamp range.
+   * Get given metric values for a given subnetId with or without a timestamp range.
    */
   async getMetricsBySubnetId(
     request: operations.GetMetricsBySubnetIdRequest,
