@@ -3,6 +3,7 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { AVAXSupply } from "./avaxsupply.js";
 import { Data } from "./data.js";
 import { Metrics } from "./metrics.js";
 import { Webhooks } from "./webhooks.js";
@@ -21,5 +22,10 @@ export class Avalanche extends ClientSDK {
   private _webhooks?: Webhooks;
   get webhooks(): Webhooks {
     return (this._webhooks ??= new Webhooks(this._options));
+  }
+
+  private _avaxSupply?: AVAXSupply;
+  get avaxSupply(): AVAXSupply {
+    return (this._avaxSupply ??= new AVAXSupply(this._options));
   }
 }

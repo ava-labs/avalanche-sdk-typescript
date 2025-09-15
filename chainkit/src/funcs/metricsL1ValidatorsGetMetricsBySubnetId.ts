@@ -28,10 +28,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get metric values with given subnet ID and timestamp range
+ * Get metric values with given subnetId and timestamp range
  *
  * @remarks
- * Get given metric values for a given subnet ID with or without a timestamp range.
+ * Get given metric values for a given subnetId with or without a timestamp range.
  */
 export function metricsL1ValidatorsGetMetricsBySubnetId(
   client: AvalancheCore,

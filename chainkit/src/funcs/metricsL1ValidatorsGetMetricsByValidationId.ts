@@ -28,10 +28,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get metric values with given validation id and timestamp range
+ * Get metric values with given validationId and timestamp range
  *
  * @remarks
- * Get given metric values for a given validation id with or without a timestamp range.
+ * Get given metric values for a given validationId with or without a timestamp range.
  */
 export function metricsL1ValidatorsGetMetricsByValidationId(
   client: AvalancheCore,

@@ -14,9 +14,9 @@ export const tool$metricsL1ValidatorsGetMetricsBySubnetId: ToolDefinition<
   typeof args
 > = {
   name: "metrics-l1-validators-get-metrics-by-subnet-id",
-  description: `Get metric values with given subnet ID and timestamp range
+  description: `Get metric values with given subnetId and timestamp range
 
-Get given metric values for a given subnet ID with or without a timestamp range.`,
+Get given metric values for a given subnetId with or without a timestamp range.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await metricsL1ValidatorsGetMetricsBySubnetId(

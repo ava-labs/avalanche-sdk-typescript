@@ -16,7 +16,7 @@ import { Avalanche } from "@avalanche-sdk/chainkit";
 const avalanche = new Avalanche();
 
 async function main() {
-  const result = await avalanche.create({
+  const result = await avalanche.webhooks.create({
     eventType: "address_activity",
     url: "https://sophisticated-exterior.org/",
     chainId: "<id>",

@@ -16,12 +16,13 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0-alpha.1
+  version: 0.3.0-alpha.2
   additionalDependencies:
     dependencies:
       json-canonicalize: ^1.0.6
@@ -59,6 +60,7 @@ typescript:
   outputModelSuffix: output
   packageName: '@avalanche-sdk/chainkit'
   responseFormat: flat
+  sseFlatResponse: false
   templateVersion: v2
   usageSDKInitImports: []
   useIndexModules: true

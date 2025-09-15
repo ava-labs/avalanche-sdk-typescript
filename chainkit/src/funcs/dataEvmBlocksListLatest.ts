@@ -280,6 +280,9 @@ async function $do(
     if (typeof nextCursor !== "string") {
       return { next: () => null };
     }
+    if (nextCursor.trim() === "") {
+      return { next: () => null };
+    }
 
     const nextVal = () =>
       dataEvmBlocksListLatest(
