@@ -167,6 +167,19 @@ async function main() {
 main().catch(console.error);
 ```
 
+## ReactJS Examples
+
+We have also included few examples to integrate the `interchain` SDK with frontend libraries like ReactJS.
+Run the following commands to setup the React example repository. See examples [here](./examples/react-examples/)
+
+```bash
+cd examples/react-examples
+npm install
+npm run dev
+```
+
+Now visit the local website to interact with the ICM and ICTT examples. 
+
 ## Warp Message Parsing
 
 The SDK provides utilities for parsing and working with Warp messages, which are used for cross-chain communication in the Avalanche network. Warp messages are signed messages that can be verified across different chains.
