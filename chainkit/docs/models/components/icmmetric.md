@@ -11,5 +11,5 @@ let value: ICMMetric = "ICMSrcDestMsgCount";
 ## Values
 
 ```typescript
-"ICMSrcDestMsgCount" | "ICMSrcAggMsgCount" | "ICMDestAggMsgCount" | "ICMNetworkMsgCount"
+"ICMSrcDestMsgCount" | "ICMSrcAggMsgCount" | "ICMSrcMsgCount" | "ICMDestAggMsgCount" | "ICMDestMsgCount" | "ICMNetworkAggMsgCount" | "ICMNetworkMsgCount"
 ```

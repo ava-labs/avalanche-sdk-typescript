@@ -11,5 +11,5 @@ let value: ICMRollingWindowMetric = "ICMSrcRollingWindowMsgCount";
 ## Values
 
 ```typescript
-"ICMSrcRollingWindowMsgCount" | "ICMDestRollingWindowMsgCount" | "ICMSrcDestRollingWindowMsgCount" | "ICMNetworkRollingWindowMsgCount"
+"ICMSrcRollingWindowMsgCount" | "ICMDestRollingWindowMsgCount" | "ICMSrcDestRollingWindowMsgCount" | "ICMNetworkRollingWindowMsgCount" | "ICMSrcRollingWindowAggMsgCount" | "ICMDestRollingWindowAggMsgCount" | "ICMNetworkRollingWindowAggMsgCount"
 ```

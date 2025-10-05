@@ -15,6 +15,8 @@ export const ChainRollingWindowMetric = {
   AvgGasPrice: "avgGasPrice",
   MaxGasPrice: "maxGasPrice",
   FeesPaid: "feesPaid",
+  Contracts: "contracts",
+  Deployers: "deployers",
 } as const;
 export type ChainRollingWindowMetric = ClosedEnum<
   typeof ChainRollingWindowMetric

@@ -8,7 +8,10 @@ import { ClosedEnum } from "../../types/enums.js";
 export const ICMMetric = {
   ICMSrcDestMsgCount: "ICMSrcDestMsgCount",
   ICMSrcAggMsgCount: "ICMSrcAggMsgCount",
+  ICMSrcMsgCount: "ICMSrcMsgCount",
   ICMDestAggMsgCount: "ICMDestAggMsgCount",
+  ICMDestMsgCount: "ICMDestMsgCount",
+  ICMNetworkAggMsgCount: "ICMNetworkAggMsgCount",
   ICMNetworkMsgCount: "ICMNetworkMsgCount",
 } as const;
 export type ICMMetric = ClosedEnum<typeof ICMMetric>;
