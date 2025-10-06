@@ -119,7 +119,7 @@ export class TelemetryHooks
       return request;
     }
 
-    await this.captureEvent("SDK Request Started", {
+    await this.captureEvent("ChainKit SDK Request Started", {
       operation: hookCtx.operationID,
       server_url: hookCtx.options.serverURL ?? hookCtx.baseURL,
       retry_config: hookCtx.retryConfig,
@@ -138,7 +138,7 @@ export class TelemetryHooks
     if (hookCtx.options.enableTelemetry === false) {
       return response;
     }
-    await this.captureEvent("SDK Request Completed", {
+    await this.captureEvent("ChainKit SDK Request Completed", {
       operation: hookCtx.operationID,
       base_url: hookCtx.baseURL,
       retry_config: hookCtx.retryConfig,
@@ -161,7 +161,7 @@ export class TelemetryHooks
       return { response, error };
     }
 
-    await this.captureEvent("SDK Request Failed", {
+    await this.captureEvent("ChainKit SDK Request Failed", {
       operation: hookCtx.operationID,
       base_url: hookCtx.baseURL,
       retry_config: hookCtx.retryConfig,
