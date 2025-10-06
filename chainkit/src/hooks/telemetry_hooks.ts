@@ -9,7 +9,8 @@ import {
   BeforeRequestHook,
 } from "./types.js";
 
-const POSTHOG_API_KEY = "phc_Hg6a406Z76cNN7gtPNKXjkKIpq9uUxd9HOrf6m9d4ks";
+const POSTHOG_PUBLIC_API_KEY =
+  "phc_Hg6a406Z76cNN7gtPNKXjkKIpq9uUxd9HOrf6m9d4ks";
 const POSTHOG_CAPTURE_URL = "https://us.i.posthog.com/capture/";
 
 interface PostHogEvent {
@@ -89,7 +90,7 @@ export class TelemetryHooks
   ): Promise<void> {
     try {
       const payload: PostHogEvent = {
-        api_key: POSTHOG_API_KEY,
+        api_key: POSTHOG_PUBLIC_API_KEY,
         event,
         properties: {
           distinct_id: this.distinctId,
