@@ -10,6 +10,9 @@ export const ICMRollingWindowMetric = {
   ICMDestRollingWindowMsgCount: "ICMDestRollingWindowMsgCount",
   ICMSrcDestRollingWindowMsgCount: "ICMSrcDestRollingWindowMsgCount",
   ICMNetworkRollingWindowMsgCount: "ICMNetworkRollingWindowMsgCount",
+  ICMSrcRollingWindowAggMsgCount: "ICMSrcRollingWindowAggMsgCount",
+  ICMDestRollingWindowAggMsgCount: "ICMDestRollingWindowAggMsgCount",
+  ICMNetworkRollingWindowAggMsgCount: "ICMNetworkRollingWindowAggMsgCount",
 } as const;
 export type ICMRollingWindowMetric = ClosedEnum<typeof ICMRollingWindowMetric>;
 

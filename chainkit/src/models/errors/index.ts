@@ -3,6 +3,7 @@
  */
 
 export * from "./avalancheapierror.js";
+export * from "./avalancheerror.js";
 export * from "./badgatewayerror.js";
 export * from "./badrequesterror.js";
 export * from "./forbiddenerror.js";
