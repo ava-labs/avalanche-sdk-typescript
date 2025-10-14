@@ -96,7 +96,7 @@ export async function prepareImportTxn(
     fromAddressesBytes,
     utxos,
     getChainIdFromAlias(params.sourceChain, context.networkID),
-    BigInt(baseFeeInWei),
+    BigInt(baseFeeInWei)
   );
 
   return {

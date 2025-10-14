@@ -51,7 +51,17 @@ export function getTxFromBytes(
       manager.getDefaultCodec()
     );
     credentials.push(cred);
-    remainingBytes = rest;
+    // Ensure remainingBytes is a Uint8Array backed by ArrayBuffer (not SharedArrayBuffer)
+    if (rest.buffer instanceof ArrayBuffer) {
+      remainingBytes = new Uint8Array(
+        rest.buffer,
+        rest.byteOffset,
+        rest.length
+      );
+    } else {
+      // Fallback: copy bytes into new ArrayBuffer if not
+      remainingBytes = new Uint8Array(rest);
+    }
   }
   return [parsedTx, credentials];
 }
