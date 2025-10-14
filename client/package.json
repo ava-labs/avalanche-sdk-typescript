@@ -2,17 +2,23 @@
   "name": "@avalanche-sdk/client",
   "scripts": {
     "update-version": "node scripts/update-version.js",
-    "build": "rm -rf dist && rm -f .tsbuildinfo && npx tsc",
+    "clean": "rm -rf dist src/_cjs src/_esm src/_types .tsbuildinfo",
+    "build:all": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types && npm run build:webpack",
+    "build:cjs": "tsc --project ./tsconfig.cjs.json --noEmitOnError false && printf '{\"type\":\"commonjs\"}' > ./dist/_cjs/package.json",
+    "build:esm": "tsc --project ./tsconfig.esm.json --noEmitOnError false && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./dist/_esm/package.json",
+    "build:types": "npx tsc --project ./tsconfig.esm.json --declarationDir ./dist/_types --emitDeclarationOnly --declaration --declarationMap",
+    "build:webpack": "npx webpack --config webpack.config.cjs",
     "generate-docs": "typedoc",
     "generate-docs:markdown": "typedoc --theme markdown --out docs-markdown",
     "generate-docs:json": "typedoc --json docs.json",
-    "build:webpack": "npx webpack --config webpack.config.cjs",
-    "build:all": "npm run build && npm run build:webpack",
     "lint": "eslint --cache --max-warnings=0 src",
     "test": "vitest"
   },
   "files": [
     "dist",
+    "dist/_cjs",
+    "dist/_esm",
+    "dist/_types",
     "src"
   ],
   "author": "Sayan Kar",
@@ -40,7 +46,7 @@
   "dependencies": {
     "@avalabs/avalanchejs": "^5.0.0",
     "@noble/hashes": "1.3.3",
-    "@noble/secp256k1": "^3.0.0",
+    "@noble/secp256k1": "2.0.0",
     "util": "^0.12.5",
     "viem": "^2.33.3"
   },
@@ -77,123 +83,148 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "types": "./dist/_types/index.d.ts",
+      "import": "./dist/_esm/index.js",
+      "require": "./dist/_cjs/index.js"
     },
     "./package.json": "./package.json",
     "./accounts": {
-      "types": "./dist/accounts/index.d.ts",
-      "import": "./dist/accounts/index.js",
-      "require": "./dist/accounts/index.js"
+      "types": "./dist/_types/accounts/index.d.ts",
+      "import": "./dist/_esm/accounts/index.js",
+      "require": "./dist/_cjs/accounts/index.js"
     },
     "./chains": {
-      "types": "./dist/chains/index.d.ts",
-      "import": "./dist/chains/index.js",
-      "require": "./dist/chains/index.js"
+      "types": "./dist/_types/chains/index.d.ts",
+      "import": "./dist/_esm/chains/index.js",
+      "require": "./dist/_cjs/chains/index.js"
     },
     "./methods": {
-      "types": "./dist/methods/index.d.ts",
-      "import": "./dist/methods/index.js",
-      "require": "./dist/methods/index.js"
+      "types": "./dist/_types/methods/index.d.ts",
+      "import": "./dist/_esm/methods/index.js",
+      "require": "./dist/_cjs/methods/index.js"
     },
     "./methods/wallet": {
-      "types": "./dist/methods/wallet/index.d.ts",
-      "import": "./dist/methods/wallet/index.js",
-      "require": "./dist/methods/wallet/index.js"
+      "types": "./dist/_types/methods/wallet/index.d.ts",
+      "import": "./dist/_esm/methods/wallet/index.js",
+      "require": "./dist/_cjs/methods/wallet/index.js"
     },
     "./methods/wallet/cChain": {
-      "types": "./dist/methods/wallet/cChain/index.d.ts",
-      "import": "./dist/methods/wallet/cChain/index.js",
-      "require": "./dist/methods/wallet/cChain/index.js"
+      "types": "./dist/_types/methods/wallet/cChain/index.d.ts",
+      "import": "./dist/_esm/methods/wallet/cChain/index.js",
+      "require": "./dist/_cjs/methods/wallet/cChain/index.js"
     },
     "./methods/wallet/pChain": {
-      "types": "./dist/methods/wallet/pChain/index.d.ts",
-      "import": "./dist/methods/wallet/pChain/index.js",
-      "require": "./dist/methods/wallet/pChain/index.js"
+      "types": "./dist/_types/methods/wallet/pChain/index.d.ts",
+      "import": "./dist/_esm/methods/wallet/pChain/index.js",
+      "require": "./dist/_cjs/methods/wallet/pChain/index.js"
     },
     "./methods/wallet/xChain": {
-      "types": "./dist/methods/wallet/xChain/index.d.ts",
-      "import": "./dist/methods/wallet/xChain/index.js",
-      "require": "./dist/methods/wallet/xChain/index.js"
+      "types": "./dist/_types/methods/wallet/xChain/index.d.ts",
+      "import": "./dist/_esm/methods/wallet/xChain/index.js",
+      "require": "./dist/_cjs/methods/wallet/xChain/index.js"
     },
     "./methods/public": {
-      "types": "./dist/methods/public/index.d.ts",
-      "import": "./dist/methods/public/index.js",
-      "require": "./dist/methods/public/index.js"
+      "types": "./dist/_types/methods/public/index.d.ts",
+      "import": "./dist/_esm/methods/public/index.js",
+      "require": "./dist/_cjs/methods/public/index.js"
     },
     "./methods/pChain": {
-      "types": "./dist/methods/pChain/index.d.ts",
-      "import": "./dist/methods/pChain/index.js",
-      "require": "./dist/methods/pChain/index.js"
+      "types": "./dist/_types/methods/pChain/index.d.ts",
+      "import": "./dist/_esm/methods/pChain/index.js",
+      "require": "./dist/_cjs/methods/pChain/index.js"
     },
     "./methods/admin": {
-      "types": "./dist/methods/admin/index.d.ts",
-      "import": "./dist/methods/admin/index.js",
-      "require": "./dist/methods/admin/index.js"
+      "types": "./dist/_types/methods/admin/index.d.ts",
+      "import": "./dist/_esm/methods/admin/index.js",
+      "require": "./dist/_cjs/methods/admin/index.js"
     },
     "./methods/cChain": {
-      "types": "./dist/methods/cChain/index.d.ts",
-      "import": "./dist/methods/cChain/index.js",
-      "require": "./dist/methods/cChain/index.js"
+      "types": "./dist/_types/methods/cChain/index.d.ts",
+      "import": "./dist/_esm/methods/cChain/index.js",
+      "require": "./dist/_cjs/methods/cChain/index.js"
     },
     "./methods/xChain": {
-      "types": "./dist/methods/xChain/index.d.ts",
-      "import": "./dist/methods/xChain/index.js",
-      "require": "./dist/methods/xChain/index.js"
+      "types": "./dist/_types/methods/xChain/index.d.ts",
+      "import": "./dist/_esm/methods/xChain/index.js",
+      "require": "./dist/_cjs/methods/xChain/index.js"
     },
     "./methods/health": {
-      "types": "./dist/methods/health/index.d.ts",
-      "import": "./dist/methods/health/index.js",
-      "require": "./dist/methods/health/index.js"
+      "types": "./dist/_types/methods/health/index.d.ts",
+      "import": "./dist/_esm/methods/health/index.js",
+      "require": "./dist/_cjs/methods/health/index.js"
     },
     "./methods/index": {
-      "types": "./dist/methods/index/index.d.ts",
-      "import": "./dist/methods/index/index.js",
-      "require": "./dist/methods/index/index.js"
+      "types": "./dist/_types/methods/index/index.d.ts",
+      "import": "./dist/_esm/methods/index/index.js",
+      "require": "./dist/_cjs/methods/index/index.js"
     },
     "./methods/info": {
-      "types": "./dist/methods/info/index.d.ts",
-      "import": "./dist/methods/info/index.js",
-      "require": "./dist/methods/info/index.js"
+      "types": "./dist/_types/methods/info/index.d.ts",
+      "import": "./dist/_esm/methods/info/index.js",
+      "require": "./dist/_cjs/methods/info/index.js"
     },
     "./node": {
-      "types": "./dist/node/index.d.ts",
-      "import": "./dist/node/index.js",
-      "require": "./dist/node/index.js"
+      "types": "./dist/_types/node/index.d.ts",
+      "import": "./dist/_esm/node/index.js",
+      "require": "./dist/_cjs/node/index.js"
     },
     "./nonce": {
-      "types": "./dist/nonce/index.d.ts",
-      "import": "./dist/nonce/index.js",
-      "require": "./dist/nonce/index.js"
+      "types": "./dist/_types/nonce/index.d.ts",
+      "import": "./dist/_esm/nonce/index.js",
+      "require": "./dist/_cjs/nonce/index.js"
     },
     "./serializable": {
-      "types": "./dist/serializable/index.d.ts",
-      "import": "./dist/serializable/index.js",
-      "require": "./dist/serializable/index.js"
+      "types": "./dist/_types/serializable/index.d.ts",
+      "import": "./dist/_esm/serializable/index.js",
+      "require": "./dist/_cjs/serializable/index.js"
     },
     "./siwe": {
-      "types": "./dist/siwe/index.d.ts",
-      "import": "./dist/siwe/index.js",
-      "require": "./dist/siwe/index.js"
+      "types": "./dist/_types/siwe/index.d.ts",
+      "import": "./dist/_esm/siwe/index.js",
+      "require": "./dist/_cjs/siwe/index.js"
     },
     "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.js"
+      "types": "./dist/_types/utils/index.d.ts",
+      "import": "./dist/_esm/utils/index.js",
+      "require": "./dist/_cjs/utils/index.js"
     },
     "./window": {
-      "types": "./dist/window/index.d.ts",
-      "import": "./dist/window/index.js",
-      "require": "./dist/window/index.js"
+      "types": "./dist/_types/window/index.d.ts",
+      "import": "./dist/_esm/window/index.js",
+      "require": "./dist/_cjs/window/index.js"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.js",
+  "main": "./dist/_cjs/index.js",
+  "types": "./dist/_types/index.d.ts",
+  "module": "./dist/_esm/index.js",
   "type": "module",
   "engines": {
     "node": ">=20",
     "npm": ">=10"
+  },
+  "typesVersions": {
+    "*": {
+      "utils": ["./dist/_types/utils/index.d.ts"],
+      "accounts": ["./dist/_types/accounts/index.d.ts"],
+      "chains": ["./dist/_types/chains/index.d.ts"],
+      "methods": ["./dist/_types/methods/index.d.ts"],
+      "methods/wallet": ["./dist/_types/methods/wallet/index.d.ts"],
+      "methods/wallet/cChain": ["./dist/_types/methods/wallet/cChain/index.d.ts"],
+      "methods/wallet/pChain": ["./dist/_types/methods/wallet/pChain/index.d.ts"],
+      "methods/wallet/xChain": ["./dist/_types/methods/wallet/xChain/index.d.ts"],
+      "methods/public": ["./dist/_types/methods/public/index.d.ts"],
+      "methods/pChain": ["./dist/_types/methods/pChain/index.d.ts"],
+      "methods/admin": ["./dist/_types/methods/admin/index.d.ts"],
+      "methods/cChain": ["./dist/_types/methods/cChain/index.d.ts"],
+      "methods/xChain": ["./dist/_types/methods/xChain/index.d.ts"],
+      "methods/health": ["./dist/_types/methods/health/index.d.ts"],
+      "methods/index": ["./dist/_types/methods/index/index.d.ts"],
+      "methods/info": ["./dist/_types/methods/info/index.d.ts"],
+      "node": ["./dist/_types/node/index.d.ts"],
+      "nonce": ["./dist/_types/nonce/index.d.ts"],
+      "serializable": ["./dist/_types/serializable/index.d.ts"],
+      "siwe": ["./dist/_types/siwe/index.d.ts"],
+      "window": ["./dist/_types/window/index.d.ts"]
+    }
   }
 }
