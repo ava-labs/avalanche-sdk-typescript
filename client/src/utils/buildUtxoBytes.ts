@@ -43,7 +43,7 @@ export function buildUtxoBytes(
     addresses: string[],
     locktime: string,
     threshold: number
-) {
+): `0x${string}` {
     const transferOutput = new TransferOutput(
         new BigIntPr(BigInt(amount)),
         OutputOwners.fromNative(
@@ -75,5 +75,5 @@ export function buildUtxoBytes(
                 utxo.toBytes(utils.getManagerForVM("PVM").getDefaultCodec()) // default codec for all chains
             )
         )
-    );
+    ) as `0x${string}`;
 }
