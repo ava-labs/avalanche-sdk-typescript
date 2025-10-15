@@ -104,7 +104,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "data-health-check",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 

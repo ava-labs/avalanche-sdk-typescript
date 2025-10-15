@@ -163,7 +163,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "listPrimaryNetworkBlocksByNodeId",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 

@@ -63,6 +63,17 @@ export const startCommand = buildCommand({
           return components.GlobalParamNetwork$inboundSchema.parse(value);
         },
       },
+      "enable-telemetry": {
+        kind: "parsed",
+        brief:
+          "Allows setting the enableTelemetry parameter for all supported operations",
+        optional: true,
+        parse: (value) => {
+          return z.enum(["true", "false"]).transform(v => v === "true").parse(
+            value,
+          );
+        },
+      },
       "server-url": {
         kind: "parsed",
         brief: "Overrides the default server URL used by the SDK",

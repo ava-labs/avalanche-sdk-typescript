@@ -42,6 +42,10 @@ export type Utxo = {
    */
   utxoId: string;
   /**
+   * The bytes of the UTXO
+   */
+  utxoBytes?: string | undefined;
+  /**
    * Unix timestamp in seconds at which this output was consumed.
    */
   consumingTxTimestamp?: number | undefined;
@@ -92,6 +96,7 @@ export const Utxo$inboundSchema: z.ZodType<Utxo, z.ZodTypeDef, unknown> = z
     consumingTxHash: z.string().optional(),
     createdOnChainId: z.string(),
     utxoId: z.string(),
+    utxoBytes: z.string().optional(),
     consumingTxTimestamp: z.number().optional(),
     creationTxHash: z.string(),
     credentials: z.array(UtxoCredential$inboundSchema).optional(),
@@ -112,6 +117,7 @@ export type Utxo$Outbound = {
   consumingTxHash?: string | undefined;
   createdOnChainId: string;
   utxoId: string;
+  utxoBytes?: string | undefined;
   consumingTxTimestamp?: number | undefined;
   creationTxHash: string;
   credentials?: Array<UtxoCredential$Outbound> | undefined;
@@ -133,6 +139,7 @@ export const Utxo$outboundSchema: z.ZodType<Utxo$Outbound, z.ZodTypeDef, Utxo> =
     consumingTxHash: z.string().optional(),
     createdOnChainId: z.string(),
     utxoId: z.string(),
+    utxoBytes: z.string().optional(),
     consumingTxTimestamp: z.number().optional(),
     creationTxHash: z.string(),
     credentials: z.array(UtxoCredential$outboundSchema).optional(),

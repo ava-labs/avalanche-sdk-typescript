@@ -129,7 +129,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "deactivateWebhook",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 

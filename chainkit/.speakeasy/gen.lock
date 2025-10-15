@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 3386adb8fc02033c5c7a66a83e459def
+  docChecksum: 81cffdc8941b35933421a5c08e94c170
   docVersion: 1.0.0
-  speakeasyVersion: 1.634.2
-  generationVersion: 2.721.3
-  releaseVersion: 0.3.0-alpha.3
-  configChecksum: ef9b3a4b4a3677200c1fb51438254e60
+  speakeasyVersion: 1.636.3
+  generationVersion: 2.723.11
+  releaseVersion: 0.3.0-alpha.4
+  configChecksum: be37ab38f7da5b79e1520e67f22005c6
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: chainkit
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
@@ -26,7 +26,7 @@ features:
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.5
     globals: 2.82.2
-    groups: 2.81.2
+    groups: 2.81.3
     ignores: 2.81.1
     mcpServer: 0.9.3
     methodServerURLs: 2.82.1
@@ -601,7 +601,6 @@ generatedFiles:
   - docs/sdks/addresscontracts/README.md
   - docs/sdks/addresses/README.md
   - docs/sdks/addresstransactions/README.md
-  - docs/sdks/avalanche/README.md
   - docs/sdks/avaxsupply/README.md
   - docs/sdks/contracts/README.md
   - docs/sdks/data/README.md
@@ -6170,4 +6169,10 @@ examples:
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Typescript SDK Changes Detected:\n* `avalanche.metrics.chains.getMetrics()`: \n  *  `request.metric` **Changed**\n* `avalanche.metrics.chains.getRollingWindowMetrics()`: \n  *  `request.metric` **Changed**\n* `avalanche.metrics.chains.getIcmMetrics()`: \n  *  `request.metric` **Changed**\n* `avalanche.metrics.chains.getIcmRollingWindowMetrics()`: \n  *  `request.metric` **Changed**\n"
+releaseNotes: |
+  ## Typescript SDK Changes Detected:
+  * `avalanche.data.primaryNetwork.transactions.get()`:  `response` **Changed**
+  * `avalanche.data.primaryNetwork.transactions.listLatest()`:  `response` **Changed**
+  * `avalanche.data.primaryNetwork.transactions.listActiveStakingTransactions()`:  `response.transactions.[].consumedUtxos.[].utxoBytes` **Added**
+  * `avalanche.data.primaryNetwork.transactions.listAssetTransactions()`:  `response.transactions.[].[xChainNonLinearTransaction].consumedUtxos.[].utxoBytes` **Added**
+  * `avalanche.data.primaryNetwork.utxos.listByAddresses()`:  `response` **Changed**
