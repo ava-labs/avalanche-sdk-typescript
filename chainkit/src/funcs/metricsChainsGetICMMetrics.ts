@@ -37,11 +37,17 @@ import { Result } from "../types/fp.js";
  *
  * <ins>ICMSrcDestMsgCount</ins>: The number of ICM messages sent from the source blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
  *
- * <ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
+ * <ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to each destination blockchain within the requested timeInterval starting at the timestamp.
  *
- * <ins>ICMDestMsgCount</ins>: The number of ICM messages received from any blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+ * <ins>ICMSrcAggMsgCount</ins>: The number of ICM messages sent from the source blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
  *
- * <ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain to any destination blockchain within the requested timeInterval starting at the timestamp.
+ * <ins>ICMDestMsgCount</ins>: The number of ICM messages received from each blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>ICMDestAggMsgCount</ins>: The number of ICM messages received from any blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
+ *
+ * <ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain on the provided network.
+ *
+ * <ins>ICMNetworkAggMsgCount</ins>: The number of ICM messages sent on the  provided network.
  */
 export function metricsChainsGetICMMetrics(
   client: AvalancheCore,

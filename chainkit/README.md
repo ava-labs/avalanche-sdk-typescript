@@ -65,10 +65,7 @@ bun add @avalanche-sdk/chainkit
 ### Yarn
 
 ```bash
-yarn add @avalanche-sdk/chainkit zod
-
-# Note that Yarn does not install peer dependencies automatically. You will need
-# to install zod as shown above.
+yarn add @avalanche-sdk/chainkit
 ```
 
 > [!NOTE]
@@ -879,7 +876,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Avalanche({ httpClient });
+const sdk = new Avalanche({ httpClient: httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 

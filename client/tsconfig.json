@@ -39,5 +39,5 @@
     "moduleDetection": "force"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/", "dist", "**/*.test.ts"]
+  "exclude": ["node_modules/", "dist", "**/*.test.ts", "node_modules/viem/**/*"]
 }

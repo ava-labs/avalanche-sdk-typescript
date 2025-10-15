@@ -32,6 +32,10 @@ All metrics are updated several times every hour. Each metric data point has a \
 
 <ins>cumulativeDeployers</ins>: The cumulative count of unique contract deployers from genesis up until 24 hours after the timestamp. Deployers counted are those that appear in the “from” field of transaction traces with the CREATE, CREATE2, and CREATE3 call types. Only \`timeInterval=day\` supported.
 
+<ins>contracts</ins>: The count of contracts created within the requested timeInterval starting at the timestamp. Contracts are counted by looking for the CREATE, CREATE2, and CREATE3 call types in all transaction traces (aka internal transactions). Only \`timeInterval=day\` supported.
+
+<ins>deployers</ins>: The count of unique deployers within the requested timeInterval starting at the timestamp. Deployers counted are those that appear in the “from” field of transaction traces with the CREATE, CREATE2, and CREATE3 call types. Only \`timeInterval=day\` supported.
+
 <ins>gasUsed</ins>: The amount of gas used by transactions within the requested timeInterval starting at the timestamp.
 
 <ins>txCount</ins>: The amount of transactions within the requested timeInterval starting at the timestamp.

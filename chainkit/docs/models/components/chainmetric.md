@@ -11,5 +11,5 @@ let value: ChainMetric = "activeAddresses";
 ## Values
 
 ```typescript
-"activeAddresses" | "activeSenders" | "cumulativeTxCount" | "cumulativeAddresses" | "cumulativeContracts" | "cumulativeDeployers" | "gasUsed" | "txCount" | "avgGps" | "maxGps" | "avgTps" | "maxTps" | "avgGasPrice" | "maxGasPrice" | "feesPaid"
+"activeAddresses" | "activeSenders" | "cumulativeTxCount" | "cumulativeAddresses" | "cumulativeContracts" | "cumulativeDeployers" | "contracts" | "deployers" | "gasUsed" | "txCount" | "avgGps" | "maxGps" | "avgTps" | "maxTps" | "avgGasPrice" | "maxGasPrice" | "feesPaid"
 ```

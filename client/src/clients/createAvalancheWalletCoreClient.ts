@@ -144,6 +144,6 @@ export function createAvalancheWalletCoreClient<
   >;
 
   return Object.assign(walletCoreClient, {
-    extend: extend(walletCoreClient as any),
+    extend: extend(walletCoreClient),
   });
 }

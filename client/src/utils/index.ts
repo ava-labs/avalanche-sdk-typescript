@@ -9,6 +9,7 @@ export {
   getUtxosForAddress,
   type GetUtxosForAddressParams,
 } from "./getUtxosForAddress.js";
+export { buildUtxoBytes } from "./buildUtxoBytes.js";
 
 export {
   /** @deprecated Use `ccipRequest`. */

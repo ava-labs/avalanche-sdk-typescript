@@ -12,6 +12,8 @@ export const ChainMetric = {
   CumulativeAddresses: "cumulativeAddresses",
   CumulativeContracts: "cumulativeContracts",
   CumulativeDeployers: "cumulativeDeployers",
+  Contracts: "contracts",
+  Deployers: "deployers",
   GasUsed: "gasUsed",
   TxCount: "txCount",
   AvgGps: "avgGps",

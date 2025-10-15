@@ -2,8 +2,9 @@
 /index.*
 /core.*
 /bin
-/cjs
-/esm
+dist/_cjs
+dist/_esm
+dist/_types
 /dist
 /.tsbuildinfo
 /.eslintcache

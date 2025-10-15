@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/_cjs",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "types": ["node"],
+    "target": "ES2020",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    // Relaxed settings for CJS compatibility
+    "strict": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": false,
+    "useUnknownInCatchVariables": false,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitReturns": false,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src",
+    "baseUrl": ".",
+    "moduleDetection": "force",
+    "strictNullChecks": true,
+    "emitDeclarationOnly": false,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "allowJs": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "node_modules/viem/**/*"]
+}
