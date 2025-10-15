@@ -84,16 +84,17 @@ export class TelemetryHooks
     return "unknown";
   }
 
-  private async captureEvent(
-    event: string,
-    properties: Record<string, any> = {}
-  ): Promise<void> {
+  private captureEvent(event: string, properties: Record<string, any> = {}) {
     try {
       const payload: PostHogEvent = {
         api_key: POSTHOG_PUBLIC_API_KEY,
         event,
         properties: {
           distinct_id: this.distinctId,
+          user_agent: this.getUserAgent(),
+          platform: this.getPlatform(),
+          environment: this.getEnvironment(),
+          sdk_version: SDK_METADATA.sdkVersion,
           ...properties,
         },
         timestamp: new Date().toISOString(),
@@ -124,10 +125,6 @@ export class TelemetryHooks
       operation: hookCtx.operationID,
       server_url: hookCtx.options.serverURL ?? hookCtx.baseURL,
       retry_config: hookCtx.retryConfig,
-      user_agent: this.getUserAgent(),
-      platform: this.getPlatform(),
-      environment: this.getEnvironment(),
-      sdk_version: SDK_METADATA.sdkVersion,
     });
     return request;
   }
@@ -145,10 +142,6 @@ export class TelemetryHooks
       retry_config: hookCtx.retryConfig,
       response_status: response.status,
       response_status_text: response.statusText,
-      user_agent: this.getUserAgent(),
-      platform: this.getPlatform(),
-      environment: this.getEnvironment(),
-      sdk_version: SDK_METADATA.sdkVersion,
     });
     return response;
   }
@@ -171,10 +164,6 @@ export class TelemetryHooks
       error_type:
         error instanceof Error ? error.constructor.name : typeof error,
       error_message: error instanceof Error ? error.message : String(error),
-      user_agent: this.getUserAgent(),
-      platform: this.getPlatform(),
-      environment: this.getEnvironment(),
-      sdk_version: SDK_METADATA.sdkVersion,
     });
     return { response, error };
   }
