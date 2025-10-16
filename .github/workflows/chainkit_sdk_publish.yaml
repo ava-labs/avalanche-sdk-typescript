@@ -50,16 +50,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "20"
           registry-url: "https://registry.npmjs.org"
-          always-auth: true
-          scope: "@avalanche-sdk"
 
       - name: Install dependencies
         run: npm install --ignore-scripts
 
       - name: Install bun
         run: npm rebuild bun
+
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Publish package
         run: |
