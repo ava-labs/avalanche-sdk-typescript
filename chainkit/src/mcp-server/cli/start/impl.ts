@@ -20,6 +20,7 @@ interface StartCommandFlags {
   readonly "api-key"?: string | undefined;
   readonly "chain-id"?: SDKOptions["chainId"] | undefined;
   readonly network?: SDKOptions["network"] | undefined;
+  readonly "enable-telemetry"?: SDKOptions["enableTelemetry"] | undefined;
   readonly "server-url"?: string;
   readonly "server-index"?: SDKOptions["serverIdx"];
   readonly "log-level": ConsoleLoggerLevel;
@@ -52,6 +53,7 @@ async function startStdio(flags: StartCommandFlags) {
     ...{ apiKey: flags["api-key"] ?? "" },
     chainId: flags["chain-id"],
     network: flags.network,
+    enableTelemetry: flags["enable-telemetry"],
     serverURL: flags["server-url"],
     serverIdx: flags["server-index"],
   });
@@ -74,6 +76,7 @@ async function startSSE(flags: StartCommandFlags) {
     ...{ apiKey: flags["api-key"] ?? "" },
     chainId: flags["chain-id"],
     network: flags.network,
+    enableTelemetry: flags["enable-telemetry"],
     serverURL: flags["server-url"],
     serverIdx: flags["server-index"],
   });

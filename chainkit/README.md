@@ -95,7 +95,8 @@ Add the following server definition to your `claude_desktop_config.json` file:
         "mcp", "start",
         "--api-key", "...",
         "--chain-id", "...",
-        "--network", "..."
+        "--network", "...",
+        "--enable-telemetry", "..."
       ]
     }
   }
@@ -120,7 +121,8 @@ Create a `.cursor/mcp.json` file in your project root with the following content
         "mcp", "start",
         "--api-key", "...",
         "--chain-id", "...",
-        "--network", "..."
+        "--network", "...",
+        "--enable-telemetry", "..."
       ]
     }
   }
@@ -234,7 +236,6 @@ run();
 
 <details open>
 <summary>Available methods</summary>
-
 
 ### [avaxSupply](docs/sdks/avaxsupply/README.md)
 
@@ -584,10 +585,11 @@ For example, you can set `chainId` to `"43114"` at SDK initialization and then y
 
 The following global parameters are available.
 
-| Name    | Type                          | Description                                              |
-| ------- | ----------------------------- | -------------------------------------------------------- |
-| chainId | string                        | A supported EVM chain id, chain alias, or blockchain id. |
-| network | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
+| Name            | Type                          | Description                                              |
+| --------------- | ----------------------------- | -------------------------------------------------------- |
+| chainId         | string                        | A supported EVM chain id, chain alias, or blockchain id. |
+| network         | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
+| enableTelemetry | boolean                       | A flag to enable or disable telemetry                    |
 
 ### Example
 
@@ -597,6 +599,7 @@ import { Avalanche } from "@avalanche-sdk/chainkit";
 const avalanche = new Avalanche({
   chainId: "43114",
   network: "mainnet",
+  enableTelemetry: false,
 });
 
 async function run() {

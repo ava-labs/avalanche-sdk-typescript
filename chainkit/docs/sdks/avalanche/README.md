@@ -1,7 +1,0 @@
-# Avalanche SDK
-
-## Overview
-
-Data, Metrics, and Webhooks API: The Avalanche API suite offers powerful tools for real-time and historical blockchain data. The Webhooks API enables instant monitoring of on-chain events, including smart contract activity, NFT transfers, and wallet transactions, with customizable filters and secure notifications. The Metrics API (Beta) provides analytics on blockchain activity, while the Data API (Beta) delivers multi-chain data for Avalanche and Ethereum, including transaction history, token balances, and metadata. These APIs empower developers to build dynamic web3 applications with real-time insights and seamless integration.
-
-### Available Operations
