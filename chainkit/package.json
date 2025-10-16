@@ -1,12 +1,12 @@
 {
   "name": "@avalanche-sdk/chainkit",
-  "version": "0.3.0-alpha.4",
+  "version": "0.3.0-alpha.5",
   "author": "Sayan Kar",
   "license": "BSD-3-Clause",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "bin": {
     "mcp": "bin/mcp-server.js"
   },
