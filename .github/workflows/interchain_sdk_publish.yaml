@@ -5,6 +5,10 @@ on:
     tags:
       - "interchain/v*"
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish:
     name: Publish to npm
@@ -47,5 +51,3 @@ jobs:
         run: |
           cd interchain
           npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
