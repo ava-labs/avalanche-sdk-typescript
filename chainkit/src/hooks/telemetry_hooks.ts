@@ -1,4 +1,3 @@
-import { uuid } from "zod/v4";
 import { SDK_METADATA } from "../lib/config.js";
 import {
   AfterErrorContext,
@@ -28,7 +27,7 @@ export class TelemetryHooks
 {
   private distinctId: string;
   constructor() {
-    this.distinctId = uuid().toString();
+    this.distinctId = crypto.randomUUID();
   }
 
   private getUserAgent(): string {
