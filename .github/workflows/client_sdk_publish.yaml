@@ -54,6 +54,9 @@ jobs:
           npm install
           npm run build:all --if-present
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Publish package
         run: |
           cd client
