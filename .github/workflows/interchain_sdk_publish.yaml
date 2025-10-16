@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "interchain/v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g., 1.0.0)"
+        required: true
+        type: string
 
 permissions:
   id-token: write
@@ -24,11 +30,15 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Set version from tag
+      - name: Set version
         id: set_version
         run: |
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG_NAME#interchain/v}
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG_NAME#interchain/v}
+          fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Update package.json version
@@ -53,4 +63,15 @@ jobs:
       - name: Publish package
         run: |
           cd interchain
-          npm publish --access public
+          VERSION=${{ steps.set_version.outputs.version }}
+          echo "Detected version: $VERSION"
+
+          if [[ "$VERSION" == *"-"* ]]; then
+            PRERELEASE=${VERSION#*-}
+            TAG=${PRERELEASE%%.*}
+            echo "Prerelease detected; publishing under dist-tag: $TAG"
+            npm publish --tag "$TAG" --access public
+          else
+            echo "Official release detected; publishing under 'latest'"
+            npm publish --access public
+          fi

@@ -60,4 +60,15 @@ jobs:
       - name: Publish package
         run: |
           cd client
-          npm publish --access public
+          VERSION=${{ steps.set_version.outputs.version }}
+          echo "Detected version: $VERSION"
+
+          if [[ "$VERSION" == *"-"* ]]; then
+            PRERELEASE=${VERSION#*-}
+            TAG=${PRERELEASE%%.*}
+            echo "Prerelease detected; publishing under dist-tag: $TAG"
+            npm publish --tag "$TAG" --access public
+          else
+            echo "Official release detected; publishing under 'latest'"
+            npm publish --access public
+          fi
