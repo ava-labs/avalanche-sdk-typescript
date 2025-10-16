@@ -4,6 +4,9 @@
   "author": "Sayan Kar",
   "license": "BSD-3-Clause",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "mcp": "bin/mcp-server.js"
   },

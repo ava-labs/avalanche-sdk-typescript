@@ -35,6 +35,8 @@ typescript:
   additionalPackageJSON:
     author: Sayan Kar
     license: BSD-3-Clause
+    publishConfig:
+      access: public
   author: Speakeasy
   baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
