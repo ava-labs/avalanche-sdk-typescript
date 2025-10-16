@@ -52,7 +52,7 @@ Based on:
 ### Releases
 - [NPM v0.3.0-alpha.3] https://www.npmjs.com/package/@avalanche-sdk/chainkit/v/0.3.0-alpha.3 - chainkit
 
-## 2025-10-16 19:21:30
+## 2025-10-16 20:09:30
 ### Changes
 Based on:
 - OpenAPI Doc  
