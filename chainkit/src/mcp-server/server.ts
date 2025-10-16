@@ -120,17 +120,19 @@ export function createMCPServer(deps: {
   apiKey?: SDKOptions["apiKey"] | undefined;
   chainId?: SDKOptions["chainId"] | undefined;
   network?: SDKOptions["network"] | undefined;
+  enableTelemetry?: SDKOptions["enableTelemetry"] | undefined;
   serverIdx?: SDKOptions["serverIdx"] | undefined;
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.3",
+    version: "0.3.0-alpha.4",
   });
 
   const client = new AvalancheCore({
     apiKey: deps.apiKey,
     chainId: deps.chainId,
     network: deps.network,
+    enableTelemetry: deps.enableTelemetry,
     serverURL: deps.serverURL,
     serverIdx: deps.serverIdx,
   });

@@ -46,6 +46,10 @@ export type PChainUtxo = {
    */
   utxoId: string;
   /**
+   * The bytes of the UTXO
+   */
+  utxoBytes?: string | undefined;
+  /**
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   amount: string;
@@ -111,6 +115,7 @@ export const PChainUtxo$inboundSchema: z.ZodType<
   consumingTxHash: z.string().optional(),
   createdOnChainId: z.string(),
   utxoId: z.string(),
+  utxoBytes: z.string().optional(),
   amount: z.string(),
   assetId: z.string(),
   blockNumber: z.string(),
@@ -137,6 +142,7 @@ export type PChainUtxo$Outbound = {
   consumingTxHash?: string | undefined;
   createdOnChainId: string;
   utxoId: string;
+  utxoBytes?: string | undefined;
   amount: string;
   assetId: string;
   blockNumber: string;
@@ -167,6 +173,7 @@ export const PChainUtxo$outboundSchema: z.ZodType<
   consumingTxHash: z.string().optional(),
   createdOnChainId: z.string(),
   utxoId: z.string(),
+  utxoBytes: z.string().optional(),
   amount: z.string(),
   assetId: z.string(),
   blockNumber: z.string(),

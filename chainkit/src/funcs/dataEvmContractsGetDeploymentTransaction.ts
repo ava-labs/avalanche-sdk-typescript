@@ -142,7 +142,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "getDeploymentTransaction",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 

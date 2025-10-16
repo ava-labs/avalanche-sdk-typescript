@@ -135,7 +135,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "getSubnetRpcUsageMetrics",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 

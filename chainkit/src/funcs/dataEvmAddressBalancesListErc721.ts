@@ -157,7 +157,7 @@ async function $do(
     options: client._options,
     baseURL: baseURL ?? "",
     operationID: "listErc721Balances",
-    oAuth2Scopes: [],
+    oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
 
