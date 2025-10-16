@@ -11,9 +11,63 @@ permissions:
       - main
     paths:
       - chainkit/RELEASES.md
+
 jobs:
-  publish_chainkit_sdk:
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
-    secrets:
-      github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+  release-typescript:
+    name: Generate TypeScript SDK Release
+    runs-on: ubuntu-22.04
+    outputs:
+      typescript_directory: ${{ steps.release.outputs.typescript_directory }}
+      typescript_regenerated: ${{ steps.release.outputs.typescript_regenerated }}
+      publish_typescript: ${{ steps.release.outputs.publish_typescript }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Tune GitHub-hosted runner network
+        uses: smorimoto/tune-github-hosted-runner-network@v1
+
+      - id: release
+        uses: speakeasy-api/sdk-generation-action@v15
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "release"
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  publish-typescript:
+    name: Publish TypeScript SDK to npm
+    needs: release-typescript
+    if: ${{ needs.release-typescript.outputs.typescript_regenerated == 'true' && needs.release-typescript.outputs.publish_typescript == 'true' }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ${{ needs.release-typescript.outputs.typescript_directory }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+          always-auth: true
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Publish package
+        run: |
+          VERSION=$(npm pkg get version | tr -d '"')
+          echo "Detected version: $VERSION"
+
+          if [[ "$VERSION" == *"-"* ]]; then
+            PRERELEASE=${VERSION#*-}
+            TAG=${PRERELEASE%%.*}
+            echo "Prerelease detected; publishing under dist-tag: $TAG"
+            npm publish --tag "$TAG" --access public
+          else
+            echo "Official release detected; publishing under 'latest'"
+            npm publish --access public
+          fi
