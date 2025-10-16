@@ -125,7 +125,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.3",
+    version: "0.3.0-alpha.4",
   });
 
   const client = new AvalancheCore({
@@ -145,14 +145,14 @@ export function createMCPServer(deps: {
     server,
     client,
     scopes,
-    allowedTools
+    allowedTools,
   );
   const resource = createRegisterResource(deps.logger, server, client, scopes);
   const resourceTemplate = createRegisterResourceTemplate(
     deps.logger,
     server,
     client,
-    scopes
+    scopes,
   );
   const prompt = createRegisterPrompt(deps.logger, server, client, scopes);
   const register = { tool, resource, resourceTemplate, prompt };
