@@ -17,12 +17,14 @@ generation:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
     hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0-alpha.4
+  version: 0.3.0-alpha.5
   acceptHeaderEnum: true
   additionalDependencies:
     dependencies:
