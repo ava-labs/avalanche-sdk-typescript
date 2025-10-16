@@ -5,7 +5,7 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.637.0
   generationVersion: 2.727.4
-  releaseVersion: 0.3.0-alpha.5
+  releaseVersion: 0.3.0-alpha.3
   configChecksum: dfcbffa6ca9fba8be16ebec77f1f34f0
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: chainkit
