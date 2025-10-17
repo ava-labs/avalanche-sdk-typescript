@@ -76,7 +76,6 @@ jobs:
       - name: Check if version exists
         id: check_version
         run: |
-          cd chainkit
           INPUT_TAG=${{ github.event.inputs.tag }}
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
