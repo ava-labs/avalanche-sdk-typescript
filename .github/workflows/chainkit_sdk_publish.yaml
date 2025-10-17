@@ -49,7 +49,7 @@ jobs:
   publish-typescript:
     name: Publish TypeScript SDK to npm
     needs: release-typescript
-    if: ${{ needs.release-typescript.outputs.typescript_regenerated == 'true' && needs.release-typescript.outputs.publish_typescript == 'true' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (needs.release-typescript.outputs.typescript_regenerated == 'true' && needs.release-typescript.outputs.publish_typescript == 'true') }}
     runs-on: ubuntu-22.04
     defaults:
       run:
