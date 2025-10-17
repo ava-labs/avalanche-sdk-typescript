@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: ${{ needs.release-typescript.outputs.typescript_directory }}
+        working-directory: ${{ github.event_name == 'workflow_dispatch' && 'chainkit' || needs.release-typescript.outputs.typescript_directory }}
 
     steps:
       - uses: actions/checkout@v4
