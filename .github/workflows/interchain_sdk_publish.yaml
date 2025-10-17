@@ -10,6 +10,11 @@ on:
         description: "Version to publish (e.g., 1.0.0)"
         required: true
         type: string
+      tag:
+        description: "Tag to publish (e.g., latest, alpha, beta, etc.)"
+        required: false
+        type: string
+        default: ""
 
 permissions:
   id-token: write
@@ -60,18 +65,46 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
+      - name: Check if version exists
+        id: check_version
+        run: |
+          cd interchain
+          VERSION=${{ steps.set_version.outputs.version }}
+          echo "Checking if version $VERSION already exists..."
+
+          if npm view "@avalanche-sdk/interchain@$VERSION" version >/dev/null 2>&1; then
+            echo "Version $VERSION already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $VERSION does not exist"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish package
         run: |
           cd interchain
           VERSION=${{ steps.set_version.outputs.version }}
+          INPUT_TAG=${{ github.event.inputs.tag }}
+          EXISTS=${{ steps.check_version.outputs.exists }}
+
           echo "Detected version: $VERSION"
 
-          if [[ "$VERSION" == *"-"* ]]; then
-            PRERELEASE=${VERSION#*-}
-            TAG=${PRERELEASE%%.*}
-            echo "Prerelease detected; publishing under dist-tag: $TAG"
-            npm publish --tag "$TAG" --access public
+          if [[ "$EXISTS" == "false" ]]; then
+            if [[ "$VERSION" == *"-"* ]]; then
+              # Prerelease: publish with auto-detected tag + add input tag if provided
+              PRERELEASE=${VERSION#*-}
+              TAG=${PRERELEASE%%.*}
+              echo "Prerelease detected; publishing under dist-tag: $TAG"
+              npm publish --tag "$TAG" --access public
+            else
+              # Stable: publish with latest tag
+              echo "Official release detected; publishing under 'latest'"
+              npm publish --access public
+            fi
+          fi
+          if [[ -n "$INPUT_TAG" ]]; then
+            echo "Adding input tag: $INPUT_TAG"
+            npm dist-tag add "@avalanche-sdk/interchain@$VERSION" "$INPUT_TAG"
           else
-            echo "Official release detected; publishing under 'latest'"
-            npm publish --access public
+            echo "No input tag provided. Skipping tag addition."
           fi

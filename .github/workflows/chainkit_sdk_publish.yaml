@@ -11,6 +11,17 @@ permissions:
       - main
     paths:
       - chainkit/RELEASES.md
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g., 1.0.0)"
+        required: true
+        type: string
+      tag:
+        description: "Tag to publish (e.g., latest, alpha, beta, etc.)"
+        required: false
+        type: string
+        default: ""
 
 jobs:
   release-typescript:
@@ -62,17 +73,59 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
+      - name: Check if version exists
+        id: check_version
+        run: |
+          cd chainkit
+          INPUT_TAG=${{ github.event.inputs.tag }}
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION=$(npm pkg get version | tr -d '"')
+          fi
+
+          echo "Checking if version $VERSION already exists..."
+
+          if npm view "@avalanche-sdk/chainkit@$VERSION" version >/dev/null 2>&1; then
+            echo "Version $VERSION already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $VERSION does not exist"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish package
         run: |
-          VERSION=$(npm pkg get version | tr -d '"')
-          echo "Detected version: $VERSION"
-
-          if [[ "$VERSION" == *"-"* ]]; then
-            PRERELEASE=${VERSION#*-}
-            TAG=${PRERELEASE%%.*}
-            echo "Prerelease detected; publishing under dist-tag: $TAG"
-            npm publish --tag "$TAG" --access public
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
           else
-            echo "Official release detected; publishing under 'latest'"
-            npm publish --access public
+            VERSION=$(npm pkg get version | tr -d '"')
+          fi
+
+          INPUT_TAG=${{ github.event.inputs.tag }}
+          EXISTS=${{ steps.check_version.outputs.exists }}
+
+          echo "Detected version: $VERSION"
+          echo "Input tag: $INPUT_TAG"
+          echo "Version exists: $EXISTS"
+
+          if [[ "$EXISTS" == "false" ]]; then
+            if [[ "$VERSION" == *"-"* ]]; then
+              # Prerelease: publish with auto-detected tag + add input tag if provided
+              PRERELEASE=${VERSION#*-}
+              TAG=${PRERELEASE%%.*}
+              echo "Prerelease detected; publishing under dist-tag: $TAG"
+              npm publish --tag "$TAG" --access public
+            else
+              # Stable: publish with latest tag
+              echo "Official release detected; publishing under 'latest'"
+              npm publish --access public
+            fi
+          fi
+          if [[ -n "$INPUT_TAG" ]]; then
+            echo "Adding input tag: $INPUT_TAG"
+            npm dist-tag add "@avalanche-sdk/chainkit@$VERSION" "$INPUT_TAG"
+          else
+            echo "No input tag provided. Skipping tag addition."
           fi
