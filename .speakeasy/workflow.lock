@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:f2f30cdef772cf8ff6ff3d658a299bfaf70337e7a0dc3c7c4790cc1907ff0604
         tags:
             - latest
-            - speakeasy-sdk-regen-1760652246
+            - speakeasy-sdk-regen-1760736815
             - 1.0.0
 targets:
     chainkit-sdk:
@@ -15,7 +15,7 @@ targets:
         sourceRevisionDigest: sha256:b73258aa8f2ec3e043f644cb69d10996881bee632ca96d043b0a04f6a9badac3
         sourceBlobDigest: sha256:f2f30cdef772cf8ff6ff3d658a299bfaf70337e7a0dc3c7c4790cc1907ff0604
         codeSamplesNamespace: avalanche-sdk-chainkit-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:df2e1c61b6f55e0d8685aae53ed22caf5feb088307dfe0bb2acd7bca07fa1941
+        codeSamplesRevisionDigest: sha256:0c4747e06fc2154e9f93af5e1194f3d57402b712b7f1c7aa9e7ea187b2183b21
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
