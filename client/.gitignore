@@ -13,3 +13,4 @@ dist/_types
 /__tests__
 .DS_Store
 /docs/typedoc
+.rollup.cache
