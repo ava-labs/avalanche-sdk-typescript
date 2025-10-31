@@ -159,6 +159,13 @@ export {
   type GetUTXOsReturnType,
 } from "./types/getUTXOs.js";
 
+export { getAllValidatorsAt } from "./getAllValidatorsAt.js";
+export {
+  type GetAllValidatorsAtErrorType,
+  type GetAllValidatorsAtParameters,
+  type GetAllValidatorsAtReturnType,
+} from "./types/getAllValidatorsAt.js";
+
 export { getValidatorsAt } from "./getValidatorsAt.js";
 export {
   type GetValidatorsAtErrorType,

@@ -1,4 +1,5 @@
 import { RpcSchemaOverride } from "viem";
+import { GetAllValidatorsAtMethod } from "./types/getAllValidatorsAt.js";
 import { GetBalanceMethod } from "./types/getBalance.js";
 import { GetBlockMethod } from "./types/getBlock.js";
 import { GetBlockByHeightMethod } from "./types/getBlockByHeight.js";
@@ -52,6 +53,7 @@ export type PChainMethods = [
   GetTxMethod,
   GetTxStatusMethod,
   GetUTXOsMethod,
+  GetAllValidatorsAtMethod,
   GetValidatorsAtMethod,
   IssueTxMethod,
   SampleValidatorsMethod,
