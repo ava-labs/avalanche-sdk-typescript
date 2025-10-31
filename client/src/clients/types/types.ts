@@ -51,4 +51,7 @@ export type ClientType =
   | "indexXChainBlock"
   | "indexXChainTx"
   | "health"
+  | "proposervmCChain"
+  | "proposervmPChain"
+  | "proposervmXChain"
   | "wallet";

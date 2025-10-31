@@ -95,6 +95,7 @@ const pChainClient = pChainActions(client);
 
 test("default", async () => {
   expect(pChainClient).toMatchInlineSnapshot(`{
+  "getAllValidatorsAt": [Function],
   "getBalance": [Function],
   "getBlock": [Function],
   "getBlockByHeight": [Function],
