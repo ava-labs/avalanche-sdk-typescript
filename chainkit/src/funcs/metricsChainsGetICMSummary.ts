@@ -3,7 +3,7 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
+import { encodeFormQuery } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -22,40 +22,42 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import { GetICMRollingWindowMetricsByChainServerList } from "../models/operations/geticmrollingwindowmetricsbychain.js";
+import { GetICMSummaryServerList } from "../models/operations/geticmsummary.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get Interchain Message (ICM) rolling window metrics
+ * Get ICM summary metrics
  *
  * @remarks
- * Interchain Message (ICM) rolling window metrics are available for all  Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics  by source and/or destination blockchainId or by network. Rolling window metrics are available for the last hour, day, month,  90 days,year, and all time.
+ * Get rolling window ICM message counts (last hour, day, month, 90 days, year, all time).
  *
- * ### Metrics
+ * Use filters (`srcBlockchainId`, `destBlockchainId`, `network`)  to select data, and the `groupBy` parameter for aggregation level.
  *
- * <ins>ICMSrcDestRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to the destination blockchain within the last hour, day, month, year, and all time.
+ * ### Examples:
  *
- * <ins>ICMSrcRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **Specific pair**:   `?srcBlockchainId=...&destBlockchainId=...`
  *
- * <ins>ICMSrcRollingWindowAggMsgCount</ins>: The number of ICM  messages sent from the source blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **From one source (aggregated)**: `?srcBlockchainId=...`
  *
- * <ins>ICMDestRollingWindowMsgCount</ins>: The number of ICM  messages received from any blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **From one source (by destination)**:   `?srcBlockchainId=...&groupBy=destBlockchainId`
  *
- * <ins>ICMDestRollingWindowAggMsgCount</ins>: The number of ICM  messages received from any blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **To one destination (aggregated)**: `?destBlockchainId=...`
  *
- * <ins>ICMNetworkRollingWindowMsgCount</ins>: The number of ICM  messages sent from any blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **To one destination (by source)**:   `?destBlockchainId=...&groupBy=srcBlockchainId`
  *
- * <ins>ICMNetworkRollingWindowAggMsgCount</ins>: The number of ICM  messages sent from any blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+ *   - **Network total**: `?network=mainnet`
+ *
+ *   - **Network breakdown**:   `?network=mainnet&groupBy=srcBlockchainId,destBlockchainId`.
  */
-export function metricsChainsGetICMRollingWindowMetrics(
+export function metricsChainsGetICMSummary(
   client: AvalancheCore,
-  request: operations.GetICMRollingWindowMetricsByChainRequest,
+  request: operations.GetICMSummaryRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.RollingWindowMetricsApiResponse,
+    components.ICMRollingWindowMetricsApiResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -83,12 +85,12 @@ export function metricsChainsGetICMRollingWindowMetrics(
 
 async function $do(
   client: AvalancheCore,
-  request: operations.GetICMRollingWindowMetricsByChainRequest,
+  request: operations.GetICMSummaryRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      components.RollingWindowMetricsApiResponse,
+      components.ICMRollingWindowMetricsApiResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -111,10 +113,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) =>
-      operations.GetICMRollingWindowMetricsByChainRequest$outboundSchema.parse(
-        value,
-      ),
+    (value) => operations.GetICMSummaryRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -124,21 +123,13 @@ async function $do(
   const body = null;
 
   const baseURL = options?.serverURL
-    || pathToFunc(GetICMRollingWindowMetricsByChainServerList[0], {
-      charEncoding: "percent",
-    })();
+    || pathToFunc(GetICMSummaryServerList[0], { charEncoding: "percent" })();
 
-  const pathParams = {
-    metric: encodeSimple("metric", payload.metric, {
-      explode: false,
-      charEncoding: "percent",
-    }),
-  };
-
-  const path = pathToFunc("/v2/icm/rollingWindowMetrics/{metric}")(pathParams);
+  const path = pathToFunc("/v2/icm/summary")();
 
   const query = encodeFormQuery({
     "destBlockchainId": payload.destBlockchainId,
+    "groupBy": payload.groupBy,
     "network": payload.network,
     "srcBlockchainId": payload.srcBlockchainId,
   });
@@ -154,7 +145,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: baseURL ?? "",
-    operationID: "getICMRollingWindowMetricsByChain",
+    operationID: "getICMSummary",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -219,7 +210,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.RollingWindowMetricsApiResponse,
+    components.ICMRollingWindowMetricsApiResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -237,7 +228,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.RollingWindowMetricsApiResponse$inboundSchema),
+    M.json(200, components.ICMRollingWindowMetricsApiResponse$inboundSchema),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),

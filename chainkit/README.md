@@ -359,6 +359,7 @@ run();
 #### [data.primaryNetwork.utxos](docs/sdks/utxos/README.md)
 
 * [listByAddresses](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
+* [listByAddressesV2](docs/sdks/utxos/README.md#listbyaddressesv2) - List UTXOs v2 - Supports querying for more addresses
 
 #### [data.primaryNetwork.vertices](docs/sdks/vertices/README.md)
 
@@ -402,8 +403,8 @@ run();
 * [get](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
 * [getMetrics](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
 * [getRollingWindowMetrics](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
-* [getICMMetrics](docs/sdks/metricschains/README.md#geticmmetrics) - Get Interchain Message (ICM) metrics
-* [getICMRollingWindowMetrics](docs/sdks/metricschains/README.md#geticmrollingwindowmetrics) - Get Interchain Message (ICM) rolling window metrics
+* [getICMTimeseries](docs/sdks/metricschains/README.md#geticmtimeseries) - Get ICM timeseries metrics
+* [getICMSummary](docs/sdks/metricschains/README.md#geticmsummary) - Get ICM summary metrics
 * [listNftHolders](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
 * [listTokenHoldersAboveThreshold](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 * [listBTCbBridgersAboveThreshold](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
@@ -514,6 +515,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataPrimaryNetworkTransactionsListAssetTransactions`](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
 - [`dataPrimaryNetworkTransactionsListLatest`](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
 - [`dataPrimaryNetworkUtxosListByAddresses`](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
+- [`dataPrimaryNetworkUtxosListByAddressesV2`](docs/sdks/utxos/README.md#listbyaddressesv2) - List UTXOs v2 - Supports querying for more addresses
 - [`dataPrimaryNetworkVerticesGetByHash`](docs/sdks/vertices/README.md#getbyhash) - Get vertex
 - [`dataPrimaryNetworkVerticesListByHeight`](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
 - [`dataPrimaryNetworkVerticesListLatest`](docs/sdks/vertices/README.md#listlatest) - List vertices
@@ -523,8 +525,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataUsageMetricsGetSubnetRpcUsage`](docs/sdks/usagemetrics/README.md#getsubnetrpcusage) - Get usage metrics for the Subnet RPC
 - [`dataUsageMetricsGetUsage`](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
 - [`metricsChainsGet`](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
-- [`metricsChainsGetICMMetrics`](docs/sdks/metricschains/README.md#geticmmetrics) - Get Interchain Message (ICM) metrics
-- [`metricsChainsGetICMRollingWindowMetrics`](docs/sdks/metricschains/README.md#geticmrollingwindowmetrics) - Get Interchain Message (ICM) rolling window metrics
+- [`metricsChainsGetICMSummary`](docs/sdks/metricschains/README.md#geticmsummary) - Get ICM summary metrics
+- [`metricsChainsGetICMTimeseries`](docs/sdks/metricschains/README.md#geticmtimeseries) - Get ICM timeseries metrics
 - [`metricsChainsGetMetrics`](docs/sdks/metricschains/README.md#getmetrics) - Get metrics for EVM chains
 - [`metricsChainsGetRollingWindowMetrics`](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
 - [`metricsChainsList`](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains

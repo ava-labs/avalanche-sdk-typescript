@@ -144,6 +144,7 @@ async function $do(
     "includeSpent": payload.includeSpent,
     "pageSize": payload.pageSize,
     "pageToken": payload.pageToken,
+    "sortBy": payload.sortBy,
     "sortOrder": payload.sortOrder,
   });
 
