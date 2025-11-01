@@ -3,6 +3,7 @@
  */
 
 import { dataPrimaryNetworkUtxosListByAddresses } from "../funcs/dataPrimaryNetworkUtxosListByAddresses.js";
+import { dataPrimaryNetworkUtxosListByAddressesV2 } from "../funcs/dataPrimaryNetworkUtxosListByAddressesV2.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { PageIterator, unwrapResultIterator } from "../types/operations.js";
@@ -21,6 +22,25 @@ export class Utxos extends ClientSDK {
     PageIterator<operations.GetUtxosByAddressesResponse, { cursor: string }>
   > {
     return unwrapResultIterator(dataPrimaryNetworkUtxosListByAddresses(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * List UTXOs v2 - Supports querying for more addresses
+   *
+   * @remarks
+   * Lists UTXOs on one of the Primary Network chains for the supplied addresses. This v2 route supports increased page size and address limit.
+   */
+  async listByAddressesV2(
+    request: operations.GetUtxosByAddressesV2Request,
+    options?: RequestOptions,
+  ): Promise<
+    PageIterator<operations.GetUtxosByAddressesV2Response, { cursor: string }>
+  > {
+    return unwrapResultIterator(dataPrimaryNetworkUtxosListByAddressesV2(
       this,
       request,
       options,
