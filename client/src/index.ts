@@ -899,7 +899,7 @@ export type {
   AuthorizationRequest,
   BlobSidecar,
   BlobSidecars,
-  Block,
+  // Block is exported separately below from our augmented type (includes Avalanche-specific fields)
   BlockIdentifier,
   BlockNumber,
   BlockTag,
@@ -1524,3 +1524,5 @@ export { type ProposerVMRpcSchema } from "./methods/proposervm/proposervmRpcSche
 export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
 export { type AvalancheWalletRpcSchema } from "./methods/wallet/avalancheWalletRPCSchema.js";
 export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";
+// Augment viem's Block type with Avalanche-specific fields
+export type { Block } from "./types/block.js";
