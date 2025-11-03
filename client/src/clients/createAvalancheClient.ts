@@ -15,6 +15,7 @@ import { createHealthApiClient } from "./createHealthApiClient.js";
 import { createIndexApiClient } from "./createIndexApiClient.js";
 import { createInfoApiClient } from "./createInfoApiClient.js";
 import { createPChainClient } from "./createPChainClient.js";
+import { createProposervmApiClient } from "./createProposervmApiClient.js";
 import { createXChainClient } from "./createXChainClient.js";
 import { adminAPIActions } from "./decorators/adminApi.js";
 import { avalanchePublicActions } from "./decorators/avalanchePublic.js";
@@ -23,6 +24,7 @@ import { healthAPIActions } from "./decorators/healthApi.js";
 import { indexAPIActions } from "./decorators/indexApi.js";
 import { infoAPIActions } from "./decorators/infoApi.js";
 import { pChainActions } from "./decorators/pChain.js";
+import { proposervmAPIActions } from "./decorators/proposervmApi.js";
 import { xChainActions } from "./decorators/xChain.js";
 import {
   AvalancheClient,
@@ -40,6 +42,7 @@ import { createAvalancheTransportClient } from "./utils.js";
  * - Admin API
  * - Info API
  * - Health API
+ * - proposervm API
  * - Index API
  *
  * @param parameters - {@link AvalancheClientConfig}
@@ -66,7 +69,13 @@ import { createAvalancheTransportClient } from "./utils.js";
  * const adminClient = client.admin
  * const infoClient = client.info
  * const healthClient = client.health
- * const indexPChainBlockClient = client.indexPChainBlock
+ * const proposervmCChainClient = client.proposervm.cChain
+ * const proposervmPChainClient = client.proposervm.pChain
+ * const proposervmXChainClient = client.proposervm.xChain
+ * const indexPChainBlockClient = client.indexBlock.pChain
+ * const indexCChainBlockClient = client.indexBlock.cChain
+ * const indexXChainBlockClient = client.indexBlock.xChain
+ * const indexXChainTxClient = client.indexTx.xChain
  *
  * // Get the latest block number
  * const blockNumber = await client.pChain.getBlockNumber()
@@ -165,34 +174,61 @@ export function createAvalancheClient<
       ...parameters,
       key: "health",
       name: "Health Client",
-    }).extend(healthAPIActions) as any,
+    }).extend(healthAPIActions),
 
-    indexPChainBlock: createIndexApiClient({
-      ...parameters,
-      key: "indexPChainBlock",
-      name: "Index P-Chain Block Client",
-      clientType: "indexPChainBlock",
-    }).extend(indexAPIActions) as any,
+    proposervm: {
+      cChain: createProposervmApiClient({
+        ...parameters,
+        key: "proposervm",
+        name: "proposervm Client",
+        clientType: "proposervmCChain",
+      }).extend(proposervmAPIActions) as any,
 
-    indexCChainBlock: createIndexApiClient({
-      ...parameters,
-      key: "indexCChainBlock",
-      name: "Index C-Chain Block Client",
-      clientType: "indexCChainBlock",
-    }).extend(indexAPIActions) as any,
+      pChain: createProposervmApiClient({
+        ...parameters,
+        key: "proposervm",
+        name: "proposervm Client",
+        clientType: "proposervmPChain",
+      }).extend(proposervmAPIActions) as any,
 
-    indexXChainBlock: createIndexApiClient({
-      ...parameters,
-      key: "indexXChainBlock",
-      name: "Index X-Chain Block Client",
-      clientType: "indexXChainBlock",
-    }).extend(indexAPIActions) as any,
+      xChain: createProposervmApiClient({
+        ...parameters,
+        key: "proposervm",
+        name: "proposervm Client",
+        clientType: "proposervmXChain",
+      }).extend(proposervmAPIActions) as any,
+    } as any,
 
-    indexXChainTx: createIndexApiClient({
-      ...parameters,
-      key: "indexXChainTx",
-      name: "Index X-Chain Tx Client",
-      clientType: "indexXChainTx",
-    }).extend(indexAPIActions) as any,
-  };
+    indexBlock: {
+      pChain: createIndexApiClient({
+        ...parameters,
+        key: "indexPChainBlock",
+        name: "Index P-Chain Block Client",
+        clientType: "indexPChainBlock",
+      }).extend(indexAPIActions) as any,
+
+      cChain: createIndexApiClient({
+        ...parameters,
+        key: "indexCChainBlock",
+        name: "Index C-Chain Block Client",
+        clientType: "indexCChainBlock",
+      }).extend(indexAPIActions) as any,
+
+      xChain: createIndexApiClient({
+        ...parameters,
+        key: "indexXChainBlock",
+        name: "Index X-Chain Block Client",
+        clientType: "indexXChainBlock",
+      }).extend(indexAPIActions) as any,
+    } as any,
+
+    indexTx: {
+      xChain: createIndexApiClient({
+        ...parameters,
+        key: "indexXChainTx",
+        name: "Index X-Chain Tx Client",
+        clientType: "indexXChainTx",
+      }).extend(indexAPIActions) as any,
+    } as any,
+  } as any;
 }

@@ -9,6 +9,7 @@
   "license": "BSD-3-Clause",
   "description": "",
   "dependencies": {
+    "@avalanche-sdk/client": "^0.0.4-alpha.16",
     "dotenv": "^16.3.1"
   },
   "devDependencies": {

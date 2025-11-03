@@ -25,6 +25,7 @@
     "Permissioned",
     "Permissionless",
     "POSTHOG",
+    "proposervm",
     "Sayan",
     "scure",
     "Sepk",
@@ -37,6 +38,7 @@
     "UTXOID",
     "UTXOs",
     "viem",
+    "VMAPI",
     "xChain"
   ]
 }

@@ -15,6 +15,7 @@ import { HealthRpcSchema } from "../../methods/health/healthRpcSchema.js";
 import { IndexRpcSchema } from "../../methods/index/indexRpcSchema.js";
 import { InfoRpcSchema } from "../../methods/info/infoRpcSchema.js";
 import { PChainRpcSchema } from "../../methods/pChain/pChainRpcSchema.js";
+import { ProposervmRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
 import { AvalanchePublicRpcSchema } from "../../methods/public/avalanchePublicRpcSchema.js";
 import { XChainRpcSchema } from "../../methods/xChain/xChainRpcSchema.js";
 import {
@@ -29,6 +30,7 @@ import { HealthAPIActions } from "../decorators/healthApi.js";
 import { IndexAPIActions } from "../decorators/indexApi.js";
 import { InfoAPIActions } from "../decorators/infoApi.js";
 import { PChainActions } from "../decorators/pChain.js";
+import { ProposervmAPIActions } from "../decorators/proposervmApi.js";
 import { XChainActions } from "../decorators/xChain.js";
 
 export type AvalancheClientConfig<
@@ -112,37 +114,63 @@ export type AvalancheClient<
             HealthAPIActions
           >;
 
-          indexPChainBlock: AvalancheCoreClient<
-            transport,
-            chain,
-            accountOrAddress,
-            IndexRpcSchema,
-            IndexAPIActions
-          >;
+          proposervm: {
+            cChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              ProposervmRpcSchema,
+              ProposervmAPIActions
+            >;
+            pChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              ProposervmRpcSchema,
+              ProposervmAPIActions
+            >;
+            xChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              ProposervmRpcSchema,
+              ProposervmAPIActions
+            >;
+          };
 
-          indexCChainBlock: AvalancheCoreClient<
-            transport,
-            chain,
-            accountOrAddress,
-            IndexRpcSchema,
-            IndexAPIActions
-          >;
+          indexBlock: {
+            pChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              IndexRpcSchema,
+              IndexAPIActions
+            >;
+            cChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              IndexRpcSchema,
+              IndexAPIActions
+            >;
+            xChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              IndexRpcSchema,
+              IndexAPIActions
+            >;
+          };
 
-          indexXChainBlock: AvalancheCoreClient<
-            transport,
-            chain,
-            accountOrAddress,
-            IndexRpcSchema,
-            IndexAPIActions
-          >;
-
-          indexXChainTx: AvalancheCoreClient<
-            transport,
-            chain,
-            accountOrAddress,
-            IndexRpcSchema,
-            IndexAPIActions
-          >;
+          indexTx: {
+            xChain: AvalancheCoreClient<
+              transport,
+              chain,
+              accountOrAddress,
+              IndexRpcSchema,
+              IndexAPIActions
+            >;
+          };
         }
       : {})
 >;

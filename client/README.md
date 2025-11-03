@@ -37,7 +37,8 @@ const cChainClient = client.cChain
 const adminClient = client.admin
 const infoClient = client.info
 const healthClient = client.health
-const indexPChainBlockClient = client.indexPChainBlock
+const indexPChainBlockClient = client.indexBlock.pChain  
+const proposervmCChainClient = client.proposervm
 
 // Example: Get the latest block number
 const blockNumber = await pChainClient.getBlockNumber()
@@ -176,6 +177,7 @@ const exportTx = await cChainWallet.prepareExportTxn({
   - Index C-Chain Block
   - Index X-Chain Block
   - Index X-Chain Transaction
+- **proposervm Client**: Proposer VM Information
 
 ### Wallet Clients
 
@@ -208,6 +210,7 @@ const client = createAvalancheClient({
 The SDK supports multiple transport types for connecting to Avalanche nodes. Each transport type has specific configuration options:
 
 #### HTTP Transport (Recommended)
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -230,12 +233,14 @@ const client = createAvalancheClient({
 ```
 
 **HTTP Transport Features:**
+
 - **Automatic URL Resolution**: If no URL is provided, uses the chain's default RPC endpoint
 - **Custom Headers**: Support for custom HTTP headers via `fetchOptions.headers`
 - **API Key Support**: Automatically adds `x-glacier-api-key` header when `apiKey` is provided
 - **Rate Limit Support**: Automatically adds `rlToken` header when `rlToken` is provided
 
 #### WebSocket Transport
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -252,11 +257,13 @@ const client = createAvalancheClient({
 ```
 
 **WebSocket Transport Features:**
+
 - **Real-time Updates**: Supports WebSocket connections for live data
 - **Automatic Reconnection**: Built-in retry logic with configurable retry count and delay
 - **Event-driven**: Ideal for subscribing to blockchain events and real-time updates
 
 #### Custom Transport
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -271,11 +278,13 @@ const client = createAvalancheClient({
 ```
 
 **Custom Transport Features:**
+
 - **Provider Integration**: Integrate with custom RPC providers or middleware
 - **Flexible Configuration**: Full control over transport behavior
 - **Wallet Support**: Special handling for wallet clients
 
 #### Fallback Transport
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -295,11 +304,13 @@ const client = createAvalancheClient({
 ```
 
 **Fallback Transport Features:**
+
 - **High Availability**: Automatic failover between multiple RPC endpoints
 
 ### Advanced Configuration Examples
 
 #### Custom HTTP Headers and Timeouts
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -317,6 +328,7 @@ const client = createAvalancheClient({
 ```
 
 #### Multiple Fallback Endpoints
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -336,6 +348,7 @@ const client = createAvalancheClient({
 ```
 
 #### WebSocket with Custom Configuration
+
 ```typescript
 const client = createAvalancheClient({
   chain: avalanche,
@@ -436,6 +449,9 @@ import { /* Health methods */ } from '@avalanche-sdk/client/methods/health'
 
 // Index methods
 import { /* Index methods */ } from '@avalanche-sdk/client/methods/index'
+
+// proposervm methods
+import { /* proposervm methods */ } from '@avalanche-sdk/client/methods/proposervm'
 ```
 
 ### Utilities
@@ -507,6 +523,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 - [`sampleValidators`](./src/methods/pChain/sampleValidators.ts) - Samples validators from the specified Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformsamplevalidators)
 - [`validatedBy`](./src/methods/pChain/validatedBy.ts) - Gets the Subnet that validates a given blockchain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformvalidatedby)
 - [`validates`](./src/methods/pChain/validates.ts) - Gets the IDs of the blockchains a Subnet validates. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformvalidates)
+- [`getAllValidatorsAt`](./src/methods/pChain/getAllValidatorsAt.ts) - Get the validators and their weights of all L1s and the Primary Network at a given P-Chain height. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetallvalidatorsat)
 
 ### X-Chain Methods
 
@@ -619,6 +636,10 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 - [`getLastAccepted`](./src/methods/index/getLastAccepted.ts) - Get the last accepted container. [Docs](https://build.avax.network/docs/api-reference/index-api#indexgetlastaccepted)
 - [`isAccepted`](./src/methods/index/isAccepted.ts) - Returns true if the container is in this index. [Docs](https://build.avax.network/docs/api-reference/index-api#indexisaccepted)
 
+### proposervm Methods
+- [`getCurrentEpoch`](./src/methods/proposervm/getCurrentEpoch.ts) - Returns the current epoch information. [Docs](https://build.avax.network/docs/api-reference/proposervm-api#proposervmgetcurrentepoch)
+- [`getProposedHeight`](./src/methods/proposervm/getProposedHeight.ts) - Returns this node's current proposer VM height. [Docs](https://build.avax.network/docs/api-reference/proposervm-api#proposervmgetproposedheight)
+
 ## Examples
 
 > **Note:** Make sure to create your own `.env` file by copying the `.env.example` file and updating the values. You'll also need to modify the `config.ts` file to point to your `.env` file path. By default, the examples use the values from `.env.example`, and the test addresses mentioned in the examples as comments (like `0x76Dd3d7b2f635c2547B861e55aE8A374E587742D` and `X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz`) are derived from the private key values in that file.
@@ -626,12 +647,15 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 Check out the [examples](./examples) folder for comprehensive usage examples:
 
 ### Basic Examples
+
 - [`sendAvax.ts`](./examples/sendAvax.ts) - Basic example of sending AVAX using the SDK
 
 ### Primary Network Transaction Examples
+
 The [`prepare-primary-network-txns`](./examples/prepare-primary-network-txns) folder contains examples for preparing various types of transactions:
 
 #### Cross-Chain Transfer Examples
+
 - [`transfer-avax-from-x-chain-to-p-chain.ts`](./examples/prepare-primary-network-txns/transfer-avax-from-x-chain-to-p-chain.ts) - Transfer AVAX from X-Chain to P-Chain
 - [`transfer-avax-from-p-chain-to-x-chain.ts`](./examples/prepare-primary-network-txns/transfer-avax-from-p-chain-to-x-chain.ts) - Transfer AVAX from P-Chain to X-Chain
 - [`transfer-avax-from-x-chain-to-c-chain.ts`](./examples/prepare-primary-network-txns/transfer-avax-from-x-chain-to-c-chain.ts) - Transfer AVAX from X-Chain to C-Chain
@@ -640,10 +664,12 @@ The [`prepare-primary-network-txns`](./examples/prepare-primary-network-txns) fo
 - [`transfer-avax-from-c-chain-to-p-chain.ts`](./examples/prepare-primary-network-txns/transfer-avax-from-c-chain-to-p-chain.ts) - Transfer AVAX from C-Chain to P-Chain
 
 #### X-Chain Transaction Examples
+
 - [`exportTx.ts`](./examples/prepare-primary-network-txns/x-chain/exportTx.ts) - Prepare X-Chain export transaction
 - [`importTx.ts`](./examples/prepare-primary-network-txns/x-chain/importTx.ts) - Prepare X-Chain import transaction
 
 #### P-Chain Transaction Examples
+
 - [`addSubnetValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/addSubnetValidatorTx.ts) - Add subnet validator transaction
 - [`baseTx.ts`](./examples/prepare-primary-network-txns/p-chain/baseTx.ts) - Base transaction example
 - [`convertSubnetToL1Tx.ts`](./examples/prepare-primary-network-txns/p-chain/convertSubnetToL1Tx.ts) - Convert subnet to L1 transaction
@@ -654,6 +680,7 @@ The [`prepare-primary-network-txns`](./examples/prepare-primary-network-txns) fo
 - [`removeSubnetValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/removeSubnetValidatorTx.ts) - Remove subnet validator transaction
 
 #### C-Chain Transaction Examples
+
 - [`exportTx.ts`](./examples/prepare-primary-network-txns/c-chain/exportTx.ts) - Prepare C-Chain export transaction
 - [`importTx.ts`](./examples/prepare-primary-network-txns/c-chain/importTx.ts) - Prepare C-Chain import transaction
 

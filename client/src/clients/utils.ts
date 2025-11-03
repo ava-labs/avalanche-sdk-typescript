@@ -118,6 +118,12 @@ function getClientURL(
       return `${origin}/ext/index/X/block`;
     case "indexXChainTx":
       return `${origin}/ext/index/X/tx`;
+    case "proposervmCChain":
+      return `${origin}/ext/bc/C/proposervm`;
+    case "proposervmPChain":
+      return `${origin}/ext/bc/P/proposervm`;
+    case "proposervmXChain":
+      return `${origin}/ext/bc/X/proposervm`;
     default:
       throw new Error(`Invalid client type` + clientType);
   }

@@ -899,7 +899,7 @@ export type {
   AuthorizationRequest,
   BlobSidecar,
   BlobSidecars,
-  Block,
+  // Block is exported separately below from our augmented type (includes Avalanche-specific fields)
   BlockIdentifier,
   BlockNumber,
   BlockTag,
@@ -1451,6 +1451,12 @@ export {
   type PChainClientConfig,
 } from "./clients/createPChainClient.js";
 export {
+  createProposervmApiClient,
+  type CreateProposervmApiClientErrorType,
+  type ProposervmApiClient,
+  type ProposervmApiClientConfig,
+} from "./clients/createProposervmApiClient.js";
+export {
   createXChainClient,
   type CreateXChainClientErrorType,
   type XChainClient,
@@ -1494,6 +1500,10 @@ export {
   type PChainActions,
 } from "./clients/decorators/pChain.js";
 export {
+  proposervmAPIActions,
+  type ProposervmAPIActions,
+} from "./clients/decorators/proposervmApi.js";
+export {
   xChainActions,
   type XChainActions,
 } from "./clients/decorators/xChain.js";
@@ -1510,6 +1520,9 @@ export { type HealthRpcSchema } from "./methods/health/healthRpcSchema.js";
 export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
 export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
 export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
+export { type ProposervmRpcSchema } from "./methods/proposervm/proposervmRpcSchema.js";
 export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
 export { type AvalancheWalletRpcSchema } from "./methods/wallet/avalancheWalletRPCSchema.js";
 export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";
+// Augment viem's Block type with Avalanche-specific fields
+export type { Block } from "./types/block.js";

@@ -1,4 +1,5 @@
 import { Chain, Transport } from "viem";
+import { getAllValidatorsAt } from "../../methods/pChain/getAllValidatorsAt.js";
 import { getBalance } from "../../methods/pChain/getBalance.js";
 import { getBlock } from "../../methods/pChain/getBlock.js";
 import { getBlockByHeight } from "../../methods/pChain/getBlockByHeight.js";
@@ -25,6 +26,10 @@ import { getUTXOs } from "../../methods/pChain/getUTXOs.js";
 import { getValidatorsAt } from "../../methods/pChain/getValidatorsAt.js";
 import { issueTx } from "../../methods/pChain/issueTx.js";
 import { sampleValidators } from "../../methods/pChain/sampleValidators.js";
+import {
+  GetAllValidatorsAtParameters,
+  GetAllValidatorsAtReturnType,
+} from "../../methods/pChain/types/getAllValidatorsAt.js";
 import {
   GetBalanceParameters,
   GetBalanceReturnType,
@@ -778,6 +783,38 @@ export type PChainActions = {
   ) => Promise<GetValidatorsAtReturnType>;
 
   /**
+   * Get all validators at a specific height across all Subnets and the Primary Network.
+   *
+   * Note: The public API (api.avax.network) only support height within 1000 blocks
+   * from the P-Chain tip.
+   *
+   * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetallvalidatorsat
+   *
+   * @param args - {@link GetAllValidatorsAtParameters} The height
+   * @returns All validators at that height across all Subnets. {@link GetAllValidatorsAtReturnType}
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheClient} from '@avalanche-sdk/client'
+   * import { avalanche } from '@avalanche-sdk/client/chains'
+   *
+   * const client = createAvalancheClient({
+   *   chain: avalanche,
+   *   transport: {
+   *     type: "http",
+   *   },
+   * })
+   *
+   * const validators = await client.pChain.getAllValidatorsAt({
+   *   height: 1000001
+   * })
+   * ```
+   */
+  getAllValidatorsAt: (
+    args: GetAllValidatorsAtParameters
+  ) => Promise<GetAllValidatorsAtReturnType>;
+
+  /**
    * Issue a transaction to the Platform Chain.
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformissuetx
@@ -917,6 +954,7 @@ export function pChainActions<
     getTx: (args) => getTx(client, args),
     getTxStatus: (args) => getTxStatus(client, args),
     getUTXOs: (args) => getUTXOs(client, args),
+    getAllValidatorsAt: (args) => getAllValidatorsAt(client, args),
     getValidatorsAt: (args) => getValidatorsAt(client, args),
     issueTx: (args) => issueTx(client, args),
     sampleValidators: (args) => sampleValidators(client, args),

@@ -52,7 +52,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const container = await client.indexPChainBlock.getContainerByID({
+   * const container = await client.indexBlock.pChain.getContainerByID({
    *   id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
    *   encoding: "hex"
    * })
@@ -82,7 +82,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const container = await client.indexPChainBlock.getContainerByIndex({
+   * const container = await client.indexBlock.pChain.getContainerByIndex({
    *   index: 1,
    *   encoding: "hex"
    * })
@@ -112,7 +112,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const containers = await client.indexPChainBlock.getContainerRange({
+   * const containers = await client.indexBlock.pChain.getContainerRange({
    *   startIndex: 0,
    *   endIndex: 10,
    *   encoding: "hex"
@@ -143,7 +143,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const index = await client.indexPChainBlock.getIndex({
+   * const index = await client.indexBlock.pChain.getIndex({
    *   id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
    *   encoding: "hex"
    * })
@@ -171,7 +171,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const lastAccepted = await client.indexPChainBlock.getLastAccepted({
+   * const lastAccepted = await client.indexBlock.pChain.getLastAccepted({
    *   encoding: "hex"
    * })
    * ```
@@ -200,7 +200,7 @@ export type IndexAPIActions = {
    *   },
    * })
    *
-   * const isAccepted = await client.indexPChainBlock.isAccepted({
+   * const isAccepted = await client.indexBlock.pChain.isAccepted({
    *   id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
    *   encoding: "hex"
    * })

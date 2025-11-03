@@ -275,22 +275,40 @@ const mockClient = {
     chain: avalanche,
     transport: mockTransport,
   }),
-  indexPChainBlock: createAvalancheBaseClient({
-    chain: avalanche,
-    transport: mockTransport,
-  }),
-  indexCChainBlock: createAvalancheBaseClient({
-    chain: avalanche,
-    transport: mockTransport,
-  }),
-  indexXChainBlock: createAvalancheBaseClient({
-    chain: avalanche,
-    transport: mockTransport,
-  }),
-  indexXChainTx: createAvalancheBaseClient({
-    chain: avalanche,
-    transport: mockTransport,
-  }),
+  proposervm: {
+    cChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+    pChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+    xChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+  } as any,
+  indexBlock: {
+    pChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+    cChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+    xChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+  },
+  indexTx: {
+    xChain: createAvalancheBaseClient({
+      chain: avalanche,
+      transport: mockTransport,
+    }),
+  },
 } as any;
 
 const avalancheClient = avalancheActions(mockClient);
@@ -360,37 +378,41 @@ test("default", async () => {
     "liveness": [Function],
     "readiness": [Function],
   },
-  "indexCChainBlock": {
-    "getContainerByID": [Function],
-    "getContainerByIndex": [Function],
-    "getContainerRange": [Function],
-    "getIndex": [Function],
-    "getLastAccepted": [Function],
-    "isAccepted": [Function],
+  "indexBlock": {
+    "cChain": {
+      "getContainerByID": [Function],
+      "getContainerByIndex": [Function],
+      "getContainerRange": [Function],
+      "getIndex": [Function],
+      "getLastAccepted": [Function],
+      "isAccepted": [Function],
+    },
+    "pChain": {
+      "getContainerByID": [Function],
+      "getContainerByIndex": [Function],
+      "getContainerRange": [Function],
+      "getIndex": [Function],
+      "getLastAccepted": [Function],
+      "isAccepted": [Function],
+    },
+    "xChain": {
+      "getContainerByID": [Function],
+      "getContainerByIndex": [Function],
+      "getContainerRange": [Function],
+      "getIndex": [Function],
+      "getLastAccepted": [Function],
+      "isAccepted": [Function],
+    },
   },
-  "indexPChainBlock": {
-    "getContainerByID": [Function],
-    "getContainerByIndex": [Function],
-    "getContainerRange": [Function],
-    "getIndex": [Function],
-    "getLastAccepted": [Function],
-    "isAccepted": [Function],
-  },
-  "indexXChainBlock": {
-    "getContainerByID": [Function],
-    "getContainerByIndex": [Function],
-    "getContainerRange": [Function],
-    "getIndex": [Function],
-    "getLastAccepted": [Function],
-    "isAccepted": [Function],
-  },
-  "indexXChainTx": {
-    "getContainerByID": [Function],
-    "getContainerByIndex": [Function],
-    "getContainerRange": [Function],
-    "getIndex": [Function],
-    "getLastAccepted": [Function],
-    "isAccepted": [Function],
+  "indexTx": {
+    "xChain": {
+      "getContainerByID": [Function],
+      "getContainerByIndex": [Function],
+      "getContainerRange": [Function],
+      "getIndex": [Function],
+      "getLastAccepted": [Function],
+      "isAccepted": [Function],
+    },
   },
   "info": {
     "acps": [Function],
@@ -410,6 +432,7 @@ test("default", async () => {
   "maxPriorityFeePerGas": [Function],
   "multicall": [Function],
   "pChain": {
+    "getAllValidatorsAt": [Function],
     "getBalance": [Function],
     "getBlock": [Function],
     "getBlockByHeight": [Function],
@@ -440,6 +463,20 @@ test("default", async () => {
     "validates": [Function],
   },
   "prepareTransactionRequest": [Function],
+  "proposervm": {
+    "cChain": {
+      "getCurrentEpoch": [Function],
+      "getProposedHeight": [Function],
+    },
+    "pChain": {
+      "getCurrentEpoch": [Function],
+      "getProposedHeight": [Function],
+    },
+    "xChain": {
+      "getCurrentEpoch": [Function],
+      "getProposedHeight": [Function],
+    },
+  },
   "readContract": [Function],
   "sendRawTransaction": [Function],
   "sendRawTransactionSync": [Function],
@@ -648,7 +685,7 @@ describe("smoke test", () => {
 
   describe("Index API methods", () => {
     test("getContainerByID", async () => {
-      const res = await avalancheClient.indexPChainBlock!.getContainerByID({
+      const res = await avalancheClient.indexBlock!.pChain!.getContainerByID({
         id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
         encoding: "hex",
       });
@@ -656,10 +693,32 @@ describe("smoke test", () => {
     });
 
     test("isAccepted", async () => {
-      const res = await avalancheClient.indexPChainBlock!.isAccepted({
+      const res = await avalancheClient.indexBlock!.pChain!.isAccepted({
         id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
         encoding: "hex",
       });
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("proposervm API methods", () => {
+    test("getCurrentEpoch C-Chain", async () => {
+      const res = await avalancheClient.proposervm!.cChain!.getCurrentEpoch();
+      expect(res).toBeDefined();
+    });
+
+    test("getProposedHeight C-Chain", async () => {
+      const res = await avalancheClient.proposervm!.cChain!.getProposedHeight();
+      expect(res).toBeDefined();
+    });
+
+    test("getCurrentEpoch P-Chain", async () => {
+      const res = await avalancheClient.proposervm!.pChain!.getCurrentEpoch();
+      expect(res).toBeDefined();
+    });
+
+    test("getProposedHeight X-Chain", async () => {
+      const res = await avalancheClient.proposervm!.xChain!.getProposedHeight();
       expect(res).toBeDefined();
     });
   });

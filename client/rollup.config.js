@@ -14,7 +14,7 @@ const getEntryPoints = () => {
   const subPaths = [
     'accounts', 'chains', 'methods', 'methods/wallet', 'methods/wallet/cChain',
     'methods/wallet/pChain', 'methods/wallet/xChain', 'methods/public', 'methods/pChain',
-    'methods/admin', 'methods/cChain', 'methods/xChain', 'methods/health',
+    'methods/admin', 'methods/cChain', 'methods/xChain', 'methods/health', 'methods/proposervm',
     'methods/index', 'methods/info', 'node', 'nonce', 'serializable', 'siwe', 'utils', 'window'
   ];
   

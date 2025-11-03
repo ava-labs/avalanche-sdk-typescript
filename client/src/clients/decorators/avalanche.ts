@@ -10,8 +10,8 @@ import { healthAPIActions, HealthAPIActions } from "./healthApi.js";
 import { IndexAPIActions, indexAPIActions } from "./indexApi.js";
 import { InfoAPIActions, infoAPIActions } from "./infoApi.js";
 import { pChainActions, PChainActions } from "./pChain.js";
+import { proposervmAPIActions, ProposervmAPIActions } from "./proposervmApi.js";
 import { XChainActions, xChainActions } from "./xChain.js";
-
 export type AvalancheActions = PublicActions &
   AvalanchePublicActions & {
     pChain?: PChainActions;
@@ -21,10 +21,19 @@ export type AvalancheActions = PublicActions &
     admin?: AdminAPIActions;
     info?: InfoAPIActions;
     health?: HealthAPIActions;
-    indexPChainBlock?: IndexAPIActions;
-    indexCChainBlock?: IndexAPIActions;
-    indexXChainBlock?: IndexAPIActions;
-    indexXChainTx?: IndexAPIActions;
+    indexBlock?: {
+      pChain?: IndexAPIActions;
+      cChain?: IndexAPIActions;
+      xChain?: IndexAPIActions;
+    };
+    indexTx?: {
+      xChain?: IndexAPIActions;
+    };
+    proposervm?: {
+      cChain?: ProposervmAPIActions;
+      pChain?: ProposervmAPIActions;
+      xChain?: ProposervmAPIActions;
+    };
   };
 
 export function avalancheActions<
@@ -38,10 +47,17 @@ export function avalancheActions<
     admin: adminClient,
     info: infoClient,
     health: healthClient,
-    indexPChainBlock: indexPChainBlockClient,
-    indexCChainBlock: indexCChainBlockClient,
-    indexXChainBlock: indexXChainBlockClient,
-    indexXChainTx: indexXChainTxClient,
+    indexBlock: {
+      pChain: indexPChainBlockClient,
+      cChain: indexCChainBlockClient,
+      xChain: indexXChainBlockClient,
+    },
+    indexTx: { xChain: indexXChainTxClient },
+    proposervm: {
+      cChain: proposervmCChainClient,
+      pChain: proposervmPChainClient,
+      xChain: proposervmXChainClient,
+    },
     ...publicClient
   } = client as any;
 
@@ -54,17 +70,45 @@ export function avalancheActions<
     ...(infoClient ? { info: infoAPIActions(infoClient) } : {}),
     ...(healthClient ? { health: healthAPIActions(healthClient) } : {}),
     ...(adminClient ? { admin: adminAPIActions(adminClient) } : {}),
-    ...(indexPChainBlockClient
-      ? { indexPChainBlock: indexAPIActions(indexPChainBlockClient) }
+    ...(indexPChainBlockClient ||
+    indexCChainBlockClient ||
+    indexXChainBlockClient ||
+    indexXChainTxClient
+      ? {
+          indexBlock: {
+            ...(indexPChainBlockClient
+              ? { pChain: indexAPIActions(indexPChainBlockClient) }
+              : {}),
+            ...(indexCChainBlockClient
+              ? { cChain: indexAPIActions(indexCChainBlockClient) }
+              : {}),
+            ...(indexXChainBlockClient
+              ? { xChain: indexAPIActions(indexXChainBlockClient) }
+              : {}),
+          },
+          indexTx: {
+            ...(indexXChainTxClient
+              ? { xChain: indexAPIActions(indexXChainTxClient) }
+              : {}),
+          },
+        }
       : {}),
-    ...(indexCChainBlockClient
-      ? { indexCChainBlock: indexAPIActions(indexCChainBlockClient) }
-      : {}),
-    ...(indexXChainBlockClient
-      ? { indexXChainBlock: indexAPIActions(indexXChainBlockClient) }
-      : {}),
-    ...(indexXChainTxClient
-      ? { indexXChainTx: indexAPIActions(indexXChainTxClient) }
+    ...(proposervmCChainClient ||
+    proposervmPChainClient ||
+    proposervmXChainClient
+      ? {
+          proposervm: {
+            ...(proposervmCChainClient
+              ? { cChain: proposervmAPIActions(proposervmCChainClient) }
+              : {}),
+            ...(proposervmPChainClient
+              ? { pChain: proposervmAPIActions(proposervmPChainClient) }
+              : {}),
+            ...(proposervmXChainClient
+              ? { xChain: proposervmAPIActions(proposervmXChainClient) }
+              : {}),
+          },
+        }
       : {}),
   };
 }
