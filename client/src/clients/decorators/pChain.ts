@@ -785,6 +785,9 @@ export type PChainActions = {
   /**
    * Get all validators at a specific height across all Subnets and the Primary Network.
    *
+   * Note: The public API (api.avax.network) only support height within 1000 blocks
+   * from the P-Chain tip.
+   *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetallvalidatorsat
    *
    * @param args - {@link GetAllValidatorsAtParameters} The height
