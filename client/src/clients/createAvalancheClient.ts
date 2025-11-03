@@ -17,15 +17,7 @@ import { createInfoApiClient } from "./createInfoApiClient.js";
 import { createPChainClient } from "./createPChainClient.js";
 import { createProposervmApiClient } from "./createProposervmApiClient.js";
 import { createXChainClient } from "./createXChainClient.js";
-import { adminAPIActions } from "./decorators/adminApi.js";
 import { avalanchePublicActions } from "./decorators/avalanchePublic.js";
-import { cChainActions } from "./decorators/cChain.js";
-import { healthAPIActions } from "./decorators/healthApi.js";
-import { indexAPIActions } from "./decorators/indexApi.js";
-import { infoAPIActions } from "./decorators/infoApi.js";
-import { pChainActions } from "./decorators/pChain.js";
-import { proposervmAPIActions } from "./decorators/proposervmApi.js";
-import { xChainActions } from "./decorators/xChain.js";
 import {
   AvalancheClient,
   AvalancheClientConfig,
@@ -144,37 +136,37 @@ export function createAvalancheClient<
       ...parameters,
       key: "pChain",
       name: "P-Chain Client",
-    }).extend(pChainActions) as any,
+    }),
 
     cChain: createCChainClient({
       ...parameters,
       key: "cChain",
       name: "C-Chain Client",
-    }).extend(cChainActions) as any,
+    }),
 
     xChain: createXChainClient({
       ...parameters,
       key: "xChain",
       name: "X-Chain Client",
-    }).extend(xChainActions) as any,
+    }),
 
     admin: createAdminApiClient({
       ...parameters,
       key: "admin",
       name: "Admin Client",
-    }).extend(adminAPIActions) as any,
+    }),
 
     info: createInfoApiClient({
       ...parameters,
       key: "info",
       name: "Info Client",
-    }).extend(infoAPIActions) as any,
+    }),
 
     health: createHealthApiClient({
       ...parameters,
       key: "health",
       name: "Health Client",
-    }).extend(healthAPIActions),
+    }),
 
     proposervm: {
       cChain: createProposervmApiClient({
@@ -182,21 +174,21 @@ export function createAvalancheClient<
         key: "proposervm",
         name: "proposervm Client",
         clientType: "proposervmCChain",
-      }).extend(proposervmAPIActions) as any,
+      }),
 
       pChain: createProposervmApiClient({
         ...parameters,
         key: "proposervm",
         name: "proposervm Client",
         clientType: "proposervmPChain",
-      }).extend(proposervmAPIActions) as any,
+      }),
 
       xChain: createProposervmApiClient({
         ...parameters,
         key: "proposervm",
         name: "proposervm Client",
         clientType: "proposervmXChain",
-      }).extend(proposervmAPIActions) as any,
+      }),
     } as any,
 
     indexBlock: {
@@ -205,21 +197,21 @@ export function createAvalancheClient<
         key: "indexPChainBlock",
         name: "Index P-Chain Block Client",
         clientType: "indexPChainBlock",
-      }).extend(indexAPIActions) as any,
+      }),
 
       cChain: createIndexApiClient({
         ...parameters,
         key: "indexCChainBlock",
         name: "Index C-Chain Block Client",
         clientType: "indexCChainBlock",
-      }).extend(indexAPIActions) as any,
+      }),
 
       xChain: createIndexApiClient({
         ...parameters,
         key: "indexXChainBlock",
         name: "Index X-Chain Block Client",
         clientType: "indexXChainBlock",
-      }).extend(indexAPIActions) as any,
+      }),
     } as any,
 
     indexTx: {
@@ -228,7 +220,7 @@ export function createAvalancheClient<
         key: "indexXChainTx",
         name: "Index X-Chain Tx Client",
         clientType: "indexXChainTx",
-      }).extend(indexAPIActions) as any,
+      }),
     } as any,
   } as any;
 }

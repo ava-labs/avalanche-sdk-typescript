@@ -87,7 +87,7 @@ export type {
 
 export { privateKeyToAvalancheAccount } from "./privateKeyToAvalancheAccount.js";
 
-export { memonicsToAvalancheAccount } from "./memonicsToAvalancheAccount.js";
+export { mnemonicsToAvalancheAccount } from "./mnemonicsToAvalancheAccount.js";
 
 export { privateKeyToXPAddress } from "./utils/privateKeyToXPAddress.js";
 

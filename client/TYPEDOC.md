@@ -386,7 +386,7 @@ import {
 ```typescript
 import { 
   privateKeyToAvalancheAccount,
-  memonicsToAvalancheAccount,
+  mnemonicsToAvalancheAccount,
   hdKeyToAvalancheAccount,
   privateKeyToXPAddress,
   publicKeyToXPAddress,

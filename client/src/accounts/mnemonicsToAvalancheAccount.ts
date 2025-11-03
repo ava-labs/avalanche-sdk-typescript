@@ -7,20 +7,20 @@ import { hdKeyToAvalancheAccount } from "./hdKeyToAvalancheAccount.js";
 /**
  * Converts a mnemonic to an Avalanche account.
  *
- * @param memonics - The mnemonic to convert.
+ * @param mnemonics - The mnemonic to convert.
  * @param options - The options for the account. {@link MnemonicToAccountOptions}
  * @returns The Avalanche account {@link AvalancheAccount}.
  *
  * @example
  * ```ts
- * import { memonicsToAvalancheAccount } from "@avalanche-sdk/client/accounts";
+ * import { mnemonicsToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  *
- * const account = memonicsToAvalancheAccount("test test t..");
+ * const account = mnemonicsToAvalancheAccount("test test t..");
  */
-export function memonicsToAvalancheAccount(
-  memonics: string,
+export function mnemonicsToAvalancheAccount(
+  mnemonics: string,
   options: MnemonicToAccountOptions = {}
 ): AvalancheAccount {
-  const seed = mnemonicToSeedSync(memonics);
+  const seed = mnemonicToSeedSync(mnemonics);
   return hdKeyToAvalancheAccount(HDKey.fromMasterSeed(seed), options);
 }
