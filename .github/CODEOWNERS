@@ -1,1 +1,6 @@
-* @SayanKar
+# CODEOWNERS file for Avalanche SDK TypeScript
+# This file defines code owners who will be automatically requested for review
+# when changes are made to the corresponding paths.
+#
+# Default owners for the entire repository
+* @SayanKar @rajranjan0608 @ava-labs/data-platform
