@@ -10,7 +10,7 @@ import { healthAPIActions, HealthAPIActions } from "./healthApi.js";
 import { IndexAPIActions, indexAPIActions } from "./indexApi.js";
 import { InfoAPIActions, infoAPIActions } from "./infoApi.js";
 import { pChainActions, PChainActions } from "./pChain.js";
-import { ProposerVMAPIActions, proposerVMAPIActions } from "./proposervmApi.js";
+import { proposervmAPIActions, ProposervmAPIActions } from "./proposervmApi.js";
 import { XChainActions, xChainActions } from "./xChain.js";
 export type AvalancheActions = PublicActions &
   AvalanchePublicActions & {
@@ -30,9 +30,9 @@ export type AvalancheActions = PublicActions &
       xChain?: IndexAPIActions;
     };
     proposervm?: {
-      cChain?: ProposerVMAPIActions;
-      pChain?: ProposerVMAPIActions;
-      xChain?: ProposerVMAPIActions;
+      cChain?: ProposervmAPIActions;
+      pChain?: ProposervmAPIActions;
+      xChain?: ProposervmAPIActions;
     };
   };
 
@@ -99,13 +99,13 @@ export function avalancheActions<
       ? {
           proposervm: {
             ...(proposervmCChainClient
-              ? { cChain: proposerVMAPIActions(proposervmCChainClient) }
+              ? { cChain: proposervmAPIActions(proposervmCChainClient) }
               : {}),
             ...(proposervmPChainClient
-              ? { pChain: proposerVMAPIActions(proposervmPChainClient) }
+              ? { pChain: proposervmAPIActions(proposervmPChainClient) }
               : {}),
             ...(proposervmXChainClient
-              ? { xChain: proposerVMAPIActions(proposervmXChainClient) }
+              ? { xChain: proposervmAPIActions(proposervmXChainClient) }
               : {}),
           },
         }

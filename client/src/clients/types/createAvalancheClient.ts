@@ -15,7 +15,7 @@ import { HealthRpcSchema } from "../../methods/health/healthRpcSchema.js";
 import { IndexRpcSchema } from "../../methods/index/indexRpcSchema.js";
 import { InfoRpcSchema } from "../../methods/info/infoRpcSchema.js";
 import { PChainRpcSchema } from "../../methods/pChain/pChainRpcSchema.js";
-import { ProposerVMRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
+import { ProposervmRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
 import { AvalanchePublicRpcSchema } from "../../methods/public/avalanchePublicRpcSchema.js";
 import { XChainRpcSchema } from "../../methods/xChain/xChainRpcSchema.js";
 import {
@@ -30,7 +30,7 @@ import { HealthAPIActions } from "../decorators/healthApi.js";
 import { IndexAPIActions } from "../decorators/indexApi.js";
 import { InfoAPIActions } from "../decorators/infoApi.js";
 import { PChainActions } from "../decorators/pChain.js";
-import { ProposerVMAPIActions } from "../decorators/proposervmApi.js";
+import { ProposervmAPIActions } from "../decorators/proposervmApi.js";
 import { XChainActions } from "../decorators/xChain.js";
 
 export type AvalancheClientConfig<
@@ -119,22 +119,22 @@ export type AvalancheClient<
               transport,
               chain,
               accountOrAddress,
-              ProposerVMRpcSchema,
-              ProposerVMAPIActions
+              ProposervmRpcSchema,
+              ProposervmAPIActions
             >;
             pChain: AvalancheCoreClient<
               transport,
               chain,
               accountOrAddress,
-              ProposerVMRpcSchema,
-              ProposerVMAPIActions
+              ProposervmRpcSchema,
+              ProposervmAPIActions
             >;
             xChain: AvalancheCoreClient<
               transport,
               chain,
               accountOrAddress,
-              ProposerVMRpcSchema,
-              ProposerVMAPIActions
+              ProposervmRpcSchema,
+              ProposervmAPIActions
             >;
           };
 

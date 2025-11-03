@@ -701,7 +701,7 @@ describe("smoke test", () => {
     });
   });
 
-  describe("ProposerVM API methods", () => {
+  describe("proposervm API methods", () => {
     test("getCurrentEpoch C-Chain", async () => {
       const res = await avalancheClient.proposervm!.cChain!.getCurrentEpoch();
       expect(res).toBeDefined();

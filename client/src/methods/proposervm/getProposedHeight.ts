@@ -3,7 +3,7 @@ import {
   AvalancheCoreClient,
   AvalancheCoreClient as Client,
 } from "../../clients/createAvalancheCoreClient.js";
-import { ProposerVMRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
+import { ProposervmRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
 import { GetProposedHeightReturnType } from "./types/getProposedHeight.js";
 
 /**
@@ -35,7 +35,7 @@ export async function getProposedHeight<chain extends Chain | undefined>(
   client: Client<Transport, chain>
 ): Promise<GetProposedHeightReturnType> {
   return client.request<
-    ProposerVMRpcSchema,
+    ProposervmRpcSchema,
     { method: "proposervm.getProposedHeight"; params: {} },
     GetProposedHeightReturnType
   >({

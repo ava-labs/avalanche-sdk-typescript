@@ -15,7 +15,7 @@ import { createHealthApiClient } from "./createHealthApiClient.js";
 import { createIndexApiClient } from "./createIndexApiClient.js";
 import { createInfoApiClient } from "./createInfoApiClient.js";
 import { createPChainClient } from "./createPChainClient.js";
-import { createProposerVMApiClient } from "./createProposervmApiClient.js";
+import { createProposervmApiClient } from "./createProposervmApiClient.js";
 import { createXChainClient } from "./createXChainClient.js";
 import { adminAPIActions } from "./decorators/adminApi.js";
 import { avalanchePublicActions } from "./decorators/avalanchePublic.js";
@@ -24,7 +24,7 @@ import { healthAPIActions } from "./decorators/healthApi.js";
 import { indexAPIActions } from "./decorators/indexApi.js";
 import { infoAPIActions } from "./decorators/infoApi.js";
 import { pChainActions } from "./decorators/pChain.js";
-import { proposerVMAPIActions } from "./decorators/proposervmApi.js";
+import { proposervmAPIActions } from "./decorators/proposervmApi.js";
 import { xChainActions } from "./decorators/xChain.js";
 import {
   AvalancheClient,
@@ -42,7 +42,7 @@ import { createAvalancheTransportClient } from "./utils.js";
  * - Admin API
  * - Info API
  * - Health API
- * - ProposerVM API
+ * - proposervm API
  * - Index API
  *
  * @param parameters - {@link AvalancheClientConfig}
@@ -69,8 +69,13 @@ import { createAvalancheTransportClient } from "./utils.js";
  * const adminClient = client.admin
  * const infoClient = client.info
  * const healthClient = client.health
- * const proposervmClient = client.proposervm
- * const indexPChainBlockClient = client.indexPChainBlock
+ * const proposervmCChainClient = client.proposervm.cChain
+ * const proposervmPChainClient = client.proposervm.pChain
+ * const proposervmXChainClient = client.proposervm.xChain
+ * const indexPChainBlockClient = client.indexBlock.pChain
+ * const indexCChainBlockClient = client.indexBlock.cChain
+ * const indexXChainBlockClient = client.indexBlock.xChain
+ * const indexXChainTxClient = client.indexTx.xChain
  *
  * // Get the latest block number
  * const blockNumber = await client.pChain.getBlockNumber()
@@ -172,26 +177,26 @@ export function createAvalancheClient<
     }).extend(healthAPIActions),
 
     proposervm: {
-      cChain: createProposerVMApiClient({
+      cChain: createProposervmApiClient({
         ...parameters,
         key: "proposervm",
-        name: "ProposerVM Client",
+        name: "proposervm Client",
         clientType: "proposervmCChain",
-      }).extend(proposerVMAPIActions) as any,
+      }).extend(proposervmAPIActions) as any,
 
-      pChain: createProposerVMApiClient({
+      pChain: createProposervmApiClient({
         ...parameters,
         key: "proposervm",
-        name: "ProposerVM Client",
+        name: "proposervm Client",
         clientType: "proposervmPChain",
-      }).extend(proposerVMAPIActions) as any,
+      }).extend(proposervmAPIActions) as any,
 
-      xChain: createProposerVMApiClient({
+      xChain: createProposervmApiClient({
         ...parameters,
         key: "proposervm",
-        name: "ProposerVM Client",
+        name: "proposervm Client",
         clientType: "proposervmXChain",
-      }).extend(proposerVMAPIActions) as any,
+      }).extend(proposervmAPIActions) as any,
     } as any,
 
     indexBlock: {

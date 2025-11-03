@@ -5,7 +5,7 @@ import { GetCurrentEpochReturnType } from "../../methods/proposervm/types/getCur
 import { GetProposedHeightReturnType } from "../../methods/proposervm/types/getProposedHeight.js";
 import { AvalancheCoreClient } from "../createAvalancheCoreClient.js";
 
-export type ProposerVMAPIActions = {
+export type ProposervmAPIActions = {
   /**
    * Returns this node's current proposer VM height.
    *
@@ -55,9 +55,9 @@ export type ProposerVMAPIActions = {
   getCurrentEpoch: () => Promise<GetCurrentEpochReturnType>;
 };
 
-export function proposerVMAPIActions<
+export function proposervmAPIActions<
   chain extends Chain | undefined = Chain | undefined
->(client: AvalancheCoreClient<Transport, chain>): ProposerVMAPIActions {
+>(client: AvalancheCoreClient<Transport, chain>): ProposervmAPIActions {
   return {
     getProposedHeight: () => getProposedHeight(client),
     getCurrentEpoch: () => getCurrentEpoch(client),

@@ -165,6 +165,11 @@
       "import": "./dist/_esm/methods/index/index.js",
       "require": "./dist/_cjs/methods/index/index.js"
     },
+    "./methods/proposervm": {
+      "types": "./dist/_types/methods/proposervm/index.d.ts",
+      "import": "./dist/_esm/methods/proposervm/index.js",
+      "require": "./dist/_cjs/methods/proposervm/index.js"
+    },
     "./methods/info": {
       "types": "./dist/_types/methods/info/index.d.ts",
       "import": "./dist/_esm/methods/info/index.js",
@@ -255,6 +260,9 @@
       ],
       "methods/index": [
         "./dist/_types/methods/index/index.d.ts"
+      ],
+      "methods/proposervm": [
+        "./dist/_types/methods/proposervm/index.d.ts"
       ],
       "methods/info": [
         "./dist/_types/methods/info/index.d.ts"

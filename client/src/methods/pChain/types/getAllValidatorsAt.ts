@@ -3,7 +3,7 @@ import { RequestErrorType } from "viem/utils";
 /**
  * Parameters for the `platform.getAllValidatorsAt` method.
  * Get all validators at a given height across all Subnets and the Primary Network.
- * @property height - The P-Chain height to get validators at, or "proposed" to return the validator set at the node's ProposerVM height
+ * @property height - The P-Chain height to get validators at, or "proposed" to return the validator set at the node's proposervm height
  */
 export type GetAllValidatorsAtParameters = {
   height: number | "proposed";

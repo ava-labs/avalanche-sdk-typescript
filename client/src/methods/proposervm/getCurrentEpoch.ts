@@ -3,7 +3,7 @@ import {
   AvalancheCoreClient,
   AvalancheCoreClient as Client,
 } from "../../clients/createAvalancheCoreClient.js";
-import { ProposerVMRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
+import { ProposervmRpcSchema } from "../../methods/proposervm/proposervmRpcSchema.js";
 import { GetCurrentEpochReturnType } from "./types/getCurrentEpoch.js";
 
 /**
@@ -35,7 +35,7 @@ export async function getCurrentEpoch<chain extends Chain | undefined>(
   client: Client<Transport, chain>
 ): Promise<GetCurrentEpochReturnType> {
   return client.request<
-    ProposerVMRpcSchema,
+    ProposervmRpcSchema,
     { method: "proposervm.getCurrentEpoch"; params: {} },
     GetCurrentEpochReturnType
   >({

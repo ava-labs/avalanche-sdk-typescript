@@ -1451,10 +1451,10 @@ export {
   type PChainClientConfig,
 } from "./clients/createPChainClient.js";
 export {
-  createProposerVMApiClient,
-  type CreateProposerVMApiClientErrorType,
-  type ProposerVMApiClient,
-  type ProposerVMApiClientConfig,
+  createProposervmApiClient,
+  type CreateProposervmApiClientErrorType,
+  type ProposervmApiClient,
+  type ProposervmApiClientConfig,
 } from "./clients/createProposervmApiClient.js";
 export {
   createXChainClient,
@@ -1500,8 +1500,8 @@ export {
   type PChainActions,
 } from "./clients/decorators/pChain.js";
 export {
-  proposerVMAPIActions,
-  type ProposerVMAPIActions,
+  proposervmAPIActions,
+  type ProposervmAPIActions,
 } from "./clients/decorators/proposervmApi.js";
 export {
   xChainActions,
@@ -1520,7 +1520,7 @@ export { type HealthRpcSchema } from "./methods/health/healthRpcSchema.js";
 export { type IndexRpcSchema } from "./methods/index/indexRpcSchema.js";
 export { type InfoRpcSchema } from "./methods/info/infoRpcSchema.js";
 export { type PChainRpcSchema } from "./methods/pChain/pChainRpcSchema.js";
-export { type ProposerVMRpcSchema } from "./methods/proposervm/proposervmRpcSchema.js";
+export { type ProposervmRpcSchema } from "./methods/proposervm/proposervmRpcSchema.js";
 export { type AvalanchePublicRpcSchema } from "./methods/public/avalanchePublicRpcSchema.js";
 export { type AvalancheWalletRpcSchema } from "./methods/wallet/avalancheWalletRPCSchema.js";
 export { type XChainRpcSchema } from "./methods/xChain/xChainRpcSchema.js";

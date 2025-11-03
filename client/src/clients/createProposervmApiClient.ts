@@ -7,19 +7,19 @@ import {
   RpcSchema,
   Transport,
 } from "viem";
-import { ProposerVMRpcSchema } from "../methods/proposervm/proposervmRpcSchema.js";
+import { ProposervmRpcSchema } from "../methods/proposervm/proposervmRpcSchema.js";
 import {
   AvalancheCoreClient,
   createAvalancheCoreClient,
   CreateAvalancheCoreClientErrorType,
 } from "./createAvalancheCoreClient.js";
 import {
-  proposerVMAPIActions,
-  ProposerVMAPIActions,
+  proposervmAPIActions,
+  ProposervmAPIActions,
 } from "./decorators/proposervmApi.js";
 import { AvalancheClientConfig } from "./types/createAvalancheClient.js";
 
-export type ProposerVMApiClientConfig<
+export type ProposervmApiClientConfig<
   transport extends Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
@@ -31,7 +31,7 @@ export type ProposerVMApiClientConfig<
   }
 >;
 
-export type ProposerVMApiClient<
+export type ProposervmApiClient<
   transport extends Transport = Transport,
   chain extends Chain | undefined = Chain | undefined,
   accountOrAddress extends Account | undefined = undefined,
@@ -42,29 +42,29 @@ export type ProposerVMApiClient<
     chain,
     accountOrAddress,
     rpcSchema extends RpcSchema
-      ? [...ProposerVMRpcSchema, ...rpcSchema]
-      : ProposerVMRpcSchema,
-    ProposerVMAPIActions
+      ? [...ProposervmRpcSchema, ...rpcSchema]
+      : ProposervmRpcSchema,
+    ProposervmAPIActions
   >
 >;
 
-export type CreateProposerVMApiClientErrorType =
+export type CreateProposervmApiClientErrorType =
   CreateAvalancheCoreClientErrorType;
 
 /**
- * Creates a ProposerVM API Client with a given transport configured for a Chain.
+ * Creates a proposervm API Client with a given transport configured for a Chain.
  *
- * The ProposerVM API Client is an interface to interact with the ProposerVM API through Avalanche-specific JSON-RPC API methods.
+ * The proposervm API Client is an interface to interact with the proposervm API through Avalanche-specific JSON-RPC API methods.
  *
- * @param parameters - {@link ProposerVMApiClientConfig}
- * @returns A ProposerVM API Client. {@link ProposerVMApiClient}
+ * @param parameters - {@link ProposervmApiClientConfig}
+ * @returns A proposervm API Client. {@link ProposervmApiClient}
  *
  * @example
  * ```ts
- * import { createProposerVMApiClient} from '@avalanche-sdk/client'
+ * import { createProposervmApiClient} from '@avalanche-sdk/client'
  * import { avalanche } from '@avalanche-sdk/client/chains'
  *
- * const client = createProposerVMApiClient({
+ * const client = createProposervmApiClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
@@ -78,21 +78,21 @@ export type CreateProposerVMApiClientErrorType =
  * const epoch = await client.getCurrentEpoch()
  * ```
  */
-export function createProposerVMApiClient<
+export function createProposervmApiClient<
   transport extends Transport,
   chain extends Chain | undefined = undefined,
   accountOrAddress extends Account | Address | undefined = undefined,
   rpcSchema extends RpcSchema | undefined = undefined,
   raw extends boolean = false
 >(
-  parameters: ProposerVMApiClientConfig<
+  parameters: ProposervmApiClientConfig<
     transport,
     chain,
     accountOrAddress,
     rpcSchema,
     raw
   >
-): ProposerVMApiClient<
+): ProposervmApiClient<
   transport,
   chain,
   ParseAccount<accountOrAddress>,
@@ -100,7 +100,7 @@ export function createProposerVMApiClient<
 > {
   const {
     key = "proposervm",
-    name = "ProposerVM API Client",
+    name = "proposervm API Client",
     clientType,
   } = parameters;
 
@@ -111,5 +111,5 @@ export function createProposerVMApiClient<
     clientType,
   });
 
-  return client.extend(proposerVMAPIActions) as any;
+  return client.extend(proposervmAPIActions) as any;
 }

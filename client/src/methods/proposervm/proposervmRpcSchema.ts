@@ -2,14 +2,14 @@ import { RpcSchemaOverride } from "viem";
 import { GetCurrentEpochMethod } from "./types/getCurrentEpoch.js";
 import { GetProposedHeightMethod } from "./types/getProposedHeight.js";
 
-export type ProposerVMMethods = [
+export type ProposervmMethods = [
   GetProposedHeightMethod,
   GetCurrentEpochMethod
 ];
 
 /**
- * The RPC schema for the ProposerVM methods.
+ * The RPC schema for the proposervm methods.
  *
- * @see {@link ProposerVMMethods}
+ * @see {@link ProposervmMethods}
  */
-export type ProposerVMRpcSchema = RpcSchemaOverride & ProposerVMMethods;
+export type ProposervmRpcSchema = RpcSchemaOverride & ProposervmMethods;
