@@ -7,11 +7,11 @@ import { AvalancheCoreClient } from "../createAvalancheCoreClient.js";
 
 export type ProposervmAPIActions = {
   /**
-   * Returns this node's current proposer VM height.
+   * Returns this node's current proposer VM height for the requested chain (C-Chain, P-Chain, X-Chain).
    *
    * - Docs: https://build.avax.network/docs/api-reference/proposervm-api#proposervmgetproposedheight
    *
-   * @returns This node's current proposer VM height. {@link GetProposedHeightReturnType}
+   * @returns This node's current proposer VM height for the requested chain. {@link GetProposedHeightReturnType}
    *
    * @example
    * ```ts
@@ -25,17 +25,19 @@ export type ProposervmAPIActions = {
    *   },
    * })
    *
-   * const height = await client.proposervm.getProposedHeight()
+   * const cChainHeight = await client.proposervm.cChain.getProposedHeight()
+   * const pChainHeight = await client.proposervm.pChain.getProposedHeight()
+   * const xChainHeight = await client.proposervm.xChain.getProposedHeight()
    * ```
    */
   getProposedHeight: () => Promise<GetProposedHeightReturnType>;
 
   /**
-   * Returns the current epoch information.
+   * Returns the current epoch information for the requested chain (C-Chain, P-Chain, X-Chain).
    *
    * - Docs: https://build.avax.network/docs/api-reference/proposervm-api#proposervmgetcurrentepoch
    *
-   * @returns The current epoch information. {@link GetCurrentEpochReturnType}
+   * @returns The current epoch information for the requested chain. {@link GetCurrentEpochReturnType}
    *
    * @example
    * ```ts
@@ -49,7 +51,9 @@ export type ProposervmAPIActions = {
    *   },
    * })
    *
-   * const epoch = await client.proposervm.getCurrentEpoch()
+   * const cChainEpoch = await client.proposervm.cChain.getCurrentEpoch()
+   * const pChainEpoch = await client.proposervm.pChain.getCurrentEpoch()
+   * const xChainEpoch = await client.proposervm.xChain.getCurrentEpoch()
    * ```
    */
   getCurrentEpoch: () => Promise<GetCurrentEpochReturnType>;

@@ -69,10 +69,11 @@ export type CreateIndexApiClientErrorType = CreateAvalancheCoreClientErrorType;
  *   transport: {
  *     type: "http",
  *   },
+ *   clientType: "indexPChainBlock",
  * })
  *
- * // Get index P-Chain block
- * const block = await client.indexPChainBlock.getContainerByID({
+ * // Get container by ID for P-Chain block
+ * const block = await client.getContainerByID({
  *   id: '0x1',
  *   encoding: 'hex'
  * })

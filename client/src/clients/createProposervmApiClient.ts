@@ -64,18 +64,27 @@ export type CreateProposervmApiClientErrorType =
  * import { createProposervmApiClient} from '@avalanche-sdk/client'
  * import { avalanche } from '@avalanche-sdk/client/chains'
  *
- * const client = createProposervmApiClient({
+ * const cChainClient = createProposervmApiClient({
  *   chain: avalanche,
  *   transport: {
  *     type: "http",
  *   },
+ *   clientType: "proposervmCChain",
  * })
  *
- * // Get proposer VM height
- * const height = await client.getProposedHeight()
+ * // Get proposer VM height for C-Chain
+ * const cChainHeight = await cChainClient.getProposedHeight()
  *
- * // Get current epoch
- * const epoch = await client.getCurrentEpoch()
+ * const pChainClient = createProposervmApiClient({
+ *   chain: avalanche,
+ *   transport: {
+ *     type: "http",
+ *   },
+ *   clientType: "proposervmPChain",
+ * })
+ *
+ * // Get proposer VM height for P-Chain
+ * const pChainHeight = await pChainClient.getProposedHeight()
  * ```
  */
 export function createProposervmApiClient<
