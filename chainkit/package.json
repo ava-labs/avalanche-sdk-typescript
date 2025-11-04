@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/chainkit",
-  "version": "0.3.0-alpha.6",
+  "version": "0.3.0-alpha.7",
   "author": "Sayan Kar",
   "license": "BSD-3-Clause",
   "publishConfig": {
@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "json-canonicalize": "^1.0.6",
-    "zod": "^3.20.0"
+    "zod": "^3.25.0 || ^4.0.0"
   },
   "exports": {
     ".": {

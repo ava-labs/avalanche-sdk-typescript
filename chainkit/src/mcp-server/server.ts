@@ -73,6 +73,7 @@ import { tool$dataPrimaryNetworkTransactionsListActiveStakingTransactions } from
 import { tool$dataPrimaryNetworkTransactionsListAssetTransactions } from "./tools/dataPrimaryNetworkTransactionsListAssetTransactions.js";
 import { tool$dataPrimaryNetworkTransactionsListLatest } from "./tools/dataPrimaryNetworkTransactionsListLatest.js";
 import { tool$dataPrimaryNetworkUtxosListByAddresses } from "./tools/dataPrimaryNetworkUtxosListByAddresses.js";
+import { tool$dataPrimaryNetworkUtxosListByAddressesV2 } from "./tools/dataPrimaryNetworkUtxosListByAddressesV2.js";
 import { tool$dataPrimaryNetworkVerticesGetByHash } from "./tools/dataPrimaryNetworkVerticesGetByHash.js";
 import { tool$dataPrimaryNetworkVerticesListByHeight } from "./tools/dataPrimaryNetworkVerticesListByHeight.js";
 import { tool$dataPrimaryNetworkVerticesListLatest } from "./tools/dataPrimaryNetworkVerticesListLatest.js";
@@ -86,8 +87,8 @@ import { tool$dataUsageMetricsGetRpcUsageMetrics } from "./tools/dataUsageMetric
 import { tool$dataUsageMetricsGetSubnetRpcUsage } from "./tools/dataUsageMetricsGetSubnetRpcUsage.js";
 import { tool$dataUsageMetricsGetUsage } from "./tools/dataUsageMetricsGetUsage.js";
 import { tool$metricsChainsGet } from "./tools/metricsChainsGet.js";
-import { tool$metricsChainsGetICMMetrics } from "./tools/metricsChainsGetICMMetrics.js";
-import { tool$metricsChainsGetICMRollingWindowMetrics } from "./tools/metricsChainsGetICMRollingWindowMetrics.js";
+import { tool$metricsChainsGetICMSummary } from "./tools/metricsChainsGetICMSummary.js";
+import { tool$metricsChainsGetICMTimeseries } from "./tools/metricsChainsGetICMTimeseries.js";
 import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js";
 import { tool$metricsChainsGetRollingWindowMetrics } from "./tools/metricsChainsGetRollingWindowMetrics.js";
 import { tool$metricsChainsList } from "./tools/metricsChainsList.js";
@@ -125,7 +126,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.6",
+    version: "0.3.0-alpha.7",
   });
 
   const client = new AvalancheCore({
@@ -172,8 +173,8 @@ export function createMCPServer(deps: {
   tool(tool$metricsChainsGet);
   tool(tool$metricsChainsGetMetrics);
   tool(tool$metricsChainsGetRollingWindowMetrics);
-  tool(tool$metricsChainsGetICMMetrics);
-  tool(tool$metricsChainsGetICMRollingWindowMetrics);
+  tool(tool$metricsChainsGetICMTimeseries);
+  tool(tool$metricsChainsGetICMSummary);
   tool(tool$metricsChainsListNftHolders);
   tool(tool$metricsChainsListTokenHoldersAboveThreshold);
   tool(tool$metricsChainsListBTCbBridgersAboveThreshold);
@@ -236,6 +237,7 @@ export function createMCPServer(deps: {
   tool(tool$dataPrimaryNetworkRewardsListPendingRewards);
   tool(tool$dataPrimaryNetworkRewardsListHistoricalRewards);
   tool(tool$dataPrimaryNetworkUtxosListByAddresses);
+  tool(tool$dataPrimaryNetworkUtxosListByAddressesV2);
   tool(tool$dataPrimaryNetworkBalancesListByAddresses);
   tool(tool$dataPrimaryNetworkBlocksGet);
   tool(tool$dataPrimaryNetworkBlocksListByNodeId);

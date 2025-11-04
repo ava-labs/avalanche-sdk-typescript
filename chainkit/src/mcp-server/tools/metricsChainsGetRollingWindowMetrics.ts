@@ -16,7 +16,7 @@ export const tool$metricsChainsGetRollingWindowMetrics: ToolDefinition<
   name: "metrics-chains-get-rolling-window-metrics",
   description: `Get rolling window metrics for EVM chains
 
-Gets the rolling window metrics for an EVM chain for the last hour, day, month, year, and all time.`,
+Gets the rolling window metrics for an EVM chain for the last hour, day, week, month, 90 days, year, and all time. Active addresses/active senders only support last hour, day, and week.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await metricsChainsGetRollingWindowMetrics(
