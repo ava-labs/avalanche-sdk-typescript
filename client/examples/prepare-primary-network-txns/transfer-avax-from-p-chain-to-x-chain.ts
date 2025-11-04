@@ -1,6 +1,7 @@
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
+import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
 import { loadConfig } from "../config";
 
 async function run() {
@@ -24,7 +25,7 @@ async function run() {
     exportedOutputs: [
       {
         addresses: [account.getXPAddress("P", "fuji")], // P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
-        amount: 0.0111,
+        amount: avaxToNanoAvax(0.0111), // 0.0111 AVAX = 11_100_000 nAVAX
       },
     ],
     destinationChain: "X",

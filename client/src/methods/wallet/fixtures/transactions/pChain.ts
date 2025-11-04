@@ -21,7 +21,7 @@ import {
 } from "./common";
 
 export const getUTXOStrings = (
-  amt = 50,
+  amt = BigInt(50 * 1e9),
   assetId: string,
   owners: string[],
   locktime = 0,
@@ -46,14 +46,14 @@ export const getUTXOStrings = (
 };
 
 export const getValidUTXO = (
-  amt = 50,
+  amt = BigInt(50 * 1e9),
   assetId: string,
   owners: string[],
   locktime = 0,
   threshold = 1,
   utxoId = "2R5bJqAd6evMJAuV4TYGqfaHkdCEQfYUx4GoHpJZxsFeor6wMi"
 ) => {
-  const bigIntAmount = new BigIntPr(BigInt(amt * 1e9));
+  const bigIntAmount = new BigIntPr(amt);
   const ownerAddresses = owners.map((owner) => Address.fromString(owner));
 
   return new Utxo(
@@ -132,7 +132,7 @@ export const getPChainMockServer = (params: {
 
 export const getDefaultGetUTXOsMockResponse = (
   reqBody: Record<string, any> | DefaultRequestMultipartBody,
-  testInputAmount: number = 1
+  testInputAmount: bigint = BigInt(1 * 1e9)
 ) => {
   return HttpResponse.json({
     jsonrpc: "2.0",

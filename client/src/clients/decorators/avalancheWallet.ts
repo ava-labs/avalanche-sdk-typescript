@@ -27,9 +27,9 @@ import { AvalancheWalletCoreClient } from "../createAvalancheWalletCoreClient.js
 
 export type AvalancheWalletActions = {
   /**
-   * Sends an XP transaction to the network.
+   * Sends an P-Chain or X-Chain or C-Chain Atomic transaction to the network.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_send
+   * - Docs: https://docs.core.app/docs/reference/avalanche_sendtransaction
    *
    * @param args - The parameters for sending the transaction. {@link SendXPTransactionParameters}
    * @returns A promise that resolves to the transaction result. {@link SendXPTransactionReturnType}
@@ -38,6 +38,7 @@ export type AvalancheWalletActions = {
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import "@avalanche-sdk/client/window"
    *
    * // You can pass a local account otherwise a custom provider can be used
    * const account = privateKeyToAvalancheAccount("0x...")
@@ -48,9 +49,7 @@ export type AvalancheWalletActions = {
    * })
    *
    * const result = await walletClient.sendXPTransaction({
-   *   amount: "1000000000",
-   *   to: "X-avax1...",
-   *   assetID: "AVAX"
+   *   ...
    * })
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
@@ -60,9 +59,7 @@ export type AvalancheWalletActions = {
    * })
    *
    * const result = await walletClient.sendXPTransaction({
-   *   amount: "1000000000",
-   *   to: "X-avax1...",
-   *   assetID: "AVAX"
+   *   ...
    * })
    * ```
    */
@@ -73,7 +70,7 @@ export type AvalancheWalletActions = {
   /**
    * Signs a message using the wallet's private key.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_signmessage
+   * - Docs: https://docs.core.app/docs/reference/avalanche_signmessage
    *
    * @param args - The parameters for signing the message. {@link SignXPMessageParameters}
    * @returns A promise that resolves to the signed message. {@link SignXPMessageReturnType}
@@ -115,7 +112,7 @@ export type AvalancheWalletActions = {
   /**
    * Signs an XP transaction using the wallet's private key.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_signtx
+   * - Docs: https://docs.core.app/docs/reference/avalanche_signtransaction
    *
    * @param args - The parameters for signing the transaction. {@link SignXPTransactionParameters}
    * @returns A promise that resolves to the signed transaction. {@link SignXPTransactionReturnType}
@@ -134,8 +131,7 @@ export type AvalancheWalletActions = {
    * })
    *
    * const signedTx = await walletClient.signXPTransaction({
-   *   tx: "0x...",
-   *   address: "X-avax1..."
+   *   ...
    * })
    *
    * // Or you can use a custom provider (e.g. window.avalanche, window.ethereum, etc.)
@@ -145,9 +141,8 @@ export type AvalancheWalletActions = {
    * })
    *
    * const signedTx = await walletClient.signXPTransaction({
-   *   tx: "0x...",
-   *   address: "X-avax1..."
-   * })
+   *   ...
+\   * })
    * ```
    */
   signXPTransaction: (
@@ -157,7 +152,7 @@ export type AvalancheWalletActions = {
   /**
    * Gets the public key associated with the wallet account.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_getaccountpubkey
+   * - Docs: https://docs.core.app/docs/reference/avalanche_getaccountpubkey
    *
    * @returns A promise that resolves to the account's public key. {@link GetAccountPubKeyReturnType}
    *
@@ -190,7 +185,6 @@ export type AvalancheWalletActions = {
   /**
    * Waits for a transaction to be confirmed on the network.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avm_waittx
    *
    * @param args - The parameters for waiting for the transaction. {@link WaitForTxnParameters}
    * @returns A promise that resolves when the transaction is confirmed.
@@ -223,6 +217,7 @@ export type AvalancheWalletActions = {
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToWei } from '@avalanche-sdk/client/utils'
    *
    * const walletClient = createAvalancheWalletClient({
    *   chain: avalanche,
@@ -230,7 +225,7 @@ export type AvalancheWalletActions = {
    * })
    *
    * const result = await walletClient.send({
-   *   amount: 1,
+   *   amount: avaxToWei(1), // 1 AVAX = 1_000_000_000_000_000_000 wei
    *   to: "0x0000000000000000000000000000000000000000",
    * });
    */

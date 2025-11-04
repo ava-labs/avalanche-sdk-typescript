@@ -4,13 +4,14 @@ import { PrepareExportTxnParameters } from ".";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
 import { testContext } from "../fixtures/testContext";
-import {
-  getCChainMockServer,
-  TEST_BASE_FEE,
-} from "../fixtures/transactions/cChain";
+import { getCChainMockServer } from "../fixtures/transactions/cChain";
 import { account1, account2, account3 } from "../fixtures/transactions/common";
 import { checkOutputs } from "../fixtures/utils";
-import { getChainIdFromAlias, toTransferableOutput } from "../utils";
+import {
+  avaxToNanoAvax,
+  getChainIdFromAlias,
+  toTransferableOutput,
+} from "../utils";
 
 const cChainWorker = getCChainMockServer({});
 
@@ -38,7 +39,7 @@ describe("prepareExportTxn", () => {
       account3.getXPAddress("P", "fuji"),
     ];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs = [
       {
         addresses: receiverAddresses,
@@ -84,7 +85,7 @@ describe("prepareExportTxn", () => {
       account3.getXPAddress("P", "fuji"),
     ];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const mockTxParamsPChain: PrepareExportTxnParameters = {
       fromAddress: account1.getEVMAddress(),
       exportedOutput: {
@@ -141,7 +142,7 @@ describe("prepareExportTxn", () => {
       account2.getXPAddress("P", "fuji"),
       account3.getXPAddress("P", "fuji"),
     ];
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const mockTxParamsPChain: PrepareExportTxnParameters = {
       fromAddress: account1.getEVMAddress(),
       exportedOutput: {

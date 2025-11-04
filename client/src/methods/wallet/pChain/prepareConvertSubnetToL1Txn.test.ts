@@ -14,9 +14,9 @@ import {
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 const popPublicKeyHex =
   "0x94ab445df7ca4158cf63b66b6c463e9995b380441863f89231d3cd468ecdf7a96b080d3e96e20d74d9f2cd4f96d9dc40";
 const popSignatureHex =
@@ -53,7 +53,7 @@ describe("convertSubnetToL1Tx", () => {
           proofOfPossession: popSignatureHex,
         },
         weight: 12345n,
-        initialBalanceInAvax: 0.123,
+        initialBalanceInAvax: avaxToNanoAvax(0.123), // 0.123 AVAX = 123_000_000 nAVAX
         remainingBalanceOwner: {
           addresses: [account2.getXPAddress("P", "fuji")],
           threshold: 1,
@@ -70,7 +70,7 @@ describe("convertSubnetToL1Tx", () => {
           proofOfPossession: popSignatureHex,
         },
         weight: 12345n,
-        initialBalanceInAvax: 0.456,
+        initialBalanceInAvax: avaxToNanoAvax(0.456), // 0.456 AVAX = 456_000_000_000_000 nAVAX
         remainingBalanceOwner: {
           addresses: [account2.getXPAddress("P", "fuji")],
           threshold: 1,
@@ -106,16 +106,15 @@ describe("convertSubnetToL1Tx", () => {
       feeState().price
     );
     const l1ValidatorBurnedFees = l1Validators.reduce(
-      (acc, v) => acc + avaxToNanoAvax(v.initialBalanceInAvax),
+      (acc, v) => acc + v.initialBalanceInAvax,
       0n
     );
     const totalBurnedFees = fee + l1ValidatorBurnedFees;
-    const expectedChangeAmount =
-      avaxToNanoAvax(testInputAmount) - totalBurnedFees;
+    const expectedChangeAmount = testInputAmount - totalBurnedFees;
 
     // expected change output
     testOutputs.push({
-      amount: nanoAvaxToAvax(expectedChangeAmount),
+      amount: expectedChangeAmount,
       addresses: changeAddresses,
     });
 
@@ -146,7 +145,7 @@ describe("convertSubnetToL1Tx", () => {
           proofOfPossession: popSignatureHex,
         },
         weight: 12345n,
-        initialBalanceInAvax: 0.123,
+        initialBalanceInAvax: avaxToNanoAvax(0.123), // 0.123 AVAX = 123_000_000 nAVAX
         remainingBalanceOwner: {
           addresses: [account2.getXPAddress("P", "fuji")],
           threshold: 1,
@@ -163,7 +162,7 @@ describe("convertSubnetToL1Tx", () => {
           proofOfPossession: popSignatureHex,
         },
         weight: 12345n,
-        initialBalanceInAvax: 0.456,
+        initialBalanceInAvax: avaxToNanoAvax(0.456), // 0.456 AVAX = 456_000_000 nAVAX
         remainingBalanceOwner: {
           addresses: [
             account2.getXPAddress("P", "fuji"),
@@ -212,7 +211,7 @@ describe("convertSubnetToL1Tx", () => {
           BigInt(a.weight)
         );
         expect(e.getBalance().value(), "balance mismatch").toBe(
-          avaxToNanoAvax(a.initialBalanceInAvax)
+          a.initialBalanceInAvax
         );
         expect(
           e.getDeactivationOwner().threshold.value(),
@@ -267,7 +266,7 @@ describe("convertSubnetToL1Tx", () => {
           proofOfPossession: popSignatureHex,
         },
         weight: 12345n,
-        initialBalanceInAvax: 0.123,
+        initialBalanceInAvax: avaxToNanoAvax(0.123), // 0.123 AVAX = 123_000_000 nAVAX
         remainingBalanceOwner: {
           addresses: [account2.getXPAddress("P", "fuji")],
           threshold: 1,

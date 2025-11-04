@@ -2,7 +2,7 @@ import { pvm, pvmSerial } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { avaxToNanoAvax, fetchCommonPVMTxParams } from "../utils.js";
+import { fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareIncreaseL1ValidatorBalanceTxnParameters,
   PrepareIncreaseL1ValidatorBalanceTxnReturnType,
@@ -23,6 +23,7 @@ import {
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -31,7 +32,7 @@ import {
  * });
  *
  * const pChainIncreaseL1ValidatorBalanceTxnRequest = await prepareIncreaseL1ValidatorBalanceTxn(walletClient, {
- *   balanceInAvax: 1,
+ *   balanceInAvax: avaxToNanoAvax(1),
  *   validationId: "11111111111111111111111111111111LpoYY",
  * });
  *
@@ -51,7 +52,7 @@ export async function prepareIncreaseL1ValidatorBalanceTxn(
   const unsignedTx = pvm.newIncreaseL1ValidatorBalanceTx(
     {
       ...commonTxParams,
-      balance: avaxToNanoAvax(params.balanceInAvax),
+      balance: params.balanceInAvax,
       validationId: params.validationId,
     },
     context

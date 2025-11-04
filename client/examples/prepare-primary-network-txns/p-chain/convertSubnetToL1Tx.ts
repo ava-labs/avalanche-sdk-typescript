@@ -1,8 +1,8 @@
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
+import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
 import { loadConfig } from "../../config";
-
 async function run() {
   // The account that will be used to sign the transaction
   const { privateKeyAccount1 } = loadConfig();
@@ -37,7 +37,7 @@ async function run() {
               "0x985b38c12afbe3ff90161f451bf2290cd6c03c3acd0a7346e346820ab4d27c200036cd9c7a828548eec5c6a5304339c400d1eb6f73e381479c4356df57938d4792f7fb9256a5817c16fb514bd27e8d9fc5c5a02470d721bb34064e90a19174df",
           },
           weight: 100n,
-          initialBalanceInAvax: 0.1,
+          initialBalanceInAvax: avaxToNanoAvax(0.1), // 0.1 AVAX = 100_000_000 nAVAX
           remainingBalanceOwner: {
             addresses: [account.getXPAddress("P", "fuji")],
             threshold: 1,

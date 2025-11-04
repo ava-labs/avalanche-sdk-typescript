@@ -1,5 +1,4 @@
 import { evm, pvm, utils } from "@avalabs/avalanchejs";
-import { formatEther } from "viem";
 import { getBalance, getTransactionCount } from "viem/actions";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
@@ -11,12 +10,11 @@ import { prepareImportTxn as prepareImportTxnPChain } from "../pChain/prepareImp
 import { sendXPTransaction } from "../sendXPTransaction.js";
 import { SendParameters, SendReturnType } from "../types/send.js";
 import {
-  avaxToNanoAvax,
   bech32AddressToBytes,
   getBech32AddressFromAccountOrClient,
   getChainIdFromAlias,
   getEVMAddressFromAccountOrClient,
-  nanoAvaxToAvax,
+  weiToNanoAvax,
 } from "../utils.js";
 import { waitForTxn } from "../waitForTxn.js";
 
@@ -49,41 +47,44 @@ export async function transferCtoPChain(
   }
 
   // Prepare the C chain export txn and get the fee for each
-  const [cChainExportTxnRequest, pChainFeeState, baseFee, txCount, balance] =
-    await Promise.all([
-      prepareExportTxnCChain(client, {
-        destinationChain: "P",
-        fromAddress: currentAccountEVMAddress,
-        exportedOutput: {
-          addresses: [currentAccountPChainBech32Address],
-          amount: params.amount,
-        },
-        context,
-      }),
-      getFeeState(client.pChainClient),
-      getBaseFee(client),
-      getTransactionCount(client, {
-        address: `0x${utils.strip0x(currentAccountEVMAddress)}`,
-      }),
-      formatEther(
-        await getBalance(client, {
-          address: `0x${utils.strip0x(currentAccountEVMAddress)}`,
-        })
-      ),
-    ]);
+  const [
+    cChainExportTxnRequest,
+    pChainFeeState,
+    baseFee,
+    txCount,
+    balanceInWei,
+  ] = await Promise.all([
+    prepareExportTxnCChain(client, {
+      destinationChain: "P",
+      fromAddress: currentAccountEVMAddress,
+      exportedOutput: {
+        addresses: [currentAccountPChainBech32Address],
+        amount: weiToNanoAvax(params.amount),
+      },
+      context,
+    }),
+    getFeeState(client.pChainClient),
+    getBaseFee(client),
+    getTransactionCount(client, {
+      address: `0x${utils.strip0x(currentAccountEVMAddress)}`,
+    }),
+    await getBalance(client, {
+      address: `0x${utils.strip0x(currentAccountEVMAddress)}`,
+    }),
+  ]);
 
   // Check if user has enough balance
-  if (Number(balance) < params.amount) {
+  if (balanceInWei < params.amount) {
     throw new Error(
-      `Insufficient balance: ${params.amount} AVAX is required, but only ${balance} AVAX is available`
+      `Insufficient balance: ${params.amount} ${params.token} (in wei) is required, but only ${balanceInWei} ${params.token} (in wei) is available`
     );
   }
 
   // Calculate the fee for the C chain export txn
-  const cChainExportTxnFee = evm.estimateExportCost(
+  const cChainExportTxnFeeInNanoAvax = evm.estimateExportCost(
     context,
     BigInt(baseFee),
-    avaxToNanoAvax(params.amount),
+    weiToNanoAvax(params.amount),
     getChainIdFromAlias("P", context.networkID),
     utils.hexToBuffer(currentAccountEVMAddress),
     [bech32AddressToBytes(params.to)],
@@ -91,13 +92,11 @@ export async function transferCtoPChain(
   );
 
   // Check if the fee for the C chain export txn is too high
-  if (cChainExportTxnFee > avaxToNanoAvax(params.amount)) {
+  if (cChainExportTxnFeeInNanoAvax > weiToNanoAvax(params.amount)) {
     throw new Error(
-      `Transfer amount is too low: ${nanoAvaxToAvax(
-        cChainExportTxnFee
-      )} AVAX Fee is required for C chain export txn, but only ${
+      `Transfer amount is too low: ${cChainExportTxnFeeInNanoAvax} nAVAX Fee is required for C chain export txn, but only ${weiToNanoAvax(
         params.amount
-      } AVAX is being transferred, try sending a higher amount.`
+      )} nAVAX is being transferred, try sending a higher amount.`
     );
   }
 
@@ -118,19 +117,18 @@ export async function transferCtoPChain(
   });
 
   // Calculate the fee for the P chain import txn
-  const pChainImportTxnFee = pvm.calculateFee(
+  const pChainImportTxnFeeInNanoAvax = pvm.calculateFee(
     pChainImportTxnRequest.tx.getTx(),
     context.platformFeeConfig.weights,
     pChainFeeState.price
   );
 
   // Calculate the total fee
-  const totalFee = pChainImportTxnFee + cChainExportTxnFee;
-  if (totalFee > avaxToNanoAvax(params.amount)) {
+  const totalFeeInNanoAvax =
+    pChainImportTxnFeeInNanoAvax + cChainExportTxnFeeInNanoAvax;
+  if (totalFeeInNanoAvax > weiToNanoAvax(params.amount)) {
     throw new Error(
-      `Transfer amount is too low: ${nanoAvaxToAvax(
-        pChainImportTxnFee
-      )} AVAX Fee is required for P chain import txn, 
+      `Transfer amount is too low: ${pChainImportTxnFeeInNanoAvax} nAVAX Fee is required for P chain import txn, 
       try sending a higher amount.
       C chain export txn hash: ${sendCChainExportTxn.txHash}`
     );

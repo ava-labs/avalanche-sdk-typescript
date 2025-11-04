@@ -23,6 +23,7 @@ export type CChainWalletActions = {
    * ```ts
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const client = createAvalancheWalletClient({
    *   chain: avalanche,
@@ -33,7 +34,7 @@ export type CChainWalletActions = {
    *
    * const exportTxn = await client.cChain.prepareExportTxn({
    *   to: "P-fuji1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
-   *   amount: "1", // 1 AVAX
+   *   amount: avaxToNanoAvax(1), // 1 AVAX = 1_000_000_000 nAVAX
    *   destinationChain: "X"
    * })
    * ```

@@ -58,9 +58,9 @@ export type FormattedCommonAVMTxParams = {
 
 export type Output = {
   /**
-   * Amount holding in this UTXO.
+   * Amount holding in this UTXO (in nano AVAX).
    */
-  amount: number;
+  amount: bigint;
   /**
    * Addresses who can sign the consuming of this UTXO.
    */
@@ -72,7 +72,7 @@ export type Output = {
   /**
    * Optional. Timestamp in seconds after which this UTXO can be consumed.
    */
-  locktime?: number;
+  locktime?: bigint;
   /**
    * Optional. Threshold of `addresses`' signatures required to consume this UTXO.
    */

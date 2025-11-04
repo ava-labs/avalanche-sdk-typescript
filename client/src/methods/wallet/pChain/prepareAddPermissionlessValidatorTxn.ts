@@ -23,6 +23,7 @@ import {
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -32,13 +33,13 @@ import {
  *
  * const pChainAddPermissionlessValidatorTxnRequest = await prepareAddPermissionlessValidatorTxn(walletClient, {
  *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
- *   stakeInAvax: 1,
- *   end: 1716441600,
+ *   stakeInAvax: avaxToNanoAvax(1),
+ *   end: 1716441600n,
  *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   threshold: 1,
  *   publicKey: "0x1234567890123456789012345678901234567890",
  *   signature: "0x1234567890123456789012345678901234567890",
- *   locktime: 1716441600,
+ *   locktime: 1716441600n,
  *   delegatorRewardPercentage: 2.5,
  *   delegatorRewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  * });
@@ -59,7 +60,7 @@ export async function prepareAddPermissionlessValidatorTxn(
   const unsignedTx = pvm.newAddPermissionlessValidatorTx(
     {
       ...commonTxParams,
-      weight: BigInt(params.stakeInAvax * 1e9),
+      weight: params.stakeInAvax,
       nodeId: params.nodeId,
       start: 0n, // start time is not relevant after Durango upgrade
       end: BigInt(params.end),

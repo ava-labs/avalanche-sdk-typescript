@@ -8,8 +8,8 @@ import { account1, account2, feeState } from "../fixtures/transactions/common";
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { toTransferableOutput } from "../utils";
-const testInputAmount = 1;
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -58,7 +58,7 @@ describe("addSubnetValidatorTx", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount = testInputAmount - expectedFeesInAvax;
 
     // expected change output
@@ -81,7 +81,7 @@ describe("addSubnetValidatorTx", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should create correct staking details", async () => {

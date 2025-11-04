@@ -27,13 +27,13 @@ export type PrepareExportTxnParameters = {
      */
     addresses: string[];
     /**
-     * The amount (in AVAX) held by this exported output.
+     * The amount (in nano AVAX) held by this exported output.
      */
-    amount: number;
+    amount: bigint;
     /**
      * Optional. Timestamp in seconds after which this UTXO can be consumed.
      */
-    locktime?: number;
+    locktime?: bigint;
     /**
      * Optional. Threshold of `addresses`' signatures required to consume this UTXO.
      */

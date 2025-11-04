@@ -7,11 +7,11 @@ import { CommonTxParams } from "../../types/common.js";
 
 export type PrepareRegisterL1ValidatorTxnParameters = CommonTxParams & {
   /**
-   * Initial balance (in AVAX) of the L1 validator getting registered,
+   * Initial balance (in nano AVAX) of the L1 validator getting registered,
    * Balance is required for paying a contiguous fee to the Primary
    * Network to validate the L1.
    */
-  initialBalanceInAvax: number;
+  initialBalanceInAvax: bigint;
   /**
    * BLS signature of the validator.
    */

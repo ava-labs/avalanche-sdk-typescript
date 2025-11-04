@@ -15,9 +15,9 @@ import {
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -44,7 +44,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: 0.123,
+      initialBalanceInAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,
@@ -64,14 +64,12 @@ describe("prepareRegisterL1ValidatorTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const totalBurnedAmount =
-      fee + avaxToNanoAvax(mockTxParams.initialBalanceInAvax);
-    const expectedChangeAmount =
-      avaxToNanoAvax(testInputAmount) - totalBurnedAmount;
+    const totalBurnedAmount = fee + mockTxParams.initialBalanceInAvax;
+    const expectedChangeAmount = testInputAmount - totalBurnedAmount;
 
     // expected change output
     testOutputs.push({
-      amount: nanoAvaxToAvax(expectedChangeAmount),
+      amount: expectedChangeAmount,
       addresses: changeAddresses,
     });
 
@@ -102,7 +100,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: 0.123,
+      initialBalanceInAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,
@@ -117,7 +115,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
         txnRequest.tx.getTx() as pvmSerial.RegisterL1ValidatorTx
       ).balance.value(),
       "balance mismatch"
-    ).toBe(avaxToNanoAvax(mockTxParams.initialBalanceInAvax));
+    ).toBe(mockTxParams.initialBalanceInAvax);
     expect(
       utils.bufferToHex(
         (
@@ -139,7 +137,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: 0.123,
+      initialBalanceInAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,

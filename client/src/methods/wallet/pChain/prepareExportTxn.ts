@@ -27,6 +27,7 @@ import {
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -38,7 +39,7 @@ import {
  *   destinationChain: "P",
  *   exportedOutputs: [{
  *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
- *     amount: 0.0001,
+ *     amount: avaxToNanoAvax(0.0001),
  *   }],
  * });
  */

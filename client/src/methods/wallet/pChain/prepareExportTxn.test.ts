@@ -17,11 +17,10 @@ import { Output } from "../types/common";
 import {
   avaxToNanoAvax,
   getChainIdFromAlias,
-  nanoAvaxToAvax,
   toTransferableOutput,
 } from "../utils";
 
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -51,8 +50,8 @@ describe("prepareExportTxn", () => {
     const receiverAddresses2 = [account4.getXPAddress("P", "fuji")];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
-    const testOutputAmount2 = 0.2345;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputAmount2 = avaxToNanoAvax(0.2345);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -82,14 +81,11 @@ describe("prepareExportTxn", () => {
       feeState().price
     );
     const expectedChangeAmount =
-      avaxToNanoAvax(testInputAmount) -
-      avaxToNanoAvax(testOutputAmount) -
-      avaxToNanoAvax(testOutputAmount2) -
-      fee;
+      testInputAmount - testOutputAmount - testOutputAmount2 - fee;
 
     // expected change output
     testOutputs.push({
-      amount: nanoAvaxToAvax(expectedChangeAmount),
+      amount: expectedChangeAmount,
       addresses: changeAddresses,
     });
 
@@ -117,7 +113,7 @@ describe("prepareExportTxn", () => {
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -172,7 +168,7 @@ describe("prepareExportTxn", () => {
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,

@@ -8,7 +8,7 @@ import { sendXPTransaction } from "../sendXPTransaction.js";
 import { SendParameters, SendReturnType } from "../types/send.js";
 import {
   getBech32AddressFromAccountOrClient,
-  nanoAvaxToAvax,
+  weiToNanoAvax,
 } from "../utils.js";
 import { waitForTxn } from "../waitForTxn.js";
 
@@ -37,26 +37,26 @@ export async function transferPtoPChain(
   }
 
   // Prepare the base transaction and get the fee state and balance
-  const [baseTxnRequest, pChainFeeState, balance] = await Promise.all([
-    prepareBaseTxn(client, {
-      fromAddresses: [currentAccountPChainAddress],
-      outputs: [
-        {
-          addresses: [params.to],
-          amount: params.amount,
-        },
-      ],
-      context,
-    }),
-    getFeeState(client.pChainClient),
-    nanoAvaxToAvax(
+  const [baseTxnRequest, pChainFeeState, balanceInNanoAvax] = await Promise.all(
+    [
+      prepareBaseTxn(client, {
+        fromAddresses: [currentAccountPChainAddress],
+        outputs: [
+          {
+            addresses: [params.to],
+            amount: weiToNanoAvax(params.amount),
+          },
+        ],
+        context,
+      }),
+      getFeeState(client.pChainClient),
       (
         await getBalance(client.pChainClient, {
           addresses: [currentAccountPChainAddress],
         })
-      ).balance
-    ),
-  ]);
+      ).balance,
+    ]
+  );
 
   // Calculate the fee for the base transaction
   const baseTxnFee = pvm.calculateFee(
@@ -65,19 +65,19 @@ export async function transferPtoPChain(
     pChainFeeState.price
   );
 
-  if (Number(balance) < params.amount) {
+  if (balanceInNanoAvax < weiToNanoAvax(params.amount)) {
     throw new Error(
-      `Insufficient balance: ${params.amount} AVAX is required, but only ${balance} AVAX is available`
+      `Insufficient balance: ${weiToNanoAvax(
+        params.amount
+      )} nAVAX is required, but only ${balanceInNanoAvax} nAVAX is available`
     );
   }
 
-  if (nanoAvaxToAvax(baseTxnFee) > params.amount) {
+  if (baseTxnFee > weiToNanoAvax(params.amount)) {
     throw new Error(
-      `Transfer amount is too low: ${nanoAvaxToAvax(
-        baseTxnFee
-      )} AVAX Fee is required, but only ${
+      `Transfer amount is too low: ${baseTxnFee} nAVAX Fee is required, but only ${weiToNanoAvax(
         params.amount
-      } AVAX is being transferred`
+      )} nAVAX is being transferred`
     );
   }
 

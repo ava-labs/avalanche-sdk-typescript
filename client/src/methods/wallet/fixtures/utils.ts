@@ -21,7 +21,7 @@ export function checkOutputs(
     expect(
       actual?.amount().valueOf(),
       `output amount did not match for index ${index}`
-    ).toBe(BigInt(expected.amount * 1e9));
+    ).toBe(expected.amount);
 
     // check owners
     const expectedOwners = expected.addresses.map((address) =>

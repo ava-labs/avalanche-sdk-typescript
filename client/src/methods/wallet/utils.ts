@@ -140,6 +140,24 @@ export function evmOrBech32AddressToBytes(address: string) {
 }
 
 /**
+ * Convert AVAX to wei
+ * @param amount - The amount of AVAX to convert
+ * @returns The amount in wei
+ */
+export function avaxToWei(amount: number) {
+  return BigInt(amount * 1e18);
+}
+
+/**
+ * Convert wei to AVAX
+ * @param amount - The amount of wei to convert
+ * @returns The amount in AVAX
+ */
+export function weiToAvax(amount: bigint) {
+  return amount / BigInt(1e18);
+}
+
+/**
  * Convert AVAX to nanoAVAX
  * @param amount - The amount of AVAX to convert
  * @returns The amount in nanoAVAX
@@ -155,6 +173,15 @@ export function avaxToNanoAvax(amount: number) {
  */
 export function weiToNanoAvax(amount: bigint) {
   return amount / BigInt(1e9);
+}
+
+/**
+ * Convert nanoAVAX to wei
+ * @param amount - The amount of nanoAVAX to convert
+ * @returns The amount in wei
+ */
+export function nanoAvaxToWei(amount: bigint) {
+  return amount * BigInt(1e9);
 }
 
 /**
@@ -380,7 +407,7 @@ export async function fetchCommonAVMTxParams(
 export function formatOutput(output: Output, context: ContextType.Context) {
   return TransferableOutput.fromNative(
     output.assetId ?? context.avaxAssetID,
-    BigInt(output.amount * 1e9),
+    output.amount,
     output.addresses.map(utils.bech32ToBytes),
     BigInt(output.locktime ?? 0),
     output.threshold ?? 1

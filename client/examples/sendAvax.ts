@@ -1,6 +1,7 @@
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheFuji } from "@avalanche-sdk/client/chains";
+import { avaxToWei } from "@avalanche-sdk/client/utils";
 import { loadConfig } from "./config";
 
 async function run() {
@@ -27,7 +28,7 @@ async function run() {
   // be confirmed on C-chain
   const sendC2CResponse = await walletClient.send({
     to: CChainReceiverAddress,
-    amount: 0.001,
+    amount: avaxToWei(0.001),
   });
   console.log("sendC2CResponse", sendC2CResponse);
 
@@ -36,7 +37,7 @@ async function run() {
   // the transaction to be confirmed on C-chain and P-chain
   const sendC2PResponse = await walletClient.send({
     to: PChainReceiverAddress,
-    amount: 0.001,
+    amount: avaxToWei(0.001),
     destinationChain: "P",
   });
   console.log("sendC2PResponse", sendC2PResponse);
@@ -46,7 +47,7 @@ async function run() {
   // the transaction to be confirmed on C-chain and P-chain
   const sendP2CResponse = await walletClient.send({
     to: CChainReceiverAddress,
-    amount: 0.001,
+    amount: avaxToWei(0.001),
     sourceChain: "P",
     destinationChain: "C",
   });
@@ -55,7 +56,7 @@ async function run() {
   // 4. Send avax to another address on P-chain from P-chain
   const sendP2PResponse = await walletClient.send({
     to: PChainReceiverAddress,
-    amount: 0.001,
+    amount: avaxToWei(0.001),
     sourceChain: "P",
     destinationChain: "P",
   });

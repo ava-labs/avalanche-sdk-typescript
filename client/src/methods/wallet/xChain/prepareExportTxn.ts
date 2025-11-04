@@ -26,6 +26,7 @@ import {
  * import { prepareExportTxn } from "@avalanche-sdk/client/methods/wallet/xChain";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount(privateKeyForTest);
  * const walletClient = new AvalancheWalletCoreClient({
@@ -40,7 +41,7 @@ import {
  *   destinationChain: "P",
  *   exportedOutputs: [
  *     {
- *       amount: 1000000000000000000,
+ *       amount: avaxToNanoAvax(0.0001), // 0.0001 AVAX = 100_000 nAVAX
  *       to: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
  *     },
  *   ],

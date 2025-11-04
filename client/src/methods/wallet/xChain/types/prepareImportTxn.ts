@@ -19,7 +19,7 @@ export type ImportedOutput = {
   /**
    * Optional. Timestamp in seconds after which this UTXO can be consumed.
    */
-  locktime?: number;
+  locktime?: bigint;
   /**
    * Optional. The number of signatures required out of the total `addresses`
    * to spend the imported output.

@@ -14,9 +14,9 @@ import {
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -60,11 +60,11 @@ describe("prepareSetL1ValidatorWeightTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedChangeAmount = avaxToNanoAvax(testInputAmount) - fee;
+    const expectedChangeAmount = testInputAmount - fee;
 
     // expected change output
     testOutputs.push({
-      amount: nanoAvaxToAvax(expectedChangeAmount),
+      amount: expectedChangeAmount,
       addresses: changeAddresses,
     });
 

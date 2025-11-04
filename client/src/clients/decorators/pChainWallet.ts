@@ -60,6 +60,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -72,8 +73,8 @@ export type PChainWalletActions = {
    *
    * const delegatorTx = await client.pChain.prepareAddPermissionlessDelegatorTxn({
    *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
-   *   stakeInAvax: 1,
-   *   end: 1716441600,
+   *   stakeInAvax: avaxToNanoAvax(1),
+   *   end: 1716441600n,
    *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
    *   threshold: 1,
    * })
@@ -97,6 +98,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -109,8 +111,8 @@ export type PChainWalletActions = {
    *
    * const validatorTx = await client.pChain.prepareAddPermissionlessValidatorTxn({
    *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
-   *   stakeInAvax: 1,
-   *   end: 1716441600,
+   *   stakeInAvax: avaxToNanoAvax(1),
+   *   end: 1716441600n,
    *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
    *   threshold: 1,
    *   publicKey: "0x1234567890123456789012345678901234567890",
@@ -176,6 +178,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -189,7 +192,7 @@ export type PChainWalletActions = {
    * const baseTx = await client.pChain.prepareBaseTxn({
    *   outputs: [{
    *     addresses: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
-   *     amount: 1,
+   *     amount: avaxToNanoAvax(1),
    *   }],
    * })
    * ```
@@ -212,6 +215,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -231,7 +235,7 @@ export type PChainWalletActions = {
    *     {
    *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
    *       weight: 1n,
-   *       initialBalanceInAvax: 1,
+   *       initialBalanceInAvax: avaxToNanoAvax(1),
    *       nodePoP: {
    *         publicKey: "0x1234567890123456789012345678901234567890",
    *         proofOfPossession: "0x1234567890123456789012345678901234567890",
@@ -375,6 +379,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -389,7 +394,7 @@ export type PChainWalletActions = {
    *   destinationChain: "P",
    *   exportedOutputs: [{
    *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
-   *     amount: 0.0001,
+   *     amount: avaxToNanoAvax(0.0001),
    *   }],
    * })
    * ```
@@ -459,7 +464,7 @@ export type PChainWalletActions = {
    * })
    *
    * const pChainIncreaseL1ValidatorBalanceTxnRequest = await client.pChain.prepareIncreaseL1ValidatorBalanceTxn({
-   *   balanceInAvax: 1,
+   *   balanceInAvax: avaxToNanoAvax(1),
    *   validationId: "11111111111111111111111111111111LpoYY",
    * })
    * ```
@@ -482,6 +487,7 @@ export type PChainWalletActions = {
    * import { createAvalancheWalletClient } from '@avalanche-sdk/client'
    * import { privateKeyToAvalancheAccount } from '@avalanche-sdk/client/accounts'
    * import { avalanche } from '@avalanche-sdk/client/chains'
+   * import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
    *
    * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890")
    * const client = createAvalancheWalletClient({
@@ -493,7 +499,7 @@ export type PChainWalletActions = {
    * })
    *
    * const pChainRegisterL1ValidatorTxnRequest = await client.pChain.prepareRegisterL1ValidatorTxn({
-   *   initialBalanceInAvax: 1,
+   *   initialBalanceInAvax: avaxToNanoAvax(1),
    *   blsSignature: "0x1234567890123456789012345678901234567890",
    *   message: "0x1234567890123456789012345678901234567890",
    * })
