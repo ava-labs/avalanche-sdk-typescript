@@ -24,7 +24,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0-alpha.6
+  version: 0.3.0-alpha.7
   acceptHeaderEnum: true
   additionalDependencies:
     dependencies:
@@ -37,6 +37,7 @@ typescript:
     license: BSD-3-Clause
     publishConfig:
       access: public
+  additionalScripts: {}
   author: Speakeasy
   baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
@@ -70,3 +71,4 @@ typescript:
   templateVersion: v2
   usageSDKInitImports: []
   useIndexModules: true
+  zodVersion: v3

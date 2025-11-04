@@ -3,14 +3,14 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
+import { dlv } from "../lib/dlv.js";
+import { encodeFormQuery, encodeJSON, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import * as components from "../models/components/index.js";
 import { AvalancheError } from "../models/errors/avalancheerror.js";
 import {
   ConnectionError,
@@ -22,73 +22,31 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import { GetICMMetricsByChainServerList } from "../models/operations/geticmmetricsbychain.js";
+import { GetUtxosByAddressesV2ServerList } from "../models/operations/getutxosbyaddressesv2.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
+import {
+  createPageIterator,
+  haltIterator,
+  PageIterator,
+  Paginator,
+} from "../types/operations.js";
 
 /**
- * Get Interchain Message (ICM) metrics
+ * List UTXOs v2 - Supports querying for more addresses
  *
  * @remarks
- * Interchain Message (ICM) metrics are available for all Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics by source and/or destination blockchainId. Metrics are available on an hourly, daily, weekly, monthly, and yearly basis. See the `/chains` endpoint for all  supported chains. You can also request metrics grouped by mainnet or testnet.
- *
- * ### Metrics
- *
- * <ins>ICMSrcDestMsgCount</ins>: The number of ICM messages sent from the source blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
- *
- * <ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to each destination blockchain within the requested timeInterval starting at the timestamp.
- *
- * <ins>ICMSrcAggMsgCount</ins>: The number of ICM messages sent from the source blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
- *
- * <ins>ICMDestMsgCount</ins>: The number of ICM messages received from each blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
- *
- * <ins>ICMDestAggMsgCount</ins>: The number of ICM messages received from any blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
- *
- * <ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain on the provided network.
- *
- * <ins>ICMNetworkAggMsgCount</ins>: The number of ICM messages sent on the  provided network.
+ * Lists UTXOs on one of the Primary Network chains for the supplied addresses. This v2 route supports increased page size and address limit.
  */
-export function metricsChainsGetICMMetrics(
+export function dataPrimaryNetworkUtxosListByAddressesV2(
   client: AvalancheCore,
-  request: operations.GetICMMetricsByChainRequest,
+  request: operations.GetUtxosByAddressesV2Request,
   options?: RequestOptions,
 ): APIPromise<
-  Result<
-    components.ICMMetricsApiResponse,
-    | errors.BadRequestError
-    | errors.UnauthorizedError
-    | errors.ForbiddenError
-    | errors.NotFoundError
-    | errors.TooManyRequestsError
-    | errors.InternalServerError
-    | errors.BadGatewayError
-    | errors.ServiceUnavailableError
-    | AvalancheError
-    | ResponseValidationError
-    | ConnectionError
-    | RequestAbortedError
-    | RequestTimeoutError
-    | InvalidRequestError
-    | UnexpectedClientError
-    | SDKValidationError
-  >
-> {
-  return new APIPromise($do(
-    client,
-    request,
-    options,
-  ));
-}
-
-async function $do(
-  client: AvalancheCore,
-  request: operations.GetICMMetricsByChainRequest,
-  options?: RequestOptions,
-): Promise<
-  [
+  PageIterator<
     Result<
-      components.ICMMetricsApiResponse,
+      operations.GetUtxosByAddressesV2Response,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -106,47 +64,93 @@ async function $do(
       | UnexpectedClientError
       | SDKValidationError
     >,
+    { cursor: string }
+  >
+> {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
+  client: AvalancheCore,
+  request: operations.GetUtxosByAddressesV2Request,
+  options?: RequestOptions,
+): Promise<
+  [
+    PageIterator<
+      Result<
+        operations.GetUtxosByAddressesV2Response,
+        | errors.BadRequestError
+        | errors.UnauthorizedError
+        | errors.ForbiddenError
+        | errors.NotFoundError
+        | errors.TooManyRequestsError
+        | errors.InternalServerError
+        | errors.BadGatewayError
+        | errors.ServiceUnavailableError
+        | AvalancheError
+        | ResponseValidationError
+        | ConnectionError
+        | RequestAbortedError
+        | RequestTimeoutError
+        | InvalidRequestError
+        | UnexpectedClientError
+        | SDKValidationError
+      >,
+      { cursor: string }
+    >,
     APICall,
   ]
 > {
   const parsed = safeParse(
     request,
     (value) =>
-      operations.GetICMMetricsByChainRequest$outboundSchema.parse(value),
+      operations.GetUtxosByAddressesV2Request$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return [parsed, { status: "invalid" }];
+    return [haltIterator(parsed), { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = null;
+  const body = encodeJSON("body", payload.PrimaryNetworkAddressesBodyDto, {
+    explode: true,
+  });
 
   const baseURL = options?.serverURL
-    || pathToFunc(GetICMMetricsByChainServerList[0], {
+    || pathToFunc(GetUtxosByAddressesV2ServerList[0], {
       charEncoding: "percent",
     })();
 
   const pathParams = {
-    metric: encodeSimple("metric", payload.metric, {
+    blockchainId: encodeSimple("blockchainId", payload.blockchainId, {
       explode: false,
       charEncoding: "percent",
     }),
+    network: encodeSimple(
+      "network",
+      payload.network ?? client._options.network,
+      { explode: false, charEncoding: "percent" },
+    ),
   };
 
-  const path = pathToFunc("/v2/icm/metrics/{metric}")(pathParams);
+  const path = pathToFunc(
+    "/v1/networks/{network}/blockchains/{blockchainId}/utxos",
+  )(pathParams);
 
   const query = encodeFormQuery({
-    "destBlockchainId": payload.destBlockchainId,
-    "endTimestamp": payload.endTimestamp,
-    "network": payload.network,
+    "assetId": payload.assetId,
+    "includeSpent": payload.includeSpent,
     "pageSize": payload.pageSize,
     "pageToken": payload.pageToken,
-    "srcBlockchainId": payload.srcBlockchainId,
-    "startTimestamp": payload.startTimestamp,
-    "timeInterval": payload.timeInterval,
+    "sortBy": payload.sortBy,
+    "sortOrder": payload.sortOrder,
   });
 
   const headers = new Headers(compactMap({
+    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 
@@ -157,7 +161,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: baseURL ?? "",
-    operationID: "getICMMetricsByChain",
+    operationID: "getUtxosByAddressesV2",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -181,7 +185,7 @@ async function $do(
 
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
-    method: "GET",
+    method: "POST",
     baseURL: baseURL,
     path: path,
     headers: headers,
@@ -191,7 +195,7 @@ async function $do(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return [requestRes, { status: "invalid" }];
+    return [haltIterator(requestRes), { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -213,7 +217,7 @@ async function $do(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return [doResult, { status: "request-error", request: req }];
+    return [haltIterator(doResult), { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -221,8 +225,8 @@ async function $do(
     HttpMeta: { Response: response, Request: req },
   };
 
-  const [result] = await M.match<
-    components.ICMMetricsApiResponse,
+  const [result, raw] = await M.match<
+    operations.GetUtxosByAddressesV2Response,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -240,7 +244,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.ICMMetricsApiResponse$inboundSchema),
+    M.json(200, operations.GetUtxosByAddressesV2Response$inboundSchema, {
+      key: "Result",
+    }),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),
@@ -253,8 +259,64 @@ async function $do(
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return [result, { status: "complete", request: req, response }];
+    return [haltIterator(result), {
+      status: "complete",
+      request: req,
+      response,
+    }];
   }
 
-  return [result, { status: "complete", request: req, response }];
+  const nextFunc = (
+    responseData: unknown,
+  ): {
+    next: Paginator<
+      Result<
+        operations.GetUtxosByAddressesV2Response,
+        | errors.BadRequestError
+        | errors.UnauthorizedError
+        | errors.ForbiddenError
+        | errors.NotFoundError
+        | errors.TooManyRequestsError
+        | errors.InternalServerError
+        | errors.BadGatewayError
+        | errors.ServiceUnavailableError
+        | AvalancheError
+        | ResponseValidationError
+        | ConnectionError
+        | RequestAbortedError
+        | RequestTimeoutError
+        | InvalidRequestError
+        | UnexpectedClientError
+        | SDKValidationError
+      >
+    >;
+    "~next"?: { cursor: string };
+  } => {
+    const nextCursor = dlv(responseData, "nextPageToken");
+    if (typeof nextCursor !== "string") {
+      return { next: () => null };
+    }
+    if (nextCursor.trim() === "") {
+      return { next: () => null };
+    }
+
+    const nextVal = () =>
+      dataPrimaryNetworkUtxosListByAddressesV2(
+        client,
+        {
+          ...request,
+          pageToken: nextCursor,
+        },
+        options,
+      );
+
+    return { next: nextVal, "~next": { cursor: nextCursor } };
+  };
+
+  const page = { ...result, ...nextFunc(raw) };
+  return [{ ...page, ...createPageIterator(page, (v) => !v.ok) }, {
+    status: "complete",
+    request: req,
+    response,
+  }];
 }

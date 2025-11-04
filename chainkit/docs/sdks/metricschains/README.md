@@ -9,8 +9,8 @@
 * [get](#get) - Get chain information for supported blockchain
 * [getMetrics](#getmetrics) - Get metrics for EVM chains
 * [getRollingWindowMetrics](#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
-* [getICMMetrics](#geticmmetrics) - Get Interchain Message (ICM) metrics
-* [getICMRollingWindowMetrics](#geticmrollingwindowmetrics) - Get Interchain Message (ICM) rolling window metrics
+* [getICMTimeseries](#geticmtimeseries) - Get ICM timeseries metrics
+* [getICMSummary](#geticmsummary) - Get ICM summary metrics
 * [listNftHolders](#listnftholders) - Get NFT holders by contract address
 * [listTokenHoldersAboveThreshold](#listtokenholdersabovethreshold) - Get addresses by balance over time
 * [listBTCbBridgersAboveThreshold](#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
@@ -309,7 +309,7 @@ run();
 
 ## getRollingWindowMetrics
 
-Gets the rolling window metrics for an EVM chain for the last hour, day, month, year, and all time.
+Gets the rolling window metrics for an EVM chain for the last hour, day, week, month, 90 days, year, and all time. Active addresses/active senders only support last hour, day, and week.
 
 ### Example Usage
 
@@ -389,41 +389,43 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getICMMetrics
+## getICMTimeseries
 
-Interchain Message (ICM) metrics are available for all Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics by source and/or destination blockchainId. Metrics are available on an hourly, daily, weekly, monthly, and yearly basis. See the `/chains` endpoint for all  supported chains. You can also request metrics grouped by mainnet or testnet.
+Get historical ICM message counts with flexible grouping.
 
-### Metrics
+Use filters (`srcBlockchainId`, `destBlockchainId`, `network`)  to select data, and the `groupBy` parameter for aggregation level.
 
-<ins>ICMSrcDestMsgCount</ins>: The number of ICM messages sent from the source blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+### Examples:
 
-<ins>ICMSrcMsgCount</ins>: The number of ICM messages sent from the source blockchain to each destination blockchain within the requested timeInterval starting at the timestamp.
+  - **Specific pair**:   `?srcBlockchainId=...&destBlockchainId=...`
 
-<ins>ICMSrcAggMsgCount</ins>: The number of ICM messages sent from the source blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
+  - **From one source (aggregated)**: `?srcBlockchainId=...`
 
-<ins>ICMDestMsgCount</ins>: The number of ICM messages received from each blockchain to the destination blockchain within the requested timeInterval starting at the timestamp.
+  - **From one source (by destination)**:   `?srcBlockchainId=...&groupBy=destBlockchainId`
 
-<ins>ICMDestAggMsgCount</ins>: The number of ICM messages received from any blockchain to all destination blockchain within the requested timeInterval starting at the timestamp.
+  - **To one destination (aggregated)**: `?destBlockchainId=...`
 
-<ins>ICMNetworkMsgCount</ins>: The number of ICM messages sent from any blockchain on the provided network.
+  - **To one destination (by source)**:   `?destBlockchainId=...&groupBy=srcBlockchainId`
 
-<ins>ICMNetworkAggMsgCount</ins>: The number of ICM messages sent on the  provided network.
+  - **Network total**: `?network=mainnet`
+
+  - **Network breakdown**:   `?network=mainnet&groupBy=srcBlockchainId,destBlockchainId`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="getICMMetricsByChain" method="get" path="/v2/icm/metrics/{metric}" -->
+<!-- UsageSnippet language="typescript" operationID="getICMTimeseries" method="get" path="/v2/icm/timeseries" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/chainkit";
 
 const avalanche = new Avalanche();
 
 async function run() {
-  const result = await avalanche.metrics.chains.getICMMetrics({
-    metric: "ICMSrcDestMsgCount",
+  const result = await avalanche.metrics.chains.getICMTimeseries({
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     timeInterval: "day",
     pageSize: 10,
+    groupBy: "destBlockchainId",
     network: "mainnet",
   });
 
@@ -439,26 +441,26 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/chainkit/core.js";
-import { metricsChainsGetICMMetrics } from "@avalanche-sdk/chainkit/funcs/metricsChainsGetICMMetrics.js";
+import { metricsChainsGetICMTimeseries } from "@avalanche-sdk/chainkit/funcs/metricsChainsGetICMTimeseries.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore();
 
 async function run() {
-  const res = await metricsChainsGetICMMetrics(avalanche, {
-    metric: "ICMSrcDestMsgCount",
+  const res = await metricsChainsGetICMTimeseries(avalanche, {
     startTimestamp: 1689541049,
     endTimestamp: 1689800249,
     timeInterval: "day",
     pageSize: 10,
+    groupBy: "destBlockchainId",
     network: "mainnet",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("metricsChainsGetICMMetrics failed:", res.error);
+    console.log("metricsChainsGetICMTimeseries failed:", res.error);
   }
 }
 
@@ -469,7 +471,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetICMMetricsByChainRequest](../../models/operations/geticmmetricsbychainrequest.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetICMTimeseriesRequest](../../models/operations/geticmtimeseriesrequest.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -493,37 +495,39 @@ run();
 | errors.ServiceUnavailableError | 503                            | application/json               |
 | errors.AvalancheAPIError       | 4XX, 5XX                       | \*/\*                          |
 
-## getICMRollingWindowMetrics
+## getICMSummary
 
-Interchain Message (ICM) rolling window metrics are available for all  Avalanche L1s on _Mainnet_ and _Fuji_ (testnet). You can request metrics  by source and/or destination blockchainId or by network. Rolling window metrics are available for the last hour, day, month,  90 days,year, and all time.
+Get rolling window ICM message counts (last hour, day, month, 90 days, year, all time).
 
-### Metrics
+Use filters (`srcBlockchainId`, `destBlockchainId`, `network`)  to select data, and the `groupBy` parameter for aggregation level.
 
-<ins>ICMSrcDestRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to the destination blockchain within the last hour, day, month, year, and all time.
+### Examples:
 
-<ins>ICMSrcRollingWindowMsgCount</ins>: The number of ICM  messages sent from the source blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **Specific pair**:   `?srcBlockchainId=...&destBlockchainId=...`
 
-<ins>ICMSrcRollingWindowAggMsgCount</ins>: The number of ICM  messages sent from the source blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **From one source (aggregated)**: `?srcBlockchainId=...`
 
-<ins>ICMDestRollingWindowMsgCount</ins>: The number of ICM  messages received from any blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **From one source (by destination)**:   `?srcBlockchainId=...&groupBy=destBlockchainId`
 
-<ins>ICMDestRollingWindowAggMsgCount</ins>: The number of ICM  messages received from any blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **To one destination (aggregated)**: `?destBlockchainId=...`
 
-<ins>ICMNetworkRollingWindowMsgCount</ins>: The number of ICM  messages sent from any blockchain to each destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **To one destination (by source)**:   `?destBlockchainId=...&groupBy=srcBlockchainId`
 
-<ins>ICMNetworkRollingWindowAggMsgCount</ins>: The number of ICM  messages sent from any blockchain to all destination blockchain within the last hour, day, month, 90 days, year, and all time.
+  - **Network total**: `?network=mainnet`
+
+  - **Network breakdown**:   `?network=mainnet&groupBy=srcBlockchainId,destBlockchainId`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="getICMRollingWindowMetricsByChain" method="get" path="/v2/icm/rollingWindowMetrics/{metric}" -->
+<!-- UsageSnippet language="typescript" operationID="getICMSummary" method="get" path="/v2/icm/summary" -->
 ```typescript
 import { Avalanche } from "@avalanche-sdk/chainkit";
 
 const avalanche = new Avalanche();
 
 async function run() {
-  const result = await avalanche.metrics.chains.getICMRollingWindowMetrics({
-    metric: "ICMSrcRollingWindowMsgCount",
+  const result = await avalanche.metrics.chains.getICMSummary({
+    groupBy: "destBlockchainId",
     network: "mainnet",
   });
 
@@ -539,22 +543,22 @@ The standalone function version of this method:
 
 ```typescript
 import { AvalancheCore } from "@avalanche-sdk/chainkit/core.js";
-import { metricsChainsGetICMRollingWindowMetrics } from "@avalanche-sdk/chainkit/funcs/metricsChainsGetICMRollingWindowMetrics.js";
+import { metricsChainsGetICMSummary } from "@avalanche-sdk/chainkit/funcs/metricsChainsGetICMSummary.js";
 
 // Use `AvalancheCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const avalanche = new AvalancheCore();
 
 async function run() {
-  const res = await metricsChainsGetICMRollingWindowMetrics(avalanche, {
-    metric: "ICMSrcRollingWindowMsgCount",
+  const res = await metricsChainsGetICMSummary(avalanche, {
+    groupBy: "destBlockchainId",
     network: "mainnet",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("metricsChainsGetICMRollingWindowMetrics failed:", res.error);
+    console.log("metricsChainsGetICMSummary failed:", res.error);
   }
 }
 
@@ -565,7 +569,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetICMRollingWindowMetricsByChainRequest](../../models/operations/geticmrollingwindowmetricsbychainrequest.md)                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetICMSummaryRequest](../../models/operations/geticmsummaryrequest.md)                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -573,7 +577,7 @@ run();
 
 ### Response
 
-**Promise\<[components.RollingWindowMetricsApiResponse](../../models/components/rollingwindowmetricsapiresponse.md)\>**
+**Promise\<[components.ICMRollingWindowMetricsApiResponse](../../models/components/icmrollingwindowmetricsapiresponse.md)\>**
 
 ### Errors
 
