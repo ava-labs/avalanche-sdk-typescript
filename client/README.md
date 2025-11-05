@@ -52,6 +52,7 @@ const baseFee = await client.getBaseFee()
 ```typescript
 import { createAvalancheWalletClient, privateKeyToAvalancheAccount } from '@avalanche-sdk/client'
 import { avalanche } from '@avalanche-sdk/client/chains'
+import { avaxToNanoAvax } from '@avalanche-sdk/client/utils'
 
 // Create an account from private key
 const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890123456789012345678901234")
@@ -74,7 +75,7 @@ const xChainExportTxnRequest = await walletClient.xChain.prepareExportTxn({
   exportedOutputs: [
     {
       addresses: [account.getXPAddress("X", "fuji")], // X-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz
-      amount: 0.001,
+      amount: avaxToNanoAvax(0.001),
     },
   ],
   destinationChain: "P",
@@ -107,7 +108,7 @@ const pChainWallet = walletClient.pChain
 // Prepare add validator transaction
 const validatorTx = await pChainWallet.prepareAddPermissionlessValidatorTxn({
   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
-  stakeInAvax: 1,
+  stakeInAvax: avaxToNanoAvax(1),
   end: 1716441600,
   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
   threshold: 1,
@@ -125,7 +126,7 @@ const xChainWallet = walletClient.xChain
 const baseTx = await xChainWallet.prepareBaseTxn({
   outputs: [{
     addresses: ["X-avax18jma8ppw3nhx5r4ap8clazz0dps7rv5ukulre5"],
-    amount: 1000000000, // 1 AVAX
+    amount: avaxToNanoAvax(1), // 1 AVAX
   }],
 })
 
@@ -135,7 +136,7 @@ const cChainWallet = walletClient.cChain
 // Prepare export transaction
 const exportTx = await cChainWallet.prepareExportTxn({
   to: "P-fuji1j2zllfqv4mgg7ytn9m2u2x0q3h3jqkzq8q8q8q8",
-  amount: "1000000000000000000", // 1 AVAX in wei
+  amount: avaxToNanoAvax(1), // 1 AVAX = 1_000_000_000 nAvax
   destinationChain: "X"
 })
 ```
