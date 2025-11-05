@@ -12,6 +12,8 @@ let value: AggregateSignaturesRequest = {
     justification: "0001abcdabcfff",
     signingSubnetId: "7WtoAMPhrmh5KosDUsFL9yTcvw7YSxiKHPpdfs4JsgW47oZT5",
     quorumPercentage: 50,
+    quorumPercentageBuffer: 50,
+    pChainHeight: 1155,
   },
 };
 ```
