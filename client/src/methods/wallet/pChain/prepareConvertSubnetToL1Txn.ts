@@ -8,11 +8,7 @@ import {
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import {
-  avaxToNanoAvax,
-  bech32AddressToBytes,
-  fetchCommonPVMTxParams,
-} from "../utils.js";
+import { bech32AddressToBytes, fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareConvertSubnetToL1TxnParameters,
   PrepareConvertSubnetToL1TxnReturnType,
@@ -33,6 +29,7 @@ import {
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -49,7 +46,7 @@ import {
  *     {
  *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
  *       weight: 1n,
- *       initialBalanceInAvax: 1,
+ *       initialBalanceInAvax: avaxToNanoAvax(1),
  *       nodePoP: {
  *         publicKey: "0x1234567890123456789012345678901234567890",
  *         proofOfPossession: "0x1234567890123456789012345678901234567890",
@@ -93,7 +90,7 @@ export async function prepareConvertSubnetToL1Txn(
       FormattedL1Validator.fromNative(
         validator.nodeId,
         validator.weight,
-        avaxToNanoAvax(validator.initialBalanceInAvax),
+        validator.initialBalanceInAvax,
         new pvmSerial.ProofOfPossession(
           utils.hexToBuffer(validator.nodePoP.publicKey),
           utils.hexToBuffer(validator.nodePoP.proofOfPossession)

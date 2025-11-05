@@ -14,9 +14,9 @@ export type SendParameters = {
    */
   account?: AvalancheAccount;
   /**
-   * The amount of tokens to send in AVAX.
+   * The amount of AVAX tokens to send in wei.
    */
-  amount: number;
+  amount: bigint;
   /**
    * The address to send the tokens to. If the destination chain is P, this should be a P chain address. If the destination chain is C, this should be a C chain address.
    */

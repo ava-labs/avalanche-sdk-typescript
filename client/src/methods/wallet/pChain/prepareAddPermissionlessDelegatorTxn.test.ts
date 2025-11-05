@@ -13,8 +13,8 @@ import {
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { toTransferableOutput } from "../utils";
-const testInputAmount = 1;
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -43,14 +43,14 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     ];
     const changeAddresses = [account3.getXPAddress("P", "fuji")];
 
-    const stakeAmount = 0.5;
+    const stakeAmount = avaxToNanoAvax(0.5);
     const endTime = 1234356770;
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessDelegatorTxn({
         changeAddresses,
         stakeInAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
-        end: Math.floor(endTime / 1000),
+        end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
         context: testContext,
       });
@@ -83,7 +83,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount =
       testInputAmount - stakeAmount - expectedFeesInAvax;
 
@@ -109,7 +109,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should create correct staking details", async () => {
@@ -119,16 +119,16 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     ];
     const changeAddresses = [account3.getXPAddress("P", "fuji")];
 
-    const stakeAmount = 0.5;
+    const stakeAmount = avaxToNanoAvax(0.5);
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
       stakeInAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
-      end: Math.floor(endTime / 1000),
+      end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
       threshold: 3,
-      locktime: 1234567890,
+      locktime: BigInt(1234567890),
       context: testContext,
     };
     const txnRequest =
@@ -145,7 +145,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
       BigInt(mockTxParams.end)
     );
     expect(vldr.weight.value(), "weight mismatch").toBe(
-      BigInt(mockTxParams.stakeInAvax * 1e9)
+      mockTxParams.stakeInAvax
     );
 
     // check delegator rewards owner
@@ -171,16 +171,16 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     ];
     const changeAddresses = [account3.getXPAddress("P", "fuji")];
 
-    const stakeAmount = 0.5;
+    const stakeAmount = avaxToNanoAvax(0.5);
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
       stakeInAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
-      end: Math.floor(endTime / 1000),
+      end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
       threshold: 3,
-      locktime: 1234567890,
+      locktime: BigInt(1234567890),
       context: testContext,
     };
     const txnRequest =

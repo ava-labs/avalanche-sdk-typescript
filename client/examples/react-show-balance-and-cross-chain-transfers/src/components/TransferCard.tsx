@@ -1,5 +1,6 @@
 import { Address, createAvalancheWalletClient } from '@avalanche-sdk/client'
 import type { Chain } from '@avalanche-sdk/client/chains'
+import { avaxToWei } from '@avalanche-sdk/client/utils'
 import { ArrowForward, CheckCircle, Error as ErrorIcon, Send } from '@mui/icons-material'
 import { Alert, Avatar, Box, Button, Card, CardContent, Chip, LinearProgress, Stack, TextField, Typography } from '@mui/material'
 import { useMemo, useState } from 'react'
@@ -65,7 +66,7 @@ export function TransferCard({
         // This requires specifying both source and destination chains
         const res = await client.send({
           to: toAddress as Address,
-          amount: value, // AVAX amount (SDK utils handle conversion)
+          amount: avaxToWei(value), // AVAX amount (SDK utils handle conversion)
           sourceChain: "P",      // Source: Platform Chain
           destinationChain: "C", // Destination: Contract Chain
         })
@@ -77,7 +78,7 @@ export function TransferCard({
         // For C → P, we only need to specify the destination chain
         const res = await client.send({
           to: toAddress,
-          amount: value,
+          amount: avaxToWei(value),
           destinationChain: "P", // Destination: Platform Chain
         })
         

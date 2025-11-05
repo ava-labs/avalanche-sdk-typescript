@@ -1,4 +1,4 @@
-import { Address, formatEther, parseEther } from "viem";
+import { Address } from "viem";
 import {
   estimateGas,
   getBalance,
@@ -28,30 +28,23 @@ export async function transferCtoCChain(
     params.from ||
     (await getEVMAddressFromAccountOrClient(client, params.account));
 
-  const [estimateGasResponse, gasPrice, balance] = await Promise.all([
-    formatEther(
-      await estimateGas(client, {
-        to: params.to as Address,
-        value: parseEther(params.amount.toString()),
-        account: currentAccountEVMAddress as Address,
-      } as any)
-    ),
-    formatEther(await getGasPrice(client)),
-    formatEther(
-      await getBalance(client, {
-        address: currentAccountEVMAddress as Address,
-      })
-    ),
+  const [estimateGasResponse, gasPrice, balanceInWei] = await Promise.all([
+    await estimateGas(client, {
+      to: params.to as Address,
+      value: params.amount,
+      account: currentAccountEVMAddress as Address,
+    } as any),
+    await getGasPrice(client),
+    await getBalance(client, {
+      address: currentAccountEVMAddress as Address,
+    }),
   ]);
 
-  const estimatedFee = Number(estimateGasResponse) * Number(gasPrice);
+  const estimatedFee = estimateGasResponse * gasPrice;
 
-  if (
-    Number(balance) < Number(estimatedFee) ||
-    Number(balance) < Number(params.amount)
-  ) {
+  if (balanceInWei < estimatedFee || balanceInWei < params.amount) {
     throw new Error(
-      `Insufficient balance: ${estimatedFee} AVAX is required, but only ${balance} AVAX is available`
+      `Insufficient balance: ${estimatedFee} AVAX (in wei) is required, but only ${balanceInWei} AVAX (in wei) is available`
     );
   }
 
@@ -63,13 +56,13 @@ export async function transferCtoCChain(
   if (!isAccountProvided) {
     txnHash = await sendTransaction(client, {
       to: params.to as Address,
-      value: parseEther(params.amount.toString()),
+      value: params.amount,
       account: currentAccountEVMAddress as Address,
     } as any);
   } else {
     const request = await prepareTransactionRequest(client, {
       to: params.to as Address,
-      value: parseEther(params.amount.toString()),
+      value: params.amount,
       account: currentAccountEVMAddress as Address,
     } as any);
 

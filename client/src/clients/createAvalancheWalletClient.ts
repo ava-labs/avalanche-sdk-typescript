@@ -1,9 +1,15 @@
+import { CChainRpcSchema } from "src/methods/cChain/cChainRpcSchema.js";
+import { PChainRpcSchema } from "src/methods/pChain/pChainRpcSchema.js";
+import { XChainRpcSchema } from "src/methods/xChain/xChainRpcSchema.js";
 import {
   Account,
   Chain,
   Client,
   CreatePublicClientErrorType,
   Prettify,
+  PublicActions,
+  publicActions,
+  PublicRpcSchema,
   rpcSchema,
   RpcSchema,
   Transport,
@@ -12,6 +18,7 @@ import {
   WalletRpcSchema,
 } from "viem";
 import { XPAccount } from "../accounts/avalancheAccount.js";
+import { AvalanchePublicRpcSchema } from "../methods/public/avalanchePublicRpcSchema.js";
 import { AvalancheWalletRpcSchema } from "../methods/wallet/avalancheWalletRPCSchema.js";
 import { AvalancheCoreClient } from "./createAvalancheCoreClient.js";
 import {
@@ -20,18 +27,24 @@ import {
   createAvalancheWalletCoreClient,
 } from "./createAvalancheWalletCoreClient.js";
 import {
+  AvalanchePublicActions,
+  avalanchePublicActions,
+} from "./decorators/avalanchePublic.js";
+import {
   avalancheWalletActions,
   AvalancheWalletActions,
 } from "./decorators/avalancheWallet.js";
+import { CChainActions, cChainActions } from "./decorators/cChain.js";
 import {
   cChainWalletActions,
   CChainWalletActions,
 } from "./decorators/cChainWallet.js";
-import { Erc20Actions, erc20Actions } from "./decorators/erc20.js";
+import { PChainActions, pChainActions } from "./decorators/pChain.js";
 import {
   pChainWalletActions,
   PChainWalletActions,
 } from "./decorators/pChainWallet.js";
+import { XChainActions, xChainActions } from "./decorators/xChain.js";
 import {
   xChainWalletActions,
   XChainWalletActions,
@@ -58,42 +71,55 @@ export type AvalancheWalletClient<
     chain,
     account,
     rpcSchema extends RpcSchema
-      ? [...WalletRpcSchema, ...AvalancheWalletRpcSchema, ...rpcSchema]
-      : [...WalletRpcSchema, ...AvalancheWalletRpcSchema],
-    WalletActions<chain, account> & AvalancheWalletActions
+      ? [
+          ...WalletRpcSchema,
+          ...AvalancheWalletRpcSchema,
+          ...PublicRpcSchema,
+          ...AvalanchePublicRpcSchema,
+          ...rpcSchema
+        ]
+      : [
+          ...WalletRpcSchema,
+          ...AvalancheWalletRpcSchema,
+          ...PublicRpcSchema,
+          ...AvalanchePublicRpcSchema
+        ],
+    WalletActions<chain, account> &
+      AvalancheWalletActions &
+      AvalanchePublicActions &
+      PublicActions
   > & {
     xpAccount?: XPAccount;
     pChainClient: AvalancheCoreClient;
     cChainClient: AvalancheCoreClient;
     xChainClient: AvalancheCoreClient;
   } & {
-    erc20: AvalancheWalletCoreClient<
-      transport,
-      chain,
-      account,
-      rpcSchema,
-      Erc20Actions
-    >;
     cChain: AvalancheWalletCoreClient<
       transport,
       chain,
       account,
-      rpcSchema,
-      CChainWalletActions
+      rpcSchema extends RpcSchema
+        ? [...CChainRpcSchema, ...rpcSchema]
+        : [...CChainRpcSchema],
+      CChainWalletActions & CChainActions
     >;
     pChain: AvalancheWalletCoreClient<
       transport,
       chain,
       account,
-      rpcSchema,
-      PChainWalletActions
+      rpcSchema extends RpcSchema
+        ? [...PChainRpcSchema, ...rpcSchema]
+        : [...PChainRpcSchema],
+      PChainWalletActions & PChainActions
     >;
     xChain: AvalancheWalletCoreClient<
       transport,
       chain,
       account,
-      rpcSchema,
-      XChainWalletActions
+      rpcSchema extends RpcSchema
+        ? [...XChainRpcSchema, ...rpcSchema]
+        : [...XChainRpcSchema],
+      XChainWalletActions & XChainActions
     >;
   }
 >;
@@ -141,27 +167,32 @@ export function createAvalancheWalletClient<
     rpcSchema: rpcSchema<AvalancheWalletRpcSchema & WalletRpcSchema>(),
   });
 
-  const avalancheWalletClient = client
-    .extend(walletActions)
-    .extend(avalancheWalletActions as any);
+  const avalancheWalletClient = (
+    client.extend(walletActions).extend(avalancheWalletActions as any) as any
+  )
+    .extend(publicActions as any)
+    .extend(avalanchePublicActions as any);
 
-  const erc20Client = client.extend(walletActions).extend(erc20Actions as any);
+  const cChainClient = (
+    client.extend(walletActions).extend(cChainWalletActions as any) as any
+  ).extend((client: AvalancheWalletCoreClient) =>
+    cChainActions(client.cChainClient)
+  );
 
-  const cChainClient = client
-    .extend(walletActions)
-    .extend(cChainWalletActions as any);
+  const pChainClient = (
+    client.extend(walletActions).extend(pChainWalletActions as any) as any
+  ).extend((client: AvalancheWalletCoreClient) =>
+    pChainActions(client.pChainClient)
+  );
 
-  const pChainClient = client
-    .extend(walletActions)
-    .extend(pChainWalletActions as any);
-
-  const xChainClient = client
-    .extend(walletActions)
-    .extend(xChainWalletActions as any);
+  const xChainClient = (
+    client.extend(walletActions).extend(xChainWalletActions as any) as any
+  ).extend((client: AvalancheWalletCoreClient) =>
+    xChainActions(client.xChainClient)
+  );
 
   return {
     ...(avalancheWalletClient as any),
-    erc20: erc20Client,
     cChain: cChainClient,
     pChain: pChainClient,
     xChain: xChainClient,

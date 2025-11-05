@@ -3,14 +3,14 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrepareDisableL1ValidatorTxnParameters } from ".";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
-import { getTxFromBytes } from "../../../utils";
+import { avaxToNanoAvax, getTxFromBytes } from "../../../utils";
 import { testContext } from "../fixtures/testContext";
 import { account1, account2, feeState } from "../fixtures/transactions/common";
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 const pChainWorker = getPChainMockServer({});
 
 describe("prepareDisableL1ValidatorTxn", () => {
@@ -54,7 +54,7 @@ describe("prepareDisableL1ValidatorTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount = testInputAmount - expectedFeesInAvax;
 
     // expected change output
@@ -76,7 +76,7 @@ describe("prepareDisableL1ValidatorTxn", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should create correct validator removal details", async () => {

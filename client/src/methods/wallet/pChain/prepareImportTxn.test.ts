@@ -11,12 +11,11 @@ import { Output } from "../types/common";
 import {
   avaxToNanoAvax,
   getChainIdFromAlias,
-  nanoAvaxToAvax,
   toTransferableOutput,
 } from "../utils";
 import { ImportedOutput } from "../xChain/types/prepareImportTxn";
 
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -46,7 +45,7 @@ describe("prepareImportTxn", () => {
 
     const importedOutput: ImportedOutput = {
       addresses: receiverAddresses,
-      locktime: 1000,
+      locktime: 1000n,
       threshold: 1,
     };
     const testOutputs: Output[] = [];
@@ -68,11 +67,11 @@ describe("prepareImportTxn", () => {
     );
 
     // imported output as the only change output
-    const testImportedOutputAmount = avaxToNanoAvax(testInputAmount) - fee;
+    const testImportedOutputAmount = testInputAmount - fee;
     testOutputs.push({
-      amount: nanoAvaxToAvax(testImportedOutputAmount),
+      amount: testImportedOutputAmount,
       addresses: importedOutput.addresses,
-      locktime: importedOutput.locktime ?? 0,
+      locktime: importedOutput.locktime ?? 0n,
       threshold: importedOutput.threshold ?? 1,
     });
 
@@ -101,7 +100,7 @@ describe("prepareImportTxn", () => {
 
     const importedOutput: ImportedOutput = {
       addresses: receiverAddresses,
-      locktime: 1000,
+      locktime: 1000n,
       threshold: 1,
     };
     const mockTxParams: PrepareImportTxnParameters = {
@@ -126,7 +125,7 @@ describe("prepareImportTxn", () => {
 
     const importedOutput: ImportedOutput = {
       addresses: receiverAddresses,
-      locktime: 1000,
+      locktime: 1000n,
       threshold: 1,
     };
     const mockTxParams: PrepareImportTxnParameters = {

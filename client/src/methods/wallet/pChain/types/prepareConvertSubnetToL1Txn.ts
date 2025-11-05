@@ -76,10 +76,10 @@ export type L1Validator = {
    */
   weight: bigint;
   /**
-   * Initial balance (in AVAX) of the L1 validator required for paying
+   * Initial balance (in nAVAX) of the L1 validator required for paying
    * a contiguous fee to the Primary Network to validate the L1.
    */
-  initialBalanceInAvax: number;
+  initialBalanceInAvax: bigint;
   /**
    * Owner information to which the remaining L1 validator balance will be assigned, in case
    * the validator is removed or disabled from the L1 validator set.

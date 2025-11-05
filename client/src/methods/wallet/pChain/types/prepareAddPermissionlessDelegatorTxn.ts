@@ -12,7 +12,7 @@ export type PrepareAddPermissionlessDelegatorTxnParameters = CommonTxParams & {
    * consolidated into a single output and owned by the
    * `changeAddresses` or the `fromAddresses` array.
    */
-  stakeInAvax: number;
+  stakeInAvax: bigint;
   /**
    * NodeID of the validator to delegate AVAX to.
    */
@@ -21,7 +21,7 @@ export type PrepareAddPermissionlessDelegatorTxnParameters = CommonTxParams & {
    * The Unix time in seconds when the delegation stops
    * (and staked AVAX is returned).
    */
-  end: number;
+  end: bigint;
   /**
    * The addresses which will receive the rewards from the delegated stake.
    * Given addresses will share the reward UTXO.
@@ -38,7 +38,7 @@ export type PrepareAddPermissionlessDelegatorTxnParameters = CommonTxParams & {
    * can be spent, once they are created after the staking period ends.
    * @default 0
    */
-  locktime?: number;
+  locktime?: bigint;
   /**
    * Optional. The context to use for the transaction. If not provided, the context will be fetched.
    */

@@ -13,7 +13,7 @@ export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
    * The staked outputs will be consolidated into a single output
    * and owned by the `changeAddresses` or the `fromAddresses` array.
    */
-  stakeInAvax: number;
+  stakeInAvax: bigint;
   /**
    * The NodeID of the validator being added.
    */
@@ -30,7 +30,7 @@ export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
    * The Unix time in seconds when the validator will be removed from staking set.
    * (and staked AVAX is returned).
    */
-  end: number;
+  end: bigint;
   /**
    * The addresses which will receive the validator rewards. Given addresses
    * will share the reward UTXO.
@@ -59,7 +59,7 @@ export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
    * (both validator and delegator fee rewards).
    * @default 0
    */
-  locktime?: number;
+  locktime?: bigint;
   /**
    * Optional. The context to use for the transaction. If not provided, the context will be fetched.
    */

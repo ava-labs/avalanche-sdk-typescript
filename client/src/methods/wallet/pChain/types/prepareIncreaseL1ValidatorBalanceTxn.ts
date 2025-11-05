@@ -7,9 +7,9 @@ import { CommonTxParams } from "../../types/common";
 
 export type PrepareIncreaseL1ValidatorBalanceTxnParameters = CommonTxParams & {
   /**
-   * Amount of AVAX to increase the L1 validator balance by.
+   * Amount of AVAX to increase the L1 validator balance by (in nano AVAX).
    */
-  balanceInAvax: number;
+  balanceInAvax: bigint;
   /**
    * Validation ID of the L1 validator.
    */

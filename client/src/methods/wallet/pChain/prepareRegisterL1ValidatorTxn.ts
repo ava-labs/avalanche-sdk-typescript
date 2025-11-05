@@ -2,7 +2,7 @@ import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import { avaxToNanoAvax, fetchCommonPVMTxParams } from "../utils.js";
+import { fetchCommonPVMTxParams } from "../utils.js";
 import {
   PrepareRegisterL1ValidatorTxnParameters,
   PrepareRegisterL1ValidatorTxnReturnType,
@@ -23,6 +23,7 @@ import {
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -31,7 +32,7 @@ import {
  * });
  *
  * const pChainRegisterL1ValidatorTxnRequest = await prepareRegisterL1ValidatorTxn(walletClient, {
- *   initialBalanceInAvax: 1,
+ *   initialBalanceInAvax: avaxToNanoAvax(1),
  *   blsSignature: "0x1234567890123456789012345678901234567890",
  *   message: "0x1234567890123456789012345678901234567890",
  * });
@@ -52,7 +53,7 @@ export async function prepareRegisterL1ValidatorTxn(
   const unsignedTx = pvm.newRegisterL1ValidatorTx(
     {
       ...commonTxParams,
-      balance: avaxToNanoAvax(params.initialBalanceInAvax),
+      balance: params.initialBalanceInAvax,
       blsSignature: utils.hexToBuffer(params.blsSignature),
       message: utils.hexToBuffer(params.message),
     },

@@ -8,7 +8,7 @@ import {
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
-import { getTxFromBytes } from "../../../utils";
+import { avaxToNanoAvax, getTxFromBytes } from "../../../utils";
 import { testContext } from "../fixtures/testContext";
 import {
   account1,
@@ -25,7 +25,7 @@ import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";
 import { PrepareBaseTxnParameters } from "./types/prepareBaseTxn";
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
 
@@ -53,7 +53,7 @@ describe("newBaseTx", () => {
       account3.getXPAddress("P", "fuji"),
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -80,7 +80,7 @@ describe("newBaseTx", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount =
       testInputAmount - testOutputAmount - expectedFeesInAvax;
 
@@ -108,7 +108,7 @@ describe("newBaseTx", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should only use utxos passed in params", async () => {
@@ -118,8 +118,8 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
-    const testInputAmount = 0.5;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testInputAmount = avaxToNanoAvax(0.5);
     const testOutputs = [
       {
         amount: testOutputAmount,
@@ -153,7 +153,7 @@ describe("newBaseTx", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     // if utxos passed in params are only used, then testInputAmount will be 0.5 instead of default 1
     const expectedChangeAmount =
       testInputAmount - testOutputAmount - expectedFeesInAvax;
@@ -179,20 +179,18 @@ describe("newBaseTx", () => {
     const allOutputAmounts = (
       txnRequest.tx.getTx() as pvmSerial.BaseTx
     ).baseTx.outputs.reduce((acc, i) => acc + i.amount(), 0n);
-    expect(allInputAmounts - allOutputAmounts).toBe(
-      BigInt(expectedFeesInAvax * 1e9)
-    );
+    expect(allInputAmounts - allOutputAmounts).toBe(expectedFeesInAvax);
   });
 
   it("should use `fromAddresses` for fetching utxos and change addresses", async () => {
-    const testSpentAmount = 1;
+    const testSpentAmount = avaxToNanoAvax(1);
     const spenderAddresses = [account1.getXPAddress("P", "fuji")];
     const receiverAddresses = [
       account4.getXPAddress("P", "fuji"),
       account3.getXPAddress("P", "fuji"),
     ];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -215,7 +213,7 @@ describe("newBaseTx", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount =
       testSpentAmount - testOutputAmount - expectedFeesInAvax;
 
@@ -245,7 +243,7 @@ describe("newBaseTx", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should sign the tx properly", async () => {
@@ -255,7 +253,7 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -287,7 +285,7 @@ describe("newBaseTx", () => {
     const receiverAddresses = [account3.getXPAddress("P", "fuji")];
     const changeAddresses = [account4.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 1.5;
+    const testOutputAmount = avaxToNanoAvax(1.5);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -348,7 +346,7 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("P", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -373,7 +371,7 @@ describe("newBaseTx", () => {
       fromAddresses: [account1.getXPAddress("P", "fuji")],
       outputs: [
         {
-          amount: 40,
+          amount: avaxToNanoAvax(40),
           addresses: [account1.getXPAddress("P", "fuji")],
         },
       ],

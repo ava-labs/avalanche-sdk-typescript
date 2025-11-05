@@ -35,8 +35,7 @@ import {
  * const xChainImportTxnRequest = await prepareImportTxn(walletClient, {
  *   sourceChain: "P",
  *   importedOutput: {
- *     amount: 1000000000000000000,
- *     to: "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz",
+ *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   },
  * });
  */

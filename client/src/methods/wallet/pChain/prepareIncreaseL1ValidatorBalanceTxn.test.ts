@@ -13,7 +13,7 @@ import {
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { avaxToNanoAvax, nanoAvaxToAvax, toTransferableOutput } from "../utils";
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 
 const testInputAmount = 1;
 
@@ -42,7 +42,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: 0.123,
+      balanceInAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };
@@ -61,13 +61,13 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const totalBurnedAmount = fee + avaxToNanoAvax(mockTxParams.balanceInAvax);
+    const totalBurnedAmount = fee + mockTxParams.balanceInAvax;
     const expectedChangeAmount =
       avaxToNanoAvax(testInputAmount) - totalBurnedAmount;
 
     // expected change output
     testOutputs.push({
-      amount: nanoAvaxToAvax(expectedChangeAmount),
+      amount: expectedChangeAmount,
       addresses: changeAddresses,
     });
 
@@ -96,7 +96,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: 0.123,
+      balanceInAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };
@@ -111,7 +111,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
         txnRequest.tx.getTx() as pvmSerial.IncreaseL1ValidatorBalanceTx
       ).balance.value(),
       "balance mismatch"
-    ).toBe(avaxToNanoAvax(mockTxParams.balanceInAvax));
+    ).toBe(mockTxParams.balanceInAvax);
     expect(
       utils.base58check.encode(
         (
@@ -127,7 +127,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: 0.123,
+      balanceInAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };

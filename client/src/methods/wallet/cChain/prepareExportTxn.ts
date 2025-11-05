@@ -3,11 +3,7 @@ import { getTransactionCount } from "viem/actions";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { baseFee as getBaseFee } from "../../public/index.js";
 import { getContextFromURI } from "../getContextFromURI.js";
-import {
-  avaxToNanoAvax,
-  bech32AddressToBytes,
-  getChainIdFromAlias,
-} from "../utils.js";
+import { bech32AddressToBytes, getChainIdFromAlias } from "../utils.js";
 import {
   PrepareExportTxnParameters,
   PrepareExportTxnReturnType,
@@ -29,6 +25,7 @@ import { newExportTxFromBaseFee } from "./utils.js";
  * import { createAvalancheWalletClient } from "@avalanche-sdk/client/clients/createAvalancheWalletClient";
  * import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
  * import { avalanche } from "@avalanche-sdk/client/chains";
+ * import { avaxToNanoAvax } from "@avalanche-sdk/client/utils";
  *
  * const account = privateKeyToAvalancheAccount("0x1234567890123456789012345678901234567890");
  * const walletClient = createAvalancheWalletClient({
@@ -41,7 +38,7 @@ import { newExportTxFromBaseFee } from "./utils.js";
  *   fromAddress: "0x76Dd3d7b2f635c2547B861e55aE8A374E587742D",
  *   exportedOutput: {
  *     addresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
- *     amount: 0.0001,
+ *     amount: avaxToNanoAvax(0.0001),
  *   },
  * });
  *
@@ -66,7 +63,7 @@ export async function prepareExportTxn(
   const unsignedTx = newExportTxFromBaseFee(
     context,
     BigInt(baseFeeInWei),
-    avaxToNanoAvax(params.exportedOutput.amount),
+    params.exportedOutput.amount,
     getChainIdFromAlias(params.destinationChain, context.networkID),
     utils.hexToBuffer(params.fromAddress),
     pAddressBytes,

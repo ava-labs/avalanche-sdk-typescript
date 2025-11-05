@@ -22,9 +22,9 @@ import {
 } from "../fixtures/transactions/xChain";
 import { checkOutputs } from "../fixtures/utils";
 import { Output } from "../types/common";
-import { toTransferableOutput } from "../utils";
+import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 import { PrepareBaseTxnParameters } from "./types/prepareBaseTxn";
-const testInputAmount = 1;
+const testInputAmount = avaxToNanoAvax(1);
 
 const xChainWorker = getXChainMockServer({});
 
@@ -52,7 +52,7 @@ describe("newBaseTx", () => {
       account3.getXPAddress("X", "fuji"),
     ];
     const changeAddresses = [account2.getXPAddress("X", "fuji")];
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -71,7 +71,7 @@ describe("newBaseTx", () => {
     ).baseTx.outputs.map(toTransferableOutput);
 
     const fee = testContext.baseTxFee;
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount =
       testInputAmount - testOutputAmount - expectedFeesInAvax;
 
@@ -99,7 +99,7 @@ describe("newBaseTx", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should only use utxos passed in params", async () => {
@@ -109,8 +109,8 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("X", "fuji")];
 
-    const testOutputAmount = 0.1234;
-    const testInputAmount = 0.5;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testInputAmount = avaxToNanoAvax(0.5);
     const testOutputs = [
       {
         amount: testOutputAmount,
@@ -140,7 +140,7 @@ describe("newBaseTx", () => {
 
     // calculate fees as per AvalancheJS method
     const fee = testContext.baseTxFee;
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     // if utxos passed in params are only used, then testInputAmount will be 0.5 instead of default 1
     const expectedChangeAmount =
       testInputAmount - testOutputAmount - expectedFeesInAvax;
@@ -166,20 +166,18 @@ describe("newBaseTx", () => {
     const allOutputAmounts = (
       txnRequest.tx.getTx() as avmSerial.BaseTx
     ).baseTx.outputs.reduce((acc, i) => acc + i.amount(), 0n);
-    expect(allInputAmounts - allOutputAmounts).toBe(
-      BigInt(expectedFeesInAvax * 1e9)
-    );
+    expect(allInputAmounts - allOutputAmounts).toBe(expectedFeesInAvax);
   });
 
   it("should use `fromAddresses` for fetching utxos and change addresses", async () => {
-    const testSpentAmount = 1;
+    const testSpentAmount = avaxToNanoAvax(1);
     const spenderAddresses = [account1.getXPAddress("X", "fuji")];
     const receiverAddresses = [
       account4.getXPAddress("X", "fuji"),
       account3.getXPAddress("X", "fuji"),
     ];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -198,7 +196,7 @@ describe("newBaseTx", () => {
     ).baseTx.outputs.map(toTransferableOutput);
 
     const fee = testContext.baseTxFee;
-    const expectedFeesInAvax = Number(fee) / 1e9;
+    const expectedFeesInAvax = fee;
     const expectedChangeAmount =
       testSpentAmount - testOutputAmount - expectedFeesInAvax;
 
@@ -228,7 +226,7 @@ describe("newBaseTx", () => {
     expect(
       allInputAmounts - allOutputAmounts,
       "expected and actual burned amount mismatch"
-    ).toBe(BigInt(expectedFeesInAvax * 1e9));
+    ).toBe(expectedFeesInAvax);
   });
 
   it("should sign the tx properly", async () => {
@@ -238,7 +236,7 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("X", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -270,7 +268,7 @@ describe("newBaseTx", () => {
     const receiverAddresses = [account3.getXPAddress("X", "fuji")];
     const changeAddresses = [account4.getXPAddress("X", "fuji")];
 
-    const testOutputAmount = 1.5;
+    const testOutputAmount = avaxToNanoAvax(1.5);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -331,7 +329,7 @@ describe("newBaseTx", () => {
     ];
     const changeAddresses = [account2.getXPAddress("X", "fuji")];
 
-    const testOutputAmount = 0.1234;
+    const testOutputAmount = avaxToNanoAvax(0.1234);
     const testOutputs: Output[] = [
       {
         amount: testOutputAmount,
@@ -356,7 +354,7 @@ describe("newBaseTx", () => {
       fromAddresses: [account1.getXPAddress("X", "fuji")],
       outputs: [
         {
-          amount: 40,
+          amount: avaxToNanoAvax(40),
           addresses: [account1.getXPAddress("X", "fuji")],
         },
       ],
