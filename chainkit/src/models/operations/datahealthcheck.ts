@@ -3,5 +3,5 @@
  */
 
 export const DataHealthCheckServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;

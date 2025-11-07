@@ -45,7 +45,6 @@ export const InternalTransactionDetails$inboundSchema: z.ZodType<
   gasUsed: z.string(),
   gasLimit: z.string(),
 });
-
 /** @internal */
 export type InternalTransactionDetails$Outbound = {
   from: RichAddress$Outbound;
@@ -72,19 +71,6 @@ export const InternalTransactionDetails$outboundSchema: z.ZodType<
   gasLimit: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace InternalTransactionDetails$ {
-  /** @deprecated use `InternalTransactionDetails$inboundSchema` instead. */
-  export const inboundSchema = InternalTransactionDetails$inboundSchema;
-  /** @deprecated use `InternalTransactionDetails$outboundSchema` instead. */
-  export const outboundSchema = InternalTransactionDetails$outboundSchema;
-  /** @deprecated use `InternalTransactionDetails$Outbound` instead. */
-  export type Outbound = InternalTransactionDetails$Outbound;
-}
-
 export function internalTransactionDetailsToJSON(
   internalTransactionDetails: InternalTransactionDetails,
 ): string {
@@ -92,7 +78,6 @@ export function internalTransactionDetailsToJSON(
     InternalTransactionDetails$outboundSchema.parse(internalTransactionDetails),
   );
 }
-
 export function internalTransactionDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<InternalTransactionDetails, SDKValidationError> {

@@ -26,7 +26,6 @@ export const ListWebhookAddressesResponse$inboundSchema: z.ZodType<
   addresses: z.array(z.string()),
   totalAddresses: z.number(),
 });
-
 /** @internal */
 export type ListWebhookAddressesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -45,19 +44,6 @@ export const ListWebhookAddressesResponse$outboundSchema: z.ZodType<
   totalAddresses: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListWebhookAddressesResponse$ {
-  /** @deprecated use `ListWebhookAddressesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListWebhookAddressesResponse$inboundSchema;
-  /** @deprecated use `ListWebhookAddressesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListWebhookAddressesResponse$outboundSchema;
-  /** @deprecated use `ListWebhookAddressesResponse$Outbound` instead. */
-  export type Outbound = ListWebhookAddressesResponse$Outbound;
-}
-
 export function listWebhookAddressesResponseToJSON(
   listWebhookAddressesResponse: ListWebhookAddressesResponse,
 ): string {
@@ -67,7 +53,6 @@ export function listWebhookAddressesResponseToJSON(
     ),
   );
 }
-
 export function listWebhookAddressesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListWebhookAddressesResponse, SDKValidationError> {

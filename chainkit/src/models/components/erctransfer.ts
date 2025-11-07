@@ -78,7 +78,6 @@ export const ERCTransfer$inboundSchema: z.ZodType<
   erc721Token: ERCToken$inboundSchema.optional(),
   erc1155Token: ERCToken$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ERCTransfer$Outbound = {
   transactionHash: string;
@@ -113,23 +112,9 @@ export const ERCTransfer$outboundSchema: z.ZodType<
   erc1155Token: ERCToken$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ERCTransfer$ {
-  /** @deprecated use `ERCTransfer$inboundSchema` instead. */
-  export const inboundSchema = ERCTransfer$inboundSchema;
-  /** @deprecated use `ERCTransfer$outboundSchema` instead. */
-  export const outboundSchema = ERCTransfer$outboundSchema;
-  /** @deprecated use `ERCTransfer$Outbound` instead. */
-  export type Outbound = ERCTransfer$Outbound;
-}
-
 export function ercTransferToJSON(ercTransfer: ERCTransfer): string {
   return JSON.stringify(ERCTransfer$outboundSchema.parse(ercTransfer));
 }
-
 export function ercTransferFromJSON(
   jsonString: string,
 ): SafeParseResult<ERCTransfer, SDKValidationError> {

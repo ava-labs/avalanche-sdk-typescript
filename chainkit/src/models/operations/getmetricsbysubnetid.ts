@@ -50,22 +50,10 @@ export type GetMetricsBySubnetIdRequest = {
 export const GetMetricsBySubnetIdMetric$inboundSchema: z.ZodNativeEnum<
   typeof GetMetricsBySubnetIdMetric
 > = z.nativeEnum(GetMetricsBySubnetIdMetric);
-
 /** @internal */
 export const GetMetricsBySubnetIdMetric$outboundSchema: z.ZodNativeEnum<
   typeof GetMetricsBySubnetIdMetric
 > = GetMetricsBySubnetIdMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsBySubnetIdMetric$ {
-  /** @deprecated use `GetMetricsBySubnetIdMetric$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsBySubnetIdMetric$inboundSchema;
-  /** @deprecated use `GetMetricsBySubnetIdMetric$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsBySubnetIdMetric$outboundSchema;
-}
 
 /** @internal */
 export const GetMetricsBySubnetIdRequest$inboundSchema: z.ZodType<
@@ -78,7 +66,6 @@ export const GetMetricsBySubnetIdRequest$inboundSchema: z.ZodType<
   endTimestamp: z.number().int().optional(),
   subnetId: z.string(),
 });
-
 /** @internal */
 export type GetMetricsBySubnetIdRequest$Outbound = {
   metric: string;
@@ -99,19 +86,6 @@ export const GetMetricsBySubnetIdRequest$outboundSchema: z.ZodType<
   subnetId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsBySubnetIdRequest$ {
-  /** @deprecated use `GetMetricsBySubnetIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsBySubnetIdRequest$inboundSchema;
-  /** @deprecated use `GetMetricsBySubnetIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsBySubnetIdRequest$outboundSchema;
-  /** @deprecated use `GetMetricsBySubnetIdRequest$Outbound` instead. */
-  export type Outbound = GetMetricsBySubnetIdRequest$Outbound;
-}
-
 export function getMetricsBySubnetIdRequestToJSON(
   getMetricsBySubnetIdRequest: GetMetricsBySubnetIdRequest,
 ): string {
@@ -121,7 +95,6 @@ export function getMetricsBySubnetIdRequestToJSON(
     ),
   );
 }
-
 export function getMetricsBySubnetIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetMetricsBySubnetIdRequest, SDKValidationError> {

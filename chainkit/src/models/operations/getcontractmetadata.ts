@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetContractMetadataServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetContractMetadataGlobals = {
@@ -47,7 +47,6 @@ export const GetContractMetadataGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetContractMetadataGlobals$Outbound = {
   chainId?: string | undefined;
@@ -62,19 +61,6 @@ export const GetContractMetadataGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetContractMetadataGlobals$ {
-  /** @deprecated use `GetContractMetadataGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetContractMetadataGlobals$inboundSchema;
-  /** @deprecated use `GetContractMetadataGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetContractMetadataGlobals$outboundSchema;
-  /** @deprecated use `GetContractMetadataGlobals$Outbound` instead. */
-  export type Outbound = GetContractMetadataGlobals$Outbound;
-}
-
 export function getContractMetadataGlobalsToJSON(
   getContractMetadataGlobals: GetContractMetadataGlobals,
 ): string {
@@ -82,7 +68,6 @@ export function getContractMetadataGlobalsToJSON(
     GetContractMetadataGlobals$outboundSchema.parse(getContractMetadataGlobals),
   );
 }
-
 export function getContractMetadataGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetContractMetadataGlobals, SDKValidationError> {
@@ -102,7 +87,6 @@ export const GetContractMetadataRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type GetContractMetadataRequest$Outbound = {
   chainId?: string | undefined;
@@ -119,19 +103,6 @@ export const GetContractMetadataRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetContractMetadataRequest$ {
-  /** @deprecated use `GetContractMetadataRequest$inboundSchema` instead. */
-  export const inboundSchema = GetContractMetadataRequest$inboundSchema;
-  /** @deprecated use `GetContractMetadataRequest$outboundSchema` instead. */
-  export const outboundSchema = GetContractMetadataRequest$outboundSchema;
-  /** @deprecated use `GetContractMetadataRequest$Outbound` instead. */
-  export type Outbound = GetContractMetadataRequest$Outbound;
-}
-
 export function getContractMetadataRequestToJSON(
   getContractMetadataRequest: GetContractMetadataRequest,
 ): string {
@@ -139,7 +110,6 @@ export function getContractMetadataRequestToJSON(
     GetContractMetadataRequest$outboundSchema.parse(getContractMetadataRequest),
   );
 }
-
 export function getContractMetadataRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetContractMetadataRequest, SDKValidationError> {
@@ -177,7 +147,6 @@ export const GetContractMetadataResponse$inboundSchema: z.ZodType<
     })),
   ),
 ]);
-
 /** @internal */
 export type GetContractMetadataResponse$Outbound =
   | (components.Erc20Contract$Outbound & { ercType: "ERC-20" })
@@ -213,19 +182,6 @@ export const GetContractMetadataResponse$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetContractMetadataResponse$ {
-  /** @deprecated use `GetContractMetadataResponse$inboundSchema` instead. */
-  export const inboundSchema = GetContractMetadataResponse$inboundSchema;
-  /** @deprecated use `GetContractMetadataResponse$outboundSchema` instead. */
-  export const outboundSchema = GetContractMetadataResponse$outboundSchema;
-  /** @deprecated use `GetContractMetadataResponse$Outbound` instead. */
-  export type Outbound = GetContractMetadataResponse$Outbound;
-}
-
 export function getContractMetadataResponseToJSON(
   getContractMetadataResponse: GetContractMetadataResponse,
 ): string {
@@ -235,7 +191,6 @@ export function getContractMetadataResponseToJSON(
     ),
   );
 }
-
 export function getContractMetadataResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetContractMetadataResponse, SDKValidationError> {

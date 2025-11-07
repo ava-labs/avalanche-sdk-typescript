@@ -27,7 +27,6 @@ export const UtxoCredential$inboundSchema: z.ZodType<
   signature: z.string().optional(),
   publicKey: z.string().optional(),
 });
-
 /** @internal */
 export type UtxoCredential$Outbound = {
   signature?: string | undefined;
@@ -44,23 +43,9 @@ export const UtxoCredential$outboundSchema: z.ZodType<
   publicKey: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UtxoCredential$ {
-  /** @deprecated use `UtxoCredential$inboundSchema` instead. */
-  export const inboundSchema = UtxoCredential$inboundSchema;
-  /** @deprecated use `UtxoCredential$outboundSchema` instead. */
-  export const outboundSchema = UtxoCredential$outboundSchema;
-  /** @deprecated use `UtxoCredential$Outbound` instead. */
-  export type Outbound = UtxoCredential$Outbound;
-}
-
 export function utxoCredentialToJSON(utxoCredential: UtxoCredential): string {
   return JSON.stringify(UtxoCredential$outboundSchema.parse(utxoCredential));
 }
-
 export function utxoCredentialFromJSON(
   jsonString: string,
 ): SafeParseResult<UtxoCredential, SDKValidationError> {

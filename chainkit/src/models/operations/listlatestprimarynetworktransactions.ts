@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListLatestPrimaryNetworkTransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListLatestPrimaryNetworkTransactionsGlobals = {
@@ -84,7 +84,6 @@ export const ListLatestPrimaryNetworkTransactionsGlobals$inboundSchema:
   > = z.object({
     network: components.GlobalParamNetwork$inboundSchema.optional(),
   });
-
 /** @internal */
 export type ListLatestPrimaryNetworkTransactionsGlobals$Outbound = {
   network?: string | undefined;
@@ -100,21 +99,6 @@ export const ListLatestPrimaryNetworkTransactionsGlobals$outboundSchema:
     network: components.GlobalParamNetwork$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkTransactionsGlobals$ {
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkTransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkTransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsGlobals$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkTransactionsGlobals$Outbound;
-}
-
 export function listLatestPrimaryNetworkTransactionsGlobalsToJSON(
   listLatestPrimaryNetworkTransactionsGlobals:
     ListLatestPrimaryNetworkTransactionsGlobals,
@@ -125,7 +109,6 @@ export function listLatestPrimaryNetworkTransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkTransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -160,7 +143,6 @@ export const ListLatestPrimaryNetworkTransactionsRequest$inboundSchema:
     network: components.GlobalParamNetwork$inboundSchema.optional(),
     sortOrder: components.SortOrder$inboundSchema.optional(),
   });
-
 /** @internal */
 export type ListLatestPrimaryNetworkTransactionsRequest$Outbound = {
   addresses?: string | undefined;
@@ -194,21 +176,6 @@ export const ListLatestPrimaryNetworkTransactionsRequest$outboundSchema:
     sortOrder: components.SortOrder$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkTransactionsRequest$ {
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkTransactionsRequest$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkTransactionsRequest$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsRequest$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkTransactionsRequest$Outbound;
-}
-
 export function listLatestPrimaryNetworkTransactionsRequestToJSON(
   listLatestPrimaryNetworkTransactionsRequest:
     ListLatestPrimaryNetworkTransactionsRequest,
@@ -219,7 +186,6 @@ export function listLatestPrimaryNetworkTransactionsRequestToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkTransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -247,7 +213,6 @@ export const ListLatestPrimaryNetworkTransactionsResponseBody$inboundSchema:
     components.ListXChainTransactionsResponse$inboundSchema,
     components.ListCChainAtomicTransactionsResponse$inboundSchema,
   ]);
-
 /** @internal */
 export type ListLatestPrimaryNetworkTransactionsResponseBody$Outbound =
   | components.ListPChainTransactionsResponse$Outbound
@@ -266,22 +231,6 @@ export const ListLatestPrimaryNetworkTransactionsResponseBody$outboundSchema:
     components.ListCChainAtomicTransactionsResponse$outboundSchema,
   ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkTransactionsResponseBody$ {
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponseBody$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkTransactionsResponseBody$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkTransactionsResponseBody$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponseBody$Outbound` instead. */
-  export type Outbound =
-    ListLatestPrimaryNetworkTransactionsResponseBody$Outbound;
-}
-
 export function listLatestPrimaryNetworkTransactionsResponseBodyToJSON(
   listLatestPrimaryNetworkTransactionsResponseBody:
     ListLatestPrimaryNetworkTransactionsResponseBody,
@@ -292,7 +241,6 @@ export function listLatestPrimaryNetworkTransactionsResponseBodyToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkTransactionsResponseBodyFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -326,7 +274,6 @@ export const ListLatestPrimaryNetworkTransactionsResponse$inboundSchema:
       "Result": "result",
     });
   });
-
 /** @internal */
 export type ListLatestPrimaryNetworkTransactionsResponse$Outbound = {
   Result:
@@ -353,21 +300,6 @@ export const ListLatestPrimaryNetworkTransactionsResponse$outboundSchema:
     });
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkTransactionsResponse$ {
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkTransactionsResponse$Outbound;
-}
-
 export function listLatestPrimaryNetworkTransactionsResponseToJSON(
   listLatestPrimaryNetworkTransactionsResponse:
     ListLatestPrimaryNetworkTransactionsResponse,
@@ -378,7 +310,6 @@ export function listLatestPrimaryNetworkTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

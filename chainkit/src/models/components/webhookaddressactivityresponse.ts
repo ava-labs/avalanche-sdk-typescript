@@ -50,24 +50,10 @@ export type WebhookAddressActivityResponse = {
 export const WebhookAddressActivityResponseEventType$inboundSchema:
   z.ZodNativeEnum<typeof WebhookAddressActivityResponseEventType> = z
     .nativeEnum(WebhookAddressActivityResponseEventType);
-
 /** @internal */
 export const WebhookAddressActivityResponseEventType$outboundSchema:
   z.ZodNativeEnum<typeof WebhookAddressActivityResponseEventType> =
     WebhookAddressActivityResponseEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace WebhookAddressActivityResponseEventType$ {
-  /** @deprecated use `WebhookAddressActivityResponseEventType$inboundSchema` instead. */
-  export const inboundSchema =
-    WebhookAddressActivityResponseEventType$inboundSchema;
-  /** @deprecated use `WebhookAddressActivityResponseEventType$outboundSchema` instead. */
-  export const outboundSchema =
-    WebhookAddressActivityResponseEventType$outboundSchema;
-}
 
 /** @internal */
 export const WebhookAddressActivityResponse$inboundSchema: z.ZodType<
@@ -80,7 +66,6 @@ export const WebhookAddressActivityResponse$inboundSchema: z.ZodType<
   messageId: z.string(),
   event: TransactionEvent$inboundSchema,
 });
-
 /** @internal */
 export type WebhookAddressActivityResponse$Outbound = {
   webhookId: string;
@@ -101,19 +86,6 @@ export const WebhookAddressActivityResponse$outboundSchema: z.ZodType<
   event: TransactionEvent$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace WebhookAddressActivityResponse$ {
-  /** @deprecated use `WebhookAddressActivityResponse$inboundSchema` instead. */
-  export const inboundSchema = WebhookAddressActivityResponse$inboundSchema;
-  /** @deprecated use `WebhookAddressActivityResponse$outboundSchema` instead. */
-  export const outboundSchema = WebhookAddressActivityResponse$outboundSchema;
-  /** @deprecated use `WebhookAddressActivityResponse$Outbound` instead. */
-  export type Outbound = WebhookAddressActivityResponse$Outbound;
-}
-
 export function webhookAddressActivityResponseToJSON(
   webhookAddressActivityResponse: WebhookAddressActivityResponse,
 ): string {
@@ -123,7 +95,6 @@ export function webhookAddressActivityResponseToJSON(
     ),
   );
 }
-
 export function webhookAddressActivityResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<WebhookAddressActivityResponse, SDKValidationError> {

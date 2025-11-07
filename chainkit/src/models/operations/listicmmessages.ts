@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListIcmMessagesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListIcmMessagesRequest = {
@@ -67,7 +67,6 @@ export const ListIcmMessagesRequest$inboundSchema: z.ZodType<
   from: z.string().optional(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListIcmMessagesRequest$Outbound = {
   pageToken?: string | undefined;
@@ -96,19 +95,6 @@ export const ListIcmMessagesRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListIcmMessagesRequest$ {
-  /** @deprecated use `ListIcmMessagesRequest$inboundSchema` instead. */
-  export const inboundSchema = ListIcmMessagesRequest$inboundSchema;
-  /** @deprecated use `ListIcmMessagesRequest$outboundSchema` instead. */
-  export const outboundSchema = ListIcmMessagesRequest$outboundSchema;
-  /** @deprecated use `ListIcmMessagesRequest$Outbound` instead. */
-  export type Outbound = ListIcmMessagesRequest$Outbound;
-}
-
 export function listIcmMessagesRequestToJSON(
   listIcmMessagesRequest: ListIcmMessagesRequest,
 ): string {
@@ -116,7 +102,6 @@ export function listIcmMessagesRequestToJSON(
     ListIcmMessagesRequest$outboundSchema.parse(listIcmMessagesRequest),
   );
 }
-
 export function listIcmMessagesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListIcmMessagesRequest, SDKValidationError> {
@@ -139,7 +124,6 @@ export const ListIcmMessagesResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListIcmMessagesResponse$Outbound = {
   Result: components.ListIcmMessagesResponse$Outbound;
@@ -158,19 +142,6 @@ export const ListIcmMessagesResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListIcmMessagesResponse$ {
-  /** @deprecated use `ListIcmMessagesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListIcmMessagesResponse$inboundSchema;
-  /** @deprecated use `ListIcmMessagesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListIcmMessagesResponse$outboundSchema;
-  /** @deprecated use `ListIcmMessagesResponse$Outbound` instead. */
-  export type Outbound = ListIcmMessagesResponse$Outbound;
-}
-
 export function listIcmMessagesResponseToJSON(
   listIcmMessagesResponse: ListIcmMessagesResponse,
 ): string {
@@ -178,7 +149,6 @@ export function listIcmMessagesResponseToJSON(
     ListIcmMessagesResponse$outboundSchema.parse(listIcmMessagesResponse),
   );
 }
-
 export function listIcmMessagesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListIcmMessagesResponse, SDKValidationError> {

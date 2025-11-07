@@ -52,7 +52,6 @@ export const PendingReward$inboundSchema: z.ZodType<
   progress: z.number(),
   estimatedReward: AssetAmount$inboundSchema,
 });
-
 /** @internal */
 export type PendingReward$Outbound = {
   addresses: Array<string>;
@@ -83,23 +82,9 @@ export const PendingReward$outboundSchema: z.ZodType<
   estimatedReward: AssetAmount$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingReward$ {
-  /** @deprecated use `PendingReward$inboundSchema` instead. */
-  export const inboundSchema = PendingReward$inboundSchema;
-  /** @deprecated use `PendingReward$outboundSchema` instead. */
-  export const outboundSchema = PendingReward$outboundSchema;
-  /** @deprecated use `PendingReward$Outbound` instead. */
-  export type Outbound = PendingReward$Outbound;
-}
-
 export function pendingRewardToJSON(pendingReward: PendingReward): string {
   return JSON.stringify(PendingReward$outboundSchema.parse(pendingReward));
 }
-
 export function pendingRewardFromJSON(
   jsonString: string,
 ): SafeParseResult<PendingReward, SDKValidationError> {

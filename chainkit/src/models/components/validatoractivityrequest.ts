@@ -47,23 +47,10 @@ export type ValidatorActivityRequest = {
 export const ValidatorActivityRequestEventType$inboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityRequestEventType
 > = z.nativeEnum(ValidatorActivityRequestEventType);
-
 /** @internal */
 export const ValidatorActivityRequestEventType$outboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityRequestEventType
 > = ValidatorActivityRequestEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityRequestEventType$ {
-  /** @deprecated use `ValidatorActivityRequestEventType$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityRequestEventType$inboundSchema;
-  /** @deprecated use `ValidatorActivityRequestEventType$outboundSchema` instead. */
-  export const outboundSchema =
-    ValidatorActivityRequestEventType$outboundSchema;
-}
 
 /** @internal */
 export const ValidatorActivityRequestMetadata$inboundSchema: z.ZodType<
@@ -71,7 +58,6 @@ export const ValidatorActivityRequestMetadata$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = ValidatorActivityMetadata$inboundSchema;
-
 /** @internal */
 export type ValidatorActivityRequestMetadata$Outbound =
   ValidatorActivityMetadata$Outbound;
@@ -83,19 +69,6 @@ export const ValidatorActivityRequestMetadata$outboundSchema: z.ZodType<
   ValidatorActivityRequestMetadata
 > = ValidatorActivityMetadata$outboundSchema;
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityRequestMetadata$ {
-  /** @deprecated use `ValidatorActivityRequestMetadata$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityRequestMetadata$inboundSchema;
-  /** @deprecated use `ValidatorActivityRequestMetadata$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityRequestMetadata$outboundSchema;
-  /** @deprecated use `ValidatorActivityRequestMetadata$Outbound` instead. */
-  export type Outbound = ValidatorActivityRequestMetadata$Outbound;
-}
-
 export function validatorActivityRequestMetadataToJSON(
   validatorActivityRequestMetadata: ValidatorActivityRequestMetadata,
 ): string {
@@ -105,7 +78,6 @@ export function validatorActivityRequestMetadataToJSON(
     ),
   );
 }
-
 export function validatorActivityRequestMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorActivityRequestMetadata, SDKValidationError> {
@@ -129,7 +101,6 @@ export const ValidatorActivityRequest$inboundSchema: z.ZodType<
   network: PrimaryNetworkType$inboundSchema,
   metadata: ValidatorActivityMetadata$inboundSchema,
 });
-
 /** @internal */
 export type ValidatorActivityRequest$Outbound = {
   eventType: string;
@@ -154,19 +125,6 @@ export const ValidatorActivityRequest$outboundSchema: z.ZodType<
   metadata: ValidatorActivityMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityRequest$ {
-  /** @deprecated use `ValidatorActivityRequest$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityRequest$inboundSchema;
-  /** @deprecated use `ValidatorActivityRequest$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityRequest$outboundSchema;
-  /** @deprecated use `ValidatorActivityRequest$Outbound` instead. */
-  export type Outbound = ValidatorActivityRequest$Outbound;
-}
-
 export function validatorActivityRequestToJSON(
   validatorActivityRequest: ValidatorActivityRequest,
 ): string {
@@ -174,7 +132,6 @@ export function validatorActivityRequestToJSON(
     ValidatorActivityRequest$outboundSchema.parse(validatorActivityRequest),
   );
 }
-
 export function validatorActivityRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorActivityRequest, SDKValidationError> {

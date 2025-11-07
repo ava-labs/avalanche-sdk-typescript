@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetOperationResultServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetOperationResultRequest = {
@@ -26,7 +26,6 @@ export const GetOperationResultRequest$inboundSchema: z.ZodType<
 > = z.object({
   operationId: z.string(),
 });
-
 /** @internal */
 export type GetOperationResultRequest$Outbound = {
   operationId: string;
@@ -41,19 +40,6 @@ export const GetOperationResultRequest$outboundSchema: z.ZodType<
   operationId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetOperationResultRequest$ {
-  /** @deprecated use `GetOperationResultRequest$inboundSchema` instead. */
-  export const inboundSchema = GetOperationResultRequest$inboundSchema;
-  /** @deprecated use `GetOperationResultRequest$outboundSchema` instead. */
-  export const outboundSchema = GetOperationResultRequest$outboundSchema;
-  /** @deprecated use `GetOperationResultRequest$Outbound` instead. */
-  export type Outbound = GetOperationResultRequest$Outbound;
-}
-
 export function getOperationResultRequestToJSON(
   getOperationResultRequest: GetOperationResultRequest,
 ): string {
@@ -61,7 +47,6 @@ export function getOperationResultRequestToJSON(
     GetOperationResultRequest$outboundSchema.parse(getOperationResultRequest),
   );
 }
-
 export function getOperationResultRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetOperationResultRequest, SDKValidationError> {

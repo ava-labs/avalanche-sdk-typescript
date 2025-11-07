@@ -23,19 +23,7 @@ export type InternalTransactionOpCall = ClosedEnum<
 export const InternalTransactionOpCall$inboundSchema: z.ZodNativeEnum<
   typeof InternalTransactionOpCall
 > = z.nativeEnum(InternalTransactionOpCall);
-
 /** @internal */
 export const InternalTransactionOpCall$outboundSchema: z.ZodNativeEnum<
   typeof InternalTransactionOpCall
 > = InternalTransactionOpCall$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace InternalTransactionOpCall$ {
-  /** @deprecated use `InternalTransactionOpCall$inboundSchema` instead. */
-  export const inboundSchema = InternalTransactionOpCall$inboundSchema;
-  /** @deprecated use `InternalTransactionOpCall$outboundSchema` instead. */
-  export const outboundSchema = InternalTransactionOpCall$outboundSchema;
-}

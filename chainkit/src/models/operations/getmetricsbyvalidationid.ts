@@ -49,22 +49,10 @@ export type GetMetricsByValidationIdRequest = {
 export const GetMetricsByValidationIdMetric$inboundSchema: z.ZodNativeEnum<
   typeof GetMetricsByValidationIdMetric
 > = z.nativeEnum(GetMetricsByValidationIdMetric);
-
 /** @internal */
 export const GetMetricsByValidationIdMetric$outboundSchema: z.ZodNativeEnum<
   typeof GetMetricsByValidationIdMetric
 > = GetMetricsByValidationIdMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsByValidationIdMetric$ {
-  /** @deprecated use `GetMetricsByValidationIdMetric$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsByValidationIdMetric$inboundSchema;
-  /** @deprecated use `GetMetricsByValidationIdMetric$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsByValidationIdMetric$outboundSchema;
-}
 
 /** @internal */
 export const GetMetricsByValidationIdRequest$inboundSchema: z.ZodType<
@@ -77,7 +65,6 @@ export const GetMetricsByValidationIdRequest$inboundSchema: z.ZodType<
   startTimestamp: z.number().int().optional(),
   endTimestamp: z.number().int().optional(),
 });
-
 /** @internal */
 export type GetMetricsByValidationIdRequest$Outbound = {
   l1ValidationId: string;
@@ -98,19 +85,6 @@ export const GetMetricsByValidationIdRequest$outboundSchema: z.ZodType<
   endTimestamp: z.number().int().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsByValidationIdRequest$ {
-  /** @deprecated use `GetMetricsByValidationIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsByValidationIdRequest$inboundSchema;
-  /** @deprecated use `GetMetricsByValidationIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsByValidationIdRequest$outboundSchema;
-  /** @deprecated use `GetMetricsByValidationIdRequest$Outbound` instead. */
-  export type Outbound = GetMetricsByValidationIdRequest$Outbound;
-}
-
 export function getMetricsByValidationIdRequestToJSON(
   getMetricsByValidationIdRequest: GetMetricsByValidationIdRequest,
 ): string {
@@ -120,7 +94,6 @@ export function getMetricsByValidationIdRequestToJSON(
     ),
   );
 }
-
 export function getMetricsByValidationIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetMetricsByValidationIdRequest, SDKValidationError> {

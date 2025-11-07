@@ -88,6 +88,11 @@ const value: components.PChainTransaction = {
       "avax1qm2a25eytsrj235hxg6jc0mwk99tss64eqevsw",
     ],
   },
+  blockchainInfo: {
+    chainName: "<value>",
+    vmId: "<id>",
+    genesisData: "{\"chainId\": 43114}",
+  },
 };
 ```
 

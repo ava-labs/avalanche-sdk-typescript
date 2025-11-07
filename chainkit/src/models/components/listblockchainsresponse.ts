@@ -30,7 +30,6 @@ export const ListBlockchainsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   blockchains: z.array(Blockchain$inboundSchema),
 });
-
 /** @internal */
 export type ListBlockchainsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListBlockchainsResponse$outboundSchema: z.ZodType<
   blockchains: z.array(Blockchain$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListBlockchainsResponse$ {
-  /** @deprecated use `ListBlockchainsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListBlockchainsResponse$inboundSchema;
-  /** @deprecated use `ListBlockchainsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListBlockchainsResponse$outboundSchema;
-  /** @deprecated use `ListBlockchainsResponse$Outbound` instead. */
-  export type Outbound = ListBlockchainsResponse$Outbound;
-}
-
 export function listBlockchainsResponseToJSON(
   listBlockchainsResponse: ListBlockchainsResponse,
 ): string {
@@ -67,7 +53,6 @@ export function listBlockchainsResponseToJSON(
     ListBlockchainsResponse$outboundSchema.parse(listBlockchainsResponse),
   );
 }
-
 export function listBlockchainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListBlockchainsResponse, SDKValidationError> {

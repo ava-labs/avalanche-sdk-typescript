@@ -38,7 +38,6 @@ export const ListPChainUtxosResponse$inboundSchema: z.ZodType<
   utxos: z.array(PChainUtxo$inboundSchema),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListPChainUtxosResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,19 +56,6 @@ export const ListPChainUtxosResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPChainUtxosResponse$ {
-  /** @deprecated use `ListPChainUtxosResponse$inboundSchema` instead. */
-  export const inboundSchema = ListPChainUtxosResponse$inboundSchema;
-  /** @deprecated use `ListPChainUtxosResponse$outboundSchema` instead. */
-  export const outboundSchema = ListPChainUtxosResponse$outboundSchema;
-  /** @deprecated use `ListPChainUtxosResponse$Outbound` instead. */
-  export type Outbound = ListPChainUtxosResponse$Outbound;
-}
-
 export function listPChainUtxosResponseToJSON(
   listPChainUtxosResponse: ListPChainUtxosResponse,
 ): string {
@@ -77,7 +63,6 @@ export function listPChainUtxosResponseToJSON(
     ListPChainUtxosResponse$outboundSchema.parse(listPChainUtxosResponse),
   );
 }
-
 export function listPChainUtxosResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListPChainUtxosResponse, SDKValidationError> {

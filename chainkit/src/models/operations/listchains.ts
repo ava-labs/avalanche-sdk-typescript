@@ -37,7 +37,6 @@ export const ListChainsRequest$inboundSchema: z.ZodType<
   pageToken: z.string().optional(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListChainsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -54,19 +53,6 @@ export const ListChainsRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListChainsRequest$ {
-  /** @deprecated use `ListChainsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListChainsRequest$inboundSchema;
-  /** @deprecated use `ListChainsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListChainsRequest$outboundSchema;
-  /** @deprecated use `ListChainsRequest$Outbound` instead. */
-  export type Outbound = ListChainsRequest$Outbound;
-}
-
 export function listChainsRequestToJSON(
   listChainsRequest: ListChainsRequest,
 ): string {
@@ -74,7 +60,6 @@ export function listChainsRequestToJSON(
     ListChainsRequest$outboundSchema.parse(listChainsRequest),
   );
 }
-
 export function listChainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListChainsRequest, SDKValidationError> {
@@ -97,7 +82,6 @@ export const ListChainsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListChainsResponse$Outbound = {
   Result: components.MetricsListChainsResponse$Outbound;
@@ -116,19 +100,6 @@ export const ListChainsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListChainsResponse$ {
-  /** @deprecated use `ListChainsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListChainsResponse$inboundSchema;
-  /** @deprecated use `ListChainsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListChainsResponse$outboundSchema;
-  /** @deprecated use `ListChainsResponse$Outbound` instead. */
-  export type Outbound = ListChainsResponse$Outbound;
-}
-
 export function listChainsResponseToJSON(
   listChainsResponse: ListChainsResponse,
 ): string {
@@ -136,7 +107,6 @@ export function listChainsResponseToJSON(
     ListChainsResponse$outboundSchema.parse(listChainsResponse),
   );
 }
-
 export function listChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListChainsResponse, SDKValidationError> {

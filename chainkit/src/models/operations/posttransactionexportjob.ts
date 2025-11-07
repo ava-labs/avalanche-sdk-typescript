@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const PostTransactionExportJobServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type PostTransactionExportJobRequest =
@@ -25,7 +25,6 @@ export const PostTransactionExportJobRequest$inboundSchema: z.ZodType<
   components.CreateEvmTransactionExportRequest$inboundSchema,
   components.CreatePrimaryNetworkTransactionExportRequest$inboundSchema,
 ]);
-
 /** @internal */
 export type PostTransactionExportJobRequest$Outbound =
   | components.CreateEvmTransactionExportRequest$Outbound
@@ -41,19 +40,6 @@ export const PostTransactionExportJobRequest$outboundSchema: z.ZodType<
   components.CreatePrimaryNetworkTransactionExportRequest$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PostTransactionExportJobRequest$ {
-  /** @deprecated use `PostTransactionExportJobRequest$inboundSchema` instead. */
-  export const inboundSchema = PostTransactionExportJobRequest$inboundSchema;
-  /** @deprecated use `PostTransactionExportJobRequest$outboundSchema` instead. */
-  export const outboundSchema = PostTransactionExportJobRequest$outboundSchema;
-  /** @deprecated use `PostTransactionExportJobRequest$Outbound` instead. */
-  export type Outbound = PostTransactionExportJobRequest$Outbound;
-}
-
 export function postTransactionExportJobRequestToJSON(
   postTransactionExportJobRequest: PostTransactionExportJobRequest,
 ): string {
@@ -63,7 +49,6 @@ export function postTransactionExportJobRequestToJSON(
     ),
   );
 }
-
 export function postTransactionExportJobRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<PostTransactionExportJobRequest, SDKValidationError> {

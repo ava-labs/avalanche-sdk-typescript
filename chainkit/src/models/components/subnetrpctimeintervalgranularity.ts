@@ -19,19 +19,7 @@ export type SubnetRpcTimeIntervalGranularity = ClosedEnum<
 export const SubnetRpcTimeIntervalGranularity$inboundSchema: z.ZodNativeEnum<
   typeof SubnetRpcTimeIntervalGranularity
 > = z.nativeEnum(SubnetRpcTimeIntervalGranularity);
-
 /** @internal */
 export const SubnetRpcTimeIntervalGranularity$outboundSchema: z.ZodNativeEnum<
   typeof SubnetRpcTimeIntervalGranularity
 > = SubnetRpcTimeIntervalGranularity$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SubnetRpcTimeIntervalGranularity$ {
-  /** @deprecated use `SubnetRpcTimeIntervalGranularity$inboundSchema` instead. */
-  export const inboundSchema = SubnetRpcTimeIntervalGranularity$inboundSchema;
-  /** @deprecated use `SubnetRpcTimeIntervalGranularity$outboundSchema` instead. */
-  export const outboundSchema = SubnetRpcTimeIntervalGranularity$outboundSchema;
-}

@@ -54,22 +54,10 @@ export type TeleporterRewardDetails = {
 export const TeleporterRewardDetailsErcType$inboundSchema: z.ZodNativeEnum<
   typeof TeleporterRewardDetailsErcType
 > = z.nativeEnum(TeleporterRewardDetailsErcType);
-
 /** @internal */
 export const TeleporterRewardDetailsErcType$outboundSchema: z.ZodNativeEnum<
   typeof TeleporterRewardDetailsErcType
 > = TeleporterRewardDetailsErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterRewardDetailsErcType$ {
-  /** @deprecated use `TeleporterRewardDetailsErcType$inboundSchema` instead. */
-  export const inboundSchema = TeleporterRewardDetailsErcType$inboundSchema;
-  /** @deprecated use `TeleporterRewardDetailsErcType$outboundSchema` instead. */
-  export const outboundSchema = TeleporterRewardDetailsErcType$outboundSchema;
-}
 
 /** @internal */
 export const TeleporterRewardDetails$inboundSchema: z.ZodType<
@@ -86,7 +74,6 @@ export const TeleporterRewardDetails$inboundSchema: z.ZodType<
   price: Money$inboundSchema.optional(),
   value: z.string(),
 });
-
 /** @internal */
 export type TeleporterRewardDetails$Outbound = {
   address: string;
@@ -115,19 +102,6 @@ export const TeleporterRewardDetails$outboundSchema: z.ZodType<
   value: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterRewardDetails$ {
-  /** @deprecated use `TeleporterRewardDetails$inboundSchema` instead. */
-  export const inboundSchema = TeleporterRewardDetails$inboundSchema;
-  /** @deprecated use `TeleporterRewardDetails$outboundSchema` instead. */
-  export const outboundSchema = TeleporterRewardDetails$outboundSchema;
-  /** @deprecated use `TeleporterRewardDetails$Outbound` instead. */
-  export type Outbound = TeleporterRewardDetails$Outbound;
-}
-
 export function teleporterRewardDetailsToJSON(
   teleporterRewardDetails: TeleporterRewardDetails,
 ): string {
@@ -135,7 +109,6 @@ export function teleporterRewardDetailsToJSON(
     TeleporterRewardDetails$outboundSchema.parse(teleporterRewardDetails),
   );
 }
-
 export function teleporterRewardDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<TeleporterRewardDetails, SDKValidationError> {

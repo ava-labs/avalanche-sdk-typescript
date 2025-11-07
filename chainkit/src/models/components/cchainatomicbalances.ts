@@ -27,7 +27,6 @@ export const CChainAtomicBalances$inboundSchema: z.ZodType<
   atomicMemoryUnlocked: z.array(CChainSharedAssetBalance$inboundSchema),
   atomicMemoryLocked: z.array(CChainSharedAssetBalance$inboundSchema),
 });
-
 /** @internal */
 export type CChainAtomicBalances$Outbound = {
   atomicMemoryUnlocked: Array<CChainSharedAssetBalance$Outbound>;
@@ -44,19 +43,6 @@ export const CChainAtomicBalances$outboundSchema: z.ZodType<
   atomicMemoryLocked: z.array(CChainSharedAssetBalance$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CChainAtomicBalances$ {
-  /** @deprecated use `CChainAtomicBalances$inboundSchema` instead. */
-  export const inboundSchema = CChainAtomicBalances$inboundSchema;
-  /** @deprecated use `CChainAtomicBalances$outboundSchema` instead. */
-  export const outboundSchema = CChainAtomicBalances$outboundSchema;
-  /** @deprecated use `CChainAtomicBalances$Outbound` instead. */
-  export type Outbound = CChainAtomicBalances$Outbound;
-}
-
 export function cChainAtomicBalancesToJSON(
   cChainAtomicBalances: CChainAtomicBalances,
 ): string {
@@ -64,7 +50,6 @@ export function cChainAtomicBalancesToJSON(
     CChainAtomicBalances$outboundSchema.parse(cChainAtomicBalances),
   );
 }
-
 export function cChainAtomicBalancesFromJSON(
   jsonString: string,
 ): SafeParseResult<CChainAtomicBalances, SDKValidationError> {

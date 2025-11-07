@@ -16,19 +16,7 @@ export type AddressActivityEventType = ClosedEnum<
 export const AddressActivityEventType$inboundSchema: z.ZodNativeEnum<
   typeof AddressActivityEventType
 > = z.nativeEnum(AddressActivityEventType);
-
 /** @internal */
 export const AddressActivityEventType$outboundSchema: z.ZodNativeEnum<
   typeof AddressActivityEventType
 > = AddressActivityEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AddressActivityEventType$ {
-  /** @deprecated use `AddressActivityEventType$inboundSchema` instead. */
-  export const inboundSchema = AddressActivityEventType$inboundSchema;
-  /** @deprecated use `AddressActivityEventType$outboundSchema` instead. */
-  export const outboundSchema = AddressActivityEventType$outboundSchema;
-}

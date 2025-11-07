@@ -60,7 +60,6 @@ export const PrimaryNetworkAddressActivityMetadata$inboundSchema: z.ZodType<
   balanceThresholdFilter: PrimaryNetworkBalanceThresholdFilter$inboundSchema
     .optional(),
 });
-
 /** @internal */
 export type PrimaryNetworkAddressActivityMetadata$Outbound = {
   eventSignatures?: Array<string> | undefined;
@@ -86,21 +85,6 @@ export const PrimaryNetworkAddressActivityMetadata$outboundSchema: z.ZodType<
     .optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityMetadata$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityMetadata$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityMetadata$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityMetadata$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityMetadata$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityMetadata$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressActivityMetadata$Outbound;
-}
-
 export function primaryNetworkAddressActivityMetadataToJSON(
   primaryNetworkAddressActivityMetadata: PrimaryNetworkAddressActivityMetadata,
 ): string {
@@ -110,7 +94,6 @@ export function primaryNetworkAddressActivityMetadataToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressActivityMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkAddressActivityMetadata, SDKValidationError> {

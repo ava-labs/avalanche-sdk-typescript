@@ -69,7 +69,6 @@ export const PChainBalance$inboundSchema: z.ZodType<
   atomicMemoryUnlocked: z.array(PChainSharedAsset$inboundSchema),
   atomicMemoryLocked: z.array(PChainSharedAsset$inboundSchema),
 });
-
 /** @internal */
 export type PChainBalance$Outbound = {
   unlockedUnstaked: Array<AggregatedAssetAmount$Outbound>;
@@ -98,23 +97,9 @@ export const PChainBalance$outboundSchema: z.ZodType<
   atomicMemoryLocked: z.array(PChainSharedAsset$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainBalance$ {
-  /** @deprecated use `PChainBalance$inboundSchema` instead. */
-  export const inboundSchema = PChainBalance$inboundSchema;
-  /** @deprecated use `PChainBalance$outboundSchema` instead. */
-  export const outboundSchema = PChainBalance$outboundSchema;
-  /** @deprecated use `PChainBalance$Outbound` instead. */
-  export type Outbound = PChainBalance$Outbound;
-}
-
 export function pChainBalanceToJSON(pChainBalance: PChainBalance): string {
   return JSON.stringify(PChainBalance$outboundSchema.parse(pChainBalance));
 }
-
 export function pChainBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainBalance, SDKValidationError> {

@@ -27,7 +27,6 @@ export const ListAddressChainsResponse$inboundSchema: z.ZodType<
   indexedChains: z.array(ChainInfo$inboundSchema).optional(),
   unindexedChains: z.array(z.string()).optional(),
 });
-
 /** @internal */
 export type ListAddressChainsResponse$Outbound = {
   indexedChains?: Array<ChainInfo$Outbound> | undefined;
@@ -44,19 +43,6 @@ export const ListAddressChainsResponse$outboundSchema: z.ZodType<
   unindexedChains: z.array(z.string()).optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListAddressChainsResponse$ {
-  /** @deprecated use `ListAddressChainsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListAddressChainsResponse$inboundSchema;
-  /** @deprecated use `ListAddressChainsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListAddressChainsResponse$outboundSchema;
-  /** @deprecated use `ListAddressChainsResponse$Outbound` instead. */
-  export type Outbound = ListAddressChainsResponse$Outbound;
-}
-
 export function listAddressChainsResponseToJSON(
   listAddressChainsResponse: ListAddressChainsResponse,
 ): string {
@@ -64,7 +50,6 @@ export function listAddressChainsResponseToJSON(
     ListAddressChainsResponse$outboundSchema.parse(listAddressChainsResponse),
   );
 }
-
 export function listAddressChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListAddressChainsResponse, SDKValidationError> {

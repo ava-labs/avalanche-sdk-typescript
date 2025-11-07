@@ -27,7 +27,6 @@ export const AccessListData$inboundSchema: z.ZodType<
   accessAddresses: z.string(),
   storageKeys: z.array(z.string()),
 });
-
 /** @internal */
 export type AccessListData$Outbound = {
   accessAddresses: string;
@@ -44,23 +43,9 @@ export const AccessListData$outboundSchema: z.ZodType<
   storageKeys: z.array(z.string()),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AccessListData$ {
-  /** @deprecated use `AccessListData$inboundSchema` instead. */
-  export const inboundSchema = AccessListData$inboundSchema;
-  /** @deprecated use `AccessListData$outboundSchema` instead. */
-  export const outboundSchema = AccessListData$outboundSchema;
-  /** @deprecated use `AccessListData$Outbound` instead. */
-  export type Outbound = AccessListData$Outbound;
-}
-
 export function accessListDataToJSON(accessListData: AccessListData): string {
   return JSON.stringify(AccessListData$outboundSchema.parse(accessListData));
 }
-
 export function accessListDataFromJSON(
   jsonString: string,
 ): SafeParseResult<AccessListData, SDKValidationError> {

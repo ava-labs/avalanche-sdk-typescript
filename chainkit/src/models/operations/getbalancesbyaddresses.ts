@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetBalancesByAddressesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetBalancesByAddressesGlobals = {
@@ -54,7 +54,6 @@ export const GetBalancesByAddressesGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetBalancesByAddressesGlobals$Outbound = {
   network?: string | undefined;
@@ -69,19 +68,6 @@ export const GetBalancesByAddressesGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBalancesByAddressesGlobals$ {
-  /** @deprecated use `GetBalancesByAddressesGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetBalancesByAddressesGlobals$inboundSchema;
-  /** @deprecated use `GetBalancesByAddressesGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetBalancesByAddressesGlobals$outboundSchema;
-  /** @deprecated use `GetBalancesByAddressesGlobals$Outbound` instead. */
-  export type Outbound = GetBalancesByAddressesGlobals$Outbound;
-}
-
 export function getBalancesByAddressesGlobalsToJSON(
   getBalancesByAddressesGlobals: GetBalancesByAddressesGlobals,
 ): string {
@@ -91,7 +77,6 @@ export function getBalancesByAddressesGlobalsToJSON(
     ),
   );
 }
-
 export function getBalancesByAddressesGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBalancesByAddressesGlobals, SDKValidationError> {
@@ -113,7 +98,6 @@ export const GetBalancesByAddressesRequest$inboundSchema: z.ZodType<
   blockchainId: components.BlockchainId$inboundSchema,
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetBalancesByAddressesRequest$Outbound = {
   blockTimestamp?: number | undefined;
@@ -134,19 +118,6 @@ export const GetBalancesByAddressesRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBalancesByAddressesRequest$ {
-  /** @deprecated use `GetBalancesByAddressesRequest$inboundSchema` instead. */
-  export const inboundSchema = GetBalancesByAddressesRequest$inboundSchema;
-  /** @deprecated use `GetBalancesByAddressesRequest$outboundSchema` instead. */
-  export const outboundSchema = GetBalancesByAddressesRequest$outboundSchema;
-  /** @deprecated use `GetBalancesByAddressesRequest$Outbound` instead. */
-  export type Outbound = GetBalancesByAddressesRequest$Outbound;
-}
-
 export function getBalancesByAddressesRequestToJSON(
   getBalancesByAddressesRequest: GetBalancesByAddressesRequest,
 ): string {
@@ -156,7 +127,6 @@ export function getBalancesByAddressesRequestToJSON(
     ),
   );
 }
-
 export function getBalancesByAddressesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBalancesByAddressesRequest, SDKValidationError> {
@@ -177,7 +147,6 @@ export const GetBalancesByAddressesResponse$inboundSchema: z.ZodType<
   components.ListXChainBalancesResponse$inboundSchema,
   components.ListCChainAtomicBalancesResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type GetBalancesByAddressesResponse$Outbound =
   | components.ListPChainBalancesResponse$Outbound
@@ -195,19 +164,6 @@ export const GetBalancesByAddressesResponse$outboundSchema: z.ZodType<
   components.ListCChainAtomicBalancesResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBalancesByAddressesResponse$ {
-  /** @deprecated use `GetBalancesByAddressesResponse$inboundSchema` instead. */
-  export const inboundSchema = GetBalancesByAddressesResponse$inboundSchema;
-  /** @deprecated use `GetBalancesByAddressesResponse$outboundSchema` instead. */
-  export const outboundSchema = GetBalancesByAddressesResponse$outboundSchema;
-  /** @deprecated use `GetBalancesByAddressesResponse$Outbound` instead. */
-  export type Outbound = GetBalancesByAddressesResponse$Outbound;
-}
-
 export function getBalancesByAddressesResponseToJSON(
   getBalancesByAddressesResponse: GetBalancesByAddressesResponse,
 ): string {
@@ -217,7 +173,6 @@ export function getBalancesByAddressesResponseToJSON(
     ),
   );
 }
-
 export function getBalancesByAddressesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBalancesByAddressesResponse, SDKValidationError> {

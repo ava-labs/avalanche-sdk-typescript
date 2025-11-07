@@ -18,19 +18,7 @@ export type PrimaryNetworkChainName = ClosedEnum<
 export const PrimaryNetworkChainName$inboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkChainName
 > = z.nativeEnum(PrimaryNetworkChainName);
-
 /** @internal */
 export const PrimaryNetworkChainName$outboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkChainName
 > = PrimaryNetworkChainName$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkChainName$ {
-  /** @deprecated use `PrimaryNetworkChainName$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkChainName$inboundSchema;
-  /** @deprecated use `PrimaryNetworkChainName$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkChainName$outboundSchema;
-}

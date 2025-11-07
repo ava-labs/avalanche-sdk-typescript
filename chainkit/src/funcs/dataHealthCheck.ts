@@ -28,7 +28,7 @@ import { Result } from "../types/fp.js";
  * Get the health of the service
  *
  * @remarks
- * Check the health of the service.
+ * Check the health of the service. This checks the read and write health of the database and cache.
  */
 export function dataHealthCheck(
   client: AvalancheCore,

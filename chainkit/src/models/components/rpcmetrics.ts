@@ -33,7 +33,6 @@ export const RpcMetrics$inboundSchema: z.ZodType<
   timestamp: z.number(),
   values: z.array(RpcUsageMetricsValueAggregated$inboundSchema),
 });
-
 /** @internal */
 export type RpcMetrics$Outbound = {
   timestamp: number;
@@ -50,23 +49,9 @@ export const RpcMetrics$outboundSchema: z.ZodType<
   values: z.array(RpcUsageMetricsValueAggregated$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RpcMetrics$ {
-  /** @deprecated use `RpcMetrics$inboundSchema` instead. */
-  export const inboundSchema = RpcMetrics$inboundSchema;
-  /** @deprecated use `RpcMetrics$outboundSchema` instead. */
-  export const outboundSchema = RpcMetrics$outboundSchema;
-  /** @deprecated use `RpcMetrics$Outbound` instead. */
-  export type Outbound = RpcMetrics$Outbound;
-}
-
 export function rpcMetricsToJSON(rpcMetrics: RpcMetrics): string {
   return JSON.stringify(RpcMetrics$outboundSchema.parse(rpcMetrics));
 }
-
 export function rpcMetricsFromJSON(
   jsonString: string,
 ): SafeParseResult<RpcMetrics, SDKValidationError> {

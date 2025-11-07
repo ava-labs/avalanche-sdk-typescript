@@ -17,18 +17,6 @@ export type XChainId = ClosedEnum<typeof XChainId>;
 /** @internal */
 export const XChainId$inboundSchema: z.ZodNativeEnum<typeof XChainId> = z
   .nativeEnum(XChainId);
-
 /** @internal */
 export const XChainId$outboundSchema: z.ZodNativeEnum<typeof XChainId> =
   XChainId$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainId$ {
-  /** @deprecated use `XChainId$inboundSchema` instead. */
-  export const inboundSchema = XChainId$inboundSchema;
-  /** @deprecated use `XChainId$outboundSchema` instead. */
-  export const outboundSchema = XChainId$outboundSchema;
-}

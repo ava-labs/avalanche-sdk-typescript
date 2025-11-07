@@ -112,24 +112,10 @@ export const ActiveValidatorDetailsValidationStatus$inboundSchema:
   z.ZodNativeEnum<typeof ActiveValidatorDetailsValidationStatus> = z.nativeEnum(
     ActiveValidatorDetailsValidationStatus,
   );
-
 /** @internal */
 export const ActiveValidatorDetailsValidationStatus$outboundSchema:
   z.ZodNativeEnum<typeof ActiveValidatorDetailsValidationStatus> =
     ActiveValidatorDetailsValidationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ActiveValidatorDetailsValidationStatus$ {
-  /** @deprecated use `ActiveValidatorDetailsValidationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    ActiveValidatorDetailsValidationStatus$inboundSchema;
-  /** @deprecated use `ActiveValidatorDetailsValidationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    ActiveValidatorDetailsValidationStatus$outboundSchema;
-}
 
 /** @internal */
 export const Geolocation$inboundSchema: z.ZodType<
@@ -143,7 +129,6 @@ export const Geolocation$inboundSchema: z.ZodType<
   latitude: z.number(),
   longitude: z.number(),
 });
-
 /** @internal */
 export type Geolocation$Outbound = {
   city: string;
@@ -166,23 +151,9 @@ export const Geolocation$outboundSchema: z.ZodType<
   longitude: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Geolocation$ {
-  /** @deprecated use `Geolocation$inboundSchema` instead. */
-  export const inboundSchema = Geolocation$inboundSchema;
-  /** @deprecated use `Geolocation$outboundSchema` instead. */
-  export const outboundSchema = Geolocation$outboundSchema;
-  /** @deprecated use `Geolocation$Outbound` instead. */
-  export type Outbound = Geolocation$Outbound;
-}
-
 export function geolocationToJSON(geolocation: Geolocation): string {
   return JSON.stringify(Geolocation$outboundSchema.parse(geolocation));
 }
-
 export function geolocationFromJSON(
   jsonString: string,
 ): SafeParseResult<Geolocation, SDKValidationError> {
@@ -218,7 +189,6 @@ export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   validatorHealth: ValidatorHealthDetails$inboundSchema,
   geolocation: z.nullable(z.lazy(() => Geolocation$inboundSchema)),
 });
-
 /** @internal */
 export type ActiveValidatorDetails$Outbound = {
   txHash: string;
@@ -267,19 +237,6 @@ export const ActiveValidatorDetails$outboundSchema: z.ZodType<
   geolocation: z.nullable(z.lazy(() => Geolocation$outboundSchema)),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ActiveValidatorDetails$ {
-  /** @deprecated use `ActiveValidatorDetails$inboundSchema` instead. */
-  export const inboundSchema = ActiveValidatorDetails$inboundSchema;
-  /** @deprecated use `ActiveValidatorDetails$outboundSchema` instead. */
-  export const outboundSchema = ActiveValidatorDetails$outboundSchema;
-  /** @deprecated use `ActiveValidatorDetails$Outbound` instead. */
-  export type Outbound = ActiveValidatorDetails$Outbound;
-}
-
 export function activeValidatorDetailsToJSON(
   activeValidatorDetails: ActiveValidatorDetails,
 ): string {
@@ -287,7 +244,6 @@ export function activeValidatorDetailsToJSON(
     ActiveValidatorDetails$outboundSchema.parse(activeValidatorDetails),
   );
 }
-
 export function activeValidatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ActiveValidatorDetails, SDKValidationError> {

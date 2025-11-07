@@ -30,7 +30,6 @@ export const ListPendingRewardsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   pendingRewards: z.array(PendingReward$inboundSchema),
 });
-
 /** @internal */
 export type ListPendingRewardsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListPendingRewardsResponse$outboundSchema: z.ZodType<
   pendingRewards: z.array(PendingReward$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPendingRewardsResponse$ {
-  /** @deprecated use `ListPendingRewardsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListPendingRewardsResponse$inboundSchema;
-  /** @deprecated use `ListPendingRewardsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListPendingRewardsResponse$outboundSchema;
-  /** @deprecated use `ListPendingRewardsResponse$Outbound` instead. */
-  export type Outbound = ListPendingRewardsResponse$Outbound;
-}
-
 export function listPendingRewardsResponseToJSON(
   listPendingRewardsResponse: ListPendingRewardsResponse,
 ): string {
@@ -67,7 +53,6 @@ export function listPendingRewardsResponseToJSON(
     ListPendingRewardsResponse$outboundSchema.parse(listPendingRewardsResponse),
   );
 }
-
 export function listPendingRewardsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListPendingRewardsResponse, SDKValidationError> {

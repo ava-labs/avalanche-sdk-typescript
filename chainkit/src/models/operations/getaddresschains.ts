@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetAddressChainsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetAddressChainsRequest = {
@@ -26,7 +26,6 @@ export const GetAddressChainsRequest$inboundSchema: z.ZodType<
 > = z.object({
   address: z.string(),
 });
-
 /** @internal */
 export type GetAddressChainsRequest$Outbound = {
   address: string;
@@ -41,19 +40,6 @@ export const GetAddressChainsRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressChainsRequest$ {
-  /** @deprecated use `GetAddressChainsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetAddressChainsRequest$inboundSchema;
-  /** @deprecated use `GetAddressChainsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetAddressChainsRequest$outboundSchema;
-  /** @deprecated use `GetAddressChainsRequest$Outbound` instead. */
-  export type Outbound = GetAddressChainsRequest$Outbound;
-}
-
 export function getAddressChainsRequestToJSON(
   getAddressChainsRequest: GetAddressChainsRequest,
 ): string {
@@ -61,7 +47,6 @@ export function getAddressChainsRequestToJSON(
     GetAddressChainsRequest$outboundSchema.parse(getAddressChainsRequest),
   );
 }
-
 export function getAddressChainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressChainsRequest, SDKValidationError> {

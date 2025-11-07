@@ -3,6 +3,7 @@
  */
 
 import { dataHealthCheck } from "../funcs/dataHealthCheck.js";
+import { dataLiveCheck } from "../funcs/dataLiveCheck.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -62,12 +63,27 @@ export class Data extends ClientSDK {
    * Get the health of the service
    *
    * @remarks
-   * Check the health of the service.
+   * Check the health of the service. This checks the read and write health of the database and cache.
    */
   async healthCheck(
     options?: RequestOptions,
   ): Promise<components.HealthCheckResultDto> {
     return unwrapAsync(dataHealthCheck(
+      this,
+      options,
+    ));
+  }
+
+  /**
+   * Get the liveliness of the service (reads only)
+   *
+   * @remarks
+   * Check the liveliness of the service (reads only).
+   */
+  async liveCheck(
+    options?: RequestOptions,
+  ): Promise<components.HealthCheckResultDto> {
+    return unwrapAsync(dataLiveCheck(
       this,
       options,
     ));

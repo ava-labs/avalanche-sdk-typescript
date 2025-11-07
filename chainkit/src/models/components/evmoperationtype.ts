@@ -14,19 +14,7 @@ export type EVMOperationType = ClosedEnum<typeof EVMOperationType>;
 export const EVMOperationType$inboundSchema: z.ZodNativeEnum<
   typeof EVMOperationType
 > = z.nativeEnum(EVMOperationType);
-
 /** @internal */
 export const EVMOperationType$outboundSchema: z.ZodNativeEnum<
   typeof EVMOperationType
 > = EVMOperationType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EVMOperationType$ {
-  /** @deprecated use `EVMOperationType$inboundSchema` instead. */
-  export const inboundSchema = EVMOperationType$inboundSchema;
-  /** @deprecated use `EVMOperationType$outboundSchema` instead. */
-  export const outboundSchema = EVMOperationType$outboundSchema;
-}

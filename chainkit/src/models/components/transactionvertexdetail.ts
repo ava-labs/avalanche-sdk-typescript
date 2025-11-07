@@ -32,7 +32,6 @@ export const TransactionVertexDetail$inboundSchema: z.ZodType<
   height: z.number(),
   timestamp: z.number(),
 });
-
 /** @internal */
 export type TransactionVertexDetail$Outbound = {
   hash: string;
@@ -51,19 +50,6 @@ export const TransactionVertexDetail$outboundSchema: z.ZodType<
   timestamp: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionVertexDetail$ {
-  /** @deprecated use `TransactionVertexDetail$inboundSchema` instead. */
-  export const inboundSchema = TransactionVertexDetail$inboundSchema;
-  /** @deprecated use `TransactionVertexDetail$outboundSchema` instead. */
-  export const outboundSchema = TransactionVertexDetail$outboundSchema;
-  /** @deprecated use `TransactionVertexDetail$Outbound` instead. */
-  export type Outbound = TransactionVertexDetail$Outbound;
-}
-
 export function transactionVertexDetailToJSON(
   transactionVertexDetail: TransactionVertexDetail,
 ): string {
@@ -71,7 +57,6 @@ export function transactionVertexDetailToJSON(
     TransactionVertexDetail$outboundSchema.parse(transactionVertexDetail),
   );
 }
-
 export function transactionVertexDetailFromJSON(
   jsonString: string,
 ): SafeParseResult<TransactionVertexDetail, SDKValidationError> {

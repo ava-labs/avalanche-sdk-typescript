@@ -52,7 +52,6 @@ export const ChainRollingWindowMetricsValue$inboundSchema: z.ZodType<
   lastYear: z.number().optional(),
   allTime: z.number().optional(),
 });
-
 /** @internal */
 export type ChainRollingWindowMetricsValue$Outbound = {
   lastHour?: number | undefined;
@@ -79,19 +78,6 @@ export const ChainRollingWindowMetricsValue$outboundSchema: z.ZodType<
   allTime: z.number().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainRollingWindowMetricsValue$ {
-  /** @deprecated use `ChainRollingWindowMetricsValue$inboundSchema` instead. */
-  export const inboundSchema = ChainRollingWindowMetricsValue$inboundSchema;
-  /** @deprecated use `ChainRollingWindowMetricsValue$outboundSchema` instead. */
-  export const outboundSchema = ChainRollingWindowMetricsValue$outboundSchema;
-  /** @deprecated use `ChainRollingWindowMetricsValue$Outbound` instead. */
-  export type Outbound = ChainRollingWindowMetricsValue$Outbound;
-}
-
 export function chainRollingWindowMetricsValueToJSON(
   chainRollingWindowMetricsValue: ChainRollingWindowMetricsValue,
 ): string {
@@ -101,7 +87,6 @@ export function chainRollingWindowMetricsValueToJSON(
     ),
   );
 }
-
 export function chainRollingWindowMetricsValueFromJSON(
   jsonString: string,
 ): SafeParseResult<ChainRollingWindowMetricsValue, SDKValidationError> {

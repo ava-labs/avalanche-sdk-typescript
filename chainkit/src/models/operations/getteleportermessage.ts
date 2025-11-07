@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetTeleporterMessageServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetTeleporterMessageRequest = {
@@ -37,7 +37,6 @@ export const GetTeleporterMessageRequest$inboundSchema: z.ZodType<
 > = z.object({
   messageId: z.string(),
 });
-
 /** @internal */
 export type GetTeleporterMessageRequest$Outbound = {
   messageId: string;
@@ -52,19 +51,6 @@ export const GetTeleporterMessageRequest$outboundSchema: z.ZodType<
   messageId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTeleporterMessageRequest$ {
-  /** @deprecated use `GetTeleporterMessageRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTeleporterMessageRequest$inboundSchema;
-  /** @deprecated use `GetTeleporterMessageRequest$outboundSchema` instead. */
-  export const outboundSchema = GetTeleporterMessageRequest$outboundSchema;
-  /** @deprecated use `GetTeleporterMessageRequest$Outbound` instead. */
-  export type Outbound = GetTeleporterMessageRequest$Outbound;
-}
-
 export function getTeleporterMessageRequestToJSON(
   getTeleporterMessageRequest: GetTeleporterMessageRequest,
 ): string {
@@ -74,7 +60,6 @@ export function getTeleporterMessageRequestToJSON(
     ),
   );
 }
-
 export function getTeleporterMessageRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTeleporterMessageRequest, SDKValidationError> {
@@ -107,7 +92,6 @@ export const GetTeleporterMessageResponse$inboundSchema: z.ZodType<
     ) => ({ status: v.status })),
   ),
 ]);
-
 /** @internal */
 export type GetTeleporterMessageResponse$Outbound =
   | (components.DeliveredTeleporterMessage$Outbound & { status: "delivered" })
@@ -139,19 +123,6 @@ export const GetTeleporterMessageResponse$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTeleporterMessageResponse$ {
-  /** @deprecated use `GetTeleporterMessageResponse$inboundSchema` instead. */
-  export const inboundSchema = GetTeleporterMessageResponse$inboundSchema;
-  /** @deprecated use `GetTeleporterMessageResponse$outboundSchema` instead. */
-  export const outboundSchema = GetTeleporterMessageResponse$outboundSchema;
-  /** @deprecated use `GetTeleporterMessageResponse$Outbound` instead. */
-  export type Outbound = GetTeleporterMessageResponse$Outbound;
-}
-
 export function getTeleporterMessageResponseToJSON(
   getTeleporterMessageResponse: GetTeleporterMessageResponse,
 ): string {
@@ -161,7 +132,6 @@ export function getTeleporterMessageResponseToJSON(
     ),
   );
 }
-
 export function getTeleporterMessageResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTeleporterMessageResponse, SDKValidationError> {

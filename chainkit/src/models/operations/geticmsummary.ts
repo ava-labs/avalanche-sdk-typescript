@@ -49,22 +49,10 @@ export type GetICMSummaryRequest = {
 export const GetICMSummaryGroupBy$inboundSchema: z.ZodNativeEnum<
   typeof GetICMSummaryGroupBy
 > = z.nativeEnum(GetICMSummaryGroupBy);
-
 /** @internal */
 export const GetICMSummaryGroupBy$outboundSchema: z.ZodNativeEnum<
   typeof GetICMSummaryGroupBy
 > = GetICMSummaryGroupBy$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetICMSummaryGroupBy$ {
-  /** @deprecated use `GetICMSummaryGroupBy$inboundSchema` instead. */
-  export const inboundSchema = GetICMSummaryGroupBy$inboundSchema;
-  /** @deprecated use `GetICMSummaryGroupBy$outboundSchema` instead. */
-  export const outboundSchema = GetICMSummaryGroupBy$outboundSchema;
-}
 
 /** @internal */
 export const GetICMSummaryRequest$inboundSchema: z.ZodType<
@@ -77,7 +65,6 @@ export const GetICMSummaryRequest$inboundSchema: z.ZodType<
   groupBy: GetICMSummaryGroupBy$inboundSchema.optional(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetICMSummaryRequest$Outbound = {
   srcBlockchainId?: string | undefined;
@@ -98,19 +85,6 @@ export const GetICMSummaryRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetICMSummaryRequest$ {
-  /** @deprecated use `GetICMSummaryRequest$inboundSchema` instead. */
-  export const inboundSchema = GetICMSummaryRequest$inboundSchema;
-  /** @deprecated use `GetICMSummaryRequest$outboundSchema` instead. */
-  export const outboundSchema = GetICMSummaryRequest$outboundSchema;
-  /** @deprecated use `GetICMSummaryRequest$Outbound` instead. */
-  export type Outbound = GetICMSummaryRequest$Outbound;
-}
-
 export function getICMSummaryRequestToJSON(
   getICMSummaryRequest: GetICMSummaryRequest,
 ): string {
@@ -118,7 +92,6 @@ export function getICMSummaryRequestToJSON(
     GetICMSummaryRequest$outboundSchema.parse(getICMSummaryRequest),
   );
 }
-
 export function getICMSummaryRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetICMSummaryRequest, SDKValidationError> {

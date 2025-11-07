@@ -15,18 +15,6 @@ export type VmName = ClosedEnum<typeof VmName>;
 /** @internal */
 export const VmName$inboundSchema: z.ZodNativeEnum<typeof VmName> = z
   .nativeEnum(VmName);
-
 /** @internal */
 export const VmName$outboundSchema: z.ZodNativeEnum<typeof VmName> =
   VmName$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace VmName$ {
-  /** @deprecated use `VmName$inboundSchema` instead. */
-  export const inboundSchema = VmName$inboundSchema;
-  /** @deprecated use `VmName$outboundSchema` instead. */
-  export const outboundSchema = VmName$outboundSchema;
-}

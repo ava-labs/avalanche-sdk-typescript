@@ -62,7 +62,6 @@ export const XChainAssetDetails$inboundSchema: z.ZodType<
   createdAtTimestamp: z.number(),
   cap: PrimaryNetworkAssetCap$inboundSchema,
 });
-
 /** @internal */
 export type XChainAssetDetails$Outbound = {
   assetId: string;
@@ -89,19 +88,6 @@ export const XChainAssetDetails$outboundSchema: z.ZodType<
   cap: PrimaryNetworkAssetCap$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainAssetDetails$ {
-  /** @deprecated use `XChainAssetDetails$inboundSchema` instead. */
-  export const inboundSchema = XChainAssetDetails$inboundSchema;
-  /** @deprecated use `XChainAssetDetails$outboundSchema` instead. */
-  export const outboundSchema = XChainAssetDetails$outboundSchema;
-  /** @deprecated use `XChainAssetDetails$Outbound` instead. */
-  export type Outbound = XChainAssetDetails$Outbound;
-}
-
 export function xChainAssetDetailsToJSON(
   xChainAssetDetails: XChainAssetDetails,
 ): string {
@@ -109,7 +95,6 @@ export function xChainAssetDetailsToJSON(
     XChainAssetDetails$outboundSchema.parse(xChainAssetDetails),
   );
 }
-
 export function xChainAssetDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<XChainAssetDetails, SDKValidationError> {

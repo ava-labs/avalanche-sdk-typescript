@@ -19,7 +19,6 @@ export const PricingProviders$inboundSchema: z.ZodType<
 > = z.object({
   coingeckoCoinId: z.string().optional(),
 });
-
 /** @internal */
 export type PricingProviders$Outbound = {
   coingeckoCoinId?: string | undefined;
@@ -34,19 +33,6 @@ export const PricingProviders$outboundSchema: z.ZodType<
   coingeckoCoinId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PricingProviders$ {
-  /** @deprecated use `PricingProviders$inboundSchema` instead. */
-  export const inboundSchema = PricingProviders$inboundSchema;
-  /** @deprecated use `PricingProviders$outboundSchema` instead. */
-  export const outboundSchema = PricingProviders$outboundSchema;
-  /** @deprecated use `PricingProviders$Outbound` instead. */
-  export type Outbound = PricingProviders$Outbound;
-}
-
 export function pricingProvidersToJSON(
   pricingProviders: PricingProviders,
 ): string {
@@ -54,7 +40,6 @@ export function pricingProvidersToJSON(
     PricingProviders$outboundSchema.parse(pricingProviders),
   );
 }
-
 export function pricingProvidersFromJSON(
   jsonString: string,
 ): SafeParseResult<PricingProviders, SDKValidationError> {

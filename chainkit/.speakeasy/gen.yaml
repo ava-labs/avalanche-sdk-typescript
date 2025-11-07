@@ -19,12 +19,13 @@ generation:
     hoistGlobalSecurity: true
   schemas:
     allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.3.0-alpha.7
+  version: 0.3.0-alpha.8
   acceptHeaderEnum: true
   additionalDependencies:
     dependencies:
@@ -38,6 +39,7 @@ typescript:
     publishConfig:
       access: public
   additionalScripts: {}
+  alwaysIncludeInboundAndOutbound: false
   author: Speakeasy
   baseErrorName: AvalancheError
   clientServerStatusCodesAsErrors: true
@@ -47,6 +49,7 @@ typescript:
   enableMCPServer: true
   enableReactQuery: false
   enumFormat: union
+  exportZodModelNamespace: false
   flattenGlobalSecurity: true
   flatteningOrder: parameters-first
   generateExamples: true

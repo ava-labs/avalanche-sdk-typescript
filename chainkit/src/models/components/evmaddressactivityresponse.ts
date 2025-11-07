@@ -61,7 +61,6 @@ export const EVMAddressActivityResponse$inboundSchema: z.ZodType<
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),
 });
-
 /** @internal */
 export type EVMAddressActivityResponse$Outbound = {
   id: string;
@@ -96,19 +95,6 @@ export const EVMAddressActivityResponse$outboundSchema: z.ZodType<
   includeLogs: z.boolean().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EVMAddressActivityResponse$ {
-  /** @deprecated use `EVMAddressActivityResponse$inboundSchema` instead. */
-  export const inboundSchema = EVMAddressActivityResponse$inboundSchema;
-  /** @deprecated use `EVMAddressActivityResponse$outboundSchema` instead. */
-  export const outboundSchema = EVMAddressActivityResponse$outboundSchema;
-  /** @deprecated use `EVMAddressActivityResponse$Outbound` instead. */
-  export type Outbound = EVMAddressActivityResponse$Outbound;
-}
-
 export function evmAddressActivityResponseToJSON(
   evmAddressActivityResponse: EVMAddressActivityResponse,
 ): string {
@@ -116,7 +102,6 @@ export function evmAddressActivityResponseToJSON(
     EVMAddressActivityResponse$outboundSchema.parse(evmAddressActivityResponse),
   );
 }
-
 export function evmAddressActivityResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<EVMAddressActivityResponse, SDKValidationError> {

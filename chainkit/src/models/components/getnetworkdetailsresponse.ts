@@ -33,7 +33,6 @@ export const GetNetworkDetailsResponse$inboundSchema: z.ZodType<
   validatorDetails: ValidatorsDetails$inboundSchema,
   delegatorDetails: DelegatorsDetails$inboundSchema,
 });
-
 /** @internal */
 export type GetNetworkDetailsResponse$Outbound = {
   validatorDetails: ValidatorsDetails$Outbound;
@@ -50,19 +49,6 @@ export const GetNetworkDetailsResponse$outboundSchema: z.ZodType<
   delegatorDetails: DelegatorsDetails$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNetworkDetailsResponse$ {
-  /** @deprecated use `GetNetworkDetailsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetNetworkDetailsResponse$inboundSchema;
-  /** @deprecated use `GetNetworkDetailsResponse$outboundSchema` instead. */
-  export const outboundSchema = GetNetworkDetailsResponse$outboundSchema;
-  /** @deprecated use `GetNetworkDetailsResponse$Outbound` instead. */
-  export type Outbound = GetNetworkDetailsResponse$Outbound;
-}
-
 export function getNetworkDetailsResponseToJSON(
   getNetworkDetailsResponse: GetNetworkDetailsResponse,
 ): string {
@@ -70,7 +56,6 @@ export function getNetworkDetailsResponseToJSON(
     GetNetworkDetailsResponse$outboundSchema.parse(getNetworkDetailsResponse),
   );
 }
-
 export function getNetworkDetailsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNetworkDetailsResponse, SDKValidationError> {

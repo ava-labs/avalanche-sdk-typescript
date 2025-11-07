@@ -22,7 +22,6 @@ export const AddressesChangeRequest$inboundSchema: z.ZodType<
 > = z.object({
   addresses: z.array(z.string()),
 });
-
 /** @internal */
 export type AddressesChangeRequest$Outbound = {
   addresses: Array<string>;
@@ -37,19 +36,6 @@ export const AddressesChangeRequest$outboundSchema: z.ZodType<
   addresses: z.array(z.string()),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AddressesChangeRequest$ {
-  /** @deprecated use `AddressesChangeRequest$inboundSchema` instead. */
-  export const inboundSchema = AddressesChangeRequest$inboundSchema;
-  /** @deprecated use `AddressesChangeRequest$outboundSchema` instead. */
-  export const outboundSchema = AddressesChangeRequest$outboundSchema;
-  /** @deprecated use `AddressesChangeRequest$Outbound` instead. */
-  export type Outbound = AddressesChangeRequest$Outbound;
-}
-
 export function addressesChangeRequestToJSON(
   addressesChangeRequest: AddressesChangeRequest,
 ): string {
@@ -57,7 +43,6 @@ export function addressesChangeRequestToJSON(
     AddressesChangeRequest$outboundSchema.parse(addressesChangeRequest),
   );
 }
-
 export function addressesChangeRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<AddressesChangeRequest, SDKValidationError> {

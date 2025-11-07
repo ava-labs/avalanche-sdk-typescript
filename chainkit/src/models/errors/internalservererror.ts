@@ -58,7 +58,6 @@ export const InternalServerErrorMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type InternalServerErrorMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const InternalServerErrorMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace InternalServerErrorMessage$ {
-  /** @deprecated use `InternalServerErrorMessage$inboundSchema` instead. */
-  export const inboundSchema = InternalServerErrorMessage$inboundSchema;
-  /** @deprecated use `InternalServerErrorMessage$outboundSchema` instead. */
-  export const outboundSchema = InternalServerErrorMessage$outboundSchema;
-  /** @deprecated use `InternalServerErrorMessage$Outbound` instead. */
-  export type Outbound = InternalServerErrorMessage$Outbound;
-}
-
 export function internalServerErrorMessageToJSON(
   internalServerErrorMessage: InternalServerErrorMessage,
 ): string {
@@ -89,7 +75,6 @@ export function internalServerErrorMessageToJSON(
     InternalServerErrorMessage$outboundSchema.parse(internalServerErrorMessage),
   );
 }
-
 export function internalServerErrorMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<InternalServerErrorMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const InternalServerError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace InternalServerError$ {
-  /** @deprecated use `InternalServerError$inboundSchema` instead. */
-  export const inboundSchema = InternalServerError$inboundSchema;
-  /** @deprecated use `InternalServerError$outboundSchema` instead. */
-  export const outboundSchema = InternalServerError$outboundSchema;
-  /** @deprecated use `InternalServerError$Outbound` instead. */
-  export type Outbound = InternalServerError$Outbound;
-}

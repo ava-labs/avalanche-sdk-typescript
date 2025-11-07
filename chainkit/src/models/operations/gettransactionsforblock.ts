@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetTransactionsForBlockServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetTransactionsForBlockGlobals = {
@@ -45,7 +45,6 @@ export const GetTransactionsForBlockGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetTransactionsForBlockGlobals$Outbound = {
   chainId?: string | undefined;
@@ -60,19 +59,6 @@ export const GetTransactionsForBlockGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTransactionsForBlockGlobals$ {
-  /** @deprecated use `GetTransactionsForBlockGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetTransactionsForBlockGlobals$inboundSchema;
-  /** @deprecated use `GetTransactionsForBlockGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetTransactionsForBlockGlobals$outboundSchema;
-  /** @deprecated use `GetTransactionsForBlockGlobals$Outbound` instead. */
-  export type Outbound = GetTransactionsForBlockGlobals$Outbound;
-}
-
 export function getTransactionsForBlockGlobalsToJSON(
   getTransactionsForBlockGlobals: GetTransactionsForBlockGlobals,
 ): string {
@@ -82,7 +68,6 @@ export function getTransactionsForBlockGlobalsToJSON(
     ),
   );
 }
-
 export function getTransactionsForBlockGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTransactionsForBlockGlobals, SDKValidationError> {
@@ -104,7 +89,6 @@ export const GetTransactionsForBlockRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   blockId: z.string(),
 });
-
 /** @internal */
 export type GetTransactionsForBlockRequest$Outbound = {
   pageToken?: string | undefined;
@@ -125,19 +109,6 @@ export const GetTransactionsForBlockRequest$outboundSchema: z.ZodType<
   blockId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTransactionsForBlockRequest$ {
-  /** @deprecated use `GetTransactionsForBlockRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTransactionsForBlockRequest$inboundSchema;
-  /** @deprecated use `GetTransactionsForBlockRequest$outboundSchema` instead. */
-  export const outboundSchema = GetTransactionsForBlockRequest$outboundSchema;
-  /** @deprecated use `GetTransactionsForBlockRequest$Outbound` instead. */
-  export type Outbound = GetTransactionsForBlockRequest$Outbound;
-}
-
 export function getTransactionsForBlockRequestToJSON(
   getTransactionsForBlockRequest: GetTransactionsForBlockRequest,
 ): string {
@@ -147,7 +118,6 @@ export function getTransactionsForBlockRequestToJSON(
     ),
   );
 }
-
 export function getTransactionsForBlockRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTransactionsForBlockRequest, SDKValidationError> {

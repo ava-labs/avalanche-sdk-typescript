@@ -39,7 +39,6 @@ export const TransactionEvent$inboundSchema: z.ZodType<
   transaction: Transaction$inboundSchema,
   logs: z.array(Log$inboundSchema).optional(),
 });
-
 /** @internal */
 export type TransactionEvent$Outbound = {
   transaction: Transaction$Outbound;
@@ -56,19 +55,6 @@ export const TransactionEvent$outboundSchema: z.ZodType<
   logs: z.array(Log$outboundSchema).optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionEvent$ {
-  /** @deprecated use `TransactionEvent$inboundSchema` instead. */
-  export const inboundSchema = TransactionEvent$inboundSchema;
-  /** @deprecated use `TransactionEvent$outboundSchema` instead. */
-  export const outboundSchema = TransactionEvent$outboundSchema;
-  /** @deprecated use `TransactionEvent$Outbound` instead. */
-  export type Outbound = TransactionEvent$Outbound;
-}
-
 export function transactionEventToJSON(
   transactionEvent: TransactionEvent,
 ): string {
@@ -76,7 +62,6 @@ export function transactionEventToJSON(
     TransactionEvent$outboundSchema.parse(transactionEvent),
   );
 }
-
 export function transactionEventFromJSON(
   jsonString: string,
 ): SafeParseResult<TransactionEvent, SDKValidationError> {

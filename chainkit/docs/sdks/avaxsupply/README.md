@@ -22,9 +22,9 @@ import { Avalanche } from "@avalanche-sdk/chainkit";
 const avalanche = new Avalanche();
 
 async function run() {
-  await avalanche.avaxSupply.get();
+  const result = await avalanche.avaxSupply.get();
 
-
+  console.log(result);
 }
 
 run();
@@ -46,7 +46,7 @@ async function run() {
   const res = await avaxSupplyGet(avalanche);
   if (res.ok) {
     const { value: result } = res;
-    
+    console.log(result);
   } else {
     console.log("avaxSupplyGet failed:", res.error);
   }
@@ -66,7 +66,7 @@ run();
 
 ### Response
 
-**Promise\<void\>**
+**Promise\<[components.AvaxSupplyResponse](../../models/components/avaxsupplyresponse.md)\>**
 
 ### Errors
 

@@ -19,7 +19,6 @@ export const SignatureAggregationResponse$inboundSchema: z.ZodType<
 > = z.object({
   signedMessage: z.string(),
 });
-
 /** @internal */
 export type SignatureAggregationResponse$Outbound = {
   signedMessage: string;
@@ -34,19 +33,6 @@ export const SignatureAggregationResponse$outboundSchema: z.ZodType<
   signedMessage: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SignatureAggregationResponse$ {
-  /** @deprecated use `SignatureAggregationResponse$inboundSchema` instead. */
-  export const inboundSchema = SignatureAggregationResponse$inboundSchema;
-  /** @deprecated use `SignatureAggregationResponse$outboundSchema` instead. */
-  export const outboundSchema = SignatureAggregationResponse$outboundSchema;
-  /** @deprecated use `SignatureAggregationResponse$Outbound` instead. */
-  export type Outbound = SignatureAggregationResponse$Outbound;
-}
-
 export function signatureAggregationResponseToJSON(
   signatureAggregationResponse: SignatureAggregationResponse,
 ): string {
@@ -56,7 +42,6 @@ export function signatureAggregationResponseToJSON(
     ),
   );
 }
-
 export function signatureAggregationResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<SignatureAggregationResponse, SDKValidationError> {

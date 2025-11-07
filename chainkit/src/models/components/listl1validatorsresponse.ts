@@ -38,7 +38,6 @@ export const ListL1ValidatorsResponse$inboundSchema: z.ZodType<
   validators: z.array(L1ValidatorDetailsFull$inboundSchema),
   blockHeight: z.string(),
 });
-
 /** @internal */
 export type ListL1ValidatorsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,19 +56,6 @@ export const ListL1ValidatorsResponse$outboundSchema: z.ZodType<
   blockHeight: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListL1ValidatorsResponse$ {
-  /** @deprecated use `ListL1ValidatorsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListL1ValidatorsResponse$inboundSchema;
-  /** @deprecated use `ListL1ValidatorsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListL1ValidatorsResponse$outboundSchema;
-  /** @deprecated use `ListL1ValidatorsResponse$Outbound` instead. */
-  export type Outbound = ListL1ValidatorsResponse$Outbound;
-}
-
 export function listL1ValidatorsResponseToJSON(
   listL1ValidatorsResponse: ListL1ValidatorsResponse,
 ): string {
@@ -77,7 +63,6 @@ export function listL1ValidatorsResponseToJSON(
     ListL1ValidatorsResponse$outboundSchema.parse(listL1ValidatorsResponse),
   );
 }
-
 export function listL1ValidatorsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListL1ValidatorsResponse, SDKValidationError> {

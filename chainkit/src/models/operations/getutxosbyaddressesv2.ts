@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetUtxosByAddressesV2ServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetUtxosByAddressesV2Globals = {
@@ -75,7 +75,6 @@ export const GetUtxosByAddressesV2Globals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetUtxosByAddressesV2Globals$Outbound = {
   network?: string | undefined;
@@ -90,19 +89,6 @@ export const GetUtxosByAddressesV2Globals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetUtxosByAddressesV2Globals$ {
-  /** @deprecated use `GetUtxosByAddressesV2Globals$inboundSchema` instead. */
-  export const inboundSchema = GetUtxosByAddressesV2Globals$inboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Globals$outboundSchema` instead. */
-  export const outboundSchema = GetUtxosByAddressesV2Globals$outboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Globals$Outbound` instead. */
-  export type Outbound = GetUtxosByAddressesV2Globals$Outbound;
-}
-
 export function getUtxosByAddressesV2GlobalsToJSON(
   getUtxosByAddressesV2Globals: GetUtxosByAddressesV2Globals,
 ): string {
@@ -112,7 +98,6 @@ export function getUtxosByAddressesV2GlobalsToJSON(
     ),
   );
 }
-
 export function getUtxosByAddressesV2GlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetUtxosByAddressesV2Globals, SDKValidationError> {
@@ -144,7 +129,6 @@ export const GetUtxosByAddressesV2Request$inboundSchema: z.ZodType<
     "PrimaryNetworkAddressesBodyDto": "primaryNetworkAddressesBodyDto",
   });
 });
-
 /** @internal */
 export type GetUtxosByAddressesV2Request$Outbound = {
   pageToken?: string | undefined;
@@ -181,19 +165,6 @@ export const GetUtxosByAddressesV2Request$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetUtxosByAddressesV2Request$ {
-  /** @deprecated use `GetUtxosByAddressesV2Request$inboundSchema` instead. */
-  export const inboundSchema = GetUtxosByAddressesV2Request$inboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Request$outboundSchema` instead. */
-  export const outboundSchema = GetUtxosByAddressesV2Request$outboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Request$Outbound` instead. */
-  export type Outbound = GetUtxosByAddressesV2Request$Outbound;
-}
-
 export function getUtxosByAddressesV2RequestToJSON(
   getUtxosByAddressesV2Request: GetUtxosByAddressesV2Request,
 ): string {
@@ -203,7 +174,6 @@ export function getUtxosByAddressesV2RequestToJSON(
     ),
   );
 }
-
 export function getUtxosByAddressesV2RequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetUtxosByAddressesV2Request, SDKValidationError> {
@@ -223,7 +193,6 @@ export const GetUtxosByAddressesV2ResponseBody$inboundSchema: z.ZodType<
   components.ListPChainUtxosResponse$inboundSchema,
   components.ListUtxosResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type GetUtxosByAddressesV2ResponseBody$Outbound =
   | components.ListPChainUtxosResponse$Outbound
@@ -239,20 +208,6 @@ export const GetUtxosByAddressesV2ResponseBody$outboundSchema: z.ZodType<
   components.ListUtxosResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetUtxosByAddressesV2ResponseBody$ {
-  /** @deprecated use `GetUtxosByAddressesV2ResponseBody$inboundSchema` instead. */
-  export const inboundSchema = GetUtxosByAddressesV2ResponseBody$inboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2ResponseBody$outboundSchema` instead. */
-  export const outboundSchema =
-    GetUtxosByAddressesV2ResponseBody$outboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2ResponseBody$Outbound` instead. */
-  export type Outbound = GetUtxosByAddressesV2ResponseBody$Outbound;
-}
-
 export function getUtxosByAddressesV2ResponseBodyToJSON(
   getUtxosByAddressesV2ResponseBody: GetUtxosByAddressesV2ResponseBody,
 ): string {
@@ -262,7 +217,6 @@ export function getUtxosByAddressesV2ResponseBodyToJSON(
     ),
   );
 }
-
 export function getUtxosByAddressesV2ResponseBodyFromJSON(
   jsonString: string,
 ): SafeParseResult<GetUtxosByAddressesV2ResponseBody, SDKValidationError> {
@@ -288,7 +242,6 @@ export const GetUtxosByAddressesV2Response$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetUtxosByAddressesV2Response$Outbound = {
   Result:
@@ -312,19 +265,6 @@ export const GetUtxosByAddressesV2Response$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetUtxosByAddressesV2Response$ {
-  /** @deprecated use `GetUtxosByAddressesV2Response$inboundSchema` instead. */
-  export const inboundSchema = GetUtxosByAddressesV2Response$inboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Response$outboundSchema` instead. */
-  export const outboundSchema = GetUtxosByAddressesV2Response$outboundSchema;
-  /** @deprecated use `GetUtxosByAddressesV2Response$Outbound` instead. */
-  export type Outbound = GetUtxosByAddressesV2Response$Outbound;
-}
-
 export function getUtxosByAddressesV2ResponseToJSON(
   getUtxosByAddressesV2Response: GetUtxosByAddressesV2Response,
 ): string {
@@ -334,7 +274,6 @@ export function getUtxosByAddressesV2ResponseToJSON(
     ),
   );
 }
-
 export function getUtxosByAddressesV2ResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetUtxosByAddressesV2Response, SDKValidationError> {

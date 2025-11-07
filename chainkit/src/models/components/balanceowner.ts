@@ -21,7 +21,6 @@ export const BalanceOwner$inboundSchema: z.ZodType<
   addresses: z.array(z.string()),
   threshold: z.number(),
 });
-
 /** @internal */
 export type BalanceOwner$Outbound = {
   addresses: Array<string>;
@@ -38,23 +37,9 @@ export const BalanceOwner$outboundSchema: z.ZodType<
   threshold: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BalanceOwner$ {
-  /** @deprecated use `BalanceOwner$inboundSchema` instead. */
-  export const inboundSchema = BalanceOwner$inboundSchema;
-  /** @deprecated use `BalanceOwner$outboundSchema` instead. */
-  export const outboundSchema = BalanceOwner$outboundSchema;
-  /** @deprecated use `BalanceOwner$Outbound` instead. */
-  export type Outbound = BalanceOwner$Outbound;
-}
-
 export function balanceOwnerToJSON(balanceOwner: BalanceOwner): string {
   return JSON.stringify(BalanceOwner$outboundSchema.parse(balanceOwner));
 }
-
 export function balanceOwnerFromJSON(
   jsonString: string,
 ): SafeParseResult<BalanceOwner, SDKValidationError> {

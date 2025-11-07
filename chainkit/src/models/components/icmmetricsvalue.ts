@@ -37,7 +37,6 @@ export const ICMMetricsValue$inboundSchema: z.ZodType<
   srcBlockchainId: z.string(),
   destBlockchainId: z.string(),
 });
-
 /** @internal */
 export type ICMMetricsValue$Outbound = {
   value: number;
@@ -58,25 +57,11 @@ export const ICMMetricsValue$outboundSchema: z.ZodType<
   destBlockchainId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ICMMetricsValue$ {
-  /** @deprecated use `ICMMetricsValue$inboundSchema` instead. */
-  export const inboundSchema = ICMMetricsValue$inboundSchema;
-  /** @deprecated use `ICMMetricsValue$outboundSchema` instead. */
-  export const outboundSchema = ICMMetricsValue$outboundSchema;
-  /** @deprecated use `ICMMetricsValue$Outbound` instead. */
-  export type Outbound = ICMMetricsValue$Outbound;
-}
-
 export function icmMetricsValueToJSON(
   icmMetricsValue: ICMMetricsValue,
 ): string {
   return JSON.stringify(ICMMetricsValue$outboundSchema.parse(icmMetricsValue));
 }
-
 export function icmMetricsValueFromJSON(
   jsonString: string,
 ): SafeParseResult<ICMMetricsValue, SDKValidationError> {

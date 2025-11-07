@@ -60,22 +60,10 @@ export type Erc721Contract = {
 export const Erc721ContractErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc721ContractErcType
 > = z.nativeEnum(Erc721ContractErcType);
-
 /** @internal */
 export const Erc721ContractErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc721ContractErcType
 > = Erc721ContractErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721ContractErcType$ {
-  /** @deprecated use `Erc721ContractErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc721ContractErcType$inboundSchema;
-  /** @deprecated use `Erc721ContractErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc721ContractErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc721Contract$inboundSchema: z.ZodType<
@@ -97,7 +85,6 @@ export const Erc721Contract$inboundSchema: z.ZodType<
   ercType: Erc721ContractErcType$inboundSchema,
   symbol: z.string().optional(),
 });
-
 /** @internal */
 export type Erc721Contract$Outbound = {
   name?: string | undefined;
@@ -136,23 +123,9 @@ export const Erc721Contract$outboundSchema: z.ZodType<
   symbol: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721Contract$ {
-  /** @deprecated use `Erc721Contract$inboundSchema` instead. */
-  export const inboundSchema = Erc721Contract$inboundSchema;
-  /** @deprecated use `Erc721Contract$outboundSchema` instead. */
-  export const outboundSchema = Erc721Contract$outboundSchema;
-  /** @deprecated use `Erc721Contract$Outbound` instead. */
-  export type Outbound = Erc721Contract$Outbound;
-}
-
 export function erc721ContractToJSON(erc721Contract: Erc721Contract): string {
   return JSON.stringify(Erc721Contract$outboundSchema.parse(erc721Contract));
 }
-
 export function erc721ContractFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc721Contract, SDKValidationError> {

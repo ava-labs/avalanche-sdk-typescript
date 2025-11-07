@@ -43,7 +43,6 @@ export const XChainBalances$inboundSchema: z.ZodType<
   atomicMemoryUnlocked: z.array(XChainSharedAssetBalance$inboundSchema),
   atomicMemoryLocked: z.array(XChainSharedAssetBalance$inboundSchema),
 });
-
 /** @internal */
 export type XChainBalances$Outbound = {
   locked: Array<AggregatedAssetAmount$Outbound>;
@@ -64,23 +63,9 @@ export const XChainBalances$outboundSchema: z.ZodType<
   atomicMemoryLocked: z.array(XChainSharedAssetBalance$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainBalances$ {
-  /** @deprecated use `XChainBalances$inboundSchema` instead. */
-  export const inboundSchema = XChainBalances$inboundSchema;
-  /** @deprecated use `XChainBalances$outboundSchema` instead. */
-  export const outboundSchema = XChainBalances$outboundSchema;
-  /** @deprecated use `XChainBalances$Outbound` instead. */
-  export type Outbound = XChainBalances$Outbound;
-}
-
 export function xChainBalancesToJSON(xChainBalances: XChainBalances): string {
   return JSON.stringify(XChainBalances$outboundSchema.parse(xChainBalances));
 }
-
 export function xChainBalancesFromJSON(
   jsonString: string,
 ): SafeParseResult<XChainBalances, SDKValidationError> {

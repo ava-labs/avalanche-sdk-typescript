@@ -15,18 +15,6 @@ export type ApiFeature = ClosedEnum<typeof ApiFeature>;
 /** @internal */
 export const ApiFeature$inboundSchema: z.ZodNativeEnum<typeof ApiFeature> = z
   .nativeEnum(ApiFeature);
-
 /** @internal */
 export const ApiFeature$outboundSchema: z.ZodNativeEnum<typeof ApiFeature> =
   ApiFeature$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ApiFeature$ {
-  /** @deprecated use `ApiFeature$inboundSchema` instead. */
-  export const inboundSchema = ApiFeature$inboundSchema;
-  /** @deprecated use `ApiFeature$outboundSchema` instead. */
-  export const outboundSchema = ApiFeature$outboundSchema;
-}

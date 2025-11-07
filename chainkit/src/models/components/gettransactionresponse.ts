@@ -89,7 +89,6 @@ export const GetTransactionResponse$inboundSchema: z.ZodType<
   nativeTransaction: FullNativeTransactionDetails$inboundSchema,
   teleporterMessageInfo: TeleporterMessageInfo$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetTransactionResponse$Outbound = {
   erc20Transfers?: Array<Erc20TransferDetails$Outbound> | undefined;
@@ -117,19 +116,6 @@ export const GetTransactionResponse$outboundSchema: z.ZodType<
   teleporterMessageInfo: TeleporterMessageInfo$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTransactionResponse$ {
-  /** @deprecated use `GetTransactionResponse$inboundSchema` instead. */
-  export const inboundSchema = GetTransactionResponse$inboundSchema;
-  /** @deprecated use `GetTransactionResponse$outboundSchema` instead. */
-  export const outboundSchema = GetTransactionResponse$outboundSchema;
-  /** @deprecated use `GetTransactionResponse$Outbound` instead. */
-  export type Outbound = GetTransactionResponse$Outbound;
-}
-
 export function getTransactionResponseToJSON(
   getTransactionResponse: GetTransactionResponse,
 ): string {
@@ -137,7 +123,6 @@ export function getTransactionResponseToJSON(
     GetTransactionResponse$outboundSchema.parse(getTransactionResponse),
   );
 }
-
 export function getTransactionResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTransactionResponse, SDKValidationError> {

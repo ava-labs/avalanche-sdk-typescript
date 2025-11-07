@@ -23,19 +23,7 @@ export type BlockchainIds = ClosedEnum<typeof BlockchainIds>;
 export const BlockchainIds$inboundSchema: z.ZodNativeEnum<
   typeof BlockchainIds
 > = z.nativeEnum(BlockchainIds);
-
 /** @internal */
 export const BlockchainIds$outboundSchema: z.ZodNativeEnum<
   typeof BlockchainIds
 > = BlockchainIds$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BlockchainIds$ {
-  /** @deprecated use `BlockchainIds$inboundSchema` instead. */
-  export const inboundSchema = BlockchainIds$inboundSchema;
-  /** @deprecated use `BlockchainIds$outboundSchema` instead. */
-  export const outboundSchema = BlockchainIds$outboundSchema;
-}

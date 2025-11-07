@@ -42,7 +42,6 @@ export const ERCToken$inboundSchema: z.ZodType<
   decimals: z.number(),
   valueWithDecimals: z.string(),
 });
-
 /** @internal */
 export type ERCToken$Outbound = {
   address: string;
@@ -65,23 +64,9 @@ export const ERCToken$outboundSchema: z.ZodType<
   valueWithDecimals: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ERCToken$ {
-  /** @deprecated use `ERCToken$inboundSchema` instead. */
-  export const inboundSchema = ERCToken$inboundSchema;
-  /** @deprecated use `ERCToken$outboundSchema` instead. */
-  export const outboundSchema = ERCToken$outboundSchema;
-  /** @deprecated use `ERCToken$Outbound` instead. */
-  export type Outbound = ERCToken$Outbound;
-}
-
 export function ercTokenToJSON(ercToken: ERCToken): string {
   return JSON.stringify(ERCToken$outboundSchema.parse(ercToken));
 }
-
 export function ercTokenFromJSON(
   jsonString: string,
 ): SafeParseResult<ERCToken, SDKValidationError> {

@@ -44,7 +44,6 @@ export const Chain$inboundSchema: z.ZodType<Chain, z.ZodTypeDef, unknown> = z
     subnetId: z.string(),
     network: NetworkType$inboundSchema,
   });
-
 /** @internal */
 export type Chain$Outbound = {
   evmChainId: number;
@@ -67,23 +66,9 @@ export const Chain$outboundSchema: z.ZodType<
   network: NetworkType$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Chain$ {
-  /** @deprecated use `Chain$inboundSchema` instead. */
-  export const inboundSchema = Chain$inboundSchema;
-  /** @deprecated use `Chain$outboundSchema` instead. */
-  export const outboundSchema = Chain$outboundSchema;
-  /** @deprecated use `Chain$Outbound` instead. */
-  export type Outbound = Chain$Outbound;
-}
-
 export function chainToJSON(chain: Chain): string {
   return JSON.stringify(Chain$outboundSchema.parse(chain));
 }
-
 export function chainFromJSON(
   jsonString: string,
 ): SafeParseResult<Chain, SDKValidationError> {

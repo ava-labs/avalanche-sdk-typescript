@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListDelegatorsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListDelegatorsGlobals = {
@@ -63,7 +63,6 @@ export const ListDelegatorsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListDelegatorsGlobals$Outbound = {
   network?: string | undefined;
@@ -78,19 +77,6 @@ export const ListDelegatorsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListDelegatorsGlobals$ {
-  /** @deprecated use `ListDelegatorsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListDelegatorsGlobals$inboundSchema;
-  /** @deprecated use `ListDelegatorsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListDelegatorsGlobals$outboundSchema;
-  /** @deprecated use `ListDelegatorsGlobals$Outbound` instead. */
-  export type Outbound = ListDelegatorsGlobals$Outbound;
-}
-
 export function listDelegatorsGlobalsToJSON(
   listDelegatorsGlobals: ListDelegatorsGlobals,
 ): string {
@@ -98,7 +84,6 @@ export function listDelegatorsGlobalsToJSON(
     ListDelegatorsGlobals$outboundSchema.parse(listDelegatorsGlobals),
   );
 }
-
 export function listDelegatorsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListDelegatorsGlobals, SDKValidationError> {
@@ -123,7 +108,6 @@ export const ListDelegatorsRequest$inboundSchema: z.ZodType<
   delegationStatus: components.DelegationStatusType$inboundSchema.optional(),
   nodeIds: z.string().optional(),
 });
-
 /** @internal */
 export type ListDelegatorsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -150,19 +134,6 @@ export const ListDelegatorsRequest$outboundSchema: z.ZodType<
   nodeIds: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListDelegatorsRequest$ {
-  /** @deprecated use `ListDelegatorsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListDelegatorsRequest$inboundSchema;
-  /** @deprecated use `ListDelegatorsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListDelegatorsRequest$outboundSchema;
-  /** @deprecated use `ListDelegatorsRequest$Outbound` instead. */
-  export type Outbound = ListDelegatorsRequest$Outbound;
-}
-
 export function listDelegatorsRequestToJSON(
   listDelegatorsRequest: ListDelegatorsRequest,
 ): string {
@@ -170,7 +141,6 @@ export function listDelegatorsRequestToJSON(
     ListDelegatorsRequest$outboundSchema.parse(listDelegatorsRequest),
   );
 }
-
 export function listDelegatorsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListDelegatorsRequest, SDKValidationError> {
@@ -193,7 +163,6 @@ export const ListDelegatorsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListDelegatorsResponse$Outbound = {
   Result: components.ListDelegatorDetailsResponse$Outbound;
@@ -212,19 +181,6 @@ export const ListDelegatorsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListDelegatorsResponse$ {
-  /** @deprecated use `ListDelegatorsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListDelegatorsResponse$inboundSchema;
-  /** @deprecated use `ListDelegatorsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListDelegatorsResponse$outboundSchema;
-  /** @deprecated use `ListDelegatorsResponse$Outbound` instead. */
-  export type Outbound = ListDelegatorsResponse$Outbound;
-}
-
 export function listDelegatorsResponseToJSON(
   listDelegatorsResponse: ListDelegatorsResponse,
 ): string {
@@ -232,7 +188,6 @@ export function listDelegatorsResponseToJSON(
     ListDelegatorsResponse$outboundSchema.parse(listDelegatorsResponse),
   );
 }
-
 export function listDelegatorsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListDelegatorsResponse, SDKValidationError> {

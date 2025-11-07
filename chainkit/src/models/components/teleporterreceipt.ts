@@ -21,7 +21,6 @@ export const TeleporterReceipt$inboundSchema: z.ZodType<
   receivedMessageNonce: z.string(),
   relayerRewardAddress: z.string(),
 });
-
 /** @internal */
 export type TeleporterReceipt$Outbound = {
   receivedMessageNonce: string;
@@ -38,19 +37,6 @@ export const TeleporterReceipt$outboundSchema: z.ZodType<
   relayerRewardAddress: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterReceipt$ {
-  /** @deprecated use `TeleporterReceipt$inboundSchema` instead. */
-  export const inboundSchema = TeleporterReceipt$inboundSchema;
-  /** @deprecated use `TeleporterReceipt$outboundSchema` instead. */
-  export const outboundSchema = TeleporterReceipt$outboundSchema;
-  /** @deprecated use `TeleporterReceipt$Outbound` instead. */
-  export type Outbound = TeleporterReceipt$Outbound;
-}
-
 export function teleporterReceiptToJSON(
   teleporterReceipt: TeleporterReceipt,
 ): string {
@@ -58,7 +44,6 @@ export function teleporterReceiptToJSON(
     TeleporterReceipt$outboundSchema.parse(teleporterReceipt),
   );
 }
-
 export function teleporterReceiptFromJSON(
   jsonString: string,
 ): SafeParseResult<TeleporterReceipt, SDKValidationError> {

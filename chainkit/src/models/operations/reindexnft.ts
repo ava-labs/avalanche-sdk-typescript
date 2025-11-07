@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ReindexNftServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ReindexNftGlobals = {
@@ -41,7 +41,6 @@ export const ReindexNftGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ReindexNftGlobals$Outbound = {
   chainId?: string | undefined;
@@ -56,19 +55,6 @@ export const ReindexNftGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ReindexNftGlobals$ {
-  /** @deprecated use `ReindexNftGlobals$inboundSchema` instead. */
-  export const inboundSchema = ReindexNftGlobals$inboundSchema;
-  /** @deprecated use `ReindexNftGlobals$outboundSchema` instead. */
-  export const outboundSchema = ReindexNftGlobals$outboundSchema;
-  /** @deprecated use `ReindexNftGlobals$Outbound` instead. */
-  export type Outbound = ReindexNftGlobals$Outbound;
-}
-
 export function reindexNftGlobalsToJSON(
   reindexNftGlobals: ReindexNftGlobals,
 ): string {
@@ -76,7 +62,6 @@ export function reindexNftGlobalsToJSON(
     ReindexNftGlobals$outboundSchema.parse(reindexNftGlobals),
   );
 }
-
 export function reindexNftGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ReindexNftGlobals, SDKValidationError> {
@@ -97,7 +82,6 @@ export const ReindexNftRequest$inboundSchema: z.ZodType<
   address: z.string(),
   tokenId: z.string(),
 });
-
 /** @internal */
 export type ReindexNftRequest$Outbound = {
   chainId?: string | undefined;
@@ -116,19 +100,6 @@ export const ReindexNftRequest$outboundSchema: z.ZodType<
   tokenId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ReindexNftRequest$ {
-  /** @deprecated use `ReindexNftRequest$inboundSchema` instead. */
-  export const inboundSchema = ReindexNftRequest$inboundSchema;
-  /** @deprecated use `ReindexNftRequest$outboundSchema` instead. */
-  export const outboundSchema = ReindexNftRequest$outboundSchema;
-  /** @deprecated use `ReindexNftRequest$Outbound` instead. */
-  export type Outbound = ReindexNftRequest$Outbound;
-}
-
 export function reindexNftRequestToJSON(
   reindexNftRequest: ReindexNftRequest,
 ): string {
@@ -136,7 +107,6 @@ export function reindexNftRequestToJSON(
     ReindexNftRequest$outboundSchema.parse(reindexNftRequest),
   );
 }
-
 export function reindexNftRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ReindexNftRequest, SDKValidationError> {

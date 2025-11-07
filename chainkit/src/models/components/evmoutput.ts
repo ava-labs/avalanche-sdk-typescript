@@ -33,7 +33,6 @@ export const EVMOutput$inboundSchema: z.ZodType<
   toAddress: z.string(),
   asset: AssetAmount$inboundSchema,
 });
-
 /** @internal */
 export type EVMOutput$Outbound = {
   toAddress: string;
@@ -50,23 +49,9 @@ export const EVMOutput$outboundSchema: z.ZodType<
   asset: AssetAmount$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EVMOutput$ {
-  /** @deprecated use `EVMOutput$inboundSchema` instead. */
-  export const inboundSchema = EVMOutput$inboundSchema;
-  /** @deprecated use `EVMOutput$outboundSchema` instead. */
-  export const outboundSchema = EVMOutput$outboundSchema;
-  /** @deprecated use `EVMOutput$Outbound` instead. */
-  export type Outbound = EVMOutput$Outbound;
-}
-
 export function evmOutputToJSON(evmOutput: EVMOutput): string {
   return JSON.stringify(EVMOutput$outboundSchema.parse(evmOutput));
 }
-
 export function evmOutputFromJSON(
   jsonString: string,
 ): SafeParseResult<EVMOutput, SDKValidationError> {

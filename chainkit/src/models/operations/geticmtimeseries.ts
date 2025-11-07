@@ -75,22 +75,10 @@ export type GetICMTimeseriesRequest = {
 export const GetICMTimeseriesGroupBy$inboundSchema: z.ZodNativeEnum<
   typeof GetICMTimeseriesGroupBy
 > = z.nativeEnum(GetICMTimeseriesGroupBy);
-
 /** @internal */
 export const GetICMTimeseriesGroupBy$outboundSchema: z.ZodNativeEnum<
   typeof GetICMTimeseriesGroupBy
 > = GetICMTimeseriesGroupBy$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetICMTimeseriesGroupBy$ {
-  /** @deprecated use `GetICMTimeseriesGroupBy$inboundSchema` instead. */
-  export const inboundSchema = GetICMTimeseriesGroupBy$inboundSchema;
-  /** @deprecated use `GetICMTimeseriesGroupBy$outboundSchema` instead. */
-  export const outboundSchema = GetICMTimeseriesGroupBy$outboundSchema;
-}
 
 /** @internal */
 export const GetICMTimeseriesRequest$inboundSchema: z.ZodType<
@@ -108,7 +96,6 @@ export const GetICMTimeseriesRequest$inboundSchema: z.ZodType<
   groupBy: GetICMTimeseriesGroupBy$inboundSchema.optional(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetICMTimeseriesRequest$Outbound = {
   startTimestamp?: number | undefined;
@@ -139,19 +126,6 @@ export const GetICMTimeseriesRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetICMTimeseriesRequest$ {
-  /** @deprecated use `GetICMTimeseriesRequest$inboundSchema` instead. */
-  export const inboundSchema = GetICMTimeseriesRequest$inboundSchema;
-  /** @deprecated use `GetICMTimeseriesRequest$outboundSchema` instead. */
-  export const outboundSchema = GetICMTimeseriesRequest$outboundSchema;
-  /** @deprecated use `GetICMTimeseriesRequest$Outbound` instead. */
-  export type Outbound = GetICMTimeseriesRequest$Outbound;
-}
-
 export function getICMTimeseriesRequestToJSON(
   getICMTimeseriesRequest: GetICMTimeseriesRequest,
 ): string {
@@ -159,7 +133,6 @@ export function getICMTimeseriesRequestToJSON(
     GetICMTimeseriesRequest$outboundSchema.parse(getICMTimeseriesRequest),
   );
 }
-
 export function getICMTimeseriesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetICMTimeseriesRequest, SDKValidationError> {

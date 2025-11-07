@@ -30,7 +30,6 @@ export const ListHistoricalRewardsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   historicalRewards: z.array(HistoricalReward$inboundSchema),
 });
-
 /** @internal */
 export type ListHistoricalRewardsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListHistoricalRewardsResponse$outboundSchema: z.ZodType<
   historicalRewards: z.array(HistoricalReward$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListHistoricalRewardsResponse$ {
-  /** @deprecated use `ListHistoricalRewardsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListHistoricalRewardsResponse$inboundSchema;
-  /** @deprecated use `ListHistoricalRewardsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListHistoricalRewardsResponse$outboundSchema;
-  /** @deprecated use `ListHistoricalRewardsResponse$Outbound` instead. */
-  export type Outbound = ListHistoricalRewardsResponse$Outbound;
-}
-
 export function listHistoricalRewardsResponseToJSON(
   listHistoricalRewardsResponse: ListHistoricalRewardsResponse,
 ): string {
@@ -69,7 +55,6 @@ export function listHistoricalRewardsResponseToJSON(
     ),
   );
 }
-
 export function listHistoricalRewardsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListHistoricalRewardsResponse, SDKValidationError> {

@@ -29,18 +29,6 @@ export type ChainMetric = ClosedEnum<typeof ChainMetric>;
 /** @internal */
 export const ChainMetric$inboundSchema: z.ZodNativeEnum<typeof ChainMetric> = z
   .nativeEnum(ChainMetric);
-
 /** @internal */
 export const ChainMetric$outboundSchema: z.ZodNativeEnum<typeof ChainMetric> =
   ChainMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainMetric$ {
-  /** @deprecated use `ChainMetric$inboundSchema` instead. */
-  export const inboundSchema = ChainMetric$inboundSchema;
-  /** @deprecated use `ChainMetric$outboundSchema` instead. */
-  export const outboundSchema = ChainMetric$outboundSchema;
-}

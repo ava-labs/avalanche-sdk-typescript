@@ -31,19 +31,7 @@ export type ResourceLinkType = ClosedEnum<typeof ResourceLinkType>;
 export const ResourceLinkType$inboundSchema: z.ZodNativeEnum<
   typeof ResourceLinkType
 > = z.nativeEnum(ResourceLinkType);
-
 /** @internal */
 export const ResourceLinkType$outboundSchema: z.ZodNativeEnum<
   typeof ResourceLinkType
 > = ResourceLinkType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ResourceLinkType$ {
-  /** @deprecated use `ResourceLinkType$inboundSchema` instead. */
-  export const inboundSchema = ResourceLinkType$inboundSchema;
-  /** @deprecated use `ResourceLinkType$outboundSchema` instead. */
-  export const outboundSchema = ResourceLinkType$outboundSchema;
-}

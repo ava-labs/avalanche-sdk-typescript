@@ -1,6 +1,6 @@
 {
   "name": "@avalanche-sdk/chainkit",
-  "version": "0.3.0-alpha.7",
+  "version": "0.3.0-alpha.8",
   "author": "Sayan Kar",
   "license": "BSD-3-Clause",
   "publishConfig": {

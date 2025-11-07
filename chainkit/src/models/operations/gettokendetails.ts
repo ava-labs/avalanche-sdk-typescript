@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetTokenDetailsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetTokenDetailsGlobals = {
@@ -49,7 +49,6 @@ export const GetTokenDetailsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetTokenDetailsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -64,19 +63,6 @@ export const GetTokenDetailsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTokenDetailsGlobals$ {
-  /** @deprecated use `GetTokenDetailsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetTokenDetailsGlobals$inboundSchema;
-  /** @deprecated use `GetTokenDetailsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetTokenDetailsGlobals$outboundSchema;
-  /** @deprecated use `GetTokenDetailsGlobals$Outbound` instead. */
-  export type Outbound = GetTokenDetailsGlobals$Outbound;
-}
-
 export function getTokenDetailsGlobalsToJSON(
   getTokenDetailsGlobals: GetTokenDetailsGlobals,
 ): string {
@@ -84,7 +70,6 @@ export function getTokenDetailsGlobalsToJSON(
     GetTokenDetailsGlobals$outboundSchema.parse(getTokenDetailsGlobals),
   );
 }
-
 export function getTokenDetailsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTokenDetailsGlobals, SDKValidationError> {
@@ -105,7 +90,6 @@ export const GetTokenDetailsRequest$inboundSchema: z.ZodType<
   address: z.string(),
   tokenId: z.string(),
 });
-
 /** @internal */
 export type GetTokenDetailsRequest$Outbound = {
   chainId?: string | undefined;
@@ -124,19 +108,6 @@ export const GetTokenDetailsRequest$outboundSchema: z.ZodType<
   tokenId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTokenDetailsRequest$ {
-  /** @deprecated use `GetTokenDetailsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTokenDetailsRequest$inboundSchema;
-  /** @deprecated use `GetTokenDetailsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetTokenDetailsRequest$outboundSchema;
-  /** @deprecated use `GetTokenDetailsRequest$Outbound` instead. */
-  export type Outbound = GetTokenDetailsRequest$Outbound;
-}
-
 export function getTokenDetailsRequestToJSON(
   getTokenDetailsRequest: GetTokenDetailsRequest,
 ): string {
@@ -144,7 +115,6 @@ export function getTokenDetailsRequestToJSON(
     GetTokenDetailsRequest$outboundSchema.parse(getTokenDetailsRequest),
   );
 }
-
 export function getTokenDetailsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTokenDetailsRequest, SDKValidationError> {
@@ -172,7 +142,6 @@ export const GetTokenDetailsResponse$inboundSchema: z.ZodType<
     })),
   ),
 ]);
-
 /** @internal */
 export type GetTokenDetailsResponse$Outbound =
   | (components.Erc721Token$Outbound & { ercType: "ERC-721" })
@@ -196,19 +165,6 @@ export const GetTokenDetailsResponse$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTokenDetailsResponse$ {
-  /** @deprecated use `GetTokenDetailsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetTokenDetailsResponse$inboundSchema;
-  /** @deprecated use `GetTokenDetailsResponse$outboundSchema` instead. */
-  export const outboundSchema = GetTokenDetailsResponse$outboundSchema;
-  /** @deprecated use `GetTokenDetailsResponse$Outbound` instead. */
-  export type Outbound = GetTokenDetailsResponse$Outbound;
-}
-
 export function getTokenDetailsResponseToJSON(
   getTokenDetailsResponse: GetTokenDetailsResponse,
 ): string {
@@ -216,7 +172,6 @@ export function getTokenDetailsResponseToJSON(
     GetTokenDetailsResponse$outboundSchema.parse(getTokenDetailsResponse),
   );
 }
-
 export function getTokenDetailsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTokenDetailsResponse, SDKValidationError> {

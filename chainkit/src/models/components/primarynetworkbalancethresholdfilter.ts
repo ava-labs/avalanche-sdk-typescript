@@ -32,7 +32,6 @@ export const PrimaryNetworkBalanceThresholdFilter$inboundSchema: z.ZodType<
   balanceType: CommonBalanceType$inboundSchema,
   balanceThreshold: z.string(),
 });
-
 /** @internal */
 export type PrimaryNetworkBalanceThresholdFilter$Outbound = {
   balanceType: string;
@@ -49,21 +48,6 @@ export const PrimaryNetworkBalanceThresholdFilter$outboundSchema: z.ZodType<
   balanceThreshold: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkBalanceThresholdFilter$ {
-  /** @deprecated use `PrimaryNetworkBalanceThresholdFilter$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkBalanceThresholdFilter$inboundSchema;
-  /** @deprecated use `PrimaryNetworkBalanceThresholdFilter$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkBalanceThresholdFilter$outboundSchema;
-  /** @deprecated use `PrimaryNetworkBalanceThresholdFilter$Outbound` instead. */
-  export type Outbound = PrimaryNetworkBalanceThresholdFilter$Outbound;
-}
-
 export function primaryNetworkBalanceThresholdFilterToJSON(
   primaryNetworkBalanceThresholdFilter: PrimaryNetworkBalanceThresholdFilter,
 ): string {
@@ -73,7 +57,6 @@ export function primaryNetworkBalanceThresholdFilterToJSON(
     ),
   );
 }
-
 export function primaryNetworkBalanceThresholdFilterFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkBalanceThresholdFilter, SDKValidationError> {

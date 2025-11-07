@@ -49,24 +49,10 @@ export type PrimaryNetworkAddressActivityRequest = {
 export const PrimaryNetworkAddressActivityRequestEventType$inboundSchema:
   z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityRequestEventType> = z
     .nativeEnum(PrimaryNetworkAddressActivityRequestEventType);
-
 /** @internal */
 export const PrimaryNetworkAddressActivityRequestEventType$outboundSchema:
   z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityRequestEventType> =
     PrimaryNetworkAddressActivityRequestEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityRequestEventType$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityRequestEventType$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityRequestEventType$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityRequestEventType$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityRequestEventType$outboundSchema;
-}
 
 /** @internal */
 export const PrimaryNetworkAddressActivityRequestMetadata$inboundSchema:
@@ -75,7 +61,6 @@ export const PrimaryNetworkAddressActivityRequestMetadata$inboundSchema:
     z.ZodTypeDef,
     unknown
   > = PrimaryNetworkAddressActivityMetadata$inboundSchema;
-
 /** @internal */
 export type PrimaryNetworkAddressActivityRequestMetadata$Outbound =
   PrimaryNetworkAddressActivityMetadata$Outbound;
@@ -88,21 +73,6 @@ export const PrimaryNetworkAddressActivityRequestMetadata$outboundSchema:
     PrimaryNetworkAddressActivityRequestMetadata
   > = PrimaryNetworkAddressActivityMetadata$outboundSchema;
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityRequestMetadata$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityRequestMetadata$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityRequestMetadata$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityRequestMetadata$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityRequestMetadata$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityRequestMetadata$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressActivityRequestMetadata$Outbound;
-}
-
 export function primaryNetworkAddressActivityRequestMetadataToJSON(
   primaryNetworkAddressActivityRequestMetadata:
     PrimaryNetworkAddressActivityRequestMetadata,
@@ -113,7 +83,6 @@ export function primaryNetworkAddressActivityRequestMetadataToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressActivityRequestMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -144,7 +113,6 @@ export const PrimaryNetworkAddressActivityRequest$inboundSchema: z.ZodType<
   chainId: z.string(),
   metadata: PrimaryNetworkAddressActivityMetadata$inboundSchema,
 });
-
 /** @internal */
 export type PrimaryNetworkAddressActivityRequest$Outbound = {
   eventType: string;
@@ -171,21 +139,6 @@ export const PrimaryNetworkAddressActivityRequest$outboundSchema: z.ZodType<
   metadata: PrimaryNetworkAddressActivityMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityRequest$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityRequest$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityRequest$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityRequest$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressActivityRequest$Outbound;
-}
-
 export function primaryNetworkAddressActivityRequestToJSON(
   primaryNetworkAddressActivityRequest: PrimaryNetworkAddressActivityRequest,
 ): string {
@@ -195,7 +148,6 @@ export function primaryNetworkAddressActivityRequestToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressActivityRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkAddressActivityRequest, SDKValidationError> {

@@ -54,22 +54,10 @@ export type IcmRewardDetails = {
 export const IcmRewardDetailsErcType$inboundSchema: z.ZodNativeEnum<
   typeof IcmRewardDetailsErcType
 > = z.nativeEnum(IcmRewardDetailsErcType);
-
 /** @internal */
 export const IcmRewardDetailsErcType$outboundSchema: z.ZodNativeEnum<
   typeof IcmRewardDetailsErcType
 > = IcmRewardDetailsErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IcmRewardDetailsErcType$ {
-  /** @deprecated use `IcmRewardDetailsErcType$inboundSchema` instead. */
-  export const inboundSchema = IcmRewardDetailsErcType$inboundSchema;
-  /** @deprecated use `IcmRewardDetailsErcType$outboundSchema` instead. */
-  export const outboundSchema = IcmRewardDetailsErcType$outboundSchema;
-}
 
 /** @internal */
 export const IcmRewardDetails$inboundSchema: z.ZodType<
@@ -86,7 +74,6 @@ export const IcmRewardDetails$inboundSchema: z.ZodType<
   price: Money$inboundSchema.optional(),
   value: z.string(),
 });
-
 /** @internal */
 export type IcmRewardDetails$Outbound = {
   address: string;
@@ -115,19 +102,6 @@ export const IcmRewardDetails$outboundSchema: z.ZodType<
   value: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IcmRewardDetails$ {
-  /** @deprecated use `IcmRewardDetails$inboundSchema` instead. */
-  export const inboundSchema = IcmRewardDetails$inboundSchema;
-  /** @deprecated use `IcmRewardDetails$outboundSchema` instead. */
-  export const outboundSchema = IcmRewardDetails$outboundSchema;
-  /** @deprecated use `IcmRewardDetails$Outbound` instead. */
-  export type Outbound = IcmRewardDetails$Outbound;
-}
-
 export function icmRewardDetailsToJSON(
   icmRewardDetails: IcmRewardDetails,
 ): string {
@@ -135,7 +109,6 @@ export function icmRewardDetailsToJSON(
     IcmRewardDetails$outboundSchema.parse(icmRewardDetails),
   );
 }
-
 export function icmRewardDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<IcmRewardDetails, SDKValidationError> {

@@ -58,7 +58,6 @@ export const NotFoundMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type NotFoundMessage$Outbound = string | Array<string>;
 
@@ -69,25 +68,11 @@ export const NotFoundMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NotFoundMessage$ {
-  /** @deprecated use `NotFoundMessage$inboundSchema` instead. */
-  export const inboundSchema = NotFoundMessage$inboundSchema;
-  /** @deprecated use `NotFoundMessage$outboundSchema` instead. */
-  export const outboundSchema = NotFoundMessage$outboundSchema;
-  /** @deprecated use `NotFoundMessage$Outbound` instead. */
-  export type Outbound = NotFoundMessage$Outbound;
-}
-
 export function notFoundMessageToJSON(
   notFoundMessage: NotFoundMessage,
 ): string {
   return JSON.stringify(NotFoundMessage$outboundSchema.parse(notFoundMessage));
 }
-
 export function notFoundMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<NotFoundMessage, SDKValidationError> {
@@ -138,16 +123,3 @@ export const NotFoundError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NotFoundError$ {
-  /** @deprecated use `NotFoundError$inboundSchema` instead. */
-  export const inboundSchema = NotFoundError$inboundSchema;
-  /** @deprecated use `NotFoundError$outboundSchema` instead. */
-  export const outboundSchema = NotFoundError$outboundSchema;
-  /** @deprecated use `NotFoundError$Outbound` instead. */
-  export type Outbound = NotFoundError$Outbound;
-}

@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetLatestBlocksServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetLatestBlocksGlobals = {
@@ -47,7 +47,6 @@ export const GetLatestBlocksGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetLatestBlocksGlobals$Outbound = {
   chainId?: string | undefined;
@@ -62,19 +61,6 @@ export const GetLatestBlocksGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetLatestBlocksGlobals$ {
-  /** @deprecated use `GetLatestBlocksGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetLatestBlocksGlobals$inboundSchema;
-  /** @deprecated use `GetLatestBlocksGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetLatestBlocksGlobals$outboundSchema;
-  /** @deprecated use `GetLatestBlocksGlobals$Outbound` instead. */
-  export type Outbound = GetLatestBlocksGlobals$Outbound;
-}
-
 export function getLatestBlocksGlobalsToJSON(
   getLatestBlocksGlobals: GetLatestBlocksGlobals,
 ): string {
@@ -82,7 +68,6 @@ export function getLatestBlocksGlobalsToJSON(
     GetLatestBlocksGlobals$outboundSchema.parse(getLatestBlocksGlobals),
   );
 }
-
 export function getLatestBlocksGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetLatestBlocksGlobals, SDKValidationError> {
@@ -103,7 +88,6 @@ export const GetLatestBlocksRequest$inboundSchema: z.ZodType<
   pageSize: z.number().int().default(10),
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetLatestBlocksRequest$Outbound = {
   pageToken?: string | undefined;
@@ -122,19 +106,6 @@ export const GetLatestBlocksRequest$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetLatestBlocksRequest$ {
-  /** @deprecated use `GetLatestBlocksRequest$inboundSchema` instead. */
-  export const inboundSchema = GetLatestBlocksRequest$inboundSchema;
-  /** @deprecated use `GetLatestBlocksRequest$outboundSchema` instead. */
-  export const outboundSchema = GetLatestBlocksRequest$outboundSchema;
-  /** @deprecated use `GetLatestBlocksRequest$Outbound` instead. */
-  export type Outbound = GetLatestBlocksRequest$Outbound;
-}
-
 export function getLatestBlocksRequestToJSON(
   getLatestBlocksRequest: GetLatestBlocksRequest,
 ): string {
@@ -142,7 +113,6 @@ export function getLatestBlocksRequestToJSON(
     GetLatestBlocksRequest$outboundSchema.parse(getLatestBlocksRequest),
   );
 }
-
 export function getLatestBlocksRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetLatestBlocksRequest, SDKValidationError> {
@@ -165,7 +135,6 @@ export const GetLatestBlocksResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetLatestBlocksResponse$Outbound = {
   Result: components.ListEvmBlocksResponse$Outbound;
@@ -184,19 +153,6 @@ export const GetLatestBlocksResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetLatestBlocksResponse$ {
-  /** @deprecated use `GetLatestBlocksResponse$inboundSchema` instead. */
-  export const inboundSchema = GetLatestBlocksResponse$inboundSchema;
-  /** @deprecated use `GetLatestBlocksResponse$outboundSchema` instead. */
-  export const outboundSchema = GetLatestBlocksResponse$outboundSchema;
-  /** @deprecated use `GetLatestBlocksResponse$Outbound` instead. */
-  export type Outbound = GetLatestBlocksResponse$Outbound;
-}
-
 export function getLatestBlocksResponseToJSON(
   getLatestBlocksResponse: GetLatestBlocksResponse,
 ): string {
@@ -204,7 +160,6 @@ export function getLatestBlocksResponseToJSON(
     GetLatestBlocksResponse$outboundSchema.parse(getLatestBlocksResponse),
   );
 }
-
 export function getLatestBlocksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetLatestBlocksResponse, SDKValidationError> {

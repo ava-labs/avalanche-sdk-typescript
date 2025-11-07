@@ -15,18 +15,6 @@ export type RewardType = ClosedEnum<typeof RewardType>;
 /** @internal */
 export const RewardType$inboundSchema: z.ZodNativeEnum<typeof RewardType> = z
   .nativeEnum(RewardType);
-
 /** @internal */
 export const RewardType$outboundSchema: z.ZodNativeEnum<typeof RewardType> =
   RewardType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RewardType$ {
-  /** @deprecated use `RewardType$inboundSchema` instead. */
-  export const inboundSchema = RewardType$inboundSchema;
-  /** @deprecated use `RewardType$outboundSchema` instead. */
-  export const outboundSchema = RewardType$outboundSchema;
-}

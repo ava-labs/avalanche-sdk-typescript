@@ -67,7 +67,6 @@ export const GetEvmChainMetricsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetEvmChainMetricsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -82,19 +81,6 @@ export const GetEvmChainMetricsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmChainMetricsGlobals$ {
-  /** @deprecated use `GetEvmChainMetricsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetEvmChainMetricsGlobals$inboundSchema;
-  /** @deprecated use `GetEvmChainMetricsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetEvmChainMetricsGlobals$outboundSchema;
-  /** @deprecated use `GetEvmChainMetricsGlobals$Outbound` instead. */
-  export type Outbound = GetEvmChainMetricsGlobals$Outbound;
-}
-
 export function getEvmChainMetricsGlobalsToJSON(
   getEvmChainMetricsGlobals: GetEvmChainMetricsGlobals,
 ): string {
@@ -102,7 +88,6 @@ export function getEvmChainMetricsGlobalsToJSON(
     GetEvmChainMetricsGlobals$outboundSchema.parse(getEvmChainMetricsGlobals),
   );
 }
-
 export function getEvmChainMetricsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmChainMetricsGlobals, SDKValidationError> {
@@ -127,7 +112,6 @@ export const GetEvmChainMetricsRequest$inboundSchema: z.ZodType<
   pageSize: z.number().int().default(100),
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetEvmChainMetricsRequest$Outbound = {
   metric: string;
@@ -154,19 +138,6 @@ export const GetEvmChainMetricsRequest$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmChainMetricsRequest$ {
-  /** @deprecated use `GetEvmChainMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetEvmChainMetricsRequest$inboundSchema;
-  /** @deprecated use `GetEvmChainMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetEvmChainMetricsRequest$outboundSchema;
-  /** @deprecated use `GetEvmChainMetricsRequest$Outbound` instead. */
-  export type Outbound = GetEvmChainMetricsRequest$Outbound;
-}
-
 export function getEvmChainMetricsRequestToJSON(
   getEvmChainMetricsRequest: GetEvmChainMetricsRequest,
 ): string {
@@ -174,7 +145,6 @@ export function getEvmChainMetricsRequestToJSON(
     GetEvmChainMetricsRequest$outboundSchema.parse(getEvmChainMetricsRequest),
   );
 }
-
 export function getEvmChainMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmChainMetricsRequest, SDKValidationError> {
@@ -197,7 +167,6 @@ export const GetEvmChainMetricsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetEvmChainMetricsResponse$Outbound = {
   Result: components.MetricsApiResponse$Outbound;
@@ -216,19 +185,6 @@ export const GetEvmChainMetricsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmChainMetricsResponse$ {
-  /** @deprecated use `GetEvmChainMetricsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetEvmChainMetricsResponse$inboundSchema;
-  /** @deprecated use `GetEvmChainMetricsResponse$outboundSchema` instead. */
-  export const outboundSchema = GetEvmChainMetricsResponse$outboundSchema;
-  /** @deprecated use `GetEvmChainMetricsResponse$Outbound` instead. */
-  export type Outbound = GetEvmChainMetricsResponse$Outbound;
-}
-
 export function getEvmChainMetricsResponseToJSON(
   getEvmChainMetricsResponse: GetEvmChainMetricsResponse,
 ): string {
@@ -236,7 +192,6 @@ export function getEvmChainMetricsResponseToJSON(
     GetEvmChainMetricsResponse$outboundSchema.parse(getEvmChainMetricsResponse),
   );
 }
-
 export function getEvmChainMetricsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmChainMetricsResponse, SDKValidationError> {

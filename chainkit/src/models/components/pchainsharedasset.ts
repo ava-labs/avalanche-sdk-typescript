@@ -58,7 +58,6 @@ export const PChainSharedAsset$inboundSchema: z.ZodType<
   sharedWithChainId: z.string(),
   status: z.string(),
 });
-
 /** @internal */
 export type PChainSharedAsset$Outbound = {
   assetId: string;
@@ -89,19 +88,6 @@ export const PChainSharedAsset$outboundSchema: z.ZodType<
   status: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainSharedAsset$ {
-  /** @deprecated use `PChainSharedAsset$inboundSchema` instead. */
-  export const inboundSchema = PChainSharedAsset$inboundSchema;
-  /** @deprecated use `PChainSharedAsset$outboundSchema` instead. */
-  export const outboundSchema = PChainSharedAsset$outboundSchema;
-  /** @deprecated use `PChainSharedAsset$Outbound` instead. */
-  export type Outbound = PChainSharedAsset$Outbound;
-}
-
 export function pChainSharedAssetToJSON(
   pChainSharedAsset: PChainSharedAsset,
 ): string {
@@ -109,7 +95,6 @@ export function pChainSharedAssetToJSON(
     PChainSharedAsset$outboundSchema.parse(pChainSharedAsset),
   );
 }
-
 export function pChainSharedAssetFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainSharedAsset, SDKValidationError> {

@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListTransfersServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListTransfersGlobals = {
@@ -59,7 +59,6 @@ export const ListTransfersGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListTransfersGlobals$Outbound = {
   chainId?: string | undefined;
@@ -74,19 +73,6 @@ export const ListTransfersGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTransfersGlobals$ {
-  /** @deprecated use `ListTransfersGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListTransfersGlobals$inboundSchema;
-  /** @deprecated use `ListTransfersGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListTransfersGlobals$outboundSchema;
-  /** @deprecated use `ListTransfersGlobals$Outbound` instead. */
-  export type Outbound = ListTransfersGlobals$Outbound;
-}
-
 export function listTransfersGlobalsToJSON(
   listTransfersGlobals: ListTransfersGlobals,
 ): string {
@@ -94,7 +80,6 @@ export function listTransfersGlobalsToJSON(
     ListTransfersGlobals$outboundSchema.parse(listTransfersGlobals),
   );
 }
-
 export function listTransfersGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTransfersGlobals, SDKValidationError> {
@@ -118,7 +103,6 @@ export const ListTransfersRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListTransfersRequest$Outbound = {
   startBlock?: number | undefined;
@@ -143,19 +127,6 @@ export const ListTransfersRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTransfersRequest$ {
-  /** @deprecated use `ListTransfersRequest$inboundSchema` instead. */
-  export const inboundSchema = ListTransfersRequest$inboundSchema;
-  /** @deprecated use `ListTransfersRequest$outboundSchema` instead. */
-  export const outboundSchema = ListTransfersRequest$outboundSchema;
-  /** @deprecated use `ListTransfersRequest$Outbound` instead. */
-  export type Outbound = ListTransfersRequest$Outbound;
-}
-
 export function listTransfersRequestToJSON(
   listTransfersRequest: ListTransfersRequest,
 ): string {
@@ -163,7 +134,6 @@ export function listTransfersRequestToJSON(
     ListTransfersRequest$outboundSchema.parse(listTransfersRequest),
   );
 }
-
 export function listTransfersRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTransfersRequest, SDKValidationError> {
@@ -186,7 +156,6 @@ export const ListTransfersResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListTransfersResponse$Outbound = {
   Result: components.ListTransfersResponse$Outbound;
@@ -205,19 +174,6 @@ export const ListTransfersResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTransfersResponse$ {
-  /** @deprecated use `ListTransfersResponse$inboundSchema` instead. */
-  export const inboundSchema = ListTransfersResponse$inboundSchema;
-  /** @deprecated use `ListTransfersResponse$outboundSchema` instead. */
-  export const outboundSchema = ListTransfersResponse$outboundSchema;
-  /** @deprecated use `ListTransfersResponse$Outbound` instead. */
-  export type Outbound = ListTransfersResponse$Outbound;
-}
-
 export function listTransfersResponseToJSON(
   listTransfersResponse: ListTransfersResponse,
 ): string {
@@ -225,7 +181,6 @@ export function listTransfersResponseToJSON(
     ListTransfersResponse$outboundSchema.parse(listTransfersResponse),
   );
 }
-
 export function listTransfersResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTransfersResponse, SDKValidationError> {

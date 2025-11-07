@@ -22,19 +22,7 @@ export type PlatformAddressActivityKeyType = ClosedEnum<
 export const PlatformAddressActivityKeyType$inboundSchema: z.ZodNativeEnum<
   typeof PlatformAddressActivityKeyType
 > = z.nativeEnum(PlatformAddressActivityKeyType);
-
 /** @internal */
 export const PlatformAddressActivityKeyType$outboundSchema: z.ZodNativeEnum<
   typeof PlatformAddressActivityKeyType
 > = PlatformAddressActivityKeyType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PlatformAddressActivityKeyType$ {
-  /** @deprecated use `PlatformAddressActivityKeyType$inboundSchema` instead. */
-  export const inboundSchema = PlatformAddressActivityKeyType$inboundSchema;
-  /** @deprecated use `PlatformAddressActivityKeyType$outboundSchema` instead. */
-  export const outboundSchema = PlatformAddressActivityKeyType$outboundSchema;
-}

@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const RemoveAddressesFromWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type RemoveAddressesFromWebhookRequest = {
@@ -34,7 +34,6 @@ export const RemoveAddressesFromWebhookRequest$inboundSchema: z.ZodType<
     "AddressesChangeRequest": "addressesChangeRequest",
   });
 });
-
 /** @internal */
 export type RemoveAddressesFromWebhookRequest$Outbound = {
   id: string;
@@ -55,20 +54,6 @@ export const RemoveAddressesFromWebhookRequest$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RemoveAddressesFromWebhookRequest$ {
-  /** @deprecated use `RemoveAddressesFromWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = RemoveAddressesFromWebhookRequest$inboundSchema;
-  /** @deprecated use `RemoveAddressesFromWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    RemoveAddressesFromWebhookRequest$outboundSchema;
-  /** @deprecated use `RemoveAddressesFromWebhookRequest$Outbound` instead. */
-  export type Outbound = RemoveAddressesFromWebhookRequest$Outbound;
-}
-
 export function removeAddressesFromWebhookRequestToJSON(
   removeAddressesFromWebhookRequest: RemoveAddressesFromWebhookRequest,
 ): string {
@@ -78,7 +63,6 @@ export function removeAddressesFromWebhookRequestToJSON(
     ),
   );
 }
-
 export function removeAddressesFromWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<RemoveAddressesFromWebhookRequest, SDKValidationError> {

@@ -23,6 +23,8 @@ Get AVAX supply information that includes  total supply, circulating supply, tot
       };
     }
 
-    return formatResult(void 0, apiCall);
+    const value = result.value;
+
+    return formatResult(value, apiCall);
   },
 };

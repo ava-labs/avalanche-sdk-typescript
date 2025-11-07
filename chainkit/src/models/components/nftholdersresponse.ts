@@ -53,7 +53,6 @@ export const NftHoldersResponse$inboundSchema: z.ZodType<
   totalHolders: z.number(),
   totalTokens: z.number(),
 });
-
 /** @internal */
 export type NftHoldersResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -78,19 +77,6 @@ export const NftHoldersResponse$outboundSchema: z.ZodType<
   totalTokens: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NftHoldersResponse$ {
-  /** @deprecated use `NftHoldersResponse$inboundSchema` instead. */
-  export const inboundSchema = NftHoldersResponse$inboundSchema;
-  /** @deprecated use `NftHoldersResponse$outboundSchema` instead. */
-  export const outboundSchema = NftHoldersResponse$outboundSchema;
-  /** @deprecated use `NftHoldersResponse$Outbound` instead. */
-  export type Outbound = NftHoldersResponse$Outbound;
-}
-
 export function nftHoldersResponseToJSON(
   nftHoldersResponse: NftHoldersResponse,
 ): string {
@@ -98,7 +84,6 @@ export function nftHoldersResponseToJSON(
     NftHoldersResponse$outboundSchema.parse(nftHoldersResponse),
   );
 }
-
 export function nftHoldersResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<NftHoldersResponse, SDKValidationError> {

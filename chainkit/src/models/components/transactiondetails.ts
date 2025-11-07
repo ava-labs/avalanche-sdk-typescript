@@ -73,7 +73,6 @@ export const TransactionDetails$inboundSchema: z.ZodType<
   internalTransactions: z.array(InternalTransactionDetails$inboundSchema)
     .optional(),
 });
-
 /** @internal */
 export type TransactionDetails$Outbound = {
   nativeTransaction: NativeTransaction$Outbound;
@@ -97,19 +96,6 @@ export const TransactionDetails$outboundSchema: z.ZodType<
     .optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionDetails$ {
-  /** @deprecated use `TransactionDetails$inboundSchema` instead. */
-  export const inboundSchema = TransactionDetails$inboundSchema;
-  /** @deprecated use `TransactionDetails$outboundSchema` instead. */
-  export const outboundSchema = TransactionDetails$outboundSchema;
-  /** @deprecated use `TransactionDetails$Outbound` instead. */
-  export type Outbound = TransactionDetails$Outbound;
-}
-
 export function transactionDetailsToJSON(
   transactionDetails: TransactionDetails,
 ): string {
@@ -117,7 +103,6 @@ export function transactionDetailsToJSON(
     TransactionDetails$outboundSchema.parse(transactionDetails),
   );
 }
-
 export function transactionDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<TransactionDetails, SDKValidationError> {

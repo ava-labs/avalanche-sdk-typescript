@@ -108,7 +108,6 @@ export const Utxo$inboundSchema: z.ZodType<Utxo, z.ZodTypeDef, unknown> = z
     timestamp: z.number(),
     utxoType: z.string(),
   });
-
 /** @internal */
 export type Utxo$Outbound = {
   addresses: Array<string>;
@@ -152,23 +151,9 @@ export const Utxo$outboundSchema: z.ZodType<Utxo$Outbound, z.ZodTypeDef, Utxo> =
     utxoType: z.string(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Utxo$ {
-  /** @deprecated use `Utxo$inboundSchema` instead. */
-  export const inboundSchema = Utxo$inboundSchema;
-  /** @deprecated use `Utxo$outboundSchema` instead. */
-  export const outboundSchema = Utxo$outboundSchema;
-  /** @deprecated use `Utxo$Outbound` instead. */
-  export type Outbound = Utxo$Outbound;
-}
-
 export function utxoToJSON(utxo: Utxo): string {
   return JSON.stringify(Utxo$outboundSchema.parse(utxo));
 }
-
 export function utxoFromJSON(
   jsonString: string,
 ): SafeParseResult<Utxo, SDKValidationError> {

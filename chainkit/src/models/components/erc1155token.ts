@@ -34,22 +34,10 @@ export type Erc1155Token = {
 export const Erc1155TokenErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc1155TokenErcType
 > = z.nativeEnum(Erc1155TokenErcType);
-
 /** @internal */
 export const Erc1155TokenErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc1155TokenErcType
 > = Erc1155TokenErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155TokenErcType$ {
-  /** @deprecated use `Erc1155TokenErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc1155TokenErcType$inboundSchema;
-  /** @deprecated use `Erc1155TokenErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc1155TokenErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc1155Token$inboundSchema: z.ZodType<
@@ -63,7 +51,6 @@ export const Erc1155Token$inboundSchema: z.ZodType<
   tokenUri: z.string(),
   metadata: Erc1155TokenMetadata$inboundSchema,
 });
-
 /** @internal */
 export type Erc1155Token$Outbound = {
   address: string;
@@ -86,23 +73,9 @@ export const Erc1155Token$outboundSchema: z.ZodType<
   metadata: Erc1155TokenMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155Token$ {
-  /** @deprecated use `Erc1155Token$inboundSchema` instead. */
-  export const inboundSchema = Erc1155Token$inboundSchema;
-  /** @deprecated use `Erc1155Token$outboundSchema` instead. */
-  export const outboundSchema = Erc1155Token$outboundSchema;
-  /** @deprecated use `Erc1155Token$Outbound` instead. */
-  export type Outbound = Erc1155Token$Outbound;
-}
-
 export function erc1155TokenToJSON(erc1155Token: Erc1155Token): string {
   return JSON.stringify(Erc1155Token$outboundSchema.parse(erc1155Token));
 }
-
 export function erc1155TokenFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc1155Token, SDKValidationError> {

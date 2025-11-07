@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetVertexByHeightServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetVertexByHeightGlobals = {
@@ -59,7 +59,6 @@ export const GetVertexByHeightGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetVertexByHeightGlobals$Outbound = {
   network?: string | undefined;
@@ -74,19 +73,6 @@ export const GetVertexByHeightGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetVertexByHeightGlobals$ {
-  /** @deprecated use `GetVertexByHeightGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetVertexByHeightGlobals$inboundSchema;
-  /** @deprecated use `GetVertexByHeightGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetVertexByHeightGlobals$outboundSchema;
-  /** @deprecated use `GetVertexByHeightGlobals$Outbound` instead. */
-  export type Outbound = GetVertexByHeightGlobals$Outbound;
-}
-
 export function getVertexByHeightGlobalsToJSON(
   getVertexByHeightGlobals: GetVertexByHeightGlobals,
 ): string {
@@ -94,7 +80,6 @@ export function getVertexByHeightGlobalsToJSON(
     GetVertexByHeightGlobals$outboundSchema.parse(getVertexByHeightGlobals),
   );
 }
-
 export function getVertexByHeightGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetVertexByHeightGlobals, SDKValidationError> {
@@ -118,7 +103,6 @@ export const GetVertexByHeightRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetVertexByHeightRequest$Outbound = {
   vertexHeight: number;
@@ -143,19 +127,6 @@ export const GetVertexByHeightRequest$outboundSchema: z.ZodType<
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetVertexByHeightRequest$ {
-  /** @deprecated use `GetVertexByHeightRequest$inboundSchema` instead. */
-  export const inboundSchema = GetVertexByHeightRequest$inboundSchema;
-  /** @deprecated use `GetVertexByHeightRequest$outboundSchema` instead. */
-  export const outboundSchema = GetVertexByHeightRequest$outboundSchema;
-  /** @deprecated use `GetVertexByHeightRequest$Outbound` instead. */
-  export type Outbound = GetVertexByHeightRequest$Outbound;
-}
-
 export function getVertexByHeightRequestToJSON(
   getVertexByHeightRequest: GetVertexByHeightRequest,
 ): string {
@@ -163,7 +134,6 @@ export function getVertexByHeightRequestToJSON(
     GetVertexByHeightRequest$outboundSchema.parse(getVertexByHeightRequest),
   );
 }
-
 export function getVertexByHeightRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetVertexByHeightRequest, SDKValidationError> {
@@ -186,7 +156,6 @@ export const GetVertexByHeightResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetVertexByHeightResponse$Outbound = {
   Result: components.ListXChainVerticesResponse$Outbound;
@@ -205,19 +174,6 @@ export const GetVertexByHeightResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetVertexByHeightResponse$ {
-  /** @deprecated use `GetVertexByHeightResponse$inboundSchema` instead. */
-  export const inboundSchema = GetVertexByHeightResponse$inboundSchema;
-  /** @deprecated use `GetVertexByHeightResponse$outboundSchema` instead. */
-  export const outboundSchema = GetVertexByHeightResponse$outboundSchema;
-  /** @deprecated use `GetVertexByHeightResponse$Outbound` instead. */
-  export type Outbound = GetVertexByHeightResponse$Outbound;
-}
-
 export function getVertexByHeightResponseToJSON(
   getVertexByHeightResponse: GetVertexByHeightResponse,
 ): string {
@@ -225,7 +181,6 @@ export function getVertexByHeightResponseToJSON(
     GetVertexByHeightResponse$outboundSchema.parse(getVertexByHeightResponse),
   );
 }
-
 export function getVertexByHeightResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetVertexByHeightResponse, SDKValidationError> {

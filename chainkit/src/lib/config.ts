@@ -15,7 +15,7 @@ export const ServerList = [
   /**
    * Data API
    */
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type SDKOptions = {
@@ -77,8 +77,8 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.3.0-alpha.7",
-  genVersion: "2.739.1",
+  sdkVersion: "0.3.0-alpha.8",
+  genVersion: "2.743.2",
   userAgent:
-    "speakeasy-sdk/typescript 0.3.0-alpha.7 2.739.1 1.0.0 @avalanche-sdk/chainkit",
+    "speakeasy-sdk/typescript 0.3.0-alpha.8 2.743.2 1.0.0 @avalanche-sdk/chainkit",
 } as const;

@@ -56,22 +56,10 @@ export type PendingIcmMessage = {
 export const PendingIcmMessageStatus$inboundSchema: z.ZodNativeEnum<
   typeof PendingIcmMessageStatus
 > = z.nativeEnum(PendingIcmMessageStatus);
-
 /** @internal */
 export const PendingIcmMessageStatus$outboundSchema: z.ZodNativeEnum<
   typeof PendingIcmMessageStatus
 > = PendingIcmMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingIcmMessageStatus$ {
-  /** @deprecated use `PendingIcmMessageStatus$inboundSchema` instead. */
-  export const inboundSchema = PendingIcmMessageStatus$inboundSchema;
-  /** @deprecated use `PendingIcmMessageStatus$outboundSchema` instead. */
-  export const outboundSchema = PendingIcmMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const PendingIcmMessage$inboundSchema: z.ZodType<
@@ -96,7 +84,6 @@ export const PendingIcmMessage$inboundSchema: z.ZodType<
   sourceTransaction: IcmSourceTransaction$inboundSchema,
   status: PendingIcmMessageStatus$inboundSchema,
 });
-
 /** @internal */
 export type PendingIcmMessage$Outbound = {
   messageId: string;
@@ -141,19 +128,6 @@ export const PendingIcmMessage$outboundSchema: z.ZodType<
   status: PendingIcmMessageStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingIcmMessage$ {
-  /** @deprecated use `PendingIcmMessage$inboundSchema` instead. */
-  export const inboundSchema = PendingIcmMessage$inboundSchema;
-  /** @deprecated use `PendingIcmMessage$outboundSchema` instead. */
-  export const outboundSchema = PendingIcmMessage$outboundSchema;
-  /** @deprecated use `PendingIcmMessage$Outbound` instead. */
-  export type Outbound = PendingIcmMessage$Outbound;
-}
-
 export function pendingIcmMessageToJSON(
   pendingIcmMessage: PendingIcmMessage,
 ): string {
@@ -161,7 +135,6 @@ export function pendingIcmMessageToJSON(
     PendingIcmMessage$outboundSchema.parse(pendingIcmMessage),
   );
 }
-
 export function pendingIcmMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<PendingIcmMessage, SDKValidationError> {

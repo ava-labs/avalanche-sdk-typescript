@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetBlockchainByIdServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetBlockchainByIdGlobals = {
@@ -38,7 +38,6 @@ export const GetBlockchainByIdGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetBlockchainByIdGlobals$Outbound = {
   network?: string | undefined;
@@ -53,19 +52,6 @@ export const GetBlockchainByIdGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockchainByIdGlobals$ {
-  /** @deprecated use `GetBlockchainByIdGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetBlockchainByIdGlobals$inboundSchema;
-  /** @deprecated use `GetBlockchainByIdGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetBlockchainByIdGlobals$outboundSchema;
-  /** @deprecated use `GetBlockchainByIdGlobals$Outbound` instead. */
-  export type Outbound = GetBlockchainByIdGlobals$Outbound;
-}
-
 export function getBlockchainByIdGlobalsToJSON(
   getBlockchainByIdGlobals: GetBlockchainByIdGlobals,
 ): string {
@@ -73,7 +59,6 @@ export function getBlockchainByIdGlobalsToJSON(
     GetBlockchainByIdGlobals$outboundSchema.parse(getBlockchainByIdGlobals),
   );
 }
-
 export function getBlockchainByIdGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockchainByIdGlobals, SDKValidationError> {
@@ -93,7 +78,6 @@ export const GetBlockchainByIdRequest$inboundSchema: z.ZodType<
   blockchainId: z.string(),
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetBlockchainByIdRequest$Outbound = {
   blockchainId: string;
@@ -110,19 +94,6 @@ export const GetBlockchainByIdRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockchainByIdRequest$ {
-  /** @deprecated use `GetBlockchainByIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetBlockchainByIdRequest$inboundSchema;
-  /** @deprecated use `GetBlockchainByIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetBlockchainByIdRequest$outboundSchema;
-  /** @deprecated use `GetBlockchainByIdRequest$Outbound` instead. */
-  export type Outbound = GetBlockchainByIdRequest$Outbound;
-}
-
 export function getBlockchainByIdRequestToJSON(
   getBlockchainByIdRequest: GetBlockchainByIdRequest,
 ): string {
@@ -130,7 +101,6 @@ export function getBlockchainByIdRequestToJSON(
     GetBlockchainByIdRequest$outboundSchema.parse(getBlockchainByIdRequest),
   );
 }
-
 export function getBlockchainByIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockchainByIdRequest, SDKValidationError> {

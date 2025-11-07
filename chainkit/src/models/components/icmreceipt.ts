@@ -21,7 +21,6 @@ export const IcmReceipt$inboundSchema: z.ZodType<
   receivedMessageNonce: z.string(),
   relayerRewardAddress: z.string(),
 });
-
 /** @internal */
 export type IcmReceipt$Outbound = {
   receivedMessageNonce: string;
@@ -38,23 +37,9 @@ export const IcmReceipt$outboundSchema: z.ZodType<
   relayerRewardAddress: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IcmReceipt$ {
-  /** @deprecated use `IcmReceipt$inboundSchema` instead. */
-  export const inboundSchema = IcmReceipt$inboundSchema;
-  /** @deprecated use `IcmReceipt$outboundSchema` instead. */
-  export const outboundSchema = IcmReceipt$outboundSchema;
-  /** @deprecated use `IcmReceipt$Outbound` instead. */
-  export type Outbound = IcmReceipt$Outbound;
-}
-
 export function icmReceiptToJSON(icmReceipt: IcmReceipt): string {
   return JSON.stringify(IcmReceipt$outboundSchema.parse(icmReceipt));
 }
-
 export function icmReceiptFromJSON(
   jsonString: string,
 ): SafeParseResult<IcmReceipt, SDKValidationError> {

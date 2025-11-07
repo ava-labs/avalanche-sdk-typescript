@@ -22,19 +22,7 @@ export type TransactionMethodType = ClosedEnum<typeof TransactionMethodType>;
 export const TransactionMethodType$inboundSchema: z.ZodNativeEnum<
   typeof TransactionMethodType
 > = z.nativeEnum(TransactionMethodType);
-
 /** @internal */
 export const TransactionMethodType$outboundSchema: z.ZodNativeEnum<
   typeof TransactionMethodType
 > = TransactionMethodType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionMethodType$ {
-  /** @deprecated use `TransactionMethodType$inboundSchema` instead. */
-  export const inboundSchema = TransactionMethodType$inboundSchema;
-  /** @deprecated use `TransactionMethodType$outboundSchema` instead. */
-  export const outboundSchema = TransactionMethodType$outboundSchema;
-}

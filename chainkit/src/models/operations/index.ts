@@ -95,6 +95,7 @@ export * from "./listtransactions.js";
 export * from "./listtransfers.js";
 export * from "./listvalidators.js";
 export * from "./listwebhooks.js";
+export * from "./livecheck.js";
 export * from "./metricshealthcheck.js";
 export * from "./posttransactionexportjob.js";
 export * from "./reindexnft.js";

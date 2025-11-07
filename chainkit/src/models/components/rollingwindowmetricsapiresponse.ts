@@ -28,7 +28,6 @@ export const RollingWindowMetricsApiResponse$inboundSchema: z.ZodType<
 > = z.object({
   result: ChainRollingWindowMetricsValue$inboundSchema,
 });
-
 /** @internal */
 export type RollingWindowMetricsApiResponse$Outbound = {
   result: ChainRollingWindowMetricsValue$Outbound;
@@ -43,19 +42,6 @@ export const RollingWindowMetricsApiResponse$outboundSchema: z.ZodType<
   result: ChainRollingWindowMetricsValue$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RollingWindowMetricsApiResponse$ {
-  /** @deprecated use `RollingWindowMetricsApiResponse$inboundSchema` instead. */
-  export const inboundSchema = RollingWindowMetricsApiResponse$inboundSchema;
-  /** @deprecated use `RollingWindowMetricsApiResponse$outboundSchema` instead. */
-  export const outboundSchema = RollingWindowMetricsApiResponse$outboundSchema;
-  /** @deprecated use `RollingWindowMetricsApiResponse$Outbound` instead. */
-  export type Outbound = RollingWindowMetricsApiResponse$Outbound;
-}
-
 export function rollingWindowMetricsApiResponseToJSON(
   rollingWindowMetricsApiResponse: RollingWindowMetricsApiResponse,
 ): string {
@@ -65,7 +51,6 @@ export function rollingWindowMetricsApiResponseToJSON(
     ),
   );
 }
-
 export function rollingWindowMetricsApiResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<RollingWindowMetricsApiResponse, SDKValidationError> {

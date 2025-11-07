@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetBlockServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetBlockGlobals = {
@@ -37,7 +37,6 @@ export const GetBlockGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetBlockGlobals$Outbound = {
   chainId?: string | undefined;
@@ -52,25 +51,11 @@ export const GetBlockGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockGlobals$ {
-  /** @deprecated use `GetBlockGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetBlockGlobals$inboundSchema;
-  /** @deprecated use `GetBlockGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetBlockGlobals$outboundSchema;
-  /** @deprecated use `GetBlockGlobals$Outbound` instead. */
-  export type Outbound = GetBlockGlobals$Outbound;
-}
-
 export function getBlockGlobalsToJSON(
   getBlockGlobals: GetBlockGlobals,
 ): string {
   return JSON.stringify(GetBlockGlobals$outboundSchema.parse(getBlockGlobals));
 }
-
 export function getBlockGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockGlobals, SDKValidationError> {
@@ -90,7 +75,6 @@ export const GetBlockRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   blockId: z.string(),
 });
-
 /** @internal */
 export type GetBlockRequest$Outbound = {
   chainId?: string | undefined;
@@ -107,25 +91,11 @@ export const GetBlockRequest$outboundSchema: z.ZodType<
   blockId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockRequest$ {
-  /** @deprecated use `GetBlockRequest$inboundSchema` instead. */
-  export const inboundSchema = GetBlockRequest$inboundSchema;
-  /** @deprecated use `GetBlockRequest$outboundSchema` instead. */
-  export const outboundSchema = GetBlockRequest$outboundSchema;
-  /** @deprecated use `GetBlockRequest$Outbound` instead. */
-  export type Outbound = GetBlockRequest$Outbound;
-}
-
 export function getBlockRequestToJSON(
   getBlockRequest: GetBlockRequest,
 ): string {
   return JSON.stringify(GetBlockRequest$outboundSchema.parse(getBlockRequest));
 }
-
 export function getBlockRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockRequest, SDKValidationError> {

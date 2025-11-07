@@ -44,7 +44,6 @@ export const ListErc721BalancesResponse$inboundSchema: z.ZodType<
   nativeTokenBalance: NativeTokenBalance$inboundSchema,
   erc721TokenBalances: z.array(Erc721TokenBalance$inboundSchema),
 });
-
 /** @internal */
 export type ListErc721BalancesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -63,19 +62,6 @@ export const ListErc721BalancesResponse$outboundSchema: z.ZodType<
   erc721TokenBalances: z.array(Erc721TokenBalance$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc721BalancesResponse$ {
-  /** @deprecated use `ListErc721BalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListErc721BalancesResponse$inboundSchema;
-  /** @deprecated use `ListErc721BalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListErc721BalancesResponse$outboundSchema;
-  /** @deprecated use `ListErc721BalancesResponse$Outbound` instead. */
-  export type Outbound = ListErc721BalancesResponse$Outbound;
-}
-
 export function listErc721BalancesResponseToJSON(
   listErc721BalancesResponse: ListErc721BalancesResponse,
 ): string {
@@ -83,7 +69,6 @@ export function listErc721BalancesResponseToJSON(
     ListErc721BalancesResponse$outboundSchema.parse(listErc721BalancesResponse),
   );
 }
-
 export function listErc721BalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc721BalancesResponse, SDKValidationError> {

@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListIcmMessagesByAddressServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListIcmMessagesByAddressRequest = {
@@ -42,7 +42,6 @@ export const ListIcmMessagesByAddressRequest$inboundSchema: z.ZodType<
   address: z.string(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListIcmMessagesByAddressRequest$Outbound = {
   pageToken?: string | undefined;
@@ -63,19 +62,6 @@ export const ListIcmMessagesByAddressRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListIcmMessagesByAddressRequest$ {
-  /** @deprecated use `ListIcmMessagesByAddressRequest$inboundSchema` instead. */
-  export const inboundSchema = ListIcmMessagesByAddressRequest$inboundSchema;
-  /** @deprecated use `ListIcmMessagesByAddressRequest$outboundSchema` instead. */
-  export const outboundSchema = ListIcmMessagesByAddressRequest$outboundSchema;
-  /** @deprecated use `ListIcmMessagesByAddressRequest$Outbound` instead. */
-  export type Outbound = ListIcmMessagesByAddressRequest$Outbound;
-}
-
 export function listIcmMessagesByAddressRequestToJSON(
   listIcmMessagesByAddressRequest: ListIcmMessagesByAddressRequest,
 ): string {
@@ -85,7 +71,6 @@ export function listIcmMessagesByAddressRequestToJSON(
     ),
   );
 }
-
 export function listIcmMessagesByAddressRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListIcmMessagesByAddressRequest, SDKValidationError> {

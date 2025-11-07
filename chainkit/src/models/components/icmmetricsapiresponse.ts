@@ -33,7 +33,6 @@ export const ICMMetricsApiResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   results: z.array(ICMMetricsValue$inboundSchema),
 });
-
 /** @internal */
 export type ICMMetricsApiResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -50,19 +49,6 @@ export const ICMMetricsApiResponse$outboundSchema: z.ZodType<
   results: z.array(ICMMetricsValue$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ICMMetricsApiResponse$ {
-  /** @deprecated use `ICMMetricsApiResponse$inboundSchema` instead. */
-  export const inboundSchema = ICMMetricsApiResponse$inboundSchema;
-  /** @deprecated use `ICMMetricsApiResponse$outboundSchema` instead. */
-  export const outboundSchema = ICMMetricsApiResponse$outboundSchema;
-  /** @deprecated use `ICMMetricsApiResponse$Outbound` instead. */
-  export type Outbound = ICMMetricsApiResponse$Outbound;
-}
-
 export function icmMetricsApiResponseToJSON(
   icmMetricsApiResponse: ICMMetricsApiResponse,
 ): string {
@@ -70,7 +56,6 @@ export function icmMetricsApiResponseToJSON(
     ICMMetricsApiResponse$outboundSchema.parse(icmMetricsApiResponse),
   );
 }
-
 export function icmMetricsApiResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ICMMetricsApiResponse, SDKValidationError> {

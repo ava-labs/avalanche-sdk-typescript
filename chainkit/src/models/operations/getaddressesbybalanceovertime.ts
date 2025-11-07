@@ -63,7 +63,6 @@ export const GetAddressesByBalanceOverTimeGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetAddressesByBalanceOverTimeGlobals$Outbound = {
   chainId?: string | undefined;
@@ -78,21 +77,6 @@ export const GetAddressesByBalanceOverTimeGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesByBalanceOverTimeGlobals$ {
-  /** @deprecated use `GetAddressesByBalanceOverTimeGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    GetAddressesByBalanceOverTimeGlobals$inboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    GetAddressesByBalanceOverTimeGlobals$outboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeGlobals$Outbound` instead. */
-  export type Outbound = GetAddressesByBalanceOverTimeGlobals$Outbound;
-}
-
 export function getAddressesByBalanceOverTimeGlobalsToJSON(
   getAddressesByBalanceOverTimeGlobals: GetAddressesByBalanceOverTimeGlobals,
 ): string {
@@ -102,7 +86,6 @@ export function getAddressesByBalanceOverTimeGlobalsToJSON(
     ),
   );
 }
-
 export function getAddressesByBalanceOverTimeGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesByBalanceOverTimeGlobals, SDKValidationError> {
@@ -128,7 +111,6 @@ export const GetAddressesByBalanceOverTimeRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type GetAddressesByBalanceOverTimeRequest$Outbound = {
   threshold: string;
@@ -155,21 +137,6 @@ export const GetAddressesByBalanceOverTimeRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesByBalanceOverTimeRequest$ {
-  /** @deprecated use `GetAddressesByBalanceOverTimeRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    GetAddressesByBalanceOverTimeRequest$inboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    GetAddressesByBalanceOverTimeRequest$outboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeRequest$Outbound` instead. */
-  export type Outbound = GetAddressesByBalanceOverTimeRequest$Outbound;
-}
-
 export function getAddressesByBalanceOverTimeRequestToJSON(
   getAddressesByBalanceOverTimeRequest: GetAddressesByBalanceOverTimeRequest,
 ): string {
@@ -179,7 +146,6 @@ export function getAddressesByBalanceOverTimeRequestToJSON(
     ),
   );
 }
-
 export function getAddressesByBalanceOverTimeRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesByBalanceOverTimeRequest, SDKValidationError> {
@@ -203,7 +169,6 @@ export const GetAddressesByBalanceOverTimeResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetAddressesByBalanceOverTimeResponse$Outbound = {
   Result: components.LookingGlassResponse$Outbound;
@@ -222,21 +187,6 @@ export const GetAddressesByBalanceOverTimeResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesByBalanceOverTimeResponse$ {
-  /** @deprecated use `GetAddressesByBalanceOverTimeResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    GetAddressesByBalanceOverTimeResponse$inboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    GetAddressesByBalanceOverTimeResponse$outboundSchema;
-  /** @deprecated use `GetAddressesByBalanceOverTimeResponse$Outbound` instead. */
-  export type Outbound = GetAddressesByBalanceOverTimeResponse$Outbound;
-}
-
 export function getAddressesByBalanceOverTimeResponseToJSON(
   getAddressesByBalanceOverTimeResponse: GetAddressesByBalanceOverTimeResponse,
 ): string {
@@ -246,7 +196,6 @@ export function getAddressesByBalanceOverTimeResponseToJSON(
     ),
   );
 }
-
 export function getAddressesByBalanceOverTimeResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesByBalanceOverTimeResponse, SDKValidationError> {

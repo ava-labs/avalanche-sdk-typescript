@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListContractDeploymentsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListContractDeploymentsGlobals = {
@@ -51,7 +51,6 @@ export const ListContractDeploymentsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListContractDeploymentsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -66,19 +65,6 @@ export const ListContractDeploymentsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListContractDeploymentsGlobals$ {
-  /** @deprecated use `ListContractDeploymentsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListContractDeploymentsGlobals$inboundSchema;
-  /** @deprecated use `ListContractDeploymentsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListContractDeploymentsGlobals$outboundSchema;
-  /** @deprecated use `ListContractDeploymentsGlobals$Outbound` instead. */
-  export type Outbound = ListContractDeploymentsGlobals$Outbound;
-}
-
 export function listContractDeploymentsGlobalsToJSON(
   listContractDeploymentsGlobals: ListContractDeploymentsGlobals,
 ): string {
@@ -88,7 +74,6 @@ export function listContractDeploymentsGlobalsToJSON(
     ),
   );
 }
-
 export function listContractDeploymentsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListContractDeploymentsGlobals, SDKValidationError> {
@@ -110,7 +95,6 @@ export const ListContractDeploymentsRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListContractDeploymentsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -131,19 +115,6 @@ export const ListContractDeploymentsRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListContractDeploymentsRequest$ {
-  /** @deprecated use `ListContractDeploymentsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListContractDeploymentsRequest$inboundSchema;
-  /** @deprecated use `ListContractDeploymentsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListContractDeploymentsRequest$outboundSchema;
-  /** @deprecated use `ListContractDeploymentsRequest$Outbound` instead. */
-  export type Outbound = ListContractDeploymentsRequest$Outbound;
-}
-
 export function listContractDeploymentsRequestToJSON(
   listContractDeploymentsRequest: ListContractDeploymentsRequest,
 ): string {
@@ -153,7 +124,6 @@ export function listContractDeploymentsRequestToJSON(
     ),
   );
 }
-
 export function listContractDeploymentsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListContractDeploymentsRequest, SDKValidationError> {
@@ -176,7 +146,6 @@ export const ListContractDeploymentsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListContractDeploymentsResponse$Outbound = {
   Result: components.ListContractsResponse$Outbound;
@@ -195,19 +164,6 @@ export const ListContractDeploymentsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListContractDeploymentsResponse$ {
-  /** @deprecated use `ListContractDeploymentsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListContractDeploymentsResponse$inboundSchema;
-  /** @deprecated use `ListContractDeploymentsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListContractDeploymentsResponse$outboundSchema;
-  /** @deprecated use `ListContractDeploymentsResponse$Outbound` instead. */
-  export type Outbound = ListContractDeploymentsResponse$Outbound;
-}
-
 export function listContractDeploymentsResponseToJSON(
   listContractDeploymentsResponse: ListContractDeploymentsResponse,
 ): string {
@@ -217,7 +173,6 @@ export function listContractDeploymentsResponseToJSON(
     ),
   );
 }
-
 export function listContractDeploymentsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListContractDeploymentsResponse, SDKValidationError> {

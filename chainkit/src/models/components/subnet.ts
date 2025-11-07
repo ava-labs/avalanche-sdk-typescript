@@ -82,7 +82,6 @@ export const Subnet$inboundSchema: z.ZodType<Subnet, z.ZodTypeDef, unknown> = z
       .optional(),
     blockchains: z.array(Blockchain$inboundSchema),
   });
-
 /** @internal */
 export type Subnet$Outbound = {
   createBlockTimestamp: number;
@@ -118,23 +117,9 @@ export const Subnet$outboundSchema: z.ZodType<
   blockchains: z.array(Blockchain$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Subnet$ {
-  /** @deprecated use `Subnet$inboundSchema` instead. */
-  export const inboundSchema = Subnet$inboundSchema;
-  /** @deprecated use `Subnet$outboundSchema` instead. */
-  export const outboundSchema = Subnet$outboundSchema;
-  /** @deprecated use `Subnet$Outbound` instead. */
-  export type Outbound = Subnet$Outbound;
-}
-
 export function subnetToJSON(subnet: Subnet): string {
   return JSON.stringify(Subnet$outboundSchema.parse(subnet));
 }
-
 export function subnetFromJSON(
   jsonString: string,
 ): SafeParseResult<Subnet, SDKValidationError> {

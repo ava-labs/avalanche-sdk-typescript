@@ -36,7 +36,6 @@ export const TeleporterMessageInfo$inboundSchema: z.ZodType<
   sourceChainId: z.string().optional(),
   destinationChainId: z.string().optional(),
 });
-
 /** @internal */
 export type TeleporterMessageInfo$Outbound = {
   teleporterMessageId: string;
@@ -57,19 +56,6 @@ export const TeleporterMessageInfo$outboundSchema: z.ZodType<
   destinationChainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterMessageInfo$ {
-  /** @deprecated use `TeleporterMessageInfo$inboundSchema` instead. */
-  export const inboundSchema = TeleporterMessageInfo$inboundSchema;
-  /** @deprecated use `TeleporterMessageInfo$outboundSchema` instead. */
-  export const outboundSchema = TeleporterMessageInfo$outboundSchema;
-  /** @deprecated use `TeleporterMessageInfo$Outbound` instead. */
-  export type Outbound = TeleporterMessageInfo$Outbound;
-}
-
 export function teleporterMessageInfoToJSON(
   teleporterMessageInfo: TeleporterMessageInfo,
 ): string {
@@ -77,7 +63,6 @@ export function teleporterMessageInfoToJSON(
     TeleporterMessageInfo$outboundSchema.parse(teleporterMessageInfo),
   );
 }
-
 export function teleporterMessageInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<TeleporterMessageInfo, SDKValidationError> {

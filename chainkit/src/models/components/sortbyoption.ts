@@ -17,18 +17,6 @@ export type SortByOption = ClosedEnum<typeof SortByOption>;
 /** @internal */
 export const SortByOption$inboundSchema: z.ZodNativeEnum<typeof SortByOption> =
   z.nativeEnum(SortByOption);
-
 /** @internal */
 export const SortByOption$outboundSchema: z.ZodNativeEnum<typeof SortByOption> =
   SortByOption$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SortByOption$ {
-  /** @deprecated use `SortByOption$inboundSchema` instead. */
-  export const inboundSchema = SortByOption$inboundSchema;
-  /** @deprecated use `SortByOption$outboundSchema` instead. */
-  export const outboundSchema = SortByOption$outboundSchema;
-}

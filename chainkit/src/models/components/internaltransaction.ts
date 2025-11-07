@@ -65,7 +65,6 @@ export const InternalTransaction$inboundSchema: z.ZodType<
   gasUsed: z.string(),
   gasLimit: z.string(),
 });
-
 /** @internal */
 export type InternalTransaction$Outbound = {
   blockNumber: string;
@@ -100,19 +99,6 @@ export const InternalTransaction$outboundSchema: z.ZodType<
   gasLimit: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace InternalTransaction$ {
-  /** @deprecated use `InternalTransaction$inboundSchema` instead. */
-  export const inboundSchema = InternalTransaction$inboundSchema;
-  /** @deprecated use `InternalTransaction$outboundSchema` instead. */
-  export const outboundSchema = InternalTransaction$outboundSchema;
-  /** @deprecated use `InternalTransaction$Outbound` instead. */
-  export type Outbound = InternalTransaction$Outbound;
-}
-
 export function internalTransactionToJSON(
   internalTransaction: InternalTransaction,
 ): string {
@@ -120,7 +106,6 @@ export function internalTransactionToJSON(
     InternalTransaction$outboundSchema.parse(internalTransaction),
   );
 }
-
 export function internalTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<InternalTransaction, SDKValidationError> {

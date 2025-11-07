@@ -47,7 +47,6 @@ export const Erc1155TokenMetadata$inboundSchema: z.ZodType<
   decimals: z.number().optional(),
   properties: z.string().optional(),
 });
-
 /** @internal */
 export type Erc1155TokenMetadata$Outbound = {
   indexStatus: string;
@@ -82,19 +81,6 @@ export const Erc1155TokenMetadata$outboundSchema: z.ZodType<
   properties: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155TokenMetadata$ {
-  /** @deprecated use `Erc1155TokenMetadata$inboundSchema` instead. */
-  export const inboundSchema = Erc1155TokenMetadata$inboundSchema;
-  /** @deprecated use `Erc1155TokenMetadata$outboundSchema` instead. */
-  export const outboundSchema = Erc1155TokenMetadata$outboundSchema;
-  /** @deprecated use `Erc1155TokenMetadata$Outbound` instead. */
-  export type Outbound = Erc1155TokenMetadata$Outbound;
-}
-
 export function erc1155TokenMetadataToJSON(
   erc1155TokenMetadata: Erc1155TokenMetadata,
 ): string {
@@ -102,7 +88,6 @@ export function erc1155TokenMetadataToJSON(
     Erc1155TokenMetadata$outboundSchema.parse(erc1155TokenMetadata),
   );
 }
-
 export function erc1155TokenMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc1155TokenMetadata, SDKValidationError> {

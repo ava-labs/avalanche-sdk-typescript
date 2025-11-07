@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetNativeBalanceServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetNativeBalanceGlobals = {
@@ -46,7 +46,6 @@ export const GetNativeBalanceGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetNativeBalanceGlobals$Outbound = {
   chainId?: string | undefined;
@@ -61,19 +60,6 @@ export const GetNativeBalanceGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNativeBalanceGlobals$ {
-  /** @deprecated use `GetNativeBalanceGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetNativeBalanceGlobals$inboundSchema;
-  /** @deprecated use `GetNativeBalanceGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetNativeBalanceGlobals$outboundSchema;
-  /** @deprecated use `GetNativeBalanceGlobals$Outbound` instead. */
-  export type Outbound = GetNativeBalanceGlobals$Outbound;
-}
-
 export function getNativeBalanceGlobalsToJSON(
   getNativeBalanceGlobals: GetNativeBalanceGlobals,
 ): string {
@@ -81,7 +67,6 @@ export function getNativeBalanceGlobalsToJSON(
     GetNativeBalanceGlobals$outboundSchema.parse(getNativeBalanceGlobals),
   );
 }
-
 export function getNativeBalanceGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNativeBalanceGlobals, SDKValidationError> {
@@ -103,7 +88,6 @@ export const GetNativeBalanceRequest$inboundSchema: z.ZodType<
   address: z.string(),
   currency: components.CurrencyCode$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetNativeBalanceRequest$Outbound = {
   blockNumber?: string | undefined;
@@ -124,19 +108,6 @@ export const GetNativeBalanceRequest$outboundSchema: z.ZodType<
   currency: components.CurrencyCode$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNativeBalanceRequest$ {
-  /** @deprecated use `GetNativeBalanceRequest$inboundSchema` instead. */
-  export const inboundSchema = GetNativeBalanceRequest$inboundSchema;
-  /** @deprecated use `GetNativeBalanceRequest$outboundSchema` instead. */
-  export const outboundSchema = GetNativeBalanceRequest$outboundSchema;
-  /** @deprecated use `GetNativeBalanceRequest$Outbound` instead. */
-  export type Outbound = GetNativeBalanceRequest$Outbound;
-}
-
 export function getNativeBalanceRequestToJSON(
   getNativeBalanceRequest: GetNativeBalanceRequest,
 ): string {
@@ -144,7 +115,6 @@ export function getNativeBalanceRequestToJSON(
     GetNativeBalanceRequest$outboundSchema.parse(getNativeBalanceRequest),
   );
 }
-
 export function getNativeBalanceRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNativeBalanceRequest, SDKValidationError> {

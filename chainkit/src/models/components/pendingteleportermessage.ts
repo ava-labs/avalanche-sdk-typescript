@@ -56,22 +56,10 @@ export type PendingTeleporterMessage = {
 export const PendingTeleporterMessageStatus$inboundSchema: z.ZodNativeEnum<
   typeof PendingTeleporterMessageStatus
 > = z.nativeEnum(PendingTeleporterMessageStatus);
-
 /** @internal */
 export const PendingTeleporterMessageStatus$outboundSchema: z.ZodNativeEnum<
   typeof PendingTeleporterMessageStatus
 > = PendingTeleporterMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingTeleporterMessageStatus$ {
-  /** @deprecated use `PendingTeleporterMessageStatus$inboundSchema` instead. */
-  export const inboundSchema = PendingTeleporterMessageStatus$inboundSchema;
-  /** @deprecated use `PendingTeleporterMessageStatus$outboundSchema` instead. */
-  export const outboundSchema = PendingTeleporterMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const PendingTeleporterMessage$inboundSchema: z.ZodType<
@@ -96,7 +84,6 @@ export const PendingTeleporterMessage$inboundSchema: z.ZodType<
   sourceTransaction: TeleporterSourceTransaction$inboundSchema,
   status: PendingTeleporterMessageStatus$inboundSchema,
 });
-
 /** @internal */
 export type PendingTeleporterMessage$Outbound = {
   messageId: string;
@@ -141,19 +128,6 @@ export const PendingTeleporterMessage$outboundSchema: z.ZodType<
   status: PendingTeleporterMessageStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingTeleporterMessage$ {
-  /** @deprecated use `PendingTeleporterMessage$inboundSchema` instead. */
-  export const inboundSchema = PendingTeleporterMessage$inboundSchema;
-  /** @deprecated use `PendingTeleporterMessage$outboundSchema` instead. */
-  export const outboundSchema = PendingTeleporterMessage$outboundSchema;
-  /** @deprecated use `PendingTeleporterMessage$Outbound` instead. */
-  export type Outbound = PendingTeleporterMessage$Outbound;
-}
-
 export function pendingTeleporterMessageToJSON(
   pendingTeleporterMessage: PendingTeleporterMessage,
 ): string {
@@ -161,7 +135,6 @@ export function pendingTeleporterMessageToJSON(
     PendingTeleporterMessage$outboundSchema.parse(pendingTeleporterMessage),
   );
 }
-
 export function pendingTeleporterMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<PendingTeleporterMessage, SDKValidationError> {

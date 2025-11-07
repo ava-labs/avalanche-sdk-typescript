@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListLatestXChainVerticesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListLatestXChainVerticesGlobals = {
@@ -51,7 +51,6 @@ export const ListLatestXChainVerticesGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestXChainVerticesGlobals$Outbound = {
   network?: string | undefined;
@@ -66,19 +65,6 @@ export const ListLatestXChainVerticesGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestXChainVerticesGlobals$ {
-  /** @deprecated use `ListLatestXChainVerticesGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListLatestXChainVerticesGlobals$inboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListLatestXChainVerticesGlobals$outboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesGlobals$Outbound` instead. */
-  export type Outbound = ListLatestXChainVerticesGlobals$Outbound;
-}
-
 export function listLatestXChainVerticesGlobalsToJSON(
   listLatestXChainVerticesGlobals: ListLatestXChainVerticesGlobals,
 ): string {
@@ -88,7 +74,6 @@ export function listLatestXChainVerticesGlobalsToJSON(
     ),
   );
 }
-
 export function listLatestXChainVerticesGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestXChainVerticesGlobals, SDKValidationError> {
@@ -110,7 +95,6 @@ export const ListLatestXChainVerticesRequest$inboundSchema: z.ZodType<
   blockchainId: components.XChainId$inboundSchema,
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestXChainVerticesRequest$Outbound = {
   pageToken?: string | undefined;
@@ -131,19 +115,6 @@ export const ListLatestXChainVerticesRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestXChainVerticesRequest$ {
-  /** @deprecated use `ListLatestXChainVerticesRequest$inboundSchema` instead. */
-  export const inboundSchema = ListLatestXChainVerticesRequest$inboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesRequest$outboundSchema` instead. */
-  export const outboundSchema = ListLatestXChainVerticesRequest$outboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesRequest$Outbound` instead. */
-  export type Outbound = ListLatestXChainVerticesRequest$Outbound;
-}
-
 export function listLatestXChainVerticesRequestToJSON(
   listLatestXChainVerticesRequest: ListLatestXChainVerticesRequest,
 ): string {
@@ -153,7 +124,6 @@ export function listLatestXChainVerticesRequestToJSON(
     ),
   );
 }
-
 export function listLatestXChainVerticesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestXChainVerticesRequest, SDKValidationError> {
@@ -176,7 +146,6 @@ export const ListLatestXChainVerticesResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListLatestXChainVerticesResponse$Outbound = {
   Result: components.ListXChainVerticesResponse$Outbound;
@@ -195,19 +164,6 @@ export const ListLatestXChainVerticesResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestXChainVerticesResponse$ {
-  /** @deprecated use `ListLatestXChainVerticesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListLatestXChainVerticesResponse$inboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListLatestXChainVerticesResponse$outboundSchema;
-  /** @deprecated use `ListLatestXChainVerticesResponse$Outbound` instead. */
-  export type Outbound = ListLatestXChainVerticesResponse$Outbound;
-}
-
 export function listLatestXChainVerticesResponseToJSON(
   listLatestXChainVerticesResponse: ListLatestXChainVerticesResponse,
 ): string {
@@ -217,7 +173,6 @@ export function listLatestXChainVerticesResponseToJSON(
     ),
   );
 }
-
 export function listLatestXChainVerticesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestXChainVerticesResponse, SDKValidationError> {

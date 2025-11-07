@@ -29,7 +29,6 @@ export const ContractDeploymentDetails$inboundSchema: z.ZodType<
   deployerAddress: z.string(),
   deployerContractAddress: z.string().optional(),
 });
-
 /** @internal */
 export type ContractDeploymentDetails$Outbound = {
   txHash: string;
@@ -48,19 +47,6 @@ export const ContractDeploymentDetails$outboundSchema: z.ZodType<
   deployerContractAddress: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ContractDeploymentDetails$ {
-  /** @deprecated use `ContractDeploymentDetails$inboundSchema` instead. */
-  export const inboundSchema = ContractDeploymentDetails$inboundSchema;
-  /** @deprecated use `ContractDeploymentDetails$outboundSchema` instead. */
-  export const outboundSchema = ContractDeploymentDetails$outboundSchema;
-  /** @deprecated use `ContractDeploymentDetails$Outbound` instead. */
-  export type Outbound = ContractDeploymentDetails$Outbound;
-}
-
 export function contractDeploymentDetailsToJSON(
   contractDeploymentDetails: ContractDeploymentDetails,
 ): string {
@@ -68,7 +54,6 @@ export function contractDeploymentDetailsToJSON(
     ContractDeploymentDetails$outboundSchema.parse(contractDeploymentDetails),
   );
 }
-
 export function contractDeploymentDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ContractDeploymentDetails, SDKValidationError> {

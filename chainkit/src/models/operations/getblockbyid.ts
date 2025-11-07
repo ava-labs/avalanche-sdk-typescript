@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetBlockByIdServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetBlockByIdGlobals = {
@@ -42,7 +42,6 @@ export const GetBlockByIdGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetBlockByIdGlobals$Outbound = {
   network?: string | undefined;
@@ -57,19 +56,6 @@ export const GetBlockByIdGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockByIdGlobals$ {
-  /** @deprecated use `GetBlockByIdGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetBlockByIdGlobals$inboundSchema;
-  /** @deprecated use `GetBlockByIdGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetBlockByIdGlobals$outboundSchema;
-  /** @deprecated use `GetBlockByIdGlobals$Outbound` instead. */
-  export type Outbound = GetBlockByIdGlobals$Outbound;
-}
-
 export function getBlockByIdGlobalsToJSON(
   getBlockByIdGlobals: GetBlockByIdGlobals,
 ): string {
@@ -77,7 +63,6 @@ export function getBlockByIdGlobalsToJSON(
     GetBlockByIdGlobals$outboundSchema.parse(getBlockByIdGlobals),
   );
 }
-
 export function getBlockByIdGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockByIdGlobals, SDKValidationError> {
@@ -98,7 +83,6 @@ export const GetBlockByIdRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   blockId: z.string(),
 });
-
 /** @internal */
 export type GetBlockByIdRequest$Outbound = {
   blockchainId: string;
@@ -117,19 +101,6 @@ export const GetBlockByIdRequest$outboundSchema: z.ZodType<
   blockId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetBlockByIdRequest$ {
-  /** @deprecated use `GetBlockByIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetBlockByIdRequest$inboundSchema;
-  /** @deprecated use `GetBlockByIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetBlockByIdRequest$outboundSchema;
-  /** @deprecated use `GetBlockByIdRequest$Outbound` instead. */
-  export type Outbound = GetBlockByIdRequest$Outbound;
-}
-
 export function getBlockByIdRequestToJSON(
   getBlockByIdRequest: GetBlockByIdRequest,
 ): string {
@@ -137,7 +108,6 @@ export function getBlockByIdRequestToJSON(
     GetBlockByIdRequest$outboundSchema.parse(getBlockByIdRequest),
   );
 }
-
 export function getBlockByIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetBlockByIdRequest, SDKValidationError> {

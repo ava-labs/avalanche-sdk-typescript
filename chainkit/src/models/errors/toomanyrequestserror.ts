@@ -58,7 +58,6 @@ export const TooManyRequestsMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type TooManyRequestsMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const TooManyRequestsMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TooManyRequestsMessage$ {
-  /** @deprecated use `TooManyRequestsMessage$inboundSchema` instead. */
-  export const inboundSchema = TooManyRequestsMessage$inboundSchema;
-  /** @deprecated use `TooManyRequestsMessage$outboundSchema` instead. */
-  export const outboundSchema = TooManyRequestsMessage$outboundSchema;
-  /** @deprecated use `TooManyRequestsMessage$Outbound` instead. */
-  export type Outbound = TooManyRequestsMessage$Outbound;
-}
-
 export function tooManyRequestsMessageToJSON(
   tooManyRequestsMessage: TooManyRequestsMessage,
 ): string {
@@ -89,7 +75,6 @@ export function tooManyRequestsMessageToJSON(
     TooManyRequestsMessage$outboundSchema.parse(tooManyRequestsMessage),
   );
 }
-
 export function tooManyRequestsMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<TooManyRequestsMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const TooManyRequestsError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TooManyRequestsError$ {
-  /** @deprecated use `TooManyRequestsError$inboundSchema` instead. */
-  export const inboundSchema = TooManyRequestsError$inboundSchema;
-  /** @deprecated use `TooManyRequestsError$outboundSchema` instead. */
-  export const outboundSchema = TooManyRequestsError$outboundSchema;
-  /** @deprecated use `TooManyRequestsError$Outbound` instead. */
-  export type Outbound = TooManyRequestsError$Outbound;
-}

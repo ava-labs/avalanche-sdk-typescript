@@ -66,22 +66,10 @@ export type GetChainResponse = {
 export const GetChainResponseEnabledFeature$inboundSchema: z.ZodNativeEnum<
   typeof GetChainResponseEnabledFeature
 > = z.nativeEnum(GetChainResponseEnabledFeature);
-
 /** @internal */
 export const GetChainResponseEnabledFeature$outboundSchema: z.ZodNativeEnum<
   typeof GetChainResponseEnabledFeature
 > = GetChainResponseEnabledFeature$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainResponseEnabledFeature$ {
-  /** @deprecated use `GetChainResponseEnabledFeature$inboundSchema` instead. */
-  export const inboundSchema = GetChainResponseEnabledFeature$inboundSchema;
-  /** @deprecated use `GetChainResponseEnabledFeature$outboundSchema` instead. */
-  export const outboundSchema = GetChainResponseEnabledFeature$outboundSchema;
-}
 
 /** @internal */
 export const GetChainResponse$inboundSchema: z.ZodType<
@@ -108,7 +96,6 @@ export const GetChainResponse$inboundSchema: z.ZodType<
   enabledFeatures: z.array(GetChainResponseEnabledFeature$inboundSchema)
     .optional(),
 });
-
 /** @internal */
 export type GetChainResponse$Outbound = {
   chainId: string;
@@ -156,19 +143,6 @@ export const GetChainResponse$outboundSchema: z.ZodType<
     .optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainResponse$ {
-  /** @deprecated use `GetChainResponse$inboundSchema` instead. */
-  export const inboundSchema = GetChainResponse$inboundSchema;
-  /** @deprecated use `GetChainResponse$outboundSchema` instead. */
-  export const outboundSchema = GetChainResponse$outboundSchema;
-  /** @deprecated use `GetChainResponse$Outbound` instead. */
-  export type Outbound = GetChainResponse$Outbound;
-}
-
 export function getChainResponseToJSON(
   getChainResponse: GetChainResponse,
 ): string {
@@ -176,7 +150,6 @@ export function getChainResponseToJSON(
     GetChainResponse$outboundSchema.parse(getChainResponse),
   );
 }
-
 export function getChainResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetChainResponse, SDKValidationError> {

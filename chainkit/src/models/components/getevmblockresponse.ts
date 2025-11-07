@@ -74,7 +74,6 @@ export const GetEvmBlockResponse$inboundSchema: z.ZodType<
   feesSpent: z.string(),
   cumulativeTransactions: z.string(),
 });
-
 /** @internal */
 export type GetEvmBlockResponse$Outbound = {
   chainId: string;
@@ -111,19 +110,6 @@ export const GetEvmBlockResponse$outboundSchema: z.ZodType<
   cumulativeTransactions: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmBlockResponse$ {
-  /** @deprecated use `GetEvmBlockResponse$inboundSchema` instead. */
-  export const inboundSchema = GetEvmBlockResponse$inboundSchema;
-  /** @deprecated use `GetEvmBlockResponse$outboundSchema` instead. */
-  export const outboundSchema = GetEvmBlockResponse$outboundSchema;
-  /** @deprecated use `GetEvmBlockResponse$Outbound` instead. */
-  export type Outbound = GetEvmBlockResponse$Outbound;
-}
-
 export function getEvmBlockResponseToJSON(
   getEvmBlockResponse: GetEvmBlockResponse,
 ): string {
@@ -131,7 +117,6 @@ export function getEvmBlockResponseToJSON(
     GetEvmBlockResponse$outboundSchema.parse(getEvmBlockResponse),
   );
 }
-
 export function getEvmBlockResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmBlockResponse, SDKValidationError> {

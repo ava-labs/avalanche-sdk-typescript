@@ -6,11 +6,17 @@ import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+import {
+  EvmGenesisDto,
+  EvmGenesisDto$inboundSchema,
+  EvmGenesisDto$Outbound,
+  EvmGenesisDto$outboundSchema,
+} from "./evmgenesisdto.js";
 
 /**
- * The genesis data of the blockchain.
+ * The genesis data of the blockchain. Can be either a parsed EvmGenesisDto object or a raw JSON string.
  */
-export type BlockchainGenesisData = {};
+export type BlockchainGenesisData = EvmGenesisDto | string;
 
 export type Blockchain = {
   createBlockTimestamp: number;
@@ -24,9 +30,9 @@ export type Blockchain = {
    */
   evmChainId: number;
   /**
-   * The genesis data of the blockchain.
+   * The genesis data of the blockchain. Can be either a parsed EvmGenesisDto object or a raw JSON string.
    */
-  genesisData?: BlockchainGenesisData | undefined;
+  genesisData?: EvmGenesisDto | string | undefined;
 };
 
 /** @internal */
@@ -34,30 +40,16 @@ export const BlockchainGenesisData$inboundSchema: z.ZodType<
   BlockchainGenesisData,
   z.ZodTypeDef,
   unknown
-> = z.object({});
-
+> = z.union([EvmGenesisDto$inboundSchema, z.string()]);
 /** @internal */
-export type BlockchainGenesisData$Outbound = {};
+export type BlockchainGenesisData$Outbound = EvmGenesisDto$Outbound | string;
 
 /** @internal */
 export const BlockchainGenesisData$outboundSchema: z.ZodType<
   BlockchainGenesisData$Outbound,
   z.ZodTypeDef,
   BlockchainGenesisData
-> = z.object({});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BlockchainGenesisData$ {
-  /** @deprecated use `BlockchainGenesisData$inboundSchema` instead. */
-  export const inboundSchema = BlockchainGenesisData$inboundSchema;
-  /** @deprecated use `BlockchainGenesisData$outboundSchema` instead. */
-  export const outboundSchema = BlockchainGenesisData$outboundSchema;
-  /** @deprecated use `BlockchainGenesisData$Outbound` instead. */
-  export type Outbound = BlockchainGenesisData$Outbound;
-}
+> = z.union([EvmGenesisDto$outboundSchema, z.string()]);
 
 export function blockchainGenesisDataToJSON(
   blockchainGenesisData: BlockchainGenesisData,
@@ -66,7 +58,6 @@ export function blockchainGenesisDataToJSON(
     BlockchainGenesisData$outboundSchema.parse(blockchainGenesisData),
   );
 }
-
 export function blockchainGenesisDataFromJSON(
   jsonString: string,
 ): SafeParseResult<BlockchainGenesisData, SDKValidationError> {
@@ -90,9 +81,8 @@ export const Blockchain$inboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
-  genesisData: z.lazy(() => BlockchainGenesisData$inboundSchema).optional(),
+  genesisData: z.union([EvmGenesisDto$inboundSchema, z.string()]).optional(),
 });
-
 /** @internal */
 export type Blockchain$Outbound = {
   createBlockTimestamp: number;
@@ -102,7 +92,7 @@ export type Blockchain$Outbound = {
   subnetId: string;
   blockchainName: string;
   evmChainId: number;
-  genesisData?: BlockchainGenesisData$Outbound | undefined;
+  genesisData?: EvmGenesisDto$Outbound | string | undefined;
 };
 
 /** @internal */
@@ -118,26 +108,12 @@ export const Blockchain$outboundSchema: z.ZodType<
   subnetId: z.string(),
   blockchainName: z.string(),
   evmChainId: z.number(),
-  genesisData: z.lazy(() => BlockchainGenesisData$outboundSchema).optional(),
+  genesisData: z.union([EvmGenesisDto$outboundSchema, z.string()]).optional(),
 });
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Blockchain$ {
-  /** @deprecated use `Blockchain$inboundSchema` instead. */
-  export const inboundSchema = Blockchain$inboundSchema;
-  /** @deprecated use `Blockchain$outboundSchema` instead. */
-  export const outboundSchema = Blockchain$outboundSchema;
-  /** @deprecated use `Blockchain$Outbound` instead. */
-  export type Outbound = Blockchain$Outbound;
-}
 
 export function blockchainToJSON(blockchain: Blockchain): string {
   return JSON.stringify(Blockchain$outboundSchema.parse(blockchain));
 }
-
 export function blockchainFromJSON(
   jsonString: string,
 ): SafeParseResult<Blockchain, SDKValidationError> {

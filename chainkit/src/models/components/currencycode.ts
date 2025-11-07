@@ -32,18 +32,6 @@ export type CurrencyCode = ClosedEnum<typeof CurrencyCode>;
 /** @internal */
 export const CurrencyCode$inboundSchema: z.ZodNativeEnum<typeof CurrencyCode> =
   z.nativeEnum(CurrencyCode);
-
 /** @internal */
 export const CurrencyCode$outboundSchema: z.ZodNativeEnum<typeof CurrencyCode> =
   CurrencyCode$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CurrencyCode$ {
-  /** @deprecated use `CurrencyCode$inboundSchema` instead. */
-  export const inboundSchema = CurrencyCode$inboundSchema;
-  /** @deprecated use `CurrencyCode$outboundSchema` instead. */
-  export const outboundSchema = CurrencyCode$outboundSchema;
-}

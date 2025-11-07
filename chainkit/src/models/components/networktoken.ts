@@ -39,7 +39,6 @@ export const NetworkToken$inboundSchema: z.ZodType<
   logoUri: z.string().optional(),
   description: z.string().optional(),
 });
-
 /** @internal */
 export type NetworkToken$Outbound = {
   name: string;
@@ -62,23 +61,9 @@ export const NetworkToken$outboundSchema: z.ZodType<
   description: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NetworkToken$ {
-  /** @deprecated use `NetworkToken$inboundSchema` instead. */
-  export const inboundSchema = NetworkToken$inboundSchema;
-  /** @deprecated use `NetworkToken$outboundSchema` instead. */
-  export const outboundSchema = NetworkToken$outboundSchema;
-  /** @deprecated use `NetworkToken$Outbound` instead. */
-  export type Outbound = NetworkToken$Outbound;
-}
-
 export function networkTokenToJSON(networkToken: NetworkToken): string {
   return JSON.stringify(NetworkToken$outboundSchema.parse(networkToken));
 }
-
 export function networkTokenFromJSON(
   jsonString: string,
 ): SafeParseResult<NetworkToken, SDKValidationError> {

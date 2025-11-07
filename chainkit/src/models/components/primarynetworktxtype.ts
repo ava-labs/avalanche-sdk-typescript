@@ -36,19 +36,7 @@ export type PrimaryNetworkTxType = ClosedEnum<typeof PrimaryNetworkTxType>;
 export const PrimaryNetworkTxType$inboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkTxType
 > = z.nativeEnum(PrimaryNetworkTxType);
-
 /** @internal */
 export const PrimaryNetworkTxType$outboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkTxType
 > = PrimaryNetworkTxType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkTxType$ {
-  /** @deprecated use `PrimaryNetworkTxType$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkTxType$inboundSchema;
-  /** @deprecated use `PrimaryNetworkTxType$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkTxType$outboundSchema;
-}

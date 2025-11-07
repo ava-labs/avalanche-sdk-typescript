@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListTeleporterMessagesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListTeleporterMessagesRequest = {
@@ -67,7 +67,6 @@ export const ListTeleporterMessagesRequest$inboundSchema: z.ZodType<
   from: z.string().optional(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListTeleporterMessagesRequest$Outbound = {
   pageToken?: string | undefined;
@@ -96,19 +95,6 @@ export const ListTeleporterMessagesRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTeleporterMessagesRequest$ {
-  /** @deprecated use `ListTeleporterMessagesRequest$inboundSchema` instead. */
-  export const inboundSchema = ListTeleporterMessagesRequest$inboundSchema;
-  /** @deprecated use `ListTeleporterMessagesRequest$outboundSchema` instead. */
-  export const outboundSchema = ListTeleporterMessagesRequest$outboundSchema;
-  /** @deprecated use `ListTeleporterMessagesRequest$Outbound` instead. */
-  export type Outbound = ListTeleporterMessagesRequest$Outbound;
-}
-
 export function listTeleporterMessagesRequestToJSON(
   listTeleporterMessagesRequest: ListTeleporterMessagesRequest,
 ): string {
@@ -118,7 +104,6 @@ export function listTeleporterMessagesRequestToJSON(
     ),
   );
 }
-
 export function listTeleporterMessagesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTeleporterMessagesRequest, SDKValidationError> {
@@ -141,7 +126,6 @@ export const ListTeleporterMessagesResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListTeleporterMessagesResponse$Outbound = {
   Result: components.ListTeleporterMessagesResponse$Outbound;
@@ -160,19 +144,6 @@ export const ListTeleporterMessagesResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTeleporterMessagesResponse$ {
-  /** @deprecated use `ListTeleporterMessagesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListTeleporterMessagesResponse$inboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListTeleporterMessagesResponse$outboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponse$Outbound` instead. */
-  export type Outbound = ListTeleporterMessagesResponse$Outbound;
-}
-
 export function listTeleporterMessagesResponseToJSON(
   listTeleporterMessagesResponse: ListTeleporterMessagesResponse,
 ): string {
@@ -182,7 +153,6 @@ export function listTeleporterMessagesResponseToJSON(
     ),
   );
 }
-
 export function listTeleporterMessagesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTeleporterMessagesResponse, SDKValidationError> {

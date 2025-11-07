@@ -38,24 +38,10 @@ export type CompletedDelegatorDetails = {
 export const CompletedDelegatorDetailsDelegationStatus$inboundSchema:
   z.ZodNativeEnum<typeof CompletedDelegatorDetailsDelegationStatus> = z
     .nativeEnum(CompletedDelegatorDetailsDelegationStatus);
-
 /** @internal */
 export const CompletedDelegatorDetailsDelegationStatus$outboundSchema:
   z.ZodNativeEnum<typeof CompletedDelegatorDetailsDelegationStatus> =
     CompletedDelegatorDetailsDelegationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CompletedDelegatorDetailsDelegationStatus$ {
-  /** @deprecated use `CompletedDelegatorDetailsDelegationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    CompletedDelegatorDetailsDelegationStatus$inboundSchema;
-  /** @deprecated use `CompletedDelegatorDetailsDelegationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    CompletedDelegatorDetailsDelegationStatus$outboundSchema;
-}
 
 /** @internal */
 export const CompletedDelegatorDetails$inboundSchema: z.ZodType<
@@ -74,7 +60,6 @@ export const CompletedDelegatorDetails$inboundSchema: z.ZodType<
   netReward: z.string(),
   delegationStatus: CompletedDelegatorDetailsDelegationStatus$inboundSchema,
 });
-
 /** @internal */
 export type CompletedDelegatorDetails$Outbound = {
   txHash: string;
@@ -107,19 +92,6 @@ export const CompletedDelegatorDetails$outboundSchema: z.ZodType<
   delegationStatus: CompletedDelegatorDetailsDelegationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CompletedDelegatorDetails$ {
-  /** @deprecated use `CompletedDelegatorDetails$inboundSchema` instead. */
-  export const inboundSchema = CompletedDelegatorDetails$inboundSchema;
-  /** @deprecated use `CompletedDelegatorDetails$outboundSchema` instead. */
-  export const outboundSchema = CompletedDelegatorDetails$outboundSchema;
-  /** @deprecated use `CompletedDelegatorDetails$Outbound` instead. */
-  export type Outbound = CompletedDelegatorDetails$Outbound;
-}
-
 export function completedDelegatorDetailsToJSON(
   completedDelegatorDetails: CompletedDelegatorDetails,
 ): string {
@@ -127,7 +99,6 @@ export function completedDelegatorDetailsToJSON(
     CompletedDelegatorDetails$outboundSchema.parse(completedDelegatorDetails),
   );
 }
-
 export function completedDelegatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<CompletedDelegatorDetails, SDKValidationError> {

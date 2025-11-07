@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetIcmMessageServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetIcmMessageRequest = {
@@ -37,7 +37,6 @@ export const GetIcmMessageRequest$inboundSchema: z.ZodType<
 > = z.object({
   messageId: z.string(),
 });
-
 /** @internal */
 export type GetIcmMessageRequest$Outbound = {
   messageId: string;
@@ -52,19 +51,6 @@ export const GetIcmMessageRequest$outboundSchema: z.ZodType<
   messageId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetIcmMessageRequest$ {
-  /** @deprecated use `GetIcmMessageRequest$inboundSchema` instead. */
-  export const inboundSchema = GetIcmMessageRequest$inboundSchema;
-  /** @deprecated use `GetIcmMessageRequest$outboundSchema` instead. */
-  export const outboundSchema = GetIcmMessageRequest$outboundSchema;
-  /** @deprecated use `GetIcmMessageRequest$Outbound` instead. */
-  export type Outbound = GetIcmMessageRequest$Outbound;
-}
-
 export function getIcmMessageRequestToJSON(
   getIcmMessageRequest: GetIcmMessageRequest,
 ): string {
@@ -72,7 +58,6 @@ export function getIcmMessageRequestToJSON(
     GetIcmMessageRequest$outboundSchema.parse(getIcmMessageRequest),
   );
 }
-
 export function getIcmMessageRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetIcmMessageRequest, SDKValidationError> {
@@ -105,7 +90,6 @@ export const GetIcmMessageResponse$inboundSchema: z.ZodType<
     ) => ({ status: v.status })),
   ),
 ]);
-
 /** @internal */
 export type GetIcmMessageResponse$Outbound =
   | (components.DeliveredIcmMessage$Outbound & { status: "delivered" })
@@ -137,19 +121,6 @@ export const GetIcmMessageResponse$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetIcmMessageResponse$ {
-  /** @deprecated use `GetIcmMessageResponse$inboundSchema` instead. */
-  export const inboundSchema = GetIcmMessageResponse$inboundSchema;
-  /** @deprecated use `GetIcmMessageResponse$outboundSchema` instead. */
-  export const outboundSchema = GetIcmMessageResponse$outboundSchema;
-  /** @deprecated use `GetIcmMessageResponse$Outbound` instead. */
-  export type Outbound = GetIcmMessageResponse$Outbound;
-}
-
 export function getIcmMessageResponseToJSON(
   getIcmMessageResponse: GetIcmMessageResponse,
 ): string {
@@ -157,7 +128,6 @@ export function getIcmMessageResponseToJSON(
     GetIcmMessageResponse$outboundSchema.parse(getIcmMessageResponse),
   );
 }
-
 export function getIcmMessageResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetIcmMessageResponse, SDKValidationError> {

@@ -108,7 +108,6 @@ export const FullNativeTransactionDetails$inboundSchema: z.ZodType<
   maxFeePerGas: z.string().optional(),
   maxPriorityFeePerGas: z.string().optional(),
 });
-
 /** @internal */
 export type FullNativeTransactionDetails$Outbound = {
   blockNumber: string;
@@ -161,19 +160,6 @@ export const FullNativeTransactionDetails$outboundSchema: z.ZodType<
   maxPriorityFeePerGas: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace FullNativeTransactionDetails$ {
-  /** @deprecated use `FullNativeTransactionDetails$inboundSchema` instead. */
-  export const inboundSchema = FullNativeTransactionDetails$inboundSchema;
-  /** @deprecated use `FullNativeTransactionDetails$outboundSchema` instead. */
-  export const outboundSchema = FullNativeTransactionDetails$outboundSchema;
-  /** @deprecated use `FullNativeTransactionDetails$Outbound` instead. */
-  export type Outbound = FullNativeTransactionDetails$Outbound;
-}
-
 export function fullNativeTransactionDetailsToJSON(
   fullNativeTransactionDetails: FullNativeTransactionDetails,
 ): string {
@@ -183,7 +169,6 @@ export function fullNativeTransactionDetailsToJSON(
     ),
   );
 }
-
 export function fullNativeTransactionDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<FullNativeTransactionDetails, SDKValidationError> {

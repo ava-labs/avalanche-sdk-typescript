@@ -44,7 +44,6 @@ export const ListErc1155BalancesResponse$inboundSchema: z.ZodType<
   nativeTokenBalance: NativeTokenBalance$inboundSchema,
   erc1155TokenBalances: z.array(Erc1155TokenBalance$inboundSchema),
 });
-
 /** @internal */
 export type ListErc1155BalancesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -63,19 +62,6 @@ export const ListErc1155BalancesResponse$outboundSchema: z.ZodType<
   erc1155TokenBalances: z.array(Erc1155TokenBalance$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc1155BalancesResponse$ {
-  /** @deprecated use `ListErc1155BalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListErc1155BalancesResponse$inboundSchema;
-  /** @deprecated use `ListErc1155BalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListErc1155BalancesResponse$outboundSchema;
-  /** @deprecated use `ListErc1155BalancesResponse$Outbound` instead. */
-  export type Outbound = ListErc1155BalancesResponse$Outbound;
-}
-
 export function listErc1155BalancesResponseToJSON(
   listErc1155BalancesResponse: ListErc1155BalancesResponse,
 ): string {
@@ -85,7 +71,6 @@ export function listErc1155BalancesResponseToJSON(
     ),
   );
 }
-
 export function listErc1155BalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc1155BalancesResponse, SDKValidationError> {

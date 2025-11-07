@@ -77,7 +77,6 @@ export const Contract$inboundSchema: z.ZodType<
     })),
   ),
 ]);
-
 /** @internal */
 export type Contract$Outbound =
   | (Erc20Contract$Outbound & { ercType: "ERC-20" })
@@ -113,23 +112,9 @@ export const Contract$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Contract$ {
-  /** @deprecated use `Contract$inboundSchema` instead. */
-  export const inboundSchema = Contract$inboundSchema;
-  /** @deprecated use `Contract$outboundSchema` instead. */
-  export const outboundSchema = Contract$outboundSchema;
-  /** @deprecated use `Contract$Outbound` instead. */
-  export type Outbound = Contract$Outbound;
-}
-
 export function contractToJSON(contract: Contract): string {
   return JSON.stringify(Contract$outboundSchema.parse(contract));
 }
-
 export function contractFromJSON(
   jsonString: string,
 ): SafeParseResult<Contract, SDKValidationError> {
@@ -172,7 +157,6 @@ export const ListContractsResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListContractsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -217,19 +201,6 @@ export const ListContractsResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListContractsResponse$ {
-  /** @deprecated use `ListContractsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListContractsResponse$inboundSchema;
-  /** @deprecated use `ListContractsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListContractsResponse$outboundSchema;
-  /** @deprecated use `ListContractsResponse$Outbound` instead. */
-  export type Outbound = ListContractsResponse$Outbound;
-}
-
 export function listContractsResponseToJSON(
   listContractsResponse: ListContractsResponse,
 ): string {
@@ -237,7 +208,6 @@ export function listContractsResponseToJSON(
     ListContractsResponse$outboundSchema.parse(listContractsResponse),
   );
 }
-
 export function listContractsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListContractsResponse, SDKValidationError> {

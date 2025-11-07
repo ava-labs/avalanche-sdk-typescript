@@ -63,22 +63,10 @@ export type DeliveredIcmMessage = {
 export const DeliveredIcmMessageStatus$inboundSchema: z.ZodNativeEnum<
   typeof DeliveredIcmMessageStatus
 > = z.nativeEnum(DeliveredIcmMessageStatus);
-
 /** @internal */
 export const DeliveredIcmMessageStatus$outboundSchema: z.ZodNativeEnum<
   typeof DeliveredIcmMessageStatus
 > = DeliveredIcmMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredIcmMessageStatus$ {
-  /** @deprecated use `DeliveredIcmMessageStatus$inboundSchema` instead. */
-  export const inboundSchema = DeliveredIcmMessageStatus$inboundSchema;
-  /** @deprecated use `DeliveredIcmMessageStatus$outboundSchema` instead. */
-  export const outboundSchema = DeliveredIcmMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const DeliveredIcmMessage$inboundSchema: z.ZodType<
@@ -104,7 +92,6 @@ export const DeliveredIcmMessage$inboundSchema: z.ZodType<
   destinationTransaction: IcmDestinationTransaction$inboundSchema,
   status: DeliveredIcmMessageStatus$inboundSchema,
 });
-
 /** @internal */
 export type DeliveredIcmMessage$Outbound = {
   messageId: string;
@@ -151,19 +138,6 @@ export const DeliveredIcmMessage$outboundSchema: z.ZodType<
   status: DeliveredIcmMessageStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredIcmMessage$ {
-  /** @deprecated use `DeliveredIcmMessage$inboundSchema` instead. */
-  export const inboundSchema = DeliveredIcmMessage$inboundSchema;
-  /** @deprecated use `DeliveredIcmMessage$outboundSchema` instead. */
-  export const outboundSchema = DeliveredIcmMessage$outboundSchema;
-  /** @deprecated use `DeliveredIcmMessage$Outbound` instead. */
-  export type Outbound = DeliveredIcmMessage$Outbound;
-}
-
 export function deliveredIcmMessageToJSON(
   deliveredIcmMessage: DeliveredIcmMessage,
 ): string {
@@ -171,7 +145,6 @@ export function deliveredIcmMessageToJSON(
     DeliveredIcmMessage$outboundSchema.parse(deliveredIcmMessage),
   );
 }
-
 export function deliveredIcmMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<DeliveredIcmMessage, SDKValidationError> {

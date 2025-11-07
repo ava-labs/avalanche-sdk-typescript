@@ -29,7 +29,6 @@ export const Money$inboundSchema: z.ZodType<Money, z.ZodTypeDef, unknown> = z
     currencyCode: CurrencyCode$inboundSchema,
     value: z.number(),
   });
-
 /** @internal */
 export type Money$Outbound = {
   currencyCode: string;
@@ -46,23 +45,9 @@ export const Money$outboundSchema: z.ZodType<
   value: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Money$ {
-  /** @deprecated use `Money$inboundSchema` instead. */
-  export const inboundSchema = Money$inboundSchema;
-  /** @deprecated use `Money$outboundSchema` instead. */
-  export const outboundSchema = Money$outboundSchema;
-  /** @deprecated use `Money$Outbound` instead. */
-  export type Outbound = Money$Outbound;
-}
-
 export function moneyToJSON(money: Money): string {
   return JSON.stringify(Money$outboundSchema.parse(money));
 }
-
 export function moneyFromJSON(
   jsonString: string,
 ): SafeParseResult<Money, SDKValidationError> {

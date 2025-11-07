@@ -25,7 +25,6 @@ export const ChainAddressChainIdMapListResponse$inboundSchema: z.ZodType<
 > = z.object({
   addresses: z.array(ChainAddressChainIdMap$inboundSchema),
 });
-
 /** @internal */
 export type ChainAddressChainIdMapListResponse$Outbound = {
   addresses: Array<ChainAddressChainIdMap$Outbound>;
@@ -40,20 +39,6 @@ export const ChainAddressChainIdMapListResponse$outboundSchema: z.ZodType<
   addresses: z.array(ChainAddressChainIdMap$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainAddressChainIdMapListResponse$ {
-  /** @deprecated use `ChainAddressChainIdMapListResponse$inboundSchema` instead. */
-  export const inboundSchema = ChainAddressChainIdMapListResponse$inboundSchema;
-  /** @deprecated use `ChainAddressChainIdMapListResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ChainAddressChainIdMapListResponse$outboundSchema;
-  /** @deprecated use `ChainAddressChainIdMapListResponse$Outbound` instead. */
-  export type Outbound = ChainAddressChainIdMapListResponse$Outbound;
-}
-
 export function chainAddressChainIdMapListResponseToJSON(
   chainAddressChainIdMapListResponse: ChainAddressChainIdMapListResponse,
 ): string {
@@ -63,7 +48,6 @@ export function chainAddressChainIdMapListResponseToJSON(
     ),
   );
 }
-
 export function chainAddressChainIdMapListResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ChainAddressChainIdMapListResponse, SDKValidationError> {

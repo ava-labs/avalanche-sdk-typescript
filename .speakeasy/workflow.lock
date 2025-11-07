@@ -1,29 +1,29 @@
-speakeasyVersion: 1.648.1
+speakeasyVersion: 1.650.0
 sources:
     chainkit-source:
         sourceNamespace: avalanche-sdk-chainkit-typescript
-        sourceRevisionDigest: sha256:7bf3cdb27fb5d07d8bb25d53fa58e56443200c1f3027b77cad7721e97ab50f2d
-        sourceBlobDigest: sha256:cd3f0c49febbaeb565c98c8e894b98b72e98d5b86470d900709cf36e2ae5a7b5
+        sourceRevisionDigest: sha256:ab3972b494cb8bf8b42f03e60b9328034c38065c779fc006d59f42573513fb7b
+        sourceBlobDigest: sha256:bd8f240c05cc61972898e16aaf9a51b3ca94fb6af5f589f4dbefe0d0219842aa
         tags:
             - latest
-            - speakeasy-sdk-regen-1761768382
+            - speakeasy-sdk-regen-1762514433
             - 1.0.0
 targets:
     chainkit-sdk:
         source: chainkit-source
         sourceNamespace: avalanche-sdk-chainkit-typescript
-        sourceRevisionDigest: sha256:7bf3cdb27fb5d07d8bb25d53fa58e56443200c1f3027b77cad7721e97ab50f2d
-        sourceBlobDigest: sha256:cd3f0c49febbaeb565c98c8e894b98b72e98d5b86470d900709cf36e2ae5a7b5
+        sourceRevisionDigest: sha256:ab3972b494cb8bf8b42f03e60b9328034c38065c779fc006d59f42573513fb7b
+        sourceBlobDigest: sha256:bd8f240c05cc61972898e16aaf9a51b3ca94fb6af5f589f4dbefe0d0219842aa
         codeSamplesNamespace: avalanche-sdk-chainkit-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:fc0c8a5d286790f4f2394f3bfcca1f335c75e455534378bf571ab456b996e686
+        codeSamplesRevisionDigest: sha256:9bdf92d8e9e8447d7d15817c2be482258490395145fe99cccbed8fe4c26767b3
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         chainkit-source:
             inputs:
-                - location: https://popsicle-api.avax.network/api-json
-                - location: https://glacier-api.avax.network/api-json
+                - location: https://metrics.avax.network/api-json
+                - location: https://data-api.avax.network/api-json
             overlays:
                 - location: chainkit/overlays/overlay.yaml
             registry:

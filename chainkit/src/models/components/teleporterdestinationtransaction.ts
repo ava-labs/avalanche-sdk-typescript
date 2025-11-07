@@ -27,7 +27,6 @@ export const TeleporterDestinationTransaction$inboundSchema: z.ZodType<
   rewardRedeemer: z.string(),
   delivererAddress: z.string(),
 });
-
 /** @internal */
 export type TeleporterDestinationTransaction$Outbound = {
   txHash: string;
@@ -50,19 +49,6 @@ export const TeleporterDestinationTransaction$outboundSchema: z.ZodType<
   delivererAddress: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterDestinationTransaction$ {
-  /** @deprecated use `TeleporterDestinationTransaction$inboundSchema` instead. */
-  export const inboundSchema = TeleporterDestinationTransaction$inboundSchema;
-  /** @deprecated use `TeleporterDestinationTransaction$outboundSchema` instead. */
-  export const outboundSchema = TeleporterDestinationTransaction$outboundSchema;
-  /** @deprecated use `TeleporterDestinationTransaction$Outbound` instead. */
-  export type Outbound = TeleporterDestinationTransaction$Outbound;
-}
-
 export function teleporterDestinationTransactionToJSON(
   teleporterDestinationTransaction: TeleporterDestinationTransaction,
 ): string {
@@ -72,7 +58,6 @@ export function teleporterDestinationTransactionToJSON(
     ),
   );
 }
-
 export function teleporterDestinationTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<TeleporterDestinationTransaction, SDKValidationError> {

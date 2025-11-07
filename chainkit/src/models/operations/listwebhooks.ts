@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListWebhooksServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListWebhooksRequest = {
@@ -42,7 +42,6 @@ export const ListWebhooksRequest$inboundSchema: z.ZodType<
   pageSize: z.number().int().default(10),
   status: components.WebhookStatus$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListWebhooksRequest$Outbound = {
   pageToken?: string | undefined;
@@ -61,19 +60,6 @@ export const ListWebhooksRequest$outboundSchema: z.ZodType<
   status: components.WebhookStatus$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListWebhooksRequest$ {
-  /** @deprecated use `ListWebhooksRequest$inboundSchema` instead. */
-  export const inboundSchema = ListWebhooksRequest$inboundSchema;
-  /** @deprecated use `ListWebhooksRequest$outboundSchema` instead. */
-  export const outboundSchema = ListWebhooksRequest$outboundSchema;
-  /** @deprecated use `ListWebhooksRequest$Outbound` instead. */
-  export type Outbound = ListWebhooksRequest$Outbound;
-}
-
 export function listWebhooksRequestToJSON(
   listWebhooksRequest: ListWebhooksRequest,
 ): string {
@@ -81,7 +67,6 @@ export function listWebhooksRequestToJSON(
     ListWebhooksRequest$outboundSchema.parse(listWebhooksRequest),
   );
 }
-
 export function listWebhooksRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListWebhooksRequest, SDKValidationError> {
@@ -104,7 +89,6 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListWebhooksResponse$Outbound = {
   Result: components.ListWebhooksResponse$Outbound;
@@ -123,19 +107,6 @@ export const ListWebhooksResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListWebhooksResponse$ {
-  /** @deprecated use `ListWebhooksResponse$inboundSchema` instead. */
-  export const inboundSchema = ListWebhooksResponse$inboundSchema;
-  /** @deprecated use `ListWebhooksResponse$outboundSchema` instead. */
-  export const outboundSchema = ListWebhooksResponse$outboundSchema;
-  /** @deprecated use `ListWebhooksResponse$Outbound` instead. */
-  export type Outbound = ListWebhooksResponse$Outbound;
-}
-
 export function listWebhooksResponseToJSON(
   listWebhooksResponse: ListWebhooksResponse,
 ): string {
@@ -143,7 +114,6 @@ export function listWebhooksResponseToJSON(
     ListWebhooksResponse$outboundSchema.parse(listWebhooksResponse),
   );
 }
-
 export function listWebhooksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListWebhooksResponse, SDKValidationError> {

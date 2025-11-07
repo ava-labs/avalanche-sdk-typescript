@@ -9,7 +9,7 @@ export const tool$dataHealthCheck: ToolDefinition = {
   name: "data-health-check",
   description: `Get the health of the service
 
-Check the health of the service.`,
+Check the health of the service. This checks the read and write health of the database and cache.`,
   tool: async (client, ctx) => {
     const [result, apiCall] = await dataHealthCheck(
       client,

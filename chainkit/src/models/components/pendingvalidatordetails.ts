@@ -43,24 +43,10 @@ export type PendingValidatorDetails = {
 export const PendingValidatorDetailsValidationStatus$inboundSchema:
   z.ZodNativeEnum<typeof PendingValidatorDetailsValidationStatus> = z
     .nativeEnum(PendingValidatorDetailsValidationStatus);
-
 /** @internal */
 export const PendingValidatorDetailsValidationStatus$outboundSchema:
   z.ZodNativeEnum<typeof PendingValidatorDetailsValidationStatus> =
     PendingValidatorDetailsValidationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingValidatorDetailsValidationStatus$ {
-  /** @deprecated use `PendingValidatorDetailsValidationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    PendingValidatorDetailsValidationStatus$inboundSchema;
-  /** @deprecated use `PendingValidatorDetailsValidationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    PendingValidatorDetailsValidationStatus$outboundSchema;
-}
 
 /** @internal */
 export const PendingValidatorDetails$inboundSchema: z.ZodType<
@@ -78,7 +64,6 @@ export const PendingValidatorDetails$inboundSchema: z.ZodType<
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   validationStatus: PendingValidatorDetailsValidationStatus$inboundSchema,
 });
-
 /** @internal */
 export type PendingValidatorDetails$Outbound = {
   txHash: string;
@@ -109,19 +94,6 @@ export const PendingValidatorDetails$outboundSchema: z.ZodType<
   validationStatus: PendingValidatorDetailsValidationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingValidatorDetails$ {
-  /** @deprecated use `PendingValidatorDetails$inboundSchema` instead. */
-  export const inboundSchema = PendingValidatorDetails$inboundSchema;
-  /** @deprecated use `PendingValidatorDetails$outboundSchema` instead. */
-  export const outboundSchema = PendingValidatorDetails$outboundSchema;
-  /** @deprecated use `PendingValidatorDetails$Outbound` instead. */
-  export type Outbound = PendingValidatorDetails$Outbound;
-}
-
 export function pendingValidatorDetailsToJSON(
   pendingValidatorDetails: PendingValidatorDetails,
 ): string {
@@ -129,7 +101,6 @@ export function pendingValidatorDetailsToJSON(
     PendingValidatorDetails$outboundSchema.parse(pendingValidatorDetails),
   );
 }
-
 export function pendingValidatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<PendingValidatorDetails, SDKValidationError> {

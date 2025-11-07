@@ -56,24 +56,10 @@ export type DeliveredSourceNotIndexedIcmMessage = {
 export const DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema:
   z.ZodNativeEnum<typeof DeliveredSourceNotIndexedIcmMessageStatus> = z
     .nativeEnum(DeliveredSourceNotIndexedIcmMessageStatus);
-
 /** @internal */
 export const DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema:
   z.ZodNativeEnum<typeof DeliveredSourceNotIndexedIcmMessageStatus> =
     DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredSourceNotIndexedIcmMessageStatus$ {
-  /** @deprecated use `DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const DeliveredSourceNotIndexedIcmMessage$inboundSchema: z.ZodType<
@@ -98,7 +84,6 @@ export const DeliveredSourceNotIndexedIcmMessage$inboundSchema: z.ZodType<
   destinationTransaction: IcmDestinationTransaction$inboundSchema,
   status: DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema,
 });
-
 /** @internal */
 export type DeliveredSourceNotIndexedIcmMessage$Outbound = {
   messageId: string;
@@ -143,21 +128,6 @@ export const DeliveredSourceNotIndexedIcmMessage$outboundSchema: z.ZodType<
   status: DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredSourceNotIndexedIcmMessage$ {
-  /** @deprecated use `DeliveredSourceNotIndexedIcmMessage$inboundSchema` instead. */
-  export const inboundSchema =
-    DeliveredSourceNotIndexedIcmMessage$inboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedIcmMessage$outboundSchema` instead. */
-  export const outboundSchema =
-    DeliveredSourceNotIndexedIcmMessage$outboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedIcmMessage$Outbound` instead. */
-  export type Outbound = DeliveredSourceNotIndexedIcmMessage$Outbound;
-}
-
 export function deliveredSourceNotIndexedIcmMessageToJSON(
   deliveredSourceNotIndexedIcmMessage: DeliveredSourceNotIndexedIcmMessage,
 ): string {
@@ -167,7 +137,6 @@ export function deliveredSourceNotIndexedIcmMessageToJSON(
     ),
   );
 }
-
 export function deliveredSourceNotIndexedIcmMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<DeliveredSourceNotIndexedIcmMessage, SDKValidationError> {

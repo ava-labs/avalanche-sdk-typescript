@@ -18,19 +18,7 @@ export type RpcUsageMetricsGroupByEnum = ClosedEnum<
 export const RpcUsageMetricsGroupByEnum$inboundSchema: z.ZodNativeEnum<
   typeof RpcUsageMetricsGroupByEnum
 > = z.nativeEnum(RpcUsageMetricsGroupByEnum);
-
 /** @internal */
 export const RpcUsageMetricsGroupByEnum$outboundSchema: z.ZodNativeEnum<
   typeof RpcUsageMetricsGroupByEnum
 > = RpcUsageMetricsGroupByEnum$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RpcUsageMetricsGroupByEnum$ {
-  /** @deprecated use `RpcUsageMetricsGroupByEnum$inboundSchema` instead. */
-  export const inboundSchema = RpcUsageMetricsGroupByEnum$inboundSchema;
-  /** @deprecated use `RpcUsageMetricsGroupByEnum$outboundSchema` instead. */
-  export const outboundSchema = RpcUsageMetricsGroupByEnum$outboundSchema;
-}

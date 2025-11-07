@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListBlockchainsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListBlockchainsGlobals = {
@@ -51,7 +51,6 @@ export const ListBlockchainsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListBlockchainsGlobals$Outbound = {
   network?: string | undefined;
@@ -66,19 +65,6 @@ export const ListBlockchainsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListBlockchainsGlobals$ {
-  /** @deprecated use `ListBlockchainsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListBlockchainsGlobals$inboundSchema;
-  /** @deprecated use `ListBlockchainsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListBlockchainsGlobals$outboundSchema;
-  /** @deprecated use `ListBlockchainsGlobals$Outbound` instead. */
-  export type Outbound = ListBlockchainsGlobals$Outbound;
-}
-
 export function listBlockchainsGlobalsToJSON(
   listBlockchainsGlobals: ListBlockchainsGlobals,
 ): string {
@@ -86,7 +72,6 @@ export function listBlockchainsGlobalsToJSON(
     ListBlockchainsGlobals$outboundSchema.parse(listBlockchainsGlobals),
   );
 }
-
 export function listBlockchainsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListBlockchainsGlobals, SDKValidationError> {
@@ -108,7 +93,6 @@ export const ListBlockchainsRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListBlockchainsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -129,19 +113,6 @@ export const ListBlockchainsRequest$outboundSchema: z.ZodType<
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListBlockchainsRequest$ {
-  /** @deprecated use `ListBlockchainsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListBlockchainsRequest$inboundSchema;
-  /** @deprecated use `ListBlockchainsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListBlockchainsRequest$outboundSchema;
-  /** @deprecated use `ListBlockchainsRequest$Outbound` instead. */
-  export type Outbound = ListBlockchainsRequest$Outbound;
-}
-
 export function listBlockchainsRequestToJSON(
   listBlockchainsRequest: ListBlockchainsRequest,
 ): string {
@@ -149,7 +120,6 @@ export function listBlockchainsRequestToJSON(
     ListBlockchainsRequest$outboundSchema.parse(listBlockchainsRequest),
   );
 }
-
 export function listBlockchainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListBlockchainsRequest, SDKValidationError> {
@@ -172,7 +142,6 @@ export const ListBlockchainsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListBlockchainsResponse$Outbound = {
   Result: components.ListBlockchainsResponse$Outbound;
@@ -191,19 +160,6 @@ export const ListBlockchainsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListBlockchainsResponse$ {
-  /** @deprecated use `ListBlockchainsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListBlockchainsResponse$inboundSchema;
-  /** @deprecated use `ListBlockchainsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListBlockchainsResponse$outboundSchema;
-  /** @deprecated use `ListBlockchainsResponse$Outbound` instead. */
-  export type Outbound = ListBlockchainsResponse$Outbound;
-}
-
 export function listBlockchainsResponseToJSON(
   listBlockchainsResponse: ListBlockchainsResponse,
 ): string {
@@ -211,7 +167,6 @@ export function listBlockchainsResponseToJSON(
     ListBlockchainsResponse$outboundSchema.parse(listBlockchainsResponse),
   );
 }
-
 export function listBlockchainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListBlockchainsResponse, SDKValidationError> {

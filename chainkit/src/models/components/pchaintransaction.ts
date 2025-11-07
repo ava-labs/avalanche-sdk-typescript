@@ -193,7 +193,6 @@ export const PChainTransaction$inboundSchema: z.ZodType<
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   blockchainInfo: BlockchainInfo$inboundSchema.optional(),
 });
-
 /** @internal */
 export type PChainTransaction$Outbound = {
   txHash: string;
@@ -266,19 +265,6 @@ export const PChainTransaction$outboundSchema: z.ZodType<
   blockchainInfo: BlockchainInfo$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainTransaction$ {
-  /** @deprecated use `PChainTransaction$inboundSchema` instead. */
-  export const inboundSchema = PChainTransaction$inboundSchema;
-  /** @deprecated use `PChainTransaction$outboundSchema` instead. */
-  export const outboundSchema = PChainTransaction$outboundSchema;
-  /** @deprecated use `PChainTransaction$Outbound` instead. */
-  export type Outbound = PChainTransaction$Outbound;
-}
-
 export function pChainTransactionToJSON(
   pChainTransaction: PChainTransaction,
 ): string {
@@ -286,7 +272,6 @@ export function pChainTransactionToJSON(
     PChainTransaction$outboundSchema.parse(pChainTransaction),
   );
 }
-
 export function pChainTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainTransaction, SDKValidationError> {

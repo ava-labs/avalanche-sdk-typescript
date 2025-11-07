@@ -58,7 +58,6 @@ export const ServiceUnavailableMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type ServiceUnavailableMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const ServiceUnavailableMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ServiceUnavailableMessage$ {
-  /** @deprecated use `ServiceUnavailableMessage$inboundSchema` instead. */
-  export const inboundSchema = ServiceUnavailableMessage$inboundSchema;
-  /** @deprecated use `ServiceUnavailableMessage$outboundSchema` instead. */
-  export const outboundSchema = ServiceUnavailableMessage$outboundSchema;
-  /** @deprecated use `ServiceUnavailableMessage$Outbound` instead. */
-  export type Outbound = ServiceUnavailableMessage$Outbound;
-}
-
 export function serviceUnavailableMessageToJSON(
   serviceUnavailableMessage: ServiceUnavailableMessage,
 ): string {
@@ -89,7 +75,6 @@ export function serviceUnavailableMessageToJSON(
     ServiceUnavailableMessage$outboundSchema.parse(serviceUnavailableMessage),
   );
 }
-
 export function serviceUnavailableMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<ServiceUnavailableMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const ServiceUnavailableError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ServiceUnavailableError$ {
-  /** @deprecated use `ServiceUnavailableError$inboundSchema` instead. */
-  export const inboundSchema = ServiceUnavailableError$inboundSchema;
-  /** @deprecated use `ServiceUnavailableError$outboundSchema` instead. */
-  export const outboundSchema = ServiceUnavailableError$outboundSchema;
-  /** @deprecated use `ServiceUnavailableError$Outbound` instead. */
-  export type Outbound = ServiceUnavailableError$Outbound;
-}

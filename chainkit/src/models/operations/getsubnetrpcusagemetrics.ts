@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetSubnetRpcUsageMetricsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetSubnetRpcUsageMetricsRequest = {
@@ -66,7 +66,6 @@ export const GetSubnetRpcUsageMetricsRequest$inboundSchema: z.ZodType<
   rpcMethod: z.string().optional(),
   rlBypassApiToken: z.string().optional(),
 });
-
 /** @internal */
 export type GetSubnetRpcUsageMetricsRequest$Outbound = {
   timeInterval?: string | undefined;
@@ -96,19 +95,6 @@ export const GetSubnetRpcUsageMetricsRequest$outboundSchema: z.ZodType<
   rlBypassApiToken: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSubnetRpcUsageMetricsRequest$ {
-  /** @deprecated use `GetSubnetRpcUsageMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetSubnetRpcUsageMetricsRequest$inboundSchema;
-  /** @deprecated use `GetSubnetRpcUsageMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetSubnetRpcUsageMetricsRequest$outboundSchema;
-  /** @deprecated use `GetSubnetRpcUsageMetricsRequest$Outbound` instead. */
-  export type Outbound = GetSubnetRpcUsageMetricsRequest$Outbound;
-}
-
 export function getSubnetRpcUsageMetricsRequestToJSON(
   getSubnetRpcUsageMetricsRequest: GetSubnetRpcUsageMetricsRequest,
 ): string {
@@ -118,7 +104,6 @@ export function getSubnetRpcUsageMetricsRequestToJSON(
     ),
   );
 }
-
 export function getSubnetRpcUsageMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSubnetRpcUsageMetricsRequest, SDKValidationError> {

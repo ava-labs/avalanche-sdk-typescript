@@ -41,7 +41,6 @@ export const NetworkTokenDetails$inboundSchema: z.ZodType<
   currentPrice: Money$inboundSchema.optional(),
   historicalPrice: Money$inboundSchema.optional(),
 });
-
 /** @internal */
 export type NetworkTokenDetails$Outbound = {
   networkToken: NetworkToken$Outbound;
@@ -60,19 +59,6 @@ export const NetworkTokenDetails$outboundSchema: z.ZodType<
   historicalPrice: Money$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NetworkTokenDetails$ {
-  /** @deprecated use `NetworkTokenDetails$inboundSchema` instead. */
-  export const inboundSchema = NetworkTokenDetails$inboundSchema;
-  /** @deprecated use `NetworkTokenDetails$outboundSchema` instead. */
-  export const outboundSchema = NetworkTokenDetails$outboundSchema;
-  /** @deprecated use `NetworkTokenDetails$Outbound` instead. */
-  export type Outbound = NetworkTokenDetails$Outbound;
-}
-
 export function networkTokenDetailsToJSON(
   networkTokenDetails: NetworkTokenDetails,
 ): string {
@@ -80,7 +66,6 @@ export function networkTokenDetailsToJSON(
     NetworkTokenDetails$outboundSchema.parse(networkTokenDetails),
   );
 }
-
 export function networkTokenDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<NetworkTokenDetails, SDKValidationError> {

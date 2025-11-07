@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetAssetDetailsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetAssetDetailsGlobals = {
@@ -42,7 +42,6 @@ export const GetAssetDetailsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetAssetDetailsGlobals$Outbound = {
   network?: string | undefined;
@@ -57,19 +56,6 @@ export const GetAssetDetailsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAssetDetailsGlobals$ {
-  /** @deprecated use `GetAssetDetailsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetAssetDetailsGlobals$inboundSchema;
-  /** @deprecated use `GetAssetDetailsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetAssetDetailsGlobals$outboundSchema;
-  /** @deprecated use `GetAssetDetailsGlobals$Outbound` instead. */
-  export type Outbound = GetAssetDetailsGlobals$Outbound;
-}
-
 export function getAssetDetailsGlobalsToJSON(
   getAssetDetailsGlobals: GetAssetDetailsGlobals,
 ): string {
@@ -77,7 +63,6 @@ export function getAssetDetailsGlobalsToJSON(
     GetAssetDetailsGlobals$outboundSchema.parse(getAssetDetailsGlobals),
   );
 }
-
 export function getAssetDetailsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAssetDetailsGlobals, SDKValidationError> {
@@ -98,7 +83,6 @@ export const GetAssetDetailsRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   assetId: z.string(),
 });
-
 /** @internal */
 export type GetAssetDetailsRequest$Outbound = {
   blockchainId: string;
@@ -117,19 +101,6 @@ export const GetAssetDetailsRequest$outboundSchema: z.ZodType<
   assetId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAssetDetailsRequest$ {
-  /** @deprecated use `GetAssetDetailsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetAssetDetailsRequest$inboundSchema;
-  /** @deprecated use `GetAssetDetailsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetAssetDetailsRequest$outboundSchema;
-  /** @deprecated use `GetAssetDetailsRequest$Outbound` instead. */
-  export type Outbound = GetAssetDetailsRequest$Outbound;
-}
-
 export function getAssetDetailsRequestToJSON(
   getAssetDetailsRequest: GetAssetDetailsRequest,
 ): string {
@@ -137,7 +108,6 @@ export function getAssetDetailsRequestToJSON(
     GetAssetDetailsRequest$outboundSchema.parse(getAssetDetailsRequest),
   );
 }
-
 export function getAssetDetailsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAssetDetailsRequest, SDKValidationError> {

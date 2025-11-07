@@ -23,7 +23,6 @@ export const IcmSourceTransaction$inboundSchema: z.ZodType<
   timestamp: z.number(),
   gasSpent: z.string(),
 });
-
 /** @internal */
 export type IcmSourceTransaction$Outbound = {
   txHash: string;
@@ -42,19 +41,6 @@ export const IcmSourceTransaction$outboundSchema: z.ZodType<
   gasSpent: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IcmSourceTransaction$ {
-  /** @deprecated use `IcmSourceTransaction$inboundSchema` instead. */
-  export const inboundSchema = IcmSourceTransaction$inboundSchema;
-  /** @deprecated use `IcmSourceTransaction$outboundSchema` instead. */
-  export const outboundSchema = IcmSourceTransaction$outboundSchema;
-  /** @deprecated use `IcmSourceTransaction$Outbound` instead. */
-  export type Outbound = IcmSourceTransaction$Outbound;
-}
-
 export function icmSourceTransactionToJSON(
   icmSourceTransaction: IcmSourceTransaction,
 ): string {
@@ -62,7 +48,6 @@ export function icmSourceTransactionToJSON(
     IcmSourceTransaction$outboundSchema.parse(icmSourceTransaction),
   );
 }
-
 export function icmSourceTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<IcmSourceTransaction, SDKValidationError> {

@@ -48,7 +48,6 @@ export const ListCChainAtomicTransactionsResponseTransaction$inboundSchema:
     CChainExportTransaction$inboundSchema,
     CChainImportTransaction$inboundSchema,
   ]);
-
 /** @internal */
 export type ListCChainAtomicTransactionsResponseTransaction$Outbound =
   | CChainExportTransaction$Outbound
@@ -65,22 +64,6 @@ export const ListCChainAtomicTransactionsResponseTransaction$outboundSchema:
     CChainImportTransaction$outboundSchema,
   ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCChainAtomicTransactionsResponseTransaction$ {
-  /** @deprecated use `ListCChainAtomicTransactionsResponseTransaction$inboundSchema` instead. */
-  export const inboundSchema =
-    ListCChainAtomicTransactionsResponseTransaction$inboundSchema;
-  /** @deprecated use `ListCChainAtomicTransactionsResponseTransaction$outboundSchema` instead. */
-  export const outboundSchema =
-    ListCChainAtomicTransactionsResponseTransaction$outboundSchema;
-  /** @deprecated use `ListCChainAtomicTransactionsResponseTransaction$Outbound` instead. */
-  export type Outbound =
-    ListCChainAtomicTransactionsResponseTransaction$Outbound;
-}
-
 export function listCChainAtomicTransactionsResponseTransactionToJSON(
   listCChainAtomicTransactionsResponseTransaction:
     ListCChainAtomicTransactionsResponseTransaction,
@@ -91,7 +74,6 @@ export function listCChainAtomicTransactionsResponseTransactionToJSON(
     ),
   );
 }
-
 export function listCChainAtomicTransactionsResponseTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -123,7 +105,6 @@ export const ListCChainAtomicTransactionsResponse$inboundSchema: z.ZodType<
   ),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListCChainAtomicTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -149,21 +130,6 @@ export const ListCChainAtomicTransactionsResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCChainAtomicTransactionsResponse$ {
-  /** @deprecated use `ListCChainAtomicTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListCChainAtomicTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListCChainAtomicTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListCChainAtomicTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListCChainAtomicTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListCChainAtomicTransactionsResponse$Outbound;
-}
-
 export function listCChainAtomicTransactionsResponseToJSON(
   listCChainAtomicTransactionsResponse: ListCChainAtomicTransactionsResponse,
 ): string {
@@ -173,7 +139,6 @@ export function listCChainAtomicTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listCChainAtomicTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCChainAtomicTransactionsResponse, SDKValidationError> {

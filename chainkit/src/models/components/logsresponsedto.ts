@@ -38,7 +38,6 @@ export const LogsResponseDTO$inboundSchema: z.ZodType<
   orgId: z.string(),
   logs: z.array(LogsFormat$inboundSchema),
 });
-
 /** @internal */
 export type LogsResponseDTO$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,25 +56,11 @@ export const LogsResponseDTO$outboundSchema: z.ZodType<
   logs: z.array(LogsFormat$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace LogsResponseDTO$ {
-  /** @deprecated use `LogsResponseDTO$inboundSchema` instead. */
-  export const inboundSchema = LogsResponseDTO$inboundSchema;
-  /** @deprecated use `LogsResponseDTO$outboundSchema` instead. */
-  export const outboundSchema = LogsResponseDTO$outboundSchema;
-  /** @deprecated use `LogsResponseDTO$Outbound` instead. */
-  export type Outbound = LogsResponseDTO$Outbound;
-}
-
 export function logsResponseDTOToJSON(
   logsResponseDTO: LogsResponseDTO,
 ): string {
   return JSON.stringify(LogsResponseDTO$outboundSchema.parse(logsResponseDTO));
 }
-
 export function logsResponseDTOFromJSON(
   jsonString: string,
 ): SafeParseResult<LogsResponseDTO, SDKValidationError> {

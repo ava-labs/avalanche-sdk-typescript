@@ -74,7 +74,6 @@ export const EvmBlock$inboundSchema: z.ZodType<
   feesSpent: z.string(),
   cumulativeTransactions: z.string(),
 });
-
 /** @internal */
 export type EvmBlock$Outbound = {
   chainId: string;
@@ -111,23 +110,9 @@ export const EvmBlock$outboundSchema: z.ZodType<
   cumulativeTransactions: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EvmBlock$ {
-  /** @deprecated use `EvmBlock$inboundSchema` instead. */
-  export const inboundSchema = EvmBlock$inboundSchema;
-  /** @deprecated use `EvmBlock$outboundSchema` instead. */
-  export const outboundSchema = EvmBlock$outboundSchema;
-  /** @deprecated use `EvmBlock$Outbound` instead. */
-  export type Outbound = EvmBlock$Outbound;
-}
-
 export function evmBlockToJSON(evmBlock: EvmBlock): string {
   return JSON.stringify(EvmBlock$outboundSchema.parse(evmBlock));
 }
-
 export function evmBlockFromJSON(
   jsonString: string,
 ): SafeParseResult<EvmBlock, SDKValidationError> {

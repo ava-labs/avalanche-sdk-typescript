@@ -16,19 +16,7 @@ export type OperationStatusCode = ClosedEnum<typeof OperationStatusCode>;
 export const OperationStatusCode$inboundSchema: z.ZodNativeEnum<
   typeof OperationStatusCode
 > = z.nativeEnum(OperationStatusCode);
-
 /** @internal */
 export const OperationStatusCode$outboundSchema: z.ZodNativeEnum<
   typeof OperationStatusCode
 > = OperationStatusCode$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace OperationStatusCode$ {
-  /** @deprecated use `OperationStatusCode$inboundSchema` instead. */
-  export const inboundSchema = OperationStatusCode$inboundSchema;
-  /** @deprecated use `OperationStatusCode$outboundSchema` instead. */
-  export const outboundSchema = OperationStatusCode$outboundSchema;
-}

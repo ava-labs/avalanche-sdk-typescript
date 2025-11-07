@@ -24,7 +24,6 @@ export const ImageAsset$inboundSchema: z.ZodType<
   assetId: z.string().optional(),
   imageUri: z.string().optional(),
 });
-
 /** @internal */
 export type ImageAsset$Outbound = {
   assetId?: string | undefined;
@@ -41,23 +40,9 @@ export const ImageAsset$outboundSchema: z.ZodType<
   imageUri: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ImageAsset$ {
-  /** @deprecated use `ImageAsset$inboundSchema` instead. */
-  export const inboundSchema = ImageAsset$inboundSchema;
-  /** @deprecated use `ImageAsset$outboundSchema` instead. */
-  export const outboundSchema = ImageAsset$outboundSchema;
-  /** @deprecated use `ImageAsset$Outbound` instead. */
-  export type Outbound = ImageAsset$Outbound;
-}
-
 export function imageAssetToJSON(imageAsset: ImageAsset): string {
   return JSON.stringify(ImageAsset$outboundSchema.parse(imageAsset));
 }
-
 export function imageAssetFromJSON(
   jsonString: string,
 ): SafeParseResult<ImageAsset, SDKValidationError> {

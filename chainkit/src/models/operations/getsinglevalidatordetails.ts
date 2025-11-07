@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetSingleValidatorDetailsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetSingleValidatorDetailsGlobals = {
@@ -59,7 +59,6 @@ export const GetSingleValidatorDetailsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetSingleValidatorDetailsGlobals$Outbound = {
   network?: string | undefined;
@@ -74,19 +73,6 @@ export const GetSingleValidatorDetailsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSingleValidatorDetailsGlobals$ {
-  /** @deprecated use `GetSingleValidatorDetailsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetSingleValidatorDetailsGlobals$inboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetSingleValidatorDetailsGlobals$outboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsGlobals$Outbound` instead. */
-  export type Outbound = GetSingleValidatorDetailsGlobals$Outbound;
-}
-
 export function getSingleValidatorDetailsGlobalsToJSON(
   getSingleValidatorDetailsGlobals: GetSingleValidatorDetailsGlobals,
 ): string {
@@ -96,7 +82,6 @@ export function getSingleValidatorDetailsGlobalsToJSON(
     ),
   );
 }
-
 export function getSingleValidatorDetailsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSingleValidatorDetailsGlobals, SDKValidationError> {
@@ -120,7 +105,6 @@ export const GetSingleValidatorDetailsRequest$inboundSchema: z.ZodType<
   validationStatus: components.ValidationStatusType$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetSingleValidatorDetailsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -145,19 +129,6 @@ export const GetSingleValidatorDetailsRequest$outboundSchema: z.ZodType<
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSingleValidatorDetailsRequest$ {
-  /** @deprecated use `GetSingleValidatorDetailsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetSingleValidatorDetailsRequest$inboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetSingleValidatorDetailsRequest$outboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsRequest$Outbound` instead. */
-  export type Outbound = GetSingleValidatorDetailsRequest$Outbound;
-}
-
 export function getSingleValidatorDetailsRequestToJSON(
   getSingleValidatorDetailsRequest: GetSingleValidatorDetailsRequest,
 ): string {
@@ -167,7 +138,6 @@ export function getSingleValidatorDetailsRequestToJSON(
     ),
   );
 }
-
 export function getSingleValidatorDetailsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSingleValidatorDetailsRequest, SDKValidationError> {
@@ -190,7 +160,6 @@ export const GetSingleValidatorDetailsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetSingleValidatorDetailsResponse$Outbound = {
   Result: components.ListValidatorDetailsResponse$Outbound;
@@ -209,20 +178,6 @@ export const GetSingleValidatorDetailsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSingleValidatorDetailsResponse$ {
-  /** @deprecated use `GetSingleValidatorDetailsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetSingleValidatorDetailsResponse$inboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    GetSingleValidatorDetailsResponse$outboundSchema;
-  /** @deprecated use `GetSingleValidatorDetailsResponse$Outbound` instead. */
-  export type Outbound = GetSingleValidatorDetailsResponse$Outbound;
-}
-
 export function getSingleValidatorDetailsResponseToJSON(
   getSingleValidatorDetailsResponse: GetSingleValidatorDetailsResponse,
 ): string {
@@ -232,7 +187,6 @@ export function getSingleValidatorDetailsResponseToJSON(
     ),
   );
 }
-
 export function getSingleValidatorDetailsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSingleValidatorDetailsResponse, SDKValidationError> {

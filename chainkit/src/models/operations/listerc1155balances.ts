@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListErc1155BalancesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListErc1155BalancesGlobals = {
@@ -59,7 +59,6 @@ export const ListErc1155BalancesGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListErc1155BalancesGlobals$Outbound = {
   chainId?: string | undefined;
@@ -74,19 +73,6 @@ export const ListErc1155BalancesGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc1155BalancesGlobals$ {
-  /** @deprecated use `ListErc1155BalancesGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListErc1155BalancesGlobals$inboundSchema;
-  /** @deprecated use `ListErc1155BalancesGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListErc1155BalancesGlobals$outboundSchema;
-  /** @deprecated use `ListErc1155BalancesGlobals$Outbound` instead. */
-  export type Outbound = ListErc1155BalancesGlobals$Outbound;
-}
-
 export function listErc1155BalancesGlobalsToJSON(
   listErc1155BalancesGlobals: ListErc1155BalancesGlobals,
 ): string {
@@ -94,7 +80,6 @@ export function listErc1155BalancesGlobalsToJSON(
     ListErc1155BalancesGlobals$outboundSchema.parse(listErc1155BalancesGlobals),
   );
 }
-
 export function listErc1155BalancesGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc1155BalancesGlobals, SDKValidationError> {
@@ -118,7 +103,6 @@ export const ListErc1155BalancesRequest$inboundSchema: z.ZodType<
   address: z.string(),
   contractAddress: z.string().optional(),
 });
-
 /** @internal */
 export type ListErc1155BalancesRequest$Outbound = {
   blockNumber?: string | undefined;
@@ -143,19 +127,6 @@ export const ListErc1155BalancesRequest$outboundSchema: z.ZodType<
   contractAddress: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc1155BalancesRequest$ {
-  /** @deprecated use `ListErc1155BalancesRequest$inboundSchema` instead. */
-  export const inboundSchema = ListErc1155BalancesRequest$inboundSchema;
-  /** @deprecated use `ListErc1155BalancesRequest$outboundSchema` instead. */
-  export const outboundSchema = ListErc1155BalancesRequest$outboundSchema;
-  /** @deprecated use `ListErc1155BalancesRequest$Outbound` instead. */
-  export type Outbound = ListErc1155BalancesRequest$Outbound;
-}
-
 export function listErc1155BalancesRequestToJSON(
   listErc1155BalancesRequest: ListErc1155BalancesRequest,
 ): string {
@@ -163,7 +134,6 @@ export function listErc1155BalancesRequestToJSON(
     ListErc1155BalancesRequest$outboundSchema.parse(listErc1155BalancesRequest),
   );
 }
-
 export function listErc1155BalancesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc1155BalancesRequest, SDKValidationError> {
@@ -186,7 +156,6 @@ export const ListErc1155BalancesResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListErc1155BalancesResponse$Outbound = {
   Result: components.ListErc1155BalancesResponse$Outbound;
@@ -205,19 +174,6 @@ export const ListErc1155BalancesResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc1155BalancesResponse$ {
-  /** @deprecated use `ListErc1155BalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListErc1155BalancesResponse$inboundSchema;
-  /** @deprecated use `ListErc1155BalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListErc1155BalancesResponse$outboundSchema;
-  /** @deprecated use `ListErc1155BalancesResponse$Outbound` instead. */
-  export type Outbound = ListErc1155BalancesResponse$Outbound;
-}
-
 export function listErc1155BalancesResponseToJSON(
   listErc1155BalancesResponse: ListErc1155BalancesResponse,
 ): string {
@@ -227,7 +183,6 @@ export function listErc1155BalancesResponseToJSON(
     ),
   );
 }
-
 export function listErc1155BalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc1155BalancesResponse, SDKValidationError> {

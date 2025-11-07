@@ -33,24 +33,10 @@ export const ActiveDelegatorDetailsDelegationStatus$inboundSchema:
   z.ZodNativeEnum<typeof ActiveDelegatorDetailsDelegationStatus> = z.nativeEnum(
     ActiveDelegatorDetailsDelegationStatus,
   );
-
 /** @internal */
 export const ActiveDelegatorDetailsDelegationStatus$outboundSchema:
   z.ZodNativeEnum<typeof ActiveDelegatorDetailsDelegationStatus> =
     ActiveDelegatorDetailsDelegationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ActiveDelegatorDetailsDelegationStatus$ {
-  /** @deprecated use `ActiveDelegatorDetailsDelegationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    ActiveDelegatorDetailsDelegationStatus$inboundSchema;
-  /** @deprecated use `ActiveDelegatorDetailsDelegationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    ActiveDelegatorDetailsDelegationStatus$outboundSchema;
-}
 
 /** @internal */
 export const ActiveDelegatorDetails$inboundSchema: z.ZodType<
@@ -69,7 +55,6 @@ export const ActiveDelegatorDetails$inboundSchema: z.ZodType<
   estimatedNetReward: z.string(),
   delegationStatus: ActiveDelegatorDetailsDelegationStatus$inboundSchema,
 });
-
 /** @internal */
 export type ActiveDelegatorDetails$Outbound = {
   txHash: string;
@@ -102,19 +87,6 @@ export const ActiveDelegatorDetails$outboundSchema: z.ZodType<
   delegationStatus: ActiveDelegatorDetailsDelegationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ActiveDelegatorDetails$ {
-  /** @deprecated use `ActiveDelegatorDetails$inboundSchema` instead. */
-  export const inboundSchema = ActiveDelegatorDetails$inboundSchema;
-  /** @deprecated use `ActiveDelegatorDetails$outboundSchema` instead. */
-  export const outboundSchema = ActiveDelegatorDetails$outboundSchema;
-  /** @deprecated use `ActiveDelegatorDetails$Outbound` instead. */
-  export type Outbound = ActiveDelegatorDetails$Outbound;
-}
-
 export function activeDelegatorDetailsToJSON(
   activeDelegatorDetails: ActiveDelegatorDetails,
 ): string {
@@ -122,7 +94,6 @@ export function activeDelegatorDetailsToJSON(
     ActiveDelegatorDetails$outboundSchema.parse(activeDelegatorDetails),
   );
 }
-
 export function activeDelegatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ActiveDelegatorDetails, SDKValidationError> {

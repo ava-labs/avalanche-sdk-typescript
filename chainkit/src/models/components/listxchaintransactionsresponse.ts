@@ -47,7 +47,6 @@ export const ListXChainTransactionsResponseTransaction$inboundSchema: z.ZodType<
   XChainLinearTransaction$inboundSchema,
   XChainNonLinearTransaction$inboundSchema,
 ]);
-
 /** @internal */
 export type ListXChainTransactionsResponseTransaction$Outbound =
   | XChainLinearTransaction$Outbound
@@ -64,21 +63,6 @@ export const ListXChainTransactionsResponseTransaction$outboundSchema:
     XChainNonLinearTransaction$outboundSchema,
   ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListXChainTransactionsResponseTransaction$ {
-  /** @deprecated use `ListXChainTransactionsResponseTransaction$inboundSchema` instead. */
-  export const inboundSchema =
-    ListXChainTransactionsResponseTransaction$inboundSchema;
-  /** @deprecated use `ListXChainTransactionsResponseTransaction$outboundSchema` instead. */
-  export const outboundSchema =
-    ListXChainTransactionsResponseTransaction$outboundSchema;
-  /** @deprecated use `ListXChainTransactionsResponseTransaction$Outbound` instead. */
-  export type Outbound = ListXChainTransactionsResponseTransaction$Outbound;
-}
-
 export function listXChainTransactionsResponseTransactionToJSON(
   listXChainTransactionsResponseTransaction:
     ListXChainTransactionsResponseTransaction,
@@ -89,7 +73,6 @@ export function listXChainTransactionsResponseTransactionToJSON(
     ),
   );
 }
-
 export function listXChainTransactionsResponseTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -121,7 +104,6 @@ export const ListXChainTransactionsResponse$inboundSchema: z.ZodType<
   ),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListXChainTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -147,19 +129,6 @@ export const ListXChainTransactionsResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListXChainTransactionsResponse$ {
-  /** @deprecated use `ListXChainTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListXChainTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListXChainTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListXChainTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListXChainTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListXChainTransactionsResponse$Outbound;
-}
-
 export function listXChainTransactionsResponseToJSON(
   listXChainTransactionsResponse: ListXChainTransactionsResponse,
 ): string {
@@ -169,7 +138,6 @@ export function listXChainTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listXChainTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListXChainTransactionsResponse, SDKValidationError> {

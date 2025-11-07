@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetVertexByHashServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetVertexByHashGlobals = {
@@ -42,7 +42,6 @@ export const GetVertexByHashGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetVertexByHashGlobals$Outbound = {
   network?: string | undefined;
@@ -57,19 +56,6 @@ export const GetVertexByHashGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetVertexByHashGlobals$ {
-  /** @deprecated use `GetVertexByHashGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetVertexByHashGlobals$inboundSchema;
-  /** @deprecated use `GetVertexByHashGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetVertexByHashGlobals$outboundSchema;
-  /** @deprecated use `GetVertexByHashGlobals$Outbound` instead. */
-  export type Outbound = GetVertexByHashGlobals$Outbound;
-}
-
 export function getVertexByHashGlobalsToJSON(
   getVertexByHashGlobals: GetVertexByHashGlobals,
 ): string {
@@ -77,7 +63,6 @@ export function getVertexByHashGlobalsToJSON(
     GetVertexByHashGlobals$outboundSchema.parse(getVertexByHashGlobals),
   );
 }
-
 export function getVertexByHashGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetVertexByHashGlobals, SDKValidationError> {
@@ -98,7 +83,6 @@ export const GetVertexByHashRequest$inboundSchema: z.ZodType<
   blockchainId: components.XChainId$inboundSchema,
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetVertexByHashRequest$Outbound = {
   vertexHash: string;
@@ -117,19 +101,6 @@ export const GetVertexByHashRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetVertexByHashRequest$ {
-  /** @deprecated use `GetVertexByHashRequest$inboundSchema` instead. */
-  export const inboundSchema = GetVertexByHashRequest$inboundSchema;
-  /** @deprecated use `GetVertexByHashRequest$outboundSchema` instead. */
-  export const outboundSchema = GetVertexByHashRequest$outboundSchema;
-  /** @deprecated use `GetVertexByHashRequest$Outbound` instead. */
-  export type Outbound = GetVertexByHashRequest$Outbound;
-}
-
 export function getVertexByHashRequestToJSON(
   getVertexByHashRequest: GetVertexByHashRequest,
 ): string {
@@ -137,7 +108,6 @@ export function getVertexByHashRequestToJSON(
     GetVertexByHashRequest$outboundSchema.parse(getVertexByHashRequest),
   );
 }
-
 export function getVertexByHashRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetVertexByHashRequest, SDKValidationError> {

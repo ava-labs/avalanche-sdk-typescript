@@ -53,7 +53,6 @@ export const HistoricalReward$inboundSchema: z.ZodType<
   reward: AssetWithPriceInfo$inboundSchema,
   rewardTxHash: z.string(),
 });
-
 /** @internal */
 export type HistoricalReward$Outbound = {
   addresses: Array<string>;
@@ -88,19 +87,6 @@ export const HistoricalReward$outboundSchema: z.ZodType<
   rewardTxHash: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace HistoricalReward$ {
-  /** @deprecated use `HistoricalReward$inboundSchema` instead. */
-  export const inboundSchema = HistoricalReward$inboundSchema;
-  /** @deprecated use `HistoricalReward$outboundSchema` instead. */
-  export const outboundSchema = HistoricalReward$outboundSchema;
-  /** @deprecated use `HistoricalReward$Outbound` instead. */
-  export type Outbound = HistoricalReward$Outbound;
-}
-
 export function historicalRewardToJSON(
   historicalReward: HistoricalReward,
 ): string {
@@ -108,7 +94,6 @@ export function historicalRewardToJSON(
     HistoricalReward$outboundSchema.parse(historicalReward),
   );
 }
-
 export function historicalRewardFromJSON(
   jsonString: string,
 ): SafeParseResult<HistoricalReward, SDKValidationError> {
