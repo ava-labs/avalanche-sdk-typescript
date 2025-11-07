@@ -68,7 +68,6 @@ export const ListIcmMessagesResponseMessage$inboundSchema: z.ZodType<
     ) => ({ status: v.status })),
   ),
 ]);
-
 /** @internal */
 export type ListIcmMessagesResponseMessage$Outbound =
   | (DeliveredIcmMessage$Outbound & { status: "delivered" })
@@ -100,19 +99,6 @@ export const ListIcmMessagesResponseMessage$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListIcmMessagesResponseMessage$ {
-  /** @deprecated use `ListIcmMessagesResponseMessage$inboundSchema` instead. */
-  export const inboundSchema = ListIcmMessagesResponseMessage$inboundSchema;
-  /** @deprecated use `ListIcmMessagesResponseMessage$outboundSchema` instead. */
-  export const outboundSchema = ListIcmMessagesResponseMessage$outboundSchema;
-  /** @deprecated use `ListIcmMessagesResponseMessage$Outbound` instead. */
-  export type Outbound = ListIcmMessagesResponseMessage$Outbound;
-}
-
 export function listIcmMessagesResponseMessageToJSON(
   listIcmMessagesResponseMessage: ListIcmMessagesResponseMessage,
 ): string {
@@ -122,7 +108,6 @@ export function listIcmMessagesResponseMessageToJSON(
     ),
   );
 }
-
 export function listIcmMessagesResponseMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<ListIcmMessagesResponseMessage, SDKValidationError> {
@@ -159,7 +144,6 @@ export const ListIcmMessagesResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListIcmMessagesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -199,19 +183,6 @@ export const ListIcmMessagesResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListIcmMessagesResponse$ {
-  /** @deprecated use `ListIcmMessagesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListIcmMessagesResponse$inboundSchema;
-  /** @deprecated use `ListIcmMessagesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListIcmMessagesResponse$outboundSchema;
-  /** @deprecated use `ListIcmMessagesResponse$Outbound` instead. */
-  export type Outbound = ListIcmMessagesResponse$Outbound;
-}
-
 export function listIcmMessagesResponseToJSON(
   listIcmMessagesResponse: ListIcmMessagesResponse,
 ): string {
@@ -219,7 +190,6 @@ export function listIcmMessagesResponseToJSON(
     ListIcmMessagesResponse$outboundSchema.parse(listIcmMessagesResponse),
   );
 }
-
 export function listIcmMessagesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListIcmMessagesResponse, SDKValidationError> {

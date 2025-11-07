@@ -32,7 +32,6 @@ export const SubnetOwnershipInfo$inboundSchema: z.ZodType<
   threshold: z.number(),
   addresses: z.array(z.string()),
 });
-
 /** @internal */
 export type SubnetOwnershipInfo$Outbound = {
   locktime: number;
@@ -51,19 +50,6 @@ export const SubnetOwnershipInfo$outboundSchema: z.ZodType<
   addresses: z.array(z.string()),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SubnetOwnershipInfo$ {
-  /** @deprecated use `SubnetOwnershipInfo$inboundSchema` instead. */
-  export const inboundSchema = SubnetOwnershipInfo$inboundSchema;
-  /** @deprecated use `SubnetOwnershipInfo$outboundSchema` instead. */
-  export const outboundSchema = SubnetOwnershipInfo$outboundSchema;
-  /** @deprecated use `SubnetOwnershipInfo$Outbound` instead. */
-  export type Outbound = SubnetOwnershipInfo$Outbound;
-}
-
 export function subnetOwnershipInfoToJSON(
   subnetOwnershipInfo: SubnetOwnershipInfo,
 ): string {
@@ -71,7 +57,6 @@ export function subnetOwnershipInfoToJSON(
     SubnetOwnershipInfo$outboundSchema.parse(subnetOwnershipInfo),
   );
 }
-
 export function subnetOwnershipInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<SubnetOwnershipInfo, SDKValidationError> {

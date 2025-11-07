@@ -32,7 +32,6 @@ export const LogsFormatMetadata$inboundSchema: z.ZodType<
   host: z.string(),
   userAgent: z.string(),
 });
-
 /** @internal */
 export type LogsFormatMetadata$Outbound = {
   ipAddress: string;
@@ -51,19 +50,6 @@ export const LogsFormatMetadata$outboundSchema: z.ZodType<
   userAgent: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace LogsFormatMetadata$ {
-  /** @deprecated use `LogsFormatMetadata$inboundSchema` instead. */
-  export const inboundSchema = LogsFormatMetadata$inboundSchema;
-  /** @deprecated use `LogsFormatMetadata$outboundSchema` instead. */
-  export const outboundSchema = LogsFormatMetadata$outboundSchema;
-  /** @deprecated use `LogsFormatMetadata$Outbound` instead. */
-  export type Outbound = LogsFormatMetadata$Outbound;
-}
-
 export function logsFormatMetadataToJSON(
   logsFormatMetadata: LogsFormatMetadata,
 ): string {
@@ -71,7 +57,6 @@ export function logsFormatMetadataToJSON(
     LogsFormatMetadata$outboundSchema.parse(logsFormatMetadata),
   );
 }
-
 export function logsFormatMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<LogsFormatMetadata, SDKValidationError> {

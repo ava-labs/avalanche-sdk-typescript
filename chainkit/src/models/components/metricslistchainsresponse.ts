@@ -33,7 +33,6 @@ export const MetricsListChainsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   chains: z.array(Chain$inboundSchema),
 });
-
 /** @internal */
 export type MetricsListChainsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -50,19 +49,6 @@ export const MetricsListChainsResponse$outboundSchema: z.ZodType<
   chains: z.array(Chain$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace MetricsListChainsResponse$ {
-  /** @deprecated use `MetricsListChainsResponse$inboundSchema` instead. */
-  export const inboundSchema = MetricsListChainsResponse$inboundSchema;
-  /** @deprecated use `MetricsListChainsResponse$outboundSchema` instead. */
-  export const outboundSchema = MetricsListChainsResponse$outboundSchema;
-  /** @deprecated use `MetricsListChainsResponse$Outbound` instead. */
-  export type Outbound = MetricsListChainsResponse$Outbound;
-}
-
 export function metricsListChainsResponseToJSON(
   metricsListChainsResponse: MetricsListChainsResponse,
 ): string {
@@ -70,7 +56,6 @@ export function metricsListChainsResponseToJSON(
     MetricsListChainsResponse$outboundSchema.parse(metricsListChainsResponse),
   );
 }
-
 export function metricsListChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<MetricsListChainsResponse, SDKValidationError> {

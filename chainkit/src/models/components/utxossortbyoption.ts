@@ -15,19 +15,7 @@ export type UtxosSortByOption = ClosedEnum<typeof UtxosSortByOption>;
 export const UtxosSortByOption$inboundSchema: z.ZodNativeEnum<
   typeof UtxosSortByOption
 > = z.nativeEnum(UtxosSortByOption);
-
 /** @internal */
 export const UtxosSortByOption$outboundSchema: z.ZodNativeEnum<
   typeof UtxosSortByOption
 > = UtxosSortByOption$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UtxosSortByOption$ {
-  /** @deprecated use `UtxosSortByOption$inboundSchema` instead. */
-  export const inboundSchema = UtxosSortByOption$inboundSchema;
-  /** @deprecated use `UtxosSortByOption$outboundSchema` instead. */
-  export const outboundSchema = UtxosSortByOption$outboundSchema;
-}

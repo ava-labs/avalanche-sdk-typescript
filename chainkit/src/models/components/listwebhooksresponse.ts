@@ -49,7 +49,6 @@ export const Webhook$inboundSchema: z.ZodType<Webhook, z.ZodTypeDef, unknown> =
     PrimaryNetworkAddressActivityResponse$inboundSchema,
     ValidatorActivityResponse$inboundSchema,
   ]);
-
 /** @internal */
 export type Webhook$Outbound =
   | EVMAddressActivityResponse$Outbound
@@ -67,23 +66,9 @@ export const Webhook$outboundSchema: z.ZodType<
   ValidatorActivityResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Webhook$ {
-  /** @deprecated use `Webhook$inboundSchema` instead. */
-  export const inboundSchema = Webhook$inboundSchema;
-  /** @deprecated use `Webhook$outboundSchema` instead. */
-  export const outboundSchema = Webhook$outboundSchema;
-  /** @deprecated use `Webhook$Outbound` instead. */
-  export type Outbound = Webhook$Outbound;
-}
-
 export function webhookToJSON(webhook: Webhook): string {
   return JSON.stringify(Webhook$outboundSchema.parse(webhook));
 }
-
 export function webhookFromJSON(
   jsonString: string,
 ): SafeParseResult<Webhook, SDKValidationError> {
@@ -109,7 +94,6 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListWebhooksResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -136,19 +120,6 @@ export const ListWebhooksResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListWebhooksResponse$ {
-  /** @deprecated use `ListWebhooksResponse$inboundSchema` instead. */
-  export const inboundSchema = ListWebhooksResponse$inboundSchema;
-  /** @deprecated use `ListWebhooksResponse$outboundSchema` instead. */
-  export const outboundSchema = ListWebhooksResponse$outboundSchema;
-  /** @deprecated use `ListWebhooksResponse$Outbound` instead. */
-  export type Outbound = ListWebhooksResponse$Outbound;
-}
-
 export function listWebhooksResponseToJSON(
   listWebhooksResponse: ListWebhooksResponse,
 ): string {
@@ -156,7 +127,6 @@ export function listWebhooksResponseToJSON(
     ListWebhooksResponse$outboundSchema.parse(listWebhooksResponse),
   );
 }
-
 export function listWebhooksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListWebhooksResponse, SDKValidationError> {

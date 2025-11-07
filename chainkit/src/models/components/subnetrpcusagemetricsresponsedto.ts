@@ -38,7 +38,6 @@ export const SubnetRpcUsageMetricsResponseDTO$inboundSchema: z.ZodType<
   metrics: z.array(RpcMetrics$inboundSchema),
   chainId: z.string(),
 });
-
 /** @internal */
 export type SubnetRpcUsageMetricsResponseDTO$Outbound = {
   aggregateDuration: string;
@@ -57,19 +56,6 @@ export const SubnetRpcUsageMetricsResponseDTO$outboundSchema: z.ZodType<
   chainId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SubnetRpcUsageMetricsResponseDTO$ {
-  /** @deprecated use `SubnetRpcUsageMetricsResponseDTO$inboundSchema` instead. */
-  export const inboundSchema = SubnetRpcUsageMetricsResponseDTO$inboundSchema;
-  /** @deprecated use `SubnetRpcUsageMetricsResponseDTO$outboundSchema` instead. */
-  export const outboundSchema = SubnetRpcUsageMetricsResponseDTO$outboundSchema;
-  /** @deprecated use `SubnetRpcUsageMetricsResponseDTO$Outbound` instead. */
-  export type Outbound = SubnetRpcUsageMetricsResponseDTO$Outbound;
-}
-
 export function subnetRpcUsageMetricsResponseDTOToJSON(
   subnetRpcUsageMetricsResponseDTO: SubnetRpcUsageMetricsResponseDTO,
 ): string {
@@ -79,7 +65,6 @@ export function subnetRpcUsageMetricsResponseDTOToJSON(
     ),
   );
 }
-
 export function subnetRpcUsageMetricsResponseDTOFromJSON(
   jsonString: string,
 ): SafeParseResult<SubnetRpcUsageMetricsResponseDTO, SDKValidationError> {

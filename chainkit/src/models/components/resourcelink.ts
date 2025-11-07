@@ -26,7 +26,6 @@ export const ResourceLink$inboundSchema: z.ZodType<
   type: ResourceLinkType$inboundSchema,
   url: z.string(),
 });
-
 /** @internal */
 export type ResourceLink$Outbound = {
   type: string;
@@ -43,23 +42,9 @@ export const ResourceLink$outboundSchema: z.ZodType<
   url: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ResourceLink$ {
-  /** @deprecated use `ResourceLink$inboundSchema` instead. */
-  export const inboundSchema = ResourceLink$inboundSchema;
-  /** @deprecated use `ResourceLink$outboundSchema` instead. */
-  export const outboundSchema = ResourceLink$outboundSchema;
-  /** @deprecated use `ResourceLink$Outbound` instead. */
-  export type Outbound = ResourceLink$Outbound;
-}
-
 export function resourceLinkToJSON(resourceLink: ResourceLink): string {
   return JSON.stringify(ResourceLink$outboundSchema.parse(resourceLink));
 }
-
 export function resourceLinkFromJSON(
   jsonString: string,
 ): SafeParseResult<ResourceLink, SDKValidationError> {

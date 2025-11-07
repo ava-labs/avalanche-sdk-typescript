@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListLatestBlocksAllChainsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListLatestBlocksAllChainsRequest = {
@@ -42,7 +42,6 @@ export const ListLatestBlocksAllChainsRequest$inboundSchema: z.ZodType<
   pageSize: z.number().int().default(10),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestBlocksAllChainsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -61,19 +60,6 @@ export const ListLatestBlocksAllChainsRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestBlocksAllChainsRequest$ {
-  /** @deprecated use `ListLatestBlocksAllChainsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListLatestBlocksAllChainsRequest$inboundSchema;
-  /** @deprecated use `ListLatestBlocksAllChainsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListLatestBlocksAllChainsRequest$outboundSchema;
-  /** @deprecated use `ListLatestBlocksAllChainsRequest$Outbound` instead. */
-  export type Outbound = ListLatestBlocksAllChainsRequest$Outbound;
-}
-
 export function listLatestBlocksAllChainsRequestToJSON(
   listLatestBlocksAllChainsRequest: ListLatestBlocksAllChainsRequest,
 ): string {
@@ -83,7 +69,6 @@ export function listLatestBlocksAllChainsRequestToJSON(
     ),
   );
 }
-
 export function listLatestBlocksAllChainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestBlocksAllChainsRequest, SDKValidationError> {
@@ -106,7 +91,6 @@ export const ListLatestBlocksAllChainsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListLatestBlocksAllChainsResponse$Outbound = {
   Result: components.ListEvmBlocksResponse$Outbound;
@@ -125,20 +109,6 @@ export const ListLatestBlocksAllChainsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestBlocksAllChainsResponse$ {
-  /** @deprecated use `ListLatestBlocksAllChainsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListLatestBlocksAllChainsResponse$inboundSchema;
-  /** @deprecated use `ListLatestBlocksAllChainsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestBlocksAllChainsResponse$outboundSchema;
-  /** @deprecated use `ListLatestBlocksAllChainsResponse$Outbound` instead. */
-  export type Outbound = ListLatestBlocksAllChainsResponse$Outbound;
-}
-
 export function listLatestBlocksAllChainsResponseToJSON(
   listLatestBlocksAllChainsResponse: ListLatestBlocksAllChainsResponse,
 ): string {
@@ -148,7 +118,6 @@ export function listLatestBlocksAllChainsResponseToJSON(
     ),
   );
 }
-
 export function listLatestBlocksAllChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestBlocksAllChainsResponse, SDKValidationError> {

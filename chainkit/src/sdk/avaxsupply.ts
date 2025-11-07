@@ -4,6 +4,7 @@
 
 import { avaxSupplyGet } from "../funcs/avaxSupplyGet.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
+import * as components from "../models/components/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class AVAXSupply extends ClientSDK {
@@ -15,7 +16,7 @@ export class AVAXSupply extends ClientSDK {
    */
   async get(
     options?: RequestOptions,
-  ): Promise<void> {
+  ): Promise<components.AvaxSupplyResponse> {
     return unwrapAsync(avaxSupplyGet(
       this,
       options,

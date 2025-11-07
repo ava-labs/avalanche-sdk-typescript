@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const DeactivateWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type DeactivateWebhookRequest = {
@@ -35,7 +35,6 @@ export const DeactivateWebhookRequest$inboundSchema: z.ZodType<
 > = z.object({
   id: z.string(),
 });
-
 /** @internal */
 export type DeactivateWebhookRequest$Outbound = {
   id: string;
@@ -50,19 +49,6 @@ export const DeactivateWebhookRequest$outboundSchema: z.ZodType<
   id: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeactivateWebhookRequest$ {
-  /** @deprecated use `DeactivateWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = DeactivateWebhookRequest$inboundSchema;
-  /** @deprecated use `DeactivateWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = DeactivateWebhookRequest$outboundSchema;
-  /** @deprecated use `DeactivateWebhookRequest$Outbound` instead. */
-  export type Outbound = DeactivateWebhookRequest$Outbound;
-}
-
 export function deactivateWebhookRequestToJSON(
   deactivateWebhookRequest: DeactivateWebhookRequest,
 ): string {
@@ -70,7 +56,6 @@ export function deactivateWebhookRequestToJSON(
     DeactivateWebhookRequest$outboundSchema.parse(deactivateWebhookRequest),
   );
 }
-
 export function deactivateWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<DeactivateWebhookRequest, SDKValidationError> {
@@ -91,7 +76,6 @@ export const DeactivateWebhookResponse$inboundSchema: z.ZodType<
   components.PrimaryNetworkAddressActivityResponse$inboundSchema,
   components.ValidatorActivityResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type DeactivateWebhookResponse$Outbound =
   | components.EVMAddressActivityResponse$Outbound
@@ -109,19 +93,6 @@ export const DeactivateWebhookResponse$outboundSchema: z.ZodType<
   components.ValidatorActivityResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeactivateWebhookResponse$ {
-  /** @deprecated use `DeactivateWebhookResponse$inboundSchema` instead. */
-  export const inboundSchema = DeactivateWebhookResponse$inboundSchema;
-  /** @deprecated use `DeactivateWebhookResponse$outboundSchema` instead. */
-  export const outboundSchema = DeactivateWebhookResponse$outboundSchema;
-  /** @deprecated use `DeactivateWebhookResponse$Outbound` instead. */
-  export type Outbound = DeactivateWebhookResponse$Outbound;
-}
-
 export function deactivateWebhookResponseToJSON(
   deactivateWebhookResponse: DeactivateWebhookResponse,
 ): string {
@@ -129,7 +100,6 @@ export function deactivateWebhookResponseToJSON(
     DeactivateWebhookResponse$outboundSchema.parse(deactivateWebhookResponse),
   );
 }
-
 export function deactivateWebhookResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<DeactivateWebhookResponse, SDKValidationError> {

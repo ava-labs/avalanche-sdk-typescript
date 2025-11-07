@@ -30,7 +30,6 @@ export const ListNativeTransactionsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(NativeTransaction$inboundSchema),
 });
-
 /** @internal */
 export type ListNativeTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListNativeTransactionsResponse$outboundSchema: z.ZodType<
   transactions: z.array(NativeTransaction$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListNativeTransactionsResponse$ {
-  /** @deprecated use `ListNativeTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListNativeTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListNativeTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListNativeTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListNativeTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListNativeTransactionsResponse$Outbound;
-}
-
 export function listNativeTransactionsResponseToJSON(
   listNativeTransactionsResponse: ListNativeTransactionsResponse,
 ): string {
@@ -69,7 +55,6 @@ export function listNativeTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listNativeTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListNativeTransactionsResponse, SDKValidationError> {

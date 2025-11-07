@@ -47,7 +47,6 @@ export const PrimaryNetworkBlock$inboundSchema: z.ZodType<
   currentSupply: z.string().optional(),
   proposerDetails: ProposerDetails$inboundSchema.optional(),
 });
-
 /** @internal */
 export type PrimaryNetworkBlock$Outbound = {
   blockNumber: string;
@@ -84,19 +83,6 @@ export const PrimaryNetworkBlock$outboundSchema: z.ZodType<
   proposerDetails: ProposerDetails$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkBlock$ {
-  /** @deprecated use `PrimaryNetworkBlock$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkBlock$inboundSchema;
-  /** @deprecated use `PrimaryNetworkBlock$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkBlock$outboundSchema;
-  /** @deprecated use `PrimaryNetworkBlock$Outbound` instead. */
-  export type Outbound = PrimaryNetworkBlock$Outbound;
-}
-
 export function primaryNetworkBlockToJSON(
   primaryNetworkBlock: PrimaryNetworkBlock,
 ): string {
@@ -104,7 +90,6 @@ export function primaryNetworkBlockToJSON(
     PrimaryNetworkBlock$outboundSchema.parse(primaryNetworkBlock),
   );
 }
-
 export function primaryNetworkBlockFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkBlock, SDKValidationError> {

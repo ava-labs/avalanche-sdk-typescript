@@ -38,7 +38,6 @@ export const ListPChainTransactionsResponse$inboundSchema: z.ZodType<
   transactions: z.array(PChainTransaction$inboundSchema),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListPChainTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,19 +56,6 @@ export const ListPChainTransactionsResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPChainTransactionsResponse$ {
-  /** @deprecated use `ListPChainTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListPChainTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListPChainTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListPChainTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListPChainTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListPChainTransactionsResponse$Outbound;
-}
-
 export function listPChainTransactionsResponseToJSON(
   listPChainTransactionsResponse: ListPChainTransactionsResponse,
 ): string {
@@ -79,7 +65,6 @@ export function listPChainTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listPChainTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListPChainTransactionsResponse, SDKValidationError> {

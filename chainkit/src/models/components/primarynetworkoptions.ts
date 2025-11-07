@@ -34,21 +34,9 @@ export type PrimaryNetworkOptions = {
 /** @internal */
 export const IncludeChain$inboundSchema: z.ZodNativeEnum<typeof IncludeChain> =
   z.nativeEnum(IncludeChain);
-
 /** @internal */
 export const IncludeChain$outboundSchema: z.ZodNativeEnum<typeof IncludeChain> =
   IncludeChain$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IncludeChain$ {
-  /** @deprecated use `IncludeChain$inboundSchema` instead. */
-  export const inboundSchema = IncludeChain$inboundSchema;
-  /** @deprecated use `IncludeChain$outboundSchema` instead. */
-  export const outboundSchema = IncludeChain$outboundSchema;
-}
 
 /** @internal */
 export const PrimaryNetworkOptions$inboundSchema: z.ZodType<
@@ -60,7 +48,6 @@ export const PrimaryNetworkOptions$inboundSchema: z.ZodType<
   cChainEvmAddresses: z.array(z.string()).optional(),
   includeChains: z.array(IncludeChain$inboundSchema),
 });
-
 /** @internal */
 export type PrimaryNetworkOptions$Outbound = {
   addresses?: Array<string> | undefined;
@@ -79,19 +66,6 @@ export const PrimaryNetworkOptions$outboundSchema: z.ZodType<
   includeChains: z.array(IncludeChain$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkOptions$ {
-  /** @deprecated use `PrimaryNetworkOptions$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkOptions$inboundSchema;
-  /** @deprecated use `PrimaryNetworkOptions$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkOptions$outboundSchema;
-  /** @deprecated use `PrimaryNetworkOptions$Outbound` instead. */
-  export type Outbound = PrimaryNetworkOptions$Outbound;
-}
-
 export function primaryNetworkOptionsToJSON(
   primaryNetworkOptions: PrimaryNetworkOptions,
 ): string {
@@ -99,7 +73,6 @@ export function primaryNetworkOptionsToJSON(
     PrimaryNetworkOptions$outboundSchema.parse(primaryNetworkOptions),
   );
 }
-
 export function primaryNetworkOptionsFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkOptions, SDKValidationError> {

@@ -67,7 +67,6 @@ export const Delegator$inboundSchema: z.ZodType<
     })),
   ),
 ]);
-
 /** @internal */
 export type Delegator$Outbound =
   | (ActiveDelegatorDetails$Outbound & { delegationStatus: "active" })
@@ -97,23 +96,9 @@ export const Delegator$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Delegator$ {
-  /** @deprecated use `Delegator$inboundSchema` instead. */
-  export const inboundSchema = Delegator$inboundSchema;
-  /** @deprecated use `Delegator$outboundSchema` instead. */
-  export const outboundSchema = Delegator$outboundSchema;
-  /** @deprecated use `Delegator$Outbound` instead. */
-  export type Outbound = Delegator$Outbound;
-}
-
 export function delegatorToJSON(delegator: Delegator): string {
   return JSON.stringify(Delegator$outboundSchema.parse(delegator));
 }
-
 export function delegatorFromJSON(
   jsonString: string,
 ): SafeParseResult<Delegator, SDKValidationError> {
@@ -151,7 +136,6 @@ export const ListDelegatorDetailsResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListDelegatorDetailsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -190,19 +174,6 @@ export const ListDelegatorDetailsResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListDelegatorDetailsResponse$ {
-  /** @deprecated use `ListDelegatorDetailsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListDelegatorDetailsResponse$inboundSchema;
-  /** @deprecated use `ListDelegatorDetailsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListDelegatorDetailsResponse$outboundSchema;
-  /** @deprecated use `ListDelegatorDetailsResponse$Outbound` instead. */
-  export type Outbound = ListDelegatorDetailsResponse$Outbound;
-}
-
 export function listDelegatorDetailsResponseToJSON(
   listDelegatorDetailsResponse: ListDelegatorDetailsResponse,
 ): string {
@@ -212,7 +183,6 @@ export function listDelegatorDetailsResponseToJSON(
     ),
   );
 }
-
 export function listDelegatorDetailsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListDelegatorDetailsResponse, SDKValidationError> {

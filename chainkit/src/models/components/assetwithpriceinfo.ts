@@ -63,7 +63,6 @@ export const AssetWithPriceInfo$inboundSchema: z.ZodType<
   amount: z.string(),
   historicalPrice: Money$inboundSchema.optional(),
 });
-
 /** @internal */
 export type AssetWithPriceInfo$Outbound = {
   assetId: string;
@@ -90,19 +89,6 @@ export const AssetWithPriceInfo$outboundSchema: z.ZodType<
   historicalPrice: Money$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AssetWithPriceInfo$ {
-  /** @deprecated use `AssetWithPriceInfo$inboundSchema` instead. */
-  export const inboundSchema = AssetWithPriceInfo$inboundSchema;
-  /** @deprecated use `AssetWithPriceInfo$outboundSchema` instead. */
-  export const outboundSchema = AssetWithPriceInfo$outboundSchema;
-  /** @deprecated use `AssetWithPriceInfo$Outbound` instead. */
-  export type Outbound = AssetWithPriceInfo$Outbound;
-}
-
 export function assetWithPriceInfoToJSON(
   assetWithPriceInfo: AssetWithPriceInfo,
 ): string {
@@ -110,7 +96,6 @@ export function assetWithPriceInfoToJSON(
     AssetWithPriceInfo$outboundSchema.parse(assetWithPriceInfo),
   );
 }
-
 export function assetWithPriceInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<AssetWithPriceInfo, SDKValidationError> {

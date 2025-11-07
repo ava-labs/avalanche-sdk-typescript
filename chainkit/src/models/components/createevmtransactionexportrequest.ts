@@ -46,7 +46,6 @@ export const CreateEvmTransactionExportRequest$inboundSchema: z.ZodType<
   endDate: z.string().optional(),
   options: EvmNetworkOptions$inboundSchema,
 });
-
 /** @internal */
 export type CreateEvmTransactionExportRequest$Outbound = {
   type: string;
@@ -71,20 +70,6 @@ export const CreateEvmTransactionExportRequest$outboundSchema: z.ZodType<
   options: EvmNetworkOptions$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreateEvmTransactionExportRequest$ {
-  /** @deprecated use `CreateEvmTransactionExportRequest$inboundSchema` instead. */
-  export const inboundSchema = CreateEvmTransactionExportRequest$inboundSchema;
-  /** @deprecated use `CreateEvmTransactionExportRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    CreateEvmTransactionExportRequest$outboundSchema;
-  /** @deprecated use `CreateEvmTransactionExportRequest$Outbound` instead. */
-  export type Outbound = CreateEvmTransactionExportRequest$Outbound;
-}
-
 export function createEvmTransactionExportRequestToJSON(
   createEvmTransactionExportRequest: CreateEvmTransactionExportRequest,
 ): string {
@@ -94,7 +79,6 @@ export function createEvmTransactionExportRequestToJSON(
     ),
   );
 }
-
 export function createEvmTransactionExportRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<CreateEvmTransactionExportRequest, SDKValidationError> {

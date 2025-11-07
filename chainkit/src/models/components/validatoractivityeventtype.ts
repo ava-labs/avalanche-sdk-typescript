@@ -16,19 +16,7 @@ export type ValidatorActivityEventType = ClosedEnum<
 export const ValidatorActivityEventType$inboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityEventType
 > = z.nativeEnum(ValidatorActivityEventType);
-
 /** @internal */
 export const ValidatorActivityEventType$outboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityEventType
 > = ValidatorActivityEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityEventType$ {
-  /** @deprecated use `ValidatorActivityEventType$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityEventType$inboundSchema;
-  /** @deprecated use `ValidatorActivityEventType$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityEventType$outboundSchema;
-}

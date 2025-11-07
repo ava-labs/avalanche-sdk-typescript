@@ -63,7 +63,6 @@ export const NativeTokenBalance$inboundSchema: z.ZodType<
   balance: z.string(),
   balanceValue: Money$inboundSchema.optional(),
 });
-
 /** @internal */
 export type NativeTokenBalance$Outbound = {
   name: string;
@@ -92,19 +91,6 @@ export const NativeTokenBalance$outboundSchema: z.ZodType<
   balanceValue: Money$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NativeTokenBalance$ {
-  /** @deprecated use `NativeTokenBalance$inboundSchema` instead. */
-  export const inboundSchema = NativeTokenBalance$inboundSchema;
-  /** @deprecated use `NativeTokenBalance$outboundSchema` instead. */
-  export const outboundSchema = NativeTokenBalance$outboundSchema;
-  /** @deprecated use `NativeTokenBalance$Outbound` instead. */
-  export type Outbound = NativeTokenBalance$Outbound;
-}
-
 export function nativeTokenBalanceToJSON(
   nativeTokenBalance: NativeTokenBalance,
 ): string {
@@ -112,7 +98,6 @@ export function nativeTokenBalanceToJSON(
     NativeTokenBalance$outboundSchema.parse(nativeTokenBalance),
   );
 }
-
 export function nativeTokenBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<NativeTokenBalance, SDKValidationError> {

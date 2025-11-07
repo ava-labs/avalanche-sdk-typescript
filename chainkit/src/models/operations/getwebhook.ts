@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetWebhookRequest = {
@@ -35,7 +35,6 @@ export const GetWebhookRequest$inboundSchema: z.ZodType<
 > = z.object({
   id: z.string(),
 });
-
 /** @internal */
 export type GetWebhookRequest$Outbound = {
   id: string;
@@ -50,19 +49,6 @@ export const GetWebhookRequest$outboundSchema: z.ZodType<
   id: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetWebhookRequest$ {
-  /** @deprecated use `GetWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = GetWebhookRequest$inboundSchema;
-  /** @deprecated use `GetWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = GetWebhookRequest$outboundSchema;
-  /** @deprecated use `GetWebhookRequest$Outbound` instead. */
-  export type Outbound = GetWebhookRequest$Outbound;
-}
-
 export function getWebhookRequestToJSON(
   getWebhookRequest: GetWebhookRequest,
 ): string {
@@ -70,7 +56,6 @@ export function getWebhookRequestToJSON(
     GetWebhookRequest$outboundSchema.parse(getWebhookRequest),
   );
 }
-
 export function getWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetWebhookRequest, SDKValidationError> {
@@ -91,7 +76,6 @@ export const GetWebhookResponse$inboundSchema: z.ZodType<
   components.PrimaryNetworkAddressActivityResponse$inboundSchema,
   components.ValidatorActivityResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type GetWebhookResponse$Outbound =
   | components.EVMAddressActivityResponse$Outbound
@@ -109,19 +93,6 @@ export const GetWebhookResponse$outboundSchema: z.ZodType<
   components.ValidatorActivityResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetWebhookResponse$ {
-  /** @deprecated use `GetWebhookResponse$inboundSchema` instead. */
-  export const inboundSchema = GetWebhookResponse$inboundSchema;
-  /** @deprecated use `GetWebhookResponse$outboundSchema` instead. */
-  export const outboundSchema = GetWebhookResponse$outboundSchema;
-  /** @deprecated use `GetWebhookResponse$Outbound` instead. */
-  export type Outbound = GetWebhookResponse$Outbound;
-}
-
 export function getWebhookResponseToJSON(
   getWebhookResponse: GetWebhookResponse,
 ): string {
@@ -129,7 +100,6 @@ export function getWebhookResponseToJSON(
     GetWebhookResponse$outboundSchema.parse(getWebhookResponse),
   );
 }
-
 export function getWebhookResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetWebhookResponse, SDKValidationError> {

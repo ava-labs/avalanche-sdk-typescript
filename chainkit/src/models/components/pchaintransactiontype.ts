@@ -34,19 +34,7 @@ export type PChainTransactionType = ClosedEnum<typeof PChainTransactionType>;
 export const PChainTransactionType$inboundSchema: z.ZodNativeEnum<
   typeof PChainTransactionType
 > = z.nativeEnum(PChainTransactionType);
-
 /** @internal */
 export const PChainTransactionType$outboundSchema: z.ZodNativeEnum<
   typeof PChainTransactionType
 > = PChainTransactionType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainTransactionType$ {
-  /** @deprecated use `PChainTransactionType$inboundSchema` instead. */
-  export const inboundSchema = PChainTransactionType$inboundSchema;
-  /** @deprecated use `PChainTransactionType$outboundSchema` instead. */
-  export const outboundSchema = PChainTransactionType$outboundSchema;
-}

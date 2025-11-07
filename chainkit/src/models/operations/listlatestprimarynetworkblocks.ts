@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListLatestPrimaryNetworkBlocksServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListLatestPrimaryNetworkBlocksGlobals = {
@@ -59,7 +59,6 @@ export const ListLatestPrimaryNetworkBlocksGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestPrimaryNetworkBlocksGlobals$Outbound = {
   network?: string | undefined;
@@ -74,21 +73,6 @@ export const ListLatestPrimaryNetworkBlocksGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkBlocksGlobals$ {
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkBlocksGlobals$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkBlocksGlobals$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksGlobals$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkBlocksGlobals$Outbound;
-}
-
 export function listLatestPrimaryNetworkBlocksGlobalsToJSON(
   listLatestPrimaryNetworkBlocksGlobals: ListLatestPrimaryNetworkBlocksGlobals,
 ): string {
@@ -98,7 +82,6 @@ export function listLatestPrimaryNetworkBlocksGlobalsToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkBlocksGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestPrimaryNetworkBlocksGlobals, SDKValidationError> {
@@ -123,7 +106,6 @@ export const ListLatestPrimaryNetworkBlocksRequest$inboundSchema: z.ZodType<
   blockchainId: components.BlockchainId$inboundSchema,
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestPrimaryNetworkBlocksRequest$Outbound = {
   startTimestamp?: number | undefined;
@@ -148,21 +130,6 @@ export const ListLatestPrimaryNetworkBlocksRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkBlocksRequest$ {
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkBlocksRequest$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkBlocksRequest$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksRequest$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkBlocksRequest$Outbound;
-}
-
 export function listLatestPrimaryNetworkBlocksRequestToJSON(
   listLatestPrimaryNetworkBlocksRequest: ListLatestPrimaryNetworkBlocksRequest,
 ): string {
@@ -172,7 +139,6 @@ export function listLatestPrimaryNetworkBlocksRequestToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkBlocksRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestPrimaryNetworkBlocksRequest, SDKValidationError> {
@@ -196,7 +162,6 @@ export const ListLatestPrimaryNetworkBlocksResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListLatestPrimaryNetworkBlocksResponse$Outbound = {
   Result: components.ListPrimaryNetworkBlocksResponse$Outbound;
@@ -215,21 +180,6 @@ export const ListLatestPrimaryNetworkBlocksResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestPrimaryNetworkBlocksResponse$ {
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestPrimaryNetworkBlocksResponse$inboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestPrimaryNetworkBlocksResponse$outboundSchema;
-  /** @deprecated use `ListLatestPrimaryNetworkBlocksResponse$Outbound` instead. */
-  export type Outbound = ListLatestPrimaryNetworkBlocksResponse$Outbound;
-}
-
 export function listLatestPrimaryNetworkBlocksResponseToJSON(
   listLatestPrimaryNetworkBlocksResponse:
     ListLatestPrimaryNetworkBlocksResponse,
@@ -240,7 +190,6 @@ export function listLatestPrimaryNetworkBlocksResponseToJSON(
     ),
   );
 }
-
 export function listLatestPrimaryNetworkBlocksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestPrimaryNetworkBlocksResponse, SDKValidationError> {

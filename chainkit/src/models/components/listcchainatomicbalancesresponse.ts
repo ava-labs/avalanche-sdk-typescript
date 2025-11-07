@@ -33,7 +33,6 @@ export const ListCChainAtomicBalancesResponse$inboundSchema: z.ZodType<
   balances: CChainAtomicBalances$inboundSchema,
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListCChainAtomicBalancesResponse$Outbound = {
   balances: CChainAtomicBalances$Outbound;
@@ -50,19 +49,6 @@ export const ListCChainAtomicBalancesResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCChainAtomicBalancesResponse$ {
-  /** @deprecated use `ListCChainAtomicBalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListCChainAtomicBalancesResponse$inboundSchema;
-  /** @deprecated use `ListCChainAtomicBalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListCChainAtomicBalancesResponse$outboundSchema;
-  /** @deprecated use `ListCChainAtomicBalancesResponse$Outbound` instead. */
-  export type Outbound = ListCChainAtomicBalancesResponse$Outbound;
-}
-
 export function listCChainAtomicBalancesResponseToJSON(
   listCChainAtomicBalancesResponse: ListCChainAtomicBalancesResponse,
 ): string {
@@ -72,7 +58,6 @@ export function listCChainAtomicBalancesResponseToJSON(
     ),
   );
 }
-
 export function listCChainAtomicBalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCChainAtomicBalancesResponse, SDKValidationError> {

@@ -26,7 +26,6 @@ export const ChainAddressChainIdMap$inboundSchema: z.ZodType<
   address: z.string(),
   blockchainIds: z.array(BlockchainIds$inboundSchema),
 });
-
 /** @internal */
 export type ChainAddressChainIdMap$Outbound = {
   address: string;
@@ -43,19 +42,6 @@ export const ChainAddressChainIdMap$outboundSchema: z.ZodType<
   blockchainIds: z.array(BlockchainIds$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainAddressChainIdMap$ {
-  /** @deprecated use `ChainAddressChainIdMap$inboundSchema` instead. */
-  export const inboundSchema = ChainAddressChainIdMap$inboundSchema;
-  /** @deprecated use `ChainAddressChainIdMap$outboundSchema` instead. */
-  export const outboundSchema = ChainAddressChainIdMap$outboundSchema;
-  /** @deprecated use `ChainAddressChainIdMap$Outbound` instead. */
-  export type Outbound = ChainAddressChainIdMap$Outbound;
-}
-
 export function chainAddressChainIdMapToJSON(
   chainAddressChainIdMap: ChainAddressChainIdMap,
 ): string {
@@ -63,7 +49,6 @@ export function chainAddressChainIdMapToJSON(
     ChainAddressChainIdMap$outboundSchema.parse(chainAddressChainIdMap),
   );
 }
-
 export function chainAddressChainIdMapFromJSON(
   jsonString: string,
 ): SafeParseResult<ChainAddressChainIdMap, SDKValidationError> {

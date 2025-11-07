@@ -105,24 +105,10 @@ export const XChainNonLinearTransactionChainFormat$inboundSchema:
   z.ZodNativeEnum<typeof XChainNonLinearTransactionChainFormat> = z.nativeEnum(
     XChainNonLinearTransactionChainFormat,
   );
-
 /** @internal */
 export const XChainNonLinearTransactionChainFormat$outboundSchema:
   z.ZodNativeEnum<typeof XChainNonLinearTransactionChainFormat> =
     XChainNonLinearTransactionChainFormat$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainNonLinearTransactionChainFormat$ {
-  /** @deprecated use `XChainNonLinearTransactionChainFormat$inboundSchema` instead. */
-  export const inboundSchema =
-    XChainNonLinearTransactionChainFormat$inboundSchema;
-  /** @deprecated use `XChainNonLinearTransactionChainFormat$outboundSchema` instead. */
-  export const outboundSchema =
-    XChainNonLinearTransactionChainFormat$outboundSchema;
-}
 
 /** @internal */
 export const XChainNonLinearTransaction$inboundSchema: z.ZodType<
@@ -144,7 +130,6 @@ export const XChainNonLinearTransaction$inboundSchema: z.ZodType<
   assetCreated: XChainAssetDetails$inboundSchema.optional(),
   vertices: z.array(TransactionVertexDetail$inboundSchema),
 });
-
 /** @internal */
 export type XChainNonLinearTransaction$Outbound = {
   txHash: string;
@@ -183,19 +168,6 @@ export const XChainNonLinearTransaction$outboundSchema: z.ZodType<
   vertices: z.array(TransactionVertexDetail$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainNonLinearTransaction$ {
-  /** @deprecated use `XChainNonLinearTransaction$inboundSchema` instead. */
-  export const inboundSchema = XChainNonLinearTransaction$inboundSchema;
-  /** @deprecated use `XChainNonLinearTransaction$outboundSchema` instead. */
-  export const outboundSchema = XChainNonLinearTransaction$outboundSchema;
-  /** @deprecated use `XChainNonLinearTransaction$Outbound` instead. */
-  export type Outbound = XChainNonLinearTransaction$Outbound;
-}
-
 export function xChainNonLinearTransactionToJSON(
   xChainNonLinearTransaction: XChainNonLinearTransaction,
 ): string {
@@ -203,7 +175,6 @@ export function xChainNonLinearTransactionToJSON(
     XChainNonLinearTransaction$outboundSchema.parse(xChainNonLinearTransaction),
   );
 }
-
 export function xChainNonLinearTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<XChainNonLinearTransaction, SDKValidationError> {

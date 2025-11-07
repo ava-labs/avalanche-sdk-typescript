@@ -27,7 +27,6 @@ export const ProposerDetails$inboundSchema: z.ZodType<
   proposerPChainHeight: z.number().optional(),
   proposerTimestamp: z.number().optional(),
 });
-
 /** @internal */
 export type ProposerDetails$Outbound = {
   proposerId?: string | undefined;
@@ -50,25 +49,11 @@ export const ProposerDetails$outboundSchema: z.ZodType<
   proposerTimestamp: z.number().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ProposerDetails$ {
-  /** @deprecated use `ProposerDetails$inboundSchema` instead. */
-  export const inboundSchema = ProposerDetails$inboundSchema;
-  /** @deprecated use `ProposerDetails$outboundSchema` instead. */
-  export const outboundSchema = ProposerDetails$outboundSchema;
-  /** @deprecated use `ProposerDetails$Outbound` instead. */
-  export type Outbound = ProposerDetails$Outbound;
-}
-
 export function proposerDetailsToJSON(
   proposerDetails: ProposerDetails,
 ): string {
   return JSON.stringify(ProposerDetails$outboundSchema.parse(proposerDetails));
 }
-
 export function proposerDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ProposerDetails, SDKValidationError> {

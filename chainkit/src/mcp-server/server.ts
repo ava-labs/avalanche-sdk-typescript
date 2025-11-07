@@ -46,6 +46,7 @@ import { tool$dataHealthCheck } from "./tools/dataHealthCheck.js";
 import { tool$dataIcmGet } from "./tools/dataIcmGet.js";
 import { tool$dataIcmList } from "./tools/dataIcmList.js";
 import { tool$dataIcmListByAddress } from "./tools/dataIcmListByAddress.js";
+import { tool$dataLiveCheck } from "./tools/dataLiveCheck.js";
 import { tool$dataNftsGet } from "./tools/dataNftsGet.js";
 import { tool$dataNftsList } from "./tools/dataNftsList.js";
 import { tool$dataNftsReindex } from "./tools/dataNftsReindex.js";
@@ -126,7 +127,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.7",
+    version: "0.3.0-alpha.8",
   });
 
   const client = new AvalancheCore({
@@ -161,6 +162,7 @@ export function createMCPServer(deps: {
 
   tool(tool$metricsHealthCheck);
   tool(tool$dataHealthCheck);
+  tool(tool$dataLiveCheck);
   tool(tool$webhooksList);
   tool(tool$webhooksCreate);
   tool(tool$webhooksGet);

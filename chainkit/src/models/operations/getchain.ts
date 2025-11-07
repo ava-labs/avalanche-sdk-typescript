@@ -33,7 +33,6 @@ export const GetChainGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetChainGlobals$Outbound = {
   chainId?: string | undefined;
@@ -48,25 +47,11 @@ export const GetChainGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainGlobals$ {
-  /** @deprecated use `GetChainGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetChainGlobals$inboundSchema;
-  /** @deprecated use `GetChainGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetChainGlobals$outboundSchema;
-  /** @deprecated use `GetChainGlobals$Outbound` instead. */
-  export type Outbound = GetChainGlobals$Outbound;
-}
-
 export function getChainGlobalsToJSON(
   getChainGlobals: GetChainGlobals,
 ): string {
   return JSON.stringify(GetChainGlobals$outboundSchema.parse(getChainGlobals));
 }
-
 export function getChainGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetChainGlobals, SDKValidationError> {
@@ -85,7 +70,6 @@ export const GetChainRequest$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetChainRequest$Outbound = {
   chainId?: string | undefined;
@@ -100,25 +84,11 @@ export const GetChainRequest$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainRequest$ {
-  /** @deprecated use `GetChainRequest$inboundSchema` instead. */
-  export const inboundSchema = GetChainRequest$inboundSchema;
-  /** @deprecated use `GetChainRequest$outboundSchema` instead. */
-  export const outboundSchema = GetChainRequest$outboundSchema;
-  /** @deprecated use `GetChainRequest$Outbound` instead. */
-  export type Outbound = GetChainRequest$Outbound;
-}
-
 export function getChainRequestToJSON(
   getChainRequest: GetChainRequest,
 ): string {
   return JSON.stringify(GetChainRequest$outboundSchema.parse(getChainRequest));
 }
-
 export function getChainRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetChainRequest, SDKValidationError> {

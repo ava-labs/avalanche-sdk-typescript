@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListPrimaryNetworkBlocksByNodeIdServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListPrimaryNetworkBlocksByNodeIdGlobals = {
@@ -63,7 +63,6 @@ export const ListPrimaryNetworkBlocksByNodeIdGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListPrimaryNetworkBlocksByNodeIdGlobals$Outbound = {
   network?: string | undefined;
@@ -78,21 +77,6 @@ export const ListPrimaryNetworkBlocksByNodeIdGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPrimaryNetworkBlocksByNodeIdGlobals$ {
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdGlobals$inboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdGlobals$outboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdGlobals$Outbound` instead. */
-  export type Outbound = ListPrimaryNetworkBlocksByNodeIdGlobals$Outbound;
-}
-
 export function listPrimaryNetworkBlocksByNodeIdGlobalsToJSON(
   listPrimaryNetworkBlocksByNodeIdGlobals:
     ListPrimaryNetworkBlocksByNodeIdGlobals,
@@ -103,7 +87,6 @@ export function listPrimaryNetworkBlocksByNodeIdGlobalsToJSON(
     ),
   );
 }
-
 export function listPrimaryNetworkBlocksByNodeIdGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -134,7 +117,6 @@ export const ListPrimaryNetworkBlocksByNodeIdRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   nodeId: z.string(),
 });
-
 /** @internal */
 export type ListPrimaryNetworkBlocksByNodeIdRequest$Outbound = {
   startTimestamp?: number | undefined;
@@ -161,21 +143,6 @@ export const ListPrimaryNetworkBlocksByNodeIdRequest$outboundSchema: z.ZodType<
   nodeId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPrimaryNetworkBlocksByNodeIdRequest$ {
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdRequest$inboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdRequest$outboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdRequest$Outbound` instead. */
-  export type Outbound = ListPrimaryNetworkBlocksByNodeIdRequest$Outbound;
-}
-
 export function listPrimaryNetworkBlocksByNodeIdRequestToJSON(
   listPrimaryNetworkBlocksByNodeIdRequest:
     ListPrimaryNetworkBlocksByNodeIdRequest,
@@ -186,7 +153,6 @@ export function listPrimaryNetworkBlocksByNodeIdRequestToJSON(
     ),
   );
 }
-
 export function listPrimaryNetworkBlocksByNodeIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -215,7 +181,6 @@ export const ListPrimaryNetworkBlocksByNodeIdResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListPrimaryNetworkBlocksByNodeIdResponse$Outbound = {
   Result: components.ListPrimaryNetworkBlocksResponse$Outbound;
@@ -234,21 +199,6 @@ export const ListPrimaryNetworkBlocksByNodeIdResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPrimaryNetworkBlocksByNodeIdResponse$ {
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdResponse$inboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPrimaryNetworkBlocksByNodeIdResponse$outboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksByNodeIdResponse$Outbound` instead. */
-  export type Outbound = ListPrimaryNetworkBlocksByNodeIdResponse$Outbound;
-}
-
 export function listPrimaryNetworkBlocksByNodeIdResponseToJSON(
   listPrimaryNetworkBlocksByNodeIdResponse:
     ListPrimaryNetworkBlocksByNodeIdResponse,
@@ -259,7 +209,6 @@ export function listPrimaryNetworkBlocksByNodeIdResponseToJSON(
     ),
   );
 }
-
 export function listPrimaryNetworkBlocksByNodeIdResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

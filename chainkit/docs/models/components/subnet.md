@@ -32,7 +32,7 @@ let value: Subnet = {
       subnetId: "<id>",
       blockchainName: "<value>",
       evmChainId: 43114,
-      genesisData: {},
+      genesisData: "{\"chainId\": 43114}",
     },
   ],
 };

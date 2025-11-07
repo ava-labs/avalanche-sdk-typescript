@@ -21,7 +21,6 @@ export const EvmNetworkOptions$inboundSchema: z.ZodType<
   addresses: z.array(z.string()),
   includeChains: z.array(z.string()),
 });
-
 /** @internal */
 export type EvmNetworkOptions$Outbound = {
   addresses: Array<string>;
@@ -38,19 +37,6 @@ export const EvmNetworkOptions$outboundSchema: z.ZodType<
   includeChains: z.array(z.string()),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace EvmNetworkOptions$ {
-  /** @deprecated use `EvmNetworkOptions$inboundSchema` instead. */
-  export const inboundSchema = EvmNetworkOptions$inboundSchema;
-  /** @deprecated use `EvmNetworkOptions$outboundSchema` instead. */
-  export const outboundSchema = EvmNetworkOptions$outboundSchema;
-  /** @deprecated use `EvmNetworkOptions$Outbound` instead. */
-  export type Outbound = EvmNetworkOptions$Outbound;
-}
-
 export function evmNetworkOptionsToJSON(
   evmNetworkOptions: EvmNetworkOptions,
 ): string {
@@ -58,7 +44,6 @@ export function evmNetworkOptionsToJSON(
     EvmNetworkOptions$outboundSchema.parse(evmNetworkOptions),
   );
 }
-
 export function evmNetworkOptionsFromJSON(
   jsonString: string,
 ): SafeParseResult<EvmNetworkOptions, SDKValidationError> {

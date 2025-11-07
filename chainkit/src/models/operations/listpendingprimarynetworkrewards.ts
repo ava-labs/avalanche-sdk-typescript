@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListPendingPrimaryNetworkRewardsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListPendingPrimaryNetworkRewardsGlobals = {
@@ -59,7 +59,6 @@ export const ListPendingPrimaryNetworkRewardsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListPendingPrimaryNetworkRewardsGlobals$Outbound = {
   network?: string | undefined;
@@ -74,21 +73,6 @@ export const ListPendingPrimaryNetworkRewardsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPendingPrimaryNetworkRewardsGlobals$ {
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPendingPrimaryNetworkRewardsGlobals$inboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPendingPrimaryNetworkRewardsGlobals$outboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsGlobals$Outbound` instead. */
-  export type Outbound = ListPendingPrimaryNetworkRewardsGlobals$Outbound;
-}
-
 export function listPendingPrimaryNetworkRewardsGlobalsToJSON(
   listPendingPrimaryNetworkRewardsGlobals:
     ListPendingPrimaryNetworkRewardsGlobals,
@@ -99,7 +83,6 @@ export function listPendingPrimaryNetworkRewardsGlobalsToJSON(
     ),
   );
 }
-
 export function listPendingPrimaryNetworkRewardsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -129,7 +112,6 @@ export const ListPendingPrimaryNetworkRewardsRequest$inboundSchema: z.ZodType<
   nodeIds: z.string().optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListPendingPrimaryNetworkRewardsRequest$Outbound = {
   addresses?: string | undefined;
@@ -154,21 +136,6 @@ export const ListPendingPrimaryNetworkRewardsRequest$outboundSchema: z.ZodType<
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPendingPrimaryNetworkRewardsRequest$ {
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPendingPrimaryNetworkRewardsRequest$inboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPendingPrimaryNetworkRewardsRequest$outboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsRequest$Outbound` instead. */
-  export type Outbound = ListPendingPrimaryNetworkRewardsRequest$Outbound;
-}
-
 export function listPendingPrimaryNetworkRewardsRequestToJSON(
   listPendingPrimaryNetworkRewardsRequest:
     ListPendingPrimaryNetworkRewardsRequest,
@@ -179,7 +146,6 @@ export function listPendingPrimaryNetworkRewardsRequestToJSON(
     ),
   );
 }
-
 export function listPendingPrimaryNetworkRewardsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -208,7 +174,6 @@ export const ListPendingPrimaryNetworkRewardsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListPendingPrimaryNetworkRewardsResponse$Outbound = {
   Result: components.ListPendingRewardsResponse$Outbound;
@@ -227,21 +192,6 @@ export const ListPendingPrimaryNetworkRewardsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPendingPrimaryNetworkRewardsResponse$ {
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListPendingPrimaryNetworkRewardsResponse$inboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListPendingPrimaryNetworkRewardsResponse$outboundSchema;
-  /** @deprecated use `ListPendingPrimaryNetworkRewardsResponse$Outbound` instead. */
-  export type Outbound = ListPendingPrimaryNetworkRewardsResponse$Outbound;
-}
-
 export function listPendingPrimaryNetworkRewardsResponseToJSON(
   listPendingPrimaryNetworkRewardsResponse:
     ListPendingPrimaryNetworkRewardsResponse,
@@ -252,7 +202,6 @@ export function listPendingPrimaryNetworkRewardsResponseToJSON(
     ),
   );
 }
-
 export function listPendingPrimaryNetworkRewardsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

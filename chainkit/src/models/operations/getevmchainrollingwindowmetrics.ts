@@ -38,7 +38,6 @@ export const GetEvmChainRollingWindowMetricsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetEvmChainRollingWindowMetricsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -53,21 +52,6 @@ export const GetEvmChainRollingWindowMetricsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmChainRollingWindowMetricsGlobals$ {
-  /** @deprecated use `GetEvmChainRollingWindowMetricsGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    GetEvmChainRollingWindowMetricsGlobals$inboundSchema;
-  /** @deprecated use `GetEvmChainRollingWindowMetricsGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    GetEvmChainRollingWindowMetricsGlobals$outboundSchema;
-  /** @deprecated use `GetEvmChainRollingWindowMetricsGlobals$Outbound` instead. */
-  export type Outbound = GetEvmChainRollingWindowMetricsGlobals$Outbound;
-}
-
 export function getEvmChainRollingWindowMetricsGlobalsToJSON(
   getEvmChainRollingWindowMetricsGlobals:
     GetEvmChainRollingWindowMetricsGlobals,
@@ -78,7 +62,6 @@ export function getEvmChainRollingWindowMetricsGlobalsToJSON(
     ),
   );
 }
-
 export function getEvmChainRollingWindowMetricsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmChainRollingWindowMetricsGlobals, SDKValidationError> {
@@ -99,7 +82,6 @@ export const GetEvmChainRollingWindowMetricsRequest$inboundSchema: z.ZodType<
   metric: components.ChainRollingWindowMetric$inboundSchema,
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetEvmChainRollingWindowMetricsRequest$Outbound = {
   metric: string;
@@ -116,21 +98,6 @@ export const GetEvmChainRollingWindowMetricsRequest$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetEvmChainRollingWindowMetricsRequest$ {
-  /** @deprecated use `GetEvmChainRollingWindowMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    GetEvmChainRollingWindowMetricsRequest$inboundSchema;
-  /** @deprecated use `GetEvmChainRollingWindowMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    GetEvmChainRollingWindowMetricsRequest$outboundSchema;
-  /** @deprecated use `GetEvmChainRollingWindowMetricsRequest$Outbound` instead. */
-  export type Outbound = GetEvmChainRollingWindowMetricsRequest$Outbound;
-}
-
 export function getEvmChainRollingWindowMetricsRequestToJSON(
   getEvmChainRollingWindowMetricsRequest:
     GetEvmChainRollingWindowMetricsRequest,
@@ -141,7 +108,6 @@ export function getEvmChainRollingWindowMetricsRequestToJSON(
     ),
   );
 }
-
 export function getEvmChainRollingWindowMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetEvmChainRollingWindowMetricsRequest, SDKValidationError> {

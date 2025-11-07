@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetAddressesFromWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetAddressesFromWebhookRequest = {
@@ -42,7 +42,6 @@ export const GetAddressesFromWebhookRequest$inboundSchema: z.ZodType<
   pageSize: z.number().int().default(10),
   id: z.string(),
 });
-
 /** @internal */
 export type GetAddressesFromWebhookRequest$Outbound = {
   pageToken?: string | undefined;
@@ -61,19 +60,6 @@ export const GetAddressesFromWebhookRequest$outboundSchema: z.ZodType<
   id: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesFromWebhookRequest$ {
-  /** @deprecated use `GetAddressesFromWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = GetAddressesFromWebhookRequest$inboundSchema;
-  /** @deprecated use `GetAddressesFromWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = GetAddressesFromWebhookRequest$outboundSchema;
-  /** @deprecated use `GetAddressesFromWebhookRequest$Outbound` instead. */
-  export type Outbound = GetAddressesFromWebhookRequest$Outbound;
-}
-
 export function getAddressesFromWebhookRequestToJSON(
   getAddressesFromWebhookRequest: GetAddressesFromWebhookRequest,
 ): string {
@@ -83,7 +69,6 @@ export function getAddressesFromWebhookRequestToJSON(
     ),
   );
 }
-
 export function getAddressesFromWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesFromWebhookRequest, SDKValidationError> {
@@ -106,7 +91,6 @@ export const GetAddressesFromWebhookResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetAddressesFromWebhookResponse$Outbound = {
   Result: components.ListWebhookAddressesResponse$Outbound;
@@ -125,19 +109,6 @@ export const GetAddressesFromWebhookResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesFromWebhookResponse$ {
-  /** @deprecated use `GetAddressesFromWebhookResponse$inboundSchema` instead. */
-  export const inboundSchema = GetAddressesFromWebhookResponse$inboundSchema;
-  /** @deprecated use `GetAddressesFromWebhookResponse$outboundSchema` instead. */
-  export const outboundSchema = GetAddressesFromWebhookResponse$outboundSchema;
-  /** @deprecated use `GetAddressesFromWebhookResponse$Outbound` instead. */
-  export type Outbound = GetAddressesFromWebhookResponse$Outbound;
-}
-
 export function getAddressesFromWebhookResponseToJSON(
   getAddressesFromWebhookResponse: GetAddressesFromWebhookResponse,
 ): string {
@@ -147,7 +118,6 @@ export function getAddressesFromWebhookResponseToJSON(
     ),
   );
 }
-
 export function getAddressesFromWebhookResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesFromWebhookResponse, SDKValidationError> {

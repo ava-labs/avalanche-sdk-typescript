@@ -30,19 +30,7 @@ export type NftTokenMetadataStatus = ClosedEnum<typeof NftTokenMetadataStatus>;
 export const NftTokenMetadataStatus$inboundSchema: z.ZodNativeEnum<
   typeof NftTokenMetadataStatus
 > = z.nativeEnum(NftTokenMetadataStatus);
-
 /** @internal */
 export const NftTokenMetadataStatus$outboundSchema: z.ZodNativeEnum<
   typeof NftTokenMetadataStatus
 > = NftTokenMetadataStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NftTokenMetadataStatus$ {
-  /** @deprecated use `NftTokenMetadataStatus$inboundSchema` instead. */
-  export const inboundSchema = NftTokenMetadataStatus$inboundSchema;
-  /** @deprecated use `NftTokenMetadataStatus$outboundSchema` instead. */
-  export const outboundSchema = NftTokenMetadataStatus$outboundSchema;
-}

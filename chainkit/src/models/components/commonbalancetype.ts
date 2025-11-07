@@ -29,19 +29,7 @@ export type CommonBalanceType = ClosedEnum<typeof CommonBalanceType>;
 export const CommonBalanceType$inboundSchema: z.ZodNativeEnum<
   typeof CommonBalanceType
 > = z.nativeEnum(CommonBalanceType);
-
 /** @internal */
 export const CommonBalanceType$outboundSchema: z.ZodNativeEnum<
   typeof CommonBalanceType
 > = CommonBalanceType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CommonBalanceType$ {
-  /** @deprecated use `CommonBalanceType$inboundSchema` instead. */
-  export const inboundSchema = CommonBalanceType$inboundSchema;
-  /** @deprecated use `CommonBalanceType$outboundSchema` instead. */
-  export const outboundSchema = CommonBalanceType$outboundSchema;
-}

@@ -63,7 +63,6 @@ export const ValidatorActivityMetadata$inboundSchema: z.ZodType<
   subnetIds: z.array(z.string()).optional(),
   l1ValidatorFeeBalanceThreshold: z.string().optional(),
 });
-
 /** @internal */
 export type ValidatorActivityMetadata$Outbound = {
   eventSignatures?: Array<string> | undefined;
@@ -90,19 +89,6 @@ export const ValidatorActivityMetadata$outboundSchema: z.ZodType<
   l1ValidatorFeeBalanceThreshold: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityMetadata$ {
-  /** @deprecated use `ValidatorActivityMetadata$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityMetadata$inboundSchema;
-  /** @deprecated use `ValidatorActivityMetadata$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityMetadata$outboundSchema;
-  /** @deprecated use `ValidatorActivityMetadata$Outbound` instead. */
-  export type Outbound = ValidatorActivityMetadata$Outbound;
-}
-
 export function validatorActivityMetadataToJSON(
   validatorActivityMetadata: ValidatorActivityMetadata,
 ): string {
@@ -110,7 +96,6 @@ export function validatorActivityMetadataToJSON(
     ValidatorActivityMetadata$outboundSchema.parse(validatorActivityMetadata),
   );
 }
-
 export function validatorActivityMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorActivityMetadata, SDKValidationError> {

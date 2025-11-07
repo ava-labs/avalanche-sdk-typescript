@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListTokensServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListTokensGlobals = {
@@ -51,7 +51,6 @@ export const ListTokensGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListTokensGlobals$Outbound = {
   chainId?: string | undefined;
@@ -66,19 +65,6 @@ export const ListTokensGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTokensGlobals$ {
-  /** @deprecated use `ListTokensGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListTokensGlobals$inboundSchema;
-  /** @deprecated use `ListTokensGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListTokensGlobals$outboundSchema;
-  /** @deprecated use `ListTokensGlobals$Outbound` instead. */
-  export type Outbound = ListTokensGlobals$Outbound;
-}
-
 export function listTokensGlobalsToJSON(
   listTokensGlobals: ListTokensGlobals,
 ): string {
@@ -86,7 +72,6 @@ export function listTokensGlobalsToJSON(
     ListTokensGlobals$outboundSchema.parse(listTokensGlobals),
   );
 }
-
 export function listTokensGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTokensGlobals, SDKValidationError> {
@@ -108,7 +93,6 @@ export const ListTokensRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListTokensRequest$Outbound = {
   pageToken?: string | undefined;
@@ -129,19 +113,6 @@ export const ListTokensRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTokensRequest$ {
-  /** @deprecated use `ListTokensRequest$inboundSchema` instead. */
-  export const inboundSchema = ListTokensRequest$inboundSchema;
-  /** @deprecated use `ListTokensRequest$outboundSchema` instead. */
-  export const outboundSchema = ListTokensRequest$outboundSchema;
-  /** @deprecated use `ListTokensRequest$Outbound` instead. */
-  export type Outbound = ListTokensRequest$Outbound;
-}
-
 export function listTokensRequestToJSON(
   listTokensRequest: ListTokensRequest,
 ): string {
@@ -149,7 +120,6 @@ export function listTokensRequestToJSON(
     ListTokensRequest$outboundSchema.parse(listTokensRequest),
   );
 }
-
 export function listTokensRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTokensRequest, SDKValidationError> {
@@ -172,7 +142,6 @@ export const ListTokensResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListTokensResponse$Outbound = {
   Result: components.ListNftTokens$Outbound;
@@ -191,19 +160,6 @@ export const ListTokensResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTokensResponse$ {
-  /** @deprecated use `ListTokensResponse$inboundSchema` instead. */
-  export const inboundSchema = ListTokensResponse$inboundSchema;
-  /** @deprecated use `ListTokensResponse$outboundSchema` instead. */
-  export const outboundSchema = ListTokensResponse$outboundSchema;
-  /** @deprecated use `ListTokensResponse$Outbound` instead. */
-  export type Outbound = ListTokensResponse$Outbound;
-}
-
 export function listTokensResponseToJSON(
   listTokensResponse: ListTokensResponse,
 ): string {
@@ -211,7 +167,6 @@ export function listTokensResponseToJSON(
     ListTokensResponse$outboundSchema.parse(listTokensResponse),
   );
 }
-
 export function listTokensResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTokensResponse, SDKValidationError> {

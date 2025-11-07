@@ -22,7 +22,6 @@ export const Rewards$inboundSchema: z.ZodType<Rewards, z.ZodTypeDef, unknown> =
     rewardAddresses: z.array(z.string()).optional(),
     rewardTxHash: z.string().optional(),
   });
-
 /** @internal */
 export type Rewards$Outbound = {
   validationRewardAmount: string;
@@ -43,23 +42,9 @@ export const Rewards$outboundSchema: z.ZodType<
   rewardTxHash: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Rewards$ {
-  /** @deprecated use `Rewards$inboundSchema` instead. */
-  export const inboundSchema = Rewards$inboundSchema;
-  /** @deprecated use `Rewards$outboundSchema` instead. */
-  export const outboundSchema = Rewards$outboundSchema;
-  /** @deprecated use `Rewards$Outbound` instead. */
-  export type Outbound = Rewards$Outbound;
-}
-
 export function rewardsToJSON(rewards: Rewards): string {
   return JSON.stringify(Rewards$outboundSchema.parse(rewards));
 }
-
 export function rewardsFromJSON(
   jsonString: string,
 ): SafeParseResult<Rewards, SDKValidationError> {

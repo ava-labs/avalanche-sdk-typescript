@@ -27,7 +27,6 @@ export const IcmDestinationTransaction$inboundSchema: z.ZodType<
   rewardRedeemer: z.string(),
   delivererAddress: z.string(),
 });
-
 /** @internal */
 export type IcmDestinationTransaction$Outbound = {
   txHash: string;
@@ -50,19 +49,6 @@ export const IcmDestinationTransaction$outboundSchema: z.ZodType<
   delivererAddress: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace IcmDestinationTransaction$ {
-  /** @deprecated use `IcmDestinationTransaction$inboundSchema` instead. */
-  export const inboundSchema = IcmDestinationTransaction$inboundSchema;
-  /** @deprecated use `IcmDestinationTransaction$outboundSchema` instead. */
-  export const outboundSchema = IcmDestinationTransaction$outboundSchema;
-  /** @deprecated use `IcmDestinationTransaction$Outbound` instead. */
-  export type Outbound = IcmDestinationTransaction$Outbound;
-}
-
 export function icmDestinationTransactionToJSON(
   icmDestinationTransaction: IcmDestinationTransaction,
 ): string {
@@ -70,7 +56,6 @@ export function icmDestinationTransactionToJSON(
     IcmDestinationTransaction$outboundSchema.parse(icmDestinationTransaction),
   );
 }
-
 export function icmDestinationTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<IcmDestinationTransaction, SDKValidationError> {

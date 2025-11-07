@@ -58,7 +58,6 @@ export const BadRequestMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type BadRequestMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const BadRequestMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BadRequestMessage$ {
-  /** @deprecated use `BadRequestMessage$inboundSchema` instead. */
-  export const inboundSchema = BadRequestMessage$inboundSchema;
-  /** @deprecated use `BadRequestMessage$outboundSchema` instead. */
-  export const outboundSchema = BadRequestMessage$outboundSchema;
-  /** @deprecated use `BadRequestMessage$Outbound` instead. */
-  export type Outbound = BadRequestMessage$Outbound;
-}
-
 export function badRequestMessageToJSON(
   badRequestMessage: BadRequestMessage,
 ): string {
@@ -89,7 +75,6 @@ export function badRequestMessageToJSON(
     BadRequestMessage$outboundSchema.parse(badRequestMessage),
   );
 }
-
 export function badRequestMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<BadRequestMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const BadRequestError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BadRequestError$ {
-  /** @deprecated use `BadRequestError$inboundSchema` instead. */
-  export const inboundSchema = BadRequestError$inboundSchema;
-  /** @deprecated use `BadRequestError$outboundSchema` instead. */
-  export const outboundSchema = BadRequestError$outboundSchema;
-  /** @deprecated use `BadRequestError$Outbound` instead. */
-  export type Outbound = BadRequestError$Outbound;
-}

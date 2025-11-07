@@ -52,24 +52,10 @@ export type CompletedValidatorDetails = {
 export const CompletedValidatorDetailsValidationStatus$inboundSchema:
   z.ZodNativeEnum<typeof CompletedValidatorDetailsValidationStatus> = z
     .nativeEnum(CompletedValidatorDetailsValidationStatus);
-
 /** @internal */
 export const CompletedValidatorDetailsValidationStatus$outboundSchema:
   z.ZodNativeEnum<typeof CompletedValidatorDetailsValidationStatus> =
     CompletedValidatorDetailsValidationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CompletedValidatorDetailsValidationStatus$ {
-  /** @deprecated use `CompletedValidatorDetailsValidationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    CompletedValidatorDetailsValidationStatus$inboundSchema;
-  /** @deprecated use `CompletedValidatorDetailsValidationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    CompletedValidatorDetailsValidationStatus$outboundSchema;
-}
 
 /** @internal */
 export const CompletedValidatorDetails$inboundSchema: z.ZodType<
@@ -90,7 +76,6 @@ export const CompletedValidatorDetails$inboundSchema: z.ZodType<
   rewards: Rewards$inboundSchema,
   validationStatus: CompletedValidatorDetailsValidationStatus$inboundSchema,
 });
-
 /** @internal */
 export type CompletedValidatorDetails$Outbound = {
   txHash: string;
@@ -127,19 +112,6 @@ export const CompletedValidatorDetails$outboundSchema: z.ZodType<
   validationStatus: CompletedValidatorDetailsValidationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CompletedValidatorDetails$ {
-  /** @deprecated use `CompletedValidatorDetails$inboundSchema` instead. */
-  export const inboundSchema = CompletedValidatorDetails$inboundSchema;
-  /** @deprecated use `CompletedValidatorDetails$outboundSchema` instead. */
-  export const outboundSchema = CompletedValidatorDetails$outboundSchema;
-  /** @deprecated use `CompletedValidatorDetails$Outbound` instead. */
-  export type Outbound = CompletedValidatorDetails$Outbound;
-}
-
 export function completedValidatorDetailsToJSON(
   completedValidatorDetails: CompletedValidatorDetails,
 ): string {
@@ -147,7 +119,6 @@ export function completedValidatorDetailsToJSON(
     CompletedValidatorDetails$outboundSchema.parse(completedValidatorDetails),
   );
 }
-
 export function completedValidatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<CompletedValidatorDetails, SDKValidationError> {

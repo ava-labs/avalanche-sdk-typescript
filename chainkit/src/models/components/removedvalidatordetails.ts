@@ -51,24 +51,10 @@ export type RemovedValidatorDetails = {
 export const RemovedValidatorDetailsValidationStatus$inboundSchema:
   z.ZodNativeEnum<typeof RemovedValidatorDetailsValidationStatus> = z
     .nativeEnum(RemovedValidatorDetailsValidationStatus);
-
 /** @internal */
 export const RemovedValidatorDetailsValidationStatus$outboundSchema:
   z.ZodNativeEnum<typeof RemovedValidatorDetailsValidationStatus> =
     RemovedValidatorDetailsValidationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RemovedValidatorDetailsValidationStatus$ {
-  /** @deprecated use `RemovedValidatorDetailsValidationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    RemovedValidatorDetailsValidationStatus$inboundSchema;
-  /** @deprecated use `RemovedValidatorDetailsValidationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    RemovedValidatorDetailsValidationStatus$outboundSchema;
-}
 
 /** @internal */
 export const RemovedValidatorDetails$inboundSchema: z.ZodType<
@@ -88,7 +74,6 @@ export const RemovedValidatorDetails$inboundSchema: z.ZodType<
   removeTimestamp: z.number(),
   validationStatus: RemovedValidatorDetailsValidationStatus$inboundSchema,
 });
-
 /** @internal */
 export type RemovedValidatorDetails$Outbound = {
   txHash: string;
@@ -123,19 +108,6 @@ export const RemovedValidatorDetails$outboundSchema: z.ZodType<
   validationStatus: RemovedValidatorDetailsValidationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RemovedValidatorDetails$ {
-  /** @deprecated use `RemovedValidatorDetails$inboundSchema` instead. */
-  export const inboundSchema = RemovedValidatorDetails$inboundSchema;
-  /** @deprecated use `RemovedValidatorDetails$outboundSchema` instead. */
-  export const outboundSchema = RemovedValidatorDetails$outboundSchema;
-  /** @deprecated use `RemovedValidatorDetails$Outbound` instead. */
-  export type Outbound = RemovedValidatorDetails$Outbound;
-}
-
 export function removedValidatorDetailsToJSON(
   removedValidatorDetails: RemovedValidatorDetails,
 ): string {
@@ -143,7 +115,6 @@ export function removedValidatorDetailsToJSON(
     RemovedValidatorDetails$outboundSchema.parse(removedValidatorDetails),
   );
 }
-
 export function removedValidatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<RemovedValidatorDetails, SDKValidationError> {

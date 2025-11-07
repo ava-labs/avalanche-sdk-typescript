@@ -32,7 +32,6 @@ export const StakingDistribution$inboundSchema: z.ZodType<
   amountStaked: z.string(),
   validatorCount: z.number(),
 });
-
 /** @internal */
 export type StakingDistribution$Outbound = {
   version: string;
@@ -51,19 +50,6 @@ export const StakingDistribution$outboundSchema: z.ZodType<
   validatorCount: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace StakingDistribution$ {
-  /** @deprecated use `StakingDistribution$inboundSchema` instead. */
-  export const inboundSchema = StakingDistribution$inboundSchema;
-  /** @deprecated use `StakingDistribution$outboundSchema` instead. */
-  export const outboundSchema = StakingDistribution$outboundSchema;
-  /** @deprecated use `StakingDistribution$Outbound` instead. */
-  export type Outbound = StakingDistribution$Outbound;
-}
-
 export function stakingDistributionToJSON(
   stakingDistribution: StakingDistribution,
 ): string {
@@ -71,7 +57,6 @@ export function stakingDistributionToJSON(
     StakingDistribution$outboundSchema.parse(stakingDistribution),
   );
 }
-
 export function stakingDistributionFromJSON(
   jsonString: string,
 ): SafeParseResult<StakingDistribution, SDKValidationError> {

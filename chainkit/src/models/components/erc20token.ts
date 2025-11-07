@@ -51,22 +51,10 @@ export type Erc20Token = {
 export const Erc20TokenErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc20TokenErcType
 > = z.nativeEnum(Erc20TokenErcType);
-
 /** @internal */
 export const Erc20TokenErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc20TokenErcType
 > = Erc20TokenErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc20TokenErcType$ {
-  /** @deprecated use `Erc20TokenErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc20TokenErcType$inboundSchema;
-  /** @deprecated use `Erc20TokenErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc20TokenErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc20Token$inboundSchema: z.ZodType<
@@ -82,7 +70,6 @@ export const Erc20Token$inboundSchema: z.ZodType<
   ercType: Erc20TokenErcType$inboundSchema,
   price: Money$inboundSchema.optional(),
 });
-
 /** @internal */
 export type Erc20Token$Outbound = {
   address: string;
@@ -109,23 +96,9 @@ export const Erc20Token$outboundSchema: z.ZodType<
   price: Money$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc20Token$ {
-  /** @deprecated use `Erc20Token$inboundSchema` instead. */
-  export const inboundSchema = Erc20Token$inboundSchema;
-  /** @deprecated use `Erc20Token$outboundSchema` instead. */
-  export const outboundSchema = Erc20Token$outboundSchema;
-  /** @deprecated use `Erc20Token$Outbound` instead. */
-  export type Outbound = Erc20Token$Outbound;
-}
-
 export function erc20TokenToJSON(erc20Token: Erc20Token): string {
   return JSON.stringify(Erc20Token$outboundSchema.parse(erc20Token));
 }
-
 export function erc20TokenFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc20Token, SDKValidationError> {

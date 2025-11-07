@@ -23,19 +23,7 @@ export type ValidatorActivityKeyType = ClosedEnum<
 export const ValidatorActivityKeyType$inboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityKeyType
 > = z.nativeEnum(ValidatorActivityKeyType);
-
 /** @internal */
 export const ValidatorActivityKeyType$outboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivityKeyType
 > = ValidatorActivityKeyType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityKeyType$ {
-  /** @deprecated use `ValidatorActivityKeyType$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityKeyType$inboundSchema;
-  /** @deprecated use `ValidatorActivityKeyType$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityKeyType$outboundSchema;
-}

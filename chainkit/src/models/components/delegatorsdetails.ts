@@ -21,7 +21,6 @@ export const DelegatorsDetails$inboundSchema: z.ZodType<
   delegatorCount: z.number(),
   totalAmountStaked: z.string(),
 });
-
 /** @internal */
 export type DelegatorsDetails$Outbound = {
   delegatorCount: number;
@@ -38,19 +37,6 @@ export const DelegatorsDetails$outboundSchema: z.ZodType<
   totalAmountStaked: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DelegatorsDetails$ {
-  /** @deprecated use `DelegatorsDetails$inboundSchema` instead. */
-  export const inboundSchema = DelegatorsDetails$inboundSchema;
-  /** @deprecated use `DelegatorsDetails$outboundSchema` instead. */
-  export const outboundSchema = DelegatorsDetails$outboundSchema;
-  /** @deprecated use `DelegatorsDetails$Outbound` instead. */
-  export type Outbound = DelegatorsDetails$Outbound;
-}
-
 export function delegatorsDetailsToJSON(
   delegatorsDetails: DelegatorsDetails,
 ): string {
@@ -58,7 +44,6 @@ export function delegatorsDetailsToJSON(
     DelegatorsDetails$outboundSchema.parse(delegatorsDetails),
   );
 }
-
 export function delegatorsDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<DelegatorsDetails, SDKValidationError> {

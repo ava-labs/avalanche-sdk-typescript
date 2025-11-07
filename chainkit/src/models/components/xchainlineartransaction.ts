@@ -102,23 +102,10 @@ export type XChainLinearTransaction = {
 export const XChainLinearTransactionChainFormat$inboundSchema: z.ZodNativeEnum<
   typeof XChainLinearTransactionChainFormat
 > = z.nativeEnum(XChainLinearTransactionChainFormat);
-
 /** @internal */
 export const XChainLinearTransactionChainFormat$outboundSchema: z.ZodNativeEnum<
   typeof XChainLinearTransactionChainFormat
 > = XChainLinearTransactionChainFormat$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainLinearTransactionChainFormat$ {
-  /** @deprecated use `XChainLinearTransactionChainFormat$inboundSchema` instead. */
-  export const inboundSchema = XChainLinearTransactionChainFormat$inboundSchema;
-  /** @deprecated use `XChainLinearTransactionChainFormat$outboundSchema` instead. */
-  export const outboundSchema =
-    XChainLinearTransactionChainFormat$outboundSchema;
-}
 
 /** @internal */
 export const XChainLinearTransaction$inboundSchema: z.ZodType<
@@ -141,7 +128,6 @@ export const XChainLinearTransaction$inboundSchema: z.ZodType<
   blockHeight: z.number(),
   blockHash: z.string(),
 });
-
 /** @internal */
 export type XChainLinearTransaction$Outbound = {
   txHash: string;
@@ -182,19 +168,6 @@ export const XChainLinearTransaction$outboundSchema: z.ZodType<
   blockHash: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainLinearTransaction$ {
-  /** @deprecated use `XChainLinearTransaction$inboundSchema` instead. */
-  export const inboundSchema = XChainLinearTransaction$inboundSchema;
-  /** @deprecated use `XChainLinearTransaction$outboundSchema` instead. */
-  export const outboundSchema = XChainLinearTransaction$outboundSchema;
-  /** @deprecated use `XChainLinearTransaction$Outbound` instead. */
-  export type Outbound = XChainLinearTransaction$Outbound;
-}
-
 export function xChainLinearTransactionToJSON(
   xChainLinearTransaction: XChainLinearTransaction,
 ): string {
@@ -202,7 +175,6 @@ export function xChainLinearTransactionToJSON(
     XChainLinearTransaction$outboundSchema.parse(xChainLinearTransaction),
   );
 }
-
 export function xChainLinearTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<XChainLinearTransaction, SDKValidationError> {

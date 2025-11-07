@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetApiUsageMetricsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 /**
@@ -74,22 +74,10 @@ export type GetApiUsageMetricsRequest = {
 export const GetApiUsageMetricsRequestType$inboundSchema: z.ZodNativeEnum<
   typeof GetApiUsageMetricsRequestType
 > = z.nativeEnum(GetApiUsageMetricsRequestType);
-
 /** @internal */
 export const GetApiUsageMetricsRequestType$outboundSchema: z.ZodNativeEnum<
   typeof GetApiUsageMetricsRequestType
 > = GetApiUsageMetricsRequestType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetApiUsageMetricsRequestType$ {
-  /** @deprecated use `GetApiUsageMetricsRequestType$inboundSchema` instead. */
-  export const inboundSchema = GetApiUsageMetricsRequestType$inboundSchema;
-  /** @deprecated use `GetApiUsageMetricsRequestType$outboundSchema` instead. */
-  export const outboundSchema = GetApiUsageMetricsRequestType$outboundSchema;
-}
 
 /** @internal */
 export const GetApiUsageMetricsRequest$inboundSchema: z.ZodType<
@@ -109,7 +97,6 @@ export const GetApiUsageMetricsRequest$inboundSchema: z.ZodType<
   apiKeyId: z.string().optional(),
   requestPath: z.string().optional(),
 });
-
 /** @internal */
 export type GetApiUsageMetricsRequest$Outbound = {
   orgId?: string | undefined;
@@ -143,19 +130,6 @@ export const GetApiUsageMetricsRequest$outboundSchema: z.ZodType<
   requestPath: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetApiUsageMetricsRequest$ {
-  /** @deprecated use `GetApiUsageMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetApiUsageMetricsRequest$inboundSchema;
-  /** @deprecated use `GetApiUsageMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetApiUsageMetricsRequest$outboundSchema;
-  /** @deprecated use `GetApiUsageMetricsRequest$Outbound` instead. */
-  export type Outbound = GetApiUsageMetricsRequest$Outbound;
-}
-
 export function getApiUsageMetricsRequestToJSON(
   getApiUsageMetricsRequest: GetApiUsageMetricsRequest,
 ): string {
@@ -163,7 +137,6 @@ export function getApiUsageMetricsRequestToJSON(
     GetApiUsageMetricsRequest$outboundSchema.parse(getApiUsageMetricsRequest),
   );
 }
-
 export function getApiUsageMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetApiUsageMetricsRequest, SDKValidationError> {

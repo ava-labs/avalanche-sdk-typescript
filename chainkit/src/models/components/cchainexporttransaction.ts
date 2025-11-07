@@ -88,22 +88,10 @@ export type CChainExportTransaction = {
 export const CChainExportTransactionTxType$inboundSchema: z.ZodNativeEnum<
   typeof CChainExportTransactionTxType
 > = z.nativeEnum(CChainExportTransactionTxType);
-
 /** @internal */
 export const CChainExportTransactionTxType$outboundSchema: z.ZodNativeEnum<
   typeof CChainExportTransactionTxType
 > = CChainExportTransactionTxType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CChainExportTransactionTxType$ {
-  /** @deprecated use `CChainExportTransactionTxType$inboundSchema` instead. */
-  export const inboundSchema = CChainExportTransactionTxType$inboundSchema;
-  /** @deprecated use `CChainExportTransactionTxType$outboundSchema` instead. */
-  export const outboundSchema = CChainExportTransactionTxType$outboundSchema;
-}
 
 /** @internal */
 export const CChainExportTransaction$inboundSchema: z.ZodType<
@@ -124,7 +112,6 @@ export const CChainExportTransaction$inboundSchema: z.ZodType<
   evmInputs: z.array(EVMInput$inboundSchema),
   emittedUtxos: z.array(Utxo$inboundSchema),
 });
-
 /** @internal */
 export type CChainExportTransaction$Outbound = {
   txHash: string;
@@ -161,19 +148,6 @@ export const CChainExportTransaction$outboundSchema: z.ZodType<
   emittedUtxos: z.array(Utxo$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CChainExportTransaction$ {
-  /** @deprecated use `CChainExportTransaction$inboundSchema` instead. */
-  export const inboundSchema = CChainExportTransaction$inboundSchema;
-  /** @deprecated use `CChainExportTransaction$outboundSchema` instead. */
-  export const outboundSchema = CChainExportTransaction$outboundSchema;
-  /** @deprecated use `CChainExportTransaction$Outbound` instead. */
-  export type Outbound = CChainExportTransaction$Outbound;
-}
-
 export function cChainExportTransactionToJSON(
   cChainExportTransaction: CChainExportTransaction,
 ): string {
@@ -181,7 +155,6 @@ export function cChainExportTransactionToJSON(
     CChainExportTransaction$outboundSchema.parse(cChainExportTransaction),
   );
 }
-
 export function cChainExportTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<CChainExportTransaction, SDKValidationError> {

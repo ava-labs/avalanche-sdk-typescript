@@ -47,7 +47,6 @@ export const CreatePrimaryNetworkTransactionExportRequest$inboundSchema:
     endDate: z.string().optional(),
     options: PrimaryNetworkOptions$inboundSchema,
   });
-
 /** @internal */
 export type CreatePrimaryNetworkTransactionExportRequest$Outbound = {
   type: string;
@@ -73,21 +72,6 @@ export const CreatePrimaryNetworkTransactionExportRequest$outboundSchema:
     options: PrimaryNetworkOptions$outboundSchema,
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreatePrimaryNetworkTransactionExportRequest$ {
-  /** @deprecated use `CreatePrimaryNetworkTransactionExportRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    CreatePrimaryNetworkTransactionExportRequest$inboundSchema;
-  /** @deprecated use `CreatePrimaryNetworkTransactionExportRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    CreatePrimaryNetworkTransactionExportRequest$outboundSchema;
-  /** @deprecated use `CreatePrimaryNetworkTransactionExportRequest$Outbound` instead. */
-  export type Outbound = CreatePrimaryNetworkTransactionExportRequest$Outbound;
-}
-
 export function createPrimaryNetworkTransactionExportRequestToJSON(
   createPrimaryNetworkTransactionExportRequest:
     CreatePrimaryNetworkTransactionExportRequest,
@@ -98,7 +82,6 @@ export function createPrimaryNetworkTransactionExportRequestToJSON(
     ),
   );
 }
-
 export function createPrimaryNetworkTransactionExportRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<

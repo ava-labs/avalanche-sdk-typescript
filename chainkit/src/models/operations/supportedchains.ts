@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const SupportedChainsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type SupportedChainsRequest = {
@@ -32,7 +32,6 @@ export const SupportedChainsRequest$inboundSchema: z.ZodType<
   network: components.Network$inboundSchema.optional(),
   feature: components.ApiFeature$inboundSchema.optional(),
 });
-
 /** @internal */
 export type SupportedChainsRequest$Outbound = {
   network?: string | undefined;
@@ -49,19 +48,6 @@ export const SupportedChainsRequest$outboundSchema: z.ZodType<
   feature: components.ApiFeature$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SupportedChainsRequest$ {
-  /** @deprecated use `SupportedChainsRequest$inboundSchema` instead. */
-  export const inboundSchema = SupportedChainsRequest$inboundSchema;
-  /** @deprecated use `SupportedChainsRequest$outboundSchema` instead. */
-  export const outboundSchema = SupportedChainsRequest$outboundSchema;
-  /** @deprecated use `SupportedChainsRequest$Outbound` instead. */
-  export type Outbound = SupportedChainsRequest$Outbound;
-}
-
 export function supportedChainsRequestToJSON(
   supportedChainsRequest: SupportedChainsRequest,
 ): string {
@@ -69,7 +55,6 @@ export function supportedChainsRequestToJSON(
     SupportedChainsRequest$outboundSchema.parse(supportedChainsRequest),
   );
 }
-
 export function supportedChainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<SupportedChainsRequest, SDKValidationError> {

@@ -55,7 +55,6 @@ export const L1ValidatorDetailsFullBlsCredentials$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({});
-
 /** @internal */
 export type L1ValidatorDetailsFullBlsCredentials$Outbound = {};
 
@@ -66,21 +65,6 @@ export const L1ValidatorDetailsFullBlsCredentials$outboundSchema: z.ZodType<
   L1ValidatorDetailsFullBlsCredentials
 > = z.object({});
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace L1ValidatorDetailsFullBlsCredentials$ {
-  /** @deprecated use `L1ValidatorDetailsFullBlsCredentials$inboundSchema` instead. */
-  export const inboundSchema =
-    L1ValidatorDetailsFullBlsCredentials$inboundSchema;
-  /** @deprecated use `L1ValidatorDetailsFullBlsCredentials$outboundSchema` instead. */
-  export const outboundSchema =
-    L1ValidatorDetailsFullBlsCredentials$outboundSchema;
-  /** @deprecated use `L1ValidatorDetailsFullBlsCredentials$Outbound` instead. */
-  export type Outbound = L1ValidatorDetailsFullBlsCredentials$Outbound;
-}
-
 export function l1ValidatorDetailsFullBlsCredentialsToJSON(
   l1ValidatorDetailsFullBlsCredentials: L1ValidatorDetailsFullBlsCredentials,
 ): string {
@@ -90,7 +74,6 @@ export function l1ValidatorDetailsFullBlsCredentialsToJSON(
     ),
   );
 }
-
 export function l1ValidatorDetailsFullBlsCredentialsFromJSON(
   jsonString: string,
 ): SafeParseResult<L1ValidatorDetailsFullBlsCredentials, SDKValidationError> {
@@ -121,7 +104,6 @@ export const L1ValidatorDetailsFull$inboundSchema: z.ZodType<
   remainingBalanceOwner: BalanceOwner$inboundSchema,
   deactivationOwner: BalanceOwner$inboundSchema,
 });
-
 /** @internal */
 export type L1ValidatorDetailsFull$Outbound = {
   validationId: string;
@@ -156,19 +138,6 @@ export const L1ValidatorDetailsFull$outboundSchema: z.ZodType<
   deactivationOwner: BalanceOwner$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace L1ValidatorDetailsFull$ {
-  /** @deprecated use `L1ValidatorDetailsFull$inboundSchema` instead. */
-  export const inboundSchema = L1ValidatorDetailsFull$inboundSchema;
-  /** @deprecated use `L1ValidatorDetailsFull$outboundSchema` instead. */
-  export const outboundSchema = L1ValidatorDetailsFull$outboundSchema;
-  /** @deprecated use `L1ValidatorDetailsFull$Outbound` instead. */
-  export type Outbound = L1ValidatorDetailsFull$Outbound;
-}
-
 export function l1ValidatorDetailsFullToJSON(
   l1ValidatorDetailsFull: L1ValidatorDetailsFull,
 ): string {
@@ -176,7 +145,6 @@ export function l1ValidatorDetailsFullToJSON(
     L1ValidatorDetailsFull$outboundSchema.parse(l1ValidatorDetailsFull),
   );
 }
-
 export function l1ValidatorDetailsFullFromJSON(
   jsonString: string,
 ): SafeParseResult<L1ValidatorDetailsFull, SDKValidationError> {

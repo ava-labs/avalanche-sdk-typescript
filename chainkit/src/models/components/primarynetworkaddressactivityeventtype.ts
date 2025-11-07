@@ -17,21 +17,7 @@ export const PrimaryNetworkAddressActivityEventType$inboundSchema:
   z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityEventType> = z.nativeEnum(
     PrimaryNetworkAddressActivityEventType,
   );
-
 /** @internal */
 export const PrimaryNetworkAddressActivityEventType$outboundSchema:
   z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityEventType> =
     PrimaryNetworkAddressActivityEventType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityEventType$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityEventType$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityEventType$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityEventType$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityEventType$outboundSchema;
-}

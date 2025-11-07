@@ -32,7 +32,6 @@ export type ListNftTokens = {
 /** @internal */
 export const Token$inboundSchema: z.ZodType<Token, z.ZodTypeDef, unknown> = z
   .union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]);
-
 /** @internal */
 export type Token$Outbound = Erc721Token$Outbound | Erc1155Token$Outbound;
 
@@ -43,23 +42,9 @@ export const Token$outboundSchema: z.ZodType<
   Token
 > = z.union([Erc721Token$outboundSchema, Erc1155Token$outboundSchema]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Token$ {
-  /** @deprecated use `Token$inboundSchema` instead. */
-  export const inboundSchema = Token$inboundSchema;
-  /** @deprecated use `Token$outboundSchema` instead. */
-  export const outboundSchema = Token$outboundSchema;
-  /** @deprecated use `Token$Outbound` instead. */
-  export type Outbound = Token$Outbound;
-}
-
 export function tokenToJSON(token: Token): string {
   return JSON.stringify(Token$outboundSchema.parse(token));
 }
-
 export function tokenFromJSON(
   jsonString: string,
 ): SafeParseResult<Token, SDKValidationError> {
@@ -81,7 +66,6 @@ export const ListNftTokens$inboundSchema: z.ZodType<
     z.union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]),
   ),
 });
-
 /** @internal */
 export type ListNftTokens$Outbound = {
   nextPageToken?: string | undefined;
@@ -100,23 +84,9 @@ export const ListNftTokens$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListNftTokens$ {
-  /** @deprecated use `ListNftTokens$inboundSchema` instead. */
-  export const inboundSchema = ListNftTokens$inboundSchema;
-  /** @deprecated use `ListNftTokens$outboundSchema` instead. */
-  export const outboundSchema = ListNftTokens$outboundSchema;
-  /** @deprecated use `ListNftTokens$Outbound` instead. */
-  export type Outbound = ListNftTokens$Outbound;
-}
-
 export function listNftTokensToJSON(listNftTokens: ListNftTokens): string {
   return JSON.stringify(ListNftTokens$outboundSchema.parse(listNftTokens));
 }
-
 export function listNftTokensFromJSON(
   jsonString: string,
 ): SafeParseResult<ListNftTokens, SDKValidationError> {

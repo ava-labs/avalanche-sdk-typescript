@@ -30,7 +30,6 @@ export const Metric$inboundSchema: z.ZodType<Metric, z.ZodTypeDef, unknown> = z
     timestamp: z.number(),
     values: z.array(UsageMetricsValueDTO$inboundSchema),
   });
-
 /** @internal */
 export type Metric$Outbound = {
   timestamp: number;
@@ -47,23 +46,9 @@ export const Metric$outboundSchema: z.ZodType<
   values: z.array(UsageMetricsValueDTO$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Metric$ {
-  /** @deprecated use `Metric$inboundSchema` instead. */
-  export const inboundSchema = Metric$inboundSchema;
-  /** @deprecated use `Metric$outboundSchema` instead. */
-  export const outboundSchema = Metric$outboundSchema;
-  /** @deprecated use `Metric$Outbound` instead. */
-  export type Outbound = Metric$Outbound;
-}
-
 export function metricToJSON(metric: Metric): string {
   return JSON.stringify(Metric$outboundSchema.parse(metric));
 }
-
 export function metricFromJSON(
   jsonString: string,
 ): SafeParseResult<Metric, SDKValidationError> {

@@ -47,7 +47,6 @@ export const SignatureAggregatorRequest$inboundSchema: z.ZodType<
   quorumPercentageBuffer: z.number().optional(),
   pChainHeight: z.number().optional(),
 });
-
 /** @internal */
 export type SignatureAggregatorRequest$Outbound = {
   message?: string | undefined;
@@ -72,19 +71,6 @@ export const SignatureAggregatorRequest$outboundSchema: z.ZodType<
   pChainHeight: z.number().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SignatureAggregatorRequest$ {
-  /** @deprecated use `SignatureAggregatorRequest$inboundSchema` instead. */
-  export const inboundSchema = SignatureAggregatorRequest$inboundSchema;
-  /** @deprecated use `SignatureAggregatorRequest$outboundSchema` instead. */
-  export const outboundSchema = SignatureAggregatorRequest$outboundSchema;
-  /** @deprecated use `SignatureAggregatorRequest$Outbound` instead. */
-  export type Outbound = SignatureAggregatorRequest$Outbound;
-}
-
 export function signatureAggregatorRequestToJSON(
   signatureAggregatorRequest: SignatureAggregatorRequest,
 ): string {
@@ -92,7 +78,6 @@ export function signatureAggregatorRequestToJSON(
     SignatureAggregatorRequest$outboundSchema.parse(signatureAggregatorRequest),
   );
 }
-
 export function signatureAggregatorRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<SignatureAggregatorRequest, SDKValidationError> {

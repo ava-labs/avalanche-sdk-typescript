@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const AddAddressesToWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type AddAddressesToWebhookRequest = {
@@ -34,7 +34,6 @@ export const AddAddressesToWebhookRequest$inboundSchema: z.ZodType<
     "AddressesChangeRequest": "addressesChangeRequest",
   });
 });
-
 /** @internal */
 export type AddAddressesToWebhookRequest$Outbound = {
   id: string;
@@ -55,19 +54,6 @@ export const AddAddressesToWebhookRequest$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AddAddressesToWebhookRequest$ {
-  /** @deprecated use `AddAddressesToWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = AddAddressesToWebhookRequest$inboundSchema;
-  /** @deprecated use `AddAddressesToWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = AddAddressesToWebhookRequest$outboundSchema;
-  /** @deprecated use `AddAddressesToWebhookRequest$Outbound` instead. */
-  export type Outbound = AddAddressesToWebhookRequest$Outbound;
-}
-
 export function addAddressesToWebhookRequestToJSON(
   addAddressesToWebhookRequest: AddAddressesToWebhookRequest,
 ): string {
@@ -77,7 +63,6 @@ export function addAddressesToWebhookRequestToJSON(
     ),
   );
 }
-
 export function addAddressesToWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<AddAddressesToWebhookRequest, SDKValidationError> {

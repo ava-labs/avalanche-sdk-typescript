@@ -244,6 +244,7 @@ run();
 ### [data](docs/sdks/data/README.md)
 
 * [healthCheck](docs/sdks/data/README.md#healthcheck) - Get the health of the service
+* [liveCheck](docs/sdks/data/README.md#livecheck) - Get the liveliness of the service (reads only)
 
 #### [data.evm.address.balances](docs/sdks/addressbalances/README.md)
 
@@ -488,6 +489,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataIcmGet`](docs/sdks/icm/README.md#get) - Get an ICM message
 - [`dataIcmList`](docs/sdks/icm/README.md#list) - List ICM messages
 - [`dataIcmListByAddress`](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
+- [`dataLiveCheck`](docs/sdks/data/README.md#livecheck) - Get the liveliness of the service (reads only)
 - [`dataNftsGet`](docs/sdks/nfts/README.md#get) - Get token details
 - [`dataNftsList`](docs/sdks/nfts/README.md#list) - List tokens
 - [`dataNftsReindex`](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
@@ -802,7 +804,7 @@ The default server can be overridden globally by passing a URL to the `serverURL
 import { Avalanche } from "@avalanche-sdk/chainkit";
 
 const avalanche = new Avalanche({
-  serverURL: "https://glacier-api.avax.network",
+  serverURL: "https://data-api.avax.network",
 });
 
 async function run() {

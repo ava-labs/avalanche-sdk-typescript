@@ -44,22 +44,10 @@ export type Erc1155TokenBalance = {
 export const Erc1155TokenBalanceErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc1155TokenBalanceErcType
 > = z.nativeEnum(Erc1155TokenBalanceErcType);
-
 /** @internal */
 export const Erc1155TokenBalanceErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc1155TokenBalanceErcType
 > = Erc1155TokenBalanceErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155TokenBalanceErcType$ {
-  /** @deprecated use `Erc1155TokenBalanceErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc1155TokenBalanceErcType$inboundSchema;
-  /** @deprecated use `Erc1155TokenBalanceErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc1155TokenBalanceErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc1155TokenBalance$inboundSchema: z.ZodType<
@@ -75,7 +63,6 @@ export const Erc1155TokenBalance$inboundSchema: z.ZodType<
   chainId: z.string(),
   balance: z.string(),
 });
-
 /** @internal */
 export type Erc1155TokenBalance$Outbound = {
   address: string;
@@ -102,19 +89,6 @@ export const Erc1155TokenBalance$outboundSchema: z.ZodType<
   balance: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155TokenBalance$ {
-  /** @deprecated use `Erc1155TokenBalance$inboundSchema` instead. */
-  export const inboundSchema = Erc1155TokenBalance$inboundSchema;
-  /** @deprecated use `Erc1155TokenBalance$outboundSchema` instead. */
-  export const outboundSchema = Erc1155TokenBalance$outboundSchema;
-  /** @deprecated use `Erc1155TokenBalance$Outbound` instead. */
-  export type Outbound = Erc1155TokenBalance$Outbound;
-}
-
 export function erc1155TokenBalanceToJSON(
   erc1155TokenBalance: Erc1155TokenBalance,
 ): string {
@@ -122,7 +96,6 @@ export function erc1155TokenBalanceToJSON(
     Erc1155TokenBalance$outboundSchema.parse(erc1155TokenBalance),
   );
 }
-
 export function erc1155TokenBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc1155TokenBalance, SDKValidationError> {

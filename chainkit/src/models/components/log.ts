@@ -59,7 +59,6 @@ export const Log$inboundSchema: z.ZodType<Log, z.ZodTypeDef, unknown> = z
     logIndex: z.number(),
     removed: z.boolean(),
   });
-
 /** @internal */
 export type Log$Outbound = {
   address: string;
@@ -87,23 +86,9 @@ export const Log$outboundSchema: z.ZodType<Log$Outbound, z.ZodTypeDef, Log> = z
     removed: z.boolean(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Log$ {
-  /** @deprecated use `Log$inboundSchema` instead. */
-  export const inboundSchema = Log$inboundSchema;
-  /** @deprecated use `Log$outboundSchema` instead. */
-  export const outboundSchema = Log$outboundSchema;
-  /** @deprecated use `Log$Outbound` instead. */
-  export type Outbound = Log$Outbound;
-}
-
 export function logToJSON(log: Log): string {
   return JSON.stringify(Log$outboundSchema.parse(log));
 }
-
 export function logFromJSON(
   jsonString: string,
 ): SafeParseResult<Log, SDKValidationError> {

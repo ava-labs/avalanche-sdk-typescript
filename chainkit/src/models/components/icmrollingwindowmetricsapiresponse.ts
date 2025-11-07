@@ -28,7 +28,6 @@ export const ICMRollingWindowMetricsApiResponse$inboundSchema: z.ZodType<
 > = z.object({
   result: ICMRollingWindowMetricsValue$inboundSchema,
 });
-
 /** @internal */
 export type ICMRollingWindowMetricsApiResponse$Outbound = {
   result: ICMRollingWindowMetricsValue$Outbound;
@@ -43,20 +42,6 @@ export const ICMRollingWindowMetricsApiResponse$outboundSchema: z.ZodType<
   result: ICMRollingWindowMetricsValue$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ICMRollingWindowMetricsApiResponse$ {
-  /** @deprecated use `ICMRollingWindowMetricsApiResponse$inboundSchema` instead. */
-  export const inboundSchema = ICMRollingWindowMetricsApiResponse$inboundSchema;
-  /** @deprecated use `ICMRollingWindowMetricsApiResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ICMRollingWindowMetricsApiResponse$outboundSchema;
-  /** @deprecated use `ICMRollingWindowMetricsApiResponse$Outbound` instead. */
-  export type Outbound = ICMRollingWindowMetricsApiResponse$Outbound;
-}
-
 export function icmRollingWindowMetricsApiResponseToJSON(
   icmRollingWindowMetricsApiResponse: ICMRollingWindowMetricsApiResponse,
 ): string {
@@ -66,7 +51,6 @@ export function icmRollingWindowMetricsApiResponseToJSON(
     ),
   );
 }
-
 export function icmRollingWindowMetricsApiResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ICMRollingWindowMetricsApiResponse, SDKValidationError> {

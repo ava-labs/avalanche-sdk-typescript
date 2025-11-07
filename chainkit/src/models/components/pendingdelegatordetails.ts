@@ -38,24 +38,10 @@ export type PendingDelegatorDetails = {
 export const PendingDelegatorDetailsDelegationStatus$inboundSchema:
   z.ZodNativeEnum<typeof PendingDelegatorDetailsDelegationStatus> = z
     .nativeEnum(PendingDelegatorDetailsDelegationStatus);
-
 /** @internal */
 export const PendingDelegatorDetailsDelegationStatus$outboundSchema:
   z.ZodNativeEnum<typeof PendingDelegatorDetailsDelegationStatus> =
     PendingDelegatorDetailsDelegationStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingDelegatorDetailsDelegationStatus$ {
-  /** @deprecated use `PendingDelegatorDetailsDelegationStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    PendingDelegatorDetailsDelegationStatus$inboundSchema;
-  /** @deprecated use `PendingDelegatorDetailsDelegationStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    PendingDelegatorDetailsDelegationStatus$outboundSchema;
-}
 
 /** @internal */
 export const PendingDelegatorDetails$inboundSchema: z.ZodType<
@@ -74,7 +60,6 @@ export const PendingDelegatorDetails$inboundSchema: z.ZodType<
   estimatedNetReward: z.string(),
   delegationStatus: PendingDelegatorDetailsDelegationStatus$inboundSchema,
 });
-
 /** @internal */
 export type PendingDelegatorDetails$Outbound = {
   txHash: string;
@@ -107,19 +92,6 @@ export const PendingDelegatorDetails$outboundSchema: z.ZodType<
   delegationStatus: PendingDelegatorDetailsDelegationStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PendingDelegatorDetails$ {
-  /** @deprecated use `PendingDelegatorDetails$inboundSchema` instead. */
-  export const inboundSchema = PendingDelegatorDetails$inboundSchema;
-  /** @deprecated use `PendingDelegatorDetails$outboundSchema` instead. */
-  export const outboundSchema = PendingDelegatorDetails$outboundSchema;
-  /** @deprecated use `PendingDelegatorDetails$Outbound` instead. */
-  export type Outbound = PendingDelegatorDetails$Outbound;
-}
-
 export function pendingDelegatorDetailsToJSON(
   pendingDelegatorDetails: PendingDelegatorDetails,
 ): string {
@@ -127,7 +99,6 @@ export function pendingDelegatorDetailsToJSON(
     PendingDelegatorDetails$outboundSchema.parse(pendingDelegatorDetails),
   );
 }
-
 export function pendingDelegatorDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<PendingDelegatorDetails, SDKValidationError> {

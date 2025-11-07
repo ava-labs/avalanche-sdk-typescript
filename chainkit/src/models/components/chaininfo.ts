@@ -66,22 +66,10 @@ export type ChainInfo = {
 export const ChainInfoEnabledFeature$inboundSchema: z.ZodNativeEnum<
   typeof ChainInfoEnabledFeature
 > = z.nativeEnum(ChainInfoEnabledFeature);
-
 /** @internal */
 export const ChainInfoEnabledFeature$outboundSchema: z.ZodNativeEnum<
   typeof ChainInfoEnabledFeature
 > = ChainInfoEnabledFeature$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainInfoEnabledFeature$ {
-  /** @deprecated use `ChainInfoEnabledFeature$inboundSchema` instead. */
-  export const inboundSchema = ChainInfoEnabledFeature$inboundSchema;
-  /** @deprecated use `ChainInfoEnabledFeature$outboundSchema` instead. */
-  export const outboundSchema = ChainInfoEnabledFeature$outboundSchema;
-}
 
 /** @internal */
 export const ChainInfo$inboundSchema: z.ZodType<
@@ -107,7 +95,6 @@ export const ChainInfo$inboundSchema: z.ZodType<
   private: z.boolean().optional(),
   enabledFeatures: z.array(ChainInfoEnabledFeature$inboundSchema).optional(),
 });
-
 /** @internal */
 export type ChainInfo$Outbound = {
   chainId: string;
@@ -154,23 +141,9 @@ export const ChainInfo$outboundSchema: z.ZodType<
   enabledFeatures: z.array(ChainInfoEnabledFeature$outboundSchema).optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainInfo$ {
-  /** @deprecated use `ChainInfo$inboundSchema` instead. */
-  export const inboundSchema = ChainInfo$inboundSchema;
-  /** @deprecated use `ChainInfo$outboundSchema` instead. */
-  export const outboundSchema = ChainInfo$outboundSchema;
-  /** @deprecated use `ChainInfo$Outbound` instead. */
-  export type Outbound = ChainInfo$Outbound;
-}
-
 export function chainInfoToJSON(chainInfo: ChainInfo): string {
   return JSON.stringify(ChainInfo$outboundSchema.parse(chainInfo));
 }
-
 export function chainInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<ChainInfo, SDKValidationError> {

@@ -33,7 +33,6 @@ export const ListXChainBalancesResponse$inboundSchema: z.ZodType<
   balances: XChainBalances$inboundSchema,
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListXChainBalancesResponse$Outbound = {
   balances: XChainBalances$Outbound;
@@ -50,19 +49,6 @@ export const ListXChainBalancesResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListXChainBalancesResponse$ {
-  /** @deprecated use `ListXChainBalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListXChainBalancesResponse$inboundSchema;
-  /** @deprecated use `ListXChainBalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListXChainBalancesResponse$outboundSchema;
-  /** @deprecated use `ListXChainBalancesResponse$Outbound` instead. */
-  export type Outbound = ListXChainBalancesResponse$Outbound;
-}
-
 export function listXChainBalancesResponseToJSON(
   listXChainBalancesResponse: ListXChainBalancesResponse,
 ): string {
@@ -70,7 +56,6 @@ export function listXChainBalancesResponseToJSON(
     ListXChainBalancesResponse$outboundSchema.parse(listXChainBalancesResponse),
   );
 }
-
 export function listXChainBalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListXChainBalancesResponse, SDKValidationError> {

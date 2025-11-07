@@ -17,19 +17,7 @@ export type TransactionDirectionType = ClosedEnum<
 export const TransactionDirectionType$inboundSchema: z.ZodNativeEnum<
   typeof TransactionDirectionType
 > = z.nativeEnum(TransactionDirectionType);
-
 /** @internal */
 export const TransactionDirectionType$outboundSchema: z.ZodNativeEnum<
   typeof TransactionDirectionType
 > = TransactionDirectionType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionDirectionType$ {
-  /** @deprecated use `TransactionDirectionType$inboundSchema` instead. */
-  export const inboundSchema = TransactionDirectionType$inboundSchema;
-  /** @deprecated use `TransactionDirectionType$outboundSchema` instead. */
-  export const outboundSchema = TransactionDirectionType$outboundSchema;
-}

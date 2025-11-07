@@ -30,7 +30,6 @@ export const ListErc1155TransactionsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(Erc1155Transfer$inboundSchema),
 });
-
 /** @internal */
 export type ListErc1155TransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListErc1155TransactionsResponse$outboundSchema: z.ZodType<
   transactions: z.array(Erc1155Transfer$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc1155TransactionsResponse$ {
-  /** @deprecated use `ListErc1155TransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListErc1155TransactionsResponse$inboundSchema;
-  /** @deprecated use `ListErc1155TransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListErc1155TransactionsResponse$outboundSchema;
-  /** @deprecated use `ListErc1155TransactionsResponse$Outbound` instead. */
-  export type Outbound = ListErc1155TransactionsResponse$Outbound;
-}
-
 export function listErc1155TransactionsResponseToJSON(
   listErc1155TransactionsResponse: ListErc1155TransactionsResponse,
 ): string {
@@ -69,7 +55,6 @@ export function listErc1155TransactionsResponseToJSON(
     ),
   );
 }
-
 export function listErc1155TransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc1155TransactionsResponse, SDKValidationError> {

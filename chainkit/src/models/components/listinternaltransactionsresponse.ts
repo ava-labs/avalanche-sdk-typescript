@@ -30,7 +30,6 @@ export const ListInternalTransactionsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(InternalTransaction$inboundSchema),
 });
-
 /** @internal */
 export type ListInternalTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListInternalTransactionsResponse$outboundSchema: z.ZodType<
   transactions: z.array(InternalTransaction$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListInternalTransactionsResponse$ {
-  /** @deprecated use `ListInternalTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListInternalTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListInternalTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListInternalTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListInternalTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListInternalTransactionsResponse$Outbound;
-}
-
 export function listInternalTransactionsResponseToJSON(
   listInternalTransactionsResponse: ListInternalTransactionsResponse,
 ): string {
@@ -69,7 +55,6 @@ export function listInternalTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listInternalTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListInternalTransactionsResponse, SDKValidationError> {

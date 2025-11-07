@@ -49,22 +49,10 @@ export type GetMetricsByNodeIdRequest = {
 export const GetMetricsByNodeIdMetric$inboundSchema: z.ZodNativeEnum<
   typeof GetMetricsByNodeIdMetric
 > = z.nativeEnum(GetMetricsByNodeIdMetric);
-
 /** @internal */
 export const GetMetricsByNodeIdMetric$outboundSchema: z.ZodNativeEnum<
   typeof GetMetricsByNodeIdMetric
 > = GetMetricsByNodeIdMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsByNodeIdMetric$ {
-  /** @deprecated use `GetMetricsByNodeIdMetric$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsByNodeIdMetric$inboundSchema;
-  /** @deprecated use `GetMetricsByNodeIdMetric$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsByNodeIdMetric$outboundSchema;
-}
 
 /** @internal */
 export const GetMetricsByNodeIdRequest$inboundSchema: z.ZodType<
@@ -77,7 +65,6 @@ export const GetMetricsByNodeIdRequest$inboundSchema: z.ZodType<
   endTimestamp: z.number().int().optional(),
   nodeId: z.string(),
 });
-
 /** @internal */
 export type GetMetricsByNodeIdRequest$Outbound = {
   metric: string;
@@ -98,19 +85,6 @@ export const GetMetricsByNodeIdRequest$outboundSchema: z.ZodType<
   nodeId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetMetricsByNodeIdRequest$ {
-  /** @deprecated use `GetMetricsByNodeIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetMetricsByNodeIdRequest$inboundSchema;
-  /** @deprecated use `GetMetricsByNodeIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetMetricsByNodeIdRequest$outboundSchema;
-  /** @deprecated use `GetMetricsByNodeIdRequest$Outbound` instead. */
-  export type Outbound = GetMetricsByNodeIdRequest$Outbound;
-}
-
 export function getMetricsByNodeIdRequestToJSON(
   getMetricsByNodeIdRequest: GetMetricsByNodeIdRequest,
 ): string {
@@ -118,7 +92,6 @@ export function getMetricsByNodeIdRequestToJSON(
     GetMetricsByNodeIdRequest$outboundSchema.parse(getMetricsByNodeIdRequest),
   );
 }
-
 export function getMetricsByNodeIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetMetricsByNodeIdRequest, SDKValidationError> {

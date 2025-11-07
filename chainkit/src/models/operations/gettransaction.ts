@@ -8,7 +8,7 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetTransactionServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetTransactionGlobals = {
@@ -37,7 +37,6 @@ export const GetTransactionGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetTransactionGlobals$Outbound = {
   chainId?: string | undefined;
@@ -52,19 +51,6 @@ export const GetTransactionGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTransactionGlobals$ {
-  /** @deprecated use `GetTransactionGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetTransactionGlobals$inboundSchema;
-  /** @deprecated use `GetTransactionGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetTransactionGlobals$outboundSchema;
-  /** @deprecated use `GetTransactionGlobals$Outbound` instead. */
-  export type Outbound = GetTransactionGlobals$Outbound;
-}
-
 export function getTransactionGlobalsToJSON(
   getTransactionGlobals: GetTransactionGlobals,
 ): string {
@@ -72,7 +58,6 @@ export function getTransactionGlobalsToJSON(
     GetTransactionGlobals$outboundSchema.parse(getTransactionGlobals),
   );
 }
-
 export function getTransactionGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTransactionGlobals, SDKValidationError> {
@@ -92,7 +77,6 @@ export const GetTransactionRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   txHash: z.string(),
 });
-
 /** @internal */
 export type GetTransactionRequest$Outbound = {
   chainId?: string | undefined;
@@ -109,19 +93,6 @@ export const GetTransactionRequest$outboundSchema: z.ZodType<
   txHash: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTransactionRequest$ {
-  /** @deprecated use `GetTransactionRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTransactionRequest$inboundSchema;
-  /** @deprecated use `GetTransactionRequest$outboundSchema` instead. */
-  export const outboundSchema = GetTransactionRequest$outboundSchema;
-  /** @deprecated use `GetTransactionRequest$Outbound` instead. */
-  export type Outbound = GetTransactionRequest$Outbound;
-}
-
 export function getTransactionRequestToJSON(
   getTransactionRequest: GetTransactionRequest,
 ): string {
@@ -129,7 +100,6 @@ export function getTransactionRequestToJSON(
     GetTransactionRequest$outboundSchema.parse(getTransactionRequest),
   );
 }
-
 export function getTransactionRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTransactionRequest, SDKValidationError> {

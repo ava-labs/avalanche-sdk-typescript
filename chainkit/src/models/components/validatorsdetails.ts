@@ -39,7 +39,6 @@ export const ValidatorsDetails$inboundSchema: z.ZodType<
   stakingDistributionByVersion: z.array(StakingDistribution$inboundSchema),
   stakingRatio: z.string(),
 });
-
 /** @internal */
 export type ValidatorsDetails$Outbound = {
   validatorCount: number;
@@ -62,19 +61,6 @@ export const ValidatorsDetails$outboundSchema: z.ZodType<
   stakingRatio: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorsDetails$ {
-  /** @deprecated use `ValidatorsDetails$inboundSchema` instead. */
-  export const inboundSchema = ValidatorsDetails$inboundSchema;
-  /** @deprecated use `ValidatorsDetails$outboundSchema` instead. */
-  export const outboundSchema = ValidatorsDetails$outboundSchema;
-  /** @deprecated use `ValidatorsDetails$Outbound` instead. */
-  export type Outbound = ValidatorsDetails$Outbound;
-}
-
 export function validatorsDetailsToJSON(
   validatorsDetails: ValidatorsDetails,
 ): string {
@@ -82,7 +68,6 @@ export function validatorsDetailsToJSON(
     ValidatorsDetails$outboundSchema.parse(validatorsDetails),
   );
 }
-
 export function validatorsDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorsDetails, SDKValidationError> {

@@ -41,7 +41,6 @@ export const OperationStatusResponseMetadata$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = TransactionExportMetadata$inboundSchema;
-
 /** @internal */
 export type OperationStatusResponseMetadata$Outbound =
   TransactionExportMetadata$Outbound;
@@ -53,19 +52,6 @@ export const OperationStatusResponseMetadata$outboundSchema: z.ZodType<
   OperationStatusResponseMetadata
 > = TransactionExportMetadata$outboundSchema;
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace OperationStatusResponseMetadata$ {
-  /** @deprecated use `OperationStatusResponseMetadata$inboundSchema` instead. */
-  export const inboundSchema = OperationStatusResponseMetadata$inboundSchema;
-  /** @deprecated use `OperationStatusResponseMetadata$outboundSchema` instead. */
-  export const outboundSchema = OperationStatusResponseMetadata$outboundSchema;
-  /** @deprecated use `OperationStatusResponseMetadata$Outbound` instead. */
-  export type Outbound = OperationStatusResponseMetadata$Outbound;
-}
-
 export function operationStatusResponseMetadataToJSON(
   operationStatusResponseMetadata: OperationStatusResponseMetadata,
 ): string {
@@ -75,7 +61,6 @@ export function operationStatusResponseMetadataToJSON(
     ),
   );
 }
-
 export function operationStatusResponseMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<OperationStatusResponseMetadata, SDKValidationError> {
@@ -100,7 +85,6 @@ export const OperationStatusResponse$inboundSchema: z.ZodType<
   createdAtTimestamp: z.number(),
   updatedAtTimestamp: z.number(),
 });
-
 /** @internal */
 export type OperationStatusResponse$Outbound = {
   operationId: string;
@@ -127,19 +111,6 @@ export const OperationStatusResponse$outboundSchema: z.ZodType<
   updatedAtTimestamp: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace OperationStatusResponse$ {
-  /** @deprecated use `OperationStatusResponse$inboundSchema` instead. */
-  export const inboundSchema = OperationStatusResponse$inboundSchema;
-  /** @deprecated use `OperationStatusResponse$outboundSchema` instead. */
-  export const outboundSchema = OperationStatusResponse$outboundSchema;
-  /** @deprecated use `OperationStatusResponse$Outbound` instead. */
-  export type Outbound = OperationStatusResponse$Outbound;
-}
-
 export function operationStatusResponseToJSON(
   operationStatusResponse: OperationStatusResponse,
 ): string {
@@ -147,7 +118,6 @@ export function operationStatusResponseToJSON(
     OperationStatusResponse$outboundSchema.parse(operationStatusResponse),
   );
 }
-
 export function operationStatusResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<OperationStatusResponse, SDKValidationError> {

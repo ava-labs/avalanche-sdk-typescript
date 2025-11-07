@@ -34,7 +34,6 @@ export const TransactionExportMetadata$inboundSchema: z.ZodType<
   downloadUrl: z.string().optional(),
   nextDate: z.string().optional(),
 });
-
 /** @internal */
 export type TransactionExportMetadata$Outbound = {
   code?: string | undefined;
@@ -53,19 +52,6 @@ export const TransactionExportMetadata$outboundSchema: z.ZodType<
   nextDate: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TransactionExportMetadata$ {
-  /** @deprecated use `TransactionExportMetadata$inboundSchema` instead. */
-  export const inboundSchema = TransactionExportMetadata$inboundSchema;
-  /** @deprecated use `TransactionExportMetadata$outboundSchema` instead. */
-  export const outboundSchema = TransactionExportMetadata$outboundSchema;
-  /** @deprecated use `TransactionExportMetadata$Outbound` instead. */
-  export type Outbound = TransactionExportMetadata$Outbound;
-}
-
 export function transactionExportMetadataToJSON(
   transactionExportMetadata: TransactionExportMetadata,
 ): string {
@@ -73,7 +59,6 @@ export function transactionExportMetadataToJSON(
     TransactionExportMetadata$outboundSchema.parse(transactionExportMetadata),
   );
 }
-
 export function transactionExportMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<TransactionExportMetadata, SDKValidationError> {

@@ -63,22 +63,10 @@ export type DeliveredTeleporterMessage = {
 export const DeliveredTeleporterMessageStatus$inboundSchema: z.ZodNativeEnum<
   typeof DeliveredTeleporterMessageStatus
 > = z.nativeEnum(DeliveredTeleporterMessageStatus);
-
 /** @internal */
 export const DeliveredTeleporterMessageStatus$outboundSchema: z.ZodNativeEnum<
   typeof DeliveredTeleporterMessageStatus
 > = DeliveredTeleporterMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredTeleporterMessageStatus$ {
-  /** @deprecated use `DeliveredTeleporterMessageStatus$inboundSchema` instead. */
-  export const inboundSchema = DeliveredTeleporterMessageStatus$inboundSchema;
-  /** @deprecated use `DeliveredTeleporterMessageStatus$outboundSchema` instead. */
-  export const outboundSchema = DeliveredTeleporterMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const DeliveredTeleporterMessage$inboundSchema: z.ZodType<
@@ -104,7 +92,6 @@ export const DeliveredTeleporterMessage$inboundSchema: z.ZodType<
   destinationTransaction: TeleporterDestinationTransaction$inboundSchema,
   status: DeliveredTeleporterMessageStatus$inboundSchema,
 });
-
 /** @internal */
 export type DeliveredTeleporterMessage$Outbound = {
   messageId: string;
@@ -151,19 +138,6 @@ export const DeliveredTeleporterMessage$outboundSchema: z.ZodType<
   status: DeliveredTeleporterMessageStatus$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredTeleporterMessage$ {
-  /** @deprecated use `DeliveredTeleporterMessage$inboundSchema` instead. */
-  export const inboundSchema = DeliveredTeleporterMessage$inboundSchema;
-  /** @deprecated use `DeliveredTeleporterMessage$outboundSchema` instead. */
-  export const outboundSchema = DeliveredTeleporterMessage$outboundSchema;
-  /** @deprecated use `DeliveredTeleporterMessage$Outbound` instead. */
-  export type Outbound = DeliveredTeleporterMessage$Outbound;
-}
-
 export function deliveredTeleporterMessageToJSON(
   deliveredTeleporterMessage: DeliveredTeleporterMessage,
 ): string {
@@ -171,7 +145,6 @@ export function deliveredTeleporterMessageToJSON(
     DeliveredTeleporterMessage$outboundSchema.parse(deliveredTeleporterMessage),
   );
 }
-
 export function deliveredTeleporterMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<DeliveredTeleporterMessage, SDKValidationError> {

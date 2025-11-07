@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListAssetTransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListAssetTransactionsGlobals = {
@@ -67,7 +67,6 @@ export const ListAssetTransactionsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListAssetTransactionsGlobals$Outbound = {
   network?: string | undefined;
@@ -82,19 +81,6 @@ export const ListAssetTransactionsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListAssetTransactionsGlobals$ {
-  /** @deprecated use `ListAssetTransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListAssetTransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListAssetTransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListAssetTransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListAssetTransactionsGlobals$Outbound` instead. */
-  export type Outbound = ListAssetTransactionsGlobals$Outbound;
-}
-
 export function listAssetTransactionsGlobalsToJSON(
   listAssetTransactionsGlobals: ListAssetTransactionsGlobals,
 ): string {
@@ -104,7 +90,6 @@ export function listAssetTransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listAssetTransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListAssetTransactionsGlobals, SDKValidationError> {
@@ -130,7 +115,6 @@ export const ListAssetTransactionsRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   assetId: z.string(),
 });
-
 /** @internal */
 export type ListAssetTransactionsRequest$Outbound = {
   txTypes?: Array<string> | undefined;
@@ -159,19 +143,6 @@ export const ListAssetTransactionsRequest$outboundSchema: z.ZodType<
   assetId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListAssetTransactionsRequest$ {
-  /** @deprecated use `ListAssetTransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListAssetTransactionsRequest$inboundSchema;
-  /** @deprecated use `ListAssetTransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListAssetTransactionsRequest$outboundSchema;
-  /** @deprecated use `ListAssetTransactionsRequest$Outbound` instead. */
-  export type Outbound = ListAssetTransactionsRequest$Outbound;
-}
-
 export function listAssetTransactionsRequestToJSON(
   listAssetTransactionsRequest: ListAssetTransactionsRequest,
 ): string {
@@ -181,7 +152,6 @@ export function listAssetTransactionsRequestToJSON(
     ),
   );
 }
-
 export function listAssetTransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListAssetTransactionsRequest, SDKValidationError> {
@@ -204,7 +174,6 @@ export const ListAssetTransactionsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListAssetTransactionsResponse$Outbound = {
   Result: components.ListXChainTransactionsResponse$Outbound;
@@ -223,19 +192,6 @@ export const ListAssetTransactionsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListAssetTransactionsResponse$ {
-  /** @deprecated use `ListAssetTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListAssetTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListAssetTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListAssetTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListAssetTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListAssetTransactionsResponse$Outbound;
-}
-
 export function listAssetTransactionsResponseToJSON(
   listAssetTransactionsResponse: ListAssetTransactionsResponse,
 ): string {
@@ -245,7 +201,6 @@ export function listAssetTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listAssetTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListAssetTransactionsResponse, SDKValidationError> {

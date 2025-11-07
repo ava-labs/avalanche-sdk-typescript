@@ -37,7 +37,6 @@ export const ValidatorHealthDetails$inboundSchema: z.ZodType<
   benchedXChainRequestsPercent: z.number(),
   benchedCChainRequestsPercent: z.number(),
 });
-
 /** @internal */
 export type ValidatorHealthDetails$Outbound = {
   reachabilityPercent: number;
@@ -58,19 +57,6 @@ export const ValidatorHealthDetails$outboundSchema: z.ZodType<
   benchedCChainRequestsPercent: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorHealthDetails$ {
-  /** @deprecated use `ValidatorHealthDetails$inboundSchema` instead. */
-  export const inboundSchema = ValidatorHealthDetails$inboundSchema;
-  /** @deprecated use `ValidatorHealthDetails$outboundSchema` instead. */
-  export const outboundSchema = ValidatorHealthDetails$outboundSchema;
-  /** @deprecated use `ValidatorHealthDetails$Outbound` instead. */
-  export type Outbound = ValidatorHealthDetails$Outbound;
-}
-
 export function validatorHealthDetailsToJSON(
   validatorHealthDetails: ValidatorHealthDetails,
 ): string {
@@ -78,7 +64,6 @@ export function validatorHealthDetailsToJSON(
     ValidatorHealthDetails$outboundSchema.parse(validatorHealthDetails),
   );
 }
-
 export function validatorHealthDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorHealthDetails, SDKValidationError> {

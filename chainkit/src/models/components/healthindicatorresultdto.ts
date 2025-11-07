@@ -33,22 +33,10 @@ export type HealthIndicatorResultDto = {
 export const HealthIndicatorResultDtoStatus$inboundSchema: z.ZodNativeEnum<
   typeof HealthIndicatorResultDtoStatus
 > = z.nativeEnum(HealthIndicatorResultDtoStatus);
-
 /** @internal */
 export const HealthIndicatorResultDtoStatus$outboundSchema: z.ZodNativeEnum<
   typeof HealthIndicatorResultDtoStatus
 > = HealthIndicatorResultDtoStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace HealthIndicatorResultDtoStatus$ {
-  /** @deprecated use `HealthIndicatorResultDtoStatus$inboundSchema` instead. */
-  export const inboundSchema = HealthIndicatorResultDtoStatus$inboundSchema;
-  /** @deprecated use `HealthIndicatorResultDtoStatus$outboundSchema` instead. */
-  export const outboundSchema = HealthIndicatorResultDtoStatus$outboundSchema;
-}
 
 /** @internal */
 export const HealthIndicatorResultDto$inboundSchema: z.ZodType<
@@ -58,7 +46,6 @@ export const HealthIndicatorResultDto$inboundSchema: z.ZodType<
 > = z.object({
   status: HealthIndicatorResultDtoStatus$inboundSchema.optional(),
 });
-
 /** @internal */
 export type HealthIndicatorResultDto$Outbound = {
   status?: string | undefined;
@@ -73,19 +60,6 @@ export const HealthIndicatorResultDto$outboundSchema: z.ZodType<
   status: HealthIndicatorResultDtoStatus$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace HealthIndicatorResultDto$ {
-  /** @deprecated use `HealthIndicatorResultDto$inboundSchema` instead. */
-  export const inboundSchema = HealthIndicatorResultDto$inboundSchema;
-  /** @deprecated use `HealthIndicatorResultDto$outboundSchema` instead. */
-  export const outboundSchema = HealthIndicatorResultDto$outboundSchema;
-  /** @deprecated use `HealthIndicatorResultDto$Outbound` instead. */
-  export type Outbound = HealthIndicatorResultDto$Outbound;
-}
-
 export function healthIndicatorResultDtoToJSON(
   healthIndicatorResultDto: HealthIndicatorResultDto,
 ): string {
@@ -93,7 +67,6 @@ export function healthIndicatorResultDtoToJSON(
     HealthIndicatorResultDto$outboundSchema.parse(healthIndicatorResultDto),
   );
 }
-
 export function healthIndicatorResultDtoFromJSON(
   jsonString: string,
 ): SafeParseResult<HealthIndicatorResultDto, SDKValidationError> {

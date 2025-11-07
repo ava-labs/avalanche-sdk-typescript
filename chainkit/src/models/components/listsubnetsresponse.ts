@@ -30,7 +30,6 @@ export const ListSubnetsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   subnets: z.array(Subnet$inboundSchema),
 });
-
 /** @internal */
 export type ListSubnetsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListSubnetsResponse$outboundSchema: z.ZodType<
   subnets: z.array(Subnet$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListSubnetsResponse$ {
-  /** @deprecated use `ListSubnetsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListSubnetsResponse$inboundSchema;
-  /** @deprecated use `ListSubnetsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListSubnetsResponse$outboundSchema;
-  /** @deprecated use `ListSubnetsResponse$Outbound` instead. */
-  export type Outbound = ListSubnetsResponse$Outbound;
-}
-
 export function listSubnetsResponseToJSON(
   listSubnetsResponse: ListSubnetsResponse,
 ): string {
@@ -67,7 +53,6 @@ export function listSubnetsResponseToJSON(
     ListSubnetsResponse$outboundSchema.parse(listSubnetsResponse),
   );
 }
-
 export function listSubnetsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListSubnetsResponse, SDKValidationError> {

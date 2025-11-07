@@ -42,7 +42,6 @@ export const RichAddress$inboundSchema: z.ZodType<
   logoUri: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type RichAddress$Outbound = {
   name?: string | undefined;
@@ -65,23 +64,9 @@ export const RichAddress$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RichAddress$ {
-  /** @deprecated use `RichAddress$inboundSchema` instead. */
-  export const inboundSchema = RichAddress$inboundSchema;
-  /** @deprecated use `RichAddress$outboundSchema` instead. */
-  export const outboundSchema = RichAddress$outboundSchema;
-  /** @deprecated use `RichAddress$Outbound` instead. */
-  export type Outbound = RichAddress$Outbound;
-}
-
 export function richAddressToJSON(richAddress: RichAddress): string {
   return JSON.stringify(RichAddress$outboundSchema.parse(richAddress));
 }
-
 export function richAddressFromJSON(
   jsonString: string,
 ): SafeParseResult<RichAddress, SDKValidationError> {

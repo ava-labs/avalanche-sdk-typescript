@@ -27,7 +27,6 @@ export const PChainAddressDetails$inboundSchema: z.ZodType<
   addresses: z.array(z.string()),
   sortKey: z.string(),
 });
-
 /** @internal */
 export type PChainAddressDetails$Outbound = {
   addresses: Array<string>;
@@ -44,19 +43,6 @@ export const PChainAddressDetails$outboundSchema: z.ZodType<
   sortKey: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainAddressDetails$ {
-  /** @deprecated use `PChainAddressDetails$inboundSchema` instead. */
-  export const inboundSchema = PChainAddressDetails$inboundSchema;
-  /** @deprecated use `PChainAddressDetails$outboundSchema` instead. */
-  export const outboundSchema = PChainAddressDetails$outboundSchema;
-  /** @deprecated use `PChainAddressDetails$Outbound` instead. */
-  export type Outbound = PChainAddressDetails$Outbound;
-}
-
 export function pChainAddressDetailsToJSON(
   pChainAddressDetails: PChainAddressDetails,
 ): string {
@@ -64,7 +50,6 @@ export function pChainAddressDetailsToJSON(
     PChainAddressDetails$outboundSchema.parse(pChainAddressDetails),
   );
 }
-
 export function pChainAddressDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainAddressDetails, SDKValidationError> {

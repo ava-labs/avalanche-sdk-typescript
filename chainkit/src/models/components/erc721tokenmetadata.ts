@@ -45,7 +45,6 @@ export const Erc721TokenMetadata$inboundSchema: z.ZodType<
   background: z.string().optional(),
   attributes: z.string().optional(),
 });
-
 /** @internal */
 export type Erc721TokenMetadata$Outbound = {
   indexStatus: string;
@@ -78,19 +77,6 @@ export const Erc721TokenMetadata$outboundSchema: z.ZodType<
   attributes: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721TokenMetadata$ {
-  /** @deprecated use `Erc721TokenMetadata$inboundSchema` instead. */
-  export const inboundSchema = Erc721TokenMetadata$inboundSchema;
-  /** @deprecated use `Erc721TokenMetadata$outboundSchema` instead. */
-  export const outboundSchema = Erc721TokenMetadata$outboundSchema;
-  /** @deprecated use `Erc721TokenMetadata$Outbound` instead. */
-  export type Outbound = Erc721TokenMetadata$Outbound;
-}
-
 export function erc721TokenMetadataToJSON(
   erc721TokenMetadata: Erc721TokenMetadata,
 ): string {
@@ -98,7 +84,6 @@ export function erc721TokenMetadataToJSON(
     Erc721TokenMetadata$outboundSchema.parse(erc721TokenMetadata),
   );
 }
-
 export function erc721TokenMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc721TokenMetadata, SDKValidationError> {

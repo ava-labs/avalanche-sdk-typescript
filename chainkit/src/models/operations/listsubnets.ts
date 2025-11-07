@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListSubnetsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListSubnetsGlobals = {
@@ -51,7 +51,6 @@ export const ListSubnetsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListSubnetsGlobals$Outbound = {
   network?: string | undefined;
@@ -66,19 +65,6 @@ export const ListSubnetsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListSubnetsGlobals$ {
-  /** @deprecated use `ListSubnetsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListSubnetsGlobals$inboundSchema;
-  /** @deprecated use `ListSubnetsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListSubnetsGlobals$outboundSchema;
-  /** @deprecated use `ListSubnetsGlobals$Outbound` instead. */
-  export type Outbound = ListSubnetsGlobals$Outbound;
-}
-
 export function listSubnetsGlobalsToJSON(
   listSubnetsGlobals: ListSubnetsGlobals,
 ): string {
@@ -86,7 +72,6 @@ export function listSubnetsGlobalsToJSON(
     ListSubnetsGlobals$outboundSchema.parse(listSubnetsGlobals),
   );
 }
-
 export function listSubnetsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListSubnetsGlobals, SDKValidationError> {
@@ -108,7 +93,6 @@ export const ListSubnetsRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListSubnetsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -129,19 +113,6 @@ export const ListSubnetsRequest$outboundSchema: z.ZodType<
   sortOrder: components.SortOrder$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListSubnetsRequest$ {
-  /** @deprecated use `ListSubnetsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListSubnetsRequest$inboundSchema;
-  /** @deprecated use `ListSubnetsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListSubnetsRequest$outboundSchema;
-  /** @deprecated use `ListSubnetsRequest$Outbound` instead. */
-  export type Outbound = ListSubnetsRequest$Outbound;
-}
-
 export function listSubnetsRequestToJSON(
   listSubnetsRequest: ListSubnetsRequest,
 ): string {
@@ -149,7 +120,6 @@ export function listSubnetsRequestToJSON(
     ListSubnetsRequest$outboundSchema.parse(listSubnetsRequest),
   );
 }
-
 export function listSubnetsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListSubnetsRequest, SDKValidationError> {
@@ -172,7 +142,6 @@ export const ListSubnetsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListSubnetsResponse$Outbound = {
   Result: components.ListSubnetsResponse$Outbound;
@@ -191,19 +160,6 @@ export const ListSubnetsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListSubnetsResponse$ {
-  /** @deprecated use `ListSubnetsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListSubnetsResponse$inboundSchema;
-  /** @deprecated use `ListSubnetsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListSubnetsResponse$outboundSchema;
-  /** @deprecated use `ListSubnetsResponse$Outbound` instead. */
-  export type Outbound = ListSubnetsResponse$Outbound;
-}
-
 export function listSubnetsResponseToJSON(
   listSubnetsResponse: ListSubnetsResponse,
 ): string {
@@ -211,7 +167,6 @@ export function listSubnetsResponseToJSON(
     ListSubnetsResponse$outboundSchema.parse(listSubnetsResponse),
   );
 }
-
 export function listSubnetsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListSubnetsResponse, SDKValidationError> {

@@ -56,7 +56,6 @@ export const CChainSharedAssetBalance$inboundSchema: z.ZodType<
   utxoCount: z.number(),
   sharedWithChainId: z.string(),
 });
-
 /** @internal */
 export type CChainSharedAssetBalance$Outbound = {
   assetId: string;
@@ -85,19 +84,6 @@ export const CChainSharedAssetBalance$outboundSchema: z.ZodType<
   sharedWithChainId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CChainSharedAssetBalance$ {
-  /** @deprecated use `CChainSharedAssetBalance$inboundSchema` instead. */
-  export const inboundSchema = CChainSharedAssetBalance$inboundSchema;
-  /** @deprecated use `CChainSharedAssetBalance$outboundSchema` instead. */
-  export const outboundSchema = CChainSharedAssetBalance$outboundSchema;
-  /** @deprecated use `CChainSharedAssetBalance$Outbound` instead. */
-  export type Outbound = CChainSharedAssetBalance$Outbound;
-}
-
 export function cChainSharedAssetBalanceToJSON(
   cChainSharedAssetBalance: CChainSharedAssetBalance,
 ): string {
@@ -105,7 +91,6 @@ export function cChainSharedAssetBalanceToJSON(
     CChainSharedAssetBalance$outboundSchema.parse(cChainSharedAssetBalance),
   );
 }
-
 export function cChainSharedAssetBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<CChainSharedAssetBalance, SDKValidationError> {

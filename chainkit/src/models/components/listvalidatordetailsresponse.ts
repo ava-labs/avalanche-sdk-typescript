@@ -80,7 +80,6 @@ export const Validator$inboundSchema: z.ZodType<
     })),
   ),
 ]);
-
 /** @internal */
 export type Validator$Outbound =
   | (ActiveValidatorDetails$Outbound & { validationStatus: "active" })
@@ -116,23 +115,9 @@ export const Validator$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Validator$ {
-  /** @deprecated use `Validator$inboundSchema` instead. */
-  export const inboundSchema = Validator$inboundSchema;
-  /** @deprecated use `Validator$outboundSchema` instead. */
-  export const outboundSchema = Validator$outboundSchema;
-  /** @deprecated use `Validator$Outbound` instead. */
-  export type Outbound = Validator$Outbound;
-}
-
 export function validatorToJSON(validator: Validator): string {
   return JSON.stringify(Validator$outboundSchema.parse(validator));
 }
-
 export function validatorFromJSON(
   jsonString: string,
 ): SafeParseResult<Validator, SDKValidationError> {
@@ -175,7 +160,6 @@ export const ListValidatorDetailsResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListValidatorDetailsResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -220,19 +204,6 @@ export const ListValidatorDetailsResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListValidatorDetailsResponse$ {
-  /** @deprecated use `ListValidatorDetailsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListValidatorDetailsResponse$inboundSchema;
-  /** @deprecated use `ListValidatorDetailsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListValidatorDetailsResponse$outboundSchema;
-  /** @deprecated use `ListValidatorDetailsResponse$Outbound` instead. */
-  export type Outbound = ListValidatorDetailsResponse$Outbound;
-}
-
 export function listValidatorDetailsResponseToJSON(
   listValidatorDetailsResponse: ListValidatorDetailsResponse,
 ): string {
@@ -242,7 +213,6 @@ export function listValidatorDetailsResponseToJSON(
     ),
   );
 }
-
 export function listValidatorDetailsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListValidatorDetailsResponse, SDKValidationError> {

@@ -59,7 +59,6 @@ export const Erc20Transfer$inboundSchema: z.ZodType<
   value: z.string(),
   erc20Token: Erc20Token$inboundSchema,
 });
-
 /** @internal */
 export type Erc20Transfer$Outbound = {
   blockNumber: string;
@@ -90,23 +89,9 @@ export const Erc20Transfer$outboundSchema: z.ZodType<
   erc20Token: Erc20Token$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc20Transfer$ {
-  /** @deprecated use `Erc20Transfer$inboundSchema` instead. */
-  export const inboundSchema = Erc20Transfer$inboundSchema;
-  /** @deprecated use `Erc20Transfer$outboundSchema` instead. */
-  export const outboundSchema = Erc20Transfer$outboundSchema;
-  /** @deprecated use `Erc20Transfer$Outbound` instead. */
-  export type Outbound = Erc20Transfer$Outbound;
-}
-
 export function erc20TransferToJSON(erc20Transfer: Erc20Transfer): string {
   return JSON.stringify(Erc20Transfer$outboundSchema.parse(erc20Transfer));
 }
-
 export function erc20TransferFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc20Transfer, SDKValidationError> {

@@ -26,7 +26,6 @@ export const PrimaryNetworkAddressActivitySubEvents$inboundSchema: z.ZodType<
     PrimaryNetworkAddressActivitySubEventType$inboundSchema,
   ),
 });
-
 /** @internal */
 export type PrimaryNetworkAddressActivitySubEvents$Outbound = {
   addressActivitySubEvents: Array<string>;
@@ -43,21 +42,6 @@ export const PrimaryNetworkAddressActivitySubEvents$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivitySubEvents$ {
-  /** @deprecated use `PrimaryNetworkAddressActivitySubEvents$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivitySubEvents$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivitySubEvents$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivitySubEvents$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivitySubEvents$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressActivitySubEvents$Outbound;
-}
-
 export function primaryNetworkAddressActivitySubEventsToJSON(
   primaryNetworkAddressActivitySubEvents:
     PrimaryNetworkAddressActivitySubEvents,
@@ -68,7 +52,6 @@ export function primaryNetworkAddressActivitySubEventsToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressActivitySubEventsFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkAddressActivitySubEvents, SDKValidationError> {

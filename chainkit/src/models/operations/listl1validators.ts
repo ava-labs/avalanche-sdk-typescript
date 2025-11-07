@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListL1ValidatorsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListL1ValidatorsGlobals = {
@@ -60,7 +60,6 @@ export const ListL1ValidatorsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListL1ValidatorsGlobals$Outbound = {
   network?: string | undefined;
@@ -75,19 +74,6 @@ export const ListL1ValidatorsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListL1ValidatorsGlobals$ {
-  /** @deprecated use `ListL1ValidatorsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListL1ValidatorsGlobals$inboundSchema;
-  /** @deprecated use `ListL1ValidatorsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListL1ValidatorsGlobals$outboundSchema;
-  /** @deprecated use `ListL1ValidatorsGlobals$Outbound` instead. */
-  export type Outbound = ListL1ValidatorsGlobals$Outbound;
-}
-
 export function listL1ValidatorsGlobalsToJSON(
   listL1ValidatorsGlobals: ListL1ValidatorsGlobals,
 ): string {
@@ -95,7 +81,6 @@ export function listL1ValidatorsGlobalsToJSON(
     ListL1ValidatorsGlobals$outboundSchema.parse(listL1ValidatorsGlobals),
   );
 }
-
 export function listL1ValidatorsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListL1ValidatorsGlobals, SDKValidationError> {
@@ -120,7 +105,6 @@ export const ListL1ValidatorsRequest$inboundSchema: z.ZodType<
   nodeId: z.string().optional(),
   subnetId: z.any().optional(),
 });
-
 /** @internal */
 export type ListL1ValidatorsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -147,19 +131,6 @@ export const ListL1ValidatorsRequest$outboundSchema: z.ZodType<
   subnetId: z.any().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListL1ValidatorsRequest$ {
-  /** @deprecated use `ListL1ValidatorsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListL1ValidatorsRequest$inboundSchema;
-  /** @deprecated use `ListL1ValidatorsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListL1ValidatorsRequest$outboundSchema;
-  /** @deprecated use `ListL1ValidatorsRequest$Outbound` instead. */
-  export type Outbound = ListL1ValidatorsRequest$Outbound;
-}
-
 export function listL1ValidatorsRequestToJSON(
   listL1ValidatorsRequest: ListL1ValidatorsRequest,
 ): string {
@@ -167,7 +138,6 @@ export function listL1ValidatorsRequestToJSON(
     ListL1ValidatorsRequest$outboundSchema.parse(listL1ValidatorsRequest),
   );
 }
-
 export function listL1ValidatorsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListL1ValidatorsRequest, SDKValidationError> {
@@ -190,7 +160,6 @@ export const ListL1ValidatorsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListL1ValidatorsResponse$Outbound = {
   Result: components.ListL1ValidatorsResponse$Outbound;
@@ -209,19 +178,6 @@ export const ListL1ValidatorsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListL1ValidatorsResponse$ {
-  /** @deprecated use `ListL1ValidatorsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListL1ValidatorsResponse$inboundSchema;
-  /** @deprecated use `ListL1ValidatorsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListL1ValidatorsResponse$outboundSchema;
-  /** @deprecated use `ListL1ValidatorsResponse$Outbound` instead. */
-  export type Outbound = ListL1ValidatorsResponse$Outbound;
-}
-
 export function listL1ValidatorsResponseToJSON(
   listL1ValidatorsResponse: ListL1ValidatorsResponse,
 ): string {
@@ -229,7 +185,6 @@ export function listL1ValidatorsResponseToJSON(
     ListL1ValidatorsResponse$outboundSchema.parse(listL1ValidatorsResponse),
   );
 }
-
 export function listL1ValidatorsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListL1ValidatorsResponse, SDKValidationError> {

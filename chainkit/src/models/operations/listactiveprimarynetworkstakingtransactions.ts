@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListActivePrimaryNetworkStakingTransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListActivePrimaryNetworkStakingTransactionsGlobals = {
@@ -72,7 +72,6 @@ export const ListActivePrimaryNetworkStakingTransactionsGlobals$inboundSchema:
   > = z.object({
     network: components.GlobalParamNetwork$inboundSchema.optional(),
   });
-
 /** @internal */
 export type ListActivePrimaryNetworkStakingTransactionsGlobals$Outbound = {
   network?: string | undefined;
@@ -88,22 +87,6 @@ export const ListActivePrimaryNetworkStakingTransactionsGlobals$outboundSchema:
     network: components.GlobalParamNetwork$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListActivePrimaryNetworkStakingTransactionsGlobals$ {
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsGlobals$Outbound` instead. */
-  export type Outbound =
-    ListActivePrimaryNetworkStakingTransactionsGlobals$Outbound;
-}
-
 export function listActivePrimaryNetworkStakingTransactionsGlobalsToJSON(
   listActivePrimaryNetworkStakingTransactionsGlobals:
     ListActivePrimaryNetworkStakingTransactionsGlobals,
@@ -114,7 +97,6 @@ export function listActivePrimaryNetworkStakingTransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listActivePrimaryNetworkStakingTransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -148,7 +130,6 @@ export const ListActivePrimaryNetworkStakingTransactionsRequest$inboundSchema:
     network: components.GlobalParamNetwork$inboundSchema.optional(),
     sortOrder: components.SortOrder$inboundSchema.optional(),
   });
-
 /** @internal */
 export type ListActivePrimaryNetworkStakingTransactionsRequest$Outbound = {
   addresses?: string | undefined;
@@ -180,22 +161,6 @@ export const ListActivePrimaryNetworkStakingTransactionsRequest$outboundSchema:
     sortOrder: components.SortOrder$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListActivePrimaryNetworkStakingTransactionsRequest$ {
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsRequest$inboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsRequest$outboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsRequest$Outbound` instead. */
-  export type Outbound =
-    ListActivePrimaryNetworkStakingTransactionsRequest$Outbound;
-}
-
 export function listActivePrimaryNetworkStakingTransactionsRequestToJSON(
   listActivePrimaryNetworkStakingTransactionsRequest:
     ListActivePrimaryNetworkStakingTransactionsRequest,
@@ -206,7 +171,6 @@ export function listActivePrimaryNetworkStakingTransactionsRequestToJSON(
     ),
   );
 }
-
 export function listActivePrimaryNetworkStakingTransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -236,7 +200,6 @@ export const ListActivePrimaryNetworkStakingTransactionsResponse$inboundSchema:
       "Result": "result",
     });
   });
-
 /** @internal */
 export type ListActivePrimaryNetworkStakingTransactionsResponse$Outbound = {
   Result: components.ListPChainTransactionsResponse$Outbound;
@@ -256,22 +219,6 @@ export const ListActivePrimaryNetworkStakingTransactionsResponse$outboundSchema:
     });
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListActivePrimaryNetworkStakingTransactionsResponse$ {
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListActivePrimaryNetworkStakingTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListActivePrimaryNetworkStakingTransactionsResponse$Outbound` instead. */
-  export type Outbound =
-    ListActivePrimaryNetworkStakingTransactionsResponse$Outbound;
-}
-
 export function listActivePrimaryNetworkStakingTransactionsResponseToJSON(
   listActivePrimaryNetworkStakingTransactionsResponse:
     ListActivePrimaryNetworkStakingTransactionsResponse,
@@ -282,7 +229,6 @@ export function listActivePrimaryNetworkStakingTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listActivePrimaryNetworkStakingTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

@@ -52,7 +52,6 @@ export const AssetAmount$inboundSchema: z.ZodType<
   type: PrimaryNetworkAssetType$inboundSchema,
   amount: z.string(),
 });
-
 /** @internal */
 export type AssetAmount$Outbound = {
   assetId: string;
@@ -77,23 +76,9 @@ export const AssetAmount$outboundSchema: z.ZodType<
   amount: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AssetAmount$ {
-  /** @deprecated use `AssetAmount$inboundSchema` instead. */
-  export const inboundSchema = AssetAmount$inboundSchema;
-  /** @deprecated use `AssetAmount$outboundSchema` instead. */
-  export const outboundSchema = AssetAmount$outboundSchema;
-  /** @deprecated use `AssetAmount$Outbound` instead. */
-  export type Outbound = AssetAmount$Outbound;
-}
-
 export function assetAmountToJSON(assetAmount: AssetAmount): string {
   return JSON.stringify(AssetAmount$outboundSchema.parse(assetAmount));
 }
-
 export function assetAmountFromJSON(
   jsonString: string,
 ): SafeParseResult<AssetAmount, SDKValidationError> {

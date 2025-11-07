@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetNetworkDetailsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetNetworkDetailsGlobals = {
@@ -34,7 +34,6 @@ export const GetNetworkDetailsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetNetworkDetailsGlobals$Outbound = {
   network?: string | undefined;
@@ -49,19 +48,6 @@ export const GetNetworkDetailsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNetworkDetailsGlobals$ {
-  /** @deprecated use `GetNetworkDetailsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetNetworkDetailsGlobals$inboundSchema;
-  /** @deprecated use `GetNetworkDetailsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetNetworkDetailsGlobals$outboundSchema;
-  /** @deprecated use `GetNetworkDetailsGlobals$Outbound` instead. */
-  export type Outbound = GetNetworkDetailsGlobals$Outbound;
-}
-
 export function getNetworkDetailsGlobalsToJSON(
   getNetworkDetailsGlobals: GetNetworkDetailsGlobals,
 ): string {
@@ -69,7 +55,6 @@ export function getNetworkDetailsGlobalsToJSON(
     GetNetworkDetailsGlobals$outboundSchema.parse(getNetworkDetailsGlobals),
   );
 }
-
 export function getNetworkDetailsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNetworkDetailsGlobals, SDKValidationError> {
@@ -88,7 +73,6 @@ export const GetNetworkDetailsRequest$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetNetworkDetailsRequest$Outbound = {
   network?: string | undefined;
@@ -103,19 +87,6 @@ export const GetNetworkDetailsRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNetworkDetailsRequest$ {
-  /** @deprecated use `GetNetworkDetailsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetNetworkDetailsRequest$inboundSchema;
-  /** @deprecated use `GetNetworkDetailsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetNetworkDetailsRequest$outboundSchema;
-  /** @deprecated use `GetNetworkDetailsRequest$Outbound` instead. */
-  export type Outbound = GetNetworkDetailsRequest$Outbound;
-}
-
 export function getNetworkDetailsRequestToJSON(
   getNetworkDetailsRequest: GetNetworkDetailsRequest,
 ): string {
@@ -123,7 +94,6 @@ export function getNetworkDetailsRequestToJSON(
     GetNetworkDetailsRequest$outboundSchema.parse(getNetworkDetailsRequest),
   );
 }
-
 export function getNetworkDetailsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNetworkDetailsRequest, SDKValidationError> {

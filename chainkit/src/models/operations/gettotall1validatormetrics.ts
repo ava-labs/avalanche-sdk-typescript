@@ -46,22 +46,10 @@ export type GetTotalL1ValidatorMetricsRequest = {
 export const GetTotalL1ValidatorMetricsMetric$inboundSchema: z.ZodNativeEnum<
   typeof GetTotalL1ValidatorMetricsMetric
 > = z.nativeEnum(GetTotalL1ValidatorMetricsMetric);
-
 /** @internal */
 export const GetTotalL1ValidatorMetricsMetric$outboundSchema: z.ZodNativeEnum<
   typeof GetTotalL1ValidatorMetricsMetric
 > = GetTotalL1ValidatorMetricsMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTotalL1ValidatorMetricsMetric$ {
-  /** @deprecated use `GetTotalL1ValidatorMetricsMetric$inboundSchema` instead. */
-  export const inboundSchema = GetTotalL1ValidatorMetricsMetric$inboundSchema;
-  /** @deprecated use `GetTotalL1ValidatorMetricsMetric$outboundSchema` instead. */
-  export const outboundSchema = GetTotalL1ValidatorMetricsMetric$outboundSchema;
-}
 
 /** @internal */
 export const GetTotalL1ValidatorMetricsRequest$inboundSchema: z.ZodType<
@@ -73,7 +61,6 @@ export const GetTotalL1ValidatorMetricsRequest$inboundSchema: z.ZodType<
   startTimestamp: z.number().int().optional(),
   endTimestamp: z.number().int().optional(),
 });
-
 /** @internal */
 export type GetTotalL1ValidatorMetricsRequest$Outbound = {
   metric: string;
@@ -92,20 +79,6 @@ export const GetTotalL1ValidatorMetricsRequest$outboundSchema: z.ZodType<
   endTimestamp: z.number().int().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTotalL1ValidatorMetricsRequest$ {
-  /** @deprecated use `GetTotalL1ValidatorMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTotalL1ValidatorMetricsRequest$inboundSchema;
-  /** @deprecated use `GetTotalL1ValidatorMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    GetTotalL1ValidatorMetricsRequest$outboundSchema;
-  /** @deprecated use `GetTotalL1ValidatorMetricsRequest$Outbound` instead. */
-  export type Outbound = GetTotalL1ValidatorMetricsRequest$Outbound;
-}
-
 export function getTotalL1ValidatorMetricsRequestToJSON(
   getTotalL1ValidatorMetricsRequest: GetTotalL1ValidatorMetricsRequest,
 ): string {
@@ -115,7 +88,6 @@ export function getTotalL1ValidatorMetricsRequestToJSON(
     ),
   );
 }
-
 export function getTotalL1ValidatorMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTotalL1ValidatorMetricsRequest, SDKValidationError> {

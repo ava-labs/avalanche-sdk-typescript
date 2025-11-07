@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListLatestTransactionsAllChainsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListLatestTransactionsAllChainsRequest = {
@@ -47,7 +47,6 @@ export const ListLatestTransactionsAllChainsRequest$inboundSchema: z.ZodType<
   network: components.Network$inboundSchema.optional(),
   status: components.TransactionStatus$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListLatestTransactionsAllChainsRequest$Outbound = {
   pageToken?: string | undefined;
@@ -68,21 +67,6 @@ export const ListLatestTransactionsAllChainsRequest$outboundSchema: z.ZodType<
   status: components.TransactionStatus$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestTransactionsAllChainsRequest$ {
-  /** @deprecated use `ListLatestTransactionsAllChainsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestTransactionsAllChainsRequest$inboundSchema;
-  /** @deprecated use `ListLatestTransactionsAllChainsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestTransactionsAllChainsRequest$outboundSchema;
-  /** @deprecated use `ListLatestTransactionsAllChainsRequest$Outbound` instead. */
-  export type Outbound = ListLatestTransactionsAllChainsRequest$Outbound;
-}
-
 export function listLatestTransactionsAllChainsRequestToJSON(
   listLatestTransactionsAllChainsRequest:
     ListLatestTransactionsAllChainsRequest,
@@ -93,7 +77,6 @@ export function listLatestTransactionsAllChainsRequestToJSON(
     ),
   );
 }
-
 export function listLatestTransactionsAllChainsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListLatestTransactionsAllChainsRequest, SDKValidationError> {
@@ -117,7 +100,6 @@ export const ListLatestTransactionsAllChainsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListLatestTransactionsAllChainsResponse$Outbound = {
   Result: components.ListNativeTransactionsResponse$Outbound;
@@ -136,21 +118,6 @@ export const ListLatestTransactionsAllChainsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListLatestTransactionsAllChainsResponse$ {
-  /** @deprecated use `ListLatestTransactionsAllChainsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListLatestTransactionsAllChainsResponse$inboundSchema;
-  /** @deprecated use `ListLatestTransactionsAllChainsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListLatestTransactionsAllChainsResponse$outboundSchema;
-  /** @deprecated use `ListLatestTransactionsAllChainsResponse$Outbound` instead. */
-  export type Outbound = ListLatestTransactionsAllChainsResponse$Outbound;
-}
-
 export function listLatestTransactionsAllChainsResponseToJSON(
   listLatestTransactionsAllChainsResponse:
     ListLatestTransactionsAllChainsResponse,
@@ -161,7 +128,6 @@ export function listLatestTransactionsAllChainsResponseToJSON(
     ),
   );
 }
-
 export function listLatestTransactionsAllChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

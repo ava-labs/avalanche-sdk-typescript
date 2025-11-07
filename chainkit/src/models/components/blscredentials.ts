@@ -21,7 +21,6 @@ export const BlsCredentials$inboundSchema: z.ZodType<
   publicKey: z.string(),
   proofOfPossession: z.string(),
 });
-
 /** @internal */
 export type BlsCredentials$Outbound = {
   publicKey: string;
@@ -38,23 +37,9 @@ export const BlsCredentials$outboundSchema: z.ZodType<
   proofOfPossession: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BlsCredentials$ {
-  /** @deprecated use `BlsCredentials$inboundSchema` instead. */
-  export const inboundSchema = BlsCredentials$inboundSchema;
-  /** @deprecated use `BlsCredentials$outboundSchema` instead. */
-  export const outboundSchema = BlsCredentials$outboundSchema;
-  /** @deprecated use `BlsCredentials$Outbound` instead. */
-  export type Outbound = BlsCredentials$Outbound;
-}
-
 export function blsCredentialsToJSON(blsCredentials: BlsCredentials): string {
   return JSON.stringify(BlsCredentials$outboundSchema.parse(blsCredentials));
 }
-
 export function blsCredentialsFromJSON(
   jsonString: string,
 ): SafeParseResult<BlsCredentials, SDKValidationError> {

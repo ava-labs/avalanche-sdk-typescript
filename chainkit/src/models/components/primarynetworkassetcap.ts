@@ -21,19 +21,7 @@ export type PrimaryNetworkAssetCap = ClosedEnum<typeof PrimaryNetworkAssetCap>;
 export const PrimaryNetworkAssetCap$inboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkAssetCap
 > = z.nativeEnum(PrimaryNetworkAssetCap);
-
 /** @internal */
 export const PrimaryNetworkAssetCap$outboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkAssetCap
 > = PrimaryNetworkAssetCap$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAssetCap$ {
-  /** @deprecated use `PrimaryNetworkAssetCap$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkAssetCap$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAssetCap$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkAssetCap$outboundSchema;
-}

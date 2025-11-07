@@ -25,7 +25,6 @@ export const DataListChainsResponse$inboundSchema: z.ZodType<
 > = z.object({
   chains: z.array(ChainInfo$inboundSchema),
 });
-
 /** @internal */
 export type DataListChainsResponse$Outbound = {
   chains: Array<ChainInfo$Outbound>;
@@ -40,19 +39,6 @@ export const DataListChainsResponse$outboundSchema: z.ZodType<
   chains: z.array(ChainInfo$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DataListChainsResponse$ {
-  /** @deprecated use `DataListChainsResponse$inboundSchema` instead. */
-  export const inboundSchema = DataListChainsResponse$inboundSchema;
-  /** @deprecated use `DataListChainsResponse$outboundSchema` instead. */
-  export const outboundSchema = DataListChainsResponse$outboundSchema;
-  /** @deprecated use `DataListChainsResponse$Outbound` instead. */
-  export type Outbound = DataListChainsResponse$Outbound;
-}
-
 export function dataListChainsResponseToJSON(
   dataListChainsResponse: DataListChainsResponse,
 ): string {
@@ -60,7 +46,6 @@ export function dataListChainsResponseToJSON(
     DataListChainsResponse$outboundSchema.parse(dataListChainsResponse),
   );
 }
-
 export function dataListChainsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<DataListChainsResponse, SDKValidationError> {

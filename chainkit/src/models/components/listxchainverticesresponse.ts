@@ -38,7 +38,6 @@ export const ListXChainVerticesResponse$inboundSchema: z.ZodType<
   vertices: z.array(XChainVertex$inboundSchema),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListXChainVerticesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,19 +56,6 @@ export const ListXChainVerticesResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListXChainVerticesResponse$ {
-  /** @deprecated use `ListXChainVerticesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListXChainVerticesResponse$inboundSchema;
-  /** @deprecated use `ListXChainVerticesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListXChainVerticesResponse$outboundSchema;
-  /** @deprecated use `ListXChainVerticesResponse$Outbound` instead. */
-  export type Outbound = ListXChainVerticesResponse$Outbound;
-}
-
 export function listXChainVerticesResponseToJSON(
   listXChainVerticesResponse: ListXChainVerticesResponse,
 ): string {
@@ -77,7 +63,6 @@ export function listXChainVerticesResponseToJSON(
     ListXChainVerticesResponse$outboundSchema.parse(listXChainVerticesResponse),
   );
 }
-
 export function listXChainVerticesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListXChainVerticesResponse, SDKValidationError> {

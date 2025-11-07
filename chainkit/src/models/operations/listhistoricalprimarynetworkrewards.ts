@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListHistoricalPrimaryNetworkRewardsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListHistoricalPrimaryNetworkRewardsGlobals = {
@@ -61,7 +61,6 @@ export const ListHistoricalPrimaryNetworkRewardsGlobals$inboundSchema:
     z.object({
       network: components.GlobalParamNetwork$inboundSchema.optional(),
     });
-
 /** @internal */
 export type ListHistoricalPrimaryNetworkRewardsGlobals$Outbound = {
   network?: string | undefined;
@@ -77,21 +76,6 @@ export const ListHistoricalPrimaryNetworkRewardsGlobals$outboundSchema:
     network: components.GlobalParamNetwork$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListHistoricalPrimaryNetworkRewardsGlobals$ {
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    ListHistoricalPrimaryNetworkRewardsGlobals$inboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    ListHistoricalPrimaryNetworkRewardsGlobals$outboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsGlobals$Outbound` instead. */
-  export type Outbound = ListHistoricalPrimaryNetworkRewardsGlobals$Outbound;
-}
-
 export function listHistoricalPrimaryNetworkRewardsGlobalsToJSON(
   listHistoricalPrimaryNetworkRewardsGlobals:
     ListHistoricalPrimaryNetworkRewardsGlobals,
@@ -102,7 +86,6 @@ export function listHistoricalPrimaryNetworkRewardsGlobalsToJSON(
     ),
   );
 }
-
 export function listHistoricalPrimaryNetworkRewardsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -131,7 +114,6 @@ export const ListHistoricalPrimaryNetworkRewardsRequest$inboundSchema:
       sortOrder: components.SortOrder$inboundSchema.optional(),
       currency: components.CurrencyCode$inboundSchema.optional(),
     });
-
 /** @internal */
 export type ListHistoricalPrimaryNetworkRewardsRequest$Outbound = {
   addresses?: string | undefined;
@@ -159,21 +141,6 @@ export const ListHistoricalPrimaryNetworkRewardsRequest$outboundSchema:
     currency: components.CurrencyCode$outboundSchema.optional(),
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListHistoricalPrimaryNetworkRewardsRequest$ {
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListHistoricalPrimaryNetworkRewardsRequest$inboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListHistoricalPrimaryNetworkRewardsRequest$outboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsRequest$Outbound` instead. */
-  export type Outbound = ListHistoricalPrimaryNetworkRewardsRequest$Outbound;
-}
-
 export function listHistoricalPrimaryNetworkRewardsRequestToJSON(
   listHistoricalPrimaryNetworkRewardsRequest:
     ListHistoricalPrimaryNetworkRewardsRequest,
@@ -184,7 +151,6 @@ export function listHistoricalPrimaryNetworkRewardsRequestToJSON(
     ),
   );
 }
-
 export function listHistoricalPrimaryNetworkRewardsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -214,7 +180,6 @@ export const ListHistoricalPrimaryNetworkRewardsResponse$inboundSchema:
       "Result": "result",
     });
   });
-
 /** @internal */
 export type ListHistoricalPrimaryNetworkRewardsResponse$Outbound = {
   Result: components.ListHistoricalRewardsResponse$Outbound;
@@ -234,21 +199,6 @@ export const ListHistoricalPrimaryNetworkRewardsResponse$outboundSchema:
     });
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListHistoricalPrimaryNetworkRewardsResponse$ {
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    ListHistoricalPrimaryNetworkRewardsResponse$inboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    ListHistoricalPrimaryNetworkRewardsResponse$outboundSchema;
-  /** @deprecated use `ListHistoricalPrimaryNetworkRewardsResponse$Outbound` instead. */
-  export type Outbound = ListHistoricalPrimaryNetworkRewardsResponse$Outbound;
-}
-
 export function listHistoricalPrimaryNetworkRewardsResponseToJSON(
   listHistoricalPrimaryNetworkRewardsResponse:
     ListHistoricalPrimaryNetworkRewardsResponse,
@@ -259,7 +209,6 @@ export function listHistoricalPrimaryNetworkRewardsResponseToJSON(
     ),
   );
 }
-
 export function listHistoricalPrimaryNetworkRewardsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<

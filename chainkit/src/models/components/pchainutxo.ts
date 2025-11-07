@@ -133,7 +133,6 @@ export const PChainUtxo$inboundSchema: z.ZodType<
   utxoStartTimestamp: z.number().optional(),
   utxoType: UtxoType$inboundSchema,
 });
-
 /** @internal */
 export type PChainUtxo$Outbound = {
   addresses: Array<string>;
@@ -192,23 +191,9 @@ export const PChainUtxo$outboundSchema: z.ZodType<
   utxoType: UtxoType$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainUtxo$ {
-  /** @deprecated use `PChainUtxo$inboundSchema` instead. */
-  export const inboundSchema = PChainUtxo$inboundSchema;
-  /** @deprecated use `PChainUtxo$outboundSchema` instead. */
-  export const outboundSchema = PChainUtxo$outboundSchema;
-  /** @deprecated use `PChainUtxo$Outbound` instead. */
-  export type Outbound = PChainUtxo$Outbound;
-}
-
 export function pChainUtxoToJSON(pChainUtxo: PChainUtxo): string {
   return JSON.stringify(PChainUtxo$outboundSchema.parse(pChainUtxo));
 }
-
 export function pChainUtxoFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainUtxo, SDKValidationError> {

@@ -58,7 +58,6 @@ export const BadGatewayMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type BadGatewayMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const BadGatewayMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BadGatewayMessage$ {
-  /** @deprecated use `BadGatewayMessage$inboundSchema` instead. */
-  export const inboundSchema = BadGatewayMessage$inboundSchema;
-  /** @deprecated use `BadGatewayMessage$outboundSchema` instead. */
-  export const outboundSchema = BadGatewayMessage$outboundSchema;
-  /** @deprecated use `BadGatewayMessage$Outbound` instead. */
-  export type Outbound = BadGatewayMessage$Outbound;
-}
-
 export function badGatewayMessageToJSON(
   badGatewayMessage: BadGatewayMessage,
 ): string {
@@ -89,7 +75,6 @@ export function badGatewayMessageToJSON(
     BadGatewayMessage$outboundSchema.parse(badGatewayMessage),
   );
 }
-
 export function badGatewayMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<BadGatewayMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const BadGatewayError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace BadGatewayError$ {
-  /** @deprecated use `BadGatewayError$inboundSchema` instead. */
-  export const inboundSchema = BadGatewayError$inboundSchema;
-  /** @deprecated use `BadGatewayError$outboundSchema` instead. */
-  export const outboundSchema = BadGatewayError$outboundSchema;
-  /** @deprecated use `BadGatewayError$Outbound` instead. */
-  export type Outbound = BadGatewayError$Outbound;
-}

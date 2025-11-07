@@ -33,7 +33,6 @@ export const MetricsApiResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   results: z.array(MetricsValue$inboundSchema),
 });
-
 /** @internal */
 export type MetricsApiResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -50,19 +49,6 @@ export const MetricsApiResponse$outboundSchema: z.ZodType<
   results: z.array(MetricsValue$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace MetricsApiResponse$ {
-  /** @deprecated use `MetricsApiResponse$inboundSchema` instead. */
-  export const inboundSchema = MetricsApiResponse$inboundSchema;
-  /** @deprecated use `MetricsApiResponse$outboundSchema` instead. */
-  export const outboundSchema = MetricsApiResponse$outboundSchema;
-  /** @deprecated use `MetricsApiResponse$Outbound` instead. */
-  export type Outbound = MetricsApiResponse$Outbound;
-}
-
 export function metricsApiResponseToJSON(
   metricsApiResponse: MetricsApiResponse,
 ): string {
@@ -70,7 +56,6 @@ export function metricsApiResponseToJSON(
     MetricsApiResponse$outboundSchema.parse(metricsApiResponse),
   );
 }
-
 export function metricsApiResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<MetricsApiResponse, SDKValidationError> {

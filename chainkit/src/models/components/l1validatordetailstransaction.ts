@@ -42,7 +42,6 @@ export const L1ValidatorDetailsTransactionBlsCredentials$inboundSchema:
     z.ZodTypeDef,
     unknown
   > = z.object({});
-
 /** @internal */
 export type L1ValidatorDetailsTransactionBlsCredentials$Outbound = {};
 
@@ -54,21 +53,6 @@ export const L1ValidatorDetailsTransactionBlsCredentials$outboundSchema:
     L1ValidatorDetailsTransactionBlsCredentials
   > = z.object({});
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace L1ValidatorDetailsTransactionBlsCredentials$ {
-  /** @deprecated use `L1ValidatorDetailsTransactionBlsCredentials$inboundSchema` instead. */
-  export const inboundSchema =
-    L1ValidatorDetailsTransactionBlsCredentials$inboundSchema;
-  /** @deprecated use `L1ValidatorDetailsTransactionBlsCredentials$outboundSchema` instead. */
-  export const outboundSchema =
-    L1ValidatorDetailsTransactionBlsCredentials$outboundSchema;
-  /** @deprecated use `L1ValidatorDetailsTransactionBlsCredentials$Outbound` instead. */
-  export type Outbound = L1ValidatorDetailsTransactionBlsCredentials$Outbound;
-}
-
 export function l1ValidatorDetailsTransactionBlsCredentialsToJSON(
   l1ValidatorDetailsTransactionBlsCredentials:
     L1ValidatorDetailsTransactionBlsCredentials,
@@ -79,7 +63,6 @@ export function l1ValidatorDetailsTransactionBlsCredentialsToJSON(
     ),
   );
 }
-
 export function l1ValidatorDetailsTransactionBlsCredentialsFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -113,7 +96,6 @@ export const L1ValidatorDetailsTransaction$inboundSchema: z.ZodType<
     L1ValidatorDetailsTransactionBlsCredentials$inboundSchema
   ).optional(),
 });
-
 /** @internal */
 export type L1ValidatorDetailsTransaction$Outbound = {
   validationId: string;
@@ -146,19 +128,6 @@ export const L1ValidatorDetailsTransaction$outboundSchema: z.ZodType<
   ).optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace L1ValidatorDetailsTransaction$ {
-  /** @deprecated use `L1ValidatorDetailsTransaction$inboundSchema` instead. */
-  export const inboundSchema = L1ValidatorDetailsTransaction$inboundSchema;
-  /** @deprecated use `L1ValidatorDetailsTransaction$outboundSchema` instead. */
-  export const outboundSchema = L1ValidatorDetailsTransaction$outboundSchema;
-  /** @deprecated use `L1ValidatorDetailsTransaction$Outbound` instead. */
-  export type Outbound = L1ValidatorDetailsTransaction$Outbound;
-}
-
 export function l1ValidatorDetailsTransactionToJSON(
   l1ValidatorDetailsTransaction: L1ValidatorDetailsTransaction,
 ): string {
@@ -168,7 +137,6 @@ export function l1ValidatorDetailsTransactionToJSON(
     ),
   );
 }
-
 export function l1ValidatorDetailsTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<L1ValidatorDetailsTransaction, SDKValidationError> {

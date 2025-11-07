@@ -3,5 +3,5 @@
  */
 
 export const GenerateOrRotateSharedSecretServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;

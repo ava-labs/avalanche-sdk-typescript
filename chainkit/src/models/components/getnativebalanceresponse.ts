@@ -28,7 +28,6 @@ export const GetNativeBalanceResponse$inboundSchema: z.ZodType<
 > = z.object({
   nativeTokenBalance: NativeTokenBalance$inboundSchema,
 });
-
 /** @internal */
 export type GetNativeBalanceResponse$Outbound = {
   nativeTokenBalance: NativeTokenBalance$Outbound;
@@ -43,19 +42,6 @@ export const GetNativeBalanceResponse$outboundSchema: z.ZodType<
   nativeTokenBalance: NativeTokenBalance$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNativeBalanceResponse$ {
-  /** @deprecated use `GetNativeBalanceResponse$inboundSchema` instead. */
-  export const inboundSchema = GetNativeBalanceResponse$inboundSchema;
-  /** @deprecated use `GetNativeBalanceResponse$outboundSchema` instead. */
-  export const outboundSchema = GetNativeBalanceResponse$outboundSchema;
-  /** @deprecated use `GetNativeBalanceResponse$Outbound` instead. */
-  export type Outbound = GetNativeBalanceResponse$Outbound;
-}
-
 export function getNativeBalanceResponseToJSON(
   getNativeBalanceResponse: GetNativeBalanceResponse,
 ): string {
@@ -63,7 +49,6 @@ export function getNativeBalanceResponseToJSON(
     GetNativeBalanceResponse$outboundSchema.parse(getNativeBalanceResponse),
   );
 }
-
 export function getNativeBalanceResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNativeBalanceResponse, SDKValidationError> {

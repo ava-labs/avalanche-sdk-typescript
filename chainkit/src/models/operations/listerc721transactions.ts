@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListErc721TransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListErc721TransactionsGlobals = {
@@ -59,7 +59,6 @@ export const ListErc721TransactionsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListErc721TransactionsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -74,19 +73,6 @@ export const ListErc721TransactionsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc721TransactionsGlobals$ {
-  /** @deprecated use `ListErc721TransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListErc721TransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListErc721TransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListErc721TransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListErc721TransactionsGlobals$Outbound` instead. */
-  export type Outbound = ListErc721TransactionsGlobals$Outbound;
-}
-
 export function listErc721TransactionsGlobalsToJSON(
   listErc721TransactionsGlobals: ListErc721TransactionsGlobals,
 ): string {
@@ -96,7 +82,6 @@ export function listErc721TransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listErc721TransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc721TransactionsGlobals, SDKValidationError> {
@@ -120,7 +105,6 @@ export const ListErc721TransactionsRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListErc721TransactionsRequest$Outbound = {
   startBlock?: number | undefined;
@@ -145,19 +129,6 @@ export const ListErc721TransactionsRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc721TransactionsRequest$ {
-  /** @deprecated use `ListErc721TransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListErc721TransactionsRequest$inboundSchema;
-  /** @deprecated use `ListErc721TransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListErc721TransactionsRequest$outboundSchema;
-  /** @deprecated use `ListErc721TransactionsRequest$Outbound` instead. */
-  export type Outbound = ListErc721TransactionsRequest$Outbound;
-}
-
 export function listErc721TransactionsRequestToJSON(
   listErc721TransactionsRequest: ListErc721TransactionsRequest,
 ): string {
@@ -167,7 +138,6 @@ export function listErc721TransactionsRequestToJSON(
     ),
   );
 }
-
 export function listErc721TransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc721TransactionsRequest, SDKValidationError> {
@@ -190,7 +160,6 @@ export const ListErc721TransactionsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListErc721TransactionsResponse$Outbound = {
   Result: components.ListErc721TransactionsResponse$Outbound;
@@ -209,19 +178,6 @@ export const ListErc721TransactionsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListErc721TransactionsResponse$ {
-  /** @deprecated use `ListErc721TransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListErc721TransactionsResponse$inboundSchema;
-  /** @deprecated use `ListErc721TransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListErc721TransactionsResponse$outboundSchema;
-  /** @deprecated use `ListErc721TransactionsResponse$Outbound` instead. */
-  export type Outbound = ListErc721TransactionsResponse$Outbound;
-}
-
 export function listErc721TransactionsResponseToJSON(
   listErc721TransactionsResponse: ListErc721TransactionsResponse,
 ): string {
@@ -231,7 +187,6 @@ export function listErc721TransactionsResponseToJSON(
     ),
   );
 }
-
 export function listErc721TransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListErc721TransactionsResponse, SDKValidationError> {

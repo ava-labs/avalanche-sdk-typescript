@@ -51,7 +51,6 @@ export const GetNftHoldersByContractAddressGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetNftHoldersByContractAddressGlobals$Outbound = {
   chainId?: string | undefined;
@@ -66,21 +65,6 @@ export const GetNftHoldersByContractAddressGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNftHoldersByContractAddressGlobals$ {
-  /** @deprecated use `GetNftHoldersByContractAddressGlobals$inboundSchema` instead. */
-  export const inboundSchema =
-    GetNftHoldersByContractAddressGlobals$inboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressGlobals$outboundSchema` instead. */
-  export const outboundSchema =
-    GetNftHoldersByContractAddressGlobals$outboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressGlobals$Outbound` instead. */
-  export type Outbound = GetNftHoldersByContractAddressGlobals$Outbound;
-}
-
 export function getNftHoldersByContractAddressGlobalsToJSON(
   getNftHoldersByContractAddressGlobals: GetNftHoldersByContractAddressGlobals,
 ): string {
@@ -90,7 +74,6 @@ export function getNftHoldersByContractAddressGlobalsToJSON(
     ),
   );
 }
-
 export function getNftHoldersByContractAddressGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNftHoldersByContractAddressGlobals, SDKValidationError> {
@@ -113,7 +96,6 @@ export const GetNftHoldersByContractAddressRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type GetNftHoldersByContractAddressRequest$Outbound = {
   pageToken?: string | undefined;
@@ -134,21 +116,6 @@ export const GetNftHoldersByContractAddressRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNftHoldersByContractAddressRequest$ {
-  /** @deprecated use `GetNftHoldersByContractAddressRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    GetNftHoldersByContractAddressRequest$inboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    GetNftHoldersByContractAddressRequest$outboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressRequest$Outbound` instead. */
-  export type Outbound = GetNftHoldersByContractAddressRequest$Outbound;
-}
-
 export function getNftHoldersByContractAddressRequestToJSON(
   getNftHoldersByContractAddressRequest: GetNftHoldersByContractAddressRequest,
 ): string {
@@ -158,7 +125,6 @@ export function getNftHoldersByContractAddressRequestToJSON(
     ),
   );
 }
-
 export function getNftHoldersByContractAddressRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNftHoldersByContractAddressRequest, SDKValidationError> {
@@ -182,7 +148,6 @@ export const GetNftHoldersByContractAddressResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetNftHoldersByContractAddressResponse$Outbound = {
   Result: components.NftHoldersResponse$Outbound;
@@ -201,21 +166,6 @@ export const GetNftHoldersByContractAddressResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetNftHoldersByContractAddressResponse$ {
-  /** @deprecated use `GetNftHoldersByContractAddressResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    GetNftHoldersByContractAddressResponse$inboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    GetNftHoldersByContractAddressResponse$outboundSchema;
-  /** @deprecated use `GetNftHoldersByContractAddressResponse$Outbound` instead. */
-  export type Outbound = GetNftHoldersByContractAddressResponse$Outbound;
-}
-
 export function getNftHoldersByContractAddressResponseToJSON(
   getNftHoldersByContractAddressResponse:
     GetNftHoldersByContractAddressResponse,
@@ -226,7 +176,6 @@ export function getNftHoldersByContractAddressResponseToJSON(
     ),
   );
 }
-
 export function getNftHoldersByContractAddressResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetNftHoldersByContractAddressResponse, SDKValidationError> {

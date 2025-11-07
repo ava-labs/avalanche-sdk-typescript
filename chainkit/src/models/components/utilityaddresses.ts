@@ -19,7 +19,6 @@ export const UtilityAddresses$inboundSchema: z.ZodType<
 > = z.object({
   multicall: z.string().optional(),
 });
-
 /** @internal */
 export type UtilityAddresses$Outbound = {
   multicall?: string | undefined;
@@ -34,19 +33,6 @@ export const UtilityAddresses$outboundSchema: z.ZodType<
   multicall: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UtilityAddresses$ {
-  /** @deprecated use `UtilityAddresses$inboundSchema` instead. */
-  export const inboundSchema = UtilityAddresses$inboundSchema;
-  /** @deprecated use `UtilityAddresses$outboundSchema` instead. */
-  export const outboundSchema = UtilityAddresses$outboundSchema;
-  /** @deprecated use `UtilityAddresses$Outbound` instead. */
-  export type Outbound = UtilityAddresses$Outbound;
-}
-
 export function utilityAddressesToJSON(
   utilityAddresses: UtilityAddresses,
 ): string {
@@ -54,7 +40,6 @@ export function utilityAddressesToJSON(
     UtilityAddresses$outboundSchema.parse(utilityAddresses),
   );
 }
-
 export function utilityAddressesFromJSON(
   jsonString: string,
 ): SafeParseResult<UtilityAddresses, SDKValidationError> {

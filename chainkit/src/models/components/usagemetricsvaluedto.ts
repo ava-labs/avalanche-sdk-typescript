@@ -74,22 +74,10 @@ export type UsageMetricsValueDTO = {
 export const UsageMetricsValueDTOGroupedBy$inboundSchema: z.ZodNativeEnum<
   typeof UsageMetricsValueDTOGroupedBy
 > = z.nativeEnum(UsageMetricsValueDTOGroupedBy);
-
 /** @internal */
 export const UsageMetricsValueDTOGroupedBy$outboundSchema: z.ZodNativeEnum<
   typeof UsageMetricsValueDTOGroupedBy
 > = UsageMetricsValueDTOGroupedBy$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UsageMetricsValueDTOGroupedBy$ {
-  /** @deprecated use `UsageMetricsValueDTOGroupedBy$inboundSchema` instead. */
-  export const inboundSchema = UsageMetricsValueDTOGroupedBy$inboundSchema;
-  /** @deprecated use `UsageMetricsValueDTOGroupedBy$outboundSchema` instead. */
-  export const outboundSchema = UsageMetricsValueDTOGroupedBy$outboundSchema;
-}
 
 /** @internal */
 export const UsageMetricsValueDTOGroupValue$inboundSchema: z.ZodType<
@@ -97,7 +85,6 @@ export const UsageMetricsValueDTOGroupValue$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.number()]);
-
 /** @internal */
 export type UsageMetricsValueDTOGroupValue$Outbound = string | number;
 
@@ -108,19 +95,6 @@ export const UsageMetricsValueDTOGroupValue$outboundSchema: z.ZodType<
   UsageMetricsValueDTOGroupValue
 > = z.union([z.string(), z.number()]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UsageMetricsValueDTOGroupValue$ {
-  /** @deprecated use `UsageMetricsValueDTOGroupValue$inboundSchema` instead. */
-  export const inboundSchema = UsageMetricsValueDTOGroupValue$inboundSchema;
-  /** @deprecated use `UsageMetricsValueDTOGroupValue$outboundSchema` instead. */
-  export const outboundSchema = UsageMetricsValueDTOGroupValue$outboundSchema;
-  /** @deprecated use `UsageMetricsValueDTOGroupValue$Outbound` instead. */
-  export type Outbound = UsageMetricsValueDTOGroupValue$Outbound;
-}
-
 export function usageMetricsValueDTOGroupValueToJSON(
   usageMetricsValueDTOGroupValue: UsageMetricsValueDTOGroupValue,
 ): string {
@@ -130,7 +104,6 @@ export function usageMetricsValueDTOGroupValueToJSON(
     ),
   );
 }
-
 export function usageMetricsValueDTOGroupValueFromJSON(
   jsonString: string,
 ): SafeParseResult<UsageMetricsValueDTOGroupValue, SDKValidationError> {
@@ -157,7 +130,6 @@ export const UsageMetricsValueDTO$inboundSchema: z.ZodType<
   apiCreditsUsed: z.number(),
   apiCreditsWasted: z.number(),
 });
-
 /** @internal */
 export type UsageMetricsValueDTO$Outbound = {
   groupedBy: string;
@@ -188,19 +160,6 @@ export const UsageMetricsValueDTO$outboundSchema: z.ZodType<
   apiCreditsWasted: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UsageMetricsValueDTO$ {
-  /** @deprecated use `UsageMetricsValueDTO$inboundSchema` instead. */
-  export const inboundSchema = UsageMetricsValueDTO$inboundSchema;
-  /** @deprecated use `UsageMetricsValueDTO$outboundSchema` instead. */
-  export const outboundSchema = UsageMetricsValueDTO$outboundSchema;
-  /** @deprecated use `UsageMetricsValueDTO$Outbound` instead. */
-  export type Outbound = UsageMetricsValueDTO$Outbound;
-}
-
 export function usageMetricsValueDTOToJSON(
   usageMetricsValueDTO: UsageMetricsValueDTO,
 ): string {
@@ -208,7 +167,6 @@ export function usageMetricsValueDTOToJSON(
     UsageMetricsValueDTO$outboundSchema.parse(usageMetricsValueDTO),
   );
 }
-
 export function usageMetricsValueDTOFromJSON(
   jsonString: string,
 ): SafeParseResult<UsageMetricsValueDTO, SDKValidationError> {

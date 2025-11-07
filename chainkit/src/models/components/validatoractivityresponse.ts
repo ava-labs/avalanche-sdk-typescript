@@ -51,7 +51,6 @@ export const ValidatorActivityResponse$inboundSchema: z.ZodType<
   eventType: ValidatorActivityEventType$inboundSchema,
   metadata: ValidatorActivityMetadata$inboundSchema,
 });
-
 /** @internal */
 export type ValidatorActivityResponse$Outbound = {
   id: string;
@@ -82,19 +81,6 @@ export const ValidatorActivityResponse$outboundSchema: z.ZodType<
   metadata: ValidatorActivityMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivityResponse$ {
-  /** @deprecated use `ValidatorActivityResponse$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivityResponse$inboundSchema;
-  /** @deprecated use `ValidatorActivityResponse$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivityResponse$outboundSchema;
-  /** @deprecated use `ValidatorActivityResponse$Outbound` instead. */
-  export type Outbound = ValidatorActivityResponse$Outbound;
-}
-
 export function validatorActivityResponseToJSON(
   validatorActivityResponse: ValidatorActivityResponse,
 ): string {
@@ -102,7 +88,6 @@ export function validatorActivityResponseToJSON(
     ValidatorActivityResponse$outboundSchema.parse(validatorActivityResponse),
   );
 }
-
 export function validatorActivityResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorActivityResponse, SDKValidationError> {

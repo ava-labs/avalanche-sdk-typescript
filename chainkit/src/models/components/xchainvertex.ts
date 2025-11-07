@@ -33,7 +33,6 @@ export const XChainVertex$inboundSchema: z.ZodType<
   transactions: z.array(z.string()),
   vertexSizeBytes: z.number(),
 });
-
 /** @internal */
 export type XChainVertex$Outbound = {
   vertexHash: string;
@@ -62,23 +61,9 @@ export const XChainVertex$outboundSchema: z.ZodType<
   vertexSizeBytes: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainVertex$ {
-  /** @deprecated use `XChainVertex$inboundSchema` instead. */
-  export const inboundSchema = XChainVertex$inboundSchema;
-  /** @deprecated use `XChainVertex$outboundSchema` instead. */
-  export const outboundSchema = XChainVertex$outboundSchema;
-  /** @deprecated use `XChainVertex$Outbound` instead. */
-  export type Outbound = XChainVertex$Outbound;
-}
-
 export function xChainVertexToJSON(xChainVertex: XChainVertex): string {
   return JSON.stringify(XChainVertex$outboundSchema.parse(xChainVertex));
 }
-
 export function xChainVertexFromJSON(
   jsonString: string,
 ): SafeParseResult<XChainVertex, SDKValidationError> {

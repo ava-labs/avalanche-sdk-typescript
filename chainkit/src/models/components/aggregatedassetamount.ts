@@ -54,7 +54,6 @@ export const AggregatedAssetAmount$inboundSchema: z.ZodType<
   amount: z.string(),
   utxoCount: z.number(),
 });
-
 /** @internal */
 export type AggregatedAssetAmount$Outbound = {
   assetId: string;
@@ -81,19 +80,6 @@ export const AggregatedAssetAmount$outboundSchema: z.ZodType<
   utxoCount: z.number(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AggregatedAssetAmount$ {
-  /** @deprecated use `AggregatedAssetAmount$inboundSchema` instead. */
-  export const inboundSchema = AggregatedAssetAmount$inboundSchema;
-  /** @deprecated use `AggregatedAssetAmount$outboundSchema` instead. */
-  export const outboundSchema = AggregatedAssetAmount$outboundSchema;
-  /** @deprecated use `AggregatedAssetAmount$Outbound` instead. */
-  export type Outbound = AggregatedAssetAmount$Outbound;
-}
-
 export function aggregatedAssetAmountToJSON(
   aggregatedAssetAmount: AggregatedAssetAmount,
 ): string {
@@ -101,7 +87,6 @@ export function aggregatedAssetAmountToJSON(
     AggregatedAssetAmount$outboundSchema.parse(aggregatedAssetAmount),
   );
 }
-
 export function aggregatedAssetAmountFromJSON(
   jsonString: string,
 ): SafeParseResult<AggregatedAssetAmount, SDKValidationError> {

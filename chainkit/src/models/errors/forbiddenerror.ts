@@ -58,7 +58,6 @@ export const ForbiddenMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type ForbiddenMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const ForbiddenMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ForbiddenMessage$ {
-  /** @deprecated use `ForbiddenMessage$inboundSchema` instead. */
-  export const inboundSchema = ForbiddenMessage$inboundSchema;
-  /** @deprecated use `ForbiddenMessage$outboundSchema` instead. */
-  export const outboundSchema = ForbiddenMessage$outboundSchema;
-  /** @deprecated use `ForbiddenMessage$Outbound` instead. */
-  export type Outbound = ForbiddenMessage$Outbound;
-}
-
 export function forbiddenMessageToJSON(
   forbiddenMessage: ForbiddenMessage,
 ): string {
@@ -89,7 +75,6 @@ export function forbiddenMessageToJSON(
     ForbiddenMessage$outboundSchema.parse(forbiddenMessage),
   );
 }
-
 export function forbiddenMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<ForbiddenMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const ForbiddenError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ForbiddenError$ {
-  /** @deprecated use `ForbiddenError$inboundSchema` instead. */
-  export const inboundSchema = ForbiddenError$inboundSchema;
-  /** @deprecated use `ForbiddenError$outboundSchema` instead. */
-  export const outboundSchema = ForbiddenError$outboundSchema;
-  /** @deprecated use `ForbiddenError$Outbound` instead. */
-  export type Outbound = ForbiddenError$Outbound;
-}

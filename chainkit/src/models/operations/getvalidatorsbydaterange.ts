@@ -57,7 +57,6 @@ export const GetValidatorsByDateRangeRequest$inboundSchema: z.ZodType<
   subnetId: z.string(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetValidatorsByDateRangeRequest$Outbound = {
   startTimestamp?: number | undefined;
@@ -82,19 +81,6 @@ export const GetValidatorsByDateRangeRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetValidatorsByDateRangeRequest$ {
-  /** @deprecated use `GetValidatorsByDateRangeRequest$inboundSchema` instead. */
-  export const inboundSchema = GetValidatorsByDateRangeRequest$inboundSchema;
-  /** @deprecated use `GetValidatorsByDateRangeRequest$outboundSchema` instead. */
-  export const outboundSchema = GetValidatorsByDateRangeRequest$outboundSchema;
-  /** @deprecated use `GetValidatorsByDateRangeRequest$Outbound` instead. */
-  export type Outbound = GetValidatorsByDateRangeRequest$Outbound;
-}
-
 export function getValidatorsByDateRangeRequestToJSON(
   getValidatorsByDateRangeRequest: GetValidatorsByDateRangeRequest,
 ): string {
@@ -104,7 +90,6 @@ export function getValidatorsByDateRangeRequestToJSON(
     ),
   );
 }
-
 export function getValidatorsByDateRangeRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetValidatorsByDateRangeRequest, SDKValidationError> {
@@ -127,7 +112,6 @@ export const GetValidatorsByDateRangeResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetValidatorsByDateRangeResponse$Outbound = {
   Result: components.PChainLookingGlassResponse$Outbound;
@@ -146,19 +130,6 @@ export const GetValidatorsByDateRangeResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetValidatorsByDateRangeResponse$ {
-  /** @deprecated use `GetValidatorsByDateRangeResponse$inboundSchema` instead. */
-  export const inboundSchema = GetValidatorsByDateRangeResponse$inboundSchema;
-  /** @deprecated use `GetValidatorsByDateRangeResponse$outboundSchema` instead. */
-  export const outboundSchema = GetValidatorsByDateRangeResponse$outboundSchema;
-  /** @deprecated use `GetValidatorsByDateRangeResponse$Outbound` instead. */
-  export type Outbound = GetValidatorsByDateRangeResponse$Outbound;
-}
-
 export function getValidatorsByDateRangeResponseToJSON(
   getValidatorsByDateRangeResponse: GetValidatorsByDateRangeResponse,
 ): string {
@@ -168,7 +139,6 @@ export function getValidatorsByDateRangeResponseToJSON(
     ),
   );
 }
-
 export function getValidatorsByDateRangeResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetValidatorsByDateRangeResponse, SDKValidationError> {

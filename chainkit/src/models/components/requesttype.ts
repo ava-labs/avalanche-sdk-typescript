@@ -20,18 +20,6 @@ export type RequestType = ClosedEnum<typeof RequestType>;
 /** @internal */
 export const RequestType$inboundSchema: z.ZodNativeEnum<typeof RequestType> = z
   .nativeEnum(RequestType);
-
 /** @internal */
 export const RequestType$outboundSchema: z.ZodNativeEnum<typeof RequestType> =
   RequestType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RequestType$ {
-  /** @deprecated use `RequestType$inboundSchema` instead. */
-  export const inboundSchema = RequestType$inboundSchema;
-  /** @deprecated use `RequestType$outboundSchema` instead. */
-  export const outboundSchema = RequestType$outboundSchema;
-}

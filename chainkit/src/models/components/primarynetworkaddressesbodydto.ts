@@ -22,7 +22,6 @@ export const PrimaryNetworkAddressesBodyDto$inboundSchema: z.ZodType<
 > = z.object({
   addresses: z.string(),
 });
-
 /** @internal */
 export type PrimaryNetworkAddressesBodyDto$Outbound = {
   addresses: string;
@@ -37,19 +36,6 @@ export const PrimaryNetworkAddressesBodyDto$outboundSchema: z.ZodType<
   addresses: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressesBodyDto$ {
-  /** @deprecated use `PrimaryNetworkAddressesBodyDto$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkAddressesBodyDto$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressesBodyDto$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkAddressesBodyDto$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressesBodyDto$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressesBodyDto$Outbound;
-}
-
 export function primaryNetworkAddressesBodyDtoToJSON(
   primaryNetworkAddressesBodyDto: PrimaryNetworkAddressesBodyDto,
 ): string {
@@ -59,7 +45,6 @@ export function primaryNetworkAddressesBodyDtoToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressesBodyDtoFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkAddressesBodyDto, SDKValidationError> {

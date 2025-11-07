@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetChainIdsForAddressesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetChainIdsForAddressesGlobals = {
@@ -38,7 +38,6 @@ export const GetChainIdsForAddressesGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetChainIdsForAddressesGlobals$Outbound = {
   network?: string | undefined;
@@ -53,19 +52,6 @@ export const GetChainIdsForAddressesGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainIdsForAddressesGlobals$ {
-  /** @deprecated use `GetChainIdsForAddressesGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetChainIdsForAddressesGlobals$inboundSchema;
-  /** @deprecated use `GetChainIdsForAddressesGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetChainIdsForAddressesGlobals$outboundSchema;
-  /** @deprecated use `GetChainIdsForAddressesGlobals$Outbound` instead. */
-  export type Outbound = GetChainIdsForAddressesGlobals$Outbound;
-}
-
 export function getChainIdsForAddressesGlobalsToJSON(
   getChainIdsForAddressesGlobals: GetChainIdsForAddressesGlobals,
 ): string {
@@ -75,7 +61,6 @@ export function getChainIdsForAddressesGlobalsToJSON(
     ),
   );
 }
-
 export function getChainIdsForAddressesGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetChainIdsForAddressesGlobals, SDKValidationError> {
@@ -95,7 +80,6 @@ export const GetChainIdsForAddressesRequest$inboundSchema: z.ZodType<
   addresses: z.string(),
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetChainIdsForAddressesRequest$Outbound = {
   addresses: string;
@@ -112,19 +96,6 @@ export const GetChainIdsForAddressesRequest$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetChainIdsForAddressesRequest$ {
-  /** @deprecated use `GetChainIdsForAddressesRequest$inboundSchema` instead. */
-  export const inboundSchema = GetChainIdsForAddressesRequest$inboundSchema;
-  /** @deprecated use `GetChainIdsForAddressesRequest$outboundSchema` instead. */
-  export const outboundSchema = GetChainIdsForAddressesRequest$outboundSchema;
-  /** @deprecated use `GetChainIdsForAddressesRequest$Outbound` instead. */
-  export type Outbound = GetChainIdsForAddressesRequest$Outbound;
-}
-
 export function getChainIdsForAddressesRequestToJSON(
   getChainIdsForAddressesRequest: GetChainIdsForAddressesRequest,
 ): string {
@@ -134,7 +105,6 @@ export function getChainIdsForAddressesRequestToJSON(
     ),
   );
 }
-
 export function getChainIdsForAddressesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetChainIdsForAddressesRequest, SDKValidationError> {

@@ -23,7 +23,6 @@ export const TeleporterSourceTransaction$inboundSchema: z.ZodType<
   timestamp: z.number(),
   gasSpent: z.string(),
 });
-
 /** @internal */
 export type TeleporterSourceTransaction$Outbound = {
   txHash: string;
@@ -42,19 +41,6 @@ export const TeleporterSourceTransaction$outboundSchema: z.ZodType<
   gasSpent: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TeleporterSourceTransaction$ {
-  /** @deprecated use `TeleporterSourceTransaction$inboundSchema` instead. */
-  export const inboundSchema = TeleporterSourceTransaction$inboundSchema;
-  /** @deprecated use `TeleporterSourceTransaction$outboundSchema` instead. */
-  export const outboundSchema = TeleporterSourceTransaction$outboundSchema;
-  /** @deprecated use `TeleporterSourceTransaction$Outbound` instead. */
-  export type Outbound = TeleporterSourceTransaction$Outbound;
-}
-
 export function teleporterSourceTransactionToJSON(
   teleporterSourceTransaction: TeleporterSourceTransaction,
 ): string {
@@ -64,7 +50,6 @@ export function teleporterSourceTransactionToJSON(
     ),
   );
 }
-
 export function teleporterSourceTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<TeleporterSourceTransaction, SDKValidationError> {

@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetSubnetByIdServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetSubnetByIdGlobals = {
@@ -38,7 +38,6 @@ export const GetSubnetByIdGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetSubnetByIdGlobals$Outbound = {
   network?: string | undefined;
@@ -53,19 +52,6 @@ export const GetSubnetByIdGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSubnetByIdGlobals$ {
-  /** @deprecated use `GetSubnetByIdGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetSubnetByIdGlobals$inboundSchema;
-  /** @deprecated use `GetSubnetByIdGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetSubnetByIdGlobals$outboundSchema;
-  /** @deprecated use `GetSubnetByIdGlobals$Outbound` instead. */
-  export type Outbound = GetSubnetByIdGlobals$Outbound;
-}
-
 export function getSubnetByIdGlobalsToJSON(
   getSubnetByIdGlobals: GetSubnetByIdGlobals,
 ): string {
@@ -73,7 +59,6 @@ export function getSubnetByIdGlobalsToJSON(
     GetSubnetByIdGlobals$outboundSchema.parse(getSubnetByIdGlobals),
   );
 }
-
 export function getSubnetByIdGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSubnetByIdGlobals, SDKValidationError> {
@@ -93,7 +78,6 @@ export const GetSubnetByIdRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   subnetId: z.string(),
 });
-
 /** @internal */
 export type GetSubnetByIdRequest$Outbound = {
   network?: string | undefined;
@@ -110,19 +94,6 @@ export const GetSubnetByIdRequest$outboundSchema: z.ZodType<
   subnetId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetSubnetByIdRequest$ {
-  /** @deprecated use `GetSubnetByIdRequest$inboundSchema` instead. */
-  export const inboundSchema = GetSubnetByIdRequest$inboundSchema;
-  /** @deprecated use `GetSubnetByIdRequest$outboundSchema` instead. */
-  export const outboundSchema = GetSubnetByIdRequest$outboundSchema;
-  /** @deprecated use `GetSubnetByIdRequest$Outbound` instead. */
-  export type Outbound = GetSubnetByIdRequest$Outbound;
-}
-
 export function getSubnetByIdRequestToJSON(
   getSubnetByIdRequest: GetSubnetByIdRequest,
 ): string {
@@ -130,7 +101,6 @@ export function getSubnetByIdRequestToJSON(
     GetSubnetByIdRequest$outboundSchema.parse(getSubnetByIdRequest),
   );
 }
-
 export function getSubnetByIdRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetSubnetByIdRequest, SDKValidationError> {

@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListInternalTransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListInternalTransactionsGlobals = {
@@ -59,7 +59,6 @@ export const ListInternalTransactionsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListInternalTransactionsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -74,19 +73,6 @@ export const ListInternalTransactionsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListInternalTransactionsGlobals$ {
-  /** @deprecated use `ListInternalTransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListInternalTransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListInternalTransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListInternalTransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListInternalTransactionsGlobals$Outbound` instead. */
-  export type Outbound = ListInternalTransactionsGlobals$Outbound;
-}
-
 export function listInternalTransactionsGlobalsToJSON(
   listInternalTransactionsGlobals: ListInternalTransactionsGlobals,
 ): string {
@@ -96,7 +82,6 @@ export function listInternalTransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listInternalTransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListInternalTransactionsGlobals, SDKValidationError> {
@@ -120,7 +105,6 @@ export const ListInternalTransactionsRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListInternalTransactionsRequest$Outbound = {
   startBlock?: number | undefined;
@@ -145,19 +129,6 @@ export const ListInternalTransactionsRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListInternalTransactionsRequest$ {
-  /** @deprecated use `ListInternalTransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListInternalTransactionsRequest$inboundSchema;
-  /** @deprecated use `ListInternalTransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListInternalTransactionsRequest$outboundSchema;
-  /** @deprecated use `ListInternalTransactionsRequest$Outbound` instead. */
-  export type Outbound = ListInternalTransactionsRequest$Outbound;
-}
-
 export function listInternalTransactionsRequestToJSON(
   listInternalTransactionsRequest: ListInternalTransactionsRequest,
 ): string {
@@ -167,7 +138,6 @@ export function listInternalTransactionsRequestToJSON(
     ),
   );
 }
-
 export function listInternalTransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListInternalTransactionsRequest, SDKValidationError> {
@@ -190,7 +160,6 @@ export const ListInternalTransactionsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListInternalTransactionsResponse$Outbound = {
   Result: components.ListInternalTransactionsResponse$Outbound;
@@ -209,19 +178,6 @@ export const ListInternalTransactionsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListInternalTransactionsResponse$ {
-  /** @deprecated use `ListInternalTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListInternalTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListInternalTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListInternalTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListInternalTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListInternalTransactionsResponse$Outbound;
-}
-
 export function listInternalTransactionsResponseToJSON(
   listInternalTransactionsResponse: ListInternalTransactionsResponse,
 ): string {
@@ -231,7 +187,6 @@ export function listInternalTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listInternalTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListInternalTransactionsResponse, SDKValidationError> {

@@ -25,19 +25,7 @@ export type XChainTransactionType = ClosedEnum<typeof XChainTransactionType>;
 export const XChainTransactionType$inboundSchema: z.ZodNativeEnum<
   typeof XChainTransactionType
 > = z.nativeEnum(XChainTransactionType);
-
 /** @internal */
 export const XChainTransactionType$outboundSchema: z.ZodNativeEnum<
   typeof XChainTransactionType
 > = XChainTransactionType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace XChainTransactionType$ {
-  /** @deprecated use `XChainTransactionType$inboundSchema` instead. */
-  export const inboundSchema = XChainTransactionType$inboundSchema;
-  /** @deprecated use `XChainTransactionType$outboundSchema` instead. */
-  export const outboundSchema = XChainTransactionType$outboundSchema;
-}

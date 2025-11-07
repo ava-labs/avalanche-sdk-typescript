@@ -97,7 +97,6 @@ export const NativeTransaction$inboundSchema: z.ZodType<
   method: Method$inboundSchema.optional(),
   value: z.string(),
 });
-
 /** @internal */
 export type NativeTransaction$Outbound = {
   blockNumber: string;
@@ -142,19 +141,6 @@ export const NativeTransaction$outboundSchema: z.ZodType<
   value: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NativeTransaction$ {
-  /** @deprecated use `NativeTransaction$inboundSchema` instead. */
-  export const inboundSchema = NativeTransaction$inboundSchema;
-  /** @deprecated use `NativeTransaction$outboundSchema` instead. */
-  export const outboundSchema = NativeTransaction$outboundSchema;
-  /** @deprecated use `NativeTransaction$Outbound` instead. */
-  export type Outbound = NativeTransaction$Outbound;
-}
-
 export function nativeTransactionToJSON(
   nativeTransaction: NativeTransaction,
 ): string {
@@ -162,7 +148,6 @@ export function nativeTransactionToJSON(
     NativeTransaction$outboundSchema.parse(nativeTransaction),
   );
 }
-
 export function nativeTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<NativeTransaction, SDKValidationError> {

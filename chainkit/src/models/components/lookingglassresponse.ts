@@ -33,7 +33,6 @@ export const LookingGlassResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   addresses: z.array(AddressDetails$inboundSchema),
 });
-
 /** @internal */
 export type LookingGlassResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -50,19 +49,6 @@ export const LookingGlassResponse$outboundSchema: z.ZodType<
   addresses: z.array(AddressDetails$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace LookingGlassResponse$ {
-  /** @deprecated use `LookingGlassResponse$inboundSchema` instead. */
-  export const inboundSchema = LookingGlassResponse$inboundSchema;
-  /** @deprecated use `LookingGlassResponse$outboundSchema` instead. */
-  export const outboundSchema = LookingGlassResponse$outboundSchema;
-  /** @deprecated use `LookingGlassResponse$Outbound` instead. */
-  export type Outbound = LookingGlassResponse$Outbound;
-}
-
 export function lookingGlassResponseToJSON(
   lookingGlassResponse: LookingGlassResponse,
 ): string {
@@ -70,7 +56,6 @@ export function lookingGlassResponseToJSON(
     LookingGlassResponse$outboundSchema.parse(lookingGlassResponse),
   );
 }
-
 export function lookingGlassResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<LookingGlassResponse, SDKValidationError> {

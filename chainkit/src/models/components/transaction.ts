@@ -182,7 +182,6 @@ export const Transaction$inboundSchema: z.ZodType<
   accessList: z.array(AccessListData$inboundSchema).optional(),
   networkToken: NetworkTokenInfo$inboundSchema.optional(),
 });
-
 /** @internal */
 export type Transaction$Outbound = {
   blockHash: string;
@@ -252,23 +251,9 @@ export const Transaction$outboundSchema: z.ZodType<
   networkToken: NetworkTokenInfo$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Transaction$ {
-  /** @deprecated use `Transaction$inboundSchema` instead. */
-  export const inboundSchema = Transaction$inboundSchema;
-  /** @deprecated use `Transaction$outboundSchema` instead. */
-  export const outboundSchema = Transaction$outboundSchema;
-  /** @deprecated use `Transaction$Outbound` instead. */
-  export type Outbound = Transaction$Outbound;
-}
-
 export function transactionToJSON(transaction: Transaction): string {
   return JSON.stringify(Transaction$outboundSchema.parse(transaction));
 }
-
 export function transactionFromJSON(
   jsonString: string,
 ): SafeParseResult<Transaction, SDKValidationError> {

@@ -37,7 +37,6 @@ export const Erc721TransferDetails$inboundSchema: z.ZodType<
   logIndex: z.number(),
   erc721Token: Erc721Token$inboundSchema,
 });
-
 /** @internal */
 export type Erc721TransferDetails$Outbound = {
   from: RichAddress$Outbound;
@@ -58,19 +57,6 @@ export const Erc721TransferDetails$outboundSchema: z.ZodType<
   erc721Token: Erc721Token$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721TransferDetails$ {
-  /** @deprecated use `Erc721TransferDetails$inboundSchema` instead. */
-  export const inboundSchema = Erc721TransferDetails$inboundSchema;
-  /** @deprecated use `Erc721TransferDetails$outboundSchema` instead. */
-  export const outboundSchema = Erc721TransferDetails$outboundSchema;
-  /** @deprecated use `Erc721TransferDetails$Outbound` instead. */
-  export type Outbound = Erc721TransferDetails$Outbound;
-}
-
 export function erc721TransferDetailsToJSON(
   erc721TransferDetails: Erc721TransferDetails,
 ): string {
@@ -78,7 +64,6 @@ export function erc721TransferDetailsToJSON(
     Erc721TransferDetails$outboundSchema.parse(erc721TransferDetails),
   );
 }
-
 export function erc721TransferDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc721TransferDetails, SDKValidationError> {

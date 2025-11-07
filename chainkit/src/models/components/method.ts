@@ -34,7 +34,6 @@ export const Method$inboundSchema: z.ZodType<Method, z.ZodTypeDef, unknown> = z
     methodHash: z.string(),
     methodName: z.string().optional(),
   });
-
 /** @internal */
 export type Method$Outbound = {
   callType: string;
@@ -53,23 +52,9 @@ export const Method$outboundSchema: z.ZodType<
   methodName: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Method$ {
-  /** @deprecated use `Method$inboundSchema` instead. */
-  export const inboundSchema = Method$inboundSchema;
-  /** @deprecated use `Method$outboundSchema` instead. */
-  export const outboundSchema = Method$outboundSchema;
-  /** @deprecated use `Method$Outbound` instead. */
-  export type Outbound = Method$Outbound;
-}
-
 export function methodToJSON(method: Method): string {
   return JSON.stringify(Method$outboundSchema.parse(method));
 }
-
 export function methodFromJSON(
   jsonString: string,
 ): SafeParseResult<Method, SDKValidationError> {

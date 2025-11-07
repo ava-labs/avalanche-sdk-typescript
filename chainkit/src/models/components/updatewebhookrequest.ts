@@ -37,7 +37,6 @@ export const UpdateWebhookRequest$inboundSchema: z.ZodType<
   includeInternalTxs: z.boolean().optional(),
   includeLogs: z.boolean().optional(),
 });
-
 /** @internal */
 export type UpdateWebhookRequest$Outbound = {
   name?: string | undefined;
@@ -62,19 +61,6 @@ export const UpdateWebhookRequest$outboundSchema: z.ZodType<
   includeLogs: z.boolean().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UpdateWebhookRequest$ {
-  /** @deprecated use `UpdateWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = UpdateWebhookRequest$inboundSchema;
-  /** @deprecated use `UpdateWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = UpdateWebhookRequest$outboundSchema;
-  /** @deprecated use `UpdateWebhookRequest$Outbound` instead. */
-  export type Outbound = UpdateWebhookRequest$Outbound;
-}
-
 export function updateWebhookRequestToJSON(
   updateWebhookRequest: UpdateWebhookRequest,
 ): string {
@@ -82,7 +68,6 @@ export function updateWebhookRequestToJSON(
     UpdateWebhookRequest$outboundSchema.parse(updateWebhookRequest),
   );
 }
-
 export function updateWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<UpdateWebhookRequest, SDKValidationError> {

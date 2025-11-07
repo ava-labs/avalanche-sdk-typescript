@@ -23,19 +23,7 @@ export type PrimaryNetworkAssetType = ClosedEnum<
 export const PrimaryNetworkAssetType$inboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkAssetType
 > = z.nativeEnum(PrimaryNetworkAssetType);
-
 /** @internal */
 export const PrimaryNetworkAssetType$outboundSchema: z.ZodNativeEnum<
   typeof PrimaryNetworkAssetType
 > = PrimaryNetworkAssetType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAssetType$ {
-  /** @deprecated use `PrimaryNetworkAssetType$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkAssetType$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAssetType$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkAssetType$outboundSchema;
-}

@@ -30,7 +30,6 @@ export const ListEvmBlocksResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   blocks: z.array(EvmBlock$inboundSchema),
 });
-
 /** @internal */
 export type ListEvmBlocksResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -47,19 +46,6 @@ export const ListEvmBlocksResponse$outboundSchema: z.ZodType<
   blocks: z.array(EvmBlock$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListEvmBlocksResponse$ {
-  /** @deprecated use `ListEvmBlocksResponse$inboundSchema` instead. */
-  export const inboundSchema = ListEvmBlocksResponse$inboundSchema;
-  /** @deprecated use `ListEvmBlocksResponse$outboundSchema` instead. */
-  export const outboundSchema = ListEvmBlocksResponse$outboundSchema;
-  /** @deprecated use `ListEvmBlocksResponse$Outbound` instead. */
-  export type Outbound = ListEvmBlocksResponse$Outbound;
-}
-
 export function listEvmBlocksResponseToJSON(
   listEvmBlocksResponse: ListEvmBlocksResponse,
 ): string {
@@ -67,7 +53,6 @@ export function listEvmBlocksResponseToJSON(
     ListEvmBlocksResponse$outboundSchema.parse(listEvmBlocksResponse),
   );
 }
-
 export function listEvmBlocksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListEvmBlocksResponse, SDKValidationError> {

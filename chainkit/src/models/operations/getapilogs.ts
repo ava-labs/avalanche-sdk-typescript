@@ -11,7 +11,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetApiLogsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 /**
@@ -77,22 +77,10 @@ export type GetApiLogsResponse = {
 export const GetApiLogsRequestType$inboundSchema: z.ZodNativeEnum<
   typeof GetApiLogsRequestType
 > = z.nativeEnum(GetApiLogsRequestType);
-
 /** @internal */
 export const GetApiLogsRequestType$outboundSchema: z.ZodNativeEnum<
   typeof GetApiLogsRequestType
 > = GetApiLogsRequestType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetApiLogsRequestType$ {
-  /** @deprecated use `GetApiLogsRequestType$inboundSchema` instead. */
-  export const inboundSchema = GetApiLogsRequestType$inboundSchema;
-  /** @deprecated use `GetApiLogsRequestType$outboundSchema` instead. */
-  export const outboundSchema = GetApiLogsRequestType$outboundSchema;
-}
 
 /** @internal */
 export const GetApiLogsRequest$inboundSchema: z.ZodType<
@@ -111,7 +99,6 @@ export const GetApiLogsRequest$inboundSchema: z.ZodType<
   pageToken: z.string().optional(),
   pageSize: z.number().int().default(10),
 });
-
 /** @internal */
 export type GetApiLogsRequest$Outbound = {
   orgId?: string | undefined;
@@ -144,19 +131,6 @@ export const GetApiLogsRequest$outboundSchema: z.ZodType<
   pageSize: z.number().int().default(10),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetApiLogsRequest$ {
-  /** @deprecated use `GetApiLogsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetApiLogsRequest$inboundSchema;
-  /** @deprecated use `GetApiLogsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetApiLogsRequest$outboundSchema;
-  /** @deprecated use `GetApiLogsRequest$Outbound` instead. */
-  export type Outbound = GetApiLogsRequest$Outbound;
-}
-
 export function getApiLogsRequestToJSON(
   getApiLogsRequest: GetApiLogsRequest,
 ): string {
@@ -164,7 +138,6 @@ export function getApiLogsRequestToJSON(
     GetApiLogsRequest$outboundSchema.parse(getApiLogsRequest),
   );
 }
-
 export function getApiLogsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetApiLogsRequest, SDKValidationError> {
@@ -187,7 +160,6 @@ export const GetApiLogsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetApiLogsResponse$Outbound = {
   Result: components.LogsResponseDTO$Outbound;
@@ -206,19 +178,6 @@ export const GetApiLogsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetApiLogsResponse$ {
-  /** @deprecated use `GetApiLogsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetApiLogsResponse$inboundSchema;
-  /** @deprecated use `GetApiLogsResponse$outboundSchema` instead. */
-  export const outboundSchema = GetApiLogsResponse$outboundSchema;
-  /** @deprecated use `GetApiLogsResponse$Outbound` instead. */
-  export type Outbound = GetApiLogsResponse$Outbound;
-}
-
 export function getApiLogsResponseToJSON(
   getApiLogsResponse: GetApiLogsResponse,
 ): string {
@@ -226,7 +185,6 @@ export function getApiLogsResponseToJSON(
     GetApiLogsResponse$outboundSchema.parse(getApiLogsResponse),
   );
 }
-
 export function getApiLogsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetApiLogsResponse, SDKValidationError> {

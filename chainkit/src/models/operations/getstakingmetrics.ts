@@ -63,7 +63,6 @@ export const GetStakingMetricsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetStakingMetricsGlobals$Outbound = {
   network?: string | undefined;
@@ -78,19 +77,6 @@ export const GetStakingMetricsGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetStakingMetricsGlobals$ {
-  /** @deprecated use `GetStakingMetricsGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetStakingMetricsGlobals$inboundSchema;
-  /** @deprecated use `GetStakingMetricsGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetStakingMetricsGlobals$outboundSchema;
-  /** @deprecated use `GetStakingMetricsGlobals$Outbound` instead. */
-  export type Outbound = GetStakingMetricsGlobals$Outbound;
-}
-
 export function getStakingMetricsGlobalsToJSON(
   getStakingMetricsGlobals: GetStakingMetricsGlobals,
 ): string {
@@ -98,7 +84,6 @@ export function getStakingMetricsGlobalsToJSON(
     GetStakingMetricsGlobals$outboundSchema.parse(getStakingMetricsGlobals),
   );
 }
-
 export function getStakingMetricsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetStakingMetricsGlobals, SDKValidationError> {
@@ -123,7 +108,6 @@ export const GetStakingMetricsRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   subnetId: z.any(),
 });
-
 /** @internal */
 export type GetStakingMetricsRequest$Outbound = {
   metric: string;
@@ -150,19 +134,6 @@ export const GetStakingMetricsRequest$outboundSchema: z.ZodType<
   subnetId: z.any(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetStakingMetricsRequest$ {
-  /** @deprecated use `GetStakingMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetStakingMetricsRequest$inboundSchema;
-  /** @deprecated use `GetStakingMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetStakingMetricsRequest$outboundSchema;
-  /** @deprecated use `GetStakingMetricsRequest$Outbound` instead. */
-  export type Outbound = GetStakingMetricsRequest$Outbound;
-}
-
 export function getStakingMetricsRequestToJSON(
   getStakingMetricsRequest: GetStakingMetricsRequest,
 ): string {
@@ -170,7 +141,6 @@ export function getStakingMetricsRequestToJSON(
     GetStakingMetricsRequest$outboundSchema.parse(getStakingMetricsRequest),
   );
 }
-
 export function getStakingMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetStakingMetricsRequest, SDKValidationError> {
@@ -193,7 +163,6 @@ export const GetStakingMetricsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetStakingMetricsResponse$Outbound = {
   Result: components.MetricsApiResponse$Outbound;
@@ -212,19 +181,6 @@ export const GetStakingMetricsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetStakingMetricsResponse$ {
-  /** @deprecated use `GetStakingMetricsResponse$inboundSchema` instead. */
-  export const inboundSchema = GetStakingMetricsResponse$inboundSchema;
-  /** @deprecated use `GetStakingMetricsResponse$outboundSchema` instead. */
-  export const outboundSchema = GetStakingMetricsResponse$outboundSchema;
-  /** @deprecated use `GetStakingMetricsResponse$Outbound` instead. */
-  export type Outbound = GetStakingMetricsResponse$Outbound;
-}
-
 export function getStakingMetricsResponseToJSON(
   getStakingMetricsResponse: GetStakingMetricsResponse,
 ): string {
@@ -232,7 +188,6 @@ export function getStakingMetricsResponseToJSON(
     GetStakingMetricsResponse$outboundSchema.parse(getStakingMetricsResponse),
   );
 }
-
 export function getStakingMetricsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetStakingMetricsResponse, SDKValidationError> {

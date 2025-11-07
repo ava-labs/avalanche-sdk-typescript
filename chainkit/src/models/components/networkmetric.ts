@@ -17,19 +17,7 @@ export type NetworkMetric = ClosedEnum<typeof NetworkMetric>;
 export const NetworkMetric$inboundSchema: z.ZodNativeEnum<
   typeof NetworkMetric
 > = z.nativeEnum(NetworkMetric);
-
 /** @internal */
 export const NetworkMetric$outboundSchema: z.ZodNativeEnum<
   typeof NetworkMetric
 > = NetworkMetric$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NetworkMetric$ {
-  /** @deprecated use `NetworkMetric$inboundSchema` instead. */
-  export const inboundSchema = NetworkMetric$inboundSchema;
-  /** @deprecated use `NetworkMetric$outboundSchema` instead. */
-  export const outboundSchema = NetworkMetric$outboundSchema;
-}

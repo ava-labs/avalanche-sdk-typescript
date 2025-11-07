@@ -32,22 +32,10 @@ export type ValidatorActivitySubEvents = {
 export const ValidatorActivitySubEvent$inboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivitySubEvent
 > = z.nativeEnum(ValidatorActivitySubEvent);
-
 /** @internal */
 export const ValidatorActivitySubEvent$outboundSchema: z.ZodNativeEnum<
   typeof ValidatorActivitySubEvent
 > = ValidatorActivitySubEvent$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivitySubEvent$ {
-  /** @deprecated use `ValidatorActivitySubEvent$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivitySubEvent$inboundSchema;
-  /** @deprecated use `ValidatorActivitySubEvent$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivitySubEvent$outboundSchema;
-}
 
 /** @internal */
 export const ValidatorActivitySubEvents$inboundSchema: z.ZodType<
@@ -57,7 +45,6 @@ export const ValidatorActivitySubEvents$inboundSchema: z.ZodType<
 > = z.object({
   validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$inboundSchema),
 });
-
 /** @internal */
 export type ValidatorActivitySubEvents$Outbound = {
   validatorActivitySubEvents: Array<string>;
@@ -72,19 +59,6 @@ export const ValidatorActivitySubEvents$outboundSchema: z.ZodType<
   validatorActivitySubEvents: z.array(ValidatorActivitySubEvent$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ValidatorActivitySubEvents$ {
-  /** @deprecated use `ValidatorActivitySubEvents$inboundSchema` instead. */
-  export const inboundSchema = ValidatorActivitySubEvents$inboundSchema;
-  /** @deprecated use `ValidatorActivitySubEvents$outboundSchema` instead. */
-  export const outboundSchema = ValidatorActivitySubEvents$outboundSchema;
-  /** @deprecated use `ValidatorActivitySubEvents$Outbound` instead. */
-  export type Outbound = ValidatorActivitySubEvents$Outbound;
-}
-
 export function validatorActivitySubEventsToJSON(
   validatorActivitySubEvents: ValidatorActivitySubEvents,
 ): string {
@@ -92,7 +66,6 @@ export function validatorActivitySubEventsToJSON(
     ValidatorActivitySubEvents$outboundSchema.parse(validatorActivitySubEvents),
   );
 }
-
 export function validatorActivitySubEventsFromJSON(
   jsonString: string,
 ): SafeParseResult<ValidatorActivitySubEvents, SDKValidationError> {

@@ -46,22 +46,10 @@ export type Erc721Token = {
 export const Erc721TokenErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc721TokenErcType
 > = z.nativeEnum(Erc721TokenErcType);
-
 /** @internal */
 export const Erc721TokenErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc721TokenErcType
 > = Erc721TokenErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721TokenErcType$ {
-  /** @deprecated use `Erc721TokenErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc721TokenErcType$inboundSchema;
-  /** @deprecated use `Erc721TokenErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc721TokenErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc721Token$inboundSchema: z.ZodType<
@@ -78,7 +66,6 @@ export const Erc721Token$inboundSchema: z.ZodType<
   metadata: Erc721TokenMetadata$inboundSchema,
   ownerAddress: z.string().optional(),
 });
-
 /** @internal */
 export type Erc721Token$Outbound = {
   address: string;
@@ -107,23 +94,9 @@ export const Erc721Token$outboundSchema: z.ZodType<
   ownerAddress: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc721Token$ {
-  /** @deprecated use `Erc721Token$inboundSchema` instead. */
-  export const inboundSchema = Erc721Token$inboundSchema;
-  /** @deprecated use `Erc721Token$outboundSchema` instead. */
-  export const outboundSchema = Erc721Token$outboundSchema;
-  /** @deprecated use `Erc721Token$Outbound` instead. */
-  export type Outbound = Erc721Token$Outbound;
-}
-
 export function erc721TokenToJSON(erc721Token: Erc721Token): string {
   return JSON.stringify(Erc721Token$outboundSchema.parse(erc721Token));
 }
-
 export function erc721TokenFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc721Token, SDKValidationError> {

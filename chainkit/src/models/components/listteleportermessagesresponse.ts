@@ -68,7 +68,6 @@ export const ListTeleporterMessagesResponseMessage$inboundSchema: z.ZodType<
     ) => ({ status: v.status })),
   ),
 ]);
-
 /** @internal */
 export type ListTeleporterMessagesResponseMessage$Outbound =
   | (DeliveredTeleporterMessage$Outbound & { status: "delivered" })
@@ -100,21 +99,6 @@ export const ListTeleporterMessagesResponseMessage$outboundSchema: z.ZodType<
   ),
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTeleporterMessagesResponseMessage$ {
-  /** @deprecated use `ListTeleporterMessagesResponseMessage$inboundSchema` instead. */
-  export const inboundSchema =
-    ListTeleporterMessagesResponseMessage$inboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponseMessage$outboundSchema` instead. */
-  export const outboundSchema =
-    ListTeleporterMessagesResponseMessage$outboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponseMessage$Outbound` instead. */
-  export type Outbound = ListTeleporterMessagesResponseMessage$Outbound;
-}
-
 export function listTeleporterMessagesResponseMessageToJSON(
   listTeleporterMessagesResponseMessage: ListTeleporterMessagesResponseMessage,
 ): string {
@@ -124,7 +108,6 @@ export function listTeleporterMessagesResponseMessageToJSON(
     ),
   );
 }
-
 export function listTeleporterMessagesResponseMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTeleporterMessagesResponseMessage, SDKValidationError> {
@@ -162,7 +145,6 @@ export const ListTeleporterMessagesResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListTeleporterMessagesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -202,19 +184,6 @@ export const ListTeleporterMessagesResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTeleporterMessagesResponse$ {
-  /** @deprecated use `ListTeleporterMessagesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListTeleporterMessagesResponse$inboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListTeleporterMessagesResponse$outboundSchema;
-  /** @deprecated use `ListTeleporterMessagesResponse$Outbound` instead. */
-  export type Outbound = ListTeleporterMessagesResponse$Outbound;
-}
-
 export function listTeleporterMessagesResponseToJSON(
   listTeleporterMessagesResponse: ListTeleporterMessagesResponse,
 ): string {
@@ -224,7 +193,6 @@ export function listTeleporterMessagesResponseToJSON(
     ),
   );
 }
-
 export function listTeleporterMessagesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTeleporterMessagesResponse, SDKValidationError> {

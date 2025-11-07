@@ -20,18 +20,6 @@ export type ChainStatus = ClosedEnum<typeof ChainStatus>;
 /** @internal */
 export const ChainStatus$inboundSchema: z.ZodNativeEnum<typeof ChainStatus> = z
   .nativeEnum(ChainStatus);
-
 /** @internal */
 export const ChainStatus$outboundSchema: z.ZodNativeEnum<typeof ChainStatus> =
   ChainStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ChainStatus$ {
-  /** @deprecated use `ChainStatus$inboundSchema` instead. */
-  export const inboundSchema = ChainStatus$inboundSchema;
-  /** @deprecated use `ChainStatus$outboundSchema` instead. */
-  export const outboundSchema = ChainStatus$outboundSchema;
-}

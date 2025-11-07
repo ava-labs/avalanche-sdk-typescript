@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetRpcUsageMetricsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetRpcUsageMetricsRequest = {
@@ -66,7 +66,6 @@ export const GetRpcUsageMetricsRequest$inboundSchema: z.ZodType<
   rpcMethod: z.string().optional(),
   rlBypassApiToken: z.string().optional(),
 });
-
 /** @internal */
 export type GetRpcUsageMetricsRequest$Outbound = {
   timeInterval?: string | undefined;
@@ -96,19 +95,6 @@ export const GetRpcUsageMetricsRequest$outboundSchema: z.ZodType<
   rlBypassApiToken: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetRpcUsageMetricsRequest$ {
-  /** @deprecated use `GetRpcUsageMetricsRequest$inboundSchema` instead. */
-  export const inboundSchema = GetRpcUsageMetricsRequest$inboundSchema;
-  /** @deprecated use `GetRpcUsageMetricsRequest$outboundSchema` instead. */
-  export const outboundSchema = GetRpcUsageMetricsRequest$outboundSchema;
-  /** @deprecated use `GetRpcUsageMetricsRequest$Outbound` instead. */
-  export type Outbound = GetRpcUsageMetricsRequest$Outbound;
-}
-
 export function getRpcUsageMetricsRequestToJSON(
   getRpcUsageMetricsRequest: GetRpcUsageMetricsRequest,
 ): string {
@@ -116,7 +102,6 @@ export function getRpcUsageMetricsRequestToJSON(
     GetRpcUsageMetricsRequest$outboundSchema.parse(getRpcUsageMetricsRequest),
   );
 }
-
 export function getRpcUsageMetricsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetRpcUsageMetricsRequest, SDKValidationError> {

@@ -42,7 +42,6 @@ export const GetAddressesByBtcbBridgedRequest$inboundSchema: z.ZodType<
   pageToken: z.string().optional(),
   pageSize: z.number().int().default(1000),
 });
-
 /** @internal */
 export type GetAddressesByBtcbBridgedRequest$Outbound = {
   threshold: string;
@@ -61,19 +60,6 @@ export const GetAddressesByBtcbBridgedRequest$outboundSchema: z.ZodType<
   pageSize: z.number().int().default(1000),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesByBtcbBridgedRequest$ {
-  /** @deprecated use `GetAddressesByBtcbBridgedRequest$inboundSchema` instead. */
-  export const inboundSchema = GetAddressesByBtcbBridgedRequest$inboundSchema;
-  /** @deprecated use `GetAddressesByBtcbBridgedRequest$outboundSchema` instead. */
-  export const outboundSchema = GetAddressesByBtcbBridgedRequest$outboundSchema;
-  /** @deprecated use `GetAddressesByBtcbBridgedRequest$Outbound` instead. */
-  export type Outbound = GetAddressesByBtcbBridgedRequest$Outbound;
-}
-
 export function getAddressesByBtcbBridgedRequestToJSON(
   getAddressesByBtcbBridgedRequest: GetAddressesByBtcbBridgedRequest,
 ): string {
@@ -83,7 +69,6 @@ export function getAddressesByBtcbBridgedRequestToJSON(
     ),
   );
 }
-
 export function getAddressesByBtcbBridgedRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesByBtcbBridgedRequest, SDKValidationError> {
@@ -106,7 +91,6 @@ export const GetAddressesByBtcbBridgedResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type GetAddressesByBtcbBridgedResponse$Outbound = {
   Result: components.LookingGlassResponse$Outbound;
@@ -125,20 +109,6 @@ export const GetAddressesByBtcbBridgedResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetAddressesByBtcbBridgedResponse$ {
-  /** @deprecated use `GetAddressesByBtcbBridgedResponse$inboundSchema` instead. */
-  export const inboundSchema = GetAddressesByBtcbBridgedResponse$inboundSchema;
-  /** @deprecated use `GetAddressesByBtcbBridgedResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    GetAddressesByBtcbBridgedResponse$outboundSchema;
-  /** @deprecated use `GetAddressesByBtcbBridgedResponse$Outbound` instead. */
-  export type Outbound = GetAddressesByBtcbBridgedResponse$Outbound;
-}
-
 export function getAddressesByBtcbBridgedResponseToJSON(
   getAddressesByBtcbBridgedResponse: GetAddressesByBtcbBridgedResponse,
 ): string {
@@ -148,7 +118,6 @@ export function getAddressesByBtcbBridgedResponseToJSON(
     ),
   );
 }
-
 export function getAddressesByBtcbBridgedResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetAddressesByBtcbBridgedResponse, SDKValidationError> {

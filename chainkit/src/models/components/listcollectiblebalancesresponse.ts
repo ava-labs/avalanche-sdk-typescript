@@ -41,7 +41,6 @@ export const CollectibleBalance$inboundSchema: z.ZodType<
   Erc721TokenBalance$inboundSchema,
   Erc1155TokenBalance$inboundSchema,
 ]);
-
 /** @internal */
 export type CollectibleBalance$Outbound =
   | Erc721TokenBalance$Outbound
@@ -57,19 +56,6 @@ export const CollectibleBalance$outboundSchema: z.ZodType<
   Erc1155TokenBalance$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CollectibleBalance$ {
-  /** @deprecated use `CollectibleBalance$inboundSchema` instead. */
-  export const inboundSchema = CollectibleBalance$inboundSchema;
-  /** @deprecated use `CollectibleBalance$outboundSchema` instead. */
-  export const outboundSchema = CollectibleBalance$outboundSchema;
-  /** @deprecated use `CollectibleBalance$Outbound` instead. */
-  export type Outbound = CollectibleBalance$Outbound;
-}
-
 export function collectibleBalanceToJSON(
   collectibleBalance: CollectibleBalance,
 ): string {
@@ -77,7 +63,6 @@ export function collectibleBalanceToJSON(
     CollectibleBalance$outboundSchema.parse(collectibleBalance),
   );
 }
-
 export function collectibleBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<CollectibleBalance, SDKValidationError> {
@@ -102,7 +87,6 @@ export const ListCollectibleBalancesResponse$inboundSchema: z.ZodType<
     ]),
   ),
 });
-
 /** @internal */
 export type ListCollectibleBalancesResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -126,19 +110,6 @@ export const ListCollectibleBalancesResponse$outboundSchema: z.ZodType<
   ),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCollectibleBalancesResponse$ {
-  /** @deprecated use `ListCollectibleBalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListCollectibleBalancesResponse$inboundSchema;
-  /** @deprecated use `ListCollectibleBalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListCollectibleBalancesResponse$outboundSchema;
-  /** @deprecated use `ListCollectibleBalancesResponse$Outbound` instead. */
-  export type Outbound = ListCollectibleBalancesResponse$Outbound;
-}
-
 export function listCollectibleBalancesResponseToJSON(
   listCollectibleBalancesResponse: ListCollectibleBalancesResponse,
 ): string {
@@ -148,7 +119,6 @@ export function listCollectibleBalancesResponseToJSON(
     ),
   );
 }
-
 export function listCollectibleBalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCollectibleBalancesResponse, SDKValidationError> {

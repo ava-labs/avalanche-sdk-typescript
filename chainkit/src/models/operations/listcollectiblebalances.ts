@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListCollectibleBalancesServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListCollectibleBalancesGlobals = {
@@ -55,7 +55,6 @@ export const ListCollectibleBalancesGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListCollectibleBalancesGlobals$Outbound = {
   chainId?: string | undefined;
@@ -70,19 +69,6 @@ export const ListCollectibleBalancesGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCollectibleBalancesGlobals$ {
-  /** @deprecated use `ListCollectibleBalancesGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListCollectibleBalancesGlobals$inboundSchema;
-  /** @deprecated use `ListCollectibleBalancesGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListCollectibleBalancesGlobals$outboundSchema;
-  /** @deprecated use `ListCollectibleBalancesGlobals$Outbound` instead. */
-  export type Outbound = ListCollectibleBalancesGlobals$Outbound;
-}
-
 export function listCollectibleBalancesGlobalsToJSON(
   listCollectibleBalancesGlobals: ListCollectibleBalancesGlobals,
 ): string {
@@ -92,7 +78,6 @@ export function listCollectibleBalancesGlobalsToJSON(
     ),
   );
 }
-
 export function listCollectibleBalancesGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCollectibleBalancesGlobals, SDKValidationError> {
@@ -115,7 +100,6 @@ export const ListCollectibleBalancesRequest$inboundSchema: z.ZodType<
   address: z.string(),
   contractAddress: z.string().optional(),
 });
-
 /** @internal */
 export type ListCollectibleBalancesRequest$Outbound = {
   pageToken?: string | undefined;
@@ -138,19 +122,6 @@ export const ListCollectibleBalancesRequest$outboundSchema: z.ZodType<
   contractAddress: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCollectibleBalancesRequest$ {
-  /** @deprecated use `ListCollectibleBalancesRequest$inboundSchema` instead. */
-  export const inboundSchema = ListCollectibleBalancesRequest$inboundSchema;
-  /** @deprecated use `ListCollectibleBalancesRequest$outboundSchema` instead. */
-  export const outboundSchema = ListCollectibleBalancesRequest$outboundSchema;
-  /** @deprecated use `ListCollectibleBalancesRequest$Outbound` instead. */
-  export type Outbound = ListCollectibleBalancesRequest$Outbound;
-}
-
 export function listCollectibleBalancesRequestToJSON(
   listCollectibleBalancesRequest: ListCollectibleBalancesRequest,
 ): string {
@@ -160,7 +131,6 @@ export function listCollectibleBalancesRequestToJSON(
     ),
   );
 }
-
 export function listCollectibleBalancesRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCollectibleBalancesRequest, SDKValidationError> {
@@ -183,7 +153,6 @@ export const ListCollectibleBalancesResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListCollectibleBalancesResponse$Outbound = {
   Result: components.ListCollectibleBalancesResponse$Outbound;
@@ -202,19 +171,6 @@ export const ListCollectibleBalancesResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListCollectibleBalancesResponse$ {
-  /** @deprecated use `ListCollectibleBalancesResponse$inboundSchema` instead. */
-  export const inboundSchema = ListCollectibleBalancesResponse$inboundSchema;
-  /** @deprecated use `ListCollectibleBalancesResponse$outboundSchema` instead. */
-  export const outboundSchema = ListCollectibleBalancesResponse$outboundSchema;
-  /** @deprecated use `ListCollectibleBalancesResponse$Outbound` instead. */
-  export type Outbound = ListCollectibleBalancesResponse$Outbound;
-}
-
 export function listCollectibleBalancesResponseToJSON(
   listCollectibleBalancesResponse: ListCollectibleBalancesResponse,
 ): string {
@@ -224,7 +180,6 @@ export function listCollectibleBalancesResponseToJSON(
     ),
   );
 }
-
 export function listCollectibleBalancesResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListCollectibleBalancesResponse, SDKValidationError> {

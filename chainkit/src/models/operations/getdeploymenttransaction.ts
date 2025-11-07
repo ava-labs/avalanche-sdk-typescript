@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetDeploymentTransactionServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetDeploymentTransactionGlobals = {
@@ -42,7 +42,6 @@ export const GetDeploymentTransactionGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type GetDeploymentTransactionGlobals$Outbound = {
   chainId?: string | undefined;
@@ -57,19 +56,6 @@ export const GetDeploymentTransactionGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetDeploymentTransactionGlobals$ {
-  /** @deprecated use `GetDeploymentTransactionGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetDeploymentTransactionGlobals$inboundSchema;
-  /** @deprecated use `GetDeploymentTransactionGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetDeploymentTransactionGlobals$outboundSchema;
-  /** @deprecated use `GetDeploymentTransactionGlobals$Outbound` instead. */
-  export type Outbound = GetDeploymentTransactionGlobals$Outbound;
-}
-
 export function getDeploymentTransactionGlobalsToJSON(
   getDeploymentTransactionGlobals: GetDeploymentTransactionGlobals,
 ): string {
@@ -79,7 +65,6 @@ export function getDeploymentTransactionGlobalsToJSON(
     ),
   );
 }
-
 export function getDeploymentTransactionGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetDeploymentTransactionGlobals, SDKValidationError> {
@@ -100,7 +85,6 @@ export const GetDeploymentTransactionRequest$inboundSchema: z.ZodType<
   address: z.string(),
   currency: components.CurrencyCode$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetDeploymentTransactionRequest$Outbound = {
   chainId?: string | undefined;
@@ -119,19 +103,6 @@ export const GetDeploymentTransactionRequest$outboundSchema: z.ZodType<
   currency: components.CurrencyCode$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetDeploymentTransactionRequest$ {
-  /** @deprecated use `GetDeploymentTransactionRequest$inboundSchema` instead. */
-  export const inboundSchema = GetDeploymentTransactionRequest$inboundSchema;
-  /** @deprecated use `GetDeploymentTransactionRequest$outboundSchema` instead. */
-  export const outboundSchema = GetDeploymentTransactionRequest$outboundSchema;
-  /** @deprecated use `GetDeploymentTransactionRequest$Outbound` instead. */
-  export type Outbound = GetDeploymentTransactionRequest$Outbound;
-}
-
 export function getDeploymentTransactionRequestToJSON(
   getDeploymentTransactionRequest: GetDeploymentTransactionRequest,
 ): string {
@@ -141,7 +112,6 @@ export function getDeploymentTransactionRequestToJSON(
     ),
   );
 }
-
 export function getDeploymentTransactionRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetDeploymentTransactionRequest, SDKValidationError> {

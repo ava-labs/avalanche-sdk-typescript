@@ -27,7 +27,6 @@ export const AddressActivityMetadata$inboundSchema: z.ZodType<
   eventSignatures: z.array(z.string()).optional(),
   addresses: z.array(z.string()),
 });
-
 /** @internal */
 export type AddressActivityMetadata$Outbound = {
   eventSignatures?: Array<string> | undefined;
@@ -44,19 +43,6 @@ export const AddressActivityMetadata$outboundSchema: z.ZodType<
   addresses: z.array(z.string()),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AddressActivityMetadata$ {
-  /** @deprecated use `AddressActivityMetadata$inboundSchema` instead. */
-  export const inboundSchema = AddressActivityMetadata$inboundSchema;
-  /** @deprecated use `AddressActivityMetadata$outboundSchema` instead. */
-  export const outboundSchema = AddressActivityMetadata$outboundSchema;
-  /** @deprecated use `AddressActivityMetadata$Outbound` instead. */
-  export type Outbound = AddressActivityMetadata$Outbound;
-}
-
 export function addressActivityMetadataToJSON(
   addressActivityMetadata: AddressActivityMetadata,
 ): string {
@@ -64,7 +50,6 @@ export function addressActivityMetadataToJSON(
     AddressActivityMetadata$outboundSchema.parse(addressActivityMetadata),
   );
 }
-
 export function addressActivityMetadataFromJSON(
   jsonString: string,
 ): SafeParseResult<AddressActivityMetadata, SDKValidationError> {

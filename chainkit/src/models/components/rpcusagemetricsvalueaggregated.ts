@@ -76,24 +76,10 @@ export type RpcUsageMetricsValueAggregated = {
 export const RpcUsageMetricsValueAggregatedGroupedBy$inboundSchema:
   z.ZodNativeEnum<typeof RpcUsageMetricsValueAggregatedGroupedBy> = z
     .nativeEnum(RpcUsageMetricsValueAggregatedGroupedBy);
-
 /** @internal */
 export const RpcUsageMetricsValueAggregatedGroupedBy$outboundSchema:
   z.ZodNativeEnum<typeof RpcUsageMetricsValueAggregatedGroupedBy> =
     RpcUsageMetricsValueAggregatedGroupedBy$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RpcUsageMetricsValueAggregatedGroupedBy$ {
-  /** @deprecated use `RpcUsageMetricsValueAggregatedGroupedBy$inboundSchema` instead. */
-  export const inboundSchema =
-    RpcUsageMetricsValueAggregatedGroupedBy$inboundSchema;
-  /** @deprecated use `RpcUsageMetricsValueAggregatedGroupedBy$outboundSchema` instead. */
-  export const outboundSchema =
-    RpcUsageMetricsValueAggregatedGroupedBy$outboundSchema;
-}
 
 /** @internal */
 export const RpcUsageMetricsValueAggregatedGroupValue$inboundSchema: z.ZodType<
@@ -101,7 +87,6 @@ export const RpcUsageMetricsValueAggregatedGroupValue$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.number()]);
-
 /** @internal */
 export type RpcUsageMetricsValueAggregatedGroupValue$Outbound = string | number;
 
@@ -111,21 +96,6 @@ export const RpcUsageMetricsValueAggregatedGroupValue$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   RpcUsageMetricsValueAggregatedGroupValue
 > = z.union([z.string(), z.number()]);
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RpcUsageMetricsValueAggregatedGroupValue$ {
-  /** @deprecated use `RpcUsageMetricsValueAggregatedGroupValue$inboundSchema` instead. */
-  export const inboundSchema =
-    RpcUsageMetricsValueAggregatedGroupValue$inboundSchema;
-  /** @deprecated use `RpcUsageMetricsValueAggregatedGroupValue$outboundSchema` instead. */
-  export const outboundSchema =
-    RpcUsageMetricsValueAggregatedGroupValue$outboundSchema;
-  /** @deprecated use `RpcUsageMetricsValueAggregatedGroupValue$Outbound` instead. */
-  export type Outbound = RpcUsageMetricsValueAggregatedGroupValue$Outbound;
-}
 
 export function rpcUsageMetricsValueAggregatedGroupValueToJSON(
   rpcUsageMetricsValueAggregatedGroupValue:
@@ -137,7 +107,6 @@ export function rpcUsageMetricsValueAggregatedGroupValueToJSON(
     ),
   );
 }
-
 export function rpcUsageMetricsValueAggregatedGroupValueFromJSON(
   jsonString: string,
 ): SafeParseResult<
@@ -170,7 +139,6 @@ export const RpcUsageMetricsValueAggregated$inboundSchema: z.ZodType<
   groupedBy: RpcUsageMetricsValueAggregatedGroupedBy$inboundSchema,
   groupValue: z.union([z.string(), z.number()]).optional(),
 });
-
 /** @internal */
 export type RpcUsageMetricsValueAggregated$Outbound = {
   totalRequests: number;
@@ -201,19 +169,6 @@ export const RpcUsageMetricsValueAggregated$outboundSchema: z.ZodType<
   groupValue: z.union([z.string(), z.number()]).optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace RpcUsageMetricsValueAggregated$ {
-  /** @deprecated use `RpcUsageMetricsValueAggregated$inboundSchema` instead. */
-  export const inboundSchema = RpcUsageMetricsValueAggregated$inboundSchema;
-  /** @deprecated use `RpcUsageMetricsValueAggregated$outboundSchema` instead. */
-  export const outboundSchema = RpcUsageMetricsValueAggregated$outboundSchema;
-  /** @deprecated use `RpcUsageMetricsValueAggregated$Outbound` instead. */
-  export type Outbound = RpcUsageMetricsValueAggregated$Outbound;
-}
-
 export function rpcUsageMetricsValueAggregatedToJSON(
   rpcUsageMetricsValueAggregated: RpcUsageMetricsValueAggregated,
 ): string {
@@ -223,7 +178,6 @@ export function rpcUsageMetricsValueAggregatedToJSON(
     ),
   );
 }
-
 export function rpcUsageMetricsValueAggregatedFromJSON(
   jsonString: string,
 ): SafeParseResult<RpcUsageMetricsValueAggregated, SDKValidationError> {

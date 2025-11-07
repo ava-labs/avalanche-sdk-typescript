@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListNativeTransactionsServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListNativeTransactionsGlobals = {
@@ -59,7 +59,6 @@ export const ListNativeTransactionsGlobals$inboundSchema: z.ZodType<
 > = z.object({
   chainId: z.string().optional(),
 });
-
 /** @internal */
 export type ListNativeTransactionsGlobals$Outbound = {
   chainId?: string | undefined;
@@ -74,19 +73,6 @@ export const ListNativeTransactionsGlobals$outboundSchema: z.ZodType<
   chainId: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListNativeTransactionsGlobals$ {
-  /** @deprecated use `ListNativeTransactionsGlobals$inboundSchema` instead. */
-  export const inboundSchema = ListNativeTransactionsGlobals$inboundSchema;
-  /** @deprecated use `ListNativeTransactionsGlobals$outboundSchema` instead. */
-  export const outboundSchema = ListNativeTransactionsGlobals$outboundSchema;
-  /** @deprecated use `ListNativeTransactionsGlobals$Outbound` instead. */
-  export type Outbound = ListNativeTransactionsGlobals$Outbound;
-}
-
 export function listNativeTransactionsGlobalsToJSON(
   listNativeTransactionsGlobals: ListNativeTransactionsGlobals,
 ): string {
@@ -96,7 +82,6 @@ export function listNativeTransactionsGlobalsToJSON(
     ),
   );
 }
-
 export function listNativeTransactionsGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<ListNativeTransactionsGlobals, SDKValidationError> {
@@ -120,7 +105,6 @@ export const ListNativeTransactionsRequest$inboundSchema: z.ZodType<
   chainId: z.string().optional(),
   address: z.string(),
 });
-
 /** @internal */
 export type ListNativeTransactionsRequest$Outbound = {
   startBlock?: number | undefined;
@@ -145,19 +129,6 @@ export const ListNativeTransactionsRequest$outboundSchema: z.ZodType<
   address: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListNativeTransactionsRequest$ {
-  /** @deprecated use `ListNativeTransactionsRequest$inboundSchema` instead. */
-  export const inboundSchema = ListNativeTransactionsRequest$inboundSchema;
-  /** @deprecated use `ListNativeTransactionsRequest$outboundSchema` instead. */
-  export const outboundSchema = ListNativeTransactionsRequest$outboundSchema;
-  /** @deprecated use `ListNativeTransactionsRequest$Outbound` instead. */
-  export type Outbound = ListNativeTransactionsRequest$Outbound;
-}
-
 export function listNativeTransactionsRequestToJSON(
   listNativeTransactionsRequest: ListNativeTransactionsRequest,
 ): string {
@@ -167,7 +138,6 @@ export function listNativeTransactionsRequestToJSON(
     ),
   );
 }
-
 export function listNativeTransactionsRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListNativeTransactionsRequest, SDKValidationError> {
@@ -190,7 +160,6 @@ export const ListNativeTransactionsResponse$inboundSchema: z.ZodType<
     "Result": "result",
   });
 });
-
 /** @internal */
 export type ListNativeTransactionsResponse$Outbound = {
   Result: components.ListNativeTransactionsResponse$Outbound;
@@ -209,19 +178,6 @@ export const ListNativeTransactionsResponse$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListNativeTransactionsResponse$ {
-  /** @deprecated use `ListNativeTransactionsResponse$inboundSchema` instead. */
-  export const inboundSchema = ListNativeTransactionsResponse$inboundSchema;
-  /** @deprecated use `ListNativeTransactionsResponse$outboundSchema` instead. */
-  export const outboundSchema = ListNativeTransactionsResponse$outboundSchema;
-  /** @deprecated use `ListNativeTransactionsResponse$Outbound` instead. */
-  export type Outbound = ListNativeTransactionsResponse$Outbound;
-}
-
 export function listNativeTransactionsResponseToJSON(
   listNativeTransactionsResponse: ListNativeTransactionsResponse,
 ): string {
@@ -231,7 +187,6 @@ export function listNativeTransactionsResponseToJSON(
     ),
   );
 }
-
 export function listNativeTransactionsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListNativeTransactionsResponse, SDKValidationError> {

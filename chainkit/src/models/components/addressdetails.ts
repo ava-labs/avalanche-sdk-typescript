@@ -27,7 +27,6 @@ export const AddressDetails$inboundSchema: z.ZodType<
   address: z.string(),
   sortKey: z.string(),
 });
-
 /** @internal */
 export type AddressDetails$Outbound = {
   address: string;
@@ -44,23 +43,9 @@ export const AddressDetails$outboundSchema: z.ZodType<
   sortKey: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace AddressDetails$ {
-  /** @deprecated use `AddressDetails$inboundSchema` instead. */
-  export const inboundSchema = AddressDetails$inboundSchema;
-  /** @deprecated use `AddressDetails$outboundSchema` instead. */
-  export const outboundSchema = AddressDetails$outboundSchema;
-  /** @deprecated use `AddressDetails$Outbound` instead. */
-  export type Outbound = AddressDetails$Outbound;
-}
-
 export function addressDetailsToJSON(addressDetails: AddressDetails): string {
   return JSON.stringify(AddressDetails$outboundSchema.parse(addressDetails));
 }
-
 export function addressDetailsFromJSON(
   jsonString: string,
 ): SafeParseResult<AddressDetails, SDKValidationError> {

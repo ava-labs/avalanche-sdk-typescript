@@ -52,7 +52,6 @@ export const WebhookInternalTransaction$inboundSchema: z.ZodType<
   gasLimit: z.string(),
   transactionHash: z.string(),
 });
-
 /** @internal */
 export type WebhookInternalTransaction$Outbound = {
   from: string;
@@ -79,19 +78,6 @@ export const WebhookInternalTransaction$outboundSchema: z.ZodType<
   transactionHash: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace WebhookInternalTransaction$ {
-  /** @deprecated use `WebhookInternalTransaction$inboundSchema` instead. */
-  export const inboundSchema = WebhookInternalTransaction$inboundSchema;
-  /** @deprecated use `WebhookInternalTransaction$outboundSchema` instead. */
-  export const outboundSchema = WebhookInternalTransaction$outboundSchema;
-  /** @deprecated use `WebhookInternalTransaction$Outbound` instead. */
-  export type Outbound = WebhookInternalTransaction$Outbound;
-}
-
 export function webhookInternalTransactionToJSON(
   webhookInternalTransaction: WebhookInternalTransaction,
 ): string {
@@ -99,7 +85,6 @@ export function webhookInternalTransactionToJSON(
     WebhookInternalTransaction$outboundSchema.parse(webhookInternalTransaction),
   );
 }
-
 export function webhookInternalTransactionFromJSON(
   jsonString: string,
 ): SafeParseResult<WebhookInternalTransaction, SDKValidationError> {

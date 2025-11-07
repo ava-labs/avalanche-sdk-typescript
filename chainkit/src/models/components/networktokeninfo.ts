@@ -37,7 +37,6 @@ export const NetworkTokenInfo$inboundSchema: z.ZodType<
   tokenDecimals: z.number().optional(),
   valueWithDecimals: z.string().optional(),
 });
-
 /** @internal */
 export type NetworkTokenInfo$Outbound = {
   tokenName?: string | undefined;
@@ -58,19 +57,6 @@ export const NetworkTokenInfo$outboundSchema: z.ZodType<
   valueWithDecimals: z.string().optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace NetworkTokenInfo$ {
-  /** @deprecated use `NetworkTokenInfo$inboundSchema` instead. */
-  export const inboundSchema = NetworkTokenInfo$inboundSchema;
-  /** @deprecated use `NetworkTokenInfo$outboundSchema` instead. */
-  export const outboundSchema = NetworkTokenInfo$outboundSchema;
-  /** @deprecated use `NetworkTokenInfo$Outbound` instead. */
-  export type Outbound = NetworkTokenInfo$Outbound;
-}
-
 export function networkTokenInfoToJSON(
   networkTokenInfo: NetworkTokenInfo,
 ): string {
@@ -78,7 +64,6 @@ export function networkTokenInfoToJSON(
     NetworkTokenInfo$outboundSchema.parse(networkTokenInfo),
   );
 }
-
 export function networkTokenInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<NetworkTokenInfo, SDKValidationError> {

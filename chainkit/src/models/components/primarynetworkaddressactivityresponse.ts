@@ -51,7 +51,6 @@ export const PrimaryNetworkAddressActivityResponse$inboundSchema: z.ZodType<
   eventType: PrimaryNetworkAddressActivityEventType$inboundSchema,
   metadata: PrimaryNetworkAddressActivityMetadata$inboundSchema,
 });
-
 /** @internal */
 export type PrimaryNetworkAddressActivityResponse$Outbound = {
   id: string;
@@ -82,21 +81,6 @@ export const PrimaryNetworkAddressActivityResponse$outboundSchema: z.ZodType<
   metadata: PrimaryNetworkAddressActivityMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkAddressActivityResponse$ {
-  /** @deprecated use `PrimaryNetworkAddressActivityResponse$inboundSchema` instead. */
-  export const inboundSchema =
-    PrimaryNetworkAddressActivityResponse$inboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityResponse$outboundSchema` instead. */
-  export const outboundSchema =
-    PrimaryNetworkAddressActivityResponse$outboundSchema;
-  /** @deprecated use `PrimaryNetworkAddressActivityResponse$Outbound` instead. */
-  export type Outbound = PrimaryNetworkAddressActivityResponse$Outbound;
-}
-
 export function primaryNetworkAddressActivityResponseToJSON(
   primaryNetworkAddressActivityResponse: PrimaryNetworkAddressActivityResponse,
 ): string {
@@ -106,7 +90,6 @@ export function primaryNetworkAddressActivityResponseToJSON(
     ),
   );
 }
-
 export function primaryNetworkAddressActivityResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkAddressActivityResponse, SDKValidationError> {

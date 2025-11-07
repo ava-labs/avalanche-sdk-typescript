@@ -20,18 +20,6 @@ export type UtxoType = ClosedEnum<typeof UtxoType>;
 /** @internal */
 export const UtxoType$inboundSchema: z.ZodNativeEnum<typeof UtxoType> = z
   .nativeEnum(UtxoType);
-
 /** @internal */
 export const UtxoType$outboundSchema: z.ZodNativeEnum<typeof UtxoType> =
   UtxoType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UtxoType$ {
-  /** @deprecated use `UtxoType$inboundSchema` instead. */
-  export const inboundSchema = UtxoType$inboundSchema;
-  /** @deprecated use `UtxoType$outboundSchema` instead. */
-  export const outboundSchema = UtxoType$outboundSchema;
-}

@@ -38,7 +38,6 @@ export const ListPrimaryNetworkBlocksResponse$inboundSchema: z.ZodType<
   blocks: z.array(PrimaryNetworkBlock$inboundSchema),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
 });
-
 /** @internal */
 export type ListPrimaryNetworkBlocksResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -57,19 +56,6 @@ export const ListPrimaryNetworkBlocksResponse$outboundSchema: z.ZodType<
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListPrimaryNetworkBlocksResponse$ {
-  /** @deprecated use `ListPrimaryNetworkBlocksResponse$inboundSchema` instead. */
-  export const inboundSchema = ListPrimaryNetworkBlocksResponse$inboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksResponse$outboundSchema` instead. */
-  export const outboundSchema = ListPrimaryNetworkBlocksResponse$outboundSchema;
-  /** @deprecated use `ListPrimaryNetworkBlocksResponse$Outbound` instead. */
-  export type Outbound = ListPrimaryNetworkBlocksResponse$Outbound;
-}
-
 export function listPrimaryNetworkBlocksResponseToJSON(
   listPrimaryNetworkBlocksResponse: ListPrimaryNetworkBlocksResponse,
 ): string {
@@ -79,7 +65,6 @@ export function listPrimaryNetworkBlocksResponseToJSON(
     ),
   );
 }
-
 export function listPrimaryNetworkBlocksResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<ListPrimaryNetworkBlocksResponse, SDKValidationError> {

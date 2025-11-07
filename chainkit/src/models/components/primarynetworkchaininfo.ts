@@ -31,7 +31,6 @@ export const PrimaryNetworkChainInfo$inboundSchema: z.ZodType<
   chainName: PrimaryNetworkChainName$inboundSchema,
   network: Network$inboundSchema,
 });
-
 /** @internal */
 export type PrimaryNetworkChainInfo$Outbound = {
   chainName: string;
@@ -48,19 +47,6 @@ export const PrimaryNetworkChainInfo$outboundSchema: z.ZodType<
   network: Network$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PrimaryNetworkChainInfo$ {
-  /** @deprecated use `PrimaryNetworkChainInfo$inboundSchema` instead. */
-  export const inboundSchema = PrimaryNetworkChainInfo$inboundSchema;
-  /** @deprecated use `PrimaryNetworkChainInfo$outboundSchema` instead. */
-  export const outboundSchema = PrimaryNetworkChainInfo$outboundSchema;
-  /** @deprecated use `PrimaryNetworkChainInfo$Outbound` instead. */
-  export type Outbound = PrimaryNetworkChainInfo$Outbound;
-}
-
 export function primaryNetworkChainInfoToJSON(
   primaryNetworkChainInfo: PrimaryNetworkChainInfo,
 ): string {
@@ -68,7 +54,6 @@ export function primaryNetworkChainInfoToJSON(
     PrimaryNetworkChainInfo$outboundSchema.parse(primaryNetworkChainInfo),
   );
 }
-
 export function primaryNetworkChainInfoFromJSON(
   jsonString: string,
 ): SafeParseResult<PrimaryNetworkChainInfo, SDKValidationError> {

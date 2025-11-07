@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const ListTeleporterMessagesByAddressServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type ListTeleporterMessagesByAddressRequest = {
@@ -42,7 +42,6 @@ export const ListTeleporterMessagesByAddressRequest$inboundSchema: z.ZodType<
   address: z.string(),
   network: components.Network$inboundSchema.optional(),
 });
-
 /** @internal */
 export type ListTeleporterMessagesByAddressRequest$Outbound = {
   pageToken?: string | undefined;
@@ -63,21 +62,6 @@ export const ListTeleporterMessagesByAddressRequest$outboundSchema: z.ZodType<
   network: components.Network$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ListTeleporterMessagesByAddressRequest$ {
-  /** @deprecated use `ListTeleporterMessagesByAddressRequest$inboundSchema` instead. */
-  export const inboundSchema =
-    ListTeleporterMessagesByAddressRequest$inboundSchema;
-  /** @deprecated use `ListTeleporterMessagesByAddressRequest$outboundSchema` instead. */
-  export const outboundSchema =
-    ListTeleporterMessagesByAddressRequest$outboundSchema;
-  /** @deprecated use `ListTeleporterMessagesByAddressRequest$Outbound` instead. */
-  export type Outbound = ListTeleporterMessagesByAddressRequest$Outbound;
-}
-
 export function listTeleporterMessagesByAddressRequestToJSON(
   listTeleporterMessagesByAddressRequest:
     ListTeleporterMessagesByAddressRequest,
@@ -88,7 +72,6 @@ export function listTeleporterMessagesByAddressRequestToJSON(
     ),
   );
 }
-
 export function listTeleporterMessagesByAddressRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<ListTeleporterMessagesByAddressRequest, SDKValidationError> {

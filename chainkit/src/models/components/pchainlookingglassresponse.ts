@@ -33,7 +33,6 @@ export const PChainLookingGlassResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   addresses: z.array(PChainAddressDetails$inboundSchema),
 });
-
 /** @internal */
 export type PChainLookingGlassResponse$Outbound = {
   nextPageToken?: string | undefined;
@@ -50,19 +49,6 @@ export const PChainLookingGlassResponse$outboundSchema: z.ZodType<
   addresses: z.array(PChainAddressDetails$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace PChainLookingGlassResponse$ {
-  /** @deprecated use `PChainLookingGlassResponse$inboundSchema` instead. */
-  export const inboundSchema = PChainLookingGlassResponse$inboundSchema;
-  /** @deprecated use `PChainLookingGlassResponse$outboundSchema` instead. */
-  export const outboundSchema = PChainLookingGlassResponse$outboundSchema;
-  /** @deprecated use `PChainLookingGlassResponse$Outbound` instead. */
-  export type Outbound = PChainLookingGlassResponse$Outbound;
-}
-
 export function pChainLookingGlassResponseToJSON(
   pChainLookingGlassResponse: PChainLookingGlassResponse,
 ): string {
@@ -70,7 +56,6 @@ export function pChainLookingGlassResponseToJSON(
     PChainLookingGlassResponse$outboundSchema.parse(pChainLookingGlassResponse),
   );
 }
-
 export function pChainLookingGlassResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<PChainLookingGlassResponse, SDKValidationError> {

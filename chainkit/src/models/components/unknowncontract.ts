@@ -56,22 +56,10 @@ export type UnknownContract = {
 export const UnknownContractErcType$inboundSchema: z.ZodNativeEnum<
   typeof UnknownContractErcType
 > = z.nativeEnum(UnknownContractErcType);
-
 /** @internal */
 export const UnknownContractErcType$outboundSchema: z.ZodNativeEnum<
   typeof UnknownContractErcType
 > = UnknownContractErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UnknownContractErcType$ {
-  /** @deprecated use `UnknownContractErcType$inboundSchema` instead. */
-  export const inboundSchema = UnknownContractErcType$inboundSchema;
-  /** @deprecated use `UnknownContractErcType$outboundSchema` instead. */
-  export const outboundSchema = UnknownContractErcType$outboundSchema;
-}
 
 /** @internal */
 export const UnknownContract$inboundSchema: z.ZodType<
@@ -92,7 +80,6 @@ export const UnknownContract$inboundSchema: z.ZodType<
   deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
   ercType: UnknownContractErcType$inboundSchema,
 });
-
 /** @internal */
 export type UnknownContract$Outbound = {
   name?: string | undefined;
@@ -129,25 +116,11 @@ export const UnknownContract$outboundSchema: z.ZodType<
   ercType: UnknownContractErcType$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UnknownContract$ {
-  /** @deprecated use `UnknownContract$inboundSchema` instead. */
-  export const inboundSchema = UnknownContract$inboundSchema;
-  /** @deprecated use `UnknownContract$outboundSchema` instead. */
-  export const outboundSchema = UnknownContract$outboundSchema;
-  /** @deprecated use `UnknownContract$Outbound` instead. */
-  export type Outbound = UnknownContract$Outbound;
-}
-
 export function unknownContractToJSON(
   unknownContract: UnknownContract,
 ): string {
   return JSON.stringify(UnknownContract$outboundSchema.parse(unknownContract));
 }
-
 export function unknownContractFromJSON(
   jsonString: string,
 ): SafeParseResult<UnknownContract, SDKValidationError> {

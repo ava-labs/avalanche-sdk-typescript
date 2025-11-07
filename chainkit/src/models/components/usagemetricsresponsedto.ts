@@ -38,7 +38,6 @@ export const UsageMetricsResponseDTO$inboundSchema: z.ZodType<
   orgId: z.string(),
   metrics: z.array(Metric$inboundSchema),
 });
-
 /** @internal */
 export type UsageMetricsResponseDTO$Outbound = {
   aggregateDuration: string;
@@ -57,19 +56,6 @@ export const UsageMetricsResponseDTO$outboundSchema: z.ZodType<
   metrics: z.array(Metric$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UsageMetricsResponseDTO$ {
-  /** @deprecated use `UsageMetricsResponseDTO$inboundSchema` instead. */
-  export const inboundSchema = UsageMetricsResponseDTO$inboundSchema;
-  /** @deprecated use `UsageMetricsResponseDTO$outboundSchema` instead. */
-  export const outboundSchema = UsageMetricsResponseDTO$outboundSchema;
-  /** @deprecated use `UsageMetricsResponseDTO$Outbound` instead. */
-  export type Outbound = UsageMetricsResponseDTO$Outbound;
-}
-
 export function usageMetricsResponseDTOToJSON(
   usageMetricsResponseDTO: UsageMetricsResponseDTO,
 ): string {
@@ -77,7 +63,6 @@ export function usageMetricsResponseDTOToJSON(
     UsageMetricsResponseDTO$outboundSchema.parse(usageMetricsResponseDTO),
   );
 }
-
 export function usageMetricsResponseDTOFromJSON(
   jsonString: string,
 ): SafeParseResult<UsageMetricsResponseDTO, SDKValidationError> {

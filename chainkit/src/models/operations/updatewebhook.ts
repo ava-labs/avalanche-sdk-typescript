@@ -10,7 +10,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const UpdateWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type UpdateWebhookRequest = {
@@ -42,7 +42,6 @@ export const UpdateWebhookRequest$inboundSchema: z.ZodType<
     "UpdateWebhookRequest": "updateWebhookRequest",
   });
 });
-
 /** @internal */
 export type UpdateWebhookRequest$Outbound = {
   id: string;
@@ -63,19 +62,6 @@ export const UpdateWebhookRequest$outboundSchema: z.ZodType<
   });
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UpdateWebhookRequest$ {
-  /** @deprecated use `UpdateWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = UpdateWebhookRequest$inboundSchema;
-  /** @deprecated use `UpdateWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = UpdateWebhookRequest$outboundSchema;
-  /** @deprecated use `UpdateWebhookRequest$Outbound` instead. */
-  export type Outbound = UpdateWebhookRequest$Outbound;
-}
-
 export function updateWebhookRequestToJSON(
   updateWebhookRequest: UpdateWebhookRequest,
 ): string {
@@ -83,7 +69,6 @@ export function updateWebhookRequestToJSON(
     UpdateWebhookRequest$outboundSchema.parse(updateWebhookRequest),
   );
 }
-
 export function updateWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<UpdateWebhookRequest, SDKValidationError> {
@@ -104,7 +89,6 @@ export const UpdateWebhookResponse$inboundSchema: z.ZodType<
   components.PrimaryNetworkAddressActivityResponse$inboundSchema,
   components.ValidatorActivityResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type UpdateWebhookResponse$Outbound =
   | components.EVMAddressActivityResponse$Outbound
@@ -122,19 +106,6 @@ export const UpdateWebhookResponse$outboundSchema: z.ZodType<
   components.ValidatorActivityResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UpdateWebhookResponse$ {
-  /** @deprecated use `UpdateWebhookResponse$inboundSchema` instead. */
-  export const inboundSchema = UpdateWebhookResponse$inboundSchema;
-  /** @deprecated use `UpdateWebhookResponse$outboundSchema` instead. */
-  export const outboundSchema = UpdateWebhookResponse$outboundSchema;
-  /** @deprecated use `UpdateWebhookResponse$Outbound` instead. */
-  export type Outbound = UpdateWebhookResponse$Outbound;
-}
-
 export function updateWebhookResponseToJSON(
   updateWebhookResponse: UpdateWebhookResponse,
 ): string {
@@ -142,7 +113,6 @@ export function updateWebhookResponseToJSON(
     UpdateWebhookResponse$outboundSchema.parse(updateWebhookResponse),
   );
 }
-
 export function updateWebhookResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<UpdateWebhookResponse, SDKValidationError> {

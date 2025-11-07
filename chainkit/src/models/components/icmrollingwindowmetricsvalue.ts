@@ -62,7 +62,6 @@ export const ICMRollingWindowMetricsValue$inboundSchema: z.ZodType<
   srcBlockchainId: z.string(),
   destBlockchainId: z.string(),
 });
-
 /** @internal */
 export type ICMRollingWindowMetricsValue$Outbound = {
   lastHour?: number | undefined;
@@ -93,19 +92,6 @@ export const ICMRollingWindowMetricsValue$outboundSchema: z.ZodType<
   destBlockchainId: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace ICMRollingWindowMetricsValue$ {
-  /** @deprecated use `ICMRollingWindowMetricsValue$inboundSchema` instead. */
-  export const inboundSchema = ICMRollingWindowMetricsValue$inboundSchema;
-  /** @deprecated use `ICMRollingWindowMetricsValue$outboundSchema` instead. */
-  export const outboundSchema = ICMRollingWindowMetricsValue$outboundSchema;
-  /** @deprecated use `ICMRollingWindowMetricsValue$Outbound` instead. */
-  export type Outbound = ICMRollingWindowMetricsValue$Outbound;
-}
-
 export function icmRollingWindowMetricsValueToJSON(
   icmRollingWindowMetricsValue: ICMRollingWindowMetricsValue,
 ): string {
@@ -115,7 +101,6 @@ export function icmRollingWindowMetricsValueToJSON(
     ),
   );
 }
-
 export function icmRollingWindowMetricsValueFromJSON(
   jsonString: string,
 ): SafeParseResult<ICMRollingWindowMetricsValue, SDKValidationError> {

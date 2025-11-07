@@ -67,22 +67,10 @@ export type Erc1155Contract = {
 export const Erc1155ContractErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc1155ContractErcType
 > = z.nativeEnum(Erc1155ContractErcType);
-
 /** @internal */
 export const Erc1155ContractErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc1155ContractErcType
 > = Erc1155ContractErcType$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155ContractErcType$ {
-  /** @deprecated use `Erc1155ContractErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc1155ContractErcType$inboundSchema;
-  /** @deprecated use `Erc1155ContractErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc1155ContractErcType$outboundSchema;
-}
 
 /** @internal */
 export const Erc1155Contract$inboundSchema: z.ZodType<
@@ -105,7 +93,6 @@ export const Erc1155Contract$inboundSchema: z.ZodType<
   symbol: z.string().optional(),
   pricingProviders: PricingProviders$inboundSchema.optional(),
 });
-
 /** @internal */
 export type Erc1155Contract$Outbound = {
   name?: string | undefined;
@@ -146,25 +133,11 @@ export const Erc1155Contract$outboundSchema: z.ZodType<
   pricingProviders: PricingProviders$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc1155Contract$ {
-  /** @deprecated use `Erc1155Contract$inboundSchema` instead. */
-  export const inboundSchema = Erc1155Contract$inboundSchema;
-  /** @deprecated use `Erc1155Contract$outboundSchema` instead. */
-  export const outboundSchema = Erc1155Contract$outboundSchema;
-  /** @deprecated use `Erc1155Contract$Outbound` instead. */
-  export type Outbound = Erc1155Contract$Outbound;
-}
-
 export function erc1155ContractToJSON(
   erc1155Contract: Erc1155Contract,
 ): string {
   return JSON.stringify(Erc1155Contract$outboundSchema.parse(erc1155Contract));
 }
-
 export function erc1155ContractFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc1155Contract, SDKValidationError> {

@@ -20,19 +20,7 @@ export type UsageMetricsGroupByEnum = ClosedEnum<
 export const UsageMetricsGroupByEnum$inboundSchema: z.ZodNativeEnum<
   typeof UsageMetricsGroupByEnum
 > = z.nativeEnum(UsageMetricsGroupByEnum);
-
 /** @internal */
 export const UsageMetricsGroupByEnum$outboundSchema: z.ZodNativeEnum<
   typeof UsageMetricsGroupByEnum
 > = UsageMetricsGroupByEnum$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UsageMetricsGroupByEnum$ {
-  /** @deprecated use `UsageMetricsGroupByEnum$inboundSchema` instead. */
-  export const inboundSchema = UsageMetricsGroupByEnum$inboundSchema;
-  /** @deprecated use `UsageMetricsGroupByEnum$outboundSchema` instead. */
-  export const outboundSchema = UsageMetricsGroupByEnum$outboundSchema;
-}

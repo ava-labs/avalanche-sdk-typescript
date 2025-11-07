@@ -58,7 +58,6 @@ export const UnauthorizedMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([z.string(), z.array(z.string())]);
-
 /** @internal */
 export type UnauthorizedMessage$Outbound = string | Array<string>;
 
@@ -69,19 +68,6 @@ export const UnauthorizedMessage$outboundSchema: z.ZodType<
   unknown
 > = z.union([z.string(), z.array(z.string())]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UnauthorizedMessage$ {
-  /** @deprecated use `UnauthorizedMessage$inboundSchema` instead. */
-  export const inboundSchema = UnauthorizedMessage$inboundSchema;
-  /** @deprecated use `UnauthorizedMessage$outboundSchema` instead. */
-  export const outboundSchema = UnauthorizedMessage$outboundSchema;
-  /** @deprecated use `UnauthorizedMessage$Outbound` instead. */
-  export type Outbound = UnauthorizedMessage$Outbound;
-}
-
 export function unauthorizedMessageToJSON(
   unauthorizedMessage: UnauthorizedMessage,
 ): string {
@@ -89,7 +75,6 @@ export function unauthorizedMessageToJSON(
     UnauthorizedMessage$outboundSchema.parse(unauthorizedMessage),
   );
 }
-
 export function unauthorizedMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<UnauthorizedMessage, SDKValidationError> {
@@ -140,16 +125,3 @@ export const UnauthorizedError$outboundSchema: z.ZodType<
     statusCode: z.number(),
     error: z.string(),
   }));
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace UnauthorizedError$ {
-  /** @deprecated use `UnauthorizedError$inboundSchema` instead. */
-  export const inboundSchema = UnauthorizedError$inboundSchema;
-  /** @deprecated use `UnauthorizedError$outboundSchema` instead. */
-  export const outboundSchema = UnauthorizedError$outboundSchema;
-  /** @deprecated use `UnauthorizedError$Outbound` instead. */
-  export type Outbound = UnauthorizedError$Outbound;
-}

@@ -56,24 +56,10 @@ export type DeliveredSourceNotIndexedTeleporterMessage = {
 export const DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema:
   z.ZodNativeEnum<typeof DeliveredSourceNotIndexedTeleporterMessageStatus> = z
     .nativeEnum(DeliveredSourceNotIndexedTeleporterMessageStatus);
-
 /** @internal */
 export const DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema:
   z.ZodNativeEnum<typeof DeliveredSourceNotIndexedTeleporterMessageStatus> =
     DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredSourceNotIndexedTeleporterMessageStatus$ {
-  /** @deprecated use `DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema` instead. */
-  export const inboundSchema =
-    DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema` instead. */
-  export const outboundSchema =
-    DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema;
-}
 
 /** @internal */
 export const DeliveredSourceNotIndexedTeleporterMessage$inboundSchema:
@@ -96,7 +82,6 @@ export const DeliveredSourceNotIndexedTeleporterMessage$inboundSchema:
       destinationTransaction: TeleporterDestinationTransaction$inboundSchema,
       status: DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema,
     });
-
 /** @internal */
 export type DeliveredSourceNotIndexedTeleporterMessage$Outbound = {
   messageId: string;
@@ -142,21 +127,6 @@ export const DeliveredSourceNotIndexedTeleporterMessage$outboundSchema:
     status: DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema,
   });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace DeliveredSourceNotIndexedTeleporterMessage$ {
-  /** @deprecated use `DeliveredSourceNotIndexedTeleporterMessage$inboundSchema` instead. */
-  export const inboundSchema =
-    DeliveredSourceNotIndexedTeleporterMessage$inboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedTeleporterMessage$outboundSchema` instead. */
-  export const outboundSchema =
-    DeliveredSourceNotIndexedTeleporterMessage$outboundSchema;
-  /** @deprecated use `DeliveredSourceNotIndexedTeleporterMessage$Outbound` instead. */
-  export type Outbound = DeliveredSourceNotIndexedTeleporterMessage$Outbound;
-}
-
 export function deliveredSourceNotIndexedTeleporterMessageToJSON(
   deliveredSourceNotIndexedTeleporterMessage:
     DeliveredSourceNotIndexedTeleporterMessage,
@@ -167,7 +137,6 @@ export function deliveredSourceNotIndexedTeleporterMessageToJSON(
     ),
   );
 }
-
 export function deliveredSourceNotIndexedTeleporterMessageFromJSON(
   jsonString: string,
 ): SafeParseResult<

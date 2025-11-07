@@ -81,43 +81,19 @@ export type Erc20TokenBalance = {
 export const Erc20TokenBalanceErcType$inboundSchema: z.ZodNativeEnum<
   typeof Erc20TokenBalanceErcType
 > = z.nativeEnum(Erc20TokenBalanceErcType);
-
 /** @internal */
 export const Erc20TokenBalanceErcType$outboundSchema: z.ZodNativeEnum<
   typeof Erc20TokenBalanceErcType
 > = Erc20TokenBalanceErcType$inboundSchema;
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc20TokenBalanceErcType$ {
-  /** @deprecated use `Erc20TokenBalanceErcType$inboundSchema` instead. */
-  export const inboundSchema = Erc20TokenBalanceErcType$inboundSchema;
-  /** @deprecated use `Erc20TokenBalanceErcType$outboundSchema` instead. */
-  export const outboundSchema = Erc20TokenBalanceErcType$outboundSchema;
-}
-
 /** @internal */
 export const TokenReputation$inboundSchema: z.ZodNativeEnum<
   typeof TokenReputation
 > = z.nativeEnum(TokenReputation);
-
 /** @internal */
 export const TokenReputation$outboundSchema: z.ZodNativeEnum<
   typeof TokenReputation
 > = TokenReputation$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TokenReputation$ {
-  /** @deprecated use `TokenReputation$inboundSchema` instead. */
-  export const inboundSchema = TokenReputation$inboundSchema;
-  /** @deprecated use `TokenReputation$outboundSchema` instead. */
-  export const outboundSchema = TokenReputation$outboundSchema;
-}
 
 /** @internal */
 export const Erc20TokenBalance$inboundSchema: z.ZodType<
@@ -137,7 +113,6 @@ export const Erc20TokenBalance$inboundSchema: z.ZodType<
   balanceValue: Money$inboundSchema.optional(),
   tokenReputation: z.nullable(TokenReputation$inboundSchema),
 });
-
 /** @internal */
 export type Erc20TokenBalance$Outbound = {
   address: string;
@@ -172,19 +147,6 @@ export const Erc20TokenBalance$outboundSchema: z.ZodType<
   tokenReputation: z.nullable(TokenReputation$outboundSchema),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Erc20TokenBalance$ {
-  /** @deprecated use `Erc20TokenBalance$inboundSchema` instead. */
-  export const inboundSchema = Erc20TokenBalance$inboundSchema;
-  /** @deprecated use `Erc20TokenBalance$outboundSchema` instead. */
-  export const outboundSchema = Erc20TokenBalance$outboundSchema;
-  /** @deprecated use `Erc20TokenBalance$Outbound` instead. */
-  export type Outbound = Erc20TokenBalance$Outbound;
-}
-
 export function erc20TokenBalanceToJSON(
   erc20TokenBalance: Erc20TokenBalance,
 ): string {
@@ -192,7 +154,6 @@ export function erc20TokenBalanceToJSON(
     Erc20TokenBalance$outboundSchema.parse(erc20TokenBalance),
   );
 }
-
 export function erc20TokenBalanceFromJSON(
   jsonString: string,
 ): SafeParseResult<Erc20TokenBalance, SDKValidationError> {

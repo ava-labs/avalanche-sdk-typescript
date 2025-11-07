@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetTxByHashServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type GetTxByHashGlobals = {
@@ -52,7 +52,6 @@ export const GetTxByHashGlobals$inboundSchema: z.ZodType<
 > = z.object({
   network: components.GlobalParamNetwork$inboundSchema.optional(),
 });
-
 /** @internal */
 export type GetTxByHashGlobals$Outbound = {
   network?: string | undefined;
@@ -67,19 +66,6 @@ export const GetTxByHashGlobals$outboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$outboundSchema.optional(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTxByHashGlobals$ {
-  /** @deprecated use `GetTxByHashGlobals$inboundSchema` instead. */
-  export const inboundSchema = GetTxByHashGlobals$inboundSchema;
-  /** @deprecated use `GetTxByHashGlobals$outboundSchema` instead. */
-  export const outboundSchema = GetTxByHashGlobals$outboundSchema;
-  /** @deprecated use `GetTxByHashGlobals$Outbound` instead. */
-  export type Outbound = GetTxByHashGlobals$Outbound;
-}
-
 export function getTxByHashGlobalsToJSON(
   getTxByHashGlobals: GetTxByHashGlobals,
 ): string {
@@ -87,7 +73,6 @@ export function getTxByHashGlobalsToJSON(
     GetTxByHashGlobals$outboundSchema.parse(getTxByHashGlobals),
   );
 }
-
 export function getTxByHashGlobalsFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTxByHashGlobals, SDKValidationError> {
@@ -108,7 +93,6 @@ export const GetTxByHashRequest$inboundSchema: z.ZodType<
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   txHash: z.string(),
 });
-
 /** @internal */
 export type GetTxByHashRequest$Outbound = {
   blockchainId: string;
@@ -127,19 +111,6 @@ export const GetTxByHashRequest$outboundSchema: z.ZodType<
   txHash: z.string(),
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTxByHashRequest$ {
-  /** @deprecated use `GetTxByHashRequest$inboundSchema` instead. */
-  export const inboundSchema = GetTxByHashRequest$inboundSchema;
-  /** @deprecated use `GetTxByHashRequest$outboundSchema` instead. */
-  export const outboundSchema = GetTxByHashRequest$outboundSchema;
-  /** @deprecated use `GetTxByHashRequest$Outbound` instead. */
-  export type Outbound = GetTxByHashRequest$Outbound;
-}
-
 export function getTxByHashRequestToJSON(
   getTxByHashRequest: GetTxByHashRequest,
 ): string {
@@ -147,7 +118,6 @@ export function getTxByHashRequestToJSON(
     GetTxByHashRequest$outboundSchema.parse(getTxByHashRequest),
   );
 }
-
 export function getTxByHashRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTxByHashRequest, SDKValidationError> {
@@ -170,7 +140,6 @@ export const GetTxByHashResponse$inboundSchema: z.ZodType<
   components.XChainLinearTransaction$inboundSchema,
   components.XChainNonLinearTransaction$inboundSchema,
 ]);
-
 /** @internal */
 export type GetTxByHashResponse$Outbound =
   | components.CChainExportTransaction$Outbound
@@ -192,19 +161,6 @@ export const GetTxByHashResponse$outboundSchema: z.ZodType<
   components.XChainNonLinearTransaction$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace GetTxByHashResponse$ {
-  /** @deprecated use `GetTxByHashResponse$inboundSchema` instead. */
-  export const inboundSchema = GetTxByHashResponse$inboundSchema;
-  /** @deprecated use `GetTxByHashResponse$outboundSchema` instead. */
-  export const outboundSchema = GetTxByHashResponse$outboundSchema;
-  /** @deprecated use `GetTxByHashResponse$Outbound` instead. */
-  export type Outbound = GetTxByHashResponse$Outbound;
-}
-
 export function getTxByHashResponseToJSON(
   getTxByHashResponse: GetTxByHashResponse,
 ): string {
@@ -212,7 +168,6 @@ export function getTxByHashResponseToJSON(
     GetTxByHashResponse$outboundSchema.parse(getTxByHashResponse),
   );
 }
-
 export function getTxByHashResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<GetTxByHashResponse, SDKValidationError> {

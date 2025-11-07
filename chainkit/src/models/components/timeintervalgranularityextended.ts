@@ -20,19 +20,7 @@ export type TimeIntervalGranularityExtended = ClosedEnum<
 export const TimeIntervalGranularityExtended$inboundSchema: z.ZodNativeEnum<
   typeof TimeIntervalGranularityExtended
 > = z.nativeEnum(TimeIntervalGranularityExtended);
-
 /** @internal */
 export const TimeIntervalGranularityExtended$outboundSchema: z.ZodNativeEnum<
   typeof TimeIntervalGranularityExtended
 > = TimeIntervalGranularityExtended$inboundSchema;
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace TimeIntervalGranularityExtended$ {
-  /** @deprecated use `TimeIntervalGranularityExtended$inboundSchema` instead. */
-  export const inboundSchema = TimeIntervalGranularityExtended$inboundSchema;
-  /** @deprecated use `TimeIntervalGranularityExtended$outboundSchema` instead. */
-  export const outboundSchema = TimeIntervalGranularityExtended$outboundSchema;
-}

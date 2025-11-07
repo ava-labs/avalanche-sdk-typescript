@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const CreateWebhookServerList = [
-  "https://glacier-api.avax.network",
+  "https://data-api.avax.network",
 ] as const;
 
 export type CreateWebhookRequest =
@@ -35,7 +35,6 @@ export const CreateWebhookRequest$inboundSchema: z.ZodType<
   components.EVMAddressActivityRequest$inboundSchema,
   components.ValidatorActivityRequest$inboundSchema,
 ]);
-
 /** @internal */
 export type CreateWebhookRequest$Outbound =
   | components.PrimaryNetworkAddressActivityRequest$Outbound
@@ -53,19 +52,6 @@ export const CreateWebhookRequest$outboundSchema: z.ZodType<
   components.ValidatorActivityRequest$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreateWebhookRequest$ {
-  /** @deprecated use `CreateWebhookRequest$inboundSchema` instead. */
-  export const inboundSchema = CreateWebhookRequest$inboundSchema;
-  /** @deprecated use `CreateWebhookRequest$outboundSchema` instead. */
-  export const outboundSchema = CreateWebhookRequest$outboundSchema;
-  /** @deprecated use `CreateWebhookRequest$Outbound` instead. */
-  export type Outbound = CreateWebhookRequest$Outbound;
-}
-
 export function createWebhookRequestToJSON(
   createWebhookRequest: CreateWebhookRequest,
 ): string {
@@ -73,7 +59,6 @@ export function createWebhookRequestToJSON(
     CreateWebhookRequest$outboundSchema.parse(createWebhookRequest),
   );
 }
-
 export function createWebhookRequestFromJSON(
   jsonString: string,
 ): SafeParseResult<CreateWebhookRequest, SDKValidationError> {
@@ -94,7 +79,6 @@ export const CreateWebhookResponse$inboundSchema: z.ZodType<
   components.PrimaryNetworkAddressActivityResponse$inboundSchema,
   components.ValidatorActivityResponse$inboundSchema,
 ]);
-
 /** @internal */
 export type CreateWebhookResponse$Outbound =
   | components.EVMAddressActivityResponse$Outbound
@@ -112,19 +96,6 @@ export const CreateWebhookResponse$outboundSchema: z.ZodType<
   components.ValidatorActivityResponse$outboundSchema,
 ]);
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace CreateWebhookResponse$ {
-  /** @deprecated use `CreateWebhookResponse$inboundSchema` instead. */
-  export const inboundSchema = CreateWebhookResponse$inboundSchema;
-  /** @deprecated use `CreateWebhookResponse$outboundSchema` instead. */
-  export const outboundSchema = CreateWebhookResponse$outboundSchema;
-  /** @deprecated use `CreateWebhookResponse$Outbound` instead. */
-  export type Outbound = CreateWebhookResponse$Outbound;
-}
-
 export function createWebhookResponseToJSON(
   createWebhookResponse: CreateWebhookResponse,
 ): string {
@@ -132,7 +103,6 @@ export function createWebhookResponseToJSON(
     CreateWebhookResponse$outboundSchema.parse(createWebhookResponse),
   );
 }
-
 export function createWebhookResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<CreateWebhookResponse, SDKValidationError> {

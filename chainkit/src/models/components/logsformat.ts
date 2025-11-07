@@ -98,7 +98,6 @@ export const LogsFormat$inboundSchema: z.ZodType<
   rpcMethod: z.string().optional(),
   metadata: LogsFormatMetadata$inboundSchema,
 });
-
 /** @internal */
 export type LogsFormat$Outbound = {
   orgId: string;
@@ -139,23 +138,9 @@ export const LogsFormat$outboundSchema: z.ZodType<
   metadata: LogsFormatMetadata$outboundSchema,
 });
 
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace LogsFormat$ {
-  /** @deprecated use `LogsFormat$inboundSchema` instead. */
-  export const inboundSchema = LogsFormat$inboundSchema;
-  /** @deprecated use `LogsFormat$outboundSchema` instead. */
-  export const outboundSchema = LogsFormat$outboundSchema;
-  /** @deprecated use `LogsFormat$Outbound` instead. */
-  export type Outbound = LogsFormat$Outbound;
-}
-
 export function logsFormatToJSON(logsFormat: LogsFormat): string {
   return JSON.stringify(LogsFormat$outboundSchema.parse(logsFormat));
 }
-
 export function logsFormatFromJSON(
   jsonString: string,
 ): SafeParseResult<LogsFormat, SDKValidationError> {
