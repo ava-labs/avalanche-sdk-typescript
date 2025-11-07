@@ -3,8 +3,8 @@ speakeasyVersion: latest
 sources:
     chainkit-source:
         inputs:
-            - location: https://popsicle-api.avax.network/api-json
-            - location: https://glacier-api.avax.network/api-json
+            - location: https://metrics.avax.network/api-json
+            - location: https://data-api.avax.network/api-json
         overlays:
             - location: chainkit/overlays/overlay.yaml
         registry:
