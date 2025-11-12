@@ -1,6 +1,16 @@
 export { bls, secp256k1, utils } from "@avalabs/avalanchejs";
 export { utf8ToBytes } from "@noble/hashes/utils";
-export { buildRequest, type RequestErrorType } from "viem/utils";
+export {
+  buildRequest,
+  /** @deprecated Use `ccipRequest`. */
+  ccipRequest as ccipFetch,
+  ccipRequest,
+  offchainLookup,
+  offchainLookupAbiItem,
+  offchainLookupSignature,
+  type OffchainLookupErrorType,
+  type RequestErrorType,
+} from "viem/utils";
 export {
   avaxToNanoAvax,
   avaxToWei,
@@ -17,16 +27,7 @@ export {
   getUtxosForAddress,
   type GetUtxosForAddressParams,
 } from "./getUtxosForAddress.js";
-
-export {
-  /** @deprecated Use `ccipRequest`. */
-  ccipRequest as ccipFetch,
-  ccipRequest,
-  offchainLookup,
-  offchainLookupAbiItem,
-  offchainLookupSignature,
-  type OffchainLookupErrorType,
-} from "viem/utils";
+export { removeChecksum } from "./removeChecksum.js";
 
 export {
   assertCurrentChain,

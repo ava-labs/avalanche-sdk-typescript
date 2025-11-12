@@ -63,6 +63,7 @@ export function hdKeyToAvalancheAccount(
     evmAccount: {
       ...cChainAccount,
       getHdKey: () => cChainHdKey,
+      source: "hdKey",
     } as any,
     xpAccount: {
       ...pChainAccount,

@@ -18,8 +18,8 @@ export function privateKeyToXPAccount(privateKey: string): XPAccount {
       xpSignTransaction(txHash, privateKey),
     verify: (message: string, signature: string) =>
       xpVerifySignature(
-        message,
         signature,
+        message,
         privateKeyToXPPublicKey(privateKey)
       ),
     type: "local",
