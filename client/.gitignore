@@ -14,3 +14,4 @@ dist/_types
 .DS_Store
 /docs/typedoc
 .rollup.cache
+/coverage

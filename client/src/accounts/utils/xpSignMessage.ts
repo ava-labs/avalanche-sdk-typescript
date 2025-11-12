@@ -1,4 +1,5 @@
 import { Int, secp256k1, utils } from "@avalabs/avalanchejs";
+import { sha256 } from "@noble/hashes/sha256";
 import { utf8ToBytes } from "@noble/hashes/utils";
 
 /**
@@ -20,8 +21,8 @@ export async function xpSignMessage(
     ...utf8ToBytes(message),
   ]);
 
-  const sig = await secp256k1.sign(
-    messageToHashBuffer,
+  const sig = await secp256k1.signHash(
+    sha256(messageToHashBuffer),
     utils.hexToBuffer(privateKey)
   );
   return utils.base58.encode(utils.addChecksum(utils.addChecksum(sig)));
