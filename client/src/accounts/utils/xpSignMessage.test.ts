@@ -5,14 +5,18 @@ import { xpSignMessage } from "./xpSignMessage.js";
 
 test("sign message", async () => {
   const signature = await xpSignMessage("hello world", privateKey1ForTest);
-  expect(signature).toBeDefined();
+  const expectedSignature =
+    "BGB2zCJLmvdeZrdWGCqGnYB3G4qNcwtLePzgJdarmGsCuiyGJ9KARBRfrX8Rg66wzQCfjSYdXYtd34CV7ouj3YACcBTSxaBEMiKq";
+  expect(signature).toBe(expectedSignature);
   expect(typeof signature).toBe("string");
   expect(signature.length).toBeGreaterThan(0);
 });
 
 test("sign empty message", async () => {
   const signature = await xpSignMessage("", privateKey1ForTest);
-  expect(signature).toBeDefined();
+  const expectedSignature =
+    "4xJd5sSJjPm14SqXJWzVzg95XJCKgsxbGgu4cppRQ6K58n84xo66FwxVfpp21fSNto95LSEeWm5N1KpNqajyQihRefMxy4uu7s4J";
+  expect(signature).toBe(expectedSignature);
   expect(typeof signature).toBe("string");
 });
 
