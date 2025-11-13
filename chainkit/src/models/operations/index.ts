@@ -97,6 +97,7 @@ export * from "./listvalidators.js";
 export * from "./listwebhooks.js";
 export * from "./livecheck.js";
 export * from "./metricshealthcheck.js";
+export * from "./metricslivecheck.js";
 export * from "./posttransactionexportjob.js";
 export * from "./reindexnft.js";
 export * from "./removeaddressesfromwebhook.js";
