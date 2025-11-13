@@ -245,3 +245,11 @@ export const getDefaultGetL1ValidatorMockResponse = (
     id: reqBody?.["id"] || 1,
   });
 };
+
+export const pChainTxHash =
+  "0x000000000010000000050000000000000000000000000000000000000000000000000000000000000000000000013d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa0000000700000000001e1d26000000000000000000000001000000012a705f0a71d8b6e19d5e955b19d683ca6d68237000000001e24544f6fd3abaa362b4c635d5c5dec16ac57a853477a1be41ae8e464d82005d000000003d9bdac0ed1d761330cf680efdeb1a42159eb387d6d2950c96f7d28f61bbe2aa0000000500000000001e31390000000100000000000000000000000b000000000000007b00000001000000012a705f0a71d8b6e19d5e955b19d683ca6d6823700000000100000009000000012df65b239996df9eaaeb235223a9e571832270e718a4be27317656965917d2080450e9aaf2141073bb1c4dab959fec0e8bb9dcb5dbf9f372160d0cb8c000f01401509d618f";
+
+export const pChainTxJsonStrExample =
+  '{"vm":"PVM","baseTx":{"NetworkId":5,"BlockchainId":"11111111111111111111111111111111LpoYY","outputs":[{"assetId":"U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK","output":{"amt":"1973542","outputOwners":{"locktime":"0","threshold":1,"addrs":["019fc97zn3mzmwr827j4d3n45refkksgms7wesnu"],"_type":"secp256k1fx.OutputOwners"},"_type":"secp256k1fx.TransferOutput"},"_type":"avax.TransferableOutput"}],"inputs":[{"utxoID":{"txID":"2ien9SLQiDw3Ym767oA83D77D2nNQm2V5E973SkvUhnHkSRTrv","outputIdx":0,"_type":"avax.UTXOID"},"assetId":"U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK","input":{"amt":"1978681","input":{"sigIndices":[0],"_type":"secp256k1fx.Input"},"_type":"secp256k1fx.TransferInput"},"_type":"avax.TransferableInput"}],"memo":"0x","_type":"avax.BaseTx"},"subnetOwners":{"locktime":"123","threshold":1,"addrs":["019fc97zn3mzmwr827j4d3n45refkksgms7wesnu"],"_type":"secp256k1fx.OutputOwners"},"_type":"pvm.CreateSubnetTx"}';
+export const pChainTxCredentialsJsonStrExample =
+  '[["2df65b239996df9eaaeb235223a9e571832270e718a4be27317656965917d2080450e9aaf2141073bb1c4dab959fec0e8bb9dcb5dbf9f372160d0cb8c000f01401"]]';
