@@ -46,6 +46,10 @@ export type GetUtxosByAddressesRequest = {
    */
   assetId?: string | undefined;
   /**
+   * The minimum UTXO amount in nAVAX (inclusive), used to filter the set of UTXOs being returned. Default is 0.
+   */
+  minUtxoAmount?: number | undefined;
+  /**
    * Boolean filter to include spent UTXOs.
    */
   includeSpent?: boolean | undefined;
@@ -121,6 +125,7 @@ export const GetUtxosByAddressesRequest$inboundSchema: z.ZodType<
   blockchainId: components.BlockchainId$inboundSchema,
   network: components.GlobalParamNetwork$inboundSchema.optional(),
   assetId: z.string().optional(),
+  minUtxoAmount: z.number().optional(),
   includeSpent: z.boolean().optional(),
   sortBy: components.UtxosSortByOption$inboundSchema.optional(),
   sortOrder: components.SortOrder$inboundSchema.optional(),
@@ -133,6 +138,7 @@ export type GetUtxosByAddressesRequest$Outbound = {
   blockchainId: string;
   network?: string | undefined;
   assetId?: string | undefined;
+  minUtxoAmount?: number | undefined;
   includeSpent?: boolean | undefined;
   sortBy?: string | undefined;
   sortOrder?: string | undefined;
@@ -150,6 +156,7 @@ export const GetUtxosByAddressesRequest$outboundSchema: z.ZodType<
   blockchainId: components.BlockchainId$outboundSchema,
   network: components.GlobalParamNetwork$outboundSchema.optional(),
   assetId: z.string().optional(),
+  minUtxoAmount: z.number().optional(),
   includeSpent: z.boolean().optional(),
   sortBy: components.UtxosSortByOption$outboundSchema.optional(),
   sortOrder: components.SortOrder$outboundSchema.optional(),

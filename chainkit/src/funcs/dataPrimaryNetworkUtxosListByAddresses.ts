@@ -142,6 +142,7 @@ async function $do(
     "addresses": payload.addresses,
     "assetId": payload.assetId,
     "includeSpent": payload.includeSpent,
+    "minUtxoAmount": payload.minUtxoAmount,
     "pageSize": payload.pageSize,
     "pageToken": payload.pageToken,
     "sortBy": payload.sortBy,
