@@ -17,16 +17,9 @@ actions:
     description: Remove the unused schema
     remove: true
   
-  - target: $["components"]["schemas"]["Blockchain"]
+  - target: $["components"]["schemas"]["Blockchain"]["required"][?(@ == "evmChainId")]
     description: Update the required fields from the Blockchain schema to make evmChainId optional, remove once glacier is merged
-    update:
-      required:
-        - "createBlockTimestamp"
-        - "createBlockNumber"
-        - "blockchainId"
-        - "vmId"
-        - "subnetId"
-        - "blockchainName"
+    remove: true
 
   - target: $.info
     description: Add a description to the OpenAPI spec
