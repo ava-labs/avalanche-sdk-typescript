@@ -1,3 +1,4 @@
+import { AvacloudHooks } from "./avacloud_hooks.js";
 import { TelemetryHooks } from "./telemetry_hooks.js";
 import { Hooks } from "./types.js";
 
@@ -14,4 +15,5 @@ export function initHooks(hooks: Hooks) {
   hooks.registerBeforeRequestHook(new TelemetryHooks());
   hooks.registerAfterSuccessHook(new TelemetryHooks());
   hooks.registerAfterErrorHook(new TelemetryHooks());
+  hooks.registerBeforeCreateRequestHook(new AvacloudHooks());
 }
