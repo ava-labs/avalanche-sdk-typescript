@@ -397,6 +397,7 @@ run();
 ### [metrics](docs/sdks/metrics/README.md)
 
 * [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+* [liveCheck](docs/sdks/metrics/README.md#livecheck) - Get the liveliness of the service
 
 #### [metrics.chains](docs/sdks/metricschains/README.md)
 
@@ -540,6 +541,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`metricsL1ValidatorsGetMetricsBySubnetId`](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnetId and timestamp range
 - [`metricsL1ValidatorsGetMetricsByValidationId`](docs/sdks/l1validators/README.md#getmetricsbyvalidationid) - Get metric values with given validationId and timestamp range
 - [`metricsL1ValidatorsListMetrics`](docs/sdks/l1validators/README.md#listmetrics) - Get given metric for all validators
+- [`metricsLiveCheck`](docs/sdks/metrics/README.md#livecheck) - Get the liveliness of the service
 - [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
 - [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 - [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook

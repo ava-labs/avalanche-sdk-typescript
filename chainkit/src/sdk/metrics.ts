@@ -3,6 +3,7 @@
  */
 
 import { metricsHealthCheck } from "../funcs/metricsHealthCheck.js";
+import { metricsLiveCheck } from "../funcs/metricsLiveCheck.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +43,21 @@ export class Metrics extends ClientSDK {
     options?: RequestOptions,
   ): Promise<components.HealthCheckResultDto> {
     return unwrapAsync(metricsHealthCheck(
+      this,
+      options,
+    ));
+  }
+
+  /**
+   * Get the liveliness of the service
+   *
+   * @remarks
+   * Check the liveliness of the service.
+   */
+  async liveCheck(
+    options?: RequestOptions,
+  ): Promise<components.HealthCheckResultDto> {
+    return unwrapAsync(metricsLiveCheck(
       this,
       options,
     ));

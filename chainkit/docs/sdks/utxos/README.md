@@ -26,6 +26,7 @@ async function run() {
   const result = await avalanche.data.primaryNetwork.utxos.listByAddresses({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
+    minUtxoAmount: 1000,
     sortOrder: "asc",
   });
 
@@ -55,6 +56,7 @@ async function run() {
   const res = await dataPrimaryNetworkUtxosListByAddresses(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
+    minUtxoAmount: 1000,
     sortOrder: "asc",
   });
   if (res.ok) {
@@ -116,6 +118,7 @@ async function run() {
   const result = await avalanche.data.primaryNetwork.utxos.listByAddressesV2({
     pageSize: 10,
     blockchainId: "p-chain",
+    minUtxoAmount: 1000,
     sortOrder: "asc",
     primaryNetworkAddressesBodyDto: {
       addresses: "P-avax1abc123,X-avax1def456,C-avax1ghi789",
@@ -148,6 +151,7 @@ async function run() {
   const res = await dataPrimaryNetworkUtxosListByAddressesV2(avalanche, {
     pageSize: 10,
     blockchainId: "p-chain",
+    minUtxoAmount: 1000,
     sortOrder: "asc",
     primaryNetworkAddressesBodyDto: {
       addresses: "P-avax1abc123,X-avax1def456,C-avax1ghi789",
