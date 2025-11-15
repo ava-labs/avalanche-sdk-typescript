@@ -17,11 +17,11 @@ export type AvaxSupplyResponse = {
    */
   totalSupply: string;
   /**
-   * The total P-chain burned fees of AVAX.
+   * Represents the total amount of AVAX burned on the P-Chain. This value includes AVAX lost when the sum of input UTXOs exceeds the sum of output UTXOs—potentially by more than the expected transaction fee, such as in malformed or improperly constructed transactions—as well as all L1 validator fees that have been burned to date.
    */
   totalPBurned: string;
   /**
-   * The total C-chain burned fees of AVAX.
+   * Represents the total amount of AVAX burned on the C-Chain. This value includes the total amount of AVAX burned on the C-Chain in evm txns and the total amount of AVAX burned on the C-Chain in atomic txns.
    */
   totalCBurned: string;
   /**
@@ -48,6 +48,10 @@ export type AvaxSupplyResponse = {
    * The genesis unlock amount of the AVAX supply.
    */
   genesisUnlock: string;
+  /**
+   * The total L1 validator fees of AVAX.
+   */
+  l1ValidatorFees: string;
 };
 
 /** @internal */
@@ -68,6 +72,7 @@ export const AvaxSupplyResponse$inboundSchema: z.ZodType<
     new Date(v)
   ),
   genesisUnlock: z.string(),
+  l1ValidatorFees: z.string(),
 });
 /** @internal */
 export type AvaxSupplyResponse$Outbound = {
@@ -81,6 +86,7 @@ export type AvaxSupplyResponse$Outbound = {
   totalRewards: string;
   lastUpdated: string;
   genesisUnlock: string;
+  l1ValidatorFees: string;
 };
 
 /** @internal */
@@ -99,6 +105,7 @@ export const AvaxSupplyResponse$outboundSchema: z.ZodType<
   totalRewards: z.string(),
   lastUpdated: z.date().transform(v => v.toISOString()),
   genesisUnlock: z.string(),
+  l1ValidatorFees: z.string(),
 });
 
 export function avaxSupplyResponseToJSON(
