@@ -72,7 +72,6 @@ export async function getUtxosForAddress(
       ...(params.sourceChain ? { sourceChain: params.sourceChain } : {}),
       ...(startIndex === undefined ? {} : { startIndex }),
     })) as GetUTXOsReturnType;
-
     utxos.push(
       ...utxosRes.utxos.map((utxo: string) =>
         getUtxoFromBytes(utxo, params.chainAlias)
@@ -96,6 +95,5 @@ export async function getUtxosForAddress(
       break;
     }
   } while (hasMore);
-
   return utxos;
 }
