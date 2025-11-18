@@ -65,7 +65,7 @@
     "crypto-browserify": "^3.12.0",
     "domain-browser": "^4.19.0",
     "events": "^3.3.0",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "https-browserify": "^1.0.0",
     "msw": "^2.10.4",
     "os-browserify": "^0.3.0",
