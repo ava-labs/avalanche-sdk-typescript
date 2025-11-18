@@ -72,5 +72,12 @@ actions:
               type: boolean
             x-speakeasy-globals-hidden: true 
             default: true
+          - name: avacloud
+            in: path
+            description: A flag to use represent a avacloud api key holder
+            schema:
+              type: boolean
+            x-speakeasy-globals-hidden: true 
+            default: false
           
   
