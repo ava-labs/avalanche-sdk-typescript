@@ -96,7 +96,8 @@ Add the following server definition to your `claude_desktop_config.json` file:
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "...",
-        "--enable-telemetry", "..."
+        "--enable-telemetry", "...",
+        "--avacloud", "..."
       ]
     }
   }
@@ -122,7 +123,8 @@ Create a `.cursor/mcp.json` file in your project root with the following content
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "...",
-        "--enable-telemetry", "..."
+        "--enable-telemetry", "...",
+        "--avacloud", "..."
       ]
     }
   }
@@ -596,6 +598,7 @@ The following global parameters are available.
 | chainId         | string                        | A supported EVM chain id, chain alias, or blockchain id. |
 | network         | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
 | enableTelemetry | boolean                       | A flag to enable or disable telemetry                    |
+| avacloud        | boolean                       | A flag to use represent a avacloud api key holder        |
 
 ### Example
 
@@ -606,6 +609,7 @@ const avalanche = new Avalanche({
   chainId: "43114",
   network: "mainnet",
   enableTelemetry: false,
+  avacloud: true,
 });
 
 async function run() {
