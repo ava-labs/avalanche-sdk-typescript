@@ -5,7 +5,7 @@ import {
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
 import { avaxToNanoAvax, getTxFromBytes } from "../../../utils";
@@ -22,9 +22,16 @@ import {
   getValidUTXO,
 } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
+import { getContextFromURI } from "../getContextFromURI";
 import { Output } from "../types/common";
 import { toTransferableOutput } from "../utils";
 import { PrepareBaseTxnParameters } from "./types/prepareBaseTxn";
+
+// Mock getContextFromURI to avoid making real HTTP requests
+vi.mock("../getContextFromURI.js", () => ({
+  getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+}));
+
 const testInputAmount = avaxToNanoAvax(1);
 
 const pChainWorker = getPChainMockServer({});
@@ -384,5 +391,72 @@ describe("newBaseTx", () => {
     ).rejects.toThrow(
       "Insufficient funds! Provided UTXOs need 39000000000 more units of asset FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z"
     );
+  });
+
+  it("should fetch context from URI when context is not provided", async () => {
+    const receiverAddresses = [account1.getXPAddress("P", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: testOutputs,
+      // context is not provided - should call getContextFromURI
+    };
+
+    const txnRequest = await walletClient.pChain.prepareBaseTxn(mockTxParams);
+
+    // Verify getContextFromURI was called
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalled();
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalledTimes(1);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+    expect(txnRequest.chainAlias).toBe("P");
+  });
+
+  it("should handle empty outputs array", async () => {
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: [], // Empty outputs array
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.pChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // When outputs is empty, formattedOutputs will be empty,
+    // but the transaction may still create change outputs from UTXOs
+    const baseTx = txnRequest.tx.getTx() as pvmSerial.BaseTx;
+    // The transaction should still be valid (may have change outputs)
+    expect(baseTx).toBeDefined();
+  });
+
+  it("should handle undefined outputs", async () => {
+    const mockTxParams: PrepareBaseTxnParameters = {
+      // outputs is not provided
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.pChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // When outputs is undefined, formattedOutputs will be empty array,
+    // but the transaction may still create change outputs from UTXOs
+    const baseTx = txnRequest.tx.getTx() as pvmSerial.BaseTx;
+    // The transaction should still be valid (may have change outputs)
+    expect(baseTx).toBeDefined();
   });
 });

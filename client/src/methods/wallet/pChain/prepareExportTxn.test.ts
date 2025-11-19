@@ -1,5 +1,5 @@
 import { pvm, pvmSerial } from "@avalabs/avalanchejs";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { PrepareExportTxnParameters } from ".";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
@@ -13,12 +13,18 @@ import {
 } from "../fixtures/transactions/common";
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { checkOutputs } from "../fixtures/utils";
+import { getContextFromURI } from "../getContextFromURI";
 import { Output } from "../types/common";
 import {
   avaxToNanoAvax,
   getChainIdFromAlias,
   toTransferableOutput,
 } from "../utils";
+
+// Mock getContextFromURI to avoid making real HTTP requests
+vi.mock("../getContextFromURI.js", () => ({
+  getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+}));
 
 const testInputAmount = avaxToNanoAvax(1);
 
@@ -213,5 +219,60 @@ describe("prepareExportTxn", () => {
     ).toBe(
       "0x0000000000120000000500000000000000000000000000000000000000000000000000000000000000000000000121e67317cbc4be2aeb00677ad6462778a8f52274b9d605df2591b23027a87dff0000000700000000343fd841000000000000000000000001000000013cb7d3842e8cee6a0ebd09f1fe884f6861e1b29c00000001ba5eeb9cf2e099134ffba3d2ce1310fa6f07413e4512044cdd1caba9e03fa8c90000000021e67317cbc4be2aeb00677ad6462778a8f52274b9d605df2591b23027a87dff00000005000000003b9aca00000000010000000000000000ab68eb1ee142a05cfe768c36e11f0b596db5a3c6c77aabe665dad9e638ca94f70000000121e67317cbc4be2aeb00677ad6462778a8f52274b9d605df2591b23027a87dff0000000700000000075aef40000000000000000000000001000000023cb7d3842e8cee6a0ebd09f1fe884f6861e1b29c931887940fd0ef612f2aa42fcdc8556405b7e7670000000100000009000000014ed80a1ee47328317b5bb1b67776a057bfee112abf6d6ec1aa49a2f514eba4b938a5afb31e6864b68e22e1422ed84c91b973f5210a329e0d7af020f7252125b60115106a40"
     );
+  });
+
+  it("should fetch context from URI when context is not provided", async () => {
+    const receiverAddresses = [account2.getXPAddress("P", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const mockTxParams: PrepareExportTxnParameters = {
+      exportedOutputs: testOutputs,
+      destinationChain: "C",
+      // context is not provided - should call getContextFromURI
+    };
+
+    const txnRequest = await walletClient.pChain.prepareExportTxn(mockTxParams);
+
+    // Verify getContextFromURI was called
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalled();
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalledTimes(1);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.exportTx).toBeDefined();
+    expect(txnRequest.chainAlias).toBe("P");
+  });
+
+  it("should handle single exported output", async () => {
+    const receiverAddress = account2.getXPAddress("P", "fuji");
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: [receiverAddress], // Single address
+      },
+    ];
+    const mockTxParams: PrepareExportTxnParameters = {
+      exportedOutputs: testOutputs,
+      destinationChain: "C",
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.pChain.prepareExportTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.exportTx).toBeDefined();
+
+    // Verify exported outputs exist
+    const exportTx = txnRequest.tx.getTx() as pvmSerial.ExportTx;
+    expect(exportTx.outs.length).toBeGreaterThan(0);
   });
 });

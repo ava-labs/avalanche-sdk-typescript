@@ -33,9 +33,21 @@ export function createAvalancheTransportClient<
           fetchOptions: {
             ...(transportConfig.config?.fetchOptions ?? {}),
             ...(apiKey
-              ? { headers: { "x-glacier-api-key": apiKey, ...commonHeaders } }
+              ? {
+                  headers: {
+                    ...transportConfig.config?.fetchOptions?.headers,
+                    "x-glacier-api-key": apiKey,
+                    ...commonHeaders,
+                  },
+                }
               : rlToken
-              ? { headers: { rlToken: rlToken, ...commonHeaders } }
+              ? {
+                  headers: {
+                    ...transportConfig.config?.fetchOptions?.headers,
+                    rlToken: rlToken,
+                    ...commonHeaders,
+                  },
+                }
               : {}),
           },
         }
@@ -82,7 +94,7 @@ function getClientURL(
   clientType: ClientType = "public",
   transportType: "http" | "webSocket" = "http"
 ): string | undefined {
-  if (chain?.name !== "Avalanche Fuji" && chain?.name !== "Avalanche") {
+  if (chain?.id !== 43_113 && chain?.id !== 43_114) {
     return url ?? chain?.rpcUrls.default[transportType]?.[0];
   }
 
