@@ -1,4 +1,6 @@
 name: Client SDK CI
+permissions:
+  contents: read
 
 on:
   push:
