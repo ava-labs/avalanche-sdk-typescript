@@ -45,6 +45,17 @@ describe("getTxFromBytes", () => {
       expect(tx).toBeDefined();
       expect(credentials.length).toBeGreaterThanOrEqual(1);
     });
+
+    test("handles hex string without 0x prefix", () => {
+      // Remove 0x prefix to test strip0x handling
+      const txHashWithoutPrefix = pChainTxHash.slice(2);
+      const [tx, credentials] = getTxFromBytes(txHashWithoutPrefix, "P");
+
+      expect(tx.getVM()).toBe("PVM");
+      expect(tx).toBeInstanceOf(Common.Transaction);
+      expect(Array.isArray(credentials)).toBe(true);
+      expect(credentials.length).toBeGreaterThan(0);
+    });
   });
 
   describe("X-Chain", () => {
@@ -61,6 +72,15 @@ describe("getTxFromBytes", () => {
         "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM"
       );
     });
+
+    test("handles hex string without 0x prefix", () => {
+      const txHashWithoutPrefix = xChainTxHash.slice(2);
+      const [tx, credentials] = getTxFromBytes(txHashWithoutPrefix, "X");
+
+      expect(tx).toBeInstanceOf(Common.Transaction);
+      expect(Array.isArray(credentials)).toBe(true);
+      expect(tx.getVM()).toBe("AVM");
+    });
   });
 
   describe("C-Chain", () => {
@@ -69,6 +89,15 @@ describe("getTxFromBytes", () => {
       // Since we don't have one in fixtures, we test that the function
       // can handle the P-Chain format which demonstrates the parsing logic
       const [tx, credentials] = getTxFromBytes(cChainTxHash, "C");
+
+      expect(tx).toBeInstanceOf(Common.Transaction);
+      expect(Array.isArray(credentials)).toBe(true);
+      expect(tx.getVM()).toBe("EVM");
+    });
+
+    test("handles hex string without 0x prefix", () => {
+      const txHashWithoutPrefix = cChainTxHash.slice(2);
+      const [tx, credentials] = getTxFromBytes(txHashWithoutPrefix, "C");
 
       expect(tx).toBeInstanceOf(Common.Transaction);
       expect(Array.isArray(credentials)).toBe(true);
@@ -96,18 +125,62 @@ describe("getTxFromBytes", () => {
 });
 
 describe("getUnsignedTxFromBytes", () => {
-  test("parses unsigned transaction from hex string", () => {
-    const unsignedTx = getUnsignedTxFromBytes(pChainTxHash, "P");
+  describe("P-Chain", () => {
+    test("parses unsigned transaction from hex string", () => {
+      const unsignedTx = getUnsignedTxFromBytes(pChainTxHash, "P");
 
-    expect(unsignedTx).toBeInstanceOf(UnsignedTx);
-    expect(unsignedTx).toBeDefined();
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
+
+    test("returns UnsignedTx with credentials", () => {
+      const unsignedTx = getUnsignedTxFromBytes(pChainTxHash, "P");
+
+      expect(unsignedTx).toBeDefined();
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+    });
+
+    test("handles hex string without 0x prefix", () => {
+      const txHashWithoutPrefix = pChainTxHash.slice(2);
+      const unsignedTx = getUnsignedTxFromBytes(txHashWithoutPrefix, "P");
+
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
   });
 
-  test("returns UnsignedTx with credentials", () => {
-    const unsignedTx = getUnsignedTxFromBytes(pChainTxHash, "P");
+  describe("X-Chain", () => {
+    test("parses unsigned transaction from hex string", () => {
+      const unsignedTx = getUnsignedTxFromBytes(xChainTxHash, "X");
 
-    expect(unsignedTx).toBeDefined();
-    expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
+
+    test("handles hex string without 0x prefix", () => {
+      const txHashWithoutPrefix = xChainTxHash.slice(2);
+      const unsignedTx = getUnsignedTxFromBytes(txHashWithoutPrefix, "X");
+
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
+  });
+
+  describe("C-Chain", () => {
+    test("parses unsigned transaction from hex string", () => {
+      const unsignedTx = getUnsignedTxFromBytes(cChainTxHash, "C");
+
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
+
+    test("handles hex string without 0x prefix", () => {
+      const txHashWithoutPrefix = cChainTxHash.slice(2);
+      const unsignedTx = getUnsignedTxFromBytes(txHashWithoutPrefix, "C");
+
+      expect(unsignedTx).toBeInstanceOf(UnsignedTx);
+      expect(unsignedTx).toBeDefined();
+    });
   });
 
   describe("error cases", () => {

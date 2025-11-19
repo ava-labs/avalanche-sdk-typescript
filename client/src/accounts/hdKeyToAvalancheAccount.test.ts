@@ -100,8 +100,12 @@ test("getEVMAddress", () => {
 test("getXPAddress", () => {
   const account = hdKeyToAvalancheAccount(hdKey);
   const address = account.getXPAddress();
+  const cAddress = account.getXPAddress("C");
   expect(address).toBeDefined();
   expect(typeof address).toBe("string");
+  expect(cAddress).toBeDefined();
+  expect(typeof cAddress).toBe("string");
+  expect(cAddress.startsWith("C-")).toBe(true);
 });
 
 test("xpAccount has getHdKey", () => {

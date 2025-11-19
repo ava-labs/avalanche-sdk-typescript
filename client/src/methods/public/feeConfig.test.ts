@@ -61,4 +61,53 @@ describe("feeConfig", () => {
     expect(result.feeConfig).toBeDefined();
     expect(result.lastChangedAt).toBe("1000000");
   });
+
+  test("uses 'latest' as default when blk is undefined", async () => {
+    const params: FeeConfigParameters = {} as any;
+
+    await feeConfig(client, params);
+
+    expect(mockRequest).toHaveBeenCalledWith({
+      method: "eth_feeConfig",
+      params: ["latest"],
+    });
+  });
+
+  test("uses 'latest' as default when blk is not provided", async () => {
+    const params: FeeConfigParameters = {} as any;
+
+    await feeConfig(client, params);
+
+    expect(mockRequest).toHaveBeenCalledWith({
+      method: "eth_feeConfig",
+      params: ["latest"],
+    });
+  });
+
+  test("handles different block values", async () => {
+    const blockValues = ["0x1", "0x100", "latest", "0xabc123"];
+
+    for (const blk of blockValues) {
+      vi.clearAllMocks();
+      await feeConfig(client, { blk });
+
+      expect(mockRequest).toHaveBeenCalledWith({
+        method: "eth_feeConfig",
+        params: [blk],
+      });
+    }
+  });
+
+  test("handles null blk value", async () => {
+    const params: FeeConfigParameters = {
+      blk: null as any,
+    };
+
+    await feeConfig(client, params);
+
+    expect(mockRequest).toHaveBeenCalledWith({
+      method: "eth_feeConfig",
+      params: ["latest"],
+    });
+  });
 });

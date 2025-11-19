@@ -37,7 +37,7 @@ export type AvalancheWalletCoreClientConfig<
     | "rpcSchema"
     | "type"
   > & {
-    account: AvalancheAccount | Address | undefined;
+    account?: AvalancheAccount | Address | undefined;
     transport: AvalancheTransportConfig<transport, rpcSchema, raw>;
     apiKey?: string;
     rlToken?: string;
