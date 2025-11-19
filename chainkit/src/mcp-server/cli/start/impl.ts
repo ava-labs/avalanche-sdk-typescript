@@ -21,6 +21,7 @@ interface StartCommandFlags {
   readonly "chain-id"?: SDKOptions["chainId"] | undefined;
   readonly network?: SDKOptions["network"] | undefined;
   readonly "enable-telemetry"?: SDKOptions["enableTelemetry"] | undefined;
+  readonly avacloud?: SDKOptions["avacloud"] | undefined;
   readonly "server-url"?: string;
   readonly "server-index"?: SDKOptions["serverIdx"];
   readonly "log-level": ConsoleLoggerLevel;
@@ -54,6 +55,7 @@ async function startStdio(flags: StartCommandFlags) {
     chainId: flags["chain-id"],
     network: flags.network,
     enableTelemetry: flags["enable-telemetry"],
+    avacloud: flags.avacloud,
     serverURL: flags["server-url"],
     serverIdx: flags["server-index"],
   });
@@ -77,6 +79,7 @@ async function startSSE(flags: StartCommandFlags) {
     chainId: flags["chain-id"],
     network: flags.network,
     enableTelemetry: flags["enable-telemetry"],
+    avacloud: flags.avacloud,
     serverURL: flags["server-url"],
     serverIdx: flags["server-index"],
   });
