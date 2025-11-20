@@ -143,6 +143,7 @@ async function $do(
   const query = encodeFormQuery({
     "assetId": payload.assetId,
     "includeSpent": payload.includeSpent,
+    "minUtxoAmount": payload.minUtxoAmount,
     "pageSize": payload.pageSize,
     "pageToken": payload.pageToken,
     "sortBy": payload.sortBy,

@@ -73,6 +73,17 @@ export const startCommand = buildCommand({
           );
         },
       },
+      avacloud: {
+        kind: "parsed",
+        brief:
+          "Allows setting the avacloud parameter for all supported operations",
+        optional: true,
+        parse: (value) => {
+          return z.enum(["true", "false"]).transform(v => v === "true").parse(
+            value,
+          );
+        },
+      },
       "server-url": {
         kind: "parsed",
         brief: "Overrides the default server URL used by the SDK",

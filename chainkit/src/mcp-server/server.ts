@@ -101,6 +101,7 @@ import { tool$metricsL1ValidatorsGetMetricsByNodeId } from "./tools/metricsL1Val
 import { tool$metricsL1ValidatorsGetMetricsBySubnetId } from "./tools/metricsL1ValidatorsGetMetricsBySubnetId.js";
 import { tool$metricsL1ValidatorsGetMetricsByValidationId } from "./tools/metricsL1ValidatorsGetMetricsByValidationId.js";
 import { tool$metricsL1ValidatorsListMetrics } from "./tools/metricsL1ValidatorsListMetrics.js";
+import { tool$metricsLiveCheck } from "./tools/metricsLiveCheck.js";
 import { tool$metricsNetworksGetStakingMetrics } from "./tools/metricsNetworksGetStakingMetrics.js";
 import { tool$metricsSubnetsGetValidators } from "./tools/metricsSubnetsGetValidators.js";
 import { tool$webhooksAddressesAdd } from "./tools/webhooksAddressesAdd.js";
@@ -123,11 +124,12 @@ export function createMCPServer(deps: {
   chainId?: SDKOptions["chainId"] | undefined;
   network?: SDKOptions["network"] | undefined;
   enableTelemetry?: SDKOptions["enableTelemetry"] | undefined;
+  avacloud?: SDKOptions["avacloud"] | undefined;
   serverIdx?: SDKOptions["serverIdx"] | undefined;
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.0-alpha.8",
+    version: "0.3.0-alpha.10",
   });
 
   const client = new AvalancheCore({
@@ -135,6 +137,7 @@ export function createMCPServer(deps: {
     chainId: deps.chainId,
     network: deps.network,
     enableTelemetry: deps.enableTelemetry,
+    avacloud: deps.avacloud,
     serverURL: deps.serverURL,
     serverIdx: deps.serverIdx,
   });
@@ -161,6 +164,7 @@ export function createMCPServer(deps: {
   void register; // suppress unused warnings
 
   tool(tool$metricsHealthCheck);
+  tool(tool$metricsLiveCheck);
   tool(tool$dataHealthCheck);
   tool(tool$dataLiveCheck);
   tool(tool$webhooksList);

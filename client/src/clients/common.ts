@@ -1,5 +1,5 @@
 export const SDK_METADATA = {
-  version: "0.0.4-alpha.0",
+  version: "0.1.0-alpha.3",
   name: "@avalanche-sdk/client",
 };
 

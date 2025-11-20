@@ -34,11 +34,13 @@ export function hdKeyToAvalancheAccount(
     xpAddressIndex = 0,
     xpChangeIndex = 0,
     path,
+    xpPath,
     ...options
   }: HDKeyToAccountOptions & {
     xpAccountIndex?: number;
     xpAddressIndex?: number;
     xpChangeIndex?: number;
+    xpPath?: string;
   } = {}
 ): AvalancheAccount {
   const cChainHdKey = hdKey_.derive(
@@ -46,7 +48,8 @@ export function hdKeyToAvalancheAccount(
   );
 
   const xpChainHdKey = hdKey_.derive(
-    path || `m/44'/9000'/${accountIndex}'/${changeIndex}/${addressIndex}`
+    xpPath ||
+      `m/44'/9000'/${xpAccountIndex}'/${xpChangeIndex}/${xpAddressIndex}`
   );
 
   const cChainAccount = privateKeyToAccount(
@@ -60,6 +63,7 @@ export function hdKeyToAvalancheAccount(
     evmAccount: {
       ...cChainAccount,
       getHdKey: () => cChainHdKey,
+      source: "hdKey",
     } as any,
     xpAccount: {
       ...pChainAccount,

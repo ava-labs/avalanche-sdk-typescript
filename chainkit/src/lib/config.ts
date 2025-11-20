@@ -36,6 +36,11 @@ export type SDKOptions = {
    */
   enableTelemetry?: boolean | undefined;
 
+  /**
+   * Allows setting the avacloud parameter for all supported operations
+   */
+  avacloud?: boolean | undefined;
+
   httpClient?: HTTPClient;
   /**
    * Allows overriding the default server used by the SDK
@@ -77,8 +82,8 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.3.0-alpha.8",
-  genVersion: "2.743.2",
+  sdkVersion: "0.3.0-alpha.10",
+  genVersion: "2.755.9",
   userAgent:
-    "speakeasy-sdk/typescript 0.3.0-alpha.8 2.743.2 1.0.0 @avalanche-sdk/chainkit",
+    "speakeasy-sdk/typescript 0.3.0-alpha.10 2.755.9 1.0.0 @avalanche-sdk/chainkit",
 } as const;

@@ -17,6 +17,10 @@ actions:
     description: Remove the unused schema
     remove: true
   
+  - target: $["components"]["schemas"]["Blockchain"]["required"][?(@ == "evmChainId")]
+    description: Update the required fields from the Blockchain schema to make evmChainId optional, remove once glacier is merged
+    remove: true
+
   - target: $.info
     description: Add a description to the OpenAPI spec
     update:
@@ -68,5 +72,12 @@ actions:
               type: boolean
             x-speakeasy-globals-hidden: true 
             default: true
+          - name: avacloud
+            in: path
+            description: A flag to use represent a avacloud api key holder
+            schema:
+              type: boolean
+            x-speakeasy-globals-hidden: true 
+            default: false
           
   

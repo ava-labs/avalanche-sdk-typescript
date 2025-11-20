@@ -1,13 +1,13 @@
 import {
-    avaxSerial,
-    Utxo,
-    BigIntPr,
-    Id,
-    Int,
-    OutputOwners,
-    TransferOutput,
-    utils,
-    Short,
+  avaxSerial,
+  BigIntPr,
+  Id,
+  Int,
+  OutputOwners,
+  Short,
+  TransferOutput,
+  utils,
+  Utxo,
 } from "@avalabs/avalanchejs";
 
 /**
@@ -25,55 +25,53 @@ import {
  * ```ts
  * import { buildUtxoBytes } from "@avalanche-sdk/client/utils";
  * const utxoBytes = buildUtxoBytes(
- *   "mYxFK3CWs6iMFFaRx4wmVLDUtnktzm2o9Mhg9AG6JSzRijy5V", 
- *   0, 
- *   "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK", 
- *   "111947", 
- *   ["P-fuji1nv6w7m6egkwhkcvz96ze3qmzyk5gt6csqz7ejq"], 
+ *   "mYxFK3CWs6iMFFaRx4wmVLDUtnktzm2o9Mhg9AG6JSzRijy5V",
+ *   0,
+ *   "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK",
+ *   "111947",
+ *   ["P-fuji1nv6w7m6egkwhkcvz96ze3qmzyk5gt6csqz7ejq"],
  *   "0",
  *   1
  * );
  * ```
-*/
+ */
 export function buildUtxoBytes(
-    txHash: string,
-    outputIndex: number,
-    assetId: string,
-    amount: string,
-    addresses: string[],
-    locktime: string,
-    threshold: number
+  txHash: string,
+  outputIndex: number,
+  assetId: string,
+  amount: string,
+  addresses: string[],
+  locktime: string,
+  threshold: number
 ): `0x${string}` {
-    const transferOutput = new TransferOutput(
-        new BigIntPr(BigInt(amount)),
-        OutputOwners.fromNative(
-            addresses
-                .map(
-                    (addr) => utils.parseBech32(
-                        addr
-                        .replace("P-", "")
-                        .replace("X-", "")
-                        .replace("C-", "")
-                    )[1] // returns [hrp, addressBytes]
-                )
-                .sort(utils.bytesCompare),
-            BigInt(locktime ?? 0),
-            threshold
+  const transferOutput = new TransferOutput(
+    new BigIntPr(BigInt(amount)),
+    OutputOwners.fromNative(
+      addresses
+        .map(
+          (addr) =>
+            utils.parseBech32(
+              addr.replace("P-", "").replace("X-", "").replace("C-", "")
+            )[1] // returns [hrp, addressBytes]
         )
-    );
+        .sort(utils.bytesCompare),
+      BigInt(locktime ?? 0),
+      threshold
+    )
+  );
 
-    const utxo = new Utxo(
-        new avaxSerial.UTXOID(Id.fromString(txHash), new Int(outputIndex)),
-        Id.fromString(assetId),
-        transferOutput
-    );
+  const utxo = new Utxo(
+    new avaxSerial.UTXOID(Id.fromString(txHash), new Int(outputIndex)),
+    Id.fromString(assetId),
+    transferOutput
+  );
 
-    return utils.bufferToHex(
-        utils.addChecksum(
-            utils.concatBytes(
-                new Short(0).toBytes(), // codec verison
-                utxo.toBytes(utils.getManagerForVM("PVM").getDefaultCodec()) // default codec for all chains
-            )
-        )
-    ) as `0x${string}`;
+  return utils.bufferToHex(
+    utils.addChecksum(
+      utils.concatBytes(
+        new Short(0).toBytes(), // codec verison
+        utxo.toBytes(utils.getManagerForVM("PVM").getDefaultCodec()) // default codec for all chains
+      )
+    )
+  ) as `0x${string}`;
 }

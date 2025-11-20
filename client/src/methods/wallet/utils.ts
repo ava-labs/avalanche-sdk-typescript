@@ -48,7 +48,7 @@ import {
 } from "./types/common.js";
 export function getBaseUrl(client: AvalancheWalletCoreClient): string {
   const { chain } = client;
-  const configUrl = chain?.rpcUrls?.default?.http[0];
+  const configUrl = chain?.rpcUrls?.default?.http?.[0];
 
   if (!configUrl) {
     throw new Error("RPC URL not found");

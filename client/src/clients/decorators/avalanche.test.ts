@@ -2,7 +2,7 @@ import { createTransport, EIP1193RequestFn } from "viem";
 import { describe, expect, test, vi } from "vitest";
 import { avalanche } from "../../chains/index.js";
 import { createAvalancheBaseClient } from "../createAvalancheBaseClient.js";
-import { avalancheActions } from "./avalanche.js";
+import { avalancheActions } from "./testUtils.js";
 
 const mockTransport = () =>
   createTransport({
@@ -173,6 +173,131 @@ const mockTransport = () =>
           };
         case "index.isAccepted":
           return { accepted: true, encoding: "hex" };
+        case "index.getContainerByIndex":
+          return {
+            id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+            bytes: "0x1234567890abcdef",
+            timestamp: "2024-01-01T00:00:00Z",
+            encoding: "hex",
+            index: "0",
+          };
+        case "index.getContainerRange":
+          return {
+            containers: [
+              {
+                id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+                bytes: "0x1234567890abcdef",
+                timestamp: "2024-01-01T00:00:00Z",
+                encoding: "hex",
+                index: "0",
+              },
+            ],
+            encoding: "hex",
+          };
+        case "index.getIndex":
+          return { index: "12345", encoding: "hex" };
+        case "index.getLastAccepted":
+          return {
+            id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+            bytes: "0x1234567890abcdef",
+            timestamp: "2024-01-01T00:00:00Z",
+            encoding: "hex",
+            index: "12345",
+          };
+
+        // Proposervm API methods
+        case "proposervm.getCurrentEpoch":
+          return {
+            number: "1",
+            startTime: "1678886400",
+            pChainHeight: "1000",
+          };
+        case "proposervm.getProposedHeight":
+          return { height: "1000" };
+
+        // Admin API methods
+        case "admin.alias":
+          return undefined;
+        case "admin.aliasChain":
+          return undefined;
+        case "admin.setLoggerLevel":
+          return undefined;
+
+        // Health API methods
+        case "health.readiness":
+          return { ready: true };
+
+        // Info API methods
+        case "info.getBlockchainID":
+          return {
+            blockchainID: "2oYMBNV4eNHyqk2fjjV5nVQLDbtmNJzq5s3qs3Lo6ftnC6FByM",
+          };
+        case "info.getNodeID":
+          return {
+            nodeID: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
+            nodePOP: "P-avax1gss39m5sx6jn7wlyzeqzm086yfq2l02xkvmecy",
+          };
+        case "info.getNodeIP":
+          return { ip: "127.0.0.1:9651" };
+        case "info.getTxFee":
+          return {
+            txFee: "1000000",
+            createAssetTxFee: "2000000",
+            createSubnetTxFee: "3000000",
+            transformSubnetTxFee: "4000000",
+            createBlockchainTxFee: "5000000",
+            addPrimaryNetworkValidatorFee: "6000000",
+            addPrimaryNetworkDelegatorFee: "7000000",
+            addSubnetValidatorFee: "8000000",
+            addSubnetDelegatorFee: "9000000",
+          };
+        case "info.getVMs":
+          return {
+            vms: {
+              avm: "v1.10.0",
+              evm: "v0.12.0",
+              platform: "v1.10.0",
+            },
+          };
+
+        // X-Chain methods
+        case "avm.getTx":
+          return {
+            tx: "0x1234567890abcdef",
+            encoding: "hex",
+          };
+        case "avm.getBlock":
+          return {
+            block: "0x1234567890abcdef",
+            encoding: "hex",
+          };
+        case "avm.getBlockByHeight":
+          return {
+            block: "0x1234567890abcdef",
+            encoding: "hex",
+          };
+        case "avm.getUTXOs":
+          return {
+            numFetched: 2,
+            utxos: [
+              "0x00000009de31b4d8b22991d51aa6aa1fc733f23a851a8c9400000000000186a0000000005f041280000000005f9ca900000030390000000000000001fceda8f90fcb5d30614b99d79fc4baa29307762668f16eb0259a57c2d3b78c875c86ec2045792d4df2d926c40f829196e0bb97ee697af71f5b0a966dabff749634c8b729855e937715b0e44303fd1014daedc752006011b730",
+            ],
+            endIndex: {
+              address: "X-avax1tnuesf6cqwnjw7fxjyk7lhch0vhf0v95wj5jvy",
+              utxo: "0x00000009de31b4d8b22991d51aa6aa1fc733f23a851a8c9400000000000186a0000000005f041280000000005f9ca900000030390000000000000001fceda8f90fcb5d30614b99d79fc4baa29307762668f16eb0259a57c2d3b78c875c86ec2045792d4df2d926c40f829196e0bb97ee697af71f5b0a966dabff749634c8b729855e937715b0e44303fd1014daedc752006011b730",
+            },
+          };
+        case "avm.getTxFee":
+          return {
+            txFee: "1000000",
+            assetCreateTxFee: "2000000",
+          };
+        case "avm.getAssetDescription":
+          return {
+            name: "Avalanche",
+            symbol: "AVAX",
+            denomination: "9",
+          };
 
         // Avalanche Public methods
         case "eth_baseFee":
@@ -626,7 +751,7 @@ describe("smoke test", () => {
 
   describe("Admin API methods", () => {
     test("getChainAliases", async () => {
-      const res = await avalancheClient.admin!.getChainAliases({
+      const res = await avalancheClient.admin?.getChainAliases({
         chain: "sV6o671RtkGBcno1FiaDbVcFv2sG5aVXMZYzKdP4VQAWmJQnM",
       });
       expect(res).toBeDefined();
@@ -749,6 +874,188 @@ describe("smoke test", () => {
     test("getActiveRulesAt", async () => {
       const res = await avalancheClient.getActiveRulesAt({
         timestamp: "0x61e8c8c0",
+      });
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("Index API methods", () => {
+    test("getContainerByIndex cChain", async () => {
+      const res = await avalancheClient.indexBlock!.cChain!.getContainerByIndex(
+        {
+          index: 0,
+          encoding: "hex",
+        }
+      );
+      expect(res).toBeDefined();
+    });
+
+    test("getContainerByIndex xChain", async () => {
+      const res = await avalancheClient.indexBlock!.xChain!.getContainerByIndex(
+        {
+          index: 0,
+          encoding: "hex",
+        }
+      );
+      expect(res).toBeDefined();
+    });
+
+    test("getContainerRange pChain", async () => {
+      const res = await avalancheClient.indexBlock!.pChain!.getContainerRange({
+        startIndex: 0,
+        endIndex: 10,
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getIndex cChain", async () => {
+      const res = await avalancheClient.indexBlock!.cChain!.getIndex({
+        id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getLastAccepted xChain", async () => {
+      const res = await avalancheClient.indexBlock!.xChain!.getLastAccepted({
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getContainerByID indexTx xChain", async () => {
+      const res = await avalancheClient.indexTx!.xChain!.getContainerByID({
+        id: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("proposervm API methods - additional coverage", () => {
+    test("getCurrentEpoch P-Chain", async () => {
+      const res = await avalancheClient.proposervm!.pChain!.getCurrentEpoch();
+      expect(res).toBeDefined();
+    });
+
+    test("getProposedHeight P-Chain", async () => {
+      const res = await avalancheClient.proposervm!.pChain!.getProposedHeight();
+      expect(res).toBeDefined();
+    });
+
+    test("getCurrentEpoch X-Chain", async () => {
+      const res = await avalancheClient.proposervm!.xChain!.getCurrentEpoch();
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("Admin API methods - additional coverage", () => {
+    test("alias", async () => {
+      await avalancheClient.admin!.alias({
+        endpoint: "bc/X",
+        alias: "myAlias",
+      });
+      // void method, just verify it doesn't throw
+      expect(true).toBe(true);
+    });
+
+    test("aliasChain", async () => {
+      await avalancheClient.admin!.aliasChain({
+        chain: "X",
+        alias: "myChainAlias",
+      });
+      expect(true).toBe(true);
+    });
+
+    test("setLoggerLevel", async () => {
+      await avalancheClient.admin!.setLoggerLevel({
+        loggerName: "C",
+        logLevel: "DEBUG",
+        displayLevel: "DEBUG",
+      });
+      expect(true).toBe(true);
+    });
+  });
+
+  describe("Health API methods - additional coverage", () => {
+    test("readiness", async () => {
+      const res = await avalancheClient.health!.readiness({
+        tags: ["11111111111111111111111111111111LpoYY"],
+      });
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("Info API methods - additional coverage", () => {
+    test("getBlockchainID", async () => {
+      const res = await avalancheClient.info!.getBlockchainID({
+        alias: "X",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getNodeID", async () => {
+      const res = await avalancheClient.info!.getNodeID();
+      expect(res).toBeDefined();
+    });
+
+    test("getNodeIP", async () => {
+      const res = await avalancheClient.info!.getNodeIP();
+      expect(res).toBeDefined();
+    });
+
+    test("getTxFee", async () => {
+      const res = await avalancheClient.info!.getTxFee();
+      expect(res).toBeDefined();
+    });
+
+    test("getVMs", async () => {
+      const res = await avalancheClient.info!.getVMs();
+      expect(res).toBeDefined();
+    });
+  });
+
+  describe("X-Chain methods - additional coverage", () => {
+    test("getTx", async () => {
+      const res = await avalancheClient.xChain!.getTx({
+        txID: "2QouvMUbQ6oy7yQ9tLvL3L8tGQG2QK1wJ1q1wJ1q1wJ1q1wJ1q1wJ1q1wJ1",
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getBlock", async () => {
+      const res = await avalancheClient.xChain!.getBlock({
+        blockId: "6fXf5hncR8LXvwtM8iezFQBpK5cubV6y1dWgpJCcNyzGB1EzY",
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getBlockByHeight", async () => {
+      const res = await avalancheClient.xChain!.getBlockByHeight({
+        height: 100,
+        encoding: "hex",
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getUTXOs", async () => {
+      const res = await avalancheClient.xChain!.getUTXOs({
+        addresses: ["X-avax18jma8ppw3nhx5r4ap8clazz0dps7rv5ukulre5"],
+      });
+      expect(res).toBeDefined();
+    });
+
+    test("getTxFee", async () => {
+      const res = await avalancheClient.xChain!.getTxFee();
+      expect(res).toBeDefined();
+    });
+
+    test("getAssetDescription", async () => {
+      const res = await avalancheClient.xChain!.getAssetDescription({
+        assetID: "FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z",
       });
       expect(res).toBeDefined();
     });

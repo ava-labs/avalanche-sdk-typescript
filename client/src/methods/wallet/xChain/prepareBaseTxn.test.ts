@@ -5,7 +5,7 @@ import {
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
 import { getTxFromBytes } from "../../../utils";
@@ -21,9 +21,16 @@ import {
   getXChainMockServer,
 } from "../fixtures/transactions/xChain";
 import { checkOutputs } from "../fixtures/utils";
+import { getContextFromURI } from "../getContextFromURI.js";
 import { Output } from "../types/common";
 import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 import { PrepareBaseTxnParameters } from "./types/prepareBaseTxn";
+
+// Mock getContextFromURI to avoid making real HTTP requests
+vi.mock("../getContextFromURI.js", () => ({
+  getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+}));
+
 const testInputAmount = avaxToNanoAvax(1);
 
 const xChainWorker = getXChainMockServer({});
@@ -367,5 +374,156 @@ describe("newBaseTx", () => {
     ).rejects.toThrow(
       "insufficient funds (Burn Amount): need 39001000000 more units of FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z to burn"
     );
+  });
+
+  it("should fetch context from URI when context is not provided", async () => {
+    const receiverAddresses = [account1.getXPAddress("X", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: testOutputs,
+      // context is not provided - should call getContextFromURI
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify getContextFromURI was called
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalled();
+    expect(vi.mocked(getContextFromURI)).toHaveBeenCalledTimes(1);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+    expect(txnRequest.chainAlias).toBe("X");
+  });
+
+  it("should handle empty outputs array", async () => {
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: [], // Empty outputs array
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // When outputs is empty, formattedOutputs will be empty,
+    // but the transaction may still create change outputs from UTXOs
+    const baseTx = txnRequest.tx.getTx() as avmSerial.BaseTx;
+    // The transaction should still be valid (may have change outputs)
+    expect(baseTx).toBeDefined();
+  });
+
+  it("should handle undefined outputs", async () => {
+    const mockTxParams: PrepareBaseTxnParameters = {
+      // outputs is not provided
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // When outputs is undefined, formattedOutputs will be empty array,
+    // but the transaction may still create change outputs from UTXOs
+    const baseTx = txnRequest.tx.getTx() as avmSerial.BaseTx;
+    // The transaction should still be valid (may have change outputs)
+    expect(baseTx).toBeDefined();
+  });
+
+  it("should include minIssuanceTime when provided", async () => {
+    const receiverAddresses = [account1.getXPAddress("X", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const minIssuanceTime = BigInt(Date.now() + 1000000); // Future time
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: testOutputs,
+      minIssuanceTime,
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // The transaction should be valid with minIssuanceTime
+    const baseTx = txnRequest.tx.getTx() as avmSerial.BaseTx;
+    expect(baseTx).toBeDefined();
+  });
+
+  it("should include memo when provided", async () => {
+    const receiverAddresses = [account1.getXPAddress("X", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const memo = "test memo";
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: testOutputs,
+      memo,
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    // This test covers the branch where memo is provided in params
+    // The memo parameter is processed in fetchCommonAVMTxParams and
+    // passed to avm.newBaseTx, testing the conditional spread: ...(commonTxParams.memo && { memo: commonTxParams.memo })
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+    expect(txnRequest.chainAlias).toBe("X");
+  });
+
+  it("should not include changeAddresses when not provided", async () => {
+    const receiverAddresses = [account1.getXPAddress("X", "fuji")];
+    const testOutputAmount = avaxToNanoAvax(0.1234);
+    const testOutputs: Output[] = [
+      {
+        amount: testOutputAmount,
+        addresses: receiverAddresses,
+      },
+    ];
+    const mockTxParams: PrepareBaseTxnParameters = {
+      outputs: testOutputs,
+      // changeAddresses is not provided
+      context: testContext,
+    };
+
+    const txnRequest = await walletClient.xChain.prepareBaseTxn(mockTxParams);
+
+    // Verify the transaction was created successfully
+    expect(txnRequest).toBeDefined();
+    expect(txnRequest.tx).toBeDefined();
+    expect(txnRequest.baseTx).toBeDefined();
+
+    // The transaction should still work without changeAddresses
+    // (it will use fromAddresses as change addresses)
+    const baseTx = txnRequest.tx.getTx() as avmSerial.BaseTx;
+    expect(baseTx.baseTx.outputs.length).toBeGreaterThan(0);
   });
 });

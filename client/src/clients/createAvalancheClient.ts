@@ -120,10 +120,7 @@ export function createAvalancheClient<
   });
   const extendedClient = client.extend(avalanchePublicActions) as any;
 
-  if (
-    chainConfig?.name !== "Avalanche" &&
-    chainConfig?.name !== "Avalanche Fuji"
-  ) {
+  if (chainConfig?.id !== 43_113 && chainConfig?.id !== 43_114) {
     return {
       ...extendedClient,
     };

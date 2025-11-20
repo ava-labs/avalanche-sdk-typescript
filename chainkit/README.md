@@ -96,7 +96,8 @@ Add the following server definition to your `claude_desktop_config.json` file:
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "...",
-        "--enable-telemetry", "..."
+        "--enable-telemetry", "...",
+        "--avacloud", "..."
       ]
     }
   }
@@ -122,7 +123,8 @@ Create a `.cursor/mcp.json` file in your project root with the following content
         "--api-key", "...",
         "--chain-id", "...",
         "--network", "...",
-        "--enable-telemetry", "..."
+        "--enable-telemetry", "...",
+        "--avacloud", "..."
       ]
     }
   }
@@ -397,6 +399,7 @@ run();
 ### [metrics](docs/sdks/metrics/README.md)
 
 * [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
+* [liveCheck](docs/sdks/metrics/README.md#livecheck) - Get the liveliness of the service
 
 #### [metrics.chains](docs/sdks/metricschains/README.md)
 
@@ -540,6 +543,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`metricsL1ValidatorsGetMetricsBySubnetId`](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnetId and timestamp range
 - [`metricsL1ValidatorsGetMetricsByValidationId`](docs/sdks/l1validators/README.md#getmetricsbyvalidationid) - Get metric values with given validationId and timestamp range
 - [`metricsL1ValidatorsListMetrics`](docs/sdks/l1validators/README.md#listmetrics) - Get given metric for all validators
+- [`metricsLiveCheck`](docs/sdks/metrics/README.md#livecheck) - Get the liveliness of the service
 - [`metricsNetworksGetStakingMetrics`](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
 - [`metricsSubnetsGetValidators`](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 - [`webhooksAddressesAdd`](docs/sdks/addresses/README.md#add) - Add addresses to EVM activity webhook
@@ -594,6 +598,7 @@ The following global parameters are available.
 | chainId         | string                        | A supported EVM chain id, chain alias, or blockchain id. |
 | network         | components.GlobalParamNetwork | A supported network type mainnet or testnet/fuji.        |
 | enableTelemetry | boolean                       | A flag to enable or disable telemetry                    |
+| avacloud        | boolean                       | A flag to use represent a avacloud api key holder        |
 
 ### Example
 
@@ -604,6 +609,7 @@ const avalanche = new Avalanche({
   chainId: "43114",
   network: "mainnet",
   enableTelemetry: false,
+  avacloud: true,
 });
 
 async function run() {
