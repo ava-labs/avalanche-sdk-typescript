@@ -1,4 +1,4 @@
-# GetUtxosByAddressesV2ResponseBody
+# GetUtxosByAddressesV2ResponseBody2
 
 Successful response
 

@@ -43,6 +43,6 @@ let value: GetUtxosByAddressesV2Response = {
 
 ## Fields
 
-| Field                                          | Type                                           | Required                                       | Description                                    |
-| ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
-| `result`                                       | *operations.GetUtxosByAddressesV2ResponseBody* | :heavy_check_mark:                             | N/A                                            |
+| Field                                            | Type                                             | Required                                         | Description                                      |
+| ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
+| `result`                                         | *operations.GetUtxosByAddressesV2ResponseResult* | :heavy_check_mark:                               | N/A                                              |
