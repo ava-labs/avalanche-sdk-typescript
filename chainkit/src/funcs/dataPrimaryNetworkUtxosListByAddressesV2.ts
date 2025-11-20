@@ -248,6 +248,9 @@ async function $do(
     M.json(200, operations.GetUtxosByAddressesV2Response$inboundSchema, {
       key: "Result",
     }),
+    M.json(201, operations.GetUtxosByAddressesV2Response$inboundSchema, {
+      key: "Result",
+    }),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
     M.jsonErr(403, errors.ForbiddenError$inboundSchema),

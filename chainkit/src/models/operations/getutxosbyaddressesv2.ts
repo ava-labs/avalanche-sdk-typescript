@@ -63,12 +63,29 @@ export type GetUtxosByAddressesV2Request = {
 /**
  * Successful response
  */
-export type GetUtxosByAddressesV2ResponseBody =
+export type GetUtxosByAddressesV2ResponseBody2 =
+  | components.ListPChainUtxosResponse
+  | components.ListUtxosResponse;
+
+/**
+ * Successful response
+ */
+export type GetUtxosByAddressesV2ResponseBody1 =
+  | components.ListPChainUtxosResponse
+  | components.ListUtxosResponse;
+
+export type GetUtxosByAddressesV2ResponseResult =
+  | components.ListPChainUtxosResponse
+  | components.ListUtxosResponse
   | components.ListPChainUtxosResponse
   | components.ListUtxosResponse;
 
 export type GetUtxosByAddressesV2Response = {
-  result: components.ListPChainUtxosResponse | components.ListUtxosResponse;
+  result:
+    | components.ListPChainUtxosResponse
+    | components.ListUtxosResponse
+    | components.ListPChainUtxosResponse
+    | components.ListUtxosResponse;
 };
 
 /** @internal */
@@ -192,8 +209,8 @@ export function getUtxosByAddressesV2RequestFromJSON(
 }
 
 /** @internal */
-export const GetUtxosByAddressesV2ResponseBody$inboundSchema: z.ZodType<
-  GetUtxosByAddressesV2ResponseBody,
+export const GetUtxosByAddressesV2ResponseBody2$inboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseBody2,
   z.ZodTypeDef,
   unknown
 > = z.union([
@@ -201,36 +218,139 @@ export const GetUtxosByAddressesV2ResponseBody$inboundSchema: z.ZodType<
   components.ListUtxosResponse$inboundSchema,
 ]);
 /** @internal */
-export type GetUtxosByAddressesV2ResponseBody$Outbound =
+export type GetUtxosByAddressesV2ResponseBody2$Outbound =
   | components.ListPChainUtxosResponse$Outbound
   | components.ListUtxosResponse$Outbound;
 
 /** @internal */
-export const GetUtxosByAddressesV2ResponseBody$outboundSchema: z.ZodType<
-  GetUtxosByAddressesV2ResponseBody$Outbound,
+export const GetUtxosByAddressesV2ResponseBody2$outboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseBody2$Outbound,
   z.ZodTypeDef,
-  GetUtxosByAddressesV2ResponseBody
+  GetUtxosByAddressesV2ResponseBody2
 > = z.union([
   components.ListPChainUtxosResponse$outboundSchema,
   components.ListUtxosResponse$outboundSchema,
 ]);
 
-export function getUtxosByAddressesV2ResponseBodyToJSON(
-  getUtxosByAddressesV2ResponseBody: GetUtxosByAddressesV2ResponseBody,
+export function getUtxosByAddressesV2ResponseBody2ToJSON(
+  getUtxosByAddressesV2ResponseBody2: GetUtxosByAddressesV2ResponseBody2,
 ): string {
   return JSON.stringify(
-    GetUtxosByAddressesV2ResponseBody$outboundSchema.parse(
-      getUtxosByAddressesV2ResponseBody,
+    GetUtxosByAddressesV2ResponseBody2$outboundSchema.parse(
+      getUtxosByAddressesV2ResponseBody2,
     ),
   );
 }
-export function getUtxosByAddressesV2ResponseBodyFromJSON(
+export function getUtxosByAddressesV2ResponseBody2FromJSON(
   jsonString: string,
-): SafeParseResult<GetUtxosByAddressesV2ResponseBody, SDKValidationError> {
+): SafeParseResult<GetUtxosByAddressesV2ResponseBody2, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => GetUtxosByAddressesV2ResponseBody$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'GetUtxosByAddressesV2ResponseBody' from JSON`,
+    (x) =>
+      GetUtxosByAddressesV2ResponseBody2$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUtxosByAddressesV2ResponseBody2' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetUtxosByAddressesV2ResponseBody1$inboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseBody1,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  components.ListPChainUtxosResponse$inboundSchema,
+  components.ListUtxosResponse$inboundSchema,
+]);
+/** @internal */
+export type GetUtxosByAddressesV2ResponseBody1$Outbound =
+  | components.ListPChainUtxosResponse$Outbound
+  | components.ListUtxosResponse$Outbound;
+
+/** @internal */
+export const GetUtxosByAddressesV2ResponseBody1$outboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseBody1$Outbound,
+  z.ZodTypeDef,
+  GetUtxosByAddressesV2ResponseBody1
+> = z.union([
+  components.ListPChainUtxosResponse$outboundSchema,
+  components.ListUtxosResponse$outboundSchema,
+]);
+
+export function getUtxosByAddressesV2ResponseBody1ToJSON(
+  getUtxosByAddressesV2ResponseBody1: GetUtxosByAddressesV2ResponseBody1,
+): string {
+  return JSON.stringify(
+    GetUtxosByAddressesV2ResponseBody1$outboundSchema.parse(
+      getUtxosByAddressesV2ResponseBody1,
+    ),
+  );
+}
+export function getUtxosByAddressesV2ResponseBody1FromJSON(
+  jsonString: string,
+): SafeParseResult<GetUtxosByAddressesV2ResponseBody1, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      GetUtxosByAddressesV2ResponseBody1$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUtxosByAddressesV2ResponseBody1' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetUtxosByAddressesV2ResponseResult$inboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseResult,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  z.union([
+    components.ListPChainUtxosResponse$inboundSchema,
+    components.ListUtxosResponse$inboundSchema,
+  ]),
+  z.union([
+    components.ListPChainUtxosResponse$inboundSchema,
+    components.ListUtxosResponse$inboundSchema,
+  ]),
+]);
+/** @internal */
+export type GetUtxosByAddressesV2ResponseResult$Outbound =
+  | components.ListPChainUtxosResponse$Outbound
+  | components.ListUtxosResponse$Outbound
+  | components.ListPChainUtxosResponse$Outbound
+  | components.ListUtxosResponse$Outbound;
+
+/** @internal */
+export const GetUtxosByAddressesV2ResponseResult$outboundSchema: z.ZodType<
+  GetUtxosByAddressesV2ResponseResult$Outbound,
+  z.ZodTypeDef,
+  GetUtxosByAddressesV2ResponseResult
+> = z.union([
+  z.union([
+    components.ListPChainUtxosResponse$outboundSchema,
+    components.ListUtxosResponse$outboundSchema,
+  ]),
+  z.union([
+    components.ListPChainUtxosResponse$outboundSchema,
+    components.ListUtxosResponse$outboundSchema,
+  ]),
+]);
+
+export function getUtxosByAddressesV2ResponseResultToJSON(
+  getUtxosByAddressesV2ResponseResult: GetUtxosByAddressesV2ResponseResult,
+): string {
+  return JSON.stringify(
+    GetUtxosByAddressesV2ResponseResult$outboundSchema.parse(
+      getUtxosByAddressesV2ResponseResult,
+    ),
+  );
+}
+export function getUtxosByAddressesV2ResponseResultFromJSON(
+  jsonString: string,
+): SafeParseResult<GetUtxosByAddressesV2ResponseResult, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      GetUtxosByAddressesV2ResponseResult$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUtxosByAddressesV2ResponseResult' from JSON`,
   );
 }
 
@@ -241,8 +361,14 @@ export const GetUtxosByAddressesV2Response$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   Result: z.union([
-    components.ListPChainUtxosResponse$inboundSchema,
-    components.ListUtxosResponse$inboundSchema,
+    z.union([
+      components.ListPChainUtxosResponse$inboundSchema,
+      components.ListUtxosResponse$inboundSchema,
+    ]),
+    z.union([
+      components.ListPChainUtxosResponse$inboundSchema,
+      components.ListUtxosResponse$inboundSchema,
+    ]),
   ]),
 }).transform((v) => {
   return remap$(v, {
@@ -252,6 +378,8 @@ export const GetUtxosByAddressesV2Response$inboundSchema: z.ZodType<
 /** @internal */
 export type GetUtxosByAddressesV2Response$Outbound = {
   Result:
+    | components.ListPChainUtxosResponse$Outbound
+    | components.ListUtxosResponse$Outbound
     | components.ListPChainUtxosResponse$Outbound
     | components.ListUtxosResponse$Outbound;
 };
@@ -263,8 +391,14 @@ export const GetUtxosByAddressesV2Response$outboundSchema: z.ZodType<
   GetUtxosByAddressesV2Response
 > = z.object({
   result: z.union([
-    components.ListPChainUtxosResponse$outboundSchema,
-    components.ListUtxosResponse$outboundSchema,
+    z.union([
+      components.ListPChainUtxosResponse$outboundSchema,
+      components.ListUtxosResponse$outboundSchema,
+    ]),
+    z.union([
+      components.ListPChainUtxosResponse$outboundSchema,
+      components.ListUtxosResponse$outboundSchema,
+    ]),
   ]),
 }).transform((v) => {
   return remap$(v, {
