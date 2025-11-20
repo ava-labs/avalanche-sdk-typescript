@@ -56,6 +56,18 @@ actions:
     description: Remove the /v1/lookingGlass/compositeQuery path
     update:
       x-speakeasy-ignore: true
+  
+  - target: $.paths['/v1/networks/{network}/blockchains/{blockchainId}/utxos'].post.responses
+    description: Add a 201 status code to the response
+    update:
+      '201':
+        description: Successful response
+        content:
+          "application/json":
+            schema:
+              oneOf: 
+                - {$ref: "#/components/schemas/ListPChainUtxosResponse"}
+                - {$ref: "#/components/schemas/ListUtxosResponse"}
 
   - target: $
     description: Add a servers list to the OpenAPI spec
