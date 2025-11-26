@@ -4,6 +4,7 @@ import {
   Id,
   Int,
   OutputOwners,
+  pvmSerial,
   Short,
   TransferOutput,
   utils,
@@ -19,6 +20,7 @@ import {
  * @param addresses - The addresses who can sign the transaction for consuming this output.
  * @param locktime - The UNIX timestamp in seconds after which this output can be consumed.
  * @param threshold - The threshold of the addresses who can sign the transaction for consuming this output.
+ * @param stakeableLocktime - The stakeable locktime in seconds before which this output can only be used as staking input.
  * @returns The UTXO hex string.
  *
  * @example
@@ -42,7 +44,8 @@ export function buildUtxoBytes(
   amount: string,
   addresses: string[],
   locktime: string,
-  threshold: number
+  threshold: number,
+  stakeableLocktime = '0',
 ): `0x${string}` {
   const transferOutput = new TransferOutput(
     new BigIntPr(BigInt(amount)),
@@ -60,10 +63,15 @@ export function buildUtxoBytes(
     )
   );
 
+  const stakeableLockOut = new pvmSerial.StakeableLockOut(
+    new BigIntPr(BigInt(stakeableLocktime ?? 0)),
+    transferOutput,
+  );
+
   const utxo = new Utxo(
     new avaxSerial.UTXOID(Id.fromString(txHash), new Int(outputIndex)),
     Id.fromString(assetId),
-    transferOutput
+    stakeableLocktime !== '0' ? stakeableLockOut : transferOutput
   );
 
   return utils.bufferToHex(
