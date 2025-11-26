@@ -157,6 +157,32 @@ describe("buildUtxoBytes", () => {
     expect(parsedUtxo).toBeDefined();
   });
 
+  test("handles stakeable locktime", () => {
+    const txHash = "2R5bJqAd6evMJAuV4TYGqfaHkdCEQfYUx4GoHpJZxsFeor6wMi";
+    const outputIndex = 0;
+    const assetId = "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK";
+    const amount = "50000000000";
+    const addresses = [account1.getXPAddress("P", "fuji")];
+    const threshold = 1;
+    const locktime = "1672531200"; // Some future timestamp
+    const stakeableLocktime = "1672531200"; // Some future timestamp
+
+    const result = buildUtxoBytes(
+      txHash,
+      outputIndex,
+      assetId,
+      amount,
+      addresses,
+      locktime,
+      threshold,
+      stakeableLocktime
+    );
+
+    expect(result).toMatch(/^0x/);
+    const parsedUtxo = getUtxoFromBytes(result, "P");
+    expect(parsedUtxo).toBeDefined();
+  });
+
   test("handles different thresholds", () => {
     const txHash = "2R5bJqAd6evMJAuV4TYGqfaHkdCEQfYUx4GoHpJZxsFeor6wMi";
     const outputIndex = 0;
