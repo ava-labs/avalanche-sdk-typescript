@@ -26,15 +26,18 @@ import {
 } from "./primarynetworkchaininfo.js";
 
 export type ListCChainAtomicTransactionsResponseTransaction =
-  | CChainExportTransaction
-  | CChainImportTransaction;
+  | (CChainExportTransaction & { txType: "ExportTx" })
+  | (CChainImportTransaction & { txType: "ImportTx" });
 
 export type ListCChainAtomicTransactionsResponse = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  transactions: Array<CChainExportTransaction | CChainImportTransaction>;
+  transactions: Array<
+    | (CChainExportTransaction & { txType: "ExportTx" })
+    | (CChainImportTransaction & { txType: "ImportTx" })
+  >;
   chainInfo: PrimaryNetworkChainInfo;
 };
 
@@ -45,13 +48,17 @@ export const ListCChainAtomicTransactionsResponseTransaction$inboundSchema:
     z.ZodTypeDef,
     unknown
   > = z.union([
-    CChainExportTransaction$inboundSchema,
-    CChainImportTransaction$inboundSchema,
+    CChainExportTransaction$inboundSchema.and(
+      z.object({ txType: z.literal("ExportTx") }),
+    ),
+    CChainImportTransaction$inboundSchema.and(
+      z.object({ txType: z.literal("ImportTx") }),
+    ),
   ]);
 /** @internal */
 export type ListCChainAtomicTransactionsResponseTransaction$Outbound =
-  | CChainExportTransaction$Outbound
-  | CChainImportTransaction$Outbound;
+  | (CChainExportTransaction$Outbound & { txType: "ExportTx" })
+  | (CChainImportTransaction$Outbound & { txType: "ImportTx" });
 
 /** @internal */
 export const ListCChainAtomicTransactionsResponseTransaction$outboundSchema:
@@ -60,8 +67,12 @@ export const ListCChainAtomicTransactionsResponseTransaction$outboundSchema:
     z.ZodTypeDef,
     ListCChainAtomicTransactionsResponseTransaction
   > = z.union([
-    CChainExportTransaction$outboundSchema,
-    CChainImportTransaction$outboundSchema,
+    CChainExportTransaction$outboundSchema.and(
+      z.object({ txType: z.literal("ExportTx") }),
+    ),
+    CChainImportTransaction$outboundSchema.and(
+      z.object({ txType: z.literal("ImportTx") }),
+    ),
   ]);
 
 export function listCChainAtomicTransactionsResponseTransactionToJSON(
@@ -99,8 +110,12 @@ export const ListCChainAtomicTransactionsResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(
     z.union([
-      CChainExportTransaction$inboundSchema,
-      CChainImportTransaction$inboundSchema,
+      CChainExportTransaction$inboundSchema.and(
+        z.object({ txType: z.literal("ExportTx") }),
+      ),
+      CChainImportTransaction$inboundSchema.and(
+        z.object({ txType: z.literal("ImportTx") }),
+      ),
     ]),
   ),
   chainInfo: PrimaryNetworkChainInfo$inboundSchema,
@@ -109,7 +124,8 @@ export const ListCChainAtomicTransactionsResponse$inboundSchema: z.ZodType<
 export type ListCChainAtomicTransactionsResponse$Outbound = {
   nextPageToken?: string | undefined;
   transactions: Array<
-    CChainExportTransaction$Outbound | CChainImportTransaction$Outbound
+    | (CChainExportTransaction$Outbound & { txType: "ExportTx" })
+    | (CChainImportTransaction$Outbound & { txType: "ImportTx" })
   >;
   chainInfo: PrimaryNetworkChainInfo$Outbound;
 };
@@ -123,8 +139,12 @@ export const ListCChainAtomicTransactionsResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   transactions: z.array(
     z.union([
-      CChainExportTransaction$outboundSchema,
-      CChainImportTransaction$outboundSchema,
+      CChainExportTransaction$outboundSchema.and(
+        z.object({ txType: z.literal("ExportTx") }),
+      ),
+      CChainImportTransaction$outboundSchema.and(
+        z.object({ txType: z.literal("ImportTx") }),
+      ),
     ]),
   ),
   chainInfo: PrimaryNetworkChainInfo$outboundSchema,

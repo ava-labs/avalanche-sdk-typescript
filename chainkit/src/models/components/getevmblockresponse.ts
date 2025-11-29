@@ -17,9 +17,17 @@ export type GetEvmBlockResponse = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
+  /**
+   * The block creation (proposal) timestamp in milliseconds. Available only after Granite upgrade.
+   */
+  blockTimestampMilliseconds?: number | undefined;
+  /**
+   * Minimum block delay in milliseconds. Available only after Granite upgrade.
+   */
+  blockMinDelayExcess?: number | undefined;
   /**
    * The block hash identifier.
    */
@@ -64,6 +72,8 @@ export const GetEvmBlockResponse$inboundSchema: z.ZodType<
   chainId: z.string(),
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
+  blockMinDelayExcess: z.number().optional(),
   blockHash: z.string(),
   txCount: z.number(),
   baseFee: z.string(),
@@ -79,6 +89,8 @@ export type GetEvmBlockResponse$Outbound = {
   chainId: string;
   blockNumber: string;
   blockTimestamp: number;
+  blockTimestampMilliseconds?: number | undefined;
+  blockMinDelayExcess?: number | undefined;
   blockHash: string;
   txCount: number;
   baseFee: string;
@@ -99,6 +111,8 @@ export const GetEvmBlockResponse$outboundSchema: z.ZodType<
   chainId: z.string(),
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
+  blockMinDelayExcess: z.number().optional(),
   blockHash: z.string(),
   txCount: z.number(),
   baseFee: z.string(),

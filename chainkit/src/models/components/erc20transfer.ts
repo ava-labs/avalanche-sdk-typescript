@@ -25,7 +25,7 @@ export type Erc20Transfer = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
   /**

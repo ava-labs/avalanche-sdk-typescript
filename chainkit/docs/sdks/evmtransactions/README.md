@@ -11,7 +11,7 @@
 
 ## listLatestAllChains
 
-Lists the most recent transactions from all supported EVM-compatible  chains. The results can be filtered based on transaction status.
+Lists the most recent transactions from all supported EVM-compatible chains. The results can be filtered based on transaction status.
 
 ### Example Usage
 

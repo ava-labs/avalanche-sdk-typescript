@@ -60,24 +60,16 @@ export const Validator$inboundSchema: z.ZodType<
   unknown
 > = z.union([
   ActiveValidatorDetails$inboundSchema.and(
-    z.object({ validationStatus: z.literal("active") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("active") }),
   ),
   CompletedValidatorDetails$inboundSchema.and(
-    z.object({ validationStatus: z.literal("completed") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("completed") }),
   ),
   RemovedValidatorDetails$inboundSchema.and(
-    z.object({ validationStatus: z.literal("removed") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("removed") }),
   ),
   PendingValidatorDetails$inboundSchema.and(
-    z.object({ validationStatus: z.literal("pending") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("pending") }),
   ),
 ]);
 /** @internal */
@@ -94,24 +86,16 @@ export const Validator$outboundSchema: z.ZodType<
   Validator
 > = z.union([
   ActiveValidatorDetails$outboundSchema.and(
-    z.object({ validationStatus: z.literal("active") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("active") }),
   ),
   CompletedValidatorDetails$outboundSchema.and(
-    z.object({ validationStatus: z.literal("completed") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("completed") }),
   ),
   RemovedValidatorDetails$outboundSchema.and(
-    z.object({ validationStatus: z.literal("removed") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("removed") }),
   ),
   PendingValidatorDetails$outboundSchema.and(
-    z.object({ validationStatus: z.literal("pending") }).transform((v) => ({
-      validationStatus: v.validationStatus,
-    })),
+    z.object({ validationStatus: z.literal("pending") }),
   ),
 ]);
 
@@ -138,24 +122,16 @@ export const ListValidatorDetailsResponse$inboundSchema: z.ZodType<
   validators: z.array(
     z.union([
       ActiveValidatorDetails$inboundSchema.and(
-        z.object({ validationStatus: z.literal("active") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("active") }),
       ),
       CompletedValidatorDetails$inboundSchema.and(
-        z.object({ validationStatus: z.literal("completed") }).transform((
-          v,
-        ) => ({ validationStatus: v.validationStatus })),
+        z.object({ validationStatus: z.literal("completed") }),
       ),
       RemovedValidatorDetails$inboundSchema.and(
-        z.object({ validationStatus: z.literal("removed") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("removed") }),
       ),
       PendingValidatorDetails$inboundSchema.and(
-        z.object({ validationStatus: z.literal("pending") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("pending") }),
       ),
     ]),
   ),
@@ -181,24 +157,16 @@ export const ListValidatorDetailsResponse$outboundSchema: z.ZodType<
   validators: z.array(
     z.union([
       ActiveValidatorDetails$outboundSchema.and(
-        z.object({ validationStatus: z.literal("active") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("active") }),
       ),
       CompletedValidatorDetails$outboundSchema.and(
-        z.object({ validationStatus: z.literal("completed") }).transform((
-          v,
-        ) => ({ validationStatus: v.validationStatus })),
+        z.object({ validationStatus: z.literal("completed") }),
       ),
       RemovedValidatorDetails$outboundSchema.and(
-        z.object({ validationStatus: z.literal("removed") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("removed") }),
       ),
       PendingValidatorDetails$outboundSchema.and(
-        z.object({ validationStatus: z.literal("pending") }).transform((v) => ({
-          validationStatus: v.validationStatus,
-        })),
+        z.object({ validationStatus: z.literal("pending") }),
       ),
     ]),
   ),

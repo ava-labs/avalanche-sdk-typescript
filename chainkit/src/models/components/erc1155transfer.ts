@@ -25,7 +25,7 @@ export type Erc1155Transfer = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
   /**

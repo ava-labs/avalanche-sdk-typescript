@@ -25,9 +25,13 @@ export type UpdateWebhookRequest = {
  * Successful response
  */
 export type UpdateWebhookResponse =
-  | components.EVMAddressActivityResponse
-  | components.PrimaryNetworkAddressActivityResponse
-  | components.ValidatorActivityResponse;
+  | (components.EVMAddressActivityResponse & { eventType: "address_activity" })
+  | (components.PrimaryNetworkAddressActivityResponse & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.ValidatorActivityResponse & {
+    eventType: "validator_activity";
+  });
 
 /** @internal */
 export const UpdateWebhookRequest$inboundSchema: z.ZodType<
@@ -85,15 +89,27 @@ export const UpdateWebhookResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.EVMAddressActivityResponse$inboundSchema,
-  components.PrimaryNetworkAddressActivityResponse$inboundSchema,
-  components.ValidatorActivityResponse$inboundSchema,
+  components.EVMAddressActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.PrimaryNetworkAddressActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.ValidatorActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 /** @internal */
 export type UpdateWebhookResponse$Outbound =
-  | components.EVMAddressActivityResponse$Outbound
-  | components.PrimaryNetworkAddressActivityResponse$Outbound
-  | components.ValidatorActivityResponse$Outbound;
+  | (components.EVMAddressActivityResponse$Outbound & {
+    eventType: "address_activity";
+  })
+  | (components.PrimaryNetworkAddressActivityResponse$Outbound & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.ValidatorActivityResponse$Outbound & {
+    eventType: "validator_activity";
+  });
 
 /** @internal */
 export const UpdateWebhookResponse$outboundSchema: z.ZodType<
@@ -101,9 +117,15 @@ export const UpdateWebhookResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   UpdateWebhookResponse
 > = z.union([
-  components.EVMAddressActivityResponse$outboundSchema,
-  components.PrimaryNetworkAddressActivityResponse$outboundSchema,
-  components.ValidatorActivityResponse$outboundSchema,
+  components.EVMAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.PrimaryNetworkAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.ValidatorActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 
 export function updateWebhookResponseToJSON(

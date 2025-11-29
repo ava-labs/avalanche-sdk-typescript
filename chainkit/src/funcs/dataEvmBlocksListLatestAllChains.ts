@@ -37,7 +37,7 @@ import {
  * List latest blocks across all supported EVM chains
  *
  * @remarks
- * Lists the most recent blocks from all supported  EVM-compatible chains. The results can be filtered by network.
+ * Lists the most recent blocks from all supported EVM-compatible chains. The results can be filtered by network.
  */
 export function dataEvmBlocksListLatestAllChains(
   client: AvalancheCore,

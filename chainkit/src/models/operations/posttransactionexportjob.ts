@@ -13,8 +13,18 @@ export const PostTransactionExportJobServerList = [
 ] as const;
 
 export type PostTransactionExportJobRequest =
-  | components.CreateEvmTransactionExportRequest
-  | components.CreatePrimaryNetworkTransactionExportRequest;
+  | (components.CreateEvmTransactionExportRequest & {
+    type: "TRANSACTION_EXPORT_EVM";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE";
+  });
 
 /** @internal */
 export const PostTransactionExportJobRequest$inboundSchema: z.ZodType<
@@ -22,13 +32,33 @@ export const PostTransactionExportJobRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.CreateEvmTransactionExportRequest$inboundSchema,
-  components.CreatePrimaryNetworkTransactionExportRequest$inboundSchema,
+  components.CreateEvmTransactionExportRequest$inboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_EVM") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$inboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$inboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$inboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE") }),
+  ),
 ]);
 /** @internal */
 export type PostTransactionExportJobRequest$Outbound =
-  | components.CreateEvmTransactionExportRequest$Outbound
-  | components.CreatePrimaryNetworkTransactionExportRequest$Outbound;
+  | (components.CreateEvmTransactionExportRequest$Outbound & {
+    type: "TRANSACTION_EXPORT_EVM";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest$Outbound & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest$Outbound & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING";
+  })
+  | (components.CreatePrimaryNetworkTransactionExportRequest$Outbound & {
+    type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE";
+  });
 
 /** @internal */
 export const PostTransactionExportJobRequest$outboundSchema: z.ZodType<
@@ -36,8 +66,18 @@ export const PostTransactionExportJobRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   PostTransactionExportJobRequest
 > = z.union([
-  components.CreateEvmTransactionExportRequest$outboundSchema,
-  components.CreatePrimaryNetworkTransactionExportRequest$outboundSchema,
+  components.CreateEvmTransactionExportRequest$outboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_EVM") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$outboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$outboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK_STAKING") }),
+  ),
+  components.CreatePrimaryNetworkTransactionExportRequest$outboundSchema.and(
+    z.object({ type: z.literal("TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE") }),
+  ),
 ]);
 
 export function postTransactionExportJobRequestToJSON(

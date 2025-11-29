@@ -9,7 +9,7 @@
 
 ## list
 
-Lists the chains where the specified address has  participated in transactions or ERC token transfers,  either as a sender or receiver. The data is refreshed every 15  minutes.
+Lists the chains where the specified address has participated in transactions or ERC token transfers, either as a sender or receiver. The data is refreshed every 15 minutes.
 
 ### Example Usage
 
