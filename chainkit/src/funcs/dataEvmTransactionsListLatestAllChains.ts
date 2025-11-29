@@ -37,7 +37,7 @@ import {
  * List the latest transactions across all supported EVM chains
  *
  * @remarks
- * Lists the most recent transactions from all supported EVM-compatible  chains. The results can be filtered based on transaction status.
+ * Lists the most recent transactions from all supported EVM-compatible chains. The results can be filtered based on transaction status.
  */
 export function dataEvmTransactionsListLatestAllChains(
   client: AvalancheCore,

@@ -19,7 +19,9 @@ import {
   Erc721TokenBalance$outboundSchema,
 } from "./erc721tokenbalance.js";
 
-export type CollectibleBalance = Erc721TokenBalance | Erc1155TokenBalance;
+export type CollectibleBalance =
+  | (Erc721TokenBalance & { ercType: "ERC-721" })
+  | (Erc1155TokenBalance & { ercType: "ERC-1155" });
 
 export type ListCollectibleBalancesResponse = {
   /**
@@ -29,7 +31,10 @@ export type ListCollectibleBalancesResponse = {
   /**
    * The list of ERC-721 and ERC-1155 token balances for the address.
    */
-  collectibleBalances: Array<Erc721TokenBalance | Erc1155TokenBalance>;
+  collectibleBalances: Array<
+    | (Erc721TokenBalance & { ercType: "ERC-721" })
+    | (Erc1155TokenBalance & { ercType: "ERC-1155" })
+  >;
 };
 
 /** @internal */
@@ -38,13 +43,17 @@ export const CollectibleBalance$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  Erc721TokenBalance$inboundSchema,
-  Erc1155TokenBalance$inboundSchema,
+  Erc721TokenBalance$inboundSchema.and(
+    z.object({ ercType: z.literal("ERC-721") }),
+  ),
+  Erc1155TokenBalance$inboundSchema.and(
+    z.object({ ercType: z.literal("ERC-1155") }),
+  ),
 ]);
 /** @internal */
 export type CollectibleBalance$Outbound =
-  | Erc721TokenBalance$Outbound
-  | Erc1155TokenBalance$Outbound;
+  | (Erc721TokenBalance$Outbound & { ercType: "ERC-721" })
+  | (Erc1155TokenBalance$Outbound & { ercType: "ERC-1155" });
 
 /** @internal */
 export const CollectibleBalance$outboundSchema: z.ZodType<
@@ -52,8 +61,12 @@ export const CollectibleBalance$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   CollectibleBalance
 > = z.union([
-  Erc721TokenBalance$outboundSchema,
-  Erc1155TokenBalance$outboundSchema,
+  Erc721TokenBalance$outboundSchema.and(
+    z.object({ ercType: z.literal("ERC-721") }),
+  ),
+  Erc1155TokenBalance$outboundSchema.and(
+    z.object({ ercType: z.literal("ERC-1155") }),
+  ),
 ]);
 
 export function collectibleBalanceToJSON(
@@ -82,8 +95,12 @@ export const ListCollectibleBalancesResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   collectibleBalances: z.array(
     z.union([
-      Erc721TokenBalance$inboundSchema,
-      Erc1155TokenBalance$inboundSchema,
+      Erc721TokenBalance$inboundSchema.and(
+        z.object({ ercType: z.literal("ERC-721") }),
+      ),
+      Erc1155TokenBalance$inboundSchema.and(
+        z.object({ ercType: z.literal("ERC-1155") }),
+      ),
     ]),
   ),
 });
@@ -91,7 +108,8 @@ export const ListCollectibleBalancesResponse$inboundSchema: z.ZodType<
 export type ListCollectibleBalancesResponse$Outbound = {
   nextPageToken?: string | undefined;
   collectibleBalances: Array<
-    Erc721TokenBalance$Outbound | Erc1155TokenBalance$Outbound
+    | (Erc721TokenBalance$Outbound & { ercType: "ERC-721" })
+    | (Erc1155TokenBalance$Outbound & { ercType: "ERC-1155" })
   >;
 };
 
@@ -104,8 +122,12 @@ export const ListCollectibleBalancesResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   collectibleBalances: z.array(
     z.union([
-      Erc721TokenBalance$outboundSchema,
-      Erc1155TokenBalance$outboundSchema,
+      Erc721TokenBalance$outboundSchema.and(
+        z.object({ ercType: z.literal("ERC-721") }),
+      ),
+      Erc1155TokenBalance$outboundSchema.and(
+        z.object({ ercType: z.literal("ERC-1155") }),
+      ),
     ]),
   ),
 });

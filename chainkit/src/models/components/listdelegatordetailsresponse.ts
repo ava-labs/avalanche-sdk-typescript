@@ -52,19 +52,13 @@ export const Delegator$inboundSchema: z.ZodType<
   unknown
 > = z.union([
   ActiveDelegatorDetails$inboundSchema.and(
-    z.object({ delegationStatus: z.literal("active") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("active") }),
   ),
   PendingDelegatorDetails$inboundSchema.and(
-    z.object({ delegationStatus: z.literal("pending") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("pending") }),
   ),
   CompletedDelegatorDetails$inboundSchema.and(
-    z.object({ delegationStatus: z.literal("completed") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("completed") }),
   ),
 ]);
 /** @internal */
@@ -80,19 +74,13 @@ export const Delegator$outboundSchema: z.ZodType<
   Delegator
 > = z.union([
   ActiveDelegatorDetails$outboundSchema.and(
-    z.object({ delegationStatus: z.literal("active") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("active") }),
   ),
   PendingDelegatorDetails$outboundSchema.and(
-    z.object({ delegationStatus: z.literal("pending") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("pending") }),
   ),
   CompletedDelegatorDetails$outboundSchema.and(
-    z.object({ delegationStatus: z.literal("completed") }).transform((v) => ({
-      delegationStatus: v.delegationStatus,
-    })),
+    z.object({ delegationStatus: z.literal("completed") }),
   ),
 ]);
 
@@ -119,19 +107,13 @@ export const ListDelegatorDetailsResponse$inboundSchema: z.ZodType<
   delegators: z.array(
     z.union([
       ActiveDelegatorDetails$inboundSchema.and(
-        z.object({ delegationStatus: z.literal("active") }).transform((v) => ({
-          delegationStatus: v.delegationStatus,
-        })),
+        z.object({ delegationStatus: z.literal("active") }),
       ),
       PendingDelegatorDetails$inboundSchema.and(
-        z.object({ delegationStatus: z.literal("pending") }).transform((v) => ({
-          delegationStatus: v.delegationStatus,
-        })),
+        z.object({ delegationStatus: z.literal("pending") }),
       ),
       CompletedDelegatorDetails$inboundSchema.and(
-        z.object({ delegationStatus: z.literal("completed") }).transform((
-          v,
-        ) => ({ delegationStatus: v.delegationStatus })),
+        z.object({ delegationStatus: z.literal("completed") }),
       ),
     ]),
   ),
@@ -156,19 +138,13 @@ export const ListDelegatorDetailsResponse$outboundSchema: z.ZodType<
   delegators: z.array(
     z.union([
       ActiveDelegatorDetails$outboundSchema.and(
-        z.object({ delegationStatus: z.literal("active") }).transform((v) => ({
-          delegationStatus: v.delegationStatus,
-        })),
+        z.object({ delegationStatus: z.literal("active") }),
       ),
       PendingDelegatorDetails$outboundSchema.and(
-        z.object({ delegationStatus: z.literal("pending") }).transform((v) => ({
-          delegationStatus: v.delegationStatus,
-        })),
+        z.object({ delegationStatus: z.literal("pending") }),
       ),
       CompletedDelegatorDetails$outboundSchema.and(
-        z.object({ delegationStatus: z.literal("completed") }).transform((
-          v,
-        ) => ({ delegationStatus: v.delegationStatus })),
+        z.object({ delegationStatus: z.literal("completed") }),
       ),
     ]),
   ),

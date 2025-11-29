@@ -17,7 +17,7 @@ export class EvmBlocks extends ClientSDK {
    * List latest blocks across all supported EVM chains
    *
    * @remarks
-   * Lists the most recent blocks from all supported  EVM-compatible chains. The results can be filtered by network.
+   * Lists the most recent blocks from all supported EVM-compatible chains. The results can be filtered by network.
    */
   async listLatestAllChains(
     request: operations.ListLatestBlocksAllChainsRequest,

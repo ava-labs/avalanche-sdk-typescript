@@ -56,25 +56,13 @@ export const Contract$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  Erc20Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  Erc721Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
+  Erc20Contract$inboundSchema.and(z.object({ ercType: z.literal("ERC-20") })),
+  Erc721Contract$inboundSchema.and(z.object({ ercType: z.literal("ERC-721") })),
   Erc1155Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-1155") }),
   ),
   UnknownContract$inboundSchema.and(
-    z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("UNKNOWN") }),
   ),
 ]);
 /** @internal */
@@ -90,25 +78,15 @@ export const Contract$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Contract
 > = z.union([
-  Erc20Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
+  Erc20Contract$outboundSchema.and(z.object({ ercType: z.literal("ERC-20") })),
   Erc721Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-721") }),
   ),
   Erc1155Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-1155") }),
   ),
   UnknownContract$outboundSchema.and(
-    z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("UNKNOWN") }),
   ),
 ]);
 
@@ -135,24 +113,16 @@ export const ListContractsResponse$inboundSchema: z.ZodType<
   contracts: z.array(
     z.union([
       Erc20Contract$inboundSchema.and(
-        z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-20") }),
       ),
       Erc721Contract$inboundSchema.and(
-        z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-721") }),
       ),
       Erc1155Contract$inboundSchema.and(
-        z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-1155") }),
       ),
       UnknownContract$inboundSchema.and(
-        z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("UNKNOWN") }),
       ),
     ]),
   ),
@@ -178,24 +148,16 @@ export const ListContractsResponse$outboundSchema: z.ZodType<
   contracts: z.array(
     z.union([
       Erc20Contract$outboundSchema.and(
-        z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-20") }),
       ),
       Erc721Contract$outboundSchema.and(
-        z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-721") }),
       ),
       Erc1155Contract$outboundSchema.and(
-        z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("ERC-1155") }),
       ),
       UnknownContract$outboundSchema.and(
-        z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-          ercType: v.ercType,
-        })),
+        z.object({ ercType: z.literal("UNKNOWN") }),
       ),
     ]),
   ),

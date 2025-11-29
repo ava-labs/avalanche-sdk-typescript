@@ -12,7 +12,7 @@
 
 ## listLatestAllChains
 
-Lists the most recent blocks from all supported  EVM-compatible chains. The results can be filtered by network.
+Lists the most recent blocks from all supported EVM-compatible chains. The results can be filtered by network.
 
 ### Example Usage
 

@@ -24,7 +24,7 @@ export type InternalTransaction = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
   /**

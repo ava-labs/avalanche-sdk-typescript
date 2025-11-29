@@ -13,17 +13,23 @@ export const CreateWebhookServerList = [
 ] as const;
 
 export type CreateWebhookRequest =
-  | components.PrimaryNetworkAddressActivityRequest
-  | components.EVMAddressActivityRequest
-  | components.ValidatorActivityRequest;
+  | (components.PrimaryNetworkAddressActivityRequest & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.EVMAddressActivityRequest & { eventType: "address_activity" })
+  | (components.ValidatorActivityRequest & { eventType: "validator_activity" });
 
 /**
  * Successful response
  */
 export type CreateWebhookResponse =
-  | components.EVMAddressActivityResponse
-  | components.PrimaryNetworkAddressActivityResponse
-  | components.ValidatorActivityResponse;
+  | (components.EVMAddressActivityResponse & { eventType: "address_activity" })
+  | (components.PrimaryNetworkAddressActivityResponse & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.ValidatorActivityResponse & {
+    eventType: "validator_activity";
+  });
 
 /** @internal */
 export const CreateWebhookRequest$inboundSchema: z.ZodType<
@@ -31,15 +37,27 @@ export const CreateWebhookRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.PrimaryNetworkAddressActivityRequest$inboundSchema,
-  components.EVMAddressActivityRequest$inboundSchema,
-  components.ValidatorActivityRequest$inboundSchema,
+  components.PrimaryNetworkAddressActivityRequest$inboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.EVMAddressActivityRequest$inboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.ValidatorActivityRequest$inboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 /** @internal */
 export type CreateWebhookRequest$Outbound =
-  | components.PrimaryNetworkAddressActivityRequest$Outbound
-  | components.EVMAddressActivityRequest$Outbound
-  | components.ValidatorActivityRequest$Outbound;
+  | (components.PrimaryNetworkAddressActivityRequest$Outbound & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.EVMAddressActivityRequest$Outbound & {
+    eventType: "address_activity";
+  })
+  | (components.ValidatorActivityRequest$Outbound & {
+    eventType: "validator_activity";
+  });
 
 /** @internal */
 export const CreateWebhookRequest$outboundSchema: z.ZodType<
@@ -47,9 +65,15 @@ export const CreateWebhookRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   CreateWebhookRequest
 > = z.union([
-  components.PrimaryNetworkAddressActivityRequest$outboundSchema,
-  components.EVMAddressActivityRequest$outboundSchema,
-  components.ValidatorActivityRequest$outboundSchema,
+  components.PrimaryNetworkAddressActivityRequest$outboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.EVMAddressActivityRequest$outboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.ValidatorActivityRequest$outboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 
 export function createWebhookRequestToJSON(
@@ -75,15 +99,27 @@ export const CreateWebhookResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.EVMAddressActivityResponse$inboundSchema,
-  components.PrimaryNetworkAddressActivityResponse$inboundSchema,
-  components.ValidatorActivityResponse$inboundSchema,
+  components.EVMAddressActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.PrimaryNetworkAddressActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.ValidatorActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 /** @internal */
 export type CreateWebhookResponse$Outbound =
-  | components.EVMAddressActivityResponse$Outbound
-  | components.PrimaryNetworkAddressActivityResponse$Outbound
-  | components.ValidatorActivityResponse$Outbound;
+  | (components.EVMAddressActivityResponse$Outbound & {
+    eventType: "address_activity";
+  })
+  | (components.PrimaryNetworkAddressActivityResponse$Outbound & {
+    eventType: "primary_network_address_activity";
+  })
+  | (components.ValidatorActivityResponse$Outbound & {
+    eventType: "validator_activity";
+  });
 
 /** @internal */
 export const CreateWebhookResponse$outboundSchema: z.ZodType<
@@ -91,9 +127,15 @@ export const CreateWebhookResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   CreateWebhookResponse
 > = z.union([
-  components.EVMAddressActivityResponse$outboundSchema,
-  components.PrimaryNetworkAddressActivityResponse$outboundSchema,
-  components.ValidatorActivityResponse$outboundSchema,
+  components.EVMAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
+  components.PrimaryNetworkAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("primary_network_address_activity") }),
+  ),
+  components.ValidatorActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("validator_activity") }),
+  ),
 ]);
 
 export function createWebhookResponseToJSON(
