@@ -493,6 +493,7 @@ test("default", async () => {
   "getGasPrice": [Function],
   "getLogs": [Function],
   "getProof": [Function],
+  "getRegistrationJustification": [Function],
   "getStorageAt": [Function],
   "getTransaction": [Function],
   "getTransactionConfirmations": [Function],

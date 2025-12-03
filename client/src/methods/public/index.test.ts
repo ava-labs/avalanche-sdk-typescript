@@ -10,6 +10,7 @@ test("exports", () => {
       "maxPriorityFeePerGas",
       "feeConfig",
       "getActiveRulesAt",
+      "getRegistrationJustification",
     ]
   `);
 });

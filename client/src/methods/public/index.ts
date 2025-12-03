@@ -34,3 +34,10 @@ export type {
   GetActiveRulesAtParameters,
   GetActiveRulesAtReturnType,
 } from "./types/getActiveRulesAt.js";
+
+export { getRegistrationJustification } from "./getRegistrationJustification.js";
+export type {
+  GetRegistrationJustificationErrorType,
+  GetRegistrationJustificationParams,
+  GetRegistrationJustificationReturnType,
+} from "./types/getRegistrationJustification.js";
