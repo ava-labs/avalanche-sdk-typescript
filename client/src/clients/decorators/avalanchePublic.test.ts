@@ -72,6 +72,37 @@ const mockTransport = () =>
               },
             },
           };
+        case "eth_blockNumber":
+          return "0x1000";
+        case "eth_getLogs":
+          return [
+            {
+              eventName: "SendWarpMessage",
+              args: {
+                sourceAddress: "0xfAcadE0000000000000000000000000000000000",
+                unsignedMessageID:
+                  "0x9e883c90bee7398d20cf3dd1e96b53a1b8b929833888532e2a2e37f2f6067c39",
+                message:
+                  "0x00000000000595d7bbe6942f60afd7be8091b89d4e4ed6183862605809c5395dca8dde94b3a3000000d800000000000100000014facade0000010000000000000000000000000000000000b60000000000019fc4f2405328995ed8bf88798e9ff7e310a5bd1918874000000147c9968cefdb8445b2426dd020f12d246defcb11294ab445df7ca4158cf63b66b6c463e9995b380441863f89231d3cd468ecdf7a96b080d3e96e20d74d9f2cd4f96d9dc40000000006931432e0000000100000001fc29235b2bdabea93b3546331fc8dc3a941391b80000000100000001fc29235b2bdabea93b3546331fc8dc3a941391b8000000000000000a",
+              },
+              address: "0x0200000000000000000000000000000000000005",
+              topics: [
+                "0x56600c567728a800c0aa927500f831cb451df66a7af570eb4df4dfbf4674887d",
+                "0x000000000000000000000000facade0000000000000000000000000000000000",
+                "0x9e883c90bee7398d20cf3dd1e96b53a1b8b929833888532e2a2e37f2f6067c39",
+              ],
+              data: "0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000010200000000000595d7bbe6942f60afd7be8091b89d4e4ed6183862605809c5395dca8dde94b3a3000000d800000000000100000014facade0000000000000000000000000000000000000000b60000000000019fc4f2405328995ed8bf8879cf83459efe1402691368e9ff7e310a5bd1918874000000147c9968cefdb8445b2426dd020f12d246defcb11294ab445df7ca4158cf63b66b6c463e9995b380441863f89231d3cd468ecdf7a96b080d3e96e20d74d9f2cd4f96d9dc40000000006931432e0000000100000001fc29235b2bdabea93b3546331fc8dc3a941391b80000000100000001fc29235b2bdabea93b3546331fc8dc3a941391b8000000000000000a000000000000000000000000000000000000000000000000000000000000",
+              blockNumber: 6n,
+              transactionHash:
+                "0xa8935a010bb7bdea63580b8fc366641f801d2e7a86d98b6b5ade3b33bf5ecdce",
+              transactionIndex: 0,
+              blockHash:
+                "0xba44797cac7ba95176f4fc5e1395cea55f8e766782bc9625031117e067641fe6",
+              logIndex: 0,
+              removed: false,
+            },
+          ];
+
         // TODO: add proper responses for the rest of the methods
         // The default case is just a placeholder to satisfy the test
         default:
@@ -98,6 +129,7 @@ test("default", async () => {
   "feeConfig": [Function],
   "getActiveRulesAt": [Function],
   "getChainConfig": [Function],
+  "getRegistrationJustification": [Function],
   "maxPriorityFeePerGas": [Function],
 }`);
 });
@@ -182,5 +214,18 @@ describe("smoke test", () => {
         },
       },
     });
+  });
+
+  test("getRegistrationJustification", async () => {
+    const res = await avalanchePublicClient.getRegistrationJustification({
+      validationID:
+        "0x5ecf5d9c6fe20c4e43afda8f5cc97e7baef800ed485a60f7370fe26fdea75e3a",
+      subnetIDStr: "2DN6PTi2uXNCzzNz1p2ckGcW2eqTfpt2kv2a1h7EV36hYV3XRJ",
+      maxBootstrapValidators: 100,
+      chunkSize: 200,
+      maxChunks: 100,
+    });
+    expect(res.error).toBeUndefined();
+    expect(res.justification).not.toBeNull();
   });
 });

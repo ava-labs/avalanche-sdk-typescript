@@ -1,8 +1,8 @@
 import { utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha256";
+import { createClient, custom } from "viem";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { avalanche } from "../../chains/index.js";
-import { createAvalancheCoreClient } from "../../clients/createAvalancheCoreClient.js";
 import { getRegistrationJustification } from "./getRegistrationJustification.js";
 import { GetRegistrationJustificationParams } from "./types/getRegistrationJustification.js";
 import {
@@ -20,14 +20,11 @@ vi.mock("viem/actions", () => ({
 }));
 
 const createMockClient = () =>
-  createAvalancheCoreClient({
+  createClient({
     chain: avalanche,
-    transport: {
-      type: "custom",
-      provider: {
-        request: vi.fn(async () => null) as any,
-      },
-    },
+    transport: custom({
+      request: vi.fn(async () => null) as any,
+    }),
   });
 
 describe("getRegistrationJustification", () => {

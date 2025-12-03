@@ -1,8 +1,7 @@
 import { Int, pvmSerial, Short, utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha256";
-import { Client, hexToBytes, parseAbiItem } from "viem";
+import { Chain, Client, hexToBytes, parseAbiItem, Transport } from "viem";
 import { getBlockNumber, getLogs } from "viem/actions";
-import { AvalancheCoreClient } from "../../clients/createAvalancheCoreClient.js";
 import {
   GetRegistrationJustificationParams,
   GetRegistrationJustificationReturnType,
@@ -76,8 +75,10 @@ const WARP_ADDRESS = "0x0200000000000000000000000000000000000005" as const;
  * console.log("justification", JSON.stringify(justification, null, 2));
  * ```
  */
-export async function getRegistrationJustification(
-  client: AvalancheCoreClient,
+export async function getRegistrationJustification<
+  chain extends Chain | undefined
+>(
+  client: Client<Transport, chain>,
   params: GetRegistrationJustificationParams
 ): Promise<GetRegistrationJustificationReturnType> {
   const DEFAULT_NUM_BOOTSTRAP_VALIDATORS_TO_SEARCH = 100;
@@ -161,8 +162,8 @@ export async function getRegistrationJustification(
 /**
  * Searches Warp logs for registration justification
  */
-async function searchWarpLogsForJustification(
-  client: AvalancheCoreClient,
+async function searchWarpLogsForJustification<chain extends Chain | undefined>(
+  client: Client<Transport, chain>,
   params: GetRegistrationJustificationParams,
   targetValidationIDBytes: Uint8Array,
   validationIDHex: string
