@@ -1,4 +1,4 @@
-import { RequestErrorType } from "src/utils";
+import { RequestErrorType } from "../../../utils";
 
 /**
  * Parameters for the public.getRegistrationJustification method.

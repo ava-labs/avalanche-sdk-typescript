@@ -1,9 +1,9 @@
-import { getRegistrationJustification } from "src/methods/public/getRegistrationJustification.js";
 import { Chain, Client, Transport } from "viem";
 import { baseFee } from "../../methods/public/baseFee.js";
 import { feeConfig } from "../../methods/public/feeConfig.js";
 import { getActiveRulesAt } from "../../methods/public/getActiveRulesAt.js";
 import { getChainConfig } from "../../methods/public/getChainConfig.js";
+import { getRegistrationJustification } from "../../methods/public/getRegistrationJustification.js";
 import { maxPriorityFeePerGas } from "../../methods/public/maxPriorityFeePerGas.js";
 import { BaseFeeReturnType } from "../../methods/public/types/baseFee.js";
 import {
