@@ -108,3 +108,35 @@ export function marshalConvertSubnetToL1TxDataJustification(
 
   return justificationBytes;
 }
+
+/**
+ * Marshals the payload bytes into a RegisterL1ValidatorMessage justification format.
+ * This creates a protobuf-encoded field 2 (register_l1_validator_message) with the payload bytes.
+ *
+ * L1ValidatorRegistrationJustification {
+ *   oneof preimage {
+ *     // Field 1
+ *     SubnetIDIndex convert_subnet_to_l1_tx_data = 1;
+ *     // Field 2
+ *     bytes register_l1_validator_message = 2;
+ *   }
+ * }
+ *
+ * @param payloadBytes - The payload bytes to marshal (RegisterL1ValidatorMessage bytes).
+ * @returns The marshalled justification bytes with protobuf field tag and length.
+ */
+export function marshalRegisterL1ValidatorMessageJustification(
+  payloadBytes: Uint8Array
+): Uint8Array {
+  const tag = new Uint8Array([0x12]); // Field 2, wire type 2
+  const lengthVarint = encodeVariant(payloadBytes.length);
+  const marshalledJustification = new Uint8Array(
+    tag.length + lengthVarint.length + payloadBytes.length
+  );
+
+  marshalledJustification.set(tag, 0);
+  marshalledJustification.set(lengthVarint, tag.length);
+  marshalledJustification.set(payloadBytes, tag.length + lengthVarint.length);
+
+  return marshalledJustification;
+}

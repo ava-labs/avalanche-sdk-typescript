@@ -1,4 +1,4 @@
-import { pvmSerial, utils } from "@avalabs/avalanchejs";
+import { Int, pvmSerial, Short, utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha256";
 import { Client, hexToBytes, parseAbiItem } from "viem";
 import { getBlockNumber, getLogs } from "viem/actions";
@@ -10,6 +10,7 @@ import {
 import {
   computeDerivedID,
   marshalConvertSubnetToL1TxDataJustification,
+  marshalRegisterL1ValidatorMessageJustification,
 } from "./utils.js";
 
 // Define the ABI for the SendWarpMessage event
@@ -17,17 +18,89 @@ export const sendWarpMessageEventAbi = parseAbiItem(
   "event SendWarpMessage(address indexed sourceAddress, bytes32 indexed unsignedMessageID, bytes message)"
 );
 
+const WARP_ADDRESS = "0x0200000000000000000000000000000000000005" as const;
+
+/**
+ * Retrieves the registration justification for the given validation ID Hex and subnet ID.
+ *
+ * If the validation ID corresponds to a bootstrap validator, the justification bytes
+ * produced by `ConvertSubnetToL1Tx` are returned.
+ *
+ * Otherwise, the function searches the Warp logs on the chain where the validator
+ * manager is deployed to locate the RegisterL1ValidatorMessage for the specified validation ID.
+ *
+ * @param client - The AvalancheCoreClient instance.
+ * @param params - The GetRegistrationJustificationParams instance.
+ * @returns The GetRegistrationJustificationReturnType instance.
+ *
+ * @example
+ * ```ts
+ * import { createAvalancheClient } from "@avalanche-sdk/client";
+ * import { getRegistrationJustification } from "@avalanche-sdk/client/methods/public";
+ * import { defineChain } from "@avalanche-sdk/client/chains";
+ * import { utils } from "@avalanche-sdk/client/utils";
+ *
+ * const chainConfig = defineChain({
+ *     id: 28098,
+ *     name: "Rough Complexity Chain",
+ *     rpcUrls: {
+ *       default: {
+ *         http: [
+ *           "https://base-url-to-your-rpc/ext/bc/28zXo5erueBemgxPjLom6Vhsm6oVyftLtfQSt61fd62SghoXrz/rpc",
+ *         ],
+ *       },
+ *     },
+ *   });
+ *
+ * const publicClient = createAvalancheClient({
+ *   chain: chainConfig,
+ *   transport: {
+ *     type: "http",
+ *   },
+ * });
+ *
+ * const validationIDHex = utils.bufferToHex(
+ *   utils.base58check.decode(
+ *     "TEwxg8JzAUsqFibtYkaiiYH9G1h5ZfX56zYURXpyaPRCSppC4"
+ *   )
+ * );
+ *
+ * const justification = await getRegistrationJustification(publicClient, {
+ *   validationIDHex,
+ *   subnetIDStr: "2DN6PTi2uXNCzzNz1p2ckGcW2eqTfpt2kv2a1h7EV36hYV3XRJ",
+ *   maxBootstrapValidators: 200,
+ *   chunkSize: 200,
+ *   maxChunks: 100,
+ * });
+ *
+ * console.log("justification", JSON.stringify(justification, null, 2));
+ * ```
+ */
 export async function getRegistrationJustification(
   client: AvalancheCoreClient,
   params: GetRegistrationJustificationParams
 ): Promise<GetRegistrationJustificationReturnType> {
-  const WARP_ADDRESS = "0x0200000000000000000000000000000000000005" as const;
-  const NUM_BOOTSTRAP_VALIDATORS_TO_SEARCH = 100;
+  const DEFAULT_NUM_BOOTSTRAP_VALIDATORS_TO_SEARCH = 100;
+  const numBValidatorsToSearch =
+    params.maxBootstrapValidators ?? DEFAULT_NUM_BOOTSTRAP_VALIDATORS_TO_SEARCH;
 
-  const { validationIDHex, subnetIDStr } = params;
+  const { validationID, subnetIDStr } = params;
   let targetValidationIDBytes: Uint8Array;
+  let validationIDHex;
+  let subnetIDBytes;
 
   try {
+    if (!validationID) {
+      throw new Error(`Found empty validationID`);
+    }
+
+    if (validationID.startsWith("0x")) {
+      validationIDHex = validationID;
+    } else {
+      validationIDHex = utils.bufferToHex(
+        utils.base58check.decode(validationID)
+      );
+    }
     targetValidationIDBytes = hexToBytes(validationIDHex as `0x${string}`);
     if (targetValidationIDBytes.length !== 32) {
       throw new Error(
@@ -35,25 +108,26 @@ export async function getRegistrationJustification(
       );
     }
   } catch (e: any) {
-    console.error(
-      `Failed to decode provided validationIDHex '${validationIDHex}': ${e.message}`
-    );
-    return { justification: null };
+    return {
+      justification: null,
+      error: `Failed to decode provided validationIDHex '${validationIDHex}': ${e.message}`,
+    };
   }
 
-  if (!subnetIDStr) {
-    console.error(`Failed to decode provided SubnetID: ${subnetIDStr}`);
-    return { justification: null };
-  }
-  const subnetIDBytes = utils.base58check.decode(subnetIDStr);
-
-  if (!subnetIDBytes) {
-    console.error(`Failed to decode provided SubnetID: ${subnetIDStr}`);
-    return { justification: null };
+  try {
+    if (!subnetIDStr) {
+      throw new Error(`Found empty subnetIDStr`);
+    }
+    subnetIDBytes = utils.base58check.decode(subnetIDStr);
+  } catch (e: any) {
+    return {
+      justification: null,
+      error: `Failed to decode provided SubnetID: ${subnetIDStr}: ${e.message}`,
+    };
   }
 
   // 1. Check for bootstrap validators (comparing hash of derived ID against targetValidationIDBytes)
-  for (let index = 0; index < NUM_BOOTSTRAP_VALIDATORS_TO_SEARCH; index++) {
+  for (let index = 0; index < numBValidatorsToSearch; index++) {
     // Compute the 36-byte derived ID (SubnetID + Index)
     const bootstrapDerivedBytes = computeDerivedID(subnetIDBytes, index);
     // Compute the SHA-256 hash (32 bytes)
@@ -76,152 +150,238 @@ export async function getRegistrationJustification(
   }
 
   // 2. If not a bootstrap validator, search Warp logs
+  return await searchWarpLogsForJustification(
+    client,
+    params,
+    targetValidationIDBytes,
+    validationIDHex
+  );
+}
+
+/**
+ * Searches Warp logs for registration justification
+ */
+async function searchWarpLogsForJustification(
+  client: AvalancheCoreClient,
+  params: GetRegistrationJustificationParams,
+  targetValidationIDBytes: Uint8Array,
+  validationIDHex: string
+): Promise<GetRegistrationJustificationReturnType> {
+  const DEFAULT_CHUNK_SIZE = 2000;
+  const DEFAULT_MAX_CHUNKS = 100;
+  const maxChunks = params.maxChunks ?? DEFAULT_MAX_CHUNKS;
+  const searchOrder = params.searchOrder ?? "desc";
+  const chunkSize = params.chunkSize ?? DEFAULT_CHUNK_SIZE;
   try {
-    const CHUNK_SIZE = 2000; // Number of blocks to query in each chunk (reduced to stay within RPC limits)
-    const MAX_CHUNKS = 100; // Maximum number of chunks to try (to prevent infinite loops)
-    let toBlock: bigint | number | "latest" = "latest";
-    let foundMatch = false;
-    let marshalledJustification: Uint8Array | null = null;
+    // Get the latest block number to determine search bounds
+    const latestBlockNumber = await getBlockNumber(client as Client);
+
+    // Determine starting block and search bounds
+    const startBlock =
+      params.startBlock === "latest" || params.startBlock === undefined
+        ? latestBlockNumber
+        : BigInt(params.startBlock);
+
+    let currentBlock = startBlock;
     let chunksSearched = 0;
 
     console.log(
-      `Searching Warp logs in chunks of ${CHUNK_SIZE} blocks starting from latest...`
+      `Searching Warp logs in ${
+        searchOrder === "desc" ? "descending" : "ascending"
+      } order, ` +
+        `chunks of ${chunkSize} blocks, starting from block ${currentBlock}...`
     );
 
-    while (!foundMatch && chunksSearched < MAX_CHUNKS) {
-      // Get the current block number for this iteration
-      const latestBlockNum =
-        toBlock === "latest" ? await getBlockNumber(client as Client) : toBlock;
-
-      // Calculate the fromBlock for this chunk
-      const fromBlockNum = Math.max(0, Number(latestBlockNum) - CHUNK_SIZE);
-
-      console.log(
-        `Searching blocks ${fromBlockNum} to ${
-          toBlock === "latest" ? latestBlockNum : toBlock
-        }...`
+    while (chunksSearched < maxChunks) {
+      // Calculate block range for this chunk based on search order
+      const { fromBlock, toBlock, shouldStopAfter } = calculateBlockRange(
+        currentBlock,
+        chunkSize,
+        searchOrder,
+        latestBlockNumber
       );
 
+      console.log(`Searching blocks ${fromBlock} to ${toBlock}...`);
+
+      // Fetch Warp logs for this block range
       const warpLogs = await getLogs(client as Client, {
         address: WARP_ADDRESS,
         event: sendWarpMessageEventAbi,
-        fromBlock: BigInt(fromBlockNum),
-        toBlock: toBlock === "latest" ? toBlock : BigInt(Number(toBlock)),
+        fromBlock: BigInt(fromBlock),
+        toBlock: BigInt(toBlock),
       });
-
-      const warpManager = pvmSerial.warp.getWarpManager();
-
+      console.log("warpLogs", warpLogs);
       if (warpLogs.length > 0) {
         console.log(
           `Found ${warpLogs.length} Warp logs in current chunk. Searching for ValidationID ${validationIDHex}...`
         );
 
-        for (const log of warpLogs.slice().reverse()) {
-          try {
-            const decodedArgs = log.args as { message?: `0x${string}` };
-            const fullMessageHex = decodedArgs.message;
-            if (!fullMessageHex) continue;
+        const justification = processWarpLogs(
+          warpLogs.reverse(),
+          targetValidationIDBytes,
+          validationIDHex
+        );
 
-            const unsignedMessageBytes = Buffer.from(
-              fullMessageHex.slice(2),
-              "hex"
-            );
-
-            const addressedCall = warpManager.unpack(
-              unsignedMessageBytes,
-              pvmSerial.warp.AddressedCallPayloads.AddressedCall
-            );
-
-            if (addressedCall.length === 0) continue;
-
-            // Check TypeID within AddressedCall for RegisterL1ValidatorMessage
-            if (addressedCall.length < 6) continue;
-            const acTypeID =
-              (addressedCall[2] << 24) |
-              (addressedCall[3] << 16) |
-              (addressedCall[4] << 8) |
-              addressedCall[5];
-            const REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID_IN_AC = 1;
-            if (acTypeID !== REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID_IN_AC) {
-              continue;
-            }
-
-            const payloadBytes = extractPayloadFromAddressedCall(addressedCall);
-            if (!payloadBytes) continue;
-
-            try {
-              // Unpack the payload
-              const parsedPayload: SolidityValidationPeriod =
-                unpackRegisterL1ValidatorPayload(payloadBytes);
-              // Calculate the validationID (hash) of this message payload
-              const logValidationIDBytes = calculateValidationID(parsedPayload);
-
-              // Compare the calculated hash with the target validation ID
-              if (compareBytes(logValidationIDBytes, targetValidationIDBytes)) {
-                // Construct justification using the original payloadBytes
-                const tag = new Uint8Array([0x12]); // Field 2, wire type 2
-                const lengthVarint = encodeVarint(payloadBytes.length);
-                marshalledJustification = new Uint8Array(
-                  tag.length + lengthVarint.length + payloadBytes.length
-                );
-                marshalledJustification.set(tag, 0);
-                marshalledJustification.set(lengthVarint, tag.length);
-                marshalledJustification.set(
-                  payloadBytes,
-                  tag.length + lengthVarint.length
-                );
-
-                console.log(
-                  `Found matching ValidationID ${validationIDHex} in Warp log (Tx: ${log.transactionHash}). Marshalled justification.`
-                );
-                foundMatch = true;
-                break;
-              }
-            } catch (parseOrHashError) {
-              // console.warn(`Error parsing/hashing RegisterL1ValidatorMessage payload from Tx ${log.transactionHash}:`, parseOrHashError);
-            }
-          } catch (logProcessingError) {
-            console.error(
-              `Error processing log entry for tx ${log.transactionHash}:`,
-              logProcessingError
-            );
-          }
+        if (justification) {
+          return { justification };
         }
       } else {
-        console.log(
-          `No Warp logs found in blocks ${fromBlockNum} to ${
-            toBlock === "latest" ? latestBlockNum : toBlock
-          }.`
-        );
+        console.log(`No Warp logs found in blocks ${fromBlock} to ${toBlock}.`);
       }
 
-      // Exit the loop if we found a match
-      if (foundMatch) break;
+      // Check if we should stop after processing this chunk
+      if (shouldStopAfter) {
+        console.log(
+          searchOrder === "desc"
+            ? `Reached genesis block. Search complete.`
+            : `Reached latest block. Search complete.`
+        );
+        break;
+      }
 
-      // Move to the previous chunk
-      toBlock = fromBlockNum - 1;
+      // Move to next chunk
+      currentBlock =
+        searchOrder === "desc" ? BigInt(fromBlock) - 1n : BigInt(toBlock) + 1n;
 
-      // Stop if we've reached the genesis block
-      if (toBlock <= 0) {
-        console.log(`Reached genesis block. Search complete.`);
+      // Additional check for ascending order to ensure we don't exceed latest
+      if (searchOrder === "asc" && currentBlock > latestBlockNumber) {
+        console.log(
+          `Reached latest block (${latestBlockNumber}). Search complete.`
+        );
         break;
       }
 
       chunksSearched++;
     }
 
-    if (!foundMatch) {
-      console.log(
-        `No matching registration log found for ValidationID ${validationIDHex} after searching ${chunksSearched} chunks.`
+    console.log(
+      `No matching registration log found for ValidationID ${validationIDHex} after searching ${chunksSearched} chunks.`
+    );
+
+    return { justification: null };
+  } catch (fetchLogError) {
+    return {
+      justification: null,
+      error: `Error fetching or decoding logs for ValidationID ${validationIDHex}: ${fetchLogError}`,
+    };
+  }
+}
+
+/**
+ * Calculates the block range for a search chunk based on search order
+ */
+function calculateBlockRange(
+  currentBlock: bigint,
+  chunkSize: number,
+  searchOrder: "asc" | "desc",
+  latestBlock: bigint
+): {
+  fromBlock: number;
+  toBlock: number;
+  shouldStopAfter: boolean;
+} {
+  const genesisBlock = 0;
+  if (searchOrder === "desc") {
+    // Descending: search from (currentBlock - chunkSize) to currentBlock
+    const fromBlock = Math.max(
+      genesisBlock,
+      Number(currentBlock) - chunkSize + 1
+    );
+    const toBlock = Number(currentBlock);
+    // Stop after this chunk if we've reached genesis block
+    // (next iteration would go below genesis)
+    const shouldStopAfter = fromBlock === genesisBlock;
+
+    return { fromBlock, toBlock, shouldStopAfter };
+  } else {
+    // Ascending: search from currentBlock to (currentBlock + chunkSize)
+    const fromBlock = Number(currentBlock);
+    const toBlock = Math.min(
+      Number(latestBlock),
+      Number(currentBlock) + chunkSize - 1
+    );
+    // Stop after this chunk if we've reached or exceeded the latest block
+    const shouldStopAfter = toBlock >= Number(latestBlock);
+
+    return { fromBlock, toBlock, shouldStopAfter };
+  }
+}
+
+/**
+ * Processes Warp logs to find matching validation ID
+ */
+function processWarpLogs(
+  logs: Awaited<ReturnType<typeof getLogs>>,
+  targetValidationIDBytes: Uint8Array,
+  validationIDHex: string
+): Uint8Array | null {
+  const warpManager = pvmSerial.warp.getWarpManager();
+  const REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID_IN_AC = 1;
+  for (const log of logs) {
+    try {
+      // Type assertion for log args - viem's getLogs returns logs with args when event is provided
+      const logWithArgs = log as typeof log & {
+        args: { message?: `0x${string}` };
+      };
+      const fullMessageHex = logWithArgs.args?.message;
+      if (!fullMessageHex) continue;
+
+      const unsignedMessageBytes = Buffer.from(fullMessageHex.slice(2), "hex");
+
+      const unsignedWarpMessage = warpManager.unpack(
+        unsignedMessageBytes,
+        pvmSerial.warp.WarpUnsignedMessage
+      );
+      const addressedCall = warpManager.unpack(
+        utils.hexToBuffer(unsignedWarpMessage.payload.toJSON()), // skip the length of the payload in the payload bytes (4 bytes)
+        pvmSerial.warp.AddressedCallPayloads.AddressedCall
+      );
+
+      const payloadBytes = utils.hexToBuffer(addressedCall.getPayload());
+      if (!payloadBytes) continue;
+
+      const [, codecRemovedPayloadBytes] = Short.fromBytes(payloadBytes);
+      const [payloadTypeId] = Int.fromBytes(codecRemovedPayloadBytes);
+
+      if (
+        payloadTypeId.value() !== REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID_IN_AC
+      ) {
+        continue;
+      }
+
+      try {
+        const parsedPayload = warpManager.unpack(
+          payloadBytes,
+          pvmSerial.warp.AddressedCallPayloads.RegisterL1ValidatorMessage
+        );
+        const logValidationIDBytes = parsedPayload.toBytes(
+          pvmSerial.warp.codec
+        );
+        const paddedLogValidationIDBytes = Uint8Array.from([
+          ...new Short(0).toBytes(),
+          ...logValidationIDBytes,
+        ]);
+        const validationIDBytesHash = sha256(paddedLogValidationIDBytes);
+
+        if (utils.bytesEqual(validationIDBytesHash, targetValidationIDBytes)) {
+          const justification =
+            marshalRegisterL1ValidatorMessageJustification(payloadBytes);
+
+          console.log(
+            `Found matching ValidationID ${validationIDHex} in Warp log (Tx: ${log.transactionHash}). Marshalled justification.`
+          );
+          return justification;
+        }
+      } catch (parseOrHashError) {
+        console.error(parseOrHashError);
+      }
+    } catch (logProcessingError) {
+      console.error(
+        `Error processing log entry for tx ${log.transactionHash}:`,
+        logProcessingError
       );
     }
-
-    return { justification: marshalledJustification ?? null };
-  } catch (fetchLogError) {
-    console.error(
-      `Error fetching or decoding logs for ValidationID ${validationIDHex}:`,
-      fetchLogError
-    );
-    return { justification: null };
   }
+
+  return null;
 }
