@@ -210,14 +210,13 @@ async function searchWarpLogsForJustification(
         fromBlock: BigInt(fromBlock),
         toBlock: BigInt(toBlock),
       });
-      console.log("warpLogs", warpLogs);
       if (warpLogs.length > 0) {
         console.log(
           `Found ${warpLogs.length} Warp logs in current chunk. Searching for ValidationID ${validationIDHex}...`
         );
 
         const justification = processWarpLogs(
-          warpLogs.reverse(),
+          warpLogs.slice().reverse(),
           targetValidationIDBytes,
           validationIDHex
         );
@@ -229,13 +228,7 @@ async function searchWarpLogsForJustification(
         console.log(`No Warp logs found in blocks ${fromBlock} to ${toBlock}.`);
       }
 
-      // Check if we should stop after processing this chunk
       if (shouldStopAfter) {
-        console.log(
-          searchOrder === "desc"
-            ? `Reached genesis block. Search complete.`
-            : `Reached latest block. Search complete.`
-        );
         break;
       }
 
@@ -243,20 +236,13 @@ async function searchWarpLogsForJustification(
       currentBlock =
         searchOrder === "desc" ? BigInt(fromBlock) - 1n : BigInt(toBlock) + 1n;
 
-      // Additional check for ascending order to ensure we don't exceed latest
+      // Check for ascending order to ensure we don't exceed latest
       if (searchOrder === "asc" && currentBlock > latestBlockNumber) {
-        console.log(
-          `Reached latest block (${latestBlockNumber}). Search complete.`
-        );
         break;
       }
 
       chunksSearched++;
     }
-
-    console.log(
-      `No matching registration log found for ValidationID ${validationIDHex} after searching ${chunksSearched} chunks.`
-    );
 
     return { justification: null };
   } catch (fetchLogError) {
@@ -282,25 +268,20 @@ function calculateBlockRange(
 } {
   const genesisBlock = 0;
   if (searchOrder === "desc") {
-    // Descending: search from (currentBlock - chunkSize) to currentBlock
     const fromBlock = Math.max(
       genesisBlock,
       Number(currentBlock) - chunkSize + 1
     );
     const toBlock = Number(currentBlock);
-    // Stop after this chunk if we've reached genesis block
-    // (next iteration would go below genesis)
     const shouldStopAfter = fromBlock === genesisBlock;
 
     return { fromBlock, toBlock, shouldStopAfter };
   } else {
-    // Ascending: search from currentBlock to (currentBlock + chunkSize)
     const fromBlock = Number(currentBlock);
     const toBlock = Math.min(
       Number(latestBlock),
       Number(currentBlock) + chunkSize - 1
     );
-    // Stop after this chunk if we've reached or exceeded the latest block
     const shouldStopAfter = toBlock >= Number(latestBlock);
 
     return { fromBlock, toBlock, shouldStopAfter };
@@ -308,7 +289,7 @@ function calculateBlockRange(
 }
 
 /**
- * Processes Warp logs to find matching validation ID
+ * Parses Warp logs to find matching validation ID
  */
 function processWarpLogs(
   logs: Awaited<ReturnType<typeof getLogs>>,
@@ -317,9 +298,9 @@ function processWarpLogs(
 ): Uint8Array | null {
   const warpManager = pvmSerial.warp.getWarpManager();
   const REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID_IN_AC = 1;
+
   for (const log of logs) {
     try {
-      // Type assertion for log args - viem's getLogs returns logs with args when event is provided
       const logWithArgs = log as typeof log & {
         args: { message?: `0x${string}` };
       };
@@ -332,8 +313,9 @@ function processWarpLogs(
         unsignedMessageBytes,
         pvmSerial.warp.WarpUnsignedMessage
       );
+
       const addressedCall = warpManager.unpack(
-        utils.hexToBuffer(unsignedWarpMessage.payload.toJSON()), // skip the length of the payload in the payload bytes (4 bytes)
+        utils.hexToBuffer(unsignedWarpMessage.payload.toJSON()),
         pvmSerial.warp.AddressedCallPayloads.AddressedCall
       );
 

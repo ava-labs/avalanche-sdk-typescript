@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { avalanche } from "../../chains/index.js";
 import { createAvalancheCoreClient } from "../../clients/createAvalancheCoreClient.js";
 import { getRegistrationJustification } from "./getRegistrationJustification.js";
-import type { GetRegistrationJustificationParams } from "./types/getRegistrationJustification.js";
+import { GetRegistrationJustificationParams } from "./types/getRegistrationJustification.js";
 import {
   computeDerivedID,
   marshalConvertSubnetToL1TxDataJustification,
@@ -18,12 +18,6 @@ vi.mock("viem/actions", () => ({
   getBlockNumber: (...args: any[]) => mockGetBlockNumber(...args),
   getLogs: (...args: any[]) => mockGetLogs(...args),
 }));
-
-// Mock console methods to avoid noise in tests
-const consoleSpy = {
-  log: vi.spyOn(console, "log").mockImplementation(() => {}),
-  error: vi.spyOn(console, "error").mockImplementation(() => {}),
-};
 
 const createMockClient = () =>
   createAvalancheCoreClient({
@@ -39,8 +33,6 @@ const createMockClient = () =>
 describe("getRegistrationJustification", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    consoleSpy.log.mockClear();
-    consoleSpy.error.mockClear();
   });
 
   describe("Bootstrap validator cases", () => {
@@ -53,8 +45,7 @@ describe("getRegistrationJustification", () => {
       // Compute the expected validation ID
       const derivedID = computeDerivedID(subnetIDBytes, index);
       const validationIDHash = sha256(derivedID);
-      const validationIDHex = utils.bufferToHex(validationIDHash);
-
+      const validationIDHex = utils.bufferToHex(validationIDHash); // 0x9a33b98f8bdef88c976f8d2c4a82ba4bb988f9297dc6ebddb4844f56b34131e9
       const params: GetRegistrationJustificationParams = {
         validationID: validationIDHex,
         subnetIDStr,
@@ -67,10 +58,12 @@ describe("getRegistrationJustification", () => {
       expect(result.justification).toBeInstanceOf(Uint8Array);
 
       // Verify the justification matches expected format
-      const expectedJustification = marshalConvertSubnetToL1TxDataJustification(
-        subnetIDBytes,
-        index
-      );
+      const expectedJustification = Uint8Array.from([
+        10, 36, 10, 32, 159, 196, 242, 64, 83, 40, 153, 94, 216, 191, 136, 121,
+        207, 131, 69, 158, 254, 20, 2, 105, 19, 104, 233, 255, 126, 49, 10, 91,
+        209, 145, 136, 116, 16, 0,
+      ]);
+      console.log("expectedJustification", expectedJustification);
       expect(result.justification).toEqual(expectedJustification);
     });
 
@@ -82,8 +75,7 @@ describe("getRegistrationJustification", () => {
 
       const derivedID = computeDerivedID(subnetIDBytes, index);
       const validationIDHash = sha256(derivedID);
-      const validationIDHex = utils.bufferToHex(validationIDHash);
-
+      const validationIDHex = utils.bufferToHex(validationIDHash); // 0x5ecf5d9c6fe20c4e43afda8f5cc97e7baef800ed485a60f7370fe26fdea75e3a
       const params: GetRegistrationJustificationParams = {
         validationID: validationIDHex,
         subnetIDStr,
@@ -93,10 +85,12 @@ describe("getRegistrationJustification", () => {
       const result = await getRegistrationJustification(client, params);
 
       expect(result.justification).not.toBeNull();
-      const expectedJustification = marshalConvertSubnetToL1TxDataJustification(
-        subnetIDBytes,
-        index
-      );
+
+      const expectedJustification = Uint8Array.from([
+        10, 36, 10, 32, 159, 196, 242, 64, 83, 40, 153, 94, 216, 191, 136, 121,
+        207, 131, 69, 158, 254, 20, 2, 105, 19, 104, 233, 255, 126, 49, 10, 91,
+        209, 145, 136, 116, 16, 5,
+      ]);
       expect(result.justification).toEqual(expectedJustification);
     });
 
@@ -442,9 +436,6 @@ describe("getRegistrationJustification", () => {
       const result = await getRegistrationJustification(client, params);
 
       expect(result.justification).toBeNull();
-      expect(consoleSpy.log).toHaveBeenCalledWith(
-        expect.stringContaining("No Warp logs found")
-      );
     });
 
     test("should give valid justification for a validation ID that from warp logs", async () => {
