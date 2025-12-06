@@ -13,7 +13,7 @@ export class AddressChains extends ClientSDK {
    * List all chains associated with a given address
    *
    * @remarks
-   * Lists the chains where the specified address has  participated in transactions or ERC token transfers,  either as a sender or receiver. The data is refreshed every 15  minutes.
+   * Lists the chains where the specified address has participated in transactions or ERC token transfers, either as a sender or receiver. The data is refreshed every 15 minutes.
    */
   async list(
     request: operations.ListAddressChainsRequest,

@@ -4,16 +4,8 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-
-export const CompletedDelegatorDetailsDelegationStatus = {
-  Completed: "completed",
-} as const;
-export type CompletedDelegatorDetailsDelegationStatus = ClosedEnum<
-  typeof CompletedDelegatorDetailsDelegationStatus
->;
 
 export type CompletedDelegatorDetails = {
   txHash: string;
@@ -31,17 +23,8 @@ export type CompletedDelegatorDetails = {
    * Net rewards distributed to the delegator after deducting delegation fee from the gross reward for the successful delegation.
    */
   netReward: string;
-  delegationStatus: CompletedDelegatorDetailsDelegationStatus;
+  delegationStatus: "completed";
 };
-
-/** @internal */
-export const CompletedDelegatorDetailsDelegationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof CompletedDelegatorDetailsDelegationStatus> = z
-    .nativeEnum(CompletedDelegatorDetailsDelegationStatus);
-/** @internal */
-export const CompletedDelegatorDetailsDelegationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof CompletedDelegatorDetailsDelegationStatus> =
-    CompletedDelegatorDetailsDelegationStatus$inboundSchema;
 
 /** @internal */
 export const CompletedDelegatorDetails$inboundSchema: z.ZodType<
@@ -58,7 +41,7 @@ export const CompletedDelegatorDetails$inboundSchema: z.ZodType<
   endTimestamp: z.number(),
   grossReward: z.string(),
   netReward: z.string(),
-  delegationStatus: CompletedDelegatorDetailsDelegationStatus$inboundSchema,
+  delegationStatus: z.literal("completed"),
 });
 /** @internal */
 export type CompletedDelegatorDetails$Outbound = {
@@ -71,7 +54,7 @@ export type CompletedDelegatorDetails$Outbound = {
   endTimestamp: number;
   grossReward: string;
   netReward: string;
-  delegationStatus: string;
+  delegationStatus: "completed";
 };
 
 /** @internal */
@@ -89,7 +72,7 @@ export const CompletedDelegatorDetails$outboundSchema: z.ZodType<
   endTimestamp: z.number(),
   grossReward: z.string(),
   netReward: z.string(),
-  delegationStatus: CompletedDelegatorDetailsDelegationStatus$outboundSchema,
+  delegationStatus: z.literal("completed"),
 });
 
 export function completedDelegatorDetailsToJSON(

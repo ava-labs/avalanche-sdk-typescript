@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -19,13 +18,6 @@ import {
   PrimaryNetworkType$outboundSchema,
 } from "./primarynetworktype.js";
 
-export const PrimaryNetworkAddressActivityRequestEventType = {
-  PrimaryNetworkAddressActivity: "primary_network_address_activity",
-} as const;
-export type PrimaryNetworkAddressActivityRequestEventType = ClosedEnum<
-  typeof PrimaryNetworkAddressActivityRequestEventType
->;
-
 /**
  * Metadata for platform address activity event
  */
@@ -33,7 +25,7 @@ export type PrimaryNetworkAddressActivityRequestMetadata =
   PrimaryNetworkAddressActivityMetadata;
 
 export type PrimaryNetworkAddressActivityRequest = {
-  eventType: PrimaryNetworkAddressActivityRequestEventType;
+  eventType: "primary_network_address_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -44,15 +36,6 @@ export type PrimaryNetworkAddressActivityRequest = {
    */
   metadata: PrimaryNetworkAddressActivityMetadata;
 };
-
-/** @internal */
-export const PrimaryNetworkAddressActivityRequestEventType$inboundSchema:
-  z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityRequestEventType> = z
-    .nativeEnum(PrimaryNetworkAddressActivityRequestEventType);
-/** @internal */
-export const PrimaryNetworkAddressActivityRequestEventType$outboundSchema:
-  z.ZodNativeEnum<typeof PrimaryNetworkAddressActivityRequestEventType> =
-    PrimaryNetworkAddressActivityRequestEventType$inboundSchema;
 
 /** @internal */
 export const PrimaryNetworkAddressActivityRequestMetadata$inboundSchema:
@@ -105,7 +88,7 @@ export const PrimaryNetworkAddressActivityRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  eventType: PrimaryNetworkAddressActivityRequestEventType$inboundSchema,
+  eventType: z.literal("primary_network_address_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),
@@ -115,7 +98,7 @@ export const PrimaryNetworkAddressActivityRequest$inboundSchema: z.ZodType<
 });
 /** @internal */
 export type PrimaryNetworkAddressActivityRequest$Outbound = {
-  eventType: string;
+  eventType: "primary_network_address_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -130,7 +113,7 @@ export const PrimaryNetworkAddressActivityRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   PrimaryNetworkAddressActivityRequest
 > = z.object({
-  eventType: PrimaryNetworkAddressActivityRequestEventType$outboundSchema,
+  eventType: z.literal("primary_network_address_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),

@@ -1,5 +1,4 @@
-# Nfts
-(*data.nfts*)
+# Data.Nfts
 
 ## Overview
 

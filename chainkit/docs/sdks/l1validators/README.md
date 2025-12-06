@@ -1,5 +1,4 @@
-# L1Validators
-(*metrics.l1Validators*)
+# Metrics.L1Validators
 
 ## Overview
 

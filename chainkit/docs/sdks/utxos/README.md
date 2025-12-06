@@ -1,5 +1,4 @@
-# Utxos
-(*data.primaryNetwork.utxos*)
+# Data.PrimaryNetwork.Utxos
 
 ## Overview
 

@@ -16,7 +16,7 @@ export const tool$dataEvmBlocksListLatestAllChains: ToolDefinition<
   name: "data-evm-blocks-list-latest-all-chains",
   description: `List latest blocks across all supported EVM chains
 
-Lists the most recent blocks from all supported  EVM-compatible chains. The results can be filtered by network.`,
+Lists the most recent blocks from all supported EVM-compatible chains. The results can be filtered by network.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await dataEvmBlocksListLatestAllChains(

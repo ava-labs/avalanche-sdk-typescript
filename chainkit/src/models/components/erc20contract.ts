@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -32,11 +31,6 @@ import {
   ResourceLink$outboundSchema,
 } from "./resourcelink.js";
 
-export const Erc20ContractErcType = {
-  Erc20: "ERC-20",
-} as const;
-export type Erc20ContractErcType = ClosedEnum<typeof Erc20ContractErcType>;
-
 export type Erc20Contract = {
   /**
    * The contract name.
@@ -55,7 +49,7 @@ export type Erc20Contract = {
    */
   address: string;
   deploymentDetails?: ContractDeploymentDetails | undefined;
-  ercType: Erc20ContractErcType;
+  ercType: "ERC-20";
   /**
    * The contract symbol.
    */
@@ -66,15 +60,6 @@ export type Erc20Contract = {
   decimals: number;
   pricingProviders?: PricingProviders | undefined;
 };
-
-/** @internal */
-export const Erc20ContractErcType$inboundSchema: z.ZodNativeEnum<
-  typeof Erc20ContractErcType
-> = z.nativeEnum(Erc20ContractErcType);
-/** @internal */
-export const Erc20ContractErcType$outboundSchema: z.ZodNativeEnum<
-  typeof Erc20ContractErcType
-> = Erc20ContractErcType$inboundSchema;
 
 /** @internal */
 export const Erc20Contract$inboundSchema: z.ZodType<
@@ -93,7 +78,7 @@ export const Erc20Contract$inboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
-  ercType: Erc20ContractErcType$inboundSchema,
+  ercType: z.literal("ERC-20"),
   symbol: z.string().optional(),
   decimals: z.number(),
   pricingProviders: PricingProviders$inboundSchema.optional(),
@@ -111,7 +96,7 @@ export type Erc20Contract$Outbound = {
   tags?: Array<string> | undefined;
   address: string;
   deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
-  ercType: string;
+  ercType: "ERC-20";
   symbol?: string | undefined;
   decimals: number;
   pricingProviders?: PricingProviders$Outbound | undefined;
@@ -134,7 +119,7 @@ export const Erc20Contract$outboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
-  ercType: Erc20ContractErcType$outboundSchema,
+  ercType: z.literal("ERC-20"),
   symbol: z.string().optional(),
   decimals: z.number(),
   pricingProviders: PricingProviders$outboundSchema.optional(),

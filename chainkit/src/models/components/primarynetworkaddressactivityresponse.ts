@@ -7,11 +7,6 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  PrimaryNetworkAddressActivityEventType,
-  PrimaryNetworkAddressActivityEventType$inboundSchema,
-  PrimaryNetworkAddressActivityEventType$outboundSchema,
-} from "./primarynetworkaddressactivityeventtype.js";
-import {
   PrimaryNetworkAddressActivityMetadata,
   PrimaryNetworkAddressActivityMetadata$inboundSchema,
   PrimaryNetworkAddressActivityMetadata$Outbound,
@@ -31,7 +26,7 @@ export type PrimaryNetworkAddressActivityResponse = {
   createdAt: number;
   name: string;
   description: string;
-  eventType: PrimaryNetworkAddressActivityEventType;
+  eventType: "primary_network_address_activity";
   metadata: PrimaryNetworkAddressActivityMetadata;
 };
 
@@ -48,7 +43,7 @@ export const PrimaryNetworkAddressActivityResponse$inboundSchema: z.ZodType<
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
-  eventType: PrimaryNetworkAddressActivityEventType$inboundSchema,
+  eventType: z.literal("primary_network_address_activity"),
   metadata: PrimaryNetworkAddressActivityMetadata$inboundSchema,
 });
 /** @internal */
@@ -60,7 +55,7 @@ export type PrimaryNetworkAddressActivityResponse$Outbound = {
   createdAt: number;
   name: string;
   description: string;
-  eventType: string;
+  eventType: "primary_network_address_activity";
   metadata: PrimaryNetworkAddressActivityMetadata$Outbound;
 };
 
@@ -77,7 +72,7 @@ export const PrimaryNetworkAddressActivityResponse$outboundSchema: z.ZodType<
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
-  eventType: PrimaryNetworkAddressActivityEventType$outboundSchema,
+  eventType: z.literal("primary_network_address_activity"),
   metadata: PrimaryNetworkAddressActivityMetadata$outboundSchema,
 });
 

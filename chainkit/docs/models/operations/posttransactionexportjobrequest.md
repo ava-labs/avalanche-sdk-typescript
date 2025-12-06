@@ -38,3 +38,33 @@ const value: components.CreatePrimaryNetworkTransactionExportRequest = {
 };
 ```
 
+### `components.CreatePrimaryNetworkTransactionExportRequest`
+
+```typescript
+const value: components.CreatePrimaryNetworkTransactionExportRequest = {
+  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE",
+  firstDate: "2023-05-01",
+  lastDate: "2023-05-02",
+  options: {
+    includeChains: [
+      "p-chain",
+    ],
+  },
+};
+```
+
+### `components.CreatePrimaryNetworkTransactionExportRequest`
+
+```typescript
+const value: components.CreatePrimaryNetworkTransactionExportRequest = {
+  type: "TRANSACTION_EXPORT_PRIMARY_NETWORK_SIMPLE",
+  firstDate: "2023-05-01",
+  lastDate: "2023-05-02",
+  options: {
+    includeChains: [
+      "p-chain",
+    ],
+  },
+};
+```
+

@@ -3,6 +3,8 @@
  */
 
 import { RequestInput } from "../lib/http.js";
+import { ERR, Result } from "../types/fp.js";
+import { WebhookAuthenticationError } from "../types/webhooks.js";
 import {
   AfterErrorContext,
   AfterErrorHook,
@@ -16,7 +18,10 @@ import {
   Hooks,
   SDKInitHook,
   SDKInitOptions,
+  WebhookVerificationContext,
+  WebhookVerificationHook,
 } from "./types.js";
+import { WebhookSecurityHook } from "./webhook-security.js";
 
 import { initHooks } from "./registration.js";
 
@@ -26,9 +31,12 @@ export class SDKHooks implements Hooks {
   beforeRequestHooks: BeforeRequestHook[] = [];
   afterSuccessHooks: AfterSuccessHook[] = [];
   afterErrorHooks: AfterErrorHook[] = [];
+  webhookVerificationHooks: WebhookVerificationHook[] = [];
 
   constructor() {
-    const presetHooks: Array<Hook> = [];
+    const presetHooks: Array<Hook> = [
+      new WebhookSecurityHook(),
+    ];
 
     for (const hook of presetHooks) {
       if ("sdkInit" in hook) {
@@ -45,6 +53,9 @@ export class SDKHooks implements Hooks {
       }
       if ("afterError" in hook) {
         this.registerAfterErrorHook(hook);
+      }
+      if ("verifyWebhook" in hook) {
+        this.registerWebhookVerificationHook(hook);
       }
     }
     initHooks(this);
@@ -128,5 +139,25 @@ export class SDKHooks implements Hooks {
     }
 
     return { response: res, error: err };
+  }
+
+  registerWebhookVerificationHook(hook: WebhookVerificationHook) {
+    this.webhookVerificationHooks.push(hook);
+  }
+
+  async verifyWebhook(
+    hookCtx: WebhookVerificationContext,
+    { request, secret }: { request: Request; secret: string },
+  ): Promise<Result<true, WebhookAuthenticationError>> {
+    let result: Result<true, WebhookAuthenticationError> = ERR(
+      new WebhookAuthenticationError("No hooks registered to verify webhooks"),
+    );
+    for (const hook of this.webhookVerificationHooks) {
+      result = await hook.verifyWebhook(hookCtx, { request, secret });
+      if (!result.ok) {
+        return result;
+      }
+    }
+    return result;
   }
 }

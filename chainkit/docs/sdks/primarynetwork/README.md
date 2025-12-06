@@ -1,5 +1,4 @@
-# PrimaryNetwork
-(*data.primaryNetwork*)
+# Data.PrimaryNetwork
 
 ## Overview
 

@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,13 +25,6 @@ import {
   IcmRewardDetails$outboundSchema,
 } from "./icmrewarddetails.js";
 
-export const DeliveredSourceNotIndexedIcmMessageStatus = {
-  DeliveredSourceNotIndexed: "delivered_source_not_indexed",
-} as const;
-export type DeliveredSourceNotIndexedIcmMessageStatus = ClosedEnum<
-  typeof DeliveredSourceNotIndexedIcmMessageStatus
->;
-
 export type DeliveredSourceNotIndexedIcmMessage = {
   messageId: string;
   icmContractAddress: string;
@@ -49,17 +41,8 @@ export type DeliveredSourceNotIndexedIcmMessage = {
   receiptDelivered: boolean;
   rewardDetails: IcmRewardDetails;
   destinationTransaction: IcmDestinationTransaction;
-  status: DeliveredSourceNotIndexedIcmMessageStatus;
+  status: "delivered_source_not_indexed";
 };
-
-/** @internal */
-export const DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema:
-  z.ZodNativeEnum<typeof DeliveredSourceNotIndexedIcmMessageStatus> = z
-    .nativeEnum(DeliveredSourceNotIndexedIcmMessageStatus);
-/** @internal */
-export const DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema:
-  z.ZodNativeEnum<typeof DeliveredSourceNotIndexedIcmMessageStatus> =
-    DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema;
 
 /** @internal */
 export const DeliveredSourceNotIndexedIcmMessage$inboundSchema: z.ZodType<
@@ -82,7 +65,7 @@ export const DeliveredSourceNotIndexedIcmMessage$inboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: IcmRewardDetails$inboundSchema,
   destinationTransaction: IcmDestinationTransaction$inboundSchema,
-  status: DeliveredSourceNotIndexedIcmMessageStatus$inboundSchema,
+  status: z.literal("delivered_source_not_indexed"),
 });
 /** @internal */
 export type DeliveredSourceNotIndexedIcmMessage$Outbound = {
@@ -101,7 +84,7 @@ export type DeliveredSourceNotIndexedIcmMessage$Outbound = {
   receiptDelivered: boolean;
   rewardDetails: IcmRewardDetails$Outbound;
   destinationTransaction: IcmDestinationTransaction$Outbound;
-  status: string;
+  status: "delivered_source_not_indexed";
 };
 
 /** @internal */
@@ -125,7 +108,7 @@ export const DeliveredSourceNotIndexedIcmMessage$outboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: IcmRewardDetails$outboundSchema,
   destinationTransaction: IcmDestinationTransaction$outboundSchema,
-  status: DeliveredSourceNotIndexedIcmMessageStatus$outboundSchema,
+  status: z.literal("delivered_source_not_indexed"),
 });
 
 export function deliveredSourceNotIndexedIcmMessageToJSON(

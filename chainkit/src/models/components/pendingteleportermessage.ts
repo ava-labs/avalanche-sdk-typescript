@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,13 +25,6 @@ import {
   TeleporterSourceTransaction$outboundSchema,
 } from "./teleportersourcetransaction.js";
 
-export const PendingTeleporterMessageStatus = {
-  Pending: "pending",
-} as const;
-export type PendingTeleporterMessageStatus = ClosedEnum<
-  typeof PendingTeleporterMessageStatus
->;
-
 export type PendingTeleporterMessage = {
   messageId: string;
   teleporterContractAddress: string;
@@ -49,17 +41,8 @@ export type PendingTeleporterMessage = {
   receiptDelivered: boolean;
   rewardDetails: TeleporterRewardDetails;
   sourceTransaction: TeleporterSourceTransaction;
-  status: PendingTeleporterMessageStatus;
+  status: "pending";
 };
-
-/** @internal */
-export const PendingTeleporterMessageStatus$inboundSchema: z.ZodNativeEnum<
-  typeof PendingTeleporterMessageStatus
-> = z.nativeEnum(PendingTeleporterMessageStatus);
-/** @internal */
-export const PendingTeleporterMessageStatus$outboundSchema: z.ZodNativeEnum<
-  typeof PendingTeleporterMessageStatus
-> = PendingTeleporterMessageStatus$inboundSchema;
 
 /** @internal */
 export const PendingTeleporterMessage$inboundSchema: z.ZodType<
@@ -82,7 +65,7 @@ export const PendingTeleporterMessage$inboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: TeleporterRewardDetails$inboundSchema,
   sourceTransaction: TeleporterSourceTransaction$inboundSchema,
-  status: PendingTeleporterMessageStatus$inboundSchema,
+  status: z.literal("pending"),
 });
 /** @internal */
 export type PendingTeleporterMessage$Outbound = {
@@ -101,7 +84,7 @@ export type PendingTeleporterMessage$Outbound = {
   receiptDelivered: boolean;
   rewardDetails: TeleporterRewardDetails$Outbound;
   sourceTransaction: TeleporterSourceTransaction$Outbound;
-  status: string;
+  status: "pending";
 };
 
 /** @internal */
@@ -125,7 +108,7 @@ export const PendingTeleporterMessage$outboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: TeleporterRewardDetails$outboundSchema,
   sourceTransaction: TeleporterSourceTransaction$outboundSchema,
-  status: PendingTeleporterMessageStatus$outboundSchema,
+  status: z.literal("pending"),
 });
 
 export function pendingTeleporterMessageToJSON(

@@ -7,11 +7,6 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
-  ValidatorActivityEventType,
-  ValidatorActivityEventType$inboundSchema,
-  ValidatorActivityEventType$outboundSchema,
-} from "./validatoractivityeventtype.js";
-import {
   ValidatorActivityMetadata,
   ValidatorActivityMetadata$inboundSchema,
   ValidatorActivityMetadata$Outbound,
@@ -31,7 +26,7 @@ export type ValidatorActivityResponse = {
   createdAt: number;
   name: string;
   description: string;
-  eventType: ValidatorActivityEventType;
+  eventType: "validator_activity";
   metadata: ValidatorActivityMetadata;
 };
 
@@ -48,7 +43,7 @@ export const ValidatorActivityResponse$inboundSchema: z.ZodType<
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
-  eventType: ValidatorActivityEventType$inboundSchema,
+  eventType: z.literal("validator_activity"),
   metadata: ValidatorActivityMetadata$inboundSchema,
 });
 /** @internal */
@@ -60,7 +55,7 @@ export type ValidatorActivityResponse$Outbound = {
   createdAt: number;
   name: string;
   description: string;
-  eventType: string;
+  eventType: "validator_activity";
   metadata: ValidatorActivityMetadata$Outbound;
 };
 
@@ -77,7 +72,7 @@ export const ValidatorActivityResponse$outboundSchema: z.ZodType<
   createdAt: z.number(),
   name: z.string(),
   description: z.string(),
-  eventType: ValidatorActivityEventType$outboundSchema,
+  eventType: z.literal("validator_activity"),
   metadata: ValidatorActivityMetadata$outboundSchema,
 });
 

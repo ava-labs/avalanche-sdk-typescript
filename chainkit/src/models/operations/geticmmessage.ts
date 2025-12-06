@@ -23,11 +23,9 @@ export type GetIcmMessageRequest = {
  * Successful response
  */
 export type GetIcmMessageResponse =
-  | (components.DeliveredIcmMessage & { status: "delivered" })
-  | (components.PendingIcmMessage & { status: "pending" })
-  | (components.DeliveredSourceNotIndexedIcmMessage & {
-    status: "delivered_source_not_indexed";
-  });
+  | components.PendingIcmMessage
+  | components.DeliveredIcmMessage
+  | components.DeliveredSourceNotIndexedIcmMessage;
 
 /** @internal */
 export const GetIcmMessageRequest$inboundSchema: z.ZodType<
@@ -74,29 +72,15 @@ export const GetIcmMessageResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.DeliveredIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  components.PendingIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("pending") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  components.DeliveredSourceNotIndexedIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
-      v,
-    ) => ({ status: v.status })),
-  ),
+  components.PendingIcmMessage$inboundSchema,
+  components.DeliveredIcmMessage$inboundSchema,
+  components.DeliveredSourceNotIndexedIcmMessage$inboundSchema,
 ]);
 /** @internal */
 export type GetIcmMessageResponse$Outbound =
-  | (components.DeliveredIcmMessage$Outbound & { status: "delivered" })
-  | (components.PendingIcmMessage$Outbound & { status: "pending" })
-  | (components.DeliveredSourceNotIndexedIcmMessage$Outbound & {
-    status: "delivered_source_not_indexed";
-  });
+  | components.PendingIcmMessage$Outbound
+  | components.DeliveredIcmMessage$Outbound
+  | components.DeliveredSourceNotIndexedIcmMessage$Outbound;
 
 /** @internal */
 export const GetIcmMessageResponse$outboundSchema: z.ZodType<
@@ -104,21 +88,9 @@ export const GetIcmMessageResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetIcmMessageResponse
 > = z.union([
-  components.DeliveredIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  components.PendingIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("pending") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  components.DeliveredSourceNotIndexedIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
-      v,
-    ) => ({ status: v.status })),
-  ),
+  components.PendingIcmMessage$outboundSchema,
+  components.DeliveredIcmMessage$outboundSchema,
+  components.DeliveredSourceNotIndexedIcmMessage$outboundSchema,
 ]);
 
 export function getIcmMessageResponseToJSON(

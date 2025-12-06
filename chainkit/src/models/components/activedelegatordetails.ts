@@ -4,16 +4,8 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-
-export const ActiveDelegatorDetailsDelegationStatus = {
-  Active: "active",
-} as const;
-export type ActiveDelegatorDetailsDelegationStatus = ClosedEnum<
-  typeof ActiveDelegatorDetailsDelegationStatus
->;
 
 export type ActiveDelegatorDetails = {
   txHash: string;
@@ -25,18 +17,8 @@ export type ActiveDelegatorDetails = {
   endTimestamp: number;
   estimatedGrossReward: string;
   estimatedNetReward: string;
-  delegationStatus: ActiveDelegatorDetailsDelegationStatus;
+  delegationStatus: "active";
 };
-
-/** @internal */
-export const ActiveDelegatorDetailsDelegationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof ActiveDelegatorDetailsDelegationStatus> = z.nativeEnum(
-    ActiveDelegatorDetailsDelegationStatus,
-  );
-/** @internal */
-export const ActiveDelegatorDetailsDelegationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof ActiveDelegatorDetailsDelegationStatus> =
-    ActiveDelegatorDetailsDelegationStatus$inboundSchema;
 
 /** @internal */
 export const ActiveDelegatorDetails$inboundSchema: z.ZodType<
@@ -53,7 +35,7 @@ export const ActiveDelegatorDetails$inboundSchema: z.ZodType<
   endTimestamp: z.number(),
   estimatedGrossReward: z.string(),
   estimatedNetReward: z.string(),
-  delegationStatus: ActiveDelegatorDetailsDelegationStatus$inboundSchema,
+  delegationStatus: z.literal("active"),
 });
 /** @internal */
 export type ActiveDelegatorDetails$Outbound = {
@@ -66,7 +48,7 @@ export type ActiveDelegatorDetails$Outbound = {
   endTimestamp: number;
   estimatedGrossReward: string;
   estimatedNetReward: string;
-  delegationStatus: string;
+  delegationStatus: "active";
 };
 
 /** @internal */
@@ -84,7 +66,7 @@ export const ActiveDelegatorDetails$outboundSchema: z.ZodType<
   endTimestamp: z.number(),
   estimatedGrossReward: z.string(),
   estimatedNetReward: z.string(),
-  delegationStatus: ActiveDelegatorDetailsDelegationStatus$outboundSchema,
+  delegationStatus: z.literal("active"),
 });
 
 export function activeDelegatorDetailsToJSON(

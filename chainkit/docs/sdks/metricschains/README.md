@@ -1,5 +1,4 @@
-# MetricsChains
-(*metrics.chains*)
+# Metrics.Chains
 
 ## Overview
 
