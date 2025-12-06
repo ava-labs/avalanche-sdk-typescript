@@ -16,7 +16,7 @@ export const tool$dataEvmTransactionsListLatestAllChains: ToolDefinition<
   name: "data-evm-transactions-list-latest-all-chains",
   description: `List the latest transactions across all supported EVM chains
 
-Lists the most recent transactions from all supported EVM-compatible  chains. The results can be filtered based on transaction status.`,
+Lists the most recent transactions from all supported EVM-compatible chains. The results can be filtered based on transaction status.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await dataEvmTransactionsListLatestAllChains(

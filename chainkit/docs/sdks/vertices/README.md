@@ -1,5 +1,4 @@
-# Vertices
-(*data.primaryNetwork.vertices*)
+# Data.PrimaryNetwork.Vertices
 
 ## Overview
 

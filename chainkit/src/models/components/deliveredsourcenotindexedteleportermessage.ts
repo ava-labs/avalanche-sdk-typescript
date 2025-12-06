@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,13 +25,6 @@ import {
   TeleporterRewardDetails$outboundSchema,
 } from "./teleporterrewarddetails.js";
 
-export const DeliveredSourceNotIndexedTeleporterMessageStatus = {
-  DeliveredSourceNotIndexed: "delivered_source_not_indexed",
-} as const;
-export type DeliveredSourceNotIndexedTeleporterMessageStatus = ClosedEnum<
-  typeof DeliveredSourceNotIndexedTeleporterMessageStatus
->;
-
 export type DeliveredSourceNotIndexedTeleporterMessage = {
   messageId: string;
   teleporterContractAddress: string;
@@ -49,17 +41,8 @@ export type DeliveredSourceNotIndexedTeleporterMessage = {
   receiptDelivered: boolean;
   rewardDetails: TeleporterRewardDetails;
   destinationTransaction: TeleporterDestinationTransaction;
-  status: DeliveredSourceNotIndexedTeleporterMessageStatus;
+  status: "delivered_source_not_indexed";
 };
-
-/** @internal */
-export const DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema:
-  z.ZodNativeEnum<typeof DeliveredSourceNotIndexedTeleporterMessageStatus> = z
-    .nativeEnum(DeliveredSourceNotIndexedTeleporterMessageStatus);
-/** @internal */
-export const DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema:
-  z.ZodNativeEnum<typeof DeliveredSourceNotIndexedTeleporterMessageStatus> =
-    DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema;
 
 /** @internal */
 export const DeliveredSourceNotIndexedTeleporterMessage$inboundSchema:
@@ -80,7 +63,7 @@ export const DeliveredSourceNotIndexedTeleporterMessage$inboundSchema:
       receiptDelivered: z.boolean(),
       rewardDetails: TeleporterRewardDetails$inboundSchema,
       destinationTransaction: TeleporterDestinationTransaction$inboundSchema,
-      status: DeliveredSourceNotIndexedTeleporterMessageStatus$inboundSchema,
+      status: z.literal("delivered_source_not_indexed"),
     });
 /** @internal */
 export type DeliveredSourceNotIndexedTeleporterMessage$Outbound = {
@@ -99,7 +82,7 @@ export type DeliveredSourceNotIndexedTeleporterMessage$Outbound = {
   receiptDelivered: boolean;
   rewardDetails: TeleporterRewardDetails$Outbound;
   destinationTransaction: TeleporterDestinationTransaction$Outbound;
-  status: string;
+  status: "delivered_source_not_indexed";
 };
 
 /** @internal */
@@ -124,7 +107,7 @@ export const DeliveredSourceNotIndexedTeleporterMessage$outboundSchema:
     receiptDelivered: z.boolean(),
     rewardDetails: TeleporterRewardDetails$outboundSchema,
     destinationTransaction: TeleporterDestinationTransaction$outboundSchema,
-    status: DeliveredSourceNotIndexedTeleporterMessageStatus$outboundSchema,
+    status: z.literal("delivered_source_not_indexed"),
   });
 
 export function deliveredSourceNotIndexedTeleporterMessageToJSON(

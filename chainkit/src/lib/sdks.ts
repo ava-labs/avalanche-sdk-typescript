@@ -12,6 +12,7 @@ import {
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
 import { ERR, OK, Result } from "../types/fp.js";
+import { WebhookAuthenticationError } from "../types/webhooks.js";
 import { stringToBase64 } from "./base64.js";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "./config.js";
 import { encodeForm } from "./encodings.js";
@@ -301,6 +302,12 @@ export class ClientSDK {
         }
       },
     );
+  }
+
+  async _verifyWebhook(
+    { request, secret }: { request: Request; secret: string },
+  ): Promise<Result<true, WebhookAuthenticationError>> {
+    return this.#hooks.verifyWebhook({}, { request, secret });
   }
 }
 

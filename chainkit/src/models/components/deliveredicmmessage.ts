@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -32,13 +31,6 @@ import {
   IcmSourceTransaction$outboundSchema,
 } from "./icmsourcetransaction.js";
 
-export const DeliveredIcmMessageStatus = {
-  Delivered: "delivered",
-} as const;
-export type DeliveredIcmMessageStatus = ClosedEnum<
-  typeof DeliveredIcmMessageStatus
->;
-
 export type DeliveredIcmMessage = {
   messageId: string;
   icmContractAddress: string;
@@ -56,17 +48,8 @@ export type DeliveredIcmMessage = {
   rewardDetails: IcmRewardDetails;
   sourceTransaction: IcmSourceTransaction;
   destinationTransaction: IcmDestinationTransaction;
-  status: DeliveredIcmMessageStatus;
+  status: "delivered";
 };
-
-/** @internal */
-export const DeliveredIcmMessageStatus$inboundSchema: z.ZodNativeEnum<
-  typeof DeliveredIcmMessageStatus
-> = z.nativeEnum(DeliveredIcmMessageStatus);
-/** @internal */
-export const DeliveredIcmMessageStatus$outboundSchema: z.ZodNativeEnum<
-  typeof DeliveredIcmMessageStatus
-> = DeliveredIcmMessageStatus$inboundSchema;
 
 /** @internal */
 export const DeliveredIcmMessage$inboundSchema: z.ZodType<
@@ -90,7 +73,7 @@ export const DeliveredIcmMessage$inboundSchema: z.ZodType<
   rewardDetails: IcmRewardDetails$inboundSchema,
   sourceTransaction: IcmSourceTransaction$inboundSchema,
   destinationTransaction: IcmDestinationTransaction$inboundSchema,
-  status: DeliveredIcmMessageStatus$inboundSchema,
+  status: z.literal("delivered"),
 });
 /** @internal */
 export type DeliveredIcmMessage$Outbound = {
@@ -110,7 +93,7 @@ export type DeliveredIcmMessage$Outbound = {
   rewardDetails: IcmRewardDetails$Outbound;
   sourceTransaction: IcmSourceTransaction$Outbound;
   destinationTransaction: IcmDestinationTransaction$Outbound;
-  status: string;
+  status: "delivered";
 };
 
 /** @internal */
@@ -135,7 +118,7 @@ export const DeliveredIcmMessage$outboundSchema: z.ZodType<
   rewardDetails: IcmRewardDetails$outboundSchema,
   sourceTransaction: IcmSourceTransaction$outboundSchema,
   destinationTransaction: IcmDestinationTransaction$outboundSchema,
-  status: DeliveredIcmMessageStatus$outboundSchema,
+  status: z.literal("delivered"),
 });
 
 export function deliveredIcmMessageToJSON(

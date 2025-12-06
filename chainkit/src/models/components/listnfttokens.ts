@@ -19,28 +19,43 @@ import {
   Erc721Token$outboundSchema,
 } from "./erc721token.js";
 
-export type Token = Erc721Token | Erc1155Token;
+export type Token =
+  | (Erc721Token & { ercType: "ERC-721" })
+  | (Erc1155Token & { ercType: "ERC-1155" });
 
 export type ListNftTokens = {
   /**
    * A token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted or empty, there are no subsequent pages.
    */
   nextPageToken?: string | undefined;
-  tokens: Array<Erc721Token | Erc1155Token>;
+  tokens: Array<
+    | (Erc721Token & { ercType: "ERC-721" })
+    | (Erc1155Token & { ercType: "ERC-1155" })
+  >;
 };
 
 /** @internal */
 export const Token$inboundSchema: z.ZodType<Token, z.ZodTypeDef, unknown> = z
-  .union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]);
+  .union([
+    Erc721Token$inboundSchema.and(z.object({ ercType: z.literal("ERC-721") })),
+    Erc1155Token$inboundSchema.and(
+      z.object({ ercType: z.literal("ERC-1155") }),
+    ),
+  ]);
 /** @internal */
-export type Token$Outbound = Erc721Token$Outbound | Erc1155Token$Outbound;
+export type Token$Outbound =
+  | (Erc721Token$Outbound & { ercType: "ERC-721" })
+  | (Erc1155Token$Outbound & { ercType: "ERC-1155" });
 
 /** @internal */
 export const Token$outboundSchema: z.ZodType<
   Token$Outbound,
   z.ZodTypeDef,
   Token
-> = z.union([Erc721Token$outboundSchema, Erc1155Token$outboundSchema]);
+> = z.union([
+  Erc721Token$outboundSchema.and(z.object({ ercType: z.literal("ERC-721") })),
+  Erc1155Token$outboundSchema.and(z.object({ ercType: z.literal("ERC-1155") })),
+]);
 
 export function tokenToJSON(token: Token): string {
   return JSON.stringify(Token$outboundSchema.parse(token));
@@ -63,13 +78,23 @@ export const ListNftTokens$inboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   tokens: z.array(
-    z.union([Erc721Token$inboundSchema, Erc1155Token$inboundSchema]),
+    z.union([
+      Erc721Token$inboundSchema.and(
+        z.object({ ercType: z.literal("ERC-721") }),
+      ),
+      Erc1155Token$inboundSchema.and(
+        z.object({ ercType: z.literal("ERC-1155") }),
+      ),
+    ]),
   ),
 });
 /** @internal */
 export type ListNftTokens$Outbound = {
   nextPageToken?: string | undefined;
-  tokens: Array<Erc721Token$Outbound | Erc1155Token$Outbound>;
+  tokens: Array<
+    | (Erc721Token$Outbound & { ercType: "ERC-721" })
+    | (Erc1155Token$Outbound & { ercType: "ERC-1155" })
+  >;
 };
 
 /** @internal */
@@ -80,7 +105,14 @@ export const ListNftTokens$outboundSchema: z.ZodType<
 > = z.object({
   nextPageToken: z.string().optional(),
   tokens: z.array(
-    z.union([Erc721Token$outboundSchema, Erc1155Token$outboundSchema]),
+    z.union([
+      Erc721Token$outboundSchema.and(
+        z.object({ ercType: z.literal("ERC-721") }),
+      ),
+      Erc1155Token$outboundSchema.and(
+        z.object({ ercType: z.literal("ERC-1155") }),
+      ),
+    ]),
   ),
 });
 

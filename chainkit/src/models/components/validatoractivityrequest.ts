@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -19,20 +18,13 @@ import {
   ValidatorActivityMetadata$outboundSchema,
 } from "./validatoractivitymetadata.js";
 
-export const ValidatorActivityRequestEventType = {
-  ValidatorActivity: "validator_activity",
-} as const;
-export type ValidatorActivityRequestEventType = ClosedEnum<
-  typeof ValidatorActivityRequestEventType
->;
-
 /**
  * Metadata for platform validator activity event
  */
 export type ValidatorActivityRequestMetadata = ValidatorActivityMetadata;
 
 export type ValidatorActivityRequest = {
-  eventType: ValidatorActivityRequestEventType;
+  eventType: "validator_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -42,15 +34,6 @@ export type ValidatorActivityRequest = {
    */
   metadata: ValidatorActivityMetadata;
 };
-
-/** @internal */
-export const ValidatorActivityRequestEventType$inboundSchema: z.ZodNativeEnum<
-  typeof ValidatorActivityRequestEventType
-> = z.nativeEnum(ValidatorActivityRequestEventType);
-/** @internal */
-export const ValidatorActivityRequestEventType$outboundSchema: z.ZodNativeEnum<
-  typeof ValidatorActivityRequestEventType
-> = ValidatorActivityRequestEventType$inboundSchema;
 
 /** @internal */
 export const ValidatorActivityRequestMetadata$inboundSchema: z.ZodType<
@@ -94,7 +77,7 @@ export const ValidatorActivityRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  eventType: ValidatorActivityRequestEventType$inboundSchema,
+  eventType: z.literal("validator_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),
@@ -103,7 +86,7 @@ export const ValidatorActivityRequest$inboundSchema: z.ZodType<
 });
 /** @internal */
 export type ValidatorActivityRequest$Outbound = {
-  eventType: string;
+  eventType: "validator_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -117,7 +100,7 @@ export const ValidatorActivityRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ValidatorActivityRequest
 > = z.object({
-  eventType: ValidatorActivityRequestEventType$outboundSchema,
+  eventType: z.literal("validator_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),

@@ -1,5 +1,4 @@
 # AVAXSupply
-(*avaxSupply*)
 
 ## Overview
 

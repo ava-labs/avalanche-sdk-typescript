@@ -17,15 +17,13 @@ import {
 /**
  * Event type
  */
-export const WebhookAddressActivityResponseEventType = {
+export const EventTypeEnum = {
   AddressActivity: "address_activity",
 } as const;
 /**
  * Event type
  */
-export type WebhookAddressActivityResponseEventType = ClosedEnum<
-  typeof WebhookAddressActivityResponseEventType
->;
+export type EventTypeEnum = ClosedEnum<typeof EventTypeEnum>;
 
 export type WebhookAddressActivityResponse = {
   /**
@@ -35,7 +33,7 @@ export type WebhookAddressActivityResponse = {
   /**
    * Event type
    */
-  eventType: WebhookAddressActivityResponseEventType;
+  eventType: EventTypeEnum;
   /**
    * Message ID
    */
@@ -47,13 +45,13 @@ export type WebhookAddressActivityResponse = {
 };
 
 /** @internal */
-export const WebhookAddressActivityResponseEventType$inboundSchema:
-  z.ZodNativeEnum<typeof WebhookAddressActivityResponseEventType> = z
-    .nativeEnum(WebhookAddressActivityResponseEventType);
+export const EventTypeEnum$inboundSchema: z.ZodNativeEnum<
+  typeof EventTypeEnum
+> = z.nativeEnum(EventTypeEnum);
 /** @internal */
-export const WebhookAddressActivityResponseEventType$outboundSchema:
-  z.ZodNativeEnum<typeof WebhookAddressActivityResponseEventType> =
-    WebhookAddressActivityResponseEventType$inboundSchema;
+export const EventTypeEnum$outboundSchema: z.ZodNativeEnum<
+  typeof EventTypeEnum
+> = EventTypeEnum$inboundSchema;
 
 /** @internal */
 export const WebhookAddressActivityResponse$inboundSchema: z.ZodType<
@@ -62,7 +60,7 @@ export const WebhookAddressActivityResponse$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   webhookId: z.string(),
-  eventType: WebhookAddressActivityResponseEventType$inboundSchema,
+  eventType: EventTypeEnum$inboundSchema,
   messageId: z.string(),
   event: TransactionEvent$inboundSchema,
 });
@@ -81,7 +79,7 @@ export const WebhookAddressActivityResponse$outboundSchema: z.ZodType<
   WebhookAddressActivityResponse
 > = z.object({
   webhookId: z.string(),
-  eventType: WebhookAddressActivityResponseEventType$outboundSchema,
+  eventType: EventTypeEnum$outboundSchema,
   messageId: z.string(),
   event: TransactionEvent$outboundSchema,
 });

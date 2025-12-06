@@ -1,5 +1,4 @@
-# Addresses
-(*webhooks.addresses*)
+# Webhooks.Addresses
 
 ## Overview
 

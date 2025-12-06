@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -19,13 +18,6 @@ import {
   Rewards$Outbound,
   Rewards$outboundSchema,
 } from "./rewards.js";
-
-export const CompletedValidatorDetailsValidationStatus = {
-  Completed: "completed",
-} as const;
-export type CompletedValidatorDetailsValidationStatus = ClosedEnum<
-  typeof CompletedValidatorDetailsValidationStatus
->;
 
 export type CompletedValidatorDetails = {
   txHash: string;
@@ -45,17 +37,8 @@ export type CompletedValidatorDetails = {
   delegatorCount: number;
   amountDelegated?: string | undefined;
   rewards: Rewards;
-  validationStatus: CompletedValidatorDetailsValidationStatus;
+  validationStatus: "completed";
 };
-
-/** @internal */
-export const CompletedValidatorDetailsValidationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof CompletedValidatorDetailsValidationStatus> = z
-    .nativeEnum(CompletedValidatorDetailsValidationStatus);
-/** @internal */
-export const CompletedValidatorDetailsValidationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof CompletedValidatorDetailsValidationStatus> =
-    CompletedValidatorDetailsValidationStatus$inboundSchema;
 
 /** @internal */
 export const CompletedValidatorDetails$inboundSchema: z.ZodType<
@@ -74,7 +57,7 @@ export const CompletedValidatorDetails$inboundSchema: z.ZodType<
   delegatorCount: z.number(),
   amountDelegated: z.string().optional(),
   rewards: Rewards$inboundSchema,
-  validationStatus: CompletedValidatorDetailsValidationStatus$inboundSchema,
+  validationStatus: z.literal("completed"),
 });
 /** @internal */
 export type CompletedValidatorDetails$Outbound = {
@@ -89,7 +72,7 @@ export type CompletedValidatorDetails$Outbound = {
   delegatorCount: number;
   amountDelegated?: string | undefined;
   rewards: Rewards$Outbound;
-  validationStatus: string;
+  validationStatus: "completed";
 };
 
 /** @internal */
@@ -109,7 +92,7 @@ export const CompletedValidatorDetails$outboundSchema: z.ZodType<
   delegatorCount: z.number(),
   amountDelegated: z.string().optional(),
   rewards: Rewards$outboundSchema,
-  validationStatus: CompletedValidatorDetailsValidationStatus$outboundSchema,
+  validationStatus: z.literal("completed"),
 });
 
 export function completedValidatorDetailsToJSON(

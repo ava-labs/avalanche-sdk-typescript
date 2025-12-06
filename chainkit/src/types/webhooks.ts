@@ -4,4 +4,8 @@
 
 export type WebhookRecipient = {
   url: string;
+  secret: string;
 };
+export class WebhookAuthenticationError extends Error {
+  override name = "WebhookAuthenticationError";
+}

@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,11 +25,6 @@ import {
   ResourceLink$outboundSchema,
 } from "./resourcelink.js";
 
-export const Erc721ContractErcType = {
-  Erc721: "ERC-721",
-} as const;
-export type Erc721ContractErcType = ClosedEnum<typeof Erc721ContractErcType>;
-
 export type Erc721Contract = {
   /**
    * The contract name.
@@ -49,21 +43,12 @@ export type Erc721Contract = {
    */
   address: string;
   deploymentDetails?: ContractDeploymentDetails | undefined;
-  ercType: Erc721ContractErcType;
+  ercType: "ERC-721";
   /**
    * The contract symbol.
    */
   symbol?: string | undefined;
 };
-
-/** @internal */
-export const Erc721ContractErcType$inboundSchema: z.ZodNativeEnum<
-  typeof Erc721ContractErcType
-> = z.nativeEnum(Erc721ContractErcType);
-/** @internal */
-export const Erc721ContractErcType$outboundSchema: z.ZodNativeEnum<
-  typeof Erc721ContractErcType
-> = Erc721ContractErcType$inboundSchema;
 
 /** @internal */
 export const Erc721Contract$inboundSchema: z.ZodType<
@@ -82,7 +67,7 @@ export const Erc721Contract$inboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
-  ercType: Erc721ContractErcType$inboundSchema,
+  ercType: z.literal("ERC-721"),
   symbol: z.string().optional(),
 });
 /** @internal */
@@ -98,7 +83,7 @@ export type Erc721Contract$Outbound = {
   tags?: Array<string> | undefined;
   address: string;
   deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
-  ercType: string;
+  ercType: "ERC-721";
   symbol?: string | undefined;
 };
 
@@ -119,7 +104,7 @@ export const Erc721Contract$outboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
-  ercType: Erc721ContractErcType$outboundSchema,
+  ercType: z.literal("ERC-721"),
   symbol: z.string().optional(),
 });
 

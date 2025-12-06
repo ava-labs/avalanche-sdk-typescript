@@ -1,5 +1,4 @@
-# EvmChains
-(*data.evm.chains*)
+# Data.Evm.Chains
 
 ## Overview
 

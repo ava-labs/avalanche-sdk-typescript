@@ -1,5 +1,4 @@
-# PrimaryNetworkTransactions
-(*data.primaryNetwork.transactions*)
+# Data.PrimaryNetwork.Transactions
 
 ## Overview
 

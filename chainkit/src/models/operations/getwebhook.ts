@@ -23,7 +23,7 @@ export type GetWebhookRequest = {
  * Successful response
  */
 export type GetWebhookResponse =
-  | components.EVMAddressActivityResponse
+  | (components.EVMAddressActivityResponse & { eventType: "address_activity" })
   | components.PrimaryNetworkAddressActivityResponse
   | components.ValidatorActivityResponse;
 
@@ -72,13 +72,17 @@ export const GetWebhookResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.EVMAddressActivityResponse$inboundSchema,
+  components.EVMAddressActivityResponse$inboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
   components.PrimaryNetworkAddressActivityResponse$inboundSchema,
   components.ValidatorActivityResponse$inboundSchema,
 ]);
 /** @internal */
 export type GetWebhookResponse$Outbound =
-  | components.EVMAddressActivityResponse$Outbound
+  | (components.EVMAddressActivityResponse$Outbound & {
+    eventType: "address_activity";
+  })
   | components.PrimaryNetworkAddressActivityResponse$Outbound
   | components.ValidatorActivityResponse$Outbound;
 
@@ -88,7 +92,9 @@ export const GetWebhookResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetWebhookResponse
 > = z.union([
-  components.EVMAddressActivityResponse$outboundSchema,
+  components.EVMAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
   components.PrimaryNetworkAddressActivityResponse$outboundSchema,
   components.ValidatorActivityResponse$outboundSchema,
 ]);

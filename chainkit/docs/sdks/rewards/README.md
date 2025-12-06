@@ -1,5 +1,4 @@
-# Rewards
-(*data.primaryNetwork.rewards*)
+# Data.PrimaryNetwork.Rewards
 
 ## Overview
 

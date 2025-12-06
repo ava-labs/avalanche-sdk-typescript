@@ -1,5 +1,4 @@
-# SignatureAggregator
-(*data.signatureAggregator*)
+# Data.SignatureAggregator
 
 ## Overview
 

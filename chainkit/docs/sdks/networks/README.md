@@ -1,5 +1,4 @@
-# Networks
-(*metrics.networks*)
+# Metrics.Networks
 
 ## Overview
 
