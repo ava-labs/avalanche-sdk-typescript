@@ -25,9 +25,17 @@ export type NativeTransaction = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
+  /**
+   * The block creation (proposal) timestamp in milliseconds. Available only after Granite upgrade.
+   */
+  blockTimestampMilliseconds?: number | undefined;
+  /**
+   * Minimum block delay in milliseconds. Available only after Granite upgrade.
+   */
+  blockMinDelayExcess?: number | undefined;
   /**
    * The block hash identifier.
    */
@@ -82,6 +90,8 @@ export const NativeTransaction$inboundSchema: z.ZodType<
 > = z.object({
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
+  blockMinDelayExcess: z.number().optional(),
   blockHash: z.string(),
   chainId: z.string(),
   blockIndex: z.number(),
@@ -101,6 +111,8 @@ export const NativeTransaction$inboundSchema: z.ZodType<
 export type NativeTransaction$Outbound = {
   blockNumber: string;
   blockTimestamp: number;
+  blockTimestampMilliseconds?: number | undefined;
+  blockMinDelayExcess?: number | undefined;
   blockHash: string;
   chainId: string;
   blockIndex: number;
@@ -125,6 +137,8 @@ export const NativeTransaction$outboundSchema: z.ZodType<
 > = z.object({
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
+  blockMinDelayExcess: z.number().optional(),
   blockHash: z.string(),
   chainId: z.string(),
   blockIndex: z.number(),

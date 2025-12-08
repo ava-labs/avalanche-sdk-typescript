@@ -1,5 +1,4 @@
 # Data
-(*data*)
 
 ## Overview
 

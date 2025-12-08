@@ -1,5 +1,4 @@
-# PrimaryNetworkBalances
-(*data.primaryNetwork.balances*)
+# Data.PrimaryNetwork.Balances
 
 ## Overview
 

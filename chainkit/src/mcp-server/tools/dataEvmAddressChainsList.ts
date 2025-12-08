@@ -14,7 +14,7 @@ export const tool$dataEvmAddressChainsList: ToolDefinition<typeof args> = {
   name: "data-evm-address-chains-list",
   description: `List all chains associated with a given address
 
-Lists the chains where the specified address has  participated in transactions or ERC token transfers,  either as a sender or receiver. The data is refreshed every 15  minutes.`,
+Lists the chains where the specified address has participated in transactions or ERC token transfers, either as a sender or receiver. The data is refreshed every 15 minutes.`,
   args,
   tool: async (client, args, ctx) => {
     const [result, apiCall] = await dataEvmAddressChainsList(

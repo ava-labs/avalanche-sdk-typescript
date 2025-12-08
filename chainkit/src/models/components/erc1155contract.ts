@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -32,11 +31,6 @@ import {
   ResourceLink$outboundSchema,
 } from "./resourcelink.js";
 
-export const Erc1155ContractErcType = {
-  Erc1155: "ERC-1155",
-} as const;
-export type Erc1155ContractErcType = ClosedEnum<typeof Erc1155ContractErcType>;
-
 export type Erc1155Contract = {
   /**
    * The contract name.
@@ -55,22 +49,13 @@ export type Erc1155Contract = {
    */
   address: string;
   deploymentDetails?: ContractDeploymentDetails | undefined;
-  ercType: Erc1155ContractErcType;
+  ercType: "ERC-1155";
   /**
    * The contract symbol.
    */
   symbol?: string | undefined;
   pricingProviders?: PricingProviders | undefined;
 };
-
-/** @internal */
-export const Erc1155ContractErcType$inboundSchema: z.ZodNativeEnum<
-  typeof Erc1155ContractErcType
-> = z.nativeEnum(Erc1155ContractErcType);
-/** @internal */
-export const Erc1155ContractErcType$outboundSchema: z.ZodNativeEnum<
-  typeof Erc1155ContractErcType
-> = Erc1155ContractErcType$inboundSchema;
 
 /** @internal */
 export const Erc1155Contract$inboundSchema: z.ZodType<
@@ -89,7 +74,7 @@ export const Erc1155Contract$inboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
-  ercType: Erc1155ContractErcType$inboundSchema,
+  ercType: z.literal("ERC-1155"),
   symbol: z.string().optional(),
   pricingProviders: PricingProviders$inboundSchema.optional(),
 });
@@ -106,7 +91,7 @@ export type Erc1155Contract$Outbound = {
   tags?: Array<string> | undefined;
   address: string;
   deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
-  ercType: string;
+  ercType: "ERC-1155";
   symbol?: string | undefined;
   pricingProviders?: PricingProviders$Outbound | undefined;
 };
@@ -128,7 +113,7 @@ export const Erc1155Contract$outboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
-  ercType: Erc1155ContractErcType$outboundSchema,
+  ercType: z.literal("ERC-1155"),
   symbol: z.string().optional(),
   pricingProviders: PricingProviders$outboundSchema.optional(),
 });

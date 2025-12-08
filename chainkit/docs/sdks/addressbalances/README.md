@@ -1,5 +1,4 @@
-# AddressBalances
-(*data.evm.address.balances*)
+# Data.Evm.Address.Balances
 
 ## Overview
 

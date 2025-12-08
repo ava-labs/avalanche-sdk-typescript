@@ -132,14 +132,10 @@ export const GetTokenDetailsResponse$inboundSchema: z.ZodType<
   unknown
 > = z.union([
   components.Erc721Token$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-721") }),
   ),
   components.Erc1155Token$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-1155") }),
   ),
 ]);
 /** @internal */
@@ -154,14 +150,10 @@ export const GetTokenDetailsResponse$outboundSchema: z.ZodType<
   GetTokenDetailsResponse
 > = z.union([
   components.Erc721Token$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-721") }),
   ),
   components.Erc1155Token$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
+    z.object({ ercType: z.literal("ERC-1155") }),
   ),
 ]);
 

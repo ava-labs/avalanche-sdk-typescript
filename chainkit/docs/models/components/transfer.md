@@ -9,6 +9,7 @@
 const value: components.Erc20Transfer = {
   blockNumber: "339",
   blockTimestamp: 1648672486,
+  blockTimestampMilliseconds: 1648672486000,
   blockHash:
     "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   txHash: "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4",
@@ -52,6 +53,7 @@ const value: components.Erc20Transfer = {
 const value: components.Erc721Transfer = {
   blockNumber: "339",
   blockTimestamp: 1648672486,
+  blockTimestampMilliseconds: 1648672486000,
   blockHash:
     "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   txHash: "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4",
@@ -93,6 +95,7 @@ const value: components.Erc721Transfer = {
 const value: components.Erc1155Transfer = {
   blockNumber: "339",
   blockTimestamp: 1648672486,
+  blockTimestampMilliseconds: 1648672486000,
   blockHash:
     "0x17533aeb5193378b9ff441d61728e7a2ebaf10f61fd5310759451627dfca2e7c",
   txHash: "0x3e9303f81be00b4af28515dab7b914bf3dbff209ea10e7071fa24d4af0a112d4",

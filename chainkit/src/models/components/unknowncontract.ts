@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,11 +25,6 @@ import {
   ResourceLink$outboundSchema,
 } from "./resourcelink.js";
 
-export const UnknownContractErcType = {
-  Unknown: "UNKNOWN",
-} as const;
-export type UnknownContractErcType = ClosedEnum<typeof UnknownContractErcType>;
-
 export type UnknownContract = {
   /**
    * The contract name.
@@ -49,17 +43,8 @@ export type UnknownContract = {
    */
   address: string;
   deploymentDetails?: ContractDeploymentDetails | undefined;
-  ercType: UnknownContractErcType;
+  ercType: "UNKNOWN";
 };
-
-/** @internal */
-export const UnknownContractErcType$inboundSchema: z.ZodNativeEnum<
-  typeof UnknownContractErcType
-> = z.nativeEnum(UnknownContractErcType);
-/** @internal */
-export const UnknownContractErcType$outboundSchema: z.ZodNativeEnum<
-  typeof UnknownContractErcType
-> = UnknownContractErcType$inboundSchema;
 
 /** @internal */
 export const UnknownContract$inboundSchema: z.ZodType<
@@ -78,7 +63,7 @@ export const UnknownContract$inboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$inboundSchema.optional(),
-  ercType: UnknownContractErcType$inboundSchema,
+  ercType: z.literal("UNKNOWN"),
 });
 /** @internal */
 export type UnknownContract$Outbound = {
@@ -93,7 +78,7 @@ export type UnknownContract$Outbound = {
   tags?: Array<string> | undefined;
   address: string;
   deploymentDetails?: ContractDeploymentDetails$Outbound | undefined;
-  ercType: string;
+  ercType: "UNKNOWN";
 };
 
 /** @internal */
@@ -113,7 +98,7 @@ export const UnknownContract$outboundSchema: z.ZodType<
   tags: z.array(z.string()).optional(),
   address: z.string(),
   deploymentDetails: ContractDeploymentDetails$outboundSchema.optional(),
-  ercType: UnknownContractErcType$outboundSchema,
+  ercType: z.literal("UNKNOWN"),
 });
 
 export function unknownContractToJSON(

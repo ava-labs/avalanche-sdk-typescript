@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -14,17 +13,10 @@ import {
   AddressActivityMetadata$outboundSchema,
 } from "./addressactivitymetadata.js";
 
-export const EVMAddressActivityRequestEventType = {
-  AddressActivity: "address_activity",
-} as const;
-export type EVMAddressActivityRequestEventType = ClosedEnum<
-  typeof EVMAddressActivityRequestEventType
->;
-
 export type EVMAddressActivityRequestMetadata = AddressActivityMetadata;
 
 export type EVMAddressActivityRequest = {
-  eventType: EVMAddressActivityRequestEventType;
+  eventType: "address_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -39,15 +31,6 @@ export type EVMAddressActivityRequest = {
    */
   includeLogs?: boolean | undefined;
 };
-
-/** @internal */
-export const EVMAddressActivityRequestEventType$inboundSchema: z.ZodNativeEnum<
-  typeof EVMAddressActivityRequestEventType
-> = z.nativeEnum(EVMAddressActivityRequestEventType);
-/** @internal */
-export const EVMAddressActivityRequestEventType$outboundSchema: z.ZodNativeEnum<
-  typeof EVMAddressActivityRequestEventType
-> = EVMAddressActivityRequestEventType$inboundSchema;
 
 /** @internal */
 export const EVMAddressActivityRequestMetadata$inboundSchema: z.ZodType<
@@ -91,7 +74,7 @@ export const EVMAddressActivityRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  eventType: EVMAddressActivityRequestEventType$inboundSchema,
+  eventType: z.literal("address_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),
@@ -102,7 +85,7 @@ export const EVMAddressActivityRequest$inboundSchema: z.ZodType<
 });
 /** @internal */
 export type EVMAddressActivityRequest$Outbound = {
-  eventType: string;
+  eventType: "address_activity";
   url: string;
   name?: string | undefined;
   description?: string | undefined;
@@ -118,7 +101,7 @@ export const EVMAddressActivityRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   EVMAddressActivityRequest
 > = z.object({
-  eventType: EVMAddressActivityRequestEventType$outboundSchema,
+  eventType: z.literal("address_activity"),
   url: z.string(),
   name: z.string().optional(),
   description: z.string().optional(),

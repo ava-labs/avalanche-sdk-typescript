@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -32,13 +31,6 @@ import {
   TeleporterSourceTransaction$outboundSchema,
 } from "./teleportersourcetransaction.js";
 
-export const DeliveredTeleporterMessageStatus = {
-  Delivered: "delivered",
-} as const;
-export type DeliveredTeleporterMessageStatus = ClosedEnum<
-  typeof DeliveredTeleporterMessageStatus
->;
-
 export type DeliveredTeleporterMessage = {
   messageId: string;
   teleporterContractAddress: string;
@@ -56,17 +48,8 @@ export type DeliveredTeleporterMessage = {
   rewardDetails: TeleporterRewardDetails;
   sourceTransaction: TeleporterSourceTransaction;
   destinationTransaction: TeleporterDestinationTransaction;
-  status: DeliveredTeleporterMessageStatus;
+  status: "delivered";
 };
-
-/** @internal */
-export const DeliveredTeleporterMessageStatus$inboundSchema: z.ZodNativeEnum<
-  typeof DeliveredTeleporterMessageStatus
-> = z.nativeEnum(DeliveredTeleporterMessageStatus);
-/** @internal */
-export const DeliveredTeleporterMessageStatus$outboundSchema: z.ZodNativeEnum<
-  typeof DeliveredTeleporterMessageStatus
-> = DeliveredTeleporterMessageStatus$inboundSchema;
 
 /** @internal */
 export const DeliveredTeleporterMessage$inboundSchema: z.ZodType<
@@ -90,7 +73,7 @@ export const DeliveredTeleporterMessage$inboundSchema: z.ZodType<
   rewardDetails: TeleporterRewardDetails$inboundSchema,
   sourceTransaction: TeleporterSourceTransaction$inboundSchema,
   destinationTransaction: TeleporterDestinationTransaction$inboundSchema,
-  status: DeliveredTeleporterMessageStatus$inboundSchema,
+  status: z.literal("delivered"),
 });
 /** @internal */
 export type DeliveredTeleporterMessage$Outbound = {
@@ -110,7 +93,7 @@ export type DeliveredTeleporterMessage$Outbound = {
   rewardDetails: TeleporterRewardDetails$Outbound;
   sourceTransaction: TeleporterSourceTransaction$Outbound;
   destinationTransaction: TeleporterDestinationTransaction$Outbound;
-  status: string;
+  status: "delivered";
 };
 
 /** @internal */
@@ -135,7 +118,7 @@ export const DeliveredTeleporterMessage$outboundSchema: z.ZodType<
   rewardDetails: TeleporterRewardDetails$outboundSchema,
   sourceTransaction: TeleporterSourceTransaction$outboundSchema,
   destinationTransaction: TeleporterDestinationTransaction$outboundSchema,
-  status: DeliveredTeleporterMessageStatus$outboundSchema,
+  status: z.literal("delivered"),
 });
 
 export function deliveredTeleporterMessageToJSON(

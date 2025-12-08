@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -13,13 +12,6 @@ import {
   BlsCredentials$Outbound,
   BlsCredentials$outboundSchema,
 } from "./blscredentials.js";
-
-export const PendingValidatorDetailsValidationStatus = {
-  Pending: "pending",
-} as const;
-export type PendingValidatorDetailsValidationStatus = ClosedEnum<
-  typeof PendingValidatorDetailsValidationStatus
->;
 
 export type PendingValidatorDetails = {
   txHash: string;
@@ -36,17 +28,8 @@ export type PendingValidatorDetails = {
    * Present for AddPermissionlessValidatorTx
    */
   blsCredentials?: BlsCredentials | undefined;
-  validationStatus: PendingValidatorDetailsValidationStatus;
+  validationStatus: "pending";
 };
-
-/** @internal */
-export const PendingValidatorDetailsValidationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof PendingValidatorDetailsValidationStatus> = z
-    .nativeEnum(PendingValidatorDetailsValidationStatus);
-/** @internal */
-export const PendingValidatorDetailsValidationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof PendingValidatorDetailsValidationStatus> =
-    PendingValidatorDetailsValidationStatus$inboundSchema;
 
 /** @internal */
 export const PendingValidatorDetails$inboundSchema: z.ZodType<
@@ -62,7 +45,7 @@ export const PendingValidatorDetails$inboundSchema: z.ZodType<
   startTimestamp: z.number(),
   endTimestamp: z.number(),
   blsCredentials: BlsCredentials$inboundSchema.optional(),
-  validationStatus: PendingValidatorDetailsValidationStatus$inboundSchema,
+  validationStatus: z.literal("pending"),
 });
 /** @internal */
 export type PendingValidatorDetails$Outbound = {
@@ -74,7 +57,7 @@ export type PendingValidatorDetails$Outbound = {
   startTimestamp: number;
   endTimestamp: number;
   blsCredentials?: BlsCredentials$Outbound | undefined;
-  validationStatus: string;
+  validationStatus: "pending";
 };
 
 /** @internal */
@@ -91,7 +74,7 @@ export const PendingValidatorDetails$outboundSchema: z.ZodType<
   startTimestamp: z.number(),
   endTimestamp: z.number(),
   blsCredentials: BlsCredentials$outboundSchema.optional(),
-  validationStatus: PendingValidatorDetailsValidationStatus$outboundSchema,
+  validationStatus: z.literal("pending"),
 });
 
 export function pendingValidatorDetailsToJSON(

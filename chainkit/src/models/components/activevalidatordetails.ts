@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -25,13 +24,6 @@ import {
   ValidatorHealthDetails$Outbound,
   ValidatorHealthDetails$outboundSchema,
 } from "./validatorhealthdetails.js";
-
-export const ActiveValidatorDetailsValidationStatus = {
-  Active: "active",
-} as const;
-export type ActiveValidatorDetailsValidationStatus = ClosedEnum<
-  typeof ActiveValidatorDetailsValidationStatus
->;
 
 /**
  * The geographical location of the validator node, if available.
@@ -99,23 +91,13 @@ export type ActiveValidatorDetails = {
    * Estimated rewards for the validator if the validation is successful.
    */
   potentialRewards: Rewards;
-  validationStatus: ActiveValidatorDetailsValidationStatus;
+  validationStatus: "active";
   validatorHealth: ValidatorHealthDetails;
   /**
    * The geographical location of the validator node, if available.
    */
   geolocation: Geolocation | null;
 };
-
-/** @internal */
-export const ActiveValidatorDetailsValidationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof ActiveValidatorDetailsValidationStatus> = z.nativeEnum(
-    ActiveValidatorDetailsValidationStatus,
-  );
-/** @internal */
-export const ActiveValidatorDetailsValidationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof ActiveValidatorDetailsValidationStatus> =
-    ActiveValidatorDetailsValidationStatus$inboundSchema;
 
 /** @internal */
 export const Geolocation$inboundSchema: z.ZodType<
@@ -185,7 +167,7 @@ export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   avalancheGoVersion: z.string().optional(),
   delegationCapacity: z.string().optional(),
   potentialRewards: Rewards$inboundSchema,
-  validationStatus: ActiveValidatorDetailsValidationStatus$inboundSchema,
+  validationStatus: z.literal("active"),
   validatorHealth: ValidatorHealthDetails$inboundSchema,
   geolocation: z.nullable(z.lazy(() => Geolocation$inboundSchema)),
 });
@@ -206,7 +188,7 @@ export type ActiveValidatorDetails$Outbound = {
   avalancheGoVersion?: string | undefined;
   delegationCapacity?: string | undefined;
   potentialRewards: Rewards$Outbound;
-  validationStatus: string;
+  validationStatus: "active";
   validatorHealth: ValidatorHealthDetails$Outbound;
   geolocation: Geolocation$Outbound | null;
 };
@@ -232,7 +214,7 @@ export const ActiveValidatorDetails$outboundSchema: z.ZodType<
   avalancheGoVersion: z.string().optional(),
   delegationCapacity: z.string().optional(),
   potentialRewards: Rewards$outboundSchema,
-  validationStatus: ActiveValidatorDetailsValidationStatus$outboundSchema,
+  validationStatus: z.literal("active"),
   validatorHealth: ValidatorHealthDetails$outboundSchema,
   geolocation: z.nullable(z.lazy(() => Geolocation$outboundSchema)),
 });

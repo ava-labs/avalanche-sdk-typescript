@@ -239,16 +239,16 @@ run();
 <details open>
 <summary>Available methods</summary>
 
-### [avaxSupply](docs/sdks/avaxsupply/README.md)
+### [AVAXSupply](docs/sdks/avaxsupply/README.md)
 
 * [get](docs/sdks/avaxsupply/README.md#get) - Get AVAX supply information
 
-### [data](docs/sdks/data/README.md)
+### [Data](docs/sdks/data/README.md)
 
 * [healthCheck](docs/sdks/data/README.md#healthcheck) - Get the health of the service
 * [liveCheck](docs/sdks/data/README.md#livecheck) - Get the liveliness of the service (reads only)
 
-#### [data.evm.address.balances](docs/sdks/addressbalances/README.md)
+#### [Data.Evm.Address.Balances](docs/sdks/addressbalances/README.md)
 
 * [getNative](docs/sdks/addressbalances/README.md#getnative) - Get native token balance
 * [listErc20](docs/sdks/addressbalances/README.md#listerc20) - List ERC-20 balances
@@ -256,15 +256,15 @@ run();
 * [listErc1155](docs/sdks/addressbalances/README.md#listerc1155) - List ERC-1155 balances
 * [listCollectibles](docs/sdks/addressbalances/README.md#listcollectibles) - List collectible (ERC-721/ERC-1155) balances
 
-#### [data.evm.address.chains](docs/sdks/addresschains/README.md)
+#### [Data.Evm.Address.Chains](docs/sdks/addresschains/README.md)
 
 * [list](docs/sdks/addresschains/README.md#list) - List all chains associated with a given address
 
-#### [data.evm.address.contracts](docs/sdks/addresscontracts/README.md)
+#### [Data.Evm.Address.Contracts](docs/sdks/addresscontracts/README.md)
 
 * [listDeployments](docs/sdks/addresscontracts/README.md#listdeployments) - List deployed contracts
 
-#### [data.evm.address.transactions](docs/sdks/addresstransactions/README.md)
+#### [Data.Evm.Address.Transactions](docs/sdks/addresstransactions/README.md)
 
 * [list](docs/sdks/addresstransactions/README.md#list) - List transactions
 * [listNative](docs/sdks/addresstransactions/README.md#listnative) - List native transactions
@@ -273,14 +273,14 @@ run();
 * [listErc1155](docs/sdks/addresstransactions/README.md#listerc1155) - List ERC-1155 transfers
 * [listInternal](docs/sdks/addresstransactions/README.md#listinternal) - List internal transactions
 
-#### [data.evm.blocks](docs/sdks/evmblocks/README.md)
+#### [Data.Evm.Blocks](docs/sdks/evmblocks/README.md)
 
 * [listLatestAllChains](docs/sdks/evmblocks/README.md#listlatestallchains) - List latest blocks across all supported EVM chains
 * [listLatest](docs/sdks/evmblocks/README.md#listlatest) - List latest blocks
 * [get](docs/sdks/evmblocks/README.md#get) - Get block
 * [listTransactions](docs/sdks/evmblocks/README.md#listtransactions) - List transactions for a block
 
-#### [data.evm.chains](docs/sdks/evmchains/README.md)
+#### [Data.Evm.Chains](docs/sdks/evmchains/README.md)
 
 * [list](docs/sdks/evmchains/README.md#list) - List chains
 * [get](docs/sdks/evmchains/README.md#get) - Get chain information
@@ -294,36 +294,36 @@ run();
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/blocks endpoint instead** . :warning: **Deprecated**
 
-#### [data.evm.contracts](docs/sdks/contracts/README.md)
+#### [Data.Evm.Contracts](docs/sdks/contracts/README.md)
 
 * [getDeploymentTransaction](docs/sdks/contracts/README.md#getdeploymenttransaction) - Get deployment transaction
 * [getMetadata](docs/sdks/contracts/README.md#getmetadata) - Get contract metadata
 * [listTransfers](docs/sdks/contracts/README.md#listtransfers) - List ERC transfers
 
-#### [data.evm.transactions](docs/sdks/evmtransactions/README.md)
+#### [Data.Evm.Transactions](docs/sdks/evmtransactions/README.md)
 
 * [listLatestAllChains](docs/sdks/evmtransactions/README.md#listlatestallchains) - List the latest transactions across all supported EVM chains
 * [get](docs/sdks/evmtransactions/README.md#get) - Get transaction
 * [listLatest](docs/sdks/evmtransactions/README.md#listlatest) - List latest transactions
 
-#### [data.icm](docs/sdks/icm/README.md)
+#### [Data.Icm](docs/sdks/icm/README.md)
 
 * [get](docs/sdks/icm/README.md#get) - Get an ICM message
 * [list](docs/sdks/icm/README.md#list) - List ICM messages
 * [listByAddress](docs/sdks/icm/README.md#listbyaddress) - List ICM messages by address
 
-#### [data.nfts](docs/sdks/nfts/README.md)
+#### [Data.Nfts](docs/sdks/nfts/README.md)
 
 * [reindex](docs/sdks/nfts/README.md#reindex) - Reindex NFT metadata
 * [list](docs/sdks/nfts/README.md#list) - List tokens
 * [get](docs/sdks/nfts/README.md#get) - Get token details
 
-#### [data.operations](docs/sdks/operations/README.md)
+#### [Data.Operations](docs/sdks/operations/README.md)
 
 * [getResult](docs/sdks/operations/README.md#getresult) - Get operation
 * [exportTransactions](docs/sdks/operations/README.md#exporttransactions) - Create transaction export operation
 
-#### [data.primaryNetwork](docs/sdks/primarynetwork/README.md)
+#### [Data.PrimaryNetwork](docs/sdks/primarynetwork/README.md)
 
 * [getAssetDetails](docs/sdks/primarynetwork/README.md#getassetdetails) - Get asset details
 * [getChainIdsForAddresses](docs/sdks/primarynetwork/README.md#getchainidsforaddresses) - Get chain interactions for addresses
@@ -337,45 +337,45 @@ run();
 * [listDelegators](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
 * [listL1Validators](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
 
-#### [data.primaryNetwork.balances](docs/sdks/primarynetworkbalances/README.md)
+##### [Data.PrimaryNetwork.Balances](docs/sdks/primarynetworkbalances/README.md)
 
 * [listByAddresses](docs/sdks/primarynetworkbalances/README.md#listbyaddresses) - Get balances
 
-#### [data.primaryNetwork.blocks](docs/sdks/primarynetworkblocks/README.md)
+##### [Data.PrimaryNetwork.Blocks](docs/sdks/primarynetworkblocks/README.md)
 
 * [get](docs/sdks/primarynetworkblocks/README.md#get) - Get block
 * [listByNodeId](docs/sdks/primarynetworkblocks/README.md#listbynodeid) - List blocks proposed by node
 * [listLatest](docs/sdks/primarynetworkblocks/README.md#listlatest) - List latest blocks
 
-#### [data.primaryNetwork.rewards](docs/sdks/rewards/README.md)
+##### [Data.PrimaryNetwork.Rewards](docs/sdks/rewards/README.md)
 
 * [listPendingRewards](docs/sdks/rewards/README.md#listpendingrewards) - List pending rewards
 * [listHistoricalRewards](docs/sdks/rewards/README.md#listhistoricalrewards) - List historical rewards
 
-#### [data.primaryNetwork.transactions](docs/sdks/primarynetworktransactions/README.md)
+##### [Data.PrimaryNetwork.Transactions](docs/sdks/primarynetworktransactions/README.md)
 
 * [get](docs/sdks/primarynetworktransactions/README.md#get) - Get transaction
 * [listLatest](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
 * [listActiveStakingTransactions](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
 * [listAssetTransactions](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
 
-#### [data.primaryNetwork.utxos](docs/sdks/utxos/README.md)
+##### [Data.PrimaryNetwork.Utxos](docs/sdks/utxos/README.md)
 
 * [listByAddresses](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
 * [listByAddressesV2](docs/sdks/utxos/README.md#listbyaddressesv2) - List UTXOs v2 - Supports querying for more addresses
 
-#### [data.primaryNetwork.vertices](docs/sdks/vertices/README.md)
+##### [Data.PrimaryNetwork.Vertices](docs/sdks/vertices/README.md)
 
 * [listLatest](docs/sdks/vertices/README.md#listlatest) - List vertices
 * [getByHash](docs/sdks/vertices/README.md#getbyhash) - Get vertex
 * [listByHeight](docs/sdks/vertices/README.md#listbyheight) - List vertices by height
 
-#### [data.signatureAggregator](docs/sdks/signatureaggregator/README.md)
+#### [Data.SignatureAggregator](docs/sdks/signatureaggregator/README.md)
 
 * [aggregate](docs/sdks/signatureaggregator/README.md#aggregate) - Aggregate Signatures
 * [get](docs/sdks/signatureaggregator/README.md#get) - Get Aggregated Signatures
 
-#### [~~data.teleporter~~](docs/sdks/teleporter/README.md)
+#### [~~Data.Teleporter~~](docs/sdks/teleporter/README.md)
 
 * [~~getTeleporterMessage~~](docs/sdks/teleporter/README.md#getteleportermessage) - **[Deprecated]** Gets a teleporter message by message ID.
 
@@ -387,7 +387,7 @@ run();
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/icm/addresses/:address/messages endpoint instead** . :warning: **Deprecated**
 
-#### [data.usageMetrics](docs/sdks/usagemetrics/README.md)
+#### [Data.UsageMetrics](docs/sdks/usagemetrics/README.md)
 
 * [getUsage](docs/sdks/usagemetrics/README.md#getusage) - Get usage metrics for the Data API
 * [getLogs](docs/sdks/usagemetrics/README.md#getlogs) - Get logs for requests made by client
@@ -396,12 +396,12 @@ run();
 
 ⚠️ **This operation will be removed in a future release.  Please use /v1/subnetRpcUsageMetrics endpoint instead**. :warning: **Deprecated**
 
-### [metrics](docs/sdks/metrics/README.md)
+### [Metrics](docs/sdks/metrics/README.md)
 
 * [healthCheck](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
 * [liveCheck](docs/sdks/metrics/README.md#livecheck) - Get the liveliness of the service
 
-#### [metrics.chains](docs/sdks/metricschains/README.md)
+#### [Metrics.Chains](docs/sdks/metricschains/README.md)
 
 * [list](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
 * [get](docs/sdks/metricschains/README.md#get) - Get chain information for supported blockchain
@@ -413,22 +413,22 @@ run();
 * [listTokenHoldersAboveThreshold](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 * [listBTCbBridgersAboveThreshold](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
 
-#### [metrics.l1Validators](docs/sdks/l1validators/README.md)
+#### [Metrics.L1Validators](docs/sdks/l1validators/README.md)
 
 * [listMetrics](docs/sdks/l1validators/README.md#listmetrics) - Get given metric for all validators
 * [getMetricsByValidationId](docs/sdks/l1validators/README.md#getmetricsbyvalidationid) - Get metric values with given validationId and timestamp range
 * [getMetricsByNodeId](docs/sdks/l1validators/README.md#getmetricsbynodeid) - Get metric values with given nodeId and timestamp range
 * [getMetricsBySubnetId](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnetId and timestamp range
 
-#### [metrics.networks](docs/sdks/networks/README.md)
+#### [Metrics.Networks](docs/sdks/networks/README.md)
 
 * [getStakingMetrics](docs/sdks/networks/README.md#getstakingmetrics) - Get staking metrics for a given subnet
 
-#### [metrics.subnets](docs/sdks/subnets/README.md)
+#### [Metrics.Subnets](docs/sdks/subnets/README.md)
 
 * [getValidators](docs/sdks/subnets/README.md#getvalidators) - Get addresses running validators during a given time frame
 
-### [webhooks](docs/sdks/webhooks/README.md)
+### [Webhooks](docs/sdks/webhooks/README.md)
 
 * [list](docs/sdks/webhooks/README.md#list) - List webhooks
 * [create](docs/sdks/webhooks/README.md#create) - Create a webhook
@@ -438,7 +438,7 @@ run();
 * [generateOrRotateSharedSecret](docs/sdks/webhooks/README.md#generateorrotatesharedsecret) - Generate or rotate a shared secret
 * [getSharedSecret](docs/sdks/webhooks/README.md#getsharedsecret) - Get a shared secret
 
-#### [webhooks.addresses](docs/sdks/addresses/README.md)
+#### [Webhooks.Addresses](docs/sdks/addresses/README.md)
 
 * [list](docs/sdks/addresses/README.md#list) - List adresses by EVM activity webhooks
 * [remove](docs/sdks/addresses/README.md#remove) - Remove addresses from EVM activity  webhook

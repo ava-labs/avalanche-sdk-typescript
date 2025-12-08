@@ -26,11 +26,9 @@ import {
 } from "./pendingteleportermessage.js";
 
 export type ListTeleporterMessagesResponseMessage =
-  | (DeliveredTeleporterMessage & { status: "delivered" })
-  | (PendingTeleporterMessage & { status: "pending" })
-  | (DeliveredSourceNotIndexedIcmMessage & {
-    status: "delivered_source_not_indexed";
-  });
+  | PendingTeleporterMessage
+  | DeliveredTeleporterMessage
+  | DeliveredSourceNotIndexedIcmMessage;
 
 export type ListTeleporterMessagesResponse = {
   /**
@@ -38,11 +36,9 @@ export type ListTeleporterMessagesResponse = {
    */
   nextPageToken?: string | undefined;
   messages: Array<
-    | (DeliveredTeleporterMessage & { status: "delivered" })
-    | (PendingTeleporterMessage & { status: "pending" })
-    | (DeliveredSourceNotIndexedIcmMessage & {
-      status: "delivered_source_not_indexed";
-    })
+    | PendingTeleporterMessage
+    | DeliveredTeleporterMessage
+    | DeliveredSourceNotIndexedIcmMessage
   >;
 };
 
@@ -52,29 +48,15 @@ export const ListTeleporterMessagesResponseMessage$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  DeliveredTeleporterMessage$inboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  PendingTeleporterMessage$inboundSchema.and(
-    z.object({ status: z.literal("pending") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  DeliveredSourceNotIndexedIcmMessage$inboundSchema.and(
-    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
-      v,
-    ) => ({ status: v.status })),
-  ),
+  PendingTeleporterMessage$inboundSchema,
+  DeliveredTeleporterMessage$inboundSchema,
+  DeliveredSourceNotIndexedIcmMessage$inboundSchema,
 ]);
 /** @internal */
 export type ListTeleporterMessagesResponseMessage$Outbound =
-  | (DeliveredTeleporterMessage$Outbound & { status: "delivered" })
-  | (PendingTeleporterMessage$Outbound & { status: "pending" })
-  | (DeliveredSourceNotIndexedIcmMessage$Outbound & {
-    status: "delivered_source_not_indexed";
-  });
+  | PendingTeleporterMessage$Outbound
+  | DeliveredTeleporterMessage$Outbound
+  | DeliveredSourceNotIndexedIcmMessage$Outbound;
 
 /** @internal */
 export const ListTeleporterMessagesResponseMessage$outboundSchema: z.ZodType<
@@ -82,21 +64,9 @@ export const ListTeleporterMessagesResponseMessage$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ListTeleporterMessagesResponseMessage
 > = z.union([
-  DeliveredTeleporterMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  PendingTeleporterMessage$outboundSchema.and(
-    z.object({ status: z.literal("pending") }).transform((v) => ({
-      status: v.status,
-    })),
-  ),
-  DeliveredSourceNotIndexedIcmMessage$outboundSchema.and(
-    z.object({ status: z.literal("delivered_source_not_indexed") }).transform((
-      v,
-    ) => ({ status: v.status })),
-  ),
+  PendingTeleporterMessage$outboundSchema,
+  DeliveredTeleporterMessage$outboundSchema,
+  DeliveredSourceNotIndexedIcmMessage$outboundSchema,
 ]);
 
 export function listTeleporterMessagesResponseMessageToJSON(
@@ -128,20 +98,9 @@ export const ListTeleporterMessagesResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   messages: z.array(
     z.union([
-      DeliveredTeleporterMessage$inboundSchema.and(
-        z.object({ status: z.literal("delivered") }).transform((v) => ({
-          status: v.status,
-        })),
-      ),
-      PendingTeleporterMessage$inboundSchema.and(
-        z.object({ status: z.literal("pending") }).transform((v) => ({
-          status: v.status,
-        })),
-      ),
-      DeliveredSourceNotIndexedIcmMessage$inboundSchema.and(
-        z.object({ status: z.literal("delivered_source_not_indexed") })
-          .transform((v) => ({ status: v.status })),
-      ),
+      PendingTeleporterMessage$inboundSchema,
+      DeliveredTeleporterMessage$inboundSchema,
+      DeliveredSourceNotIndexedIcmMessage$inboundSchema,
     ]),
   ),
 });
@@ -149,11 +108,9 @@ export const ListTeleporterMessagesResponse$inboundSchema: z.ZodType<
 export type ListTeleporterMessagesResponse$Outbound = {
   nextPageToken?: string | undefined;
   messages: Array<
-    | (DeliveredTeleporterMessage$Outbound & { status: "delivered" })
-    | (PendingTeleporterMessage$Outbound & { status: "pending" })
-    | (DeliveredSourceNotIndexedIcmMessage$Outbound & {
-      status: "delivered_source_not_indexed";
-    })
+    | PendingTeleporterMessage$Outbound
+    | DeliveredTeleporterMessage$Outbound
+    | DeliveredSourceNotIndexedIcmMessage$Outbound
   >;
 };
 
@@ -166,20 +123,9 @@ export const ListTeleporterMessagesResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   messages: z.array(
     z.union([
-      DeliveredTeleporterMessage$outboundSchema.and(
-        z.object({ status: z.literal("delivered") }).transform((v) => ({
-          status: v.status,
-        })),
-      ),
-      PendingTeleporterMessage$outboundSchema.and(
-        z.object({ status: z.literal("pending") }).transform((v) => ({
-          status: v.status,
-        })),
-      ),
-      DeliveredSourceNotIndexedIcmMessage$outboundSchema.and(
-        z.object({ status: z.literal("delivered_source_not_indexed") })
-          .transform((v) => ({ status: v.status })),
-      ),
+      PendingTeleporterMessage$outboundSchema,
+      DeliveredTeleporterMessage$outboundSchema,
+      DeliveredSourceNotIndexedIcmMessage$outboundSchema,
     ]),
   ),
 });

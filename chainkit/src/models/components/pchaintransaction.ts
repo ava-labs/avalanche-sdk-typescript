@@ -61,7 +61,7 @@ export type PChainTransaction = {
   txHash: string;
   txType: PChainTransactionType;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
   /**

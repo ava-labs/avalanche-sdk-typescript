@@ -4,16 +4,8 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-
-export const PendingDelegatorDetailsDelegationStatus = {
-  Pending: "pending",
-} as const;
-export type PendingDelegatorDetailsDelegationStatus = ClosedEnum<
-  typeof PendingDelegatorDetailsDelegationStatus
->;
 
 export type PendingDelegatorDetails = {
   txHash: string;
@@ -31,17 +23,8 @@ export type PendingDelegatorDetails = {
    * Estimated net rewards that will be distributed to the delegator after deducting delegation fee from the gross reward for the successful delegation.
    */
   estimatedNetReward: string;
-  delegationStatus: PendingDelegatorDetailsDelegationStatus;
+  delegationStatus: "pending";
 };
-
-/** @internal */
-export const PendingDelegatorDetailsDelegationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof PendingDelegatorDetailsDelegationStatus> = z
-    .nativeEnum(PendingDelegatorDetailsDelegationStatus);
-/** @internal */
-export const PendingDelegatorDetailsDelegationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof PendingDelegatorDetailsDelegationStatus> =
-    PendingDelegatorDetailsDelegationStatus$inboundSchema;
 
 /** @internal */
 export const PendingDelegatorDetails$inboundSchema: z.ZodType<
@@ -58,7 +41,7 @@ export const PendingDelegatorDetails$inboundSchema: z.ZodType<
   endTimestamp: z.number(),
   estimatedGrossReward: z.string(),
   estimatedNetReward: z.string(),
-  delegationStatus: PendingDelegatorDetailsDelegationStatus$inboundSchema,
+  delegationStatus: z.literal("pending"),
 });
 /** @internal */
 export type PendingDelegatorDetails$Outbound = {
@@ -71,7 +54,7 @@ export type PendingDelegatorDetails$Outbound = {
   endTimestamp: number;
   estimatedGrossReward: string;
   estimatedNetReward: string;
-  delegationStatus: string;
+  delegationStatus: "pending";
 };
 
 /** @internal */
@@ -89,7 +72,7 @@ export const PendingDelegatorDetails$outboundSchema: z.ZodType<
   endTimestamp: z.number(),
   estimatedGrossReward: z.string(),
   estimatedNetReward: z.string(),
-  delegationStatus: PendingDelegatorDetailsDelegationStatus$outboundSchema,
+  delegationStatus: z.literal("pending"),
 });
 
 export function pendingDelegatorDetailsToJSON(
