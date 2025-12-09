@@ -6,7 +6,7 @@ import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { baseFee as getBaseFee } from "../../public/baseFee.js";
 import { prepareImportTxn as prepareImportTxnCChain } from "../cChain/prepareImportTxn.js";
-import { getContextFromURI } from "../getContextFromURI.js";
+import { getContextFromURI, getHRP } from "../getContextFromURI.js";
 import { prepareExportTxn as prepareExportTxnPChain } from "../pChain/prepareExportTxn.js";
 import { sendXPTransaction } from "../sendXPTransaction.js";
 import { SendParameters, SendReturnType } from "../types/send.js";
@@ -25,7 +25,7 @@ export async function transferPtoCChain(
   params: TransferPtoCChainParameters
 ): Promise<TransferPtoCChainReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const isTestnet = context.networkID === 5;
+  const hrp = getHRP(context.networkID);
 
   // Note: CChain and PChain have different bech32 addresses for seedless accounts on core
   // The value in both can be same for seed accounts
@@ -37,7 +37,7 @@ export async function transferPtoCChain(
         client,
         params.account,
         C_CHAIN_ALIAS,
-        isTestnet ? "fuji" : "avax"
+        hrp
       );
   }
 
@@ -49,7 +49,7 @@ export async function transferPtoCChain(
         client,
         params.account,
         P_CHAIN_ALIAS,
-        isTestnet ? "fuji" : "avax"
+        hrp
       );
   }
 

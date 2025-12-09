@@ -5,7 +5,7 @@ import { P_CHAIN_ALIAS } from "../../consts.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { baseFee as getBaseFee } from "../../public/baseFee.js";
 import { prepareExportTxn as prepareExportTxnCChain } from "../cChain/prepareExportTxn.js";
-import { getContextFromURI } from "../getContextFromURI.js";
+import { getContextFromURI, getHRP } from "../getContextFromURI.js";
 import { prepareImportTxn as prepareImportTxnPChain } from "../pChain/prepareImportTxn.js";
 import { sendXPTransaction } from "../sendXPTransaction.js";
 import { SendParameters, SendReturnType } from "../types/send.js";
@@ -38,7 +38,7 @@ export async function transferCtoPChain(
       client,
       params.account,
       P_CHAIN_ALIAS,
-      context.networkID === 5 ? "fuji" : "avax"
+      getHRP(context.networkID)
     );
 
   // Validate the P chain address
