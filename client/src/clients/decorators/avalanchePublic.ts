@@ -3,6 +3,7 @@ import { baseFee } from "../../methods/public/baseFee.js";
 import { feeConfig } from "../../methods/public/feeConfig.js";
 import { getActiveRulesAt } from "../../methods/public/getActiveRulesAt.js";
 import { getChainConfig } from "../../methods/public/getChainConfig.js";
+import { getRegistrationJustification } from "../../methods/public/getRegistrationJustification.js";
 import { maxPriorityFeePerGas } from "../../methods/public/maxPriorityFeePerGas.js";
 import { BaseFeeReturnType } from "../../methods/public/types/baseFee.js";
 import {
@@ -14,6 +15,10 @@ import {
   GetActiveRulesAtReturnType,
 } from "../../methods/public/types/getActiveRulesAt.js";
 import { GetChainConfigReturnType } from "../../methods/public/types/getChainConfig.js";
+import {
+  GetRegistrationJustificationParams,
+  GetRegistrationJustificationReturnType,
+} from "../../methods/public/types/getRegistrationJustification.js";
 import { MaxPriorityFeePerGasReturnType } from "../../methods/public/types/maxPriorityFeePerGas.js";
 export type AvalanchePublicActions = {
   /**
@@ -134,6 +139,66 @@ export type AvalanchePublicActions = {
   getActiveRulesAt: (
     args: GetActiveRulesAtParameters
   ) => Promise<GetActiveRulesAtReturnType>;
+
+  /**
+   * Retrieves the registration justification for the given validation ID Hex and subnet ID.
+   *
+   * If the validation ID corresponds to a bootstrap validator, the justification bytes
+   * produced by `ConvertSubnetToL1Tx` are returned.
+   *
+   * Otherwise, the function searches the Warp logs on the chain where the validator
+   * manager is deployed to locate the RegisterL1ValidatorMessage for the specified validation ID.
+   *
+   * @param client - The AvalancheCoreClient instance.
+   * @param params - The GetRegistrationJustificationParams instance.
+   * @returns The GetRegistrationJustificationReturnType instance.
+   *
+   * @example
+   * ```ts
+   * import { createAvalancheClient } from "@avalanche-sdk/client";
+   * import { getRegistrationJustification } from "@avalanche-sdk/client/methods/public";
+   * import { defineChain } from "@avalanche-sdk/client/chains";
+   * import { utils } from "@avalanche-sdk/client/utils";
+   *
+   * const chainConfig = defineChain({
+   *     id: 28098,
+   *     name: "Rough Complexity Chain",
+   *     rpcUrls: {
+   *       default: {
+   *         http: [
+   *           "https://base-url-to-your-rpc/ext/bc/28zXo5erueBemgxPjLom6Vhsm6oVyftLtfQSt61fd62SghoXrz/rpc",
+   *         ],
+   *       },
+   *     },
+   *   });
+   *
+   * const publicClient = createAvalancheClient({
+   *   chain: chainConfig,
+   *   transport: {
+   *     type: "http",
+   *   },
+   * });
+   *
+   * const validationIDHex = utils.bufferToHex(
+   *   utils.base58check.decode(
+   *     "TEwxg8JzAUsqFibtYkaiiYH9G1h5ZfX56zYURXpyaPRCSppC4"
+   *   )
+   * );
+   *
+   * const justification = await publicClient.getRegistrationJustification({
+   *   validationIDHex,
+   *   subnetIDStr: "2DN6PTi2uXNCzzNz1p2ckGcW2eqTfpt2kv2a1h7EV36hYV3XRJ",
+   *   maxBootstrapValidators: 200,
+   *   chunkSize: 200,
+   *   maxChunks: 100,
+   * });
+   *
+   * console.log("justification", JSON.stringify(justification, null, 2));
+   * ```
+   */
+  getRegistrationJustification: (
+    args: GetRegistrationJustificationParams
+  ) => Promise<GetRegistrationJustificationReturnType>;
 };
 
 export function avalanchePublicActions<
@@ -145,5 +210,7 @@ export function avalanchePublicActions<
     maxPriorityFeePerGas: () => maxPriorityFeePerGas(client),
     feeConfig: (args) => feeConfig(client, args),
     getActiveRulesAt: (args) => getActiveRulesAt(client, args),
+    getRegistrationJustification: (args) =>
+      getRegistrationJustification(client, args),
   };
 }

@@ -1,6 +1,3 @@
-import { CChainRpcSchema } from "src/methods/cChain/cChainRpcSchema.js";
-import { PChainRpcSchema } from "src/methods/pChain/pChainRpcSchema.js";
-import { XChainRpcSchema } from "src/methods/xChain/xChainRpcSchema.js";
 import {
   Account,
   Chain,
@@ -18,8 +15,11 @@ import {
   WalletRpcSchema,
 } from "viem";
 import { XPAccount } from "../accounts/avalancheAccount.js";
+import { CChainRpcSchema } from "../methods/cChain/cChainRpcSchema.js";
+import { PChainRpcSchema } from "../methods/pChain/pChainRpcSchema.js";
 import { AvalanchePublicRpcSchema } from "../methods/public/avalanchePublicRpcSchema.js";
 import { AvalancheWalletRpcSchema } from "../methods/wallet/avalancheWalletRPCSchema.js";
+import { XChainRpcSchema } from "../methods/xChain/xChainRpcSchema.js";
 import { AvalancheCoreClient } from "./createAvalancheCoreClient.js";
 import {
   AvalancheWalletCoreClient,
