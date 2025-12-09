@@ -94,7 +94,7 @@ function getClientURL(
   clientType: ClientType = "public",
   transportType: "http" | "webSocket" = "http"
 ): string | undefined {
-  if (chain?.id !== 43_113 && chain?.id !== 43_114) {
+  if (chain?.id !== 43_112 && chain?.id !== 43_113 && chain?.id !== 43_114) {
     return url ?? chain?.rpcUrls.default[transportType]?.[0];
   }
 

@@ -174,6 +174,7 @@ export type {
 } from "viem/chains";
 export { avalanche } from "./avalanche.js";
 export { avalancheFuji } from "./avalancheFuji.js";
+export { avalancheLocal } from "./avalancheLocal.js";
 /** @deprecated Use `sonicTestnet` instead. */
 export {
   fantomSonicTestnet,
