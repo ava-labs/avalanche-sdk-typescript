@@ -1,5 +1,4 @@
-# Subnets
-(*metrics.subnets*)
+# Metrics.Subnets
 
 ## Overview
 

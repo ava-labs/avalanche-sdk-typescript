@@ -12,14 +12,9 @@ import {
   EvmNetworkOptions$Outbound,
   EvmNetworkOptions$outboundSchema,
 } from "./evmnetworkoptions.js";
-import {
-  EVMOperationType,
-  EVMOperationType$inboundSchema,
-  EVMOperationType$outboundSchema,
-} from "./evmoperationtype.js";
 
 export type CreateEvmTransactionExportRequest = {
-  type: EVMOperationType;
+  type: "TRANSACTION_EXPORT_EVM";
   firstDate?: string | undefined;
   lastDate?: string | undefined;
   /**
@@ -39,7 +34,7 @@ export const CreateEvmTransactionExportRequest$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  type: EVMOperationType$inboundSchema,
+  type: z.literal("TRANSACTION_EXPORT_EVM"),
   firstDate: z.string().optional(),
   lastDate: z.string().optional(),
   startDate: z.string().optional(),
@@ -48,7 +43,7 @@ export const CreateEvmTransactionExportRequest$inboundSchema: z.ZodType<
 });
 /** @internal */
 export type CreateEvmTransactionExportRequest$Outbound = {
-  type: string;
+  type: "TRANSACTION_EXPORT_EVM";
   firstDate?: string | undefined;
   lastDate?: string | undefined;
   startDate?: string | undefined;
@@ -62,7 +57,7 @@ export const CreateEvmTransactionExportRequest$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   CreateEvmTransactionExportRequest
 > = z.object({
-  type: EVMOperationType$outboundSchema,
+  type: z.literal("TRANSACTION_EXPORT_EVM"),
   firstDate: z.string().optional(),
   lastDate: z.string().optional(),
   startDate: z.string().optional(),

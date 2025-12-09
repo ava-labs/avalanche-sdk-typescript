@@ -1,5 +1,4 @@
-# UsageMetrics
-(*data.usageMetrics*)
+# Data.UsageMetrics
 
 ## Overview
 

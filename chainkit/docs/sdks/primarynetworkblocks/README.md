@@ -1,5 +1,4 @@
-# PrimaryNetworkBlocks
-(*data.primaryNetwork.blocks*)
+# Data.PrimaryNetwork.Blocks
 
 ## Overview
 

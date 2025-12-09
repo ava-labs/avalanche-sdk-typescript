@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -26,13 +25,6 @@ import {
   IcmSourceTransaction$outboundSchema,
 } from "./icmsourcetransaction.js";
 
-export const PendingIcmMessageStatus = {
-  Pending: "pending",
-} as const;
-export type PendingIcmMessageStatus = ClosedEnum<
-  typeof PendingIcmMessageStatus
->;
-
 export type PendingIcmMessage = {
   messageId: string;
   icmContractAddress: string;
@@ -49,17 +41,8 @@ export type PendingIcmMessage = {
   receiptDelivered: boolean;
   rewardDetails: IcmRewardDetails;
   sourceTransaction: IcmSourceTransaction;
-  status: PendingIcmMessageStatus;
+  status: "pending";
 };
-
-/** @internal */
-export const PendingIcmMessageStatus$inboundSchema: z.ZodNativeEnum<
-  typeof PendingIcmMessageStatus
-> = z.nativeEnum(PendingIcmMessageStatus);
-/** @internal */
-export const PendingIcmMessageStatus$outboundSchema: z.ZodNativeEnum<
-  typeof PendingIcmMessageStatus
-> = PendingIcmMessageStatus$inboundSchema;
 
 /** @internal */
 export const PendingIcmMessage$inboundSchema: z.ZodType<
@@ -82,7 +65,7 @@ export const PendingIcmMessage$inboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: IcmRewardDetails$inboundSchema,
   sourceTransaction: IcmSourceTransaction$inboundSchema,
-  status: PendingIcmMessageStatus$inboundSchema,
+  status: z.literal("pending"),
 });
 /** @internal */
 export type PendingIcmMessage$Outbound = {
@@ -101,7 +84,7 @@ export type PendingIcmMessage$Outbound = {
   receiptDelivered: boolean;
   rewardDetails: IcmRewardDetails$Outbound;
   sourceTransaction: IcmSourceTransaction$Outbound;
-  status: string;
+  status: "pending";
 };
 
 /** @internal */
@@ -125,7 +108,7 @@ export const PendingIcmMessage$outboundSchema: z.ZodType<
   receiptDelivered: z.boolean(),
   rewardDetails: IcmRewardDetails$outboundSchema,
   sourceTransaction: IcmSourceTransaction$outboundSchema,
-  status: PendingIcmMessageStatus$outboundSchema,
+  status: z.literal("pending"),
 });
 
 export function pendingIcmMessageToJSON(

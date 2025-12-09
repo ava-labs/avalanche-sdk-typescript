@@ -4,7 +4,6 @@
 
 import * as z from "zod/v3";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -13,13 +12,6 @@ import {
   BlsCredentials$Outbound,
   BlsCredentials$outboundSchema,
 } from "./blscredentials.js";
-
-export const RemovedValidatorDetailsValidationStatus = {
-  Removed: "removed",
-} as const;
-export type RemovedValidatorDetailsValidationStatus = ClosedEnum<
-  typeof RemovedValidatorDetailsValidationStatus
->;
 
 export type RemovedValidatorDetails = {
   txHash: string;
@@ -44,17 +36,8 @@ export type RemovedValidatorDetails = {
    * The timestamp of the transaction that removed the permissioned subnet validator.
    */
   removeTimestamp: number;
-  validationStatus: RemovedValidatorDetailsValidationStatus;
+  validationStatus: "removed";
 };
-
-/** @internal */
-export const RemovedValidatorDetailsValidationStatus$inboundSchema:
-  z.ZodNativeEnum<typeof RemovedValidatorDetailsValidationStatus> = z
-    .nativeEnum(RemovedValidatorDetailsValidationStatus);
-/** @internal */
-export const RemovedValidatorDetailsValidationStatus$outboundSchema:
-  z.ZodNativeEnum<typeof RemovedValidatorDetailsValidationStatus> =
-    RemovedValidatorDetailsValidationStatus$inboundSchema;
 
 /** @internal */
 export const RemovedValidatorDetails$inboundSchema: z.ZodType<
@@ -72,7 +55,7 @@ export const RemovedValidatorDetails$inboundSchema: z.ZodType<
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   removeTxHash: z.string(),
   removeTimestamp: z.number(),
-  validationStatus: RemovedValidatorDetailsValidationStatus$inboundSchema,
+  validationStatus: z.literal("removed"),
 });
 /** @internal */
 export type RemovedValidatorDetails$Outbound = {
@@ -86,7 +69,7 @@ export type RemovedValidatorDetails$Outbound = {
   blsCredentials?: BlsCredentials$Outbound | undefined;
   removeTxHash: string;
   removeTimestamp: number;
-  validationStatus: string;
+  validationStatus: "removed";
 };
 
 /** @internal */
@@ -105,7 +88,7 @@ export const RemovedValidatorDetails$outboundSchema: z.ZodType<
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   removeTxHash: z.string(),
   removeTimestamp: z.number(),
-  validationStatus: RemovedValidatorDetailsValidationStatus$outboundSchema,
+  validationStatus: z.literal("removed"),
 });
 
 export function removedValidatorDetailsToJSON(

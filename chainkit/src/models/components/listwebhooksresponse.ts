@@ -26,7 +26,7 @@ import {
 } from "./validatoractivityresponse.js";
 
 export type Webhook =
-  | EVMAddressActivityResponse
+  | (EVMAddressActivityResponse & { eventType: "address_activity" })
   | PrimaryNetworkAddressActivityResponse
   | ValidatorActivityResponse;
 
@@ -36,7 +36,7 @@ export type ListWebhooksResponse = {
    */
   nextPageToken?: string | undefined;
   webhooks: Array<
-    | EVMAddressActivityResponse
+    | (EVMAddressActivityResponse & { eventType: "address_activity" })
     | PrimaryNetworkAddressActivityResponse
     | ValidatorActivityResponse
   >;
@@ -45,13 +45,15 @@ export type ListWebhooksResponse = {
 /** @internal */
 export const Webhook$inboundSchema: z.ZodType<Webhook, z.ZodTypeDef, unknown> =
   z.union([
-    EVMAddressActivityResponse$inboundSchema,
+    EVMAddressActivityResponse$inboundSchema.and(
+      z.object({ eventType: z.literal("address_activity") }),
+    ),
     PrimaryNetworkAddressActivityResponse$inboundSchema,
     ValidatorActivityResponse$inboundSchema,
   ]);
 /** @internal */
 export type Webhook$Outbound =
-  | EVMAddressActivityResponse$Outbound
+  | (EVMAddressActivityResponse$Outbound & { eventType: "address_activity" })
   | PrimaryNetworkAddressActivityResponse$Outbound
   | ValidatorActivityResponse$Outbound;
 
@@ -61,7 +63,9 @@ export const Webhook$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Webhook
 > = z.union([
-  EVMAddressActivityResponse$outboundSchema,
+  EVMAddressActivityResponse$outboundSchema.and(
+    z.object({ eventType: z.literal("address_activity") }),
+  ),
   PrimaryNetworkAddressActivityResponse$outboundSchema,
   ValidatorActivityResponse$outboundSchema,
 ]);
@@ -88,7 +92,9 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   webhooks: z.array(
     z.union([
-      EVMAddressActivityResponse$inboundSchema,
+      EVMAddressActivityResponse$inboundSchema.and(
+        z.object({ eventType: z.literal("address_activity") }),
+      ),
       PrimaryNetworkAddressActivityResponse$inboundSchema,
       ValidatorActivityResponse$inboundSchema,
     ]),
@@ -98,7 +104,7 @@ export const ListWebhooksResponse$inboundSchema: z.ZodType<
 export type ListWebhooksResponse$Outbound = {
   nextPageToken?: string | undefined;
   webhooks: Array<
-    | EVMAddressActivityResponse$Outbound
+    | (EVMAddressActivityResponse$Outbound & { eventType: "address_activity" })
     | PrimaryNetworkAddressActivityResponse$Outbound
     | ValidatorActivityResponse$Outbound
   >;
@@ -113,7 +119,9 @@ export const ListWebhooksResponse$outboundSchema: z.ZodType<
   nextPageToken: z.string().optional(),
   webhooks: z.array(
     z.union([
-      EVMAddressActivityResponse$outboundSchema,
+      EVMAddressActivityResponse$outboundSchema.and(
+        z.object({ eventType: z.literal("address_activity") }),
+      ),
       PrimaryNetworkAddressActivityResponse$outboundSchema,
       ValidatorActivityResponse$outboundSchema,
     ]),

@@ -34,10 +34,10 @@ export type GetContractMetadataRequest = {
  * Successful response
  */
 export type GetContractMetadataResponse =
-  | (components.Erc20Contract & { ercType: "ERC-20" })
-  | (components.Erc721Contract & { ercType: "ERC-721" })
-  | (components.Erc1155Contract & { ercType: "ERC-1155" })
-  | (components.UnknownContract & { ercType: "UNKNOWN" });
+  | components.Erc721Contract
+  | components.Erc1155Contract
+  | components.Erc20Contract
+  | components.UnknownContract;
 
 /** @internal */
 export const GetContractMetadataGlobals$inboundSchema: z.ZodType<
@@ -126,33 +126,17 @@ export const GetContractMetadataResponse$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.union([
-  components.Erc20Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.Erc721Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.Erc1155Contract$inboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.UnknownContract$inboundSchema.and(
-    z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
+  components.Erc721Contract$inboundSchema,
+  components.Erc1155Contract$inboundSchema,
+  components.Erc20Contract$inboundSchema,
+  components.UnknownContract$inboundSchema,
 ]);
 /** @internal */
 export type GetContractMetadataResponse$Outbound =
-  | (components.Erc20Contract$Outbound & { ercType: "ERC-20" })
-  | (components.Erc721Contract$Outbound & { ercType: "ERC-721" })
-  | (components.Erc1155Contract$Outbound & { ercType: "ERC-1155" })
-  | (components.UnknownContract$Outbound & { ercType: "UNKNOWN" });
+  | components.Erc721Contract$Outbound
+  | components.Erc1155Contract$Outbound
+  | components.Erc20Contract$Outbound
+  | components.UnknownContract$Outbound;
 
 /** @internal */
 export const GetContractMetadataResponse$outboundSchema: z.ZodType<
@@ -160,26 +144,10 @@ export const GetContractMetadataResponse$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   GetContractMetadataResponse
 > = z.union([
-  components.Erc20Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-20") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.Erc721Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-721") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.Erc1155Contract$outboundSchema.and(
-    z.object({ ercType: z.literal("ERC-1155") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
-  components.UnknownContract$outboundSchema.and(
-    z.object({ ercType: z.literal("UNKNOWN") }).transform((v) => ({
-      ercType: v.ercType,
-    })),
-  ),
+  components.Erc721Contract$outboundSchema,
+  components.Erc1155Contract$outboundSchema,
+  components.Erc20Contract$outboundSchema,
+  components.UnknownContract$outboundSchema,
 ]);
 
 export function getContractMetadataResponseToJSON(

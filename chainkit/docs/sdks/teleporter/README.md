@@ -1,5 +1,7 @@
-# Teleporter
-(*data.teleporter*)
+# ~~Data.Teleporter~~
+
+> [!WARNING]
+> This SDK is **DEPRECATED**
 
 ## Overview
 

@@ -25,9 +25,13 @@ export type Erc721Transfer = {
    */
   blockNumber: string;
   /**
-   * The block finality timestamp.
+   * The block creation (proposal) timestamp in seconds
    */
   blockTimestamp: number;
+  /**
+   * The block creation (proposal) timestamp in milliseconds. Available only after Granite upgrade.
+   */
+  blockTimestampMilliseconds?: number | undefined;
   /**
    * The block hash identifier.
    */
@@ -50,6 +54,7 @@ export const Erc721Transfer$inboundSchema: z.ZodType<
 > = z.object({
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
   blockHash: z.string(),
   txHash: z.string(),
   from: RichAddress$inboundSchema,
@@ -61,6 +66,7 @@ export const Erc721Transfer$inboundSchema: z.ZodType<
 export type Erc721Transfer$Outbound = {
   blockNumber: string;
   blockTimestamp: number;
+  blockTimestampMilliseconds?: number | undefined;
   blockHash: string;
   txHash: string;
   from: RichAddress$Outbound;
@@ -77,6 +83,7 @@ export const Erc721Transfer$outboundSchema: z.ZodType<
 > = z.object({
   blockNumber: z.string(),
   blockTimestamp: z.number(),
+  blockTimestampMilliseconds: z.number().optional(),
   blockHash: z.string(),
   txHash: z.string(),
   from: RichAddress$outboundSchema,
