@@ -171,6 +171,7 @@ test("exports", () => {
       "fantom",
       "avalanche",
       "avalancheFuji",
+      "avalancheLocal",
       "fantomSonicTestnet",
       "fantomTestnet",
       "fibo",

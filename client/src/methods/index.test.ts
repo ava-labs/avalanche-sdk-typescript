@@ -110,17 +110,23 @@ test("exports", () => {
       "watchEvent",
       "watchPendingTransactions",
       "writeContract",
+      "AVALANCHE_CHAIN_IDS",
+      "AVALANCHE_NETWORK_IDS",
       "P_CHAIN_MAINNET_ID",
       "P_CHAIN_FUJI_ID",
+      "P_CHAIN_LOCAL_ID",
       "P_CHAIN_ALIAS",
       "X_CHAIN_MAINNET_ID",
       "X_CHAIN_FUJI_ID",
+      "X_CHAIN_LOCAL_ID",
       "X_CHAIN_ALIAS",
       "C_CHAIN_MAINNET_ID",
       "C_CHAIN_FUJI_ID",
+      "C_CHAIN_LOCAL_ID",
       "C_CHAIN_ALIAS",
       "MAINNET_NETWORK_ID",
       "TESTNET_NETWORK_ID",
+      "LOCAL_NETWORK_ID",
     ]
   `);
 });
