@@ -3,18 +3,18 @@ id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
   docChecksum: 2c9309501f1671ba734a2af85f2477e0
   docVersion: 1.0.0
-  speakeasyVersion: 1.671.0
-  generationVersion: 2.774.0
-  releaseVersion: 0.3.0-alpha.12
-  configChecksum: ae56dc7549656a603bdf9647a3700a6d
+  speakeasyVersion: 1.673.0
+  generationVersion: 2.776.1
+  releaseVersion: 0.3.0
+  configChecksum: 94862fac93497c1afae6e605b82f6afc
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: chainkit
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
   published: true
 persistentEdits:
-  generation_id: 069522f8-90f8-43e5-99ca-8d1aaa39186a
-  pristine_commit_hash: dc2f3d17059543b2f698a5001fc3eaccf6380c23
-  pristine_tree_hash: cca7aad43a74cc4483f83a24eedff9c1297c0518
+  generation_id: 01cadb69-75e6-42d2-a1fd-60af785359c4
+  pristine_commit_hash: 086b318001f6de3f01358c957bfdda64c20e75b1
+  pristine_tree_hash: 857cb6afa06633ac5288c405d759c055352276ca
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -2389,8 +2389,8 @@ trackedFiles:
     pristine_git_object: 1a97e1fc7c8e78279998c62c4a682e22f6fa8773
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:b02d143c5b7b19761664b4781e9a0ebf597851af
-    pristine_git_object: 5373c172366c8750cbbe7afacb7bcca01e7edc00
+    last_write_checksum: sha1:eea7e54036055b082103d374fe7ea2c011c0025a
+    pristine_git_object: e47b00cd91c158d8458dcf25d8bd7498a4dd77ce
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:b35d791d3adeaaa7c33d09a78dd388a7352d0c3d
@@ -2829,8 +2829,8 @@ trackedFiles:
     pristine_git_object: 0aebd8b0a4867e35cb3348fc52921c3c0b4725b7
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:89f3478c451507c0bd8ca91632f81ee8b3662222
-    pristine_git_object: 270718a8693a4d9a5a8ea589e952fa0b8eff44b1
+    last_write_checksum: sha1:e31ef84c0e15ae8128e587242b82ec57fb5c6054
+    pristine_git_object: 61a2f19aad99f481bb087594265a40685a9c1d1d
   src/lib/dlv.ts:
     id: b1988214835a
     last_write_checksum: sha1:1dd3e3fbb4550c4bf31f5ef997faff355d6f3250
@@ -2909,8 +2909,8 @@ trackedFiles:
     pristine_git_object: 0955a573c2ce989d63c737410ab8cc28706d9f74
   src/mcp-server/mcp-server.ts:
     id: aabbc4ab07c1
-    last_write_checksum: sha1:2ff03a62589bcb16beb532878a4cad4089b10ed0
-    pristine_git_object: 03c96cbac9dfe5f8376ced35992086098822abe2
+    last_write_checksum: sha1:0f38fe13361c0de68b7c79c640c323cb90f4ce82
+    pristine_git_object: a70686a7cb0f3de72b35d4fc1a3152b2cebab6a2
   src/mcp-server/prompts.ts:
     id: 26f3d73cbf31
     last_write_checksum: sha1:1573b4466fbd86f9dd4ae0b3cd22d9558239eb62
@@ -2925,8 +2925,8 @@ trackedFiles:
     pristine_git_object: c25696d4c4f70e081fa5d87ad6891874c509a577
   src/mcp-server/server.ts:
     id: 2784dd48e82a
-    last_write_checksum: sha1:c3e2f0a7fd1d604df7fe9168e66a9883e41d7223
-    pristine_git_object: 28597dd8fe20dbe1654bee070a1a1a058f6ae565
+    last_write_checksum: sha1:6c2bf6415c7c203df759fce6145d8194f0fa78ac
+    pristine_git_object: bf1b8cd078f407dd243a9774936b172eba7289c5
   src/mcp-server/shared.ts:
     id: 074e80d4be1e
     last_write_checksum: sha1:56c73d4429691516e35541825e759a0285747a2b
@@ -10064,25 +10064,6 @@ examples:
           application/json: {"message": "<value>", "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `avalanche.data.evm.address.transactions.list()`:  `response.transactions.[].nativeTransaction` **Changed**
-  * `avalanche.data.evm.address.transactions.listNative()`:  `response.transactions.[]` **Changed**
-  * `avalanche.data.evm.address.transactions.listErc20()`:  `response.transactions.[].blockTimestampMilliseconds` **Added**
-  * `avalanche.data.evm.address.transactions.listErc721()`:  `response.transactions.[].blockTimestampMilliseconds` **Added**
-  * `avalanche.data.evm.address.transactions.listErc1155()`:  `response.transactions.[].blockTimestampMilliseconds` **Added**
-  * `avalanche.data.evm.address.transactions.listInternal()`:  `response.transactions.[].blockTimestampMilliseconds` **Added**
-  * `avalanche.data.evm.transactions.listLatestAllChains()`:  `response.transactions.[]` **Changed**
-  * `avalanche.data.evm.transactions.get()`:  `response.nativetransaction` **Changed**
-  * `avalanche.data.evm.transactions.listLatest()`:  `response.transactions.[]` **Changed**
-  * `avalanche.data.evm.blocks.listLatestAllChains()`:  `response.blocks.[]` **Changed**
-  * `avalanche.data.evm.blocks.listLatest()`:  `response.blocks.[]` **Changed**
-  * `avalanche.data.evm.blocks.get()`:  `response` **Changed**
-  * `avalanche.data.evm.blocks.listTransactions()`:  `response.transactions.[]` **Changed**
-  * `avalanche.data.evm.contracts.getDeploymentTransaction()`:  `response.nativetransaction` **Changed**
-  * `avalanche.data.evm.contracts.listTransfers()`:  `response.transfers.[]` **Changed**
-  * `avalanche.data.evm.chains.listAllLatestTransactions()`:  `response.transactions.[]` **Changed**
-  * `avalanche.data.evm.chains.listAllLatestBlocks()`:  `response.blocks.[]` **Changed**
 generatedFiles:
   - .gitattributes
   - .npmignore
