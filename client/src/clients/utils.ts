@@ -9,6 +9,9 @@ import {
 } from "viem";
 import { commonHeaders } from "./common.js";
 import { AvalancheTransportConfig, ClientType } from "./types/types.js";
+import { AVALANCHE_CHAIN_IDS } from "../methods/consts.js";
+
+const AVALANCHE_CHAIN_ID_VALUES = Object.values(AVALANCHE_CHAIN_IDS) as number[];
 
 export function createAvalancheTransportClient<
   transport extends Transport,
@@ -94,7 +97,7 @@ function getClientURL(
   clientType: ClientType = "public",
   transportType: "http" | "webSocket" = "http"
 ): string | undefined {
-  if (chain?.id !== 43_113 && chain?.id !== 43_114) {
+  if (!chain?.id || !AVALANCHE_CHAIN_ID_VALUES.includes(chain.id)) {
     return url ?? chain?.rpcUrls.default[transportType]?.[0];
   }
 
