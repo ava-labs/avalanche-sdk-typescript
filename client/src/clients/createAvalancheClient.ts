@@ -8,6 +8,7 @@ import {
   RpcSchema,
   Transport,
 } from "viem";
+import { AVALANCHE_CHAIN_IDS } from "../methods/consts.js";
 import { AvalanchePublicRpcSchema } from "../methods/public/avalanchePublicRpcSchema.js";
 import { createAdminApiClient } from "./createAdminApiClient.js";
 import { createCChainClient } from "./createCChainClient.js";
@@ -23,6 +24,8 @@ import {
   AvalancheClientConfig,
 } from "./types/createAvalancheClient.js";
 import { createAvalancheTransportClient } from "./utils.js";
+
+const AVALANCHE_CHAIN_ID_VALUES = Object.values(AVALANCHE_CHAIN_IDS) as number[];
 /**
  * Creates an Avalanche Client with a given transport configured for a Chain.
  *
@@ -120,7 +123,7 @@ export function createAvalancheClient<
   });
   const extendedClient = client.extend(avalanchePublicActions) as any;
 
-  if (chainConfig?.id !== 43_112 && chainConfig?.id !== 43_113 && chainConfig?.id !== 43_114) {
+  if (!chainConfig?.id || !AVALANCHE_CHAIN_ID_VALUES.includes(chainConfig.id)) {
     return {
       ...extendedClient,
     };
