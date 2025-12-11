@@ -14,9 +14,15 @@ const fromPChainAddress = account.getXPAddress("P", "fuji");
 const toPChainAddress = "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz";
 
 // Mock dependencies
-vi.mock("../getContextFromURI.js", () => ({
-  getContextFromURI: vi.fn(),
-}));
+vi.mock("../getContextFromURI.js", async (importOriginal) => {
+  const actual = await importOriginal<
+    typeof import("../getContextFromURI.js")
+  >();
+  return {
+    ...actual,
+    getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+  };
+});
 
 vi.mock("../utils.js", () => ({
   getBech32AddressFromAccountOrClient: vi.fn(),

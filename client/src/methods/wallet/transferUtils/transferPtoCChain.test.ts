@@ -16,9 +16,15 @@ const toCChainAddress =
   "0x0000000000000000000000000000000000000000" as `0x${string}`;
 
 // Mock dependencies
-vi.mock("../getContextFromURI.js", () => ({
-  getContextFromURI: vi.fn(),
-}));
+vi.mock("../getContextFromURI.js", async (importOriginal) => {
+  const actual = await importOriginal<
+    typeof import("../getContextFromURI.js")
+  >();
+  return {
+    ...actual,
+    getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+  };
+});
 
 vi.mock("../utils.js", () => ({
   getBech32AddressFromAccountOrClient: vi.fn(),
