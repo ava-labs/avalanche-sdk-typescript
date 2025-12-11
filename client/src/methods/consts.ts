@@ -9,7 +9,7 @@ export const AVALANCHE_CHAIN_IDS = {
 export const AVALANCHE_NETWORK_IDS = {
   MAINNET: 1,
   FUJI: 5,
-  LOCAL: 1337,
+  LOCAL: 12345,
 } as const;
 
 export const P_CHAIN_MAINNET_ID = '11111111111111111111111111111111LpoYY';
@@ -29,4 +29,4 @@ export const C_CHAIN_ALIAS = 'C';
 
 export const MAINNET_NETWORK_ID = 1;
 export const TESTNET_NETWORK_ID = 5;
-export const LOCAL_NETWORK_ID = 1337;
+export const LOCAL_NETWORK_ID = 12345;

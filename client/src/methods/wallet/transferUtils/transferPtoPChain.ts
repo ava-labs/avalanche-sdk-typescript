@@ -2,7 +2,7 @@ import { pvm } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
-import { getContextFromURI } from "../getContextFromURI.js";
+import { getContextFromURI, getHRP } from "../getContextFromURI.js";
 import { prepareBaseTxn } from "../pChain/prepareBaseTxn.js";
 import { sendXPTransaction } from "../sendXPTransaction.js";
 import { SendParameters, SendReturnType } from "../types/send.js";
@@ -21,14 +21,13 @@ export async function transferPtoPChain(
   params: TransferPtoPChainParameters
 ): Promise<TransferPtoPChainReturnType> {
   const context = params.context || (await getContextFromURI(client));
-  const isTestnet = context.networkID === 5;
 
   // Get the current account P chain address
   const currentAccountPChainAddress = await getBech32AddressFromAccountOrClient(
     client,
     params.account,
     "P",
-    isTestnet ? "fuji" : "avax"
+    getHRP(context.networkID)
   );
 
   // Validate the destination address

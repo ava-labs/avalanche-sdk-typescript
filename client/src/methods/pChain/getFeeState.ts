@@ -46,10 +46,23 @@ export async function getFeeState<chain extends Chain | undefined>(
     params: {},
   });
 
+  // Convert to BigInt
+  let capacity = BigInt(feeState.capacity);
+  const excess = BigInt(feeState.excess);
+  const price = BigInt(feeState.price);
+
+  // WORKAROUND: On local networks with Etna upgrade not yet active or freshly started,
+  // capacity can be 0 which causes all transactions to fail with "gas exceeds capacity".
+  // Set a default capacity of 1,000,000 to allow transactions to proceed.
+  // This matches the default maxGasCapacity from AvalancheGo's local network params.
+  if (capacity === 0n) {
+    capacity = BigInt(1_000_000);
+  }
+
   return {
     ...feeState,
-    capacity: BigInt(feeState.capacity),
-    excess: BigInt(feeState.excess),
-    price: BigInt(feeState.price),
+    capacity,
+    excess,
+    price,
   };
 }

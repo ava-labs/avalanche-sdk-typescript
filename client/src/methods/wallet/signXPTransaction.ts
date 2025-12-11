@@ -13,7 +13,7 @@ import { getTxFromBytes } from "../../utils/getTxFromBytes.js";
 import { getUtxosForAddress } from "../../utils/getUtxosForAddress.js";
 import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import { SepkSignatureLength } from "./constants.js";
-import { getContextFromURI } from "./getContextFromURI.js";
+import { getContextFromURI, getHRP } from "./getContextFromURI.js";
 import {
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
@@ -88,20 +88,16 @@ export async function signXPTransaction(
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
 
-  let isTestnet, networkId;
-  if (client.chain?.testnet) {
-    isTestnet = client.chain?.testnet;
-    networkId = isTestnet ? 5 : 1;
-  } else {
-    const context = params.context || (await getContextFromURI(client));
-    isTestnet = context.networkID === 5;
-    networkId = context.networkID;
-  }
+  // Always get the actual network ID from the node to determine the correct HRP
+  // Don't rely on chain.testnet flag as it doesn't distinguish between different test networks
+  const context = params.context || (await getContextFromURI(client));
+  const networkId = context.networkID;
+  const hrp = getHRP(networkId);
 
   if (xpAccount) {
     const xpAddress = publicKeyToXPAddress(
       xpAccount.publicKey,
-      isTestnet ? "fuji" : "avax"
+      hrp
     );
 
     if (typeof txOrTxHex === "string") {
@@ -165,7 +161,7 @@ export async function signXPTransaction(
             utxo
               .getOutputOwners()
               .addrs.findIndex(
-                (add) => add.toString(isTestnet ? "fuji" : "avax") === xpAddress
+                (add) => add.toString(hrp) === xpAddress
               ),
           ]);
         }
@@ -191,7 +187,7 @@ export async function signXPTransaction(
         const credentialIndex = credentials.length - 1;
 
         const signerIndex = signingOwners.findIndex(
-          (owner) => owner.toString(isTestnet ? "fuji" : "avax") === xpAddress
+          (owner) => owner.toString(hrp) === xpAddress
         );
 
         if (signerIndex !== -1) {
