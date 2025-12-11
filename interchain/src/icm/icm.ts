@@ -103,7 +103,7 @@ export class ICM {
     });
 
     const messageInput: TeleporterMessageInput = {
-      destinationBlockchainID: sourceChain.blockchainId,
+      destinationBlockchainID: destinationChain.blockchainId,
       destinationAddress: params.recipientAddress || this.defaultRecipient,
       feeInfo: params.feeInfo || this.feeInfo,
       requiredGasLimit: params.requiredGasLimit || this.requiredGasLimit,
