@@ -1,5 +1,13 @@
 import { pvm, pvmSerial, utils } from "@avalabs/avalanchejs";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 import { PrepareIncreaseL1ValidatorBalanceTxnParameters } from ".";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
@@ -17,9 +25,15 @@ import { Output } from "../types/common";
 import { avaxToNanoAvax, toTransferableOutput } from "../utils";
 
 // Mock getContextFromURI to avoid making real HTTP requests
-vi.mock("../getContextFromURI.js", () => ({
-  getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
-}));
+vi.mock("../getContextFromURI.js", async (importOriginal) => {
+  const actual = await importOriginal<
+    typeof import("../getContextFromURI.js")
+  >();
+  return {
+    ...actual,
+    getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+  };
+});
 
 const testInputAmount = 1;
 
@@ -37,6 +51,10 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
   beforeAll(() => {
     pChainWorker.listen();
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   afterAll(() => {

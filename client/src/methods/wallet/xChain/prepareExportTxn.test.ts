@@ -1,5 +1,13 @@
 import { avmSerial } from "@avalabs/avalanchejs";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 import { PrepareExportTxnParameters } from ".";
 import { avalancheFuji } from "../../../chains";
 import { createAvalancheWalletClient } from "../../../clients/createAvalancheWalletClient";
@@ -21,9 +29,15 @@ import {
 } from "../utils";
 
 // Mock getContextFromURI to avoid making real HTTP requests
-vi.mock("../getContextFromURI.js", () => ({
-  getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
-}));
+vi.mock("../getContextFromURI.js", async (importOriginal) => {
+  const actual = await importOriginal<
+    typeof import("../getContextFromURI.js")
+  >();
+  return {
+    ...actual,
+    getContextFromURI: vi.fn(() => Promise.resolve(testContext)),
+  };
+});
 
 const testInputAmount = avaxToNanoAvax(1);
 
@@ -41,6 +55,10 @@ describe("prepareExportTxn", () => {
 
   beforeAll(() => {
     xChainWorker.listen();
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
