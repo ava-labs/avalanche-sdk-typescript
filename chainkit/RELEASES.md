@@ -161,3 +161,13 @@ Based on:
 - [typescript v0.3.11] chainkit
 ### Releases
 - [NPM v0.3.11] https://www.npmjs.com/package/@avalanche-sdk/chainkit/v/0.3.11 - chainkit
+
+## 2025-12-15 20:22:36
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.676.1 (2.781.2) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v0.3.12] chainkit
+### Releases
+- [NPM v0.3.12] https://www.npmjs.com/package/@avalanche-sdk/chainkit/v/0.3.12 - chainkit

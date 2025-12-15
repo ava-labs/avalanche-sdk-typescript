@@ -73,6 +73,8 @@ import { tool$dataPrimaryNetworkTransactionsGet } from "./tools/dataPrimaryNetwo
 import { tool$dataPrimaryNetworkTransactionsListActiveStakingTransactions } from "./tools/dataPrimaryNetworkTransactionsListActiveStakingTransactions.js";
 import { tool$dataPrimaryNetworkTransactionsListAssetTransactions } from "./tools/dataPrimaryNetworkTransactionsListAssetTransactions.js";
 import { tool$dataPrimaryNetworkTransactionsListLatest } from "./tools/dataPrimaryNetworkTransactionsListLatest.js";
+import { tool$dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses } from "./tools/dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses.js";
+import { tool$dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2 } from "./tools/dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2.js";
 import { tool$dataPrimaryNetworkUtxosListByAddresses } from "./tools/dataPrimaryNetworkUtxosListByAddresses.js";
 import { tool$dataPrimaryNetworkUtxosListByAddressesV2 } from "./tools/dataPrimaryNetworkUtxosListByAddressesV2.js";
 import { tool$dataPrimaryNetworkVerticesGetByHash } from "./tools/dataPrimaryNetworkVerticesGetByHash.js";
@@ -94,8 +96,6 @@ import { tool$metricsChainsGetMetrics } from "./tools/metricsChainsGetMetrics.js
 import { tool$metricsChainsGetRollingWindowMetrics } from "./tools/metricsChainsGetRollingWindowMetrics.js";
 import { tool$metricsChainsList } from "./tools/metricsChainsList.js";
 import { tool$metricsChainsListBTCbBridgersAboveThreshold } from "./tools/metricsChainsListBTCbBridgersAboveThreshold.js";
-import { tool$metricsChainsListNftHolders } from "./tools/metricsChainsListNftHolders.js";
-import { tool$metricsChainsListTokenHoldersAboveThreshold } from "./tools/metricsChainsListTokenHoldersAboveThreshold.js";
 import { tool$metricsHealthCheck } from "./tools/metricsHealthCheck.js";
 import { tool$metricsL1ValidatorsGetMetricsByNodeId } from "./tools/metricsL1ValidatorsGetMetricsByNodeId.js";
 import { tool$metricsL1ValidatorsGetMetricsBySubnetId } from "./tools/metricsL1ValidatorsGetMetricsBySubnetId.js";
@@ -129,7 +129,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "Avalanche",
-    version: "0.3.11",
+    version: "0.3.12",
   });
 
   const client = new AvalancheCore({
@@ -181,8 +181,6 @@ export function createMCPServer(deps: {
   tool(tool$metricsChainsGetRollingWindowMetrics);
   tool(tool$metricsChainsGetICMTimeseries);
   tool(tool$metricsChainsGetICMSummary);
-  tool(tool$metricsChainsListNftHolders);
-  tool(tool$metricsChainsListTokenHoldersAboveThreshold);
   tool(tool$metricsChainsListBTCbBridgersAboveThreshold);
   tool(tool$metricsNetworksGetStakingMetrics);
   tool(tool$metricsL1ValidatorsListMetrics);
@@ -244,6 +242,8 @@ export function createMCPServer(deps: {
   tool(tool$dataPrimaryNetworkRewardsListHistoricalRewards);
   tool(tool$dataPrimaryNetworkUtxosListByAddresses);
   tool(tool$dataPrimaryNetworkUtxosListByAddressesV2);
+  tool(tool$dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses);
+  tool(tool$dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2);
   tool(tool$dataPrimaryNetworkBalancesListByAddresses);
   tool(tool$dataPrimaryNetworkBlocksGet);
   tool(tool$dataPrimaryNetworkBlocksListByNodeId);

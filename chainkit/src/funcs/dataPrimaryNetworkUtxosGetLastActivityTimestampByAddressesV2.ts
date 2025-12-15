@@ -3,8 +3,7 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { dlv } from "../lib/dlv.js";
-import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
+import { encodeFormQuery, encodeJSON, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
@@ -22,31 +21,57 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import { GetAddressesByBalanceOverTimeServerList } from "../models/operations/getaddressesbybalanceovertime.js";
+import { GetLastActivityTimestampByAddressesV2ServerList } from "../models/operations/getlastactivitytimestampbyaddressesv2.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
-import {
-  createPageIterator,
-  haltIterator,
-  PageIterator,
-  Paginator,
-} from "../types/operations.js";
 
 /**
- * Get addresses by balance over time
+ * Get last activity timestamp by addresses v2
  *
  * @remarks
- * Get list of addresses and their latest balances that have held more than a certain threshold of a given token during the specified time frame.
+ * Gets the last activity timestamp for the supplied addresses on one of the Primary Network chains. V2 route supports querying for more addresses.
  */
-export function metricsChainsListTokenHoldersAboveThreshold(
+export function dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2(
   client: AvalancheCore,
-  request: operations.GetAddressesByBalanceOverTimeRequest,
+  request: operations.GetLastActivityTimestampByAddressesV2Request,
   options?: RequestOptions,
 ): APIPromise<
-  PageIterator<
+  Result<
+    operations.GetLastActivityTimestampByAddressesV2Response,
+    | errors.BadRequestError
+    | errors.UnauthorizedError
+    | errors.ForbiddenError
+    | errors.NotFoundError
+    | errors.TooManyRequestsError
+    | errors.InternalServerError
+    | errors.BadGatewayError
+    | errors.ServiceUnavailableError
+    | AvalancheError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
+  client: AvalancheCore,
+  request: operations.GetLastActivityTimestampByAddressesV2Request,
+  options?: RequestOptions,
+): Promise<
+  [
     Result<
-      operations.GetAddressesByBalanceOverTimeResponse,
+      operations.GetLastActivityTimestampByAddressesV2Response,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -64,91 +89,51 @@ export function metricsChainsListTokenHoldersAboveThreshold(
       | UnexpectedClientError
       | SDKValidationError
     >,
-    { cursor: string }
-  >
-> {
-  return new APIPromise($do(
-    client,
-    request,
-    options,
-  ));
-}
-
-async function $do(
-  client: AvalancheCore,
-  request: operations.GetAddressesByBalanceOverTimeRequest,
-  options?: RequestOptions,
-): Promise<
-  [
-    PageIterator<
-      Result<
-        operations.GetAddressesByBalanceOverTimeResponse,
-        | errors.BadRequestError
-        | errors.UnauthorizedError
-        | errors.ForbiddenError
-        | errors.NotFoundError
-        | errors.TooManyRequestsError
-        | errors.InternalServerError
-        | errors.BadGatewayError
-        | errors.ServiceUnavailableError
-        | AvalancheError
-        | ResponseValidationError
-        | ConnectionError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | InvalidRequestError
-        | UnexpectedClientError
-        | SDKValidationError
-      >,
-      { cursor: string }
-    >,
     APICall,
   ]
 > {
   const parsed = safeParse(
     request,
     (value) =>
-      operations.GetAddressesByBalanceOverTimeRequest$outboundSchema.parse(
-        value,
-      ),
+      operations.GetLastActivityTimestampByAddressesV2Request$outboundSchema
+        .parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return [haltIterator(parsed), { status: "invalid" }];
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = null;
+  const body = encodeJSON("body", payload.PrimaryNetworkAddressesBodyDto, {
+    explode: true,
+  });
 
   const baseURL = options?.serverURL
-    || pathToFunc(GetAddressesByBalanceOverTimeServerList[0], {
+    || pathToFunc(GetLastActivityTimestampByAddressesV2ServerList[0], {
       charEncoding: "percent",
     })();
 
   const pathParams = {
-    address: encodeSimple("address", payload.address, {
+    blockchainId: encodeSimple("blockchainId", payload.blockchainId, {
       explode: false,
       charEncoding: "percent",
     }),
-    chainId: encodeSimple(
-      "chainId",
-      payload.chainId ?? client._options.chainId,
+    network: encodeSimple(
+      "network",
+      payload.network ?? client._options.network,
       { explode: false, charEncoding: "percent" },
     ),
   };
 
-  const path = pathToFunc("/v2/chains/{chainId}/contracts/{address}/balances")(
-    pathParams,
-  );
+  const path = pathToFunc(
+    "/v1/networks/{network}/blockchains/{blockchainId}/lastActivityTimestampByAddresses",
+  )(pathParams);
 
   const query = encodeFormQuery({
-    "endTimestamp": payload.endTimestamp,
-    "pageSize": payload.pageSize,
-    "pageToken": payload.pageToken,
-    "startTimestamp": payload.startTimestamp,
-    "threshold": payload.threshold,
+    "minUtxoAmount": payload.minUtxoAmount,
   });
 
   const headers = new Headers(compactMap({
+    "Content-Type": "application/json",
     Accept: "application/json",
   }));
 
@@ -159,7 +144,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: baseURL ?? "",
-    operationID: "getAddressesByBalanceOverTime",
+    operationID: "getLastActivityTimestampByAddressesV2",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -183,7 +168,7 @@ async function $do(
 
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
-    method: "GET",
+    method: "POST",
     baseURL: baseURL,
     path: path,
     headers: headers,
@@ -193,7 +178,7 @@ async function $do(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return [haltIterator(requestRes), { status: "invalid" }];
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -215,7 +200,7 @@ async function $do(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return [haltIterator(doResult), { status: "request-error", request: req }];
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -223,8 +208,8 @@ async function $do(
     HttpMeta: { Response: response, Request: req },
   };
 
-  const [result, raw] = await M.match<
-    operations.GetAddressesByBalanceOverTimeResponse,
+  const [result] = await M.match<
+    operations.GetLastActivityTimestampByAddressesV2Response,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -244,8 +229,7 @@ async function $do(
   >(
     M.json(
       200,
-      operations.GetAddressesByBalanceOverTimeResponse$inboundSchema,
-      { key: "Result" },
+      operations.GetLastActivityTimestampByAddressesV2Response$inboundSchema,
     ),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
@@ -259,64 +243,8 @@ async function $do(
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return [haltIterator(result), {
-      status: "complete",
-      request: req,
-      response,
-    }];
+    return [result, { status: "complete", request: req, response }];
   }
 
-  const nextFunc = (
-    responseData: unknown,
-  ): {
-    next: Paginator<
-      Result<
-        operations.GetAddressesByBalanceOverTimeResponse,
-        | errors.BadRequestError
-        | errors.UnauthorizedError
-        | errors.ForbiddenError
-        | errors.NotFoundError
-        | errors.TooManyRequestsError
-        | errors.InternalServerError
-        | errors.BadGatewayError
-        | errors.ServiceUnavailableError
-        | AvalancheError
-        | ResponseValidationError
-        | ConnectionError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | InvalidRequestError
-        | UnexpectedClientError
-        | SDKValidationError
-      >
-    >;
-    "~next"?: { cursor: string };
-  } => {
-    const nextCursor = dlv(responseData, "nextPageToken");
-    if (typeof nextCursor !== "string") {
-      return { next: () => null };
-    }
-    if (nextCursor.trim() === "") {
-      return { next: () => null };
-    }
-
-    const nextVal = () =>
-      metricsChainsListTokenHoldersAboveThreshold(
-        client,
-        {
-          ...request,
-          pageToken: nextCursor,
-        },
-        options,
-      );
-
-    return { next: nextVal, "~next": { cursor: nextCursor } };
-  };
-
-  const page = { ...result, ...nextFunc(raw) };
-  return [{ ...page, ...createPageIterator(page, (v) => !v.ok) }, {
-    status: "complete",
-    request: req,
-    response,
-  }];
+  return [result, { status: "complete", request: req, response }];
 }

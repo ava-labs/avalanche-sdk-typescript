@@ -363,6 +363,8 @@ run();
 
 * [listByAddresses](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
 * [listByAddressesV2](docs/sdks/utxos/README.md#listbyaddressesv2) - List UTXOs v2 - Supports querying for more addresses
+* [getLastActivityTimestampByAddresses](docs/sdks/utxos/README.md#getlastactivitytimestampbyaddresses) - Get last activity timestamp by addresses
+* [getLastActivityTimestampByAddressesV2](docs/sdks/utxos/README.md#getlastactivitytimestampbyaddressesv2) - Get last activity timestamp by addresses v2
 
 ##### [Data.PrimaryNetwork.Vertices](docs/sdks/vertices/README.md)
 
@@ -409,8 +411,6 @@ run();
 * [getRollingWindowMetrics](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
 * [getICMTimeseries](docs/sdks/metricschains/README.md#geticmtimeseries) - Get ICM timeseries metrics
 * [getICMSummary](docs/sdks/metricschains/README.md#geticmsummary) - Get ICM summary metrics
-* [listNftHolders](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
-* [listTokenHoldersAboveThreshold](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 * [listBTCbBridgersAboveThreshold](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
 
 #### [Metrics.L1Validators](docs/sdks/l1validators/README.md)
@@ -519,6 +519,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataPrimaryNetworkTransactionsListActiveStakingTransactions`](docs/sdks/primarynetworktransactions/README.md#listactivestakingtransactions) - List staking transactions
 - [`dataPrimaryNetworkTransactionsListAssetTransactions`](docs/sdks/primarynetworktransactions/README.md#listassettransactions) - List asset transactions
 - [`dataPrimaryNetworkTransactionsListLatest`](docs/sdks/primarynetworktransactions/README.md#listlatest) - List latest transactions
+- [`dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses`](docs/sdks/utxos/README.md#getlastactivitytimestampbyaddresses) - Get last activity timestamp by addresses
+- [`dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2`](docs/sdks/utxos/README.md#getlastactivitytimestampbyaddressesv2) - Get last activity timestamp by addresses v2
 - [`dataPrimaryNetworkUtxosListByAddresses`](docs/sdks/utxos/README.md#listbyaddresses) - List UTXOs
 - [`dataPrimaryNetworkUtxosListByAddressesV2`](docs/sdks/utxos/README.md#listbyaddressesv2) - List UTXOs v2 - Supports querying for more addresses
 - [`dataPrimaryNetworkVerticesGetByHash`](docs/sdks/vertices/README.md#getbyhash) - Get vertex
@@ -536,8 +538,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`metricsChainsGetRollingWindowMetrics`](docs/sdks/metricschains/README.md#getrollingwindowmetrics) - Get rolling window metrics for EVM chains
 - [`metricsChainsList`](docs/sdks/metricschains/README.md#list) - Get a list of supported blockchains
 - [`metricsChainsListBTCbBridgersAboveThreshold`](docs/sdks/metricschains/README.md#listbtcbbridgersabovethreshold) - Get addresses by BTCb bridged balance
-- [`metricsChainsListNftHolders`](docs/sdks/metricschains/README.md#listnftholders) - Get NFT holders by contract address
-- [`metricsChainsListTokenHoldersAboveThreshold`](docs/sdks/metricschains/README.md#listtokenholdersabovethreshold) - Get addresses by balance over time
 - [`metricsHealthCheck`](docs/sdks/metrics/README.md#healthcheck) - Get the health of the service
 - [`metricsL1ValidatorsGetMetricsByNodeId`](docs/sdks/l1validators/README.md#getmetricsbynodeid) - Get metric values with given nodeId and timestamp range
 - [`metricsL1ValidatorsGetMetricsBySubnetId`](docs/sdks/l1validators/README.md#getmetricsbysubnetid) - Get metric values with given subnetId and timestamp range
