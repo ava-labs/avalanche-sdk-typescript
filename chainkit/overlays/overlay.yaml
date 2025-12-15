@@ -69,6 +69,17 @@ actions:
                 - {$ref: "#/components/schemas/ListPChainUtxosResponse"}
                 - {$ref: "#/components/schemas/ListUtxosResponse"}
 
+  - target: $.paths['/v2/chains/{chainId}/btcb/bridged:getAddresses'].get.parameters
+    description: Add missing chainId to the parameters
+    update:
+      - name: chainId
+        required: true
+        in: path
+        description: A supported evm chain id. Use the `/chains` endpoint to get a list of supported chain ids.
+        schema:
+          type: string
+        example: 43114
+
   - target: $
     description: Add a servers list to the OpenAPI spec
     update:
