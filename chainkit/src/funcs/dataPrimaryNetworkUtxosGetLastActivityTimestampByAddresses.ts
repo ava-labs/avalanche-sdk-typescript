@@ -3,7 +3,6 @@
  */
 
 import { AvalancheCore } from "../core.js";
-import { dlv } from "../lib/dlv.js";
 import { encodeFormQuery, encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -22,31 +21,57 @@ import {
 import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import { GetNftHoldersByContractAddressServerList } from "../models/operations/getnftholdersbycontractaddress.js";
+import { GetLastActivityTimestampByAddressesServerList } from "../models/operations/getlastactivitytimestampbyaddresses.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
-import {
-  createPageIterator,
-  haltIterator,
-  PageIterator,
-  Paginator,
-} from "../types/operations.js";
 
 /**
- * Get NFT holders by contract address
+ * Get last activity timestamp by addresses
  *
  * @remarks
- * Get list of NFT holders and number of NFTs held by contract address.
+ * Gets the last activity timestamp for the supplied addresses on one of the Primary Network chains.
  */
-export function metricsChainsListNftHolders(
+export function dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses(
   client: AvalancheCore,
-  request: operations.GetNftHoldersByContractAddressRequest,
+  request: operations.GetLastActivityTimestampByAddressesRequest,
   options?: RequestOptions,
 ): APIPromise<
-  PageIterator<
+  Result<
+    operations.GetLastActivityTimestampByAddressesResponse,
+    | errors.BadRequestError
+    | errors.UnauthorizedError
+    | errors.ForbiddenError
+    | errors.NotFoundError
+    | errors.TooManyRequestsError
+    | errors.InternalServerError
+    | errors.BadGatewayError
+    | errors.ServiceUnavailableError
+    | AvalancheError
+    | ResponseValidationError
+    | ConnectionError
+    | RequestAbortedError
+    | RequestTimeoutError
+    | InvalidRequestError
+    | UnexpectedClientError
+    | SDKValidationError
+  >
+> {
+  return new APIPromise($do(
+    client,
+    request,
+    options,
+  ));
+}
+
+async function $do(
+  client: AvalancheCore,
+  request: operations.GetLastActivityTimestampByAddressesRequest,
+  options?: RequestOptions,
+): Promise<
+  [
     Result<
-      operations.GetNftHoldersByContractAddressResponse,
+      operations.GetLastActivityTimestampByAddressesResponse,
       | errors.BadRequestError
       | errors.UnauthorizedError
       | errors.ForbiddenError
@@ -64,85 +89,46 @@ export function metricsChainsListNftHolders(
       | UnexpectedClientError
       | SDKValidationError
     >,
-    { cursor: string }
-  >
-> {
-  return new APIPromise($do(
-    client,
-    request,
-    options,
-  ));
-}
-
-async function $do(
-  client: AvalancheCore,
-  request: operations.GetNftHoldersByContractAddressRequest,
-  options?: RequestOptions,
-): Promise<
-  [
-    PageIterator<
-      Result<
-        operations.GetNftHoldersByContractAddressResponse,
-        | errors.BadRequestError
-        | errors.UnauthorizedError
-        | errors.ForbiddenError
-        | errors.NotFoundError
-        | errors.TooManyRequestsError
-        | errors.InternalServerError
-        | errors.BadGatewayError
-        | errors.ServiceUnavailableError
-        | AvalancheError
-        | ResponseValidationError
-        | ConnectionError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | InvalidRequestError
-        | UnexpectedClientError
-        | SDKValidationError
-      >,
-      { cursor: string }
-    >,
     APICall,
   ]
 > {
   const parsed = safeParse(
     request,
     (value) =>
-      operations.GetNftHoldersByContractAddressRequest$outboundSchema.parse(
-        value,
-      ),
+      operations.GetLastActivityTimestampByAddressesRequest$outboundSchema
+        .parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
-    return [haltIterator(parsed), { status: "invalid" }];
+    return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
   const body = null;
 
   const baseURL = options?.serverURL
-    || pathToFunc(GetNftHoldersByContractAddressServerList[0], {
+    || pathToFunc(GetLastActivityTimestampByAddressesServerList[0], {
       charEncoding: "percent",
     })();
 
   const pathParams = {
-    address: encodeSimple("address", payload.address, {
+    blockchainId: encodeSimple("blockchainId", payload.blockchainId, {
       explode: false,
       charEncoding: "percent",
     }),
-    chainId: encodeSimple(
-      "chainId",
-      payload.chainId ?? client._options.chainId,
+    network: encodeSimple(
+      "network",
+      payload.network ?? client._options.network,
       { explode: false, charEncoding: "percent" },
     ),
   };
 
   const path = pathToFunc(
-    "/v2/chains/{chainId}/contracts/{address}/nfts:listHolders",
+    "/v1/networks/{network}/blockchains/{blockchainId}/lastActivityTimestampByAddresses",
   )(pathParams);
 
   const query = encodeFormQuery({
-    "pageSize": payload.pageSize,
-    "pageToken": payload.pageToken,
+    "addresses": payload.addresses,
+    "minUtxoAmount": payload.minUtxoAmount,
   });
 
   const headers = new Headers(compactMap({
@@ -156,7 +142,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: baseURL ?? "",
-    operationID: "getNftHoldersByContractAddress",
+    operationID: "getLastActivityTimestampByAddresses",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -190,7 +176,7 @@ async function $do(
     timeoutMs: options?.timeoutMs || client._options.timeoutMs || -1,
   }, options);
   if (!requestRes.ok) {
-    return [haltIterator(requestRes), { status: "invalid" }];
+    return [requestRes, { status: "invalid" }];
   }
   const req = requestRes.value;
 
@@ -212,7 +198,7 @@ async function $do(
     retryCodes: context.retryCodes,
   });
   if (!doResult.ok) {
-    return [haltIterator(doResult), { status: "request-error", request: req }];
+    return [doResult, { status: "request-error", request: req }];
   }
   const response = doResult.value;
 
@@ -220,8 +206,8 @@ async function $do(
     HttpMeta: { Response: response, Request: req },
   };
 
-  const [result, raw] = await M.match<
-    operations.GetNftHoldersByContractAddressResponse,
+  const [result] = await M.match<
+    operations.GetLastActivityTimestampByAddressesResponse,
     | errors.BadRequestError
     | errors.UnauthorizedError
     | errors.ForbiddenError
@@ -241,8 +227,7 @@ async function $do(
   >(
     M.json(
       200,
-      operations.GetNftHoldersByContractAddressResponse$inboundSchema,
-      { key: "Result" },
+      operations.GetLastActivityTimestampByAddressesResponse$inboundSchema,
     ),
     M.jsonErr(400, errors.BadRequestError$inboundSchema),
     M.jsonErr(401, errors.UnauthorizedError$inboundSchema),
@@ -256,64 +241,8 @@ async function $do(
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
   if (!result.ok) {
-    return [haltIterator(result), {
-      status: "complete",
-      request: req,
-      response,
-    }];
+    return [result, { status: "complete", request: req, response }];
   }
 
-  const nextFunc = (
-    responseData: unknown,
-  ): {
-    next: Paginator<
-      Result<
-        operations.GetNftHoldersByContractAddressResponse,
-        | errors.BadRequestError
-        | errors.UnauthorizedError
-        | errors.ForbiddenError
-        | errors.NotFoundError
-        | errors.TooManyRequestsError
-        | errors.InternalServerError
-        | errors.BadGatewayError
-        | errors.ServiceUnavailableError
-        | AvalancheError
-        | ResponseValidationError
-        | ConnectionError
-        | RequestAbortedError
-        | RequestTimeoutError
-        | InvalidRequestError
-        | UnexpectedClientError
-        | SDKValidationError
-      >
-    >;
-    "~next"?: { cursor: string };
-  } => {
-    const nextCursor = dlv(responseData, "nextPageToken");
-    if (typeof nextCursor !== "string") {
-      return { next: () => null };
-    }
-    if (nextCursor.trim() === "") {
-      return { next: () => null };
-    }
-
-    const nextVal = () =>
-      metricsChainsListNftHolders(
-        client,
-        {
-          ...request,
-          pageToken: nextCursor,
-        },
-        options,
-      );
-
-    return { next: nextVal, "~next": { cursor: nextCursor } };
-  };
-
-  const page = { ...result, ...nextFunc(raw) };
-  return [{ ...page, ...createPageIterator(page, (v) => !v.ok) }, {
-    status: "complete",
-    request: req,
-    response,
-  }];
+  return [result, { status: "complete", request: req, response }];
 }

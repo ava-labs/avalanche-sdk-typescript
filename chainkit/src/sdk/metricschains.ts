@@ -9,8 +9,6 @@ import { metricsChainsGetMetrics } from "../funcs/metricsChainsGetMetrics.js";
 import { metricsChainsGetRollingWindowMetrics } from "../funcs/metricsChainsGetRollingWindowMetrics.js";
 import { metricsChainsList } from "../funcs/metricsChainsList.js";
 import { metricsChainsListBTCbBridgersAboveThreshold } from "../funcs/metricsChainsListBTCbBridgersAboveThreshold.js";
-import { metricsChainsListNftHolders } from "../funcs/metricsChainsListNftHolders.js";
-import { metricsChainsListTokenHoldersAboveThreshold } from "../funcs/metricsChainsListTokenHoldersAboveThreshold.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as components from "../models/components/index.js";
 import * as operations from "../models/operations/index.js";
@@ -190,50 +188,6 @@ export class MetricsChains extends ClientSDK {
     options?: RequestOptions,
   ): Promise<components.ICMRollingWindowMetricsApiResponse> {
     return unwrapAsync(metricsChainsGetICMSummary(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Get NFT holders by contract address
-   *
-   * @remarks
-   * Get list of NFT holders and number of NFTs held by contract address.
-   */
-  async listNftHolders(
-    request: operations.GetNftHoldersByContractAddressRequest,
-    options?: RequestOptions,
-  ): Promise<
-    PageIterator<
-      operations.GetNftHoldersByContractAddressResponse,
-      { cursor: string }
-    >
-  > {
-    return unwrapResultIterator(metricsChainsListNftHolders(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Get addresses by balance over time
-   *
-   * @remarks
-   * Get list of addresses and their latest balances that have held more than a certain threshold of a given token during the specified time frame.
-   */
-  async listTokenHoldersAboveThreshold(
-    request: operations.GetAddressesByBalanceOverTimeRequest,
-    options?: RequestOptions,
-  ): Promise<
-    PageIterator<
-      operations.GetAddressesByBalanceOverTimeResponse,
-      { cursor: string }
-    >
-  > {
-    return unwrapResultIterator(metricsChainsListTokenHoldersAboveThreshold(
       this,
       request,
       options,
