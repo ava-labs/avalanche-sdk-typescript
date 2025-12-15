@@ -69,16 +69,96 @@ actions:
                 - {$ref: "#/components/schemas/ListPChainUtxosResponse"}
                 - {$ref: "#/components/schemas/ListUtxosResponse"}
 
-  - target: $.paths['/v2/chains/{chainId}/btcb/bridged:getAddresses'].get.parameters
-    description: Add missing chainId to the parameters
-    update:
-      - name: chainId
-        required: true
-        in: path
-        description: A supported evm chain id. Use the `/chains` endpoint to get a list of supported chain ids.
-        schema:
-          type: string
-        example: 43114
+  - target: "$.paths['/v2/chains/{chainId}/btcb/bridged:getAddresses']"
+    remove: true
+  
+  - target: $.paths
+    description: fix the endpoint as only 43114 is supported
+    update: 
+      "/v2/chains/43114/btcb/bridged:getAddresses":
+        get:
+          tags:
+            - "Looking Glass"
+          summary: "Get addresses by BTCb bridged balance"
+          description: "Get list of addresses and their net bridged amounts that have bridged more than a certain threshold."
+          operationId: "getAddressesByBtcbBridged"
+          parameters:
+            - name: "threshold"
+              in: "query"
+              description: "The minimum balance for which addresses should be considered."
+              required: true
+              schema:
+                type: "string"
+              example: "1000000"
+            - name: "pageToken"
+              in: "query"
+              description: "A page token, received from a previous list call. Provide this to retrieve the subsequent page."
+              required: false
+              schema:
+                type: "string"
+            - name: "pageSize"
+              in: "query"
+              description: "The maximum number of items to return. The minimum page size is 1. The maximum pageSize is 5000."
+              required: false
+              schema:
+                type: "integer"
+                maximum: 5000
+                minimum: 1
+                default: 1000
+              example: "10"
+          responses:
+            "200":
+              description: "Successful response"
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/LookingGlassResponse"}
+            "400":
+              description: "Bad requests generally mean the client has passed invalid \n    or malformed parameters. Error messages in the response could help in \n    evaluating the error."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/BadRequest"}
+            "401":
+              description: "When a client attempts to access resources that require \n    authorization credentials but the client lacks proper authentication \n    in the request, the server responds with 401."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/Unauthorized"}
+            "403":
+              description: "When a client attempts to access resources with valid\n    credentials but doesn't have the privilege to perform that action, \n    the server responds with 403."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/Forbidden"}
+            "404":
+              description: "The error is mostly returned when the client requests\n    with either mistyped URL, or the passed resource is moved or deleted, \n    or the resource doesn't exist."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/NotFound"}
+            "429":
+              description: "This error is returned when the client has sent too many,\n    and has hit the rate limit."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/TooManyRequests"}
+            "500":
+              description: "The error is a generic server side error that is \n    returned for any uncaught and unexpected issues on the server side. \n    This should be very rare, and you may reach out to us if the problem \n    persists for a longer duration."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/InternalServerError"}
+            "502":
+              description: "This is an internal error indicating invalid response \n      received by the client-facing proxy or gateway from the upstream server."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/BadGateway"}
+            "503":
+              description: "The error is returned for certain routes on a particular\n    Subnet. This indicates an internal problem with our Subnet node, and may \n    not necessarily mean the Subnet is down or affected."
+              content:
+                "application/json":
+                  schema: {"$ref": "#/components/schemas/ServiceUnavailable"}
+          x-execution-weight: "large"
+          x-speakeasy-group: "metrics.chains"
+          x-speakeasy-name-override: "listBTCbBridgersAboveThreshold"
+          x-speakeasy-pagination: {"type": "cursor", "inputs": [{"name": "pageToken", "in": "parameters", "type": "cursor"}], "outputs": {"nextCursor": "$.nextPageToken"}}
+          servers:
+            - url: "https://metrics.avax.network"
+  
 
   - target: $
     description: Add a servers list to the OpenAPI spec
