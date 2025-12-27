@@ -217,7 +217,6 @@ async function run() {
   const result = await avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddresses({
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    minUtxoAmount: 1000,
   });
 
   console.log(result);
@@ -244,7 +243,6 @@ async function run() {
   const res = await dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses(avalanche, {
     addresses: "avax1h2ccj9f5ay5acl6tyn9mwmw32p8wref8vl8ctg",
     blockchainId: "p-chain",
-    minUtxoAmount: 1000,
   });
   if (res.ok) {
     const { value: result } = res;
@@ -302,7 +300,6 @@ const avalanche = new Avalanche({
 async function run() {
   const result = await avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddressesV2({
     blockchainId: "p-chain",
-    minUtxoAmount: 1000,
     primaryNetworkAddressesBodyDto: {
       addresses: "P-avax1abc123,X-avax1def456,C-avax1ghi789",
     },
@@ -331,7 +328,6 @@ const avalanche = new AvalancheCore({
 async function run() {
   const res = await dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2(avalanche, {
     blockchainId: "p-chain",
-    minUtxoAmount: 1000,
     primaryNetworkAddressesBodyDto: {
       addresses: "P-avax1abc123,X-avax1def456,C-avax1ghi789",
     },
