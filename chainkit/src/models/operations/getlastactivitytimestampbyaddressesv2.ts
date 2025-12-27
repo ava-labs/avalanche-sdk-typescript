@@ -29,10 +29,6 @@ export type GetLastActivityTimestampByAddressesV2Request = {
    * Either mainnet or testnet/fuji.
    */
   network?: components.GlobalParamNetwork | undefined;
-  /**
-   * The minimum UTXO amount in nAVAX (inclusive), used to filter the set of UTXOs being returned. Default is 0.
-   */
-  minUtxoAmount?: number | undefined;
   primaryNetworkAddressesBodyDto: components.PrimaryNetworkAddressesBodyDto;
 };
 
@@ -101,7 +97,6 @@ export const GetLastActivityTimestampByAddressesV2Request$inboundSchema:
   > = z.object({
     blockchainId: components.BlockchainId$inboundSchema,
     network: components.GlobalParamNetwork$inboundSchema.optional(),
-    minUtxoAmount: z.number().optional(),
     PrimaryNetworkAddressesBodyDto:
       components.PrimaryNetworkAddressesBodyDto$inboundSchema,
   }).transform((v) => {
@@ -113,7 +108,6 @@ export const GetLastActivityTimestampByAddressesV2Request$inboundSchema:
 export type GetLastActivityTimestampByAddressesV2Request$Outbound = {
   blockchainId: string;
   network?: string | undefined;
-  minUtxoAmount?: number | undefined;
   PrimaryNetworkAddressesBodyDto:
     components.PrimaryNetworkAddressesBodyDto$Outbound;
 };
@@ -127,7 +121,6 @@ export const GetLastActivityTimestampByAddressesV2Request$outboundSchema:
   > = z.object({
     blockchainId: components.BlockchainId$outboundSchema,
     network: components.GlobalParamNetwork$outboundSchema.optional(),
-    minUtxoAmount: z.number().optional(),
     primaryNetworkAddressesBodyDto:
       components.PrimaryNetworkAddressesBodyDto$outboundSchema,
   }).transform((v) => {
