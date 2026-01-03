@@ -128,7 +128,6 @@ async function $do(
 
   const query = encodeFormQuery({
     "addresses": payload.addresses,
-    "minUtxoAmount": payload.minUtxoAmount,
   });
 
   const headers = new Headers(compactMap({
