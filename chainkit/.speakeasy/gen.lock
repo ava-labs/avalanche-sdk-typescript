@@ -1,30 +1,30 @@
 lockVersion: 2.0.0
 id: 125b8491-d8a2-4e4f-ad7e-83badf249c68
 management:
-  docChecksum: 8ab7f8b7058b19a4b748a7cf49dcee6a
+  docChecksum: 2e757ed7784d8ef9376644b3654bc4f7
   docVersion: 1.0.0
-  speakeasyVersion: 1.676.1
-  generationVersion: 2.781.2
-  releaseVersion: 0.3.12
-  configChecksum: c21795e5d0f2e847d1592ec2eafa2ec2
+  speakeasyVersion: 1.680.11
+  generationVersion: 2.788.15
+  releaseVersion: 0.3.13
+  configChecksum: 21edfbd4a0ac74b42f7376cea1409e3b
   repoURL: https://github.com/ava-labs/avalanche-sdk-typescript.git
   repoSubDirectory: chainkit
   installationURL: https://gitpkg.now.sh/ava-labs/avalanche-sdk-typescript/chainkit
   published: true
 persistentEdits:
-  generation_id: 1e1592c8-a16e-414e-9831-2f07b0f265b1
-  pristine_commit_hash: cd7f7b51ea5c8a5f3b77a04c4977e8f7a3f95c4b
-  pristine_tree_hash: 13d627ac1c57e49fd8674b5390aa84cfdd4bf053
+  generation_id: 573f7cdd-5e28-48c6-a9fe-fd197d9d9b4b
+  pristine_commit_hash: 15440bda7ca4587cd3d937bae24dff994113ef43
+  pristine_tree_hash: aef6dfdbc34bee491634624118315acd86113179
 features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.26.15
+    core: 3.26.17
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.1.2
-    examples: 2.82.3
+    examples: 2.82.4
     globalSecurity: 2.82.14
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
@@ -32,7 +32,7 @@ features:
     globals: 2.82.2
     groups: 2.81.3
     ignores: 2.81.1
-    mcpServer: 0.9.3
+    mcpServer: 0.9.4
     methodServerURLs: 2.82.1
     nameOverrides: 2.81.2
     nullables: 0.1.1
@@ -1569,8 +1569,8 @@ trackedFiles:
     pristine_git_object: 558c57bbe267a56aef27e8e74b7692aa935416a4
   docs/models/operations/getlastactivitytimestampbyaddressesrequest.md:
     id: 9cffa6ec35b9
-    last_write_checksum: sha1:cdb2346e5aae3f599b9edc9cba6499425cd2497d
-    pristine_git_object: f5fc69a02a782a5336160fd845544f66961640a4
+    last_write_checksum: sha1:94e410999b4d30fa5c53ef2730a5b3bc0ad4a0f0
+    pristine_git_object: d95eaf8fc6fb619b06a5786f1f02a0654104441f
   docs/models/operations/getlastactivitytimestampbyaddressesresponse.md:
     id: 87a1d5930d0b
     last_write_checksum: sha1:4549c1726941f65861abe5378f574baa1f4b588b
@@ -1581,8 +1581,8 @@ trackedFiles:
     pristine_git_object: 8398aeac41a641a8fd3b8d2eb6d010f39115ad84
   docs/models/operations/getlastactivitytimestampbyaddressesv2request.md:
     id: 059c216bcb50
-    last_write_checksum: sha1:3b497edbd7daf9c373ae202381f6371fdb218f63
-    pristine_git_object: 4620b7c18b8219140a2c78ec92dcb0d2d28fe528
+    last_write_checksum: sha1:a97f2d8befec010a6b44a11f96c422a527853b3b
+    pristine_git_object: c433636b50fda0f64571454bbef12e1428b21e4c
   docs/models/operations/getlastactivitytimestampbyaddressesv2response.md:
     id: 526a657c4232
     last_write_checksum: sha1:f47fbf01b449e9c9b0f108b7ecada0445a091863
@@ -2357,8 +2357,8 @@ trackedFiles:
     pristine_git_object: 60a0e883482dc8dec4898ebbf3e66b69464bee42
   docs/sdks/utxos/README.md:
     id: a307103fe48b
-    last_write_checksum: sha1:08250658be84cd7a788a1a5210355541327a7ce0
-    pristine_git_object: 0d3efdb8041476665fadfc13e80dc3e0bec9bc6c
+    last_write_checksum: sha1:7b439fa22c8967132a5af28c23679f0f8e4d1d41
+    pristine_git_object: 209a77d0716ae6db510ce653fe0dd57d212104a8
   docs/sdks/vertices/README.md:
     id: 50675f82a461
     last_write_checksum: sha1:437a56ea866783e175caeeed3e50d5c58df015b5
@@ -2389,8 +2389,8 @@ trackedFiles:
     pristine_git_object: 1a97e1fc7c8e78279998c62c4a682e22f6fa8773
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:52567cc6222fd5ae812e6d4a59d04888f2ccae0e
-    pristine_git_object: a1a3284841e34cec879027f07320d7d304d93a2a
+    last_write_checksum: sha1:ceba53d6bcdc5a66e6ef2d057c7230edacd214fd
+    pristine_git_object: c99059b0edbc88775da2e5b2e84c3c982ae56a2f
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:b35d791d3adeaaa7c33d09a78dd388a7352d0c3d
@@ -2637,12 +2637,12 @@ trackedFiles:
     pristine_git_object: b122a1c02ff469f91bc9b387ce52a43481483436
   src/funcs/dataPrimaryNetworkUtxosGetLastActivityTimestampByAddresses.ts:
     id: c1d78212f27f
-    last_write_checksum: sha1:42e91eefb761a2d2eed2b4d880acba89c49638d6
-    pristine_git_object: 6dd9f4d4b4f3868d591ba0d86ebadc6f8fab2367
+    last_write_checksum: sha1:5f62bc9d1a5d4f5eb83bf0e8f75ddfdb87633393
+    pristine_git_object: 8bcb21e2c648fde61a639c002ce3ff43f03d0fcf
   src/funcs/dataPrimaryNetworkUtxosGetLastActivityTimestampByAddressesV2.ts:
     id: 4afb31c76340
-    last_write_checksum: sha1:d04218add589281aacd5fc6c7a50f9cd825c4ee3
-    pristine_git_object: d6ba0aa0815df1d62f19dc8e58407bf4712c04d9
+    last_write_checksum: sha1:f96d38c40e19139d4dbcb0bf943fd490b8c6ff37
+    pristine_git_object: b44e2eff48d56ac833ead88d421ad7a73cc82296
   src/funcs/dataPrimaryNetworkUtxosListByAddresses.ts:
     id: e596dfd87724
     last_write_checksum: sha1:d1ca55fefd9e771f6cc30b7d84498091862f3ccf
@@ -2829,8 +2829,8 @@ trackedFiles:
     pristine_git_object: 0aebd8b0a4867e35cb3348fc52921c3c0b4725b7
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:98bdaa4d5789eadc4ee65b92466d0620cb6b7e65
-    pristine_git_object: 45fe5e03c5eba4e121ad423d1f0a4dc9aa908244
+    last_write_checksum: sha1:f7afe22a4438ab28a0043b4a1ca36028e8084feb
+    pristine_git_object: 14dca5e7383d3fc4c358d28b3a2994c3ed0e3588
   src/lib/dlv.ts:
     id: b1988214835a
     last_write_checksum: sha1:1dd3e3fbb4550c4bf31f5ef997faff355d6f3250
@@ -2909,32 +2909,32 @@ trackedFiles:
     pristine_git_object: 0955a573c2ce989d63c737410ab8cc28706d9f74
   src/mcp-server/mcp-server.ts:
     id: aabbc4ab07c1
-    last_write_checksum: sha1:b8778af343d827203485110a4891579e5024eb8b
-    pristine_git_object: 4845f45b9722ca4af0daf264096b29047a10320f
+    last_write_checksum: sha1:cf11bbafd097159ffc6cbc5fda1a35f4d13266f5
+    pristine_git_object: 546c51ba91e6617bc5f90bca13da4fe371770701
   src/mcp-server/prompts.ts:
     id: 26f3d73cbf31
-    last_write_checksum: sha1:1573b4466fbd86f9dd4ae0b3cd22d9558239eb62
-    pristine_git_object: 2ebbb4d8817238377e14d628d869a7889358abad
+    last_write_checksum: sha1:37b11d7867d5cc67e11e795b4d31228aa5599246
+    pristine_git_object: 68f5a8df71a2663a7aa665cb874586700bf4ea7b
   src/mcp-server/resources.ts:
     id: cb0c57ebeaea
-    last_write_checksum: sha1:0125aa9a0870c9ede929afa33046c8e2b87e52e9
-    pristine_git_object: ac05763bda77f8e9d0a83274192172f6d63bb71b
+    last_write_checksum: sha1:cb9b88a200e4210891b7a569df8ac13eabc6ee6d
+    pristine_git_object: b23e496425ca7eafae1104917a597803d303287b
   src/mcp-server/scopes.ts:
     id: 8966d24256b2
     last_write_checksum: sha1:77d0eb95785e84f9fd0b27c4612f8c6470489fe4
     pristine_git_object: c25696d4c4f70e081fa5d87ad6891874c509a577
   src/mcp-server/server.ts:
     id: 2784dd48e82a
-    last_write_checksum: sha1:0db114d28193b34a8323b2d2bc436a2940515fb7
-    pristine_git_object: 8b773aa9f9bc3ecb8b3eca8f3326eb4ffe31779f
+    last_write_checksum: sha1:01bbb3596ea689e5c06b743ddf28eb5251aa227e
+    pristine_git_object: 7c062f07aa79177a4a62c9c9cafcf703d43f1f36
   src/mcp-server/shared.ts:
     id: 074e80d4be1e
     last_write_checksum: sha1:56c73d4429691516e35541825e759a0285747a2b
     pristine_git_object: 3e94144d13f0707bc300183ebb4325b367c297dd
   src/mcp-server/tools.ts:
     id: 654d5d1f2062
-    last_write_checksum: sha1:2acf3b93be3bd85676ba1145bad8147001fd3016
-    pristine_git_object: 9d8c02f056068fa5f3af14df7933512f26439e33
+    last_write_checksum: sha1:4a023ff1c87724f3236d8c8c43f176fb439d8e2d
+    pristine_git_object: 0c1b2fea9c35a933524d9566cfe177a9dce1d6b9
   src/mcp-server/tools/avaxSupplyGet.ts:
     id: 690b02971944
     last_write_checksum: sha1:903ecd33929134e40e182ec0480db4bb0d0489e2
@@ -4477,8 +4477,8 @@ trackedFiles:
     pristine_git_object: afeec89afcb8e6bc98f20731d86fa5f3f2b32662
   src/models/operations/getaddressesbybtcbbridged.ts:
     id: b51ca4d6a6d0
-    last_write_checksum: sha1:640030dee20588a3a9bb43f82bda8083bea16509
-    pristine_git_object: dee469eb8f6239c077a738fee8ad60e4ddda833b
+    last_write_checksum: sha1:48705b5acc050f90c00230f09718861372e3511d
+    pristine_git_object: 0d39512d089c778c7659b0901c622ba3450d3879
   src/models/operations/getaddressesfromwebhook.ts:
     id: e8d8845f1bd6
     last_write_checksum: sha1:5c13f438e422202a463367b72709d20ba48d063f
@@ -4561,12 +4561,12 @@ trackedFiles:
     pristine_git_object: b0f8197b3f998b787201648d4f7c6188551ac0ea
   src/models/operations/getlastactivitytimestampbyaddresses.ts:
     id: a38e1df097ce
-    last_write_checksum: sha1:3663a80daf00adff8fb8cbb665bdbafda8974726
-    pristine_git_object: 10b9ded1febc5e8187e1046c1dc3f8e05411d792
+    last_write_checksum: sha1:556046ae5a88bb957c092be5cc7f20ad97ca5435
+    pristine_git_object: 2dbc0c7fd9eea12329c78dd371fbc494b2b0c25e
   src/models/operations/getlastactivitytimestampbyaddressesv2.ts:
     id: 54c1cb36680a
-    last_write_checksum: sha1:3b63b01619b199a4535629c1a92f498bf59b755d
-    pristine_git_object: 5746e79463c9786fd4f5297adf2fed1e203417d3
+    last_write_checksum: sha1:8da9a37842bff6685958c3eebb9713e15cfbbcb5
+    pristine_git_object: c1a3ebffdcdccd3bf140aa254a3133c063704ff0
   src/models/operations/getlatestblocks.ts:
     id: c91ad543daae
     last_write_checksum: sha1:acc2ed85d334cdec3ccb0be7b38321441c72023d
@@ -10121,12 +10121,7 @@ examples:
           application/json: {"message": ["<value 1>"], "statusCode": 503, "error": "Service Unavailable"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddresses()`: **Added**
-  * `avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddressesV2()`: **Added**
-  * `avalanche.metrics.chains.listNftHolders()`: **Deleted** **Breaking** :warning:
-  * `avalanche.metrics.chains.listTokenHoldersAboveThreshold()`: **Deleted** **Breaking** :warning:
+releaseNotes: "## Typescript SDK Changes:\n* `avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddresses()`: \n  *  `request.minUtxoAmount` **Removed** **Breaking** :warning:\n* `avalanche.data.primaryNetwork.utxos.getLastActivityTimestampByAddressesV2()`: \n  *  `request.minUtxoAmount` **Removed** **Breaking** :warning:\n"
 generatedFiles:
   - .gitattributes
   - .npmignore

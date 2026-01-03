@@ -11,6 +11,7 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export const GetAddressesByBtcbBridgedServerList = [
   "https://metrics.avax.network",
+  "https://metrics.avax.network",
 ] as const;
 
 export type GetAddressesByBtcbBridgedRequest = {
