@@ -29,18 +29,24 @@ export type GetLastActivityTimestampByAddressesV2Request = {
    * Either mainnet or testnet/fuji.
    */
   network?: components.GlobalParamNetwork | undefined;
-  /**
-   * The minimum UTXO amount in nAVAX (inclusive), used to filter the set of UTXOs being returned. Default is 0.
-   */
-  minUtxoAmount?: number | undefined;
   primaryNetworkAddressesBodyDto: components.PrimaryNetworkAddressesBodyDto;
 };
 
 /**
  * Successful response
  */
-export type GetLastActivityTimestampByAddressesV2Response =
+export type GetLastActivityTimestampByAddressesV2ResponseBody2 =
   components.LastActivityTimestamp;
+
+/**
+ * Successful response
+ */
+export type GetLastActivityTimestampByAddressesV2ResponseBody1 =
+  components.LastActivityTimestamp;
+
+export type GetLastActivityTimestampByAddressesV2Response =
+  | components.LastActivityTimestamp
+  | components.LastActivityTimestamp;
 
 /** @internal */
 export const GetLastActivityTimestampByAddressesV2Globals$inboundSchema:
@@ -101,7 +107,6 @@ export const GetLastActivityTimestampByAddressesV2Request$inboundSchema:
   > = z.object({
     blockchainId: components.BlockchainId$inboundSchema,
     network: components.GlobalParamNetwork$inboundSchema.optional(),
-    minUtxoAmount: z.number().optional(),
     PrimaryNetworkAddressesBodyDto:
       components.PrimaryNetworkAddressesBodyDto$inboundSchema,
   }).transform((v) => {
@@ -113,7 +118,6 @@ export const GetLastActivityTimestampByAddressesV2Request$inboundSchema:
 export type GetLastActivityTimestampByAddressesV2Request$Outbound = {
   blockchainId: string;
   network?: string | undefined;
-  minUtxoAmount?: number | undefined;
   PrimaryNetworkAddressesBodyDto:
     components.PrimaryNetworkAddressesBodyDto$Outbound;
 };
@@ -127,7 +131,6 @@ export const GetLastActivityTimestampByAddressesV2Request$outboundSchema:
   > = z.object({
     blockchainId: components.BlockchainId$outboundSchema,
     network: components.GlobalParamNetwork$outboundSchema.optional(),
-    minUtxoAmount: z.number().optional(),
     primaryNetworkAddressesBodyDto:
       components.PrimaryNetworkAddressesBodyDto$outboundSchema,
   }).transform((v) => {
@@ -163,15 +166,109 @@ export function getLastActivityTimestampByAddressesV2RequestFromJSON(
 }
 
 /** @internal */
+export const GetLastActivityTimestampByAddressesV2ResponseBody2$inboundSchema:
+  z.ZodType<
+    GetLastActivityTimestampByAddressesV2ResponseBody2,
+    z.ZodTypeDef,
+    unknown
+  > = components.LastActivityTimestamp$inboundSchema;
+/** @internal */
+export type GetLastActivityTimestampByAddressesV2ResponseBody2$Outbound =
+  components.LastActivityTimestamp$Outbound;
+
+/** @internal */
+export const GetLastActivityTimestampByAddressesV2ResponseBody2$outboundSchema:
+  z.ZodType<
+    GetLastActivityTimestampByAddressesV2ResponseBody2$Outbound,
+    z.ZodTypeDef,
+    GetLastActivityTimestampByAddressesV2ResponseBody2
+  > = components.LastActivityTimestamp$outboundSchema;
+
+export function getLastActivityTimestampByAddressesV2ResponseBody2ToJSON(
+  getLastActivityTimestampByAddressesV2ResponseBody2:
+    GetLastActivityTimestampByAddressesV2ResponseBody2,
+): string {
+  return JSON.stringify(
+    GetLastActivityTimestampByAddressesV2ResponseBody2$outboundSchema.parse(
+      getLastActivityTimestampByAddressesV2ResponseBody2,
+    ),
+  );
+}
+export function getLastActivityTimestampByAddressesV2ResponseBody2FromJSON(
+  jsonString: string,
+): SafeParseResult<
+  GetLastActivityTimestampByAddressesV2ResponseBody2,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      GetLastActivityTimestampByAddressesV2ResponseBody2$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'GetLastActivityTimestampByAddressesV2ResponseBody2' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetLastActivityTimestampByAddressesV2ResponseBody1$inboundSchema:
+  z.ZodType<
+    GetLastActivityTimestampByAddressesV2ResponseBody1,
+    z.ZodTypeDef,
+    unknown
+  > = components.LastActivityTimestamp$inboundSchema;
+/** @internal */
+export type GetLastActivityTimestampByAddressesV2ResponseBody1$Outbound =
+  components.LastActivityTimestamp$Outbound;
+
+/** @internal */
+export const GetLastActivityTimestampByAddressesV2ResponseBody1$outboundSchema:
+  z.ZodType<
+    GetLastActivityTimestampByAddressesV2ResponseBody1$Outbound,
+    z.ZodTypeDef,
+    GetLastActivityTimestampByAddressesV2ResponseBody1
+  > = components.LastActivityTimestamp$outboundSchema;
+
+export function getLastActivityTimestampByAddressesV2ResponseBody1ToJSON(
+  getLastActivityTimestampByAddressesV2ResponseBody1:
+    GetLastActivityTimestampByAddressesV2ResponseBody1,
+): string {
+  return JSON.stringify(
+    GetLastActivityTimestampByAddressesV2ResponseBody1$outboundSchema.parse(
+      getLastActivityTimestampByAddressesV2ResponseBody1,
+    ),
+  );
+}
+export function getLastActivityTimestampByAddressesV2ResponseBody1FromJSON(
+  jsonString: string,
+): SafeParseResult<
+  GetLastActivityTimestampByAddressesV2ResponseBody1,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      GetLastActivityTimestampByAddressesV2ResponseBody1$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'GetLastActivityTimestampByAddressesV2ResponseBody1' from JSON`,
+  );
+}
+
+/** @internal */
 export const GetLastActivityTimestampByAddressesV2Response$inboundSchema:
   z.ZodType<
     GetLastActivityTimestampByAddressesV2Response,
     z.ZodTypeDef,
     unknown
-  > = components.LastActivityTimestamp$inboundSchema;
+  > = z.union([
+    components.LastActivityTimestamp$inboundSchema,
+    components.LastActivityTimestamp$inboundSchema,
+  ]);
 /** @internal */
 export type GetLastActivityTimestampByAddressesV2Response$Outbound =
-  components.LastActivityTimestamp$Outbound;
+  | components.LastActivityTimestamp$Outbound
+  | components.LastActivityTimestamp$Outbound;
 
 /** @internal */
 export const GetLastActivityTimestampByAddressesV2Response$outboundSchema:
@@ -179,7 +276,10 @@ export const GetLastActivityTimestampByAddressesV2Response$outboundSchema:
     GetLastActivityTimestampByAddressesV2Response$Outbound,
     z.ZodTypeDef,
     GetLastActivityTimestampByAddressesV2Response
-  > = components.LastActivityTimestamp$outboundSchema;
+  > = z.union([
+    components.LastActivityTimestamp$outboundSchema,
+    components.LastActivityTimestamp$outboundSchema,
+  ]);
 
 export function getLastActivityTimestampByAddressesV2ResponseToJSON(
   getLastActivityTimestampByAddressesV2Response:
