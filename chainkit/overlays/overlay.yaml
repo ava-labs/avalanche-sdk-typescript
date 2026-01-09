@@ -69,6 +69,18 @@ actions:
                 - {$ref: "#/components/schemas/ListPChainUtxosResponse"}
                 - {$ref: "#/components/schemas/ListUtxosResponse"}
 
+  - target: $.paths['/v1/networks/{network}/blockchains/{blockchainId}/lastActivityTimestampByAddresses'].post.responses
+    description: Add a temp 201 status code to response
+    update:
+      '201':
+        description: Successful response
+        content:
+          "application/json":
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/LastActivityTimestamp"
+
+
   - target: "$.paths['/v2/chains/{chainId}/btcb/bridged:getAddresses']"
     remove: true
   
