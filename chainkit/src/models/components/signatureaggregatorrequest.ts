@@ -19,6 +19,10 @@ export type SignatureAggregatorRequest = {
   /**
    * Optional hex or cb58 encoded signing subnet ID. If omitted will default to the subnetID of the source blockchain.
    */
+  signingSubnet?: string | undefined;
+  /**
+   * @deprecated Use signingSubnet instead. This field is kept for backward compatibility.
+   */
   signingSubnetId?: string | undefined;
   /**
    * Optional. Integer from 0 to 100 representing the percentage of the weight of the signing Subnet that is required to sign the message. Defaults to 67 if omitted.
@@ -42,6 +46,7 @@ export const SignatureAggregatorRequest$inboundSchema: z.ZodType<
 > = z.object({
   message: z.string().optional(),
   justification: z.string().optional(),
+  signingSubnet: z.string().optional(),
   signingSubnetId: z.string().optional(),
   quorumPercentage: z.number().optional(),
   quorumPercentageBuffer: z.number().optional(),
@@ -51,7 +56,7 @@ export const SignatureAggregatorRequest$inboundSchema: z.ZodType<
 export type SignatureAggregatorRequest$Outbound = {
   message?: string | undefined;
   justification?: string | undefined;
-  signingSubnetId?: string | undefined;
+  signingSubnet?: string | undefined;
   quorumPercentage?: number | undefined;
   quorumPercentageBuffer?: number | undefined;
   pChainHeight?: number | undefined;
@@ -65,10 +70,19 @@ export const SignatureAggregatorRequest$outboundSchema: z.ZodType<
 > = z.object({
   message: z.string().optional(),
   justification: z.string().optional(),
+  // Map both signingSubnet and deprecated signingSubnetId to the correct API field name
+  signingSubnet: z.string().optional(),
   signingSubnetId: z.string().optional(),
   quorumPercentage: z.number().optional(),
   quorumPercentageBuffer: z.number().optional(),
   pChainHeight: z.number().optional(),
+}).transform((data) => {
+  const { signingSubnetId, ...rest } = data;
+  return {
+    ...rest,
+    // Prefer signingSubnet, fall back to deprecated signingSubnetId
+    signingSubnet: rest.signingSubnet || signingSubnetId,
+  };
 });
 
 export function signatureAggregatorRequestToJSON(
