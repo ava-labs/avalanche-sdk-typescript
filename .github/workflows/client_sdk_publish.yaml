@@ -37,9 +37,12 @@ jobs:
 
       - name: Set version
         id: set_version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            VERSION="$INPUT_VERSION"
           else
             TAG_NAME=${GITHUB_REF#refs/tags/}
             VERSION=${TAG_NAME#client/v}
@@ -47,8 +50,10 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Update package.json version
+        env:
+          STEP_VERSION: ${{ steps.set_version.outputs.version }}
         run: |
-          VERSION=${{ steps.set_version.outputs.version }}
+          VERSION="$STEP_VERSION"
           cd client
           npm version "$VERSION" --no-git-tag-version --allow-same-version
           npm run update-version
@@ -64,9 +69,11 @@ jobs:
 
       - name: Check if version exists
         id: check_version
+        env:
+          STEP_VERSION: ${{ steps.set_version.outputs.version }}
         run: |
           cd client
-          VERSION=${{ steps.set_version.outputs.version }}
+          VERSION="$STEP_VERSION"
           echo "Checking if version $VERSION already exists..."
 
           if npm view "@avalanche-sdk/client@$VERSION" version >/dev/null 2>&1; then
@@ -78,15 +85,18 @@ jobs:
           fi
 
       - name: Publish package
+        env:
+          STEP_VERSION: ${{ steps.set_version.outputs.version }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          VERSION_EXISTS: ${{ steps.check_version.outputs.exists }}
         run: |
           cd client
-          VERSION=${{ steps.set_version.outputs.version }}
-          INPUT_TAG=${{ github.event.inputs.tag }}
-          EXISTS=${{ steps.check_version.outputs.exists }}
+          VERSION="$STEP_VERSION"
+          EXISTS="$VERSION_EXISTS"
 
           echo "Detected version: $VERSION"
           echo "Input tag: $INPUT_TAG"
-          echo "Version exists: ${{ steps.check_version.outputs.exists }}"
+          echo "Version exists: $EXISTS"
 
           if [[ "$EXISTS" == "false" ]]; then
             if [[ "$VERSION" == *"-"* ]]; then

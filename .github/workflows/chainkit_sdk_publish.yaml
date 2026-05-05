@@ -75,11 +75,13 @@ jobs:
 
       - name: Check if version exists
         id: check_version
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          INPUT_TAG=${{ github.event.inputs.tag }}
-
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            VERSION="$INPUT_VERSION"
           else
             VERSION=$(npm pkg get version | tr -d '"')
           fi
@@ -95,15 +97,19 @@ jobs:
           fi
 
       - name: Publish package
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          EVENT_NAME: ${{ github.event_name }}
+          VERSION_EXISTS: ${{ steps.check_version.outputs.exists }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            VERSION="$INPUT_VERSION"
           else
             VERSION=$(npm pkg get version | tr -d '"')
           fi
 
-          INPUT_TAG=${{ github.event.inputs.tag }}
-          EXISTS=${{ steps.check_version.outputs.exists }}
+          EXISTS="$VERSION_EXISTS"
 
           echo "Detected version: $VERSION"
           echo "Input tag: $INPUT_TAG"
