@@ -8,7 +8,9 @@ describe("hexToCB58", () => {
     const result = hexToCB58(hex);
 
     expect(typeof result).toBe("string");
-    expect(result).toBe(utils.base58.encode(utils.hexToBuffer(hex)));
+    // CB58 is base58check (sha256 checksum appended) — must match the
+    // reference encoder used by every warp message constructor.
+    expect(result).toBe(utils.base58check.encode(utils.hexToBuffer(hex)));
   });
 
   test("converts empty hex string to CB58", () => {
@@ -16,7 +18,7 @@ describe("hexToCB58", () => {
     const result = hexToCB58(hex);
 
     expect(typeof result).toBe("string");
-    expect(result).toBe(utils.base58.encode(utils.hexToBuffer(hex)));
+    expect(result).toBe(utils.base58check.encode(utils.hexToBuffer(hex)));
   });
 
   test("converts hex string without 0x prefix", () => {
@@ -56,7 +58,7 @@ describe("hexToCB58", () => {
 describe("CB58ToHex", () => {
   test("converts CB58 string to hex", () => {
     const hex = "0x1234567890abcdef";
-    const cb58 = utils.base58.encode(utils.hexToBuffer(hex));
+    const cb58 = utils.base58check.encode(utils.hexToBuffer(hex));
     const result = CB58ToHex(cb58);
 
     expect(result).toMatch(/^0x/i);
@@ -64,7 +66,7 @@ describe("CB58ToHex", () => {
   });
 
   test("converts empty CB58 string to hex", () => {
-    const cb58 = utils.base58.encode(new Uint8Array(0));
+    const cb58 = utils.base58check.encode(new Uint8Array(0));
     const result = CB58ToHex(cb58);
 
     expect(result).toBe("0x");
@@ -74,7 +76,7 @@ describe("CB58ToHex", () => {
     const testCases = ["0x00", "0xff", "0x1234", "0xabcdef1234567890"];
 
     for (const hex of testCases) {
-      const cb58 = utils.base58.encode(utils.hexToBuffer(hex));
+      const cb58 = utils.base58check.encode(utils.hexToBuffer(hex));
       const result = CB58ToHex(cb58);
       expect(result).toMatch(/^0x/i);
       expect(result.toLowerCase()).toBe(hex.toLowerCase());
