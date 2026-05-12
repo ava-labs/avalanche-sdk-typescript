@@ -68,7 +68,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: avaxToNanoAvax(0.123),
+      initialBalanceInNanoAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,
@@ -88,7 +88,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const totalBurnedAmount = fee + mockTxParams.initialBalanceInAvax;
+    const totalBurnedAmount = fee + mockTxParams.initialBalanceInNanoAvax;
     const expectedChangeAmount = testInputAmount - totalBurnedAmount;
 
     // expected change output
@@ -124,7 +124,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: avaxToNanoAvax(0.123),
+      initialBalanceInNanoAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,
@@ -139,7 +139,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
         txnRequest.tx.getTx() as pvmSerial.RegisterL1ValidatorTx
       ).balance.value(),
       "balance mismatch"
-    ).toBe(mockTxParams.initialBalanceInAvax);
+    ).toBe(mockTxParams.initialBalanceInNanoAvax);
     expect(
       utils.bufferToHex(
         (
@@ -161,7 +161,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const mockTxParams: PrepareRegisterL1ValidatorTxnParameters = {
       changeAddresses,
-      initialBalanceInAvax: avaxToNanoAvax(0.123),
+      initialBalanceInNanoAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       context: testContext,
@@ -180,7 +180,7 @@ describe("prepareRegisterL1ValidatorTxn", () => {
 
     const txnRequest = await walletClient.pChain.prepareRegisterL1ValidatorTxn({
       changeAddresses,
-      initialBalanceInAvax: avaxToNanoAvax(0.123),
+      initialBalanceInNanoAvax: avaxToNanoAvax(0.123),
       blsSignature: popSignatureHex,
       message: signedWarpMsgRegisterL1ValidatorHex,
       // context is not provided - should call getContextFromURI

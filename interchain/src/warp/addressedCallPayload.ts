@@ -1,5 +1,6 @@
 import { utils, pvmSerial, Address, Bytes, Short } from "@avalabs/avalanchejs";
 import { parseWarpMessage } from "./warpMessage";
+import { parseWarpUnsignedMessage } from "./warpUnsignedMessage";
 import { evmOrBech32AddressToBytes } from "./utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
@@ -23,11 +24,15 @@ export function parseAddressedCallPayload(
             parsedAddressedCallPayload.payload
         );
     } catch (error) {
-        const warpMsg = parseWarpMessage(addressedCallPayloadHex);
-        const addressedCallPayload = parseAddressedCallPayload(
-            warpMsg.unsignedMessage.payload.toString('hex'),
-        );
-        return addressedCallPayload;
+        // Fallback: input might be an UnsignedMessage (no signature) wrapping the AddressedCall.
+        try {
+            const unsignedMsg = parseWarpUnsignedMessage(addressedCallPayloadHex);
+            return parseAddressedCallPayload(unsignedMsg.payload.toString('hex'));
+        } catch {
+            // Final fallback: input is a fully signed WarpMessage.
+            const warpMsg = parseWarpMessage(addressedCallPayloadHex);
+            return parseAddressedCallPayload(warpMsg.unsignedMessage.payload.toString('hex'));
+        }
     }
 }
 

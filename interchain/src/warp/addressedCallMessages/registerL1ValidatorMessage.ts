@@ -9,7 +9,7 @@ import {
     Short,
 } from "@avalabs/avalanchejs";
 import { parseAddressedCallPayload } from "../addressedCallPayload";
-import { parseBech32AddressToBytes } from "../utils";
+import { nodeIdToBytes, parseBech32AddressToBytes } from "../utils";
 import type { PChainOwner as PChainOwnerRaw } from "../types";
 
 const warpManager = pvmSerial.warp.getWarpManager();
@@ -67,7 +67,7 @@ export function newRegisterL1ValidatorMessage(
     disableOwner: PChainOwnerRaw,
     weight: bigint
 ) {
-    const nodeIdBytes = utils.base58check.decode(nodeId.replace('NodeID-', ''));
+    const nodeIdBytes = nodeIdToBytes(nodeId);
     const subnetIdBytes = utils.base58check.decode(subnetId);
     const formattedRemainingBalanceOwner = PChainOwner.fromNative(
         remainingBalanceOwner.addresses.map((address) => parseBech32AddressToBytes(address, 'P')),

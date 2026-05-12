@@ -11,7 +11,7 @@ export type PrepareRegisterL1ValidatorTxnParameters = CommonTxParams & {
    * Balance is required for paying a contiguous fee to the Primary
    * Network to validate the L1.
    */
-  initialBalanceInAvax: bigint;
+  initialBalanceInNanoAvax: bigint;
   /**
    * BLS signature of the validator.
    */

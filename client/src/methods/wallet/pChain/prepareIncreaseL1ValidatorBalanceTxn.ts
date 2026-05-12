@@ -32,7 +32,7 @@ import {
  * });
  *
  * const pChainIncreaseL1ValidatorBalanceTxnRequest = await prepareIncreaseL1ValidatorBalanceTxn(walletClient, {
- *   balanceInAvax: avaxToNanoAvax(1),
+ *   balanceInNanoAvax: avaxToNanoAvax(1),
  *   validationId: "11111111111111111111111111111111LpoYY",
  * });
  *
@@ -52,7 +52,7 @@ export async function prepareIncreaseL1ValidatorBalanceTxn(
   const unsignedTx = pvm.newIncreaseL1ValidatorBalanceTx(
     {
       ...commonTxParams,
-      balance: params.balanceInAvax,
+      balance: params.balanceInNanoAvax,
       validationId: params.validationId,
     },
     context

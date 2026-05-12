@@ -66,7 +66,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: avaxToNanoAvax(0.123),
+      balanceInNanoAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };
@@ -85,7 +85,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
       testContext.platformFeeConfig.weights,
       feeState().price
     );
-    const totalBurnedAmount = fee + mockTxParams.balanceInAvax;
+    const totalBurnedAmount = fee + mockTxParams.balanceInNanoAvax;
     const expectedChangeAmount =
       avaxToNanoAvax(testInputAmount) - totalBurnedAmount;
 
@@ -120,7 +120,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: avaxToNanoAvax(0.123),
+      balanceInNanoAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };
@@ -135,7 +135,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
         txnRequest.tx.getTx() as pvmSerial.IncreaseL1ValidatorBalanceTx
       ).balance.value(),
       "balance mismatch"
-    ).toBe(mockTxParams.balanceInAvax);
+    ).toBe(mockTxParams.balanceInNanoAvax);
     expect(
       utils.base58check.encode(
         (
@@ -151,7 +151,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
 
     const mockTxParams: PrepareIncreaseL1ValidatorBalanceTxnParameters = {
       changeAddresses,
-      balanceInAvax: avaxToNanoAvax(0.123),
+      balanceInNanoAvax: avaxToNanoAvax(0.123),
       validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
       context: testContext,
     };
@@ -172,7 +172,7 @@ describe("prepareIncreaseL1ValidatorBalanceTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareIncreaseL1ValidatorBalanceTxn({
         changeAddresses,
-        balanceInAvax: avaxToNanoAvax(0.123),
+        balanceInNanoAvax: avaxToNanoAvax(0.123),
         validationId: "FFqpTFRtYPDgHFCEd2n8KQQVnH2FC9j9vdjU5Vx1mHTCkYkAu",
         // context is not provided - should call getContextFromURI
       });

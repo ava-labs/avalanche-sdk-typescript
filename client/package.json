@@ -1,5 +1,6 @@
 {
   "name": "@avalanche-sdk/client",
+  "version": "0.0.4-alpha.14",
   "scripts": {
     "update-version": "node scripts/update-version.js",
     "clean": "rm -rf dist src/_cjs src/_esm src/_types .tsbuildinfo",

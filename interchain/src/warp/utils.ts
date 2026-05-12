@@ -39,7 +39,31 @@ export function bech32AddressToBytes(address: string) {
     return utils.bech32ToBytes(`P-${address}`);
 }
 
+/**
+ * Parses a node ID into its raw 20-byte representation.
+ *
+ * Accepts any of:
+ *   - `NodeID-<base58check>` (canonical Avalanche format)
+ *   - `<base58check>` (NodeID without the `NodeID-` prefix)
+ *   - `0x<40 hex chars>` (raw hex, as returned by `platform.getTx` over JSON-RPC)
+ *
+ * @param nodeId - The node ID in any supported format.
+ * @returns 20 raw bytes of the node ID.
+ */
+export function nodeIdToBytes(nodeId: string): Uint8Array {
+    if (nodeId.startsWith("0x") || /^[0-9a-fA-F]+$/.test(nodeId)) {
+        return utils.hexToBuffer(nodeId.startsWith("0x") ? nodeId : `0x${nodeId}`);
+    }
+    const stripped = nodeId.startsWith("NodeID-") ? nodeId.slice("NodeID-".length) : nodeId;
+    return utils.base58check.decode(stripped);
+}
+
 export function evmOrBech32AddressToBytes(address: string) {
+    // Empty source address is valid for warp messages that don't have a sender
+    // (e.g. system-originated L1 validator messages).
+    if (address === "" || address === "0x") {
+        return new Uint8Array(0);
+    }
     try {
         return evmAddressToBytes(address);
     } catch (error) {

@@ -1,6 +1,18 @@
 export { AddressedCall, parseAddressedCallPayload, newAddressedCallPayload } from "./addressedCallPayload";
 export { WarpMessage, parseWarpMessage } from "./warpMessage";
 export { WarpUnsignedMessage, parseWarpUnsignedMessage, newWarpUnsignedMessage } from "./warpUnsignedMessage";
+export { newWarpMessage } from "./newWarpMessage";
+export {
+    extractWarpMessageFromReceipt,
+    packWarpIntoAccessList,
+    WARP_PRECOMPILE_ADDRESS,
+    WARP_MESSAGE_TOPIC,
+} from "./evm";
+export {
+    getRegistrationJustification,
+    type JustificationPublicClient,
+    type GetRegistrationJustificationOptions,
+} from "./justification";
 
 // AddressedCall exports
 export { ConversionData, parseConversionData, newConversionData } from "./addressedCallMessages/conversionData";
@@ -8,3 +20,4 @@ export { L1ValidatorRegistrationMessage, parseL1ValidatorRegistrationMessage, ne
 export { L1ValidatorWeightMessage, parseL1ValidatorWeightMessage, newL1ValidatorWeightMessage } from "./addressedCallMessages/l1ValidatorWeightMessage";
 export { RegisterL1ValidatorMessage, parseRegisterL1ValidatorMessage, newRegisterL1ValidatorMessage } from "./addressedCallMessages/registerL1ValidatorMessage";
 export { SubnetToL1ConversionMessage, parseSubnetToL1ConversionMessage, newSubnetToL1ConversionMessage } from "./addressedCallMessages/subnetToL1ConversionMessage";
+export { ValidationUptimeMessage, parseValidationUptimeMessage, newValidationUptimeMessage } from "./addressedCallMessages/validationUptimeMessage";
