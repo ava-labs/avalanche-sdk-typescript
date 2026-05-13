@@ -16,7 +16,22 @@ export const TMPNET_ROOT = join(process.env.HOME || "/tmp", ".avalanche-cli", "t
 export const NETWORKS_DIR = join(TMPNET_ROOT, "networks");
 
 /** Default staking keys directory. */
-export const STAKING_KEYS_DIR = join(process.env.HOME || "", ".avalanche-cli", "staking", "local");
+/**
+ * Default staking keys directory. Resolved to the e2e package's vendored
+ * `staking-keys/` folder (pulled from avalanchego v1.14.0's public local-
+ * network keys). Using known staking material lets tmpnet run with sybil
+ * protection enabled so the P-Chain has a real validator set — which the
+ * icm-services signature-aggregator binary requires for peer lookup.
+ * Override via the `TMPNET_STAKING_KEYS_DIR` env var if needed.
+ */
+const VENDORED_STAKING_KEYS_DIR = (() => {
+  // import.meta.url at runtime points at this file. Walk up to e2e/.
+  //   src/tmpnet/constants.ts → src/tmpnet → src → e2e → staking-keys
+  const here = new URL(".", import.meta.url).pathname;
+  return join(here, "..", "..", "staking-keys");
+})();
+export const STAKING_KEYS_DIR =
+  process.env.TMPNET_STAKING_KEYS_DIR || VENDORED_STAKING_KEYS_DIR;
 
 /** Default plugin directory. */
 export const PLUGIN_DIR = join(process.env.HOME || "", ".avalanchego", "plugins");
