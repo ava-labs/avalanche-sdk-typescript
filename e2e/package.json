@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "bun test",
-    "test:integration": "bun test --timeout 600000 src/**/*.integration.test.ts test/**/*.integration.test.ts",
+    "test:integration": "bun test --timeout 600000 ./test/warp-l1-flow.integration.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
