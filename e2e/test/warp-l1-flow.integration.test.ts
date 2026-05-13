@@ -117,6 +117,39 @@ async function waitForPChainReady(
   throw new Error(`P-Chain never became ready: ${String(lastErr)}`);
 }
 
+/**
+ * Poll an L1 EVM RPC endpoint until it answers `eth_chainId`. tmpnet only
+ * starts bootstrapping a subnet's chain once that subnet has been converted
+ * to an L1 (post ConvertSubnetToL1Tx commit) — until then the node returns
+ * "404 page not found" for /ext/bc/<id>/rpc.
+ */
+async function waitForL1EvmReady(
+  rpcUrl: string,
+  timeoutMs = BOOT_TIMEOUT_MS,
+): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  let lastErr: unknown;
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(rpcUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_chainId", params: [] }),
+        signal: AbortSignal.timeout(2000),
+      });
+      if (res.ok) {
+        const data = (await res.json()) as { result?: string; error?: unknown };
+        if (data.result) return;
+      }
+      lastErr = `HTTP ${res.status}`;
+    } catch (err) {
+      lastErr = err;
+    }
+    await Bun.sleep(POLL_INTERVAL_MS);
+  }
+  throw new Error(`L1 EVM RPC at ${rpcUrl} never became ready: ${String(lastErr)}`);
+}
+
 describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   beforeAll(async () => {
     state.tmpnet = new TmpnetManager();
@@ -385,13 +418,17 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
 
     // The L1's EVM RPC lives at <node-uri>/ext/bc/<blockchainID>/rpc.
     // chainId 99999 matches the genesis we emitted in step 3.
+    const l1RpcUrl = `${state.l1Node.uri}/ext/bc/${state.blockchainId}/rpc`;
+    console.log(`[step 6] waiting for L1 EVM RPC at ${l1RpcUrl}...`);
+    await waitForL1EvmReady(l1RpcUrl);
+
     const l1Chain = defineChain({
       id: 99999,
       name: "e2e-l1",
       nativeCurrency: { decimals: 18, name: "L1", symbol: "L1" },
       rpcUrls: {
         default: {
-          http: [`${state.l1Node.uri}/ext/bc/${state.blockchainId}/rpc`],
+          http: [l1RpcUrl],
         },
       },
     });
