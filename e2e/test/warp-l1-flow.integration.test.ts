@@ -193,6 +193,12 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     }
 
     // Minimal subnet-evm genesis (chain ID 99999, EWOQ pre-funded).
+    //
+    // Shanghai/Cancun timestamps at 0 enable PUSH0 + transient storage, which
+    // icm-contracts v2.1.0 bytecode requires (compiled with solc 0.8.25).
+    // Durango/Etna activate subnet-evm upgrades that ValidatorManager + warp
+    // helpers depend on. Without these, deploying the VM bytecode reverts
+    // with "invalid opcode: PUSH0".
     const genesisData: Record<string, unknown> = {
       config: {
         chainId: 99999,
@@ -205,7 +211,18 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         petersburgBlock: 0,
         istanbulBlock: 0,
         muirGlacierBlock: 0,
+        berlinBlock: 0,
+        londonBlock: 0,
+        shanghaiTime: 0,
+        cancunTime: 0,
         subnetEVMTimestamp: 0,
+        durangoTimestamp: 0,
+        etnaTimestamp: 0,
+        warpConfig: {
+          blockTimestamp: 0,
+          quorumNumerator: 67,
+          requirePrimaryNetworkSigners: false,
+        },
       },
       alloc: {
         [LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress.replace(/^0x/, "")]: {
