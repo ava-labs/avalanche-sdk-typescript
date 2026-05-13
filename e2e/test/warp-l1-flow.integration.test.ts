@@ -285,7 +285,15 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         }),
       },
       nonce: "0x0",
-      timestamp: "0x0",
+      // Genesis block timestamp = current wall clock. subnet-evm v0.8.0
+      // overrides shanghaiTime to durangoTimestamp (1607144400) at chain
+      // setup. Until the L1 has finished initializeValidatorSet, it has no
+      // active validators and produces no new blocks — so eth_estimateGas
+      // runs against head = genesis. If genesis.timestamp = 0 < 1607144400,
+      // the simulator sees pre-Shanghai → PUSH0 reverts even though
+      // Shanghai is "scheduled" for activation. Setting genesis time to
+      // wall clock puts the head past Shanghai activation immediately.
+      timestamp: `0x${Math.floor(Date.now() / 1000).toString(16)}`,
       extraData: "0x00",
       gasLimit: "0x7A1200",
       difficulty: "0x0",
