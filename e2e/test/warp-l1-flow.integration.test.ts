@@ -516,7 +516,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       !state.blockchainId ||
       !state.l1WalletClient ||
       !state.l1PublicClient ||
-      !state.validatorManagerAddress
+      !state.validatorManagerAddress ||
+      !state.walletClient ||
+      !state.ownerPAddr
     ) {
       throw new Error("Prerequisite step failed");
     }
@@ -524,14 +526,13 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     // The L1 validator only just bootstrapped its chain (step 6 was ~7s
     // ago). It needs a moment to establish P2P connections + be visible in
     // P-Chain's validator-set query — otherwise the sig-aggregator finds
-    // 0 signers for our subnet. Wait for the L1 validator to show up in
-    // P-Chain's getCurrentValidators(subnetID) response.
+    // 0 signers for our subnet.
     console.log(`[step 7] waiting for L1 validator to register on P-Chain...`);
     const validatorDeadline = Date.now() + 60_000;
     let validatorRegistered = false;
     while (Date.now() < validatorDeadline) {
       try {
-        const current = await state.walletClient!.pChain.getCurrentValidators({
+        const current = await state.walletClient.pChain.getCurrentValidators({
           subnetID: state.subnetId,
         });
         const list = (current as { validators?: unknown[] })?.validators ?? [];
@@ -546,6 +547,24 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       await Bun.sleep(2_000);
     }
     expect(validatorRegistered).toBe(true);
+
+    // Advance P-Chain height by 1 with a P-Chain self-transfer. The L1's
+    // WARP precompile verifies the signed message against its cached
+    // P-Chain validator-set view; right after ConvertSubnetToL1Tx that
+    // view is stale and the verification reverts. A no-op P-Chain block
+    // pushes the L1's proposerVM-tracked P-Chain height forward so the
+    // precompile sees the new validator set when initializeValidatorSet
+    // is called.
+    console.log(`[step 7] advancing P-Chain height with a self-transfer...`);
+    const advanceTxn = await state.walletClient.pChain.prepareBaseTxn({});
+    const { txHash: advanceTxHash } = await state.walletClient.sendXPTransaction({
+      tx: advanceTxn.tx,
+      chainAlias: "P",
+    });
+    await waitForCommitted(state.walletClient, advanceTxHash);
+    console.log(`[step 7] P-Chain advanced: ${advanceTxHash}`);
+    // Give the L1's proposerVM a moment to pull the new P-Chain height.
+    await Bun.sleep(5_000);
 
     // Boot the signature aggregator pointed at the running tmpnet. It
     // discovers peers from disk under ~/.avalanche-cli/tmpnet/networks/<name>/.
