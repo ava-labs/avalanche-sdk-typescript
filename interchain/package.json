@@ -51,7 +51,8 @@
     "./chains": "./dist/chains/index.js",
     "./icm": "./dist/icm/index.js",
     "./ictt": "./dist/ictt/index.js",
-    "./warp": "./dist/warp/index.js"
+    "./warp": "./dist/warp/index.js",
+    "./validator-manager": "./dist/validator-manager/index.js"
   },
   "typesVersions": {
     "*": {
@@ -66,6 +67,9 @@
       ],
       "warp": [
         "dist/warp/index.d.ts"
+      ],
+      "validator-manager": [
+        "dist/validator-manager/index.d.ts"
       ]
     }
   }

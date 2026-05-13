@@ -21,15 +21,29 @@ import { utils } from "@avalabs/avalanchejs";
 import {
   ConversionData,
   newConversionData,
+  deployValidatorManager,
+  initializeValidatorSet,
 } from "@avalanche-sdk/interchain";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheLocal } from "@avalanche-sdk/client/chains";
 import { createAvalancheWalletClient } from "@avalanche-sdk/client";
 import { sha256 } from "@noble/hashes/sha2";
+import {
+  createPublicClient,
+  createWalletClient,
+  defineChain,
+  http,
+  type Address,
+  type Hex,
+  type PublicClient,
+  type WalletClient,
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
 
 import { LOCAL_PREFUNDED_KEYS } from "../src/tmpnet/constants.ts";
 import { TmpnetManager } from "../src/tmpnet/index.ts";
 import type { NodeInfo } from "../src/tmpnet/types.ts";
+import { SignatureAggregatorManager } from "../src/signature-aggregator/index.ts";
 
 const SKIP_INTEGRATION = process.env.SKIP_INTEGRATION === "true";
 const NETWORK_NAME = `e2e-warp-l1-${Date.now()}`;
@@ -50,8 +64,16 @@ interface FlowState {
   l1Node?: NodeInfo;
   convertTxId?: string;
   conversionData?: ConversionData;
+  // Step 6+: deploy + initialize ValidatorManager on the L1 EVM.
+  l1WalletClient?: WalletClient;
+  l1PublicClient?: PublicClient;
+  validatorManagerAddress?: Address;
+  signatureAggregator?: SignatureAggregatorManager;
 }
 const state: FlowState = {};
+
+const PCHAIN_BLOCKCHAIN_ID = "11111111111111111111111111111111LpoYY";
+const TMPNET_NETWORK_ID = 12345; // avalanchego --network-id=local resolves to 12345
 
 /** Poll P-Chain getTxStatus until "Committed" or timeout. */
 async function waitForCommitted(
@@ -122,6 +144,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   }, BOOT_TIMEOUT_MS);
 
   afterAll(async () => {
+    if (state.signatureAggregator) {
+      await state.signatureAggregator.dispose().catch(() => {});
+    }
     if (state.tmpnet) {
       // Stop processes but don't delete the network directory — leave it for
       // the GH Actions artifact upload to grab tmpnet logs on failure. The
@@ -330,5 +355,123 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     // is intentionally omitted until parseConversionData matches the
     // canonical layout. The convertSubnetToL1Tx commit above is the real
     // regression net for this PR's byte-layout work.
+  }, BOOT_TIMEOUT_MS);
+
+  test("6. Deploy ValidatorManager on the L1 EVM", async () => {
+    if (!state.l1Node || !state.blockchainId || !state.subnetId) {
+      throw new Error("Prerequisite step failed");
+    }
+
+    const evmAccount = privateKeyToAccount(
+      `0x${LOCAL_PREFUNDED_KEYS.ewoq.privateKey}` as `0x${string}`,
+    );
+
+    // The L1's EVM RPC lives at <node-uri>/ext/bc/<blockchainID>/rpc.
+    // chainId 99999 matches the genesis we emitted in step 3.
+    const l1Chain = defineChain({
+      id: 99999,
+      name: "e2e-l1",
+      nativeCurrency: { decimals: 18, name: "L1", symbol: "L1" },
+      rpcUrls: {
+        default: {
+          http: [`${state.l1Node.uri}/ext/bc/${state.blockchainId}/rpc`],
+        },
+      },
+    });
+    state.l1WalletClient = createWalletClient({
+      account: evmAccount,
+      chain: l1Chain,
+      transport: http(),
+    });
+    state.l1PublicClient = createPublicClient({
+      chain: l1Chain,
+      transport: http(),
+    });
+
+    // Subnet ID as 32-byte hex for ValidatorManagerSettings.subnetID.
+    const subnetIdHex = (`0x${Buffer.from(
+      utils.base58check.decode(state.subnetId),
+    ).toString("hex")}`) as Hex;
+
+    // Cast: viem is installed twice (e2e + interchain) so the WalletClient
+    // types don't unify even though they're structurally identical.
+    const deploy = await deployValidatorManager(
+      state.l1WalletClient as never,
+      state.l1PublicClient as never,
+      {
+        initSettings: {
+          admin: evmAccount.address,
+          subnetID: subnetIdHex,
+          churnPeriodSeconds: 0n,
+          maximumChurnPercentage: 20,
+        },
+      },
+    );
+    expect(deploy.address).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    expect(deploy.libraryAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    expect(deploy.initializeTxHash).toBeDefined();
+    state.validatorManagerAddress = deploy.address;
+    console.log(`[step 6] ValidatorManager deployed at ${deploy.address}`);
+    console.log(`[step 6] ValidatorMessages library at ${deploy.libraryAddress}`);
+  }, BOOT_TIMEOUT_MS);
+
+  test("7. initializeValidatorSet via signature-aggregator", async () => {
+    if (
+      !state.tmpnet ||
+      !state.l1Node ||
+      !state.subnetId ||
+      !state.blockchainId ||
+      !state.l1WalletClient ||
+      !state.l1PublicClient ||
+      !state.validatorManagerAddress
+    ) {
+      throw new Error("Prerequisite step failed");
+    }
+
+    // Boot the signature aggregator pointed at the running tmpnet. It
+    // discovers peers from disk under ~/.avalanche-cli/tmpnet/networks/<name>/.
+    // Tracking just our subnet keeps the signing scope narrow.
+    state.signatureAggregator = new SignatureAggregatorManager();
+    const networkDir = `${process.env.HOME}/.avalanche-cli/tmpnet/networks/${NETWORK_NAME}`;
+    const sigaggStart = await state.signatureAggregator.start(
+      networkDir,
+      { trackedSubnets: [state.subnetId] },
+      (msg) => console.log(`[sigagg] ${msg}`),
+    );
+    expect(sigaggStart.running).toBe(true);
+
+    const result = await initializeValidatorSet(
+      state.l1WalletClient as never,
+      state.l1PublicClient as never,
+      {
+        contractAddress: state.validatorManagerAddress,
+        networkId: TMPNET_NETWORK_ID,
+        subnetId: state.subnetId,
+        blockchainId: state.blockchainId,
+        validators: [
+          {
+            nodeId: state.l1Node.nodeId,
+            weight: 100n,
+            blsPublicKey: state.l1Node.blsPublicKey! as Hex,
+          },
+        ],
+        aggregateSignatures: async ({ unsignedMessageHex, signingSubnetId }) => {
+          const sig = await state.signatureAggregator!.aggregateSignatures({
+            message: unsignedMessageHex,
+            "signing-subnet-id": signingSubnetId,
+          });
+          if (sig.error || !sig["signed-message"]) {
+            throw new Error(`sig-aggregator failed: ${sig.error}`);
+          }
+          return (sig["signed-message"].startsWith("0x")
+            ? sig["signed-message"]
+            : `0x${sig["signed-message"]}`) as Hex;
+        },
+      },
+    );
+
+    expect(result.receipt.status).toBe("success");
+    expect(result.signedMessageHex.length).toBeGreaterThan(2);
+    console.log(`[step 7] initializeValidatorSet committed: ${result.txHash}`);
   }, BOOT_TIMEOUT_MS);
 });
