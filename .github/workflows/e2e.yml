@@ -71,13 +71,11 @@ jobs:
             ~/.avalanchego/plugins
           key: avalanche-bins-${{ env.AVALANCHEGO_VERSION }}-${{ env.SUBNET_EVM_VERSION }}-${{ env.SIGNATURE_AGGREGATOR_VERSION }}-${{ env.ICM_RELAYER_VERSION }}
 
-      - name: Install workspace deps
+      - name: Install client + interchain deps
         working-directory: ${{ github.workspace }}
         run: |
-          # Install client + interchain first so the e2e package can resolve file: deps.
           cd client && bun install --frozen-lockfile || bun install
           cd ../interchain && bun install --frozen-lockfile || bun install
-          cd ../e2e && bun install
 
       - name: Build interchain (postbuild adds .js extensions)
         working-directory: interchain
@@ -90,6 +88,13 @@ jobs:
           bun run clean
           bun run build:esm
           bun run build:types
+
+      # Install e2e LAST so `file:` deps snapshot the freshly-built dist/ folders.
+      # bun install with file: copies the source dir at install time; building
+      # client/interchain afterwards wouldn't propagate into e2e/node_modules.
+      - name: Install e2e deps
+        working-directory: e2e
+        run: bun install
 
       - name: Create binary dirs
         run: |
