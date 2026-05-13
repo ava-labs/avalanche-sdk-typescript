@@ -1,0 +1,29 @@
+{
+  "name": "@avalanche-sdk/e2e",
+  "version": "0.0.0-internal",
+  "private": true,
+  "description": "End-to-end integration tests for @avalanche-sdk/* against a local tmpnet AvalancheGo network. Not published.",
+  "type": "module",
+  "engines": {
+    "bun": ">=1.1.38"
+  },
+  "scripts": {
+    "test": "bun test",
+    "test:integration": "bun test --timeout 600000 src/**/*.integration.test.ts test/**/*.integration.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@avalabs/avalanchejs": "^5.1.0-alpha.1",
+    "@avalanche-sdk/client": "file:../client",
+    "@avalanche-sdk/interchain": "file:../interchain",
+    "@noble/hashes": "^1.5.0",
+    "viem": "^2.21.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.0.0",
+    "bun-types": "latest",
+    "typescript": "^5.5.0"
+  }
+}
