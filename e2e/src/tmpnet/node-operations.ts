@@ -126,7 +126,12 @@ export function buildBaseNodeArgs(
     `--data-dir=${nodeDir}`,
     "--network-id=local",
     "--http-host=127.0.0.1",
-    "--sybil-protection-enabled=false",
+    // sybil-protection MUST stay ON so the local network treats nodes as
+    // real P-Chain validators with their staker NodeIDs. With it off,
+    // avalanchego reports myNodeID=NodeID-111...111 (empty) and the
+    // signature-aggregator's getCurrentValidators(PrimaryNetwork) returns
+    // an empty list — leading to "failed to connect to any bootstrap nodes".
+    // Real staker keys come from STAKING_KEYS_DIR.
     `--plugin-dir=${pluginDir}`,
   ];
 }
