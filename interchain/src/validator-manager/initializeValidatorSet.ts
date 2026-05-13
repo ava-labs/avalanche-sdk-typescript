@@ -1,5 +1,6 @@
 import { utils } from "@avalabs/avalanchejs";
 import {
+    encodeFunctionData,
     type Address,
     type Hex,
     type WalletClient,
@@ -178,6 +179,24 @@ export async function initializeValidatorSet(
         initialValidators,
     };
 
+    // Pre-flight via simulateContract so a revert surfaces as a viem
+    // BaseError chain (with abi-decoded revert reason) BEFORE we commit
+    // the tx. Without this, writeContract + waitForTransactionReceipt
+    // only returns status=reverted with no detail.
+    try {
+        await publicClient.simulateContract({
+            address: args.contractAddress,
+            abi: ValidatorManagerAbi,
+            functionName: "initializeValidatorSet",
+            args: [conversionStruct, 0],
+            accessList,
+            account: walletClient.account ?? undefined,
+        } as never);
+    } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        throw new Error(`initializeValidatorSet would revert: ${msg}`);
+    }
+
     const txHash = await walletClient.writeContract({
         address: args.contractAddress,
         abi: ValidatorManagerAbi,
@@ -188,6 +207,33 @@ export async function initializeValidatorSet(
         account: walletClient.account ?? null,
     } as never);
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+
+    console.log(`[initializeValidatorSet] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`);
+    if (receipt.status !== "success") {
+        // Replay the tx against the pre-tx block (receipt.blockNumber - 1)
+        // so the contract state is what it was right before the failed call.
+        // Calling against receipt.blockNumber would replay against post-tx
+        // state where the revert may no longer trigger.
+        let revertReason = "<eth_call replay produced no error>";
+        try {
+            await publicClient.call({
+                to: args.contractAddress,
+                data: encodeFunctionData({
+                    abi: ValidatorManagerAbi,
+                    functionName: "initializeValidatorSet",
+                    args: [conversionStruct, 0],
+                }),
+                account: walletClient.account ?? undefined,
+                accessList,
+                blockNumber: receipt.blockNumber - 1n,
+            } as never);
+        } catch (err: unknown) {
+            revertReason = err instanceof Error ? err.message : String(err);
+        }
+        throw new Error(
+            `initializeValidatorSet reverted on-chain (tx ${txHash}, block ${receipt.blockNumber}): ${revertReason}`,
+        );
+    }
 
     return { signedMessageHex, txHash, receipt };
 }

@@ -133,6 +133,14 @@ export function buildBaseNodeArgs(
     // an empty list — leading to "failed to connect to any bootstrap nodes".
     // Real staker keys come from STAKING_KEYS_DIR.
     `--plugin-dir=${pluginDir}`,
+    // Debug logging so warp predicate verification failures surface in
+    // the L1 chain log instead of dying silently.
+    "--log-level=debug",
+    "--log-display-level=debug",
+    // Per-VM chain config dir — we write a chainConfig that enables
+    // subnet-evm's debug logging so VerifyPredicate / warp errors show
+    // up in the subnet-evm chain log (not just avalanchego's main log).
+    `--chain-config-dir=${join(nodeDir, "chainConfigs")}`,
   ];
 }
 
@@ -172,6 +180,16 @@ export function createNodeDirectoryStructure(nodeDir: string): void {
   mkdirSecure(join(nodeDir, "db"), { recursive: true });
   mkdirSecure(join(nodeDir, "logs"), { recursive: true });
   mkdirSecure(join(nodeDir, "chainData"), { recursive: true });
+  // Per-VM config so subnet-evm logs at debug level. The subnet-evm
+  // plugin doesn't inherit avalanchego's --log-level — we have to set
+  // it via chainConfigs/<vmID>/config.json.
+  const subnetEvmVmID = "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy";
+  const cfgDir = join(nodeDir, "chainConfigs", subnetEvmVmID);
+  mkdirSecure(cfgDir, { recursive: true });
+  writeFileSecure(
+    join(cfgDir, "config.json"),
+    JSON.stringify({ "log-level": "debug" }),
+  );
 }
 
 export function saveNodeConfig(nodeDir: string, config: NodeConfig): void {

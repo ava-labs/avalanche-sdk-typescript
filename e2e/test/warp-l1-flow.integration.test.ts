@@ -152,6 +152,45 @@ async function waitForL1EvmReady(
   throw new Error(`L1 EVM RPC at ${rpcUrl} never became ready: ${String(lastErr)}`);
 }
 
+/**
+ * Diagnostic: log the L1's proposerVM-tracked P-Chain height + the primary
+ * network's actual P-Chain height. The L1's predicate verification queries
+ * the validator set at proposerVM.PChainHeight — if that height is behind
+ * the height at which ConvertSubnetToL1Tx committed, the L1 won't see its
+ * own subnet validator set yet and BLS signature verification fails.
+ */
+async function dumpProposerVMHeights(
+  nodeUri: string,
+  l1BlockchainId: string,
+): Promise<void> {
+  const pChainUrl = `${nodeUri}/ext/bc/P`;
+  const proposerVMUrl = `${nodeUri}/ext/bc/${l1BlockchainId}/proposervm`;
+
+  const post = async (url: string, method: string) => {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params: {} }),
+        signal: AbortSignal.timeout(3_000),
+      });
+      const data = (await res.json()) as { result?: unknown; error?: unknown };
+      return data;
+    } catch (err) {
+      return { error: err instanceof Error ? err.message : String(err) };
+    }
+  };
+
+  const [pHeight, proposed, epoch] = await Promise.all([
+    post(pChainUrl, "platform.getHeight"),
+    post(proposerVMUrl, "proposervm.getProposedHeight"),
+    post(proposerVMUrl, "proposervm.getCurrentEpoch"),
+  ]);
+  console.log(`[step 7] primary P-Chain height: ${JSON.stringify(pHeight.result ?? pHeight.error)}`);
+  console.log(`[step 7] L1 proposerVM proposed height: ${JSON.stringify(proposed.result ?? proposed.error)}`);
+  console.log(`[step 7] L1 proposerVM current epoch: ${JSON.stringify(epoch.result ?? epoch.error)}`);
+}
+
 describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   beforeAll(async () => {
     state.tmpnet = new TmpnetManager();
@@ -179,6 +218,12 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   }, BOOT_TIMEOUT_MS);
 
   afterAll(async () => {
+    // Set KEEP_TMPNET=1 to leave the network running after test exit so you
+    // can poke it interactively (useful for debugging step 7 reverts).
+    if (process.env.KEEP_TMPNET) {
+      console.log(`[teardown] KEEP_TMPNET set — leaving network running`);
+      return;
+    }
     if (state.signatureAggregator) {
       await state.signatureAggregator.dispose().catch(() => {});
     }
@@ -273,7 +318,11 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         warpConfig: {
           blockTimestamp: 1607144400,
           quorumNumerator: 67,
-          requirePrimaryNetworkSigners: false,
+          // Match builders-hub's genesis config — for SubnetToL1Conversion
+          // messages (source=P-Chain) subnet-evm's State wrapper special-cases
+          // to the L1's own subnet set regardless, so this is a behavior parity
+          // setting more than a functional one.
+          requirePrimaryNetworkSigners: true,
         },
       },
       alloc: {
@@ -548,23 +597,79 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     }
     expect(validatorRegistered).toBe(true);
 
-    // Advance P-Chain height by 1 with a P-Chain self-transfer. The L1's
-    // WARP precompile verifies the signed message against its cached
-    // P-Chain validator-set view; right after ConvertSubnetToL1Tx that
-    // view is stale and the verification reverts. A no-op P-Chain block
-    // pushes the L1's proposerVM-tracked P-Chain height forward so the
-    // precompile sees the new validator set when initializeValidatorSet
-    // is called.
-    console.log(`[step 7] advancing P-Chain height with a self-transfer...`);
-    const advanceTxn = await state.walletClient.pChain.prepareBaseTxn({});
-    const { txHash: advanceTxHash } = await state.walletClient.sendXPTransaction({
-      tx: advanceTxn.tx,
-      chainAlias: "P",
-    });
-    await waitForCommitted(state.walletClient, advanceTxHash);
-    console.log(`[step 7] P-Chain advanced: ${advanceTxHash}`);
-    // Give the L1's proposerVM a moment to pull the new P-Chain height.
-    await Bun.sleep(5_000);
+    // Advance P-Chain height by 2 with P-Chain self-transfers. The L1's
+    // WARP precompile calls
+    //   GetWarpValidatorSet(ProposerVMBlockCtx.PChainHeight, ourSubnetID)
+    // when verifying initializeValidatorSet's warp message. Validators
+    // added in the ConvertSubnetToL1Tx at P-Chain height H are visible
+    // starting at H+1. The L1's proposerVM-tracked PChainHeight must
+    // therefore advance to at least H+1 before our contract call.
+    //
+    // We do TWO advances + a long sleep to give the L1 enough time to
+    // pull the new heights through its proposerVM cache. With one advance
+    // the L1 block has pChainHeight = H (the conversion block), and the
+    // validator-set query returns the pre-conversion set (no L1 validator)
+    // and signature verification fails.
+    for (let i = 0; i < 2; i++) {
+      console.log(`[step 7] advancing P-Chain height (${i + 1}/2)...`);
+      const advanceTxn = await state.walletClient.pChain.prepareBaseTxn({});
+      const { txHash: advanceTxHash } = await state.walletClient.sendXPTransaction({
+        tx: advanceTxn.tx,
+        chainAlias: "P",
+      });
+      await waitForCommitted(state.walletClient, advanceTxHash);
+      console.log(`[step 7] P-Chain advanced: ${advanceTxHash}`);
+    }
+    // 30s for L1's proposerVM to absorb the new heights.
+    await Bun.sleep(30_000);
+
+    // Diagnostic: dump the L1's proposerVM PChainHeight + primary network
+    // P-Chain height so we can tell whether the L1's view of P-Chain has
+    // actually advanced past the subnet-conversion height.
+    await dumpProposerVMHeights(state.l1Node.uri, state.blockchainId);
+
+    // Roll the L1 past its first ACP-181 epoch.
+    //
+    // avalanchego v1.14+ implements ACP-181 ("P-Chain epoched views"). On
+    // every proposerVM block, the validator-set lookup used for warp
+    // predicate verification is *not* the block's current PChainHeight —
+    // it's the epoch's PChainHeight, which is frozen at the time the epoch
+    // was created. Epoch 1 starts at the genesis block, whose parent has
+    // no PChainHeight, so epoch 1's PChainHeight = 0. The L1's own subnet
+    // validators don't exist at P-Chain height 0, so warp signature
+    // verification finds zero signers and fails silently.
+    //
+    // Local network's epoch duration is 30s. To get into epoch 2 (with a
+    // real PChainHeight) we need a parent block whose timestamp is past
+    // epoch 1's end. The child of that block is then the first block of
+    // epoch 2, with PChainHeight = parent.pChainHeight (i.e. current).
+    //
+    // Send one cheap L1 tx, sleep 35s, send a second one. The second tx's
+    // block has timestamp T_2 > epoch_1.startTime + 30s. The block that
+    // contains our subsequent initializeValidatorSet is then epoch 2's
+    // first block and inherits the L1's now-current pChainHeight.
+    const evmAccount = state.l1WalletClient.account!;
+    console.log(`[step 7] rolling L1 past first epoch (warm-up tx 1/2)...`);
+    const warm1 = await state.l1WalletClient.sendTransaction({
+      to: evmAccount.address,
+      value: 0n,
+      chain: state.l1WalletClient.chain,
+      account: evmAccount,
+    } as never);
+    await state.l1PublicClient.waitForTransactionReceipt({ hash: warm1 });
+    await Bun.sleep(35_000);
+    console.log(`[step 7] rolling L1 past first epoch (warm-up tx 2/2)...`);
+    const warm2 = await state.l1WalletClient.sendTransaction({
+      to: evmAccount.address,
+      value: 0n,
+      chain: state.l1WalletClient.chain,
+      account: evmAccount,
+    } as never);
+    await state.l1PublicClient.waitForTransactionReceipt({ hash: warm2 });
+
+    // Re-dump after rolling — current epoch should now have a non-zero
+    // pChainHeight if we successfully rolled to epoch 2.
+    await dumpProposerVMHeights(state.l1Node.uri, state.blockchainId);
 
     // Boot the signature aggregator pointed at the running tmpnet. It
     // discovers peers from disk under ~/.avalanche-cli/tmpnet/networks/<name>/.
