@@ -404,7 +404,13 @@ export class SignatureAggregatorManager implements IDisposable {
           nodeId?: string;
           stakingPort?: number;
         };
-        if (config.isValidator && config.nodeId && config.stakingPort) {
+        // Include ALL nodes, not just primary-network validators.
+        // SubnetToL1Conversion messages have to be signed by validators of
+        // the converted L1, and those L1 validator nodes are added with
+        // isValidator: false (they're not primary-network validators).
+        // The sig-aggregator filters by signing-subnet-id at request time —
+        // we just have to make sure the peers are reachable.
+        if (config.nodeId && config.stakingPort) {
           peers.push({ id: config.nodeId, ip: `127.0.0.1:${config.stakingPort}` });
         }
       } catch (e) {
