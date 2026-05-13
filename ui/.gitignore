@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+esm/
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+.vitest/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# ESLint cache
+.eslintcache
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+temp/
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Playground build
+playground/dist/
+playground/node_modules/
+
