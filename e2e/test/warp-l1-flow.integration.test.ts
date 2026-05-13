@@ -21,8 +21,10 @@ import { utils } from "@avalabs/avalanchejs";
 import {
   ConversionData,
   newConversionData,
-  deployValidatorManager,
+  upgradeProxyToValidatorManager,
   initializeValidatorSet,
+  buildValidatorManagerGenesisAlloc,
+  VALIDATOR_MANAGER_PROXY_ADDRESS,
 } from "@avalanche-sdk/interchain";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheLocal } from "@avalanche-sdk/client/chains";
@@ -232,6 +234,15 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     // Durango/Etna activate subnet-evm upgrades that ValidatorManager + warp
     // helpers depend on. Without these, deploying the VM bytecode reverts
     // with "invalid opcode: PUSH0".
+    //
+    // The alloc also pre-deploys a TransparentUpgradeableProxy at
+    // 0xfacade... and a ProxyAdmin at 0xdad0... (owned by EWOQ). The
+    // ConvertSubnetToL1Tx in step 5 references the proxy address as the
+    // validator manager — that address has to exist at genesis time because
+    // it's baked into the canonical conversion-data hash before the L1's
+    // EVM chain has any user-deployable state. After conversion completes,
+    // step 6 deploys the real ValidatorManager implementation and upgrades
+    // the proxy to point at it via ProxyAdmin.upgradeAndCall(...).
     const genesisData: Record<string, unknown> = {
       config: {
         chainId: 99999,
@@ -261,6 +272,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         [LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress.replace(/^0x/, "")]: {
           balance: "0x295BE96E64066972000000",
         },
+        ...buildValidatorManagerGenesisAlloc({
+          proxyAdminOwner: LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress as `0x${string}`,
+        }),
       },
       nonce: "0x0",
       timestamp: "0x0",
@@ -325,8 +339,11 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     }
 
     const ownerPAddr = state.ownerPAddr;
-    // ValidatorManager address is arbitrary for tmpnet — pick a fixed test EOA.
-    const managerAddress = "0x000000000000000000000000000000000000bEEF";
+    // Use the canonical genesis-pre-deployed proxy address as the validator
+    // manager — that contract exists at L1 genesis time, so the conversion
+    // data hash references a real on-chain contract. After conversion, step 6
+    // upgrades the proxy to a freshly deployed ValidatorManager impl.
+    const managerAddress = VALIDATOR_MANAGER_PROXY_ADDRESS;
     const weight = 100n;
     const initialBalanceInNanoAvax = 100_000_000n; // 0.1 AVAX
 
@@ -407,7 +424,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     // regression net for this PR's byte-layout work.
   }, BOOT_TIMEOUT_MS);
 
-  test("6. Deploy ValidatorManager on the L1 EVM", async () => {
+  test("6. Deploy ValidatorManager impl + upgrade proxy on the L1 EVM", async () => {
     if (!state.l1Node || !state.blockchainId || !state.subnetId) {
       throw new Error("Prerequisite step failed");
     }
@@ -447,9 +464,15 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       utils.base58check.decode(state.subnetId),
     ).toString("hex")}`) as Hex;
 
+    // The proxy at VALIDATOR_MANAGER_PROXY_ADDRESS was pre-deployed in
+    // genesis (step 3). This call deploys the real ValidatorManager
+    // implementation and points the proxy at it via
+    // ProxyAdmin.upgradeAndCall(...), atomically running initialize(settings)
+    // in the proxy's storage.
+    //
     // Cast: viem is installed twice (e2e + interchain) so the WalletClient
     // types don't unify even though they're structurally identical.
-    const deploy = await deployValidatorManager(
+    const upgrade = await upgradeProxyToValidatorManager(
       state.l1WalletClient as never,
       state.l1PublicClient as never,
       {
@@ -461,12 +484,12 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         },
       },
     );
-    expect(deploy.address).toMatch(/^0x[a-fA-F0-9]{40}$/);
-    expect(deploy.libraryAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
-    expect(deploy.initializeTxHash).toBeDefined();
-    state.validatorManagerAddress = deploy.address;
-    console.log(`[step 6] ValidatorManager deployed at ${deploy.address}`);
-    console.log(`[step 6] ValidatorMessages library at ${deploy.libraryAddress}`);
+    expect(upgrade.address).toBe(VALIDATOR_MANAGER_PROXY_ADDRESS);
+    expect(upgrade.implementationAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    expect(upgrade.libraryAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    state.validatorManagerAddress = upgrade.address;
+    console.log(`[step 6] proxy upgraded to impl ${upgrade.implementationAddress}`);
+    console.log(`[step 6] proxy is now the live ValidatorManager at ${upgrade.address}`);
   }, BOOT_TIMEOUT_MS);
 
   test("7. initializeValidatorSet via signature-aggregator", async () => {
