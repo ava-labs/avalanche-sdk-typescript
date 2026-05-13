@@ -229,11 +229,13 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
 
     // Minimal subnet-evm genesis (chain ID 99999, EWOQ pre-funded).
     //
-    // Shanghai/Cancun timestamps at 0 enable PUSH0 + transient storage, which
-    // icm-contracts v2.1.0 bytecode requires (compiled with solc 0.8.25).
-    // Durango/Etna activate subnet-evm upgrades that ValidatorManager + warp
-    // helpers depend on. Without these, deploying the VM bytecode reverts
-    // with "invalid opcode: PUSH0".
+    // durangoTimestamp + warpConfig.blockTimestamp are both pinned to
+    // avalanchego's hardcoded local-network Durango activation (2020-12-05
+    // 05:00 UTC = 1607144400). Equal values are allowed; both at 0 fails
+    // verification ("warp cannot be activated before Durango") because 0
+    // reads as "not set." Past this timestamp, Shanghai is active via the
+    // Durango upgrade, so PUSH0 (in icm-contracts v2.1.0 bytecode, compiled
+    // with solc 0.8.25) works.
     //
     // The alloc also pre-deploys a TransparentUpgradeableProxy at
     // 0xfacade... and a ProxyAdmin at 0xdad0... (owned by EWOQ). The
@@ -257,15 +259,13 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         muirGlacierBlock: 0,
         berlinBlock: 0,
         londonBlock: 0,
-        shanghaiTime: 0,
-        cancunTime: 0,
         subnetEVMTimestamp: 0,
+        // Local-network Durango activation timestamp baked into avalanchego.
+        // Setting it explicitly + matching warpConfig keeps the L1 in a state
+        // where Shanghai (PUSH0) + warp precompile are both active.
+        durangoTimestamp: 1607144400,
         warpConfig: {
-          // Must be strictly after the Durango network upgrade. avalanchego's
-          // genesis validator rejects warpConfig.blockTimestamp == 0 with
-          // "warp cannot be activated before Durango". Use the wall clock at
-          // generation time — same pattern as builders-hub's genGenesis.
-          blockTimestamp: Math.floor(Date.now() / 1000),
+          blockTimestamp: 1607144400,
           quorumNumerator: 67,
           requirePrimaryNetworkSigners: false,
         },
