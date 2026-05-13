@@ -104,9 +104,14 @@ export async function initializeValidatorSet(
     );
     const conversionIdHex = conversionData.getConversionId();
 
-    // 2. SubnetToL1Conversion payload (the AddressedCall body).
+    // 2. SubnetToL1Conversion payload (the AddressedCall body). The helper
+    //    takes a base58check-encoded ID, not hex — feeding hex causes a
+    //    "Unknown letter: 0" from the base58 decoder.
+    const conversionIdBase58 = utils.base58check.encode(
+        utils.hexToBuffer(conversionIdHex),
+    );
     const subnetToL1ConversionMessage = newSubnetToL1ConversionMessage(
-        conversionIdHex.replace(/^0x/, ""),
+        conversionIdBase58,
     );
 
     // 3. Wrap in UnsignedMessage. P-Chain is the source — its blockchainID is
