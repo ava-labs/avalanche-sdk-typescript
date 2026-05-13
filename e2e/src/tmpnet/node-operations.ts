@@ -133,10 +133,17 @@ export function buildBaseNodeArgs(
 
 export function addStakingKeyArgs(args: string[], stakerNum: number): void {
   if (stakerNum >= 1 && stakerNum <= MAX_PRECONFIGURED_STAKERS) {
+    const crt = join(STAKING_KEYS_DIR, `staker${stakerNum}.crt`);
+    const key = join(STAKING_KEYS_DIR, `staker${stakerNum}.key`);
+    const signer = join(STAKING_KEYS_DIR, `signer${stakerNum}.key`);
+    // Only wire the preconfigured staker files if they actually exist.
+    // On CI there are no preshipped keys — let avalanchego auto-generate
+    // them under --data-dir instead of failing to load missing certs.
+    if (!existsSync(crt) || !existsSync(key) || !existsSync(signer)) return;
     args.push(
-      `--staking-tls-cert-file=${join(STAKING_KEYS_DIR, `staker${stakerNum}.crt`)}`,
-      `--staking-tls-key-file=${join(STAKING_KEYS_DIR, `staker${stakerNum}.key`)}`,
-      `--staking-signer-key-file=${join(STAKING_KEYS_DIR, `signer${stakerNum}.key`)}`
+      `--staking-tls-cert-file=${crt}`,
+      `--staking-tls-key-file=${key}`,
+      `--staking-signer-key-file=${signer}`
     );
   } else {
     args.push("--staking-ephemeral-cert-enabled=true", "--staking-ephemeral-signer-enabled=true");
@@ -231,10 +238,15 @@ export async function startNewNode(
   addStakingKeyArgs(args, stakerNum);
   addBootstrapArgs(args, bootstrapNodeId);
 
+  // Capture stdout/stderr to disk so we can diagnose silent startup failures.
+  // avalanchego writes its own logs under --log-dir, but anything it emits
+  // before opening that sink (cert load errors, port conflicts, etc.) only
+  // appears on stdio.
+  const stdioPath = join(tempNodeDir, "stdio.log");
   const proc = spawn([avalanchego, ...args], {
     cwd: tempNodeDir,
-    stdout: "ignore",
-    stderr: "ignore",
+    stdout: Bun.file(stdioPath),
+    stderr: Bun.file(stdioPath),
     detached: true,
   });
   proc.unref();
