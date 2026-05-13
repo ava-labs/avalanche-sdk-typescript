@@ -259,10 +259,16 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         muirGlacierBlock: 0,
         berlinBlock: 0,
         londonBlock: 0,
+        // Standard go-ethereum EVM fork timestamps. subnet-evm v0.8.0 doesn't
+        // auto-activate Shanghai when Durango is set — we need explicit
+        // shanghaiTime/cancunTime to make PUSH0 and transient storage valid
+        // for the vendored icm-contracts v2.1.0 bytecode (solc 0.8.25).
+        shanghaiTime: 0,
+        cancunTime: 0,
         subnetEVMTimestamp: 0,
         // Local-network Durango activation timestamp baked into avalanchego.
-        // Setting it explicitly + matching warpConfig keeps the L1 in a state
-        // where Shanghai (PUSH0) + warp precompile are both active.
+        // durango must come before warp activation; equal timestamps are fine,
+        // both at 0 fails verification (0 reads as "not set").
         durangoTimestamp: 1607144400,
         warpConfig: {
           blockTimestamp: 1607144400,
