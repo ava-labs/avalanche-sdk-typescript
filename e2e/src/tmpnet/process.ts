@@ -388,12 +388,17 @@ export async function checkNodeHealth(
     if (!healthData.result?.healthy) {
       if (options?.primaryNetworkOnly && healthData.result?.checks) {
         const checks = healthData.result.checks;
+        // "not yet run" is avalanchego's placeholder before the periodic
+        // health-check goroutine has fired its first iteration — it's not a
+        // real failure. Treat it as not-yet-known rather than unhealthy,
+        // otherwise we race the polling interval right after bootstrap.
+        const isRealError = (c: { error?: string } | undefined): boolean =>
+          !!c?.error && c.error !== "not yet run";
         // primaryNetworkOnly really means "P-Chain is enough" — X / C-Chain can
-        // legitimately report unhealthy in a tmpnet (e.g. when sybil-protection
-        // is disabled, the C-Chain sometimes flags missing validators) while
-        // P-Chain still serves issueTx / getTxStatus / getValidatorsAt fine,
-        // which is all the warp + L1 flow needs.
-        const pChainHealthy = checks.P && !checks.P.error;
+        // legitimately report unhealthy in a tmpnet (sybil-protection disabled,
+        // missing validators, etc.) while P-Chain still serves issueTx /
+        // getTxStatus / getValidatorsAt fine, which is all warp + L1 needs.
+        const pChainHealthy = checks.P && !isRealError(checks.P);
 
         if (pChainHealthy) {
           try {
