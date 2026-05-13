@@ -83,6 +83,14 @@ jobs:
         working-directory: interchain
         run: bun run build
 
+      - name: Build client types + esm (e2e imports require dist/_types and dist/_esm)
+        working-directory: client
+        run: |
+          # Skip build:cjs + build:webpack — e2e only needs ESM + types.
+          bun run clean
+          bun run build:esm
+          bun run build:types
+
       - name: Create binary dirs
         run: |
           mkdir -p ~/.avalanche-cli/bin
