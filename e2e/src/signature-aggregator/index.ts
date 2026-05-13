@@ -256,9 +256,13 @@ export class SignatureAggregatorManager implements IDisposable {
 
     onProgress?.("starting signature-aggregator...");
 
+    // Capture stdout/stderr to a file so failures are diagnosable. Without
+    // this any startup crash is invisible (the prior "pipe" config left the
+    // streams hanging and dropped on the floor).
+    const stdioPath = join(networkDir, "signature-aggregator-stdio.log");
     this.process = Bun.spawn([binaryPath, "--config-file", this.configPath], {
-      stdout: "pipe",
-      stderr: "pipe",
+      stdout: Bun.file(stdioPath),
+      stderr: Bun.file(stdioPath),
       env: { ...process.env },
       detached: true,
     });
