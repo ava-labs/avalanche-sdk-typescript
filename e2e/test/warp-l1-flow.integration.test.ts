@@ -521,6 +521,32 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       throw new Error("Prerequisite step failed");
     }
 
+    // The L1 validator only just bootstrapped its chain (step 6 was ~7s
+    // ago). It needs a moment to establish P2P connections + be visible in
+    // P-Chain's validator-set query — otherwise the sig-aggregator finds
+    // 0 signers for our subnet. Wait for the L1 validator to show up in
+    // P-Chain's getCurrentValidators(subnetID) response.
+    console.log(`[step 7] waiting for L1 validator to register on P-Chain...`);
+    const validatorDeadline = Date.now() + 60_000;
+    let validatorRegistered = false;
+    while (Date.now() < validatorDeadline) {
+      try {
+        const current = await state.walletClient!.pChain.getCurrentValidators({
+          subnetID: state.subnetId,
+        });
+        const list = (current as { validators?: unknown[] })?.validators ?? [];
+        if (list.length > 0) {
+          validatorRegistered = true;
+          console.log(`[step 7] L1 has ${list.length} validator(s) on P-Chain`);
+          break;
+        }
+      } catch {
+        // try again
+      }
+      await Bun.sleep(2_000);
+    }
+    expect(validatorRegistered).toBe(true);
+
     // Boot the signature aggregator pointed at the running tmpnet. It
     // discovers peers from disk under ~/.avalanche-cli/tmpnet/networks/<name>/.
     // Tracking just our subnet keeps the signing scope narrow.
