@@ -574,17 +574,19 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
             blsPublicKey: state.l1Node.blsPublicKey! as Hex,
           },
         ],
-        aggregateSignatures: async ({ unsignedMessageHex, signingSubnetId }) => {
+        aggregateSignatures: async ({ unsignedMessageHex, signingSubnetId, justificationHex }) => {
           // sig-aggregator returns "no signatures" until it has actually
           // connected to and handshaked with the validators in the signing
           // subnet. After /health says "up", it can still take several
           // seconds before P2P is fully established. Retry on the "no
-          // signatures" path for up to ~60s.
-          const deadline = Date.now() + 60_000;
+          // signatures" or "failed to collect a threshold of signatures"
+          // path for up to ~120s.
+          const deadline = Date.now() + 120_000;
           let lastErr = "";
           while (Date.now() < deadline) {
             const sig = await state.signatureAggregator!.aggregateSignatures({
               message: unsignedMessageHex,
+              justification: justificationHex,
               "signing-subnet-id": signingSubnetId,
             });
             if (sig["signed-message"]) {
@@ -593,7 +595,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
                 : `0x${sig["signed-message"]}`) as Hex;
             }
             lastErr = sig.error ?? "unknown sig-aggregator error";
-            if (!/no signatures/i.test(lastErr)) {
+            const retryable = /no signatures|threshold/i.test(lastErr);
+            if (!retryable) {
               throw new Error(`sig-aggregator failed: ${lastErr}`);
             }
             console.log(`[step 7] waiting for sig-aggregator peers (${lastErr})...`);

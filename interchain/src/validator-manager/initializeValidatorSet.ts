@@ -30,11 +30,18 @@ export interface InitialValidator {
  *
  * Implementations:
  *   - input  `unsignedMessageHex` — full warp UnsignedMessage hex
+ *            `signingSubnetId` — base58check subnet ID to query for sigs
+ *            `justificationHex` — hex-encoded bytes the validator's
+ *              verifier uses to look up its local state. For
+ *              SubnetToL1Conversion messages this is the 32-byte
+ *              subnet ID; without it avalanchego's verifier rejects
+ *              the signing request as "failed to parse justification".
  *   - output `signedMessageHex`   — signed warp message hex with BLS sig
  */
 export type AggregateSignaturesFn = (input: {
     unsignedMessageHex: Hex;
     signingSubnetId: string;
+    justificationHex: Hex;
 }) => Promise<Hex>;
 
 export interface InitializeValidatorSetArgs {
@@ -125,10 +132,19 @@ export async function initializeValidatorSet(
     );
     const unsignedMessageHex = unsignedMessage.toHex() as Hex;
 
-    // 4. Aggregate signatures across the L1's validators.
+    // 4. Aggregate signatures.
+    //    avalanchego's ACP-118 signature handler (vms/platformvm/network/
+    //    warp.go#verifySubnetToL1Conversion) requires `justification` to
+    //    be the 32-byte subnet ID — it parses with ids.ToID(justification)
+    //    and queries `state.GetSubnetToL1Conversion(subnetID)`. Without
+    //    a justification the verifier returns "failed to parse
+    //    justification" and the validator never signs.
+    const subnetIdRawBytes = utils.base58check.decode(args.subnetId);
+    const justificationHex = (`0x${Buffer.from(subnetIdRawBytes).toString("hex")}`) as Hex;
     const signedMessageHex = await args.aggregateSignatures({
         unsignedMessageHex,
         signingSubnetId: args.subnetId,
+        justificationHex,
     });
     const signedBytes = utils.hexToBuffer(signedMessageHex);
 
