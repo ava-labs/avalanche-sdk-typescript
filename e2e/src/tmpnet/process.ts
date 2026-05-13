@@ -388,11 +388,14 @@ export async function checkNodeHealth(
     if (!healthData.result?.healthy) {
       if (options?.primaryNetworkOnly && healthData.result?.checks) {
         const checks = healthData.result.checks;
+        // primaryNetworkOnly really means "P-Chain is enough" — X / C-Chain can
+        // legitimately report unhealthy in a tmpnet (e.g. when sybil-protection
+        // is disabled, the C-Chain sometimes flags missing validators) while
+        // P-Chain still serves issueTx / getTxStatus / getValidatorsAt fine,
+        // which is all the warp + L1 flow needs.
         const pChainHealthy = checks.P && !checks.P.error;
-        const xChainHealthy = checks.X && !checks.X.error;
-        const cChainHealthy = checks.C && !checks.C.error;
 
-        if (pChainHealthy && xChainHealthy && cChainHealthy) {
+        if (pChainHealthy) {
           try {
             const infoResponse = await fetch(`${uri}/ext/info`, {
               method: "POST",

@@ -123,8 +123,10 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
 
   afterAll(async () => {
     if (state.tmpnet) {
+      // Stop processes but don't delete the network directory — leave it for
+      // the GH Actions artifact upload to grab tmpnet logs on failure. The
+      // runner is ephemeral; nothing to clean up beyond killing avalanchego.
       await state.tmpnet.stopNetwork().catch(() => {});
-      await state.tmpnet.deleteNetwork(NETWORK_NAME).catch(() => {});
       await state.tmpnet.dispose().catch(() => {});
     }
   }, 60_000);
