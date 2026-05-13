@@ -1,7 +1,5 @@
 import { utils } from "@avalabs/avalanchejs";
 import { parseAddressedCallPayload } from "../addressedCallPayload";
-import { parseWarpUnsignedMessage } from "../warpUnsignedMessage";
-import { parseWarpMessage } from "../warpMessage";
 
 // ValidationUptimeMessage layout (46 bytes):
 //   codecID:      uint16  (always 0)
@@ -65,34 +63,18 @@ export function newValidationUptimeMessage(validationId: string, uptime: bigint)
  * Parses a ValidationUptimeMessage from a hex string.
  *
  * Accepts either a raw payload, an AddressedCall-wrapped payload, an UnsignedMessage,
- * or a signed WarpMessage — the inner payload will be located.
+ * or a signed WarpMessage — the inner payload will be located. `parseAddressedCallPayload`
+ * already cascades through UnsignedMessage and WarpMessage wrappings.
  */
 export function parseValidationUptimeMessage(hex: string): ValidationUptimeMessage {
     const bytes = utils.hexToBuffer(hex);
     if (bytes.length === PAYLOAD_LENGTH) {
         return ValidationUptimeMessage.fromPayloadBytes(bytes);
     }
-    // Try each wrapping layer in turn. Each parse step yields the inner payload hex;
-    // we then check whether it's the 46-byte ValidationUptime payload or needs more unwrapping.
-    const candidates: Array<() => string> = [
-        () => `0x${parseAddressedCallPayload(hex).payload.toString('hex')}`,
-        () => `0x${parseWarpUnsignedMessage(hex).payload.toString('hex')}`,
-        () => `0x${parseWarpMessage(hex).unsignedMessage.payload.toString('hex')}`,
-    ];
-    for (const next of candidates) {
-        try {
-            const innerHex = next();
-            const innerBytes = utils.hexToBuffer(innerHex);
-            if (innerBytes.length === PAYLOAD_LENGTH) {
-                return ValidationUptimeMessage.fromPayloadBytes(innerBytes);
-            }
-            // The inner bytes are still wrapped — recurse once.
-            return parseValidationUptimeMessage(innerHex);
-        } catch { /* try next */ }
-    }
-    throw new Error(
-        `Cannot parse ValidationUptimeMessage from input: not a raw payload, AddressedCall, UnsignedMessage, or signed WarpMessage`,
+    const innerBytes = utils.hexToBuffer(
+        `0x${parseAddressedCallPayload(hex).payload.toString('hex')}`,
     );
+    return ValidationUptimeMessage.fromPayloadBytes(innerBytes);
 }
 
 export class ValidationUptimeMessage {

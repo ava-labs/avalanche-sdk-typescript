@@ -46,21 +46,35 @@ export function bech32AddressToBytes(address: string) {
  *   - `NodeID-<base58check>` (canonical Avalanche format)
  *   - `<base58check>` (NodeID without the `NodeID-` prefix)
  *   - `0x<40 hex chars>` (raw hex, as returned by `platform.getTx` over JSON-RPC)
+ *   - `<40 hex chars>` (raw hex without the `0x` prefix)
+ *
+ * Hex detection requires the `0x` prefix OR exactly 40 hex characters — the length guard
+ * disambiguates the (rare but real) case of a base58check NodeID that happens to contain
+ * only `[0-9a-fA-F]`.
  *
  * @param nodeId - The node ID in any supported format.
  * @returns 20 raw bytes of the node ID.
  */
 export function nodeIdToBytes(nodeId: string): Uint8Array {
-    if (nodeId.startsWith("0x") || /^[0-9a-fA-F]+$/.test(nodeId)) {
-        return utils.hexToBuffer(nodeId.startsWith("0x") ? nodeId : `0x${nodeId}`);
+    if (nodeId.startsWith("0x")) {
+        return utils.hexToBuffer(nodeId);
+    }
+    if (nodeId.length === 40 && /^[0-9a-fA-F]+$/.test(nodeId)) {
+        return utils.hexToBuffer(`0x${nodeId}`);
     }
     const stripped = nodeId.startsWith("NodeID-") ? nodeId.slice("NodeID-".length) : nodeId;
     return utils.base58check.decode(stripped);
 }
 
+/**
+ * Parses an EVM or Bech32 address to bytes.
+ *
+ * NOTE: Returns an empty `Uint8Array(0)` for `''` or `'0x'` — these represent the
+ * system source for warp messages that don't have a sender (e.g. P-Chain-originated
+ * L1 validator messages). Previously this case threw; callers that depended on the
+ * throw must guard the empty string themselves.
+ */
 export function evmOrBech32AddressToBytes(address: string) {
-    // Empty source address is valid for warp messages that don't have a sender
-    // (e.g. system-originated L1 validator messages).
     if (address === "" || address === "0x") {
         return new Uint8Array(0);
     }

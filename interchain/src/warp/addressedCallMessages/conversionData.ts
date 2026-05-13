@@ -1,4 +1,4 @@
-import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, Short, utils } from "@avalabs/avalanchejs";
+import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, utils } from "@avalabs/avalanchejs";
 import type { ValidatorData as ValidatorDataRaw } from "../types";
 import { sha256 } from "@noble/hashes/sha2";
 import { nodeIdToBytes } from "../utils";
@@ -133,8 +133,6 @@ export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.Convers
         const out = new Uint8Array(total);
         let off = 0;
         for (const p of parts) { out.set(p, off); off += p.length; }
-        // Silence unused-import warning for Short; it's still used by sibling classes.
-        void Short;
         return utils.bufferToHex(out);
     }
 

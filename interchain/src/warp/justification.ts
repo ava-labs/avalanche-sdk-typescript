@@ -103,17 +103,28 @@ const SEND_WARP_MESSAGE_EVENT = parseAbiItem(
 
 const REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID = 1;
 
-/** A minimal subset of a viem PublicClient — enough to scan warp logs. */
+/**
+ * A minimal subset of a viem PublicClient — enough to scan warp logs.
+ *
+ * Typed loosely (`args: unknown`) so any viem PublicClient is assignable; the function
+ * narrows the log shape it cares about internally.
+ */
 export interface JustificationPublicClient {
     getBlockNumber: () => Promise<bigint>;
-    getLogs: (args: any) => Promise<any[]>;
+    getLogs: (args: unknown) => Promise<unknown[]>;
+}
+
+/** The single log shape we depend on after `getLogs` returns. */
+interface ScannedWarpLog {
+    args?: { message?: `0x${string}` };
 }
 
 /** Options for {@link getRegistrationJustification}. */
 export interface GetRegistrationJustificationOptions {
     /**
      * How many bootstrap validator indices to derive and hash before giving up on the
-     * bootstrap path. Defaults to 100.
+     * bootstrap path. Defaults to 1000 — each iteration is just a sha256, so the cost
+     * is negligible and the wider window survives L1s with many bootstrap validators.
      */
     bootstrapSearchLimit?: number;
     /** Block range per `eth_getLogs` call. Defaults to 2000. */
@@ -148,7 +159,7 @@ export async function getRegistrationJustification(
     options: GetRegistrationJustificationOptions = {},
 ): Promise<Uint8Array | null> {
     const {
-        bootstrapSearchLimit = 100,
+        bootstrapSearchLimit = 1000,
         logChunkSize = 2000,
         maxLogChunks = 100,
         warpAddress = WARP_PRECOMPILE_ADDRESS,
@@ -185,20 +196,20 @@ export async function getRegistrationJustification(
         const latest: bigint = toBlock === "latest" ? await publicClient.getBlockNumber() : toBlock;
         const fromBlock: bigint = latest > BigInt(logChunkSize) ? latest - BigInt(logChunkSize) : 0n;
 
-        let logs: any[];
+        let logs: ScannedWarpLog[];
         try {
-            logs = await publicClient.getLogs({
+            logs = (await publicClient.getLogs({
                 address: warpAddress,
                 event: SEND_WARP_MESSAGE_EVENT,
                 fromBlock,
                 toBlock: toBlock === "latest" ? toBlock : (toBlock as bigint),
-            });
+            })) as ScannedWarpLog[];
         } catch {
             return null;
         }
 
         for (const log of logs.slice().reverse()) {
-            const fullMessageHex = (log?.args as { message?: `0x${string}` } | undefined)?.message;
+            const fullMessageHex = log?.args?.message;
             if (!fullMessageHex) continue;
             const unsignedBytes = hexToBytes(fullMessageHex);
             const addressedCall = extractAddressedCallFromUnsignedMessage(unsignedBytes);

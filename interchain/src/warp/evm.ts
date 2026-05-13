@@ -9,39 +9,29 @@ export const WARP_MESSAGE_TOPIC = "0x56600c567728a800c0aa927500f831cb451df66a7af
 /**
  * Extracts the unsigned warp message bytes from an EVM transaction receipt.
  *
- * Prefers the `SendWarpMessage` event emitted by the Warp precompile; falls back to
- * the second-then-first log if no matching event is present (handles older receipts).
+ * Locates the `SendWarpMessage` event emitted by the Warp precompile and decodes its
+ * `bytes message` data parameter.
  *
  * @param receipt - The EVM transaction receipt to scan.
  * @returns The unsigned warp message as a 0x-prefixed hex string.
- * @throws If no warp message can be located in the receipt.
+ * @throws If no `SendWarpMessage` event from the Warp precompile is present.
  */
 export function extractWarpMessageFromReceipt(receipt: TransactionReceipt): `0x${string}` {
     if (!receipt.logs || receipt.logs.length === 0) {
         throw new Error("No logs in transaction receipt — cannot extract warp message.");
     }
 
-    const decodeBytesParam = (data: `0x${string}`): `0x${string}` => {
-        try {
-            const [decoded] = decodeAbiParameters([{ type: "bytes", name: "message" }], data);
-            return decoded as `0x${string}`;
-        } catch {
-            return data;
-        }
-    };
-
     const warpEvent = receipt.logs.find((log) =>
         log?.address?.toLowerCase() === WARP_PRECOMPILE_ADDRESS.toLowerCase() &&
         log?.topics?.[0]?.toLowerCase() === WARP_MESSAGE_TOPIC.toLowerCase()
     );
-    if (warpEvent?.data) return decodeBytesParam(warpEvent.data);
-
-    // Legacy fallbacks: some flows write the message into logs[1].data (event-less),
-    // or logs[0].data when only one log is emitted.
-    const fallback = receipt.logs[1]?.data ?? receipt.logs[0]?.data;
-    if (fallback) return decodeBytesParam(fallback);
-
-    throw new Error("Could not locate warp message in transaction receipt.");
+    if (!warpEvent?.data) {
+        throw new Error(
+            `Could not locate SendWarpMessage event from ${WARP_PRECOMPILE_ADDRESS} in transaction receipt.`,
+        );
+    }
+    const [decoded] = decodeAbiParameters([{ type: "bytes", name: "message" }], warpEvent.data);
+    return decoded as `0x${string}`;
 }
 
 /**
