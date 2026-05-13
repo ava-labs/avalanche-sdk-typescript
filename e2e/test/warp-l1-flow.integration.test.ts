@@ -260,10 +260,12 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         shanghaiTime: 0,
         cancunTime: 0,
         subnetEVMTimestamp: 0,
-        durangoTimestamp: 0,
-        etnaTimestamp: 0,
         warpConfig: {
-          blockTimestamp: 0,
+          // Must be strictly after the Durango network upgrade. avalanchego's
+          // genesis validator rejects warpConfig.blockTimestamp == 0 with
+          // "warp cannot be activated before Durango". Use the wall clock at
+          // generation time — same pattern as builders-hub's genGenesis.
+          blockTimestamp: Math.floor(Date.now() / 1000),
           quorumNumerator: 67,
           requirePrimaryNetworkSigners: false,
         },
