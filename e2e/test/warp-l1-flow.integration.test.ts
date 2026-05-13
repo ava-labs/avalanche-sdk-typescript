@@ -213,6 +213,10 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     const { txHash } = await state.walletClient.sendXPTransaction({
       tx: txnRequest.tx,
       chainAlias: "P",
+      // Pass subnet owners + auth so signXPTransaction adds the subnet-credential
+      // signature — without these the tx is rejected as "unauthorized modification".
+      subnetOwners: txnRequest.subnetOwners,
+      subnetAuth: txnRequest.subnetAuth,
     });
     expect(typeof txHash).toBe("string");
 
@@ -289,6 +293,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     const { txHash } = await state.walletClient.sendXPTransaction({
       tx: txnRequest.tx,
       chainAlias: "P",
+      subnetOwners: txnRequest.subnetOwners,
+      subnetAuth: txnRequest.subnetAuth,
     });
     state.convertTxId = txHash;
     await waitForCommitted(state.walletClient, txHash, BOOT_TIMEOUT_MS);
