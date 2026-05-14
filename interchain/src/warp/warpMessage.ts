@@ -1,48 +1,27 @@
-import { pvmSerial, Short, utils } from "@avalabs/avalanchejs";
+import { pvmSerial, utils } from "@avalabs/avalanchejs";
+
+import { encodeWithCodec, throwNoDirectFromBytes } from "./_codec";
 
 const warpManager = pvmSerial.warp.getWarpManager();
+const Schema = pvmSerial.warp.WarpMessage;
 
-/**
- * Parses a Warp signed message from a hex string.
- *
- * @param warpMsgHex - The hex string representing the signed message.
- * @returns The parsed WarpSignedMessage instance. {@link WarpMessage}
-*/
-export function parseWarpMessage(warpMsgHex: string): WarpMessage {
-    const parsedWarpMsg = warpManager.unpack(
-        utils.hexToBuffer(warpMsgHex),
-        pvmSerial.warp.WarpMessage,
-    );
-
-    return new WarpMessage(
-        parsedWarpMsg.unsignedMessage,
-        parsedWarpMsg.signature
-    );
+/** Parses a fully signed Warp message from a hex string. */
+export function parseWarpMessage(hex: string): WarpMessage {
+    const parsed = warpManager.unpack(utils.hexToBuffer(hex), Schema);
+    return new WarpMessage(parsed.unsignedMessage, parsed.signature);
 }
 
-/**
- * WarpSignedMessage class provides utility methods to build
- * and parse signed warp message from hex strings or values, and
- * access its properties.
- */
-export class WarpMessage extends pvmSerial.warp.WarpMessage {
-    static fromHex(warpMsgHex: string) {
-        return parseWarpMessage(warpMsgHex);
+export class WarpMessage extends Schema {
+    static fromHex(hex: string) {
+        return parseWarpMessage(hex);
     }
 
     toHex() {
-        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
-        const codecBytes = new Short(0)
-        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
+        return encodeWithCodec(this);
     }
 
-    /**
-     * Do not use this method directly.
-     */
-    static override fromBytes(
-        _bytes: never,
-        _codec: never
-    ): [WarpMessage, Uint8Array] {
-        throw new Error('Do not use `WarpMessage.fromBytes` method directly.');
+    /** Do not use directly — go via `fromHex`. */
+    static override fromBytes(_b: never, _c: never): [WarpMessage, Uint8Array] {
+        return throwNoDirectFromBytes("WarpMessage");
     }
 }

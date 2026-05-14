@@ -1,5 +1,7 @@
 import { utils } from "@avalabs/avalanchejs";
+
 import { newAddressedCallPayload } from "./addressedCallPayload";
+import { concatBytes, u16, u32 } from "./utils";
 import { newWarpUnsignedMessage, WarpUnsignedMessage } from "./warpUnsignedMessage";
 
 const ADDRESSED_CALL_TYPE_ID = 1;
@@ -8,22 +10,17 @@ const ADDRESSED_CALL_TYPE_ID = 1;
  * Build the canonical AddressedCall byte layout for a *system* source (no sender):
  *   codecID(uint16=0) | typeID(uint32=1) | sourceAddrLen(uint32=0) | payloadLen(uint32) | payload
  *
- * This skips `pvmSerial.warp.AddressedCallPayloads.AddressedCall`, which serializes
- * the source address through `Address` (fixed 20 bytes) and would emit 20 zero bytes
- * instead of a true zero-length source address. P-Chain and L1 validators sign the
- * variable-length encoding — the 20-byte version produces a different message hash
- * and the signature aggregator will not converge.
+ * Bypasses `pvmSerial.warp.AddressedCallPayloads.AddressedCall`, which serializes
+ * the source address through `Address` (fixed 20 bytes) and would emit 20 zero
+ * bytes instead of a true zero-length source address. P-Chain and L1 validators
+ * sign the variable-length encoding — the 20-byte version produces a different
+ * message hash and the signature aggregator will not converge.
  */
 function buildSystemSourceAddressedCallHex(payloadHex: string): string {
     const payloadBytes = utils.hexToBuffer(payloadHex);
-    const out = new Uint8Array(2 + 4 + 4 + 4 + payloadBytes.length);
-    const dv = new DataView(out.buffer);
-    dv.setUint16(0, 0, false);                       // codecID
-    dv.setUint32(2, ADDRESSED_CALL_TYPE_ID, false);  // typeID
-    dv.setUint32(6, 0, false);                       // sourceAddress length = 0
-    dv.setUint32(10, payloadBytes.length, false);    // payload length
-    out.set(payloadBytes, 14);
-    return utils.bufferToHex(out);
+    return utils.bufferToHex(
+        concatBytes(u16(0), u32(ADDRESSED_CALL_TYPE_ID), u32(0), u32(payloadBytes.length), payloadBytes),
+    );
 }
 
 /**

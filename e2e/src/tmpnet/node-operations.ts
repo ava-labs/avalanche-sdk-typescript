@@ -51,30 +51,6 @@ async function getNodeIdWithBLSFromUri(uri: string): Promise<NodeIdWithBLS> {
 // Directory utilities
 // ----------------------------------------------------------------------------
 
-/** Remove leftover `node-temp-*` directories from failed startups. */
-export function cleanupTempDirectories(networkPath: string): void {
-  if (!existsSync(networkPath)) return;
-
-  try {
-    const entries = readdirSync(networkPath);
-    for (const entry of entries) {
-      if (entry.startsWith("node-temp-")) {
-        const tempPath = join(networkPath, entry);
-        try {
-          rmSync(tempPath, { recursive: true, force: true });
-          logger.file(`Cleaned up stale temp directory: ${entry}`);
-        } catch (e) {
-          const message = e instanceof Error ? e.message : String(e);
-          logger.warn(`Failed to cleanup temp directory ${entry} at ${tempPath}: ${message}`);
-        }
-      }
-    }
-  } catch (e) {
-    const message = e instanceof Error ? e.message : String(e);
-    logger.warn(`Failed to read directories for cleanup from ${networkPath}: ${message}`);
-  }
-}
-
 /**
  * Get all node directories in a network path, sorted by HTTP port (so the
  * bootstrap node is first).
@@ -103,15 +79,11 @@ export function getNodeDirectories(networkPath: string): string[] {
   }
 }
 
-export function countNodes(networkPath: string): number {
-  return getNodeDirectories(networkPath).length;
-}
-
 // ----------------------------------------------------------------------------
 // avalanchego argument builders
 // ----------------------------------------------------------------------------
 
-export function buildBaseNodeArgs(
+function buildBaseNodeArgs(
   httpPort: number,
   stakingPort: number,
   nodeDir: string,
@@ -144,7 +116,7 @@ export function buildBaseNodeArgs(
   ];
 }
 
-export function addStakingKeyArgs(args: string[], stakerNum: number): void {
+function addStakingKeyArgs(args: string[], stakerNum: number): void {
   if (stakerNum >= 1 && stakerNum <= MAX_PRECONFIGURED_STAKERS) {
     const crt = join(STAKING_KEYS_DIR, `staker${stakerNum}.crt`);
     const key = join(STAKING_KEYS_DIR, `staker${stakerNum}.key`);
@@ -163,7 +135,7 @@ export function addStakingKeyArgs(args: string[], stakerNum: number): void {
   }
 }
 
-export function addBootstrapArgs(args: string[], bootstrapNodeId?: string): void {
+function addBootstrapArgs(args: string[], bootstrapNodeId?: string): void {
   if (bootstrapNodeId) {
     args.push("--bootstrap-ips=127.0.0.1:9651", `--bootstrap-ids=${bootstrapNodeId}`);
   } else {
@@ -175,7 +147,7 @@ export function addBootstrapArgs(args: string[], bootstrapNodeId?: string): void
 // Persistence
 // ----------------------------------------------------------------------------
 
-export function createNodeDirectoryStructure(nodeDir: string): void {
+function createNodeDirectoryStructure(nodeDir: string): void {
   mkdirSecure(nodeDir, { recursive: true });
   mkdirSecure(join(nodeDir, "db"), { recursive: true });
   mkdirSecure(join(nodeDir, "logs"), { recursive: true });
@@ -192,7 +164,7 @@ export function createNodeDirectoryStructure(nodeDir: string): void {
   );
 }
 
-export function saveNodeConfig(nodeDir: string, config: NodeConfig): void {
+function saveNodeConfig(nodeDir: string, config: NodeConfig): void {
   writeFileSecure(join(nodeDir, "config.json"), JSON.stringify(config, null, 2));
 }
 
@@ -218,7 +190,7 @@ export function loadNodeConfig(nodeDir: string): NodeConfig | null {
   }
 }
 
-export function saveProcessDetails(nodeDir: string, details: ProcessDetails): void {
+function saveProcessDetails(nodeDir: string, details: ProcessDetails): void {
   writeFileSecure(join(nodeDir, "process.json"), JSON.stringify(details, null, 2));
 }
 
@@ -226,19 +198,6 @@ export function saveProcessDetails(nodeDir: string, details: ProcessDetails): vo
 // Spawning
 // ----------------------------------------------------------------------------
 
-/** Spawn an avalanchego process detached so it survives CLI exit. */
-export function spawnNode(avalanchego: string, args: string[], cwd: string): Subprocess {
-  ensureExecutable(avalanchego);
-  const proc = spawn([avalanchego, ...args], {
-    cwd,
-    stdout: "ignore",
-    stderr: "ignore",
-    detached: true,
-  });
-  proc.unref();
-  addNodeProcess(proc);
-  return proc;
-}
 
 /** Start a brand-new validator node and return startup data. */
 export async function startNewNode(
@@ -318,54 +277,6 @@ export async function finalizeNode(
   };
 }
 
-/** Re-launch an existing node from its persisted config. */
-export function startExistingNode(
-  avalanchego: string,
-  networkPath: string,
-  nodeDir: string,
-  config: NodeConfig,
-  pluginDir: string,
-  bootstrapNodeId?: string
-): Subprocess | null {
-  ensureExecutable(avalanchego);
-
-  const nodePath = join(networkPath, nodeDir);
-  const args = buildBaseNodeArgs(config.httpPort, config.stakingPort, nodePath, pluginDir);
-
-  if (config.isValidator) {
-    const stakerNum = getStakerNumFromPort(config.httpPort);
-    addStakingKeyArgs(args, stakerNum);
-  }
-
-  if (config.trackedSubnets && config.trackedSubnets.length > 0) {
-    args.push(`--track-subnets=${config.trackedSubnets.join(",")}`);
-  }
-
-  addBootstrapArgs(args, bootstrapNodeId);
-
-  try {
-    const proc = spawn([avalanchego, ...args], {
-      cwd: nodePath,
-      stdout: "ignore",
-      stderr: "ignore",
-      detached: true,
-    });
-    proc.unref();
-
-    const processDetails: ProcessDetails = {
-      pid: proc.pid,
-      apiUri: `http://127.0.0.1:${config.httpPort}`,
-      stakingAddress: `127.0.0.1:${config.stakingPort}`,
-    };
-    saveProcessDetails(nodePath, processDetails);
-
-    return proc;
-  } catch (e) {
-    const message = e instanceof Error ? e.message : String(e);
-    logger.warn(`Failed to start existing node at ${nodePath} on port ${config.httpPort}: ${message}`);
-    return null;
-  }
-}
 
 /** Start an L1 validator node with `--track-subnets`. */
 export async function startL1Node(

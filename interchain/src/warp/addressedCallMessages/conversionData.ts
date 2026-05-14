@@ -1,7 +1,9 @@
 import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, utils } from "@avalabs/avalanchejs";
-import type { ValidatorData as ValidatorDataRaw } from "../types";
 import { sha256 } from "@noble/hashes/sha2";
-import { nodeIdToBytes } from "../utils";
+
+import { throwNoDirectFromBytes } from "../_codec";
+import type { ValidatorData as ValidatorDataRaw } from "../types";
+import { concatBytes, nodeIdToBytes, u16, u32 } from "../utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
@@ -105,48 +107,37 @@ export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.Convers
      */
     toHex(): string {
         const validators = this.validators as Array<{
-            nodeId: { toBytes(codec?: unknown): Uint8Array };
-            blsPublicKey: { toBytes(codec?: unknown): Uint8Array };
-            weight: { toBytes(codec?: unknown): Uint8Array };
+            nodeId: { toBytes(): Uint8Array };
+            blsPublicKey: { toBytes(): Uint8Array };
+            weight: { toBytes(): Uint8Array };
         }>;
-        const u16 = (n: number) => { const b = new Uint8Array(2); new DataView(b.buffer).setUint16(0, n, false); return b; };
-        const u32 = (n: number) => { const b = new Uint8Array(4); new DataView(b.buffer).setUint32(0, n, false); return b; };
         const subnetIdBytes = (this.subnetId as { toBytes(): Uint8Array }).toBytes();
         const managerChainIdBytes = (this.managerChainId as { toBytes(): Uint8Array }).toBytes();
         const managerAddrBytes = (this.managerAddress as { toBytes(): Uint8Array }).toBytes();
         const parts: Uint8Array[] = [
-            u16(0),                             // codec
-            subnetIdBytes,                      // 32 bytes
-            managerChainIdBytes,                // 32 bytes
-            u32(managerAddrBytes.length),       // managerAddress length prefix
+            u16(0), // codec
+            subnetIdBytes, // 32 bytes
+            managerChainIdBytes, // 32 bytes
+            u32(managerAddrBytes.length), // managerAddress length prefix
             managerAddrBytes,
-            u32(validators.length),             // numValidators
+            u32(validators.length), // numValidators
         ];
         for (const v of validators) {
             const nodeIdBytes = v.nodeId.toBytes();
             parts.push(u32(nodeIdBytes.length));
             parts.push(nodeIdBytes);
-            parts.push(v.blsPublicKey.toBytes());     // 48 bytes, no length prefix
-            parts.push(v.weight.toBytes());           // 8 bytes BE uint64
+            parts.push(v.blsPublicKey.toBytes()); // 48 bytes, no length prefix
+            parts.push(v.weight.toBytes()); // 8 bytes BE uint64
         }
-        const total = parts.reduce((s, p) => s + p.length, 0);
-        const out = new Uint8Array(total);
-        let off = 0;
-        for (const p of parts) { out.set(p, off); off += p.length; }
-        return utils.bufferToHex(out);
+        return utils.bufferToHex(concatBytes(...parts));
     }
 
     getConversionId() {
         return utils.bufferToHex(sha256(utils.hexToBuffer(this.toHex())));
     }
 
-    /**
-     * Do not use this method directly.
-     */
-    static override fromBytes(
-        _bytes: never,
-        _codec: never
-    ): [ConversionData, Uint8Array] {
-        throw new Error('Do not use `ConversionData.fromBytes` method directly.');
+    /** Do not use directly — go via `fromHex` / `fromValues`. */
+    static override fromBytes(_b: never, _c: never): [ConversionData, Uint8Array] {
+        return throwNoDirectFromBytes("ConversionData");
     }
 }

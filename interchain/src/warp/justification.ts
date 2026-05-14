@@ -1,8 +1,10 @@
 import { utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 import { bytesToHex, hexToBytes, parseAbiItem } from "viem";
+
 import { parseRegisterL1ValidatorMessage } from "./addressedCallMessages/registerL1ValidatorMessage";
 import { WARP_PRECOMPILE_ADDRESS } from "./evm";
+import { concatBytes, u32 } from "./utils";
 
 // ─── protobuf varint encoding ────────────────────────────────────────────────
 
@@ -14,22 +16,6 @@ function encodeVarint(value: number): Uint8Array {
     }
     bytes.push(value);
     return new Uint8Array(bytes);
-}
-
-function uint32BE(value: number): Uint8Array {
-    const b = new Uint8Array(4);
-    new DataView(b.buffer).setUint32(0, value, false);
-    return b;
-}
-
-// ─── byte helpers ────────────────────────────────────────────────────────────
-
-function concat(...parts: Uint8Array[]): Uint8Array {
-    const total = parts.reduce((s, p) => s + p.length, 0);
-    const out = new Uint8Array(total);
-    let off = 0;
-    for (const p of parts) { out.set(p, off); off += p.length; }
-    return out;
 }
 
 function bytesEqual(a: Uint8Array, b: Uint8Array): boolean {
@@ -54,19 +40,19 @@ function marshalBootstrapJustification(subnetIdBytes: Uint8Array, index: number)
     const subnetIdLen = encodeVarint(subnetIdBytes.length);
     const indexTag = new Uint8Array([0x10]);               // field 2, wire type 0 (varint)
     const indexVarint = encodeVarint(index);
-    const inner = concat(subnetIdTag, subnetIdLen, subnetIdBytes, indexTag, indexVarint);
+    const inner = concatBytes(subnetIdTag, subnetIdLen, subnetIdBytes, indexTag, indexVarint);
 
     // Outer message, field 1 (convert_subnet_to_l1_tx_data)
     const outerTag = new Uint8Array([0x0a]);
     const outerLen = encodeVarint(inner.length);
-    return concat(outerTag, outerLen, inner);
+    return concatBytes(outerTag, outerLen, inner);
 }
 
 function marshalRegisterMessageJustification(registerL1ValidatorMessagePayload: Uint8Array): Uint8Array {
     // Field 2: register_l1_validator_message (bytes), wire type 2
     const tag = new Uint8Array([0x12]);
     const len = encodeVarint(registerL1ValidatorMessagePayload.length);
-    return concat(tag, len, registerL1ValidatorMessagePayload);
+    return concatBytes(tag, len, registerL1ValidatorMessagePayload);
 }
 
 // ─── raw warp/addressedCall byte parsing (for log scanning) ──────────────────
@@ -182,7 +168,7 @@ export async function getRegistrationJustification(
 
     // 1. Bootstrap validator: validationID = sha256(subnetID || index_be_u32)
     for (let index = 0; index < bootstrapSearchLimit; index++) {
-        const derived = concat(subnetIdBytes, uint32BE(index));
+        const derived = concatBytes(subnetIdBytes, u32(index));
         const hash = sha256(derived);
         if (bytesEqual(hash, targetValidationIdBytes)) {
             return marshalBootstrapJustification(subnetIdBytes, index);

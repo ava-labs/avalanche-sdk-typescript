@@ -15,11 +15,11 @@ import type { NodeWaitResult } from "./types.ts";
 // Input Validation
 // =============================================================================
 
-export function isValidPort(port: number): boolean {
+function isValidPort(port: number): boolean {
   return Number.isInteger(port) && port >= 1 && port <= 65535;
 }
 
-export function isValidPid(pid: number): boolean {
+function isValidPid(pid: number): boolean {
   return Number.isInteger(pid) && pid > 0 && pid < 4194304;
 }
 
@@ -30,7 +30,7 @@ export function isValidPid(pid: number): boolean {
 /** Hold subprocess handles so they don't get GC'd. */
 let nodeProcesses: Subprocess[] = [];
 
-export function cleanDeadProcesses(): number {
+function cleanDeadProcesses(): number {
   const before = nodeProcesses.length;
   nodeProcesses = nodeProcesses.filter((proc) => {
     if (!proc.pid) return false;
@@ -47,10 +47,6 @@ export function cleanDeadProcesses(): number {
   return removed;
 }
 
-export function getNodeProcesses(): Subprocess[] {
-  return nodeProcesses;
-}
-
 export function setNodeProcesses(procs: Subprocess[]): void {
   cleanDeadProcesses();
   nodeProcesses = procs;
@@ -61,7 +57,7 @@ export function addNodeProcess(proc: Subprocess): void {
   nodeProcesses.push(proc);
 }
 
-export function clearNodeProcesses(): void {
+function clearNodeProcesses(): void {
   nodeProcesses = [];
 }
 
@@ -88,71 +84,6 @@ export async function killTrackedProcesses(): Promise<void> {
     }
   }
   clearNodeProcesses();
-}
-
-export function fastKillAllProcesses(): void {
-  for (const proc of nodeProcesses) {
-    try {
-      if (proc.pid && isProcessRunning(proc.pid)) {
-        process.kill(proc.pid, 9);
-      }
-    } catch {
-      // Ignore - process may already be dead
-    }
-  }
-  clearNodeProcesses();
-}
-
-export async function gracefulKillAllProcesses(timeoutMs = 5000): Promise<boolean> {
-  const pids = nodeProcesses.filter((p) => p.pid && isProcessRunning(p.pid)).map((p) => p.pid as number);
-  if (pids.length === 0) {
-    clearNodeProcesses();
-    return true;
-  }
-
-  logger.file(`[process] Sending SIGTERM to ${pids.length} processes for graceful shutdown`);
-  for (const pid of pids) {
-    try {
-      process.kill(pid, "SIGTERM");
-    } catch {
-      // ignore
-    }
-  }
-
-  const startTime = Date.now();
-  while (Date.now() - startTime < timeoutMs) {
-    const stillRunning = pids.filter((pid) => isProcessRunning(pid));
-    if (stillRunning.length === 0) {
-      logger.file("[process] All processes exited gracefully");
-      clearNodeProcesses();
-      return true;
-    }
-    await Bun.sleep(100);
-  }
-
-  const stillRunning = pids.filter((pid) => isProcessRunning(pid));
-  if (stillRunning.length > 0) {
-    logger.file(`[process] ${stillRunning.length} processes did not exit gracefully after ${timeoutMs}ms`);
-    return false;
-  }
-  clearNodeProcesses();
-  return true;
-}
-
-export function sendSigtermToAllProcesses(): number {
-  let count = 0;
-  for (const proc of nodeProcesses) {
-    try {
-      if (proc.pid && isProcessRunning(proc.pid)) {
-        process.kill(proc.pid, "SIGTERM");
-        count++;
-      }
-    } catch {
-      // ignore
-    }
-  }
-  logger.file(`[process] Sent SIGTERM to ${count} processes`);
-  return count;
 }
 
 // =============================================================================
@@ -206,61 +137,6 @@ export async function killProcessesOnPorts(ports: number[] = TMPNET_PORTS): Prom
     }
   }
   await Bun.sleep(PROCESS_KILL_WAIT);
-}
-
-/**
- * Kill avalanchego process on a specific port (more careful version).
- */
-export async function killAvalanchegoOnPort(
-  httpPort: number,
-  loggerArg?: { file: (msg: string) => void; fileError: (msg: string) => void }
-): Promise<void> {
-  if (!isValidPort(httpPort)) {
-    loggerArg?.fileError(`killAvalanchegoOnPort: invalid port ${httpPort}`);
-    return;
-  }
-
-  try {
-    const pgrepResult = await Bun.$`pgrep -f "avalanchego.*--http-port=${httpPort}" 2>/dev/null`.quiet().nothrow();
-    let pids = pgrepResult.text().trim();
-    loggerArg?.file(`Found avalanchego PIDs via pgrep: ${pids || "none"}`);
-
-    if (!pids) {
-      const lsofResult = await Bun.$`lsof -ti :${httpPort} 2>/dev/null`.quiet().nothrow();
-      pids = lsofResult.text().trim();
-      loggerArg?.file(`Found PIDs via lsof fallback: ${pids || "none"}`);
-    }
-
-    if (pids) {
-      const pidList = pids.split("\n").filter(Boolean);
-      const myPid = process.pid;
-      const parentPid = process.ppid;
-
-      for (const pid of pidList) {
-        try {
-          const pidNum = Number.parseInt(pid.trim(), 10);
-          if (!isValidPid(pidNum)) continue;
-          if (pidNum === myPid || pidNum === parentPid) continue;
-
-          try {
-            const psResult = await Bun.$`ps -p ${pidNum} -o comm= 2>/dev/null`.quiet().nothrow();
-            const processName = psResult.text().trim();
-            if (processName.includes("avalanchego") || processName === "") {
-              const killed = await gracefulKill(pidNum, 5000);
-              if (killed) loggerArg?.file(`Successfully killed PID ${pidNum}`);
-            }
-          } catch {
-            const killed = await gracefulKill(pidNum, 5000);
-            if (killed) loggerArg?.file(`Successfully killed PID ${pidNum}`);
-          }
-        } catch (innerKillErr) {
-          loggerArg?.fileError(`Inner kill error for PID ${pid}: ${innerKillErr}`);
-        }
-      }
-    }
-  } catch (killErr) {
-    loggerArg?.fileError(`Kill error: ${killErr}`);
-  }
 }
 
 // =============================================================================
@@ -438,44 +314,11 @@ export async function checkNodeHealth(
   }
 }
 
-export async function checkChainBootstrapStatus(
-  uri: string
-): Promise<{ pChain: boolean; xChain: boolean; cChain: boolean; bootstrapped: boolean }> {
-  try {
-    const response = await fetch(`${uri}/ext/health`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "health.health" }),
-      signal: AbortSignal.timeout(NODE_HEALTH_TIMEOUT),
-    });
-
-    const data = (await response.json()) as {
-      result?: { healthy: boolean; checks?: { P?: unknown; X?: unknown; C?: unknown; bootstrapped?: unknown } };
-    };
-
-    if (!data.result) return { pChain: false, xChain: false, cChain: false, bootstrapped: false };
-
-    return {
-      pChain: data.result.checks?.P !== undefined,
-      xChain: data.result.checks?.X !== undefined,
-      cChain: data.result.checks?.C !== undefined,
-      bootstrapped: data.result.checks?.bootstrapped !== undefined,
-    };
-  } catch {
-    return { pChain: false, xChain: false, cChain: false, bootstrapped: false };
-  }
-}
-
-export function getNodePorts(nodeIndex: number): { httpPort: number; stakingPort: number } {
-  const httpPort = 9650 + nodeIndex * 100;
-  return { httpPort, stakingPort: httpPort + 1 };
-}
-
 export function getStakerNumFromPort(httpPort: number): number {
   return Math.floor((httpPort - 9650) / 100) + 1;
 }
 
-export function isProcessRunning(pid: number): boolean {
+function isProcessRunning(pid: number): boolean {
   if (!isValidPid(pid)) return false;
   try {
     process.kill(pid, 0);
@@ -525,20 +368,3 @@ export async function gracefulKill(pid: number, timeoutMs = 5000): Promise<boole
   }
 }
 
-export async function areNodesAlreadyRunning(
-  nodeConfigs: Array<{ httpPort: number; pid?: number }>
-): Promise<{ running: boolean; healthyCount: number }> {
-  if (nodeConfigs.length === 0) return { running: false, healthyCount: 0 };
-
-  const bootstrapConfig = nodeConfigs[0]!;
-  const health = await checkNodeHealth(`http://127.0.0.1:${bootstrapConfig.httpPort}`, true);
-  if (!health.healthy) return { running: false, healthyCount: 0 };
-
-  const healthChecks = nodeConfigs.slice(1).map(async (config) => {
-    const result = await checkNodeHealth(`http://127.0.0.1:${config.httpPort}`, true);
-    return result.healthy;
-  });
-
-  const results = await Promise.all(healthChecks);
-  return { running: true, healthyCount: 1 + results.filter(Boolean).length };
-}

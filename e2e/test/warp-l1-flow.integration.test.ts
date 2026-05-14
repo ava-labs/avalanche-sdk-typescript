@@ -1,17 +1,9 @@
 /**
  * Warp + L1 conversion E2E flow against a tmpnet AvalancheGo network.
  *
- * This is the regression net for the warp byte-layout fixes in
- * @avalanche-sdk/interchain. Steps run sequentially — each one's output feeds
- * the next. If step N fails, N+1 and later are skipped via state guards.
- *
- *   1. Boot a 5-node tmpnet + wait for P-Chain bootstrap.
- *   2. Create a subnet via prepareCreateSubnetTxn → assert it shows up on P-Chain.
- *   3. Create a subnet-evm blockchain via prepareCreateChainTxn.
- *   4. Spin up an L1 validator node that tracks the new subnet.
- *   5. Convert the subnet to an L1 via prepareConvertSubnetToL1Txn AND assert
- *      that ConversionData.toHex() matches the bytes P-Chain actually accepted
- *      (this is the AvalancheGo-byte-equivalence test that motivated this PR).
+ * Sequential — each step's output feeds the next. State is shared via the
+ * mutable {@link FlowState} object; prerequisite checks at the top of each
+ * step bail out if an earlier step left state incomplete.
  *
  * Skip with:  SKIP_INTEGRATION=true bun test
  */
@@ -20,10 +12,9 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { utils } from "@avalabs/avalanchejs";
 import {
   ConversionData,
+  initializeValidatorSet,
   newConversionData,
   upgradeProxyToValidatorManager,
-  initializeValidatorSet,
-  buildValidatorManagerGenesisAlloc,
   VALIDATOR_MANAGER_PROXY_ADDRESS,
 } from "@avalanche-sdk/interchain";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
@@ -47,14 +38,29 @@ import { TmpnetManager } from "../src/tmpnet/index.ts";
 import type { NodeInfo } from "../src/tmpnet/types.ts";
 import { SignatureAggregatorManager } from "../src/signature-aggregator/index.ts";
 
+import {
+  BOOT_TIMEOUT_MS,
+  L1_CHAIN_ID,
+  L1_CHAIN_NAME,
+  SUBNET_EVM_VM_ID,
+  TMPNET_NETWORK_ID,
+  TX_TIMEOUT_MS,
+} from "./helpers/constants.ts";
+import { buildL1GenesisConfig } from "./helpers/genesis.ts";
+import { dumpProposerVMHeights, rollL1PastFirstEpoch } from "./helpers/proposervm.ts";
+import { buildAggregateSignaturesFn } from "./helpers/sig-aggregator.ts";
+import {
+  waitForCommitted,
+  waitForL1EvmReady,
+  waitForL1ValidatorRegistered,
+  waitForPChainReady,
+} from "./helpers/wait.ts";
+
 const SKIP_INTEGRATION = process.env.SKIP_INTEGRATION === "true";
 const NETWORK_NAME = `e2e-warp-l1-${Date.now()}`;
+const EWOQ_PK = `0x${LOCAL_PREFUNDED_KEYS.ewoq.privateKey}` as `0x${string}`;
+const EWOQ_C_ADDR = LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress as `0x${string}`;
 
-const BOOT_TIMEOUT_MS = 5 * 60_000;
-const TX_TIMEOUT_MS = 60_000;
-const POLL_INTERVAL_MS = 1_000;
-
-/** Shared state across the sequential steps. */
 interface FlowState {
   tmpnet?: TmpnetManager;
   walletClient?: ReturnType<typeof createAvalancheWalletClient>;
@@ -66,7 +72,6 @@ interface FlowState {
   l1Node?: NodeInfo;
   convertTxId?: string;
   conversionData?: ConversionData;
-  // Step 6+: deploy + initialize ValidatorManager on the L1 EVM.
   l1WalletClient?: WalletClient;
   l1PublicClient?: PublicClient;
   validatorManagerAddress?: Address;
@@ -74,139 +79,33 @@ interface FlowState {
 }
 const state: FlowState = {};
 
-const PCHAIN_BLOCKCHAIN_ID = "11111111111111111111111111111111LpoYY";
-const TMPNET_NETWORK_ID = 12345; // avalanchego --network-id=local resolves to 12345
-
-/** Poll P-Chain getTxStatus until "Committed" or timeout. */
-async function waitForCommitted(
-  walletClient: NonNullable<FlowState["walletClient"]>,
-  txID: string,
-  timeoutMs = TX_TIMEOUT_MS,
-): Promise<void> {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    try {
-      const { status } = await walletClient.pChain.getTxStatus({ txID });
-      if (status === "Committed") return;
-      if (status === "Dropped") {
-        throw new Error(`Tx ${txID} was dropped`);
-      }
-    } catch (err) {
-      // Tx might not be queryable yet — keep polling.
-      if (Date.now() > deadline - 1000) throw err;
-    }
-    await Bun.sleep(POLL_INTERVAL_MS);
-  }
-  throw new Error(`Timed out waiting for tx ${txID} to commit`);
-}
-
-/** Wait for P-Chain to accept getHeight (bootstrap proxy). */
-async function waitForPChainReady(
-  walletClient: NonNullable<FlowState["walletClient"]>,
-  timeoutMs = BOOT_TIMEOUT_MS,
-): Promise<void> {
-  const deadline = Date.now() + timeoutMs;
-  let lastErr: unknown;
-  while (Date.now() < deadline) {
-    try {
-      await walletClient.pChain.getHeight();
-      return;
-    } catch (err) {
-      lastErr = err;
-    }
-    await Bun.sleep(POLL_INTERVAL_MS);
-  }
-  throw new Error(`P-Chain never became ready: ${String(lastErr)}`);
-}
-
 /**
- * Poll an L1 EVM RPC endpoint until it answers `eth_chainId`. tmpnet only
- * starts bootstrapping a subnet's chain once that subnet has been converted
- * to an L1 (post ConvertSubnetToL1Tx commit) — until then the node returns
- * "404 page not found" for /ext/bc/<id>/rpc.
+ * Verify the named fields of {@link state} are populated and return a
+ * narrowed view. Use the returned object inside tests so the narrowing
+ * survives across `await` boundaries — `state` itself is mutable, so
+ * TypeScript de-narrows it after every async call.
  */
-async function waitForL1EvmReady(
-  rpcUrl: string,
-  timeoutMs = BOOT_TIMEOUT_MS,
-): Promise<void> {
-  const deadline = Date.now() + timeoutMs;
-  let lastErr: unknown;
-  while (Date.now() < deadline) {
-    try {
-      const res = await fetch(rpcUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_chainId", params: [] }),
-        signal: AbortSignal.timeout(2000),
-      });
-      if (res.ok) {
-        const data = (await res.json()) as { result?: string; error?: unknown };
-        if (data.result) return;
-      }
-      lastErr = `HTTP ${res.status}`;
-    } catch (err) {
-      lastErr = err;
-    }
-    await Bun.sleep(POLL_INTERVAL_MS);
+function requireState<K extends keyof FlowState>(
+  ...keys: K[]
+): { [P in K]: NonNullable<FlowState[P]> } {
+  const out: Record<string, unknown> = {};
+  for (const k of keys) {
+    if (state[k] == null) throw new Error(`Prerequisite step failed: state.${String(k)} missing`);
+    out[k as string] = state[k];
   }
-  throw new Error(`L1 EVM RPC at ${rpcUrl} never became ready: ${String(lastErr)}`);
-}
-
-/**
- * Diagnostic: log the L1's proposerVM-tracked P-Chain height + the primary
- * network's actual P-Chain height. The L1's predicate verification queries
- * the validator set at proposerVM.PChainHeight — if that height is behind
- * the height at which ConvertSubnetToL1Tx committed, the L1 won't see its
- * own subnet validator set yet and BLS signature verification fails.
- */
-async function dumpProposerVMHeights(
-  nodeUri: string,
-  l1BlockchainId: string,
-): Promise<void> {
-  const pChainUrl = `${nodeUri}/ext/bc/P`;
-  const proposerVMUrl = `${nodeUri}/ext/bc/${l1BlockchainId}/proposervm`;
-
-  const post = async (url: string, method: string) => {
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params: {} }),
-        signal: AbortSignal.timeout(3_000),
-      });
-      const data = (await res.json()) as { result?: unknown; error?: unknown };
-      return data;
-    } catch (err) {
-      return { error: err instanceof Error ? err.message : String(err) };
-    }
-  };
-
-  const [pHeight, proposed, epoch] = await Promise.all([
-    post(pChainUrl, "platform.getHeight"),
-    post(proposerVMUrl, "proposervm.getProposedHeight"),
-    post(proposerVMUrl, "proposervm.getCurrentEpoch"),
-  ]);
-  console.log(`[step 7] primary P-Chain height: ${JSON.stringify(pHeight.result ?? pHeight.error)}`);
-  console.log(`[step 7] L1 proposerVM proposed height: ${JSON.stringify(proposed.result ?? proposed.error)}`);
-  console.log(`[step 7] L1 proposerVM current epoch: ${JSON.stringify(epoch.result ?? epoch.error)}`);
+  return out as { [P in K]: NonNullable<FlowState[P]> };
 }
 
 describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   beforeAll(async () => {
     state.tmpnet = new TmpnetManager();
-    const result = await state.tmpnet.createNetwork(
-      NETWORK_NAME,
-      5,
-      (msg) => console.log(`[tmpnet] ${msg}`),
+    const result = await state.tmpnet.createNetwork(NETWORK_NAME, 5, (msg) =>
+      console.log(`[tmpnet] ${msg}`),
     );
-    if (!result.success) {
-      throw new Error(`Failed to start tmpnet: ${result.error?.message}`);
-    }
+    if (!result.success) throw new Error(`Failed to start tmpnet: ${result.error?.message}`);
     state.primaryNodes = result.data?.nodes;
 
-    state.account = privateKeyToAvalancheAccount(
-      `0x${LOCAL_PREFUNDED_KEYS.ewoq.privateKey}` as `0x${string}`,
-    );
+    state.account = privateKeyToAvalancheAccount(EWOQ_PK);
     state.ownerPAddr = state.account.getXPAddress("P", "local");
     state.walletClient = createAvalancheWalletClient({
       account: state.account,
@@ -218,218 +117,115 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
   }, BOOT_TIMEOUT_MS);
 
   afterAll(async () => {
-    // Set KEEP_TMPNET=1 to leave the network running after test exit so you
-    // can poke it interactively (useful for debugging step 7 reverts).
+    // KEEP_TMPNET=1 leaves the network running for interactive debugging.
     if (process.env.KEEP_TMPNET) {
       console.log(`[teardown] KEEP_TMPNET set — leaving network running`);
       return;
     }
-    if (state.signatureAggregator) {
-      await state.signatureAggregator.dispose().catch(() => {});
-    }
-    if (state.tmpnet) {
-      // Stop processes but don't delete the network directory — leave it for
-      // the GH Actions artifact upload to grab tmpnet logs on failure. The
-      // runner is ephemeral; nothing to clean up beyond killing avalanchego.
-      await state.tmpnet.stopNetwork().catch(() => {});
-      await state.tmpnet.dispose().catch(() => {});
-    }
+    await state.signatureAggregator?.dispose().catch(() => {});
+    // Stop processes but don't delete the network directory — GH Actions
+    // uploads tmpnet logs as artifacts on failure.
+    await state.tmpnet?.stopNetwork().catch(() => {});
+    await state.tmpnet?.dispose().catch(() => {});
   }, 60_000);
 
-  test("1. tmpnet booted with 5 nodes and P-Chain reachable", async () => {
+  test("1. tmpnet booted with 5 nodes and P-Chain reachable", () => {
     // createNetwork already waited for chain bootstrap before returning success,
-    // and we ran waitForPChainReady in beforeAll — so trusting those two is
-    // enough. A getStatus() race here can briefly report running=false even
-    // when the network is up, which makes this test flaky for no real signal.
+    // and we ran waitForPChainReady in beforeAll — trusting those two is enough.
+    // A getStatus() race here can briefly report running=false even when up.
     expect(state.tmpnet).toBeDefined();
     expect(state.primaryNodes?.length).toBe(5);
     expect(state.walletClient).toBeDefined();
   });
 
   test("2. Create subnet via prepareCreateSubnetTxn", async () => {
-    if (!state.walletClient || !state.ownerPAddr) {
-      throw new Error("Wallet client not initialized");
-    }
-
-    const txnRequest = await state.walletClient.pChain.prepareCreateSubnetTxn({
-      subnetOwners: { addresses: [state.ownerPAddr], threshold: 1 },
+    const { walletClient, ownerPAddr } = requireState("walletClient", "ownerPAddr");
+    const txnRequest = await walletClient.pChain.prepareCreateSubnetTxn({
+      subnetOwners: { addresses: [ownerPAddr], threshold: 1 },
     });
-
-    const { txHash } = await state.walletClient.sendXPTransaction({
+    const { txHash } = await walletClient.sendXPTransaction({
       tx: txnRequest.tx,
       chainAlias: "P",
     });
-    expect(typeof txHash).toBe("string");
     expect(txHash.length).toBeGreaterThan(0);
 
-    await waitForCommitted(state.walletClient, txHash);
+    await waitForCommitted(walletClient, txHash);
     state.subnetId = txHash; // subnet ID is the create-subnet tx ID
     console.log(`[step 2] subnet created: ${state.subnetId}`);
   }, TX_TIMEOUT_MS);
 
   test("3. Create subnet-evm blockchain via prepareCreateChainTxn", async () => {
-    if (!state.walletClient || !state.subnetId) {
-      throw new Error("Prerequisite step failed");
-    }
+    const { walletClient, subnetId } = requireState("walletClient", "subnetId");
+    const genesisData = buildL1GenesisConfig({
+      prefundedAddress: EWOQ_C_ADDR,
+      proxyAdminOwner: EWOQ_C_ADDR,
+    });
 
-    // Minimal subnet-evm genesis (chain ID 99999, EWOQ pre-funded).
-    //
-    // durangoTimestamp + warpConfig.blockTimestamp are both pinned to
-    // avalanchego's hardcoded local-network Durango activation (2020-12-05
-    // 05:00 UTC = 1607144400). Equal values are allowed; both at 0 fails
-    // verification ("warp cannot be activated before Durango") because 0
-    // reads as "not set." Past this timestamp, Shanghai is active via the
-    // Durango upgrade, so PUSH0 (in icm-contracts v2.1.0 bytecode, compiled
-    // with solc 0.8.25) works.
-    //
-    // The alloc also pre-deploys a TransparentUpgradeableProxy at
-    // 0xfacade... and a ProxyAdmin at 0xdad0... (owned by EWOQ). The
-    // ConvertSubnetToL1Tx in step 5 references the proxy address as the
-    // validator manager — that address has to exist at genesis time because
-    // it's baked into the canonical conversion-data hash before the L1's
-    // EVM chain has any user-deployable state. After conversion completes,
-    // step 6 deploys the real ValidatorManager implementation and upgrades
-    // the proxy to point at it via ProxyAdmin.upgradeAndCall(...).
-    const genesisData: Record<string, unknown> = {
-      config: {
-        chainId: 99999,
-        homesteadBlock: 0,
-        eip150Block: 0,
-        eip155Block: 0,
-        eip158Block: 0,
-        byzantiumBlock: 0,
-        constantinopleBlock: 0,
-        petersburgBlock: 0,
-        istanbulBlock: 0,
-        muirGlacierBlock: 0,
-        berlinBlock: 0,
-        londonBlock: 0,
-        // Standard go-ethereum EVM fork timestamps. subnet-evm v0.8.0 doesn't
-        // auto-activate Shanghai when Durango is set — we need explicit
-        // shanghaiTime/cancunTime to make PUSH0 and transient storage valid
-        // for the vendored icm-contracts v2.1.0 bytecode (solc 0.8.25).
-        shanghaiTime: 0,
-        cancunTime: 0,
-        subnetEVMTimestamp: 0,
-        // Local-network Durango activation timestamp baked into avalanchego.
-        // durango must come before warp activation; equal timestamps are fine,
-        // both at 0 fails verification (0 reads as "not set").
-        durangoTimestamp: 1607144400,
-        warpConfig: {
-          blockTimestamp: 1607144400,
-          quorumNumerator: 67,
-          // Match builders-hub's genesis config — for SubnetToL1Conversion
-          // messages (source=P-Chain) subnet-evm's State wrapper special-cases
-          // to the L1's own subnet set regardless, so this is a behavior parity
-          // setting more than a functional one.
-          requirePrimaryNetworkSigners: true,
-        },
-      },
-      alloc: {
-        [LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress.replace(/^0x/, "")]: {
-          balance: "0x295BE96E64066972000000",
-        },
-        ...buildValidatorManagerGenesisAlloc({
-          proxyAdminOwner: LOCAL_PREFUNDED_KEYS.ewoq.cChainAddress as `0x${string}`,
-        }),
-      },
-      nonce: "0x0",
-      // Genesis block timestamp = current wall clock. subnet-evm v0.8.0
-      // overrides shanghaiTime to durangoTimestamp (1607144400) at chain
-      // setup. Until the L1 has finished initializeValidatorSet, it has no
-      // active validators and produces no new blocks — so eth_estimateGas
-      // runs against head = genesis. If genesis.timestamp = 0 < 1607144400,
-      // the simulator sees pre-Shanghai → PUSH0 reverts even though
-      // Shanghai is "scheduled" for activation. Setting genesis time to
-      // wall clock puts the head past Shanghai activation immediately.
-      timestamp: `0x${Math.floor(Date.now() / 1000).toString(16)}`,
-      extraData: "0x00",
-      gasLimit: "0x7A1200",
-      difficulty: "0x0",
-      mixHash:
-        "0x0000000000000000000000000000000000000000000000000000000000000000",
-      coinbase: "0x0000000000000000000000000000000000000000",
-      number: "0x0",
-      gasUsed: "0x0",
-      parentHash:
-        "0x0000000000000000000000000000000000000000000000000000000000000000",
-    };
-
-    const txnRequest = await state.walletClient.pChain.prepareCreateChainTxn({
-      subnetId: state.subnetId,
+    const txnRequest = await walletClient.pChain.prepareCreateChainTxn({
+      subnetId,
       // AvalancheGo rejects non-alphanumeric chars in chain names with
       // "illegal name character" — keep it strictly [A-Za-z0-9].
-      chainName: "e2el1",
-      vmId: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy", // subnet-evm
+      chainName: L1_CHAIN_NAME,
+      vmId: SUBNET_EVM_VM_ID,
       genesisData,
       subnetAuth: [0],
       fxIds: [],
     });
-
-    const { txHash } = await state.walletClient.sendXPTransaction({
+    // subnetOwners + subnetAuth so signXPTransaction adds the subnet-credential
+    // signature — without these the tx is rejected as "unauthorized modification".
+    const { txHash } = await walletClient.sendXPTransaction({
       tx: txnRequest.tx,
       chainAlias: "P",
-      // Pass subnet owners + auth so signXPTransaction adds the subnet-credential
-      // signature — without these the tx is rejected as "unauthorized modification".
       subnetOwners: txnRequest.subnetOwners,
       subnetAuth: txnRequest.subnetAuth,
     });
-    expect(typeof txHash).toBe("string");
-
-    await waitForCommitted(state.walletClient, txHash);
+    await waitForCommitted(walletClient, txHash);
     state.blockchainId = txHash;
     console.log(`[step 3] blockchain created: ${state.blockchainId}`);
   }, TX_TIMEOUT_MS);
 
   test("4. Spin up L1 validator node tracking the subnet", async () => {
-    if (!state.tmpnet || !state.subnetId) {
-      throw new Error("Prerequisite step failed");
-    }
-
-    const result = await state.tmpnet.addL1Node(state.subnetId, (msg) =>
-      console.log(`[l1-node] ${msg}`),
-    );
+    const { tmpnet, subnetId } = requireState("tmpnet", "subnetId");
+    const result = await tmpnet.addL1Node(subnetId, (msg) => console.log(`[l1-node] ${msg}`));
     expect(result.success).toBe(true);
-    expect(result.data).toBeDefined();
-    state.l1Node = result.data!;
-    expect(state.l1Node.nodeId.startsWith("NodeID-")).toBe(true);
-    expect(state.l1Node.blsPublicKey).toBeTruthy();
-    expect(state.l1Node.blsProofOfPossession).toBeTruthy();
-    console.log(`[step 4] L1 node up: ${state.l1Node.nodeId} @ ${state.l1Node.uri}`);
+    const node = result.data!;
+    state.l1Node = node;
+    expect(node.nodeId.startsWith("NodeID-")).toBe(true);
+    expect(node.blsPublicKey).toBeTruthy();
+    expect(node.blsProofOfPossession).toBeTruthy();
+    console.log(`[step 4] L1 node up: ${node.nodeId} @ ${node.uri}`);
   }, BOOT_TIMEOUT_MS);
 
   test("5. ConvertSubnetToL1: byte-equivalence of ConversionData.toHex()", async () => {
-    if (!state.walletClient || !state.subnetId || !state.blockchainId || !state.l1Node || !state.ownerPAddr) {
-      throw new Error("Prerequisite step failed");
-    }
-
-    const ownerPAddr = state.ownerPAddr;
-    // Use the canonical genesis-pre-deployed proxy address as the validator
-    // manager — that contract exists at L1 genesis time, so the conversion
-    // data hash references a real on-chain contract. After conversion, step 6
-    // upgrades the proxy to a freshly deployed ValidatorManager impl.
+    const { walletClient, subnetId, blockchainId, l1Node, ownerPAddr } = requireState(
+      "walletClient",
+      "subnetId",
+      "blockchainId",
+      "l1Node",
+      "ownerPAddr",
+    );
+    // Use the genesis-pre-deployed proxy as the validator manager — that
+    // address has to exist at conversion time because it's baked into the
+    // canonical conversion-data hash. Step 6 upgrades the proxy at the real
+    // ValidatorManager impl after conversion completes.
     const managerAddress = VALIDATOR_MANAGER_PROXY_ADDRESS;
-    const weight = 100n;
-    const initialBalanceInNanoAvax = 100_000_000n; // 0.1 AVAX
-
     const validators = [
       {
-        nodeId: state.l1Node.nodeId,
-        weight,
-        initialBalanceInNanoAvax,
+        nodeId: l1Node.nodeId,
+        weight: 100n,
+        initialBalanceInNanoAvax: 100_000_000n, // 0.1 AVAX
         nodePoP: {
-          publicKey: state.l1Node.blsPublicKey!,
-          proofOfPossession: state.l1Node.blsProofOfPossession!,
+          publicKey: l1Node.blsPublicKey!,
+          proofOfPossession: l1Node.blsProofOfPossession!,
         },
         remainingBalanceOwner: { addresses: [ownerPAddr], threshold: 1 },
         deactivationOwner: { addresses: [ownerPAddr], threshold: 1 },
       },
     ];
 
-    // Build the local ConversionData we expect to be canonical.
     const localConversionData = newConversionData(
-      state.subnetId,
-      state.blockchainId,
+      subnetId,
+      blockchainId,
       managerAddress,
       validators.map((v) => ({
         nodeId: v.nodeId,
@@ -441,105 +237,70 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     const localConversionId = localConversionData.getConversionId();
     console.log(`[step 5] local conversionID: ${localConversionId}`);
 
-    const txnRequest = await state.walletClient.pChain.prepareConvertSubnetToL1Txn({
-      subnetId: state.subnetId,
-      blockchainId: state.blockchainId,
+    const txnRequest = await walletClient.pChain.prepareConvertSubnetToL1Txn({
+      subnetId,
+      blockchainId,
       managerContractAddress: managerAddress,
       validators,
       subnetAuth: [0],
     });
-
-    const { txHash } = await state.walletClient.sendXPTransaction({
+    const { txHash } = await walletClient.sendXPTransaction({
       tx: txnRequest.tx,
       chainAlias: "P",
       subnetOwners: txnRequest.subnetOwners,
       subnetAuth: txnRequest.subnetAuth,
     });
     state.convertTxId = txHash;
-    await waitForCommitted(state.walletClient, txHash, BOOT_TIMEOUT_MS);
+    await waitForCommitted(walletClient, txHash, BOOT_TIMEOUT_MS);
     console.log(`[step 5] convertSubnetToL1 committed: ${txHash}`);
 
-    // The fact that P-Chain committed ConvertSubnetToL1Tx above IS the
-    // byte-equivalence proof for this PR — AvalancheGo computes the
-    // conversionID from the same canonical bytes our ConversionData.toHex()
-    // emits, and if those diverged the tx would have failed verification
-    // with "incorrect conversion ID" instead of committing.
-    //
-    // We can additionally cross-check by fetching the subnet from P-Chain
-    // and asserting it's no longer permissioned (post-conversion state).
-    const onChain = await state.walletClient.pChain.getCurrentValidators({
-      subnetID: state.subnetId,
-    });
+    // The fact that P-Chain committed ConvertSubnetToL1Tx IS the byte-
+    // equivalence proof for this PR — AvalancheGo computes the conversionID
+    // from the same canonical bytes our ConversionData.toHex() emits. If
+    // those diverged, the tx would fail verification with "incorrect
+    // conversion ID" instead of committing.
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
     expect(onChain).toBeDefined();
 
     // Self-consistency: getConversionId() == sha256(toHex()).
-    const reHashed = utils.bufferToHex(
-      sha256(utils.hexToBuffer(localConversionData.toHex())),
-    );
+    const reHashed = utils.bufferToHex(sha256(utils.hexToBuffer(localConversionData.toHex())));
     expect(reHashed).toBe(localConversionId);
 
-    // FOLLOWUP: parseConversionData still uses avalanchejs's unpack which
-    // expects the broken 4-byte-prefixed validators layout — so the new
-    // canonical toHex() and the old parseConversionData are no longer
-    // inverses. ConversionData.fromHex(localConversionData.toHex()).getConversionId()
-    // produces a DIFFERENT hash than the original because the parser misreads
-    // the fields. Filed as a separate fix — the round-trip assertion below
-    // is intentionally omitted until parseConversionData matches the
-    // canonical layout. The convertSubnetToL1Tx commit above is the real
-    // regression net for this PR's byte-layout work.
+    // FOLLOWUP: parseConversionData still uses avalanchejs's broken
+    // unpack and is no longer the inverse of toHex(). Round-trip
+    // assertion is intentionally omitted; filed as a separate fix.
   }, BOOT_TIMEOUT_MS);
 
   test("6. Deploy ValidatorManager impl + upgrade proxy on the L1 EVM", async () => {
-    if (!state.l1Node || !state.blockchainId || !state.subnetId) {
-      throw new Error("Prerequisite step failed");
-    }
+    const { l1Node, blockchainId, subnetId } = requireState("l1Node", "blockchainId", "subnetId");
+    const evmAccount = privateKeyToAccount(EWOQ_PK);
 
-    const evmAccount = privateKeyToAccount(
-      `0x${LOCAL_PREFUNDED_KEYS.ewoq.privateKey}` as `0x${string}`,
-    );
-
-    // The L1's EVM RPC lives at <node-uri>/ext/bc/<blockchainID>/rpc.
-    // chainId 99999 matches the genesis we emitted in step 3.
-    const l1RpcUrl = `${state.l1Node.uri}/ext/bc/${state.blockchainId}/rpc`;
+    const l1RpcUrl = `${l1Node.uri}/ext/bc/${blockchainId}/rpc`;
     console.log(`[step 6] waiting for L1 EVM RPC at ${l1RpcUrl}...`);
     await waitForL1EvmReady(l1RpcUrl);
 
     const l1Chain = defineChain({
-      id: 99999,
+      id: L1_CHAIN_ID,
       name: "e2e-l1",
       nativeCurrency: { decimals: 18, name: "L1", symbol: "L1" },
-      rpcUrls: {
-        default: {
-          http: [l1RpcUrl],
-        },
-      },
+      rpcUrls: { default: { http: [l1RpcUrl] } },
     });
-    state.l1WalletClient = createWalletClient({
+    const l1WalletClient = createWalletClient({
       account: evmAccount,
       chain: l1Chain,
       transport: http(),
     });
-    state.l1PublicClient = createPublicClient({
-      chain: l1Chain,
-      transport: http(),
-    });
+    const l1PublicClient = createPublicClient({ chain: l1Chain, transport: http() });
+    state.l1WalletClient = l1WalletClient;
+    state.l1PublicClient = l1PublicClient;
 
-    // Subnet ID as 32-byte hex for ValidatorManagerSettings.subnetID.
-    const subnetIdHex = (`0x${Buffer.from(
-      utils.base58check.decode(state.subnetId),
-    ).toString("hex")}`) as Hex;
+    const subnetIdHex = `0x${Buffer.from(utils.base58check.decode(subnetId)).toString("hex")}` as Hex;
 
-    // The proxy at VALIDATOR_MANAGER_PROXY_ADDRESS was pre-deployed in
-    // genesis (step 3). This call deploys the real ValidatorManager
-    // implementation and points the proxy at it via
-    // ProxyAdmin.upgradeAndCall(...), atomically running initialize(settings)
-    // in the proxy's storage.
-    //
-    // Cast: viem is installed twice (e2e + interchain) so the WalletClient
-    // types don't unify even though they're structurally identical.
+    // viem is installed twice (e2e + interchain) so WalletClient types
+    // don't unify across packages — cast at the boundary.
     const upgrade = await upgradeProxyToValidatorManager(
-      state.l1WalletClient as never,
-      state.l1PublicClient as never,
+      l1WalletClient as never,
+      l1PublicClient as never,
       {
         initSettings: {
           admin: evmAccount.address,
@@ -554,182 +315,70 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(upgrade.libraryAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
     state.validatorManagerAddress = upgrade.address;
     console.log(`[step 6] proxy upgraded to impl ${upgrade.implementationAddress}`);
-    console.log(`[step 6] proxy is now the live ValidatorManager at ${upgrade.address}`);
   }, BOOT_TIMEOUT_MS);
 
   test("7. initializeValidatorSet via signature-aggregator", async () => {
-    if (
-      !state.tmpnet ||
-      !state.l1Node ||
-      !state.subnetId ||
-      !state.blockchainId ||
-      !state.l1WalletClient ||
-      !state.l1PublicClient ||
-      !state.validatorManagerAddress ||
-      !state.walletClient ||
-      !state.ownerPAddr
-    ) {
-      throw new Error("Prerequisite step failed");
-    }
+    const {
+      l1Node,
+      subnetId,
+      blockchainId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+    } = requireState(
+      "tmpnet",
+      "l1Node",
+      "subnetId",
+      "blockchainId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+    );
 
-    // The L1 validator only just bootstrapped its chain (step 6 was ~7s
-    // ago). It needs a moment to establish P2P connections + be visible in
-    // P-Chain's validator-set query — otherwise the sig-aggregator finds
-    // 0 signers for our subnet.
     console.log(`[step 7] waiting for L1 validator to register on P-Chain...`);
-    const validatorDeadline = Date.now() + 60_000;
-    let validatorRegistered = false;
-    while (Date.now() < validatorDeadline) {
-      try {
-        const current = await state.walletClient.pChain.getCurrentValidators({
-          subnetID: state.subnetId,
-        });
-        const list = (current as { validators?: unknown[] })?.validators ?? [];
-        if (list.length > 0) {
-          validatorRegistered = true;
-          console.log(`[step 7] L1 has ${list.length} validator(s) on P-Chain`);
-          break;
-        }
-      } catch {
-        // try again
-      }
-      await Bun.sleep(2_000);
-    }
-    expect(validatorRegistered).toBe(true);
+    const count = await waitForL1ValidatorRegistered(walletClient, subnetId);
+    console.log(`[step 7] L1 has ${count} validator(s) on P-Chain`);
 
-    // Advance P-Chain height by 2 with P-Chain self-transfers. The L1's
-    // WARP precompile calls
-    //   GetWarpValidatorSet(ProposerVMBlockCtx.PChainHeight, ourSubnetID)
-    // when verifying initializeValidatorSet's warp message. Validators
-    // added in the ConvertSubnetToL1Tx at P-Chain height H are visible
-    // starting at H+1. The L1's proposerVM-tracked PChainHeight must
-    // therefore advance to at least H+1 before our contract call.
-    //
-    // We do TWO advances + a long sleep to give the L1 enough time to
-    // pull the new heights through its proposerVM cache. With one advance
-    // the L1 block has pChainHeight = H (the conversion block), and the
-    // validator-set query returns the pre-conversion set (no L1 validator)
-    // and signature verification fails.
+    // Advance P-Chain height by 2 with self-transfers so the L1's proposerVM
+    // catches the subnet conversion in its tracked P-Chain view.
     for (let i = 0; i < 2; i++) {
       console.log(`[step 7] advancing P-Chain height (${i + 1}/2)...`);
-      const advanceTxn = await state.walletClient.pChain.prepareBaseTxn({});
-      const { txHash: advanceTxHash } = await state.walletClient.sendXPTransaction({
+      const advanceTxn = await walletClient.pChain.prepareBaseTxn({});
+      const { txHash } = await walletClient.sendXPTransaction({
         tx: advanceTxn.tx,
         chainAlias: "P",
       });
-      await waitForCommitted(state.walletClient, advanceTxHash);
-      console.log(`[step 7] P-Chain advanced: ${advanceTxHash}`);
+      await waitForCommitted(walletClient, txHash);
     }
-    // 30s for L1's proposerVM to absorb the new heights.
     await Bun.sleep(30_000);
+    await dumpProposerVMHeights(l1Node.uri, blockchainId, "step 7");
+    await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+      console.log(`[step 7] ${m}`),
+    );
+    await dumpProposerVMHeights(l1Node.uri, blockchainId, "step 7");
 
-    // Diagnostic: dump the L1's proposerVM PChainHeight + primary network
-    // P-Chain height so we can tell whether the L1's view of P-Chain has
-    // actually advanced past the subnet-conversion height.
-    await dumpProposerVMHeights(state.l1Node.uri, state.blockchainId);
-
-    // Roll the L1 past its first ACP-181 epoch.
-    //
-    // avalanchego v1.14+ implements ACP-181 ("P-Chain epoched views"). On
-    // every proposerVM block, the validator-set lookup used for warp
-    // predicate verification is *not* the block's current PChainHeight —
-    // it's the epoch's PChainHeight, which is frozen at the time the epoch
-    // was created. Epoch 1 starts at the genesis block, whose parent has
-    // no PChainHeight, so epoch 1's PChainHeight = 0. The L1's own subnet
-    // validators don't exist at P-Chain height 0, so warp signature
-    // verification finds zero signers and fails silently.
-    //
-    // Local network's epoch duration is 30s. To get into epoch 2 (with a
-    // real PChainHeight) we need a parent block whose timestamp is past
-    // epoch 1's end. The child of that block is then the first block of
-    // epoch 2, with PChainHeight = parent.pChainHeight (i.e. current).
-    //
-    // Send one cheap L1 tx, sleep 35s, send a second one. The second tx's
-    // block has timestamp T_2 > epoch_1.startTime + 30s. The block that
-    // contains our subsequent initializeValidatorSet is then epoch 2's
-    // first block and inherits the L1's now-current pChainHeight.
-    const evmAccount = state.l1WalletClient.account!;
-    console.log(`[step 7] rolling L1 past first epoch (warm-up tx 1/2)...`);
-    const warm1 = await state.l1WalletClient.sendTransaction({
-      to: evmAccount.address,
-      value: 0n,
-      chain: state.l1WalletClient.chain,
-      account: evmAccount,
-    } as never);
-    await state.l1PublicClient.waitForTransactionReceipt({ hash: warm1 });
-    await Bun.sleep(35_000);
-    console.log(`[step 7] rolling L1 past first epoch (warm-up tx 2/2)...`);
-    const warm2 = await state.l1WalletClient.sendTransaction({
-      to: evmAccount.address,
-      value: 0n,
-      chain: state.l1WalletClient.chain,
-      account: evmAccount,
-    } as never);
-    await state.l1PublicClient.waitForTransactionReceipt({ hash: warm2 });
-
-    // Re-dump after rolling — current epoch should now have a non-zero
-    // pChainHeight if we successfully rolled to epoch 2.
-    await dumpProposerVMHeights(state.l1Node.uri, state.blockchainId);
-
-    // Boot the signature aggregator pointed at the running tmpnet. It
-    // discovers peers from disk under ~/.avalanche-cli/tmpnet/networks/<name>/.
-    // Tracking just our subnet keeps the signing scope narrow.
-    state.signatureAggregator = new SignatureAggregatorManager();
+    const sigagg = new SignatureAggregatorManager();
+    state.signatureAggregator = sigagg;
     const networkDir = `${process.env.HOME}/.avalanche-cli/tmpnet/networks/${NETWORK_NAME}`;
-    const sigaggStart = await state.signatureAggregator.start(
-      networkDir,
-      { trackedSubnets: [state.subnetId] },
-      (msg) => console.log(`[sigagg] ${msg}`),
+    const sigaggStart = await sigagg.start(networkDir, { trackedSubnets: [subnetId] }, (m) =>
+      console.log(`[sigagg] ${m}`),
     );
     expect(sigaggStart.running).toBe(true);
 
-    const result = await initializeValidatorSet(
-      state.l1WalletClient as never,
-      state.l1PublicClient as never,
-      {
-        contractAddress: state.validatorManagerAddress,
-        networkId: TMPNET_NETWORK_ID,
-        subnetId: state.subnetId,
-        blockchainId: state.blockchainId,
-        validators: [
-          {
-            nodeId: state.l1Node.nodeId,
-            weight: 100n,
-            blsPublicKey: state.l1Node.blsPublicKey! as Hex,
-          },
-        ],
-        aggregateSignatures: async ({ unsignedMessageHex, signingSubnetId, justificationHex }) => {
-          // sig-aggregator returns "no signatures" until it has actually
-          // connected to and handshaked with the validators in the signing
-          // subnet. After /health says "up", it can still take several
-          // seconds before P2P is fully established. Retry on the "no
-          // signatures" or "failed to collect a threshold of signatures"
-          // path for up to ~120s.
-          const deadline = Date.now() + 120_000;
-          let lastErr = "";
-          while (Date.now() < deadline) {
-            const sig = await state.signatureAggregator!.aggregateSignatures({
-              message: unsignedMessageHex,
-              justification: justificationHex,
-              "signing-subnet-id": signingSubnetId,
-            });
-            if (sig["signed-message"]) {
-              return (sig["signed-message"].startsWith("0x")
-                ? sig["signed-message"]
-                : `0x${sig["signed-message"]}`) as Hex;
-            }
-            lastErr = sig.error ?? "unknown sig-aggregator error";
-            const retryable = /no signatures|threshold/i.test(lastErr);
-            if (!retryable) {
-              throw new Error(`sig-aggregator failed: ${lastErr}`);
-            }
-            console.log(`[step 7] waiting for sig-aggregator peers (${lastErr})...`);
-            await Bun.sleep(3_000);
-          }
-          throw new Error(`sig-aggregator timed out: ${lastErr}`);
-        },
-      },
-    );
+    const result = await initializeValidatorSet(l1WalletClient as never, l1PublicClient as never, {
+      contractAddress: validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      blockchainId,
+      validators: [
+        { nodeId: l1Node.nodeId, weight: 100n, blsPublicKey: l1Node.blsPublicKey! as Hex },
+      ],
+      aggregateSignatures: buildAggregateSignaturesFn(sigagg, {
+        log: (m) => console.log(`[step 7] ${m}`),
+      }),
+    });
 
     expect(result.receipt.status).toBe("success");
     expect(result.signedMessageHex.length).toBeGreaterThan(2);

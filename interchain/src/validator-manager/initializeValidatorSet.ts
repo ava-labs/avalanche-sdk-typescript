@@ -1,18 +1,25 @@
 import { utils } from "@avalabs/avalanchejs";
 import {
+    bytesToHex,
     encodeFunctionData,
     type Address,
     type Hex,
-    type WalletClient,
     type PublicClient,
     type TransactionReceipt,
+    type WalletClient,
 } from "viem";
 
 import { newConversionData } from "../warp/addressedCallMessages/conversionData.js";
 import { newSubnetToL1ConversionMessage } from "../warp/addressedCallMessages/subnetToL1ConversionMessage.js";
-import { newWarpMessage } from "../warp/newWarpMessage.js";
 import { packWarpIntoAccessList } from "../warp/evm.js";
+import { newWarpMessage } from "../warp/newWarpMessage.js";
+import { readU64 } from "../warp/utils.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
+
+/** Re-encode a base58check ID as a 0x-prefixed 32-byte hex string. */
+function base58checkToBytes32Hex(id: string): Hex {
+    return bytesToHex(utils.base58check.decode(id));
+}
 
 /** Validator entry passed to {@link initializeValidatorSet}. */
 export interface InitialValidator {
@@ -115,11 +122,8 @@ export async function initializeValidatorSet(
     // 2. SubnetToL1Conversion payload (the AddressedCall body). The helper
     //    takes a base58check-encoded ID, not hex — feeding hex causes a
     //    "Unknown letter: 0" from the base58 decoder.
-    const conversionIdBase58 = utils.base58check.encode(
-        utils.hexToBuffer(conversionIdHex),
-    );
     const subnetToL1ConversionMessage = newSubnetToL1ConversionMessage(
-        conversionIdBase58,
+        utils.base58check.encode(utils.hexToBuffer(conversionIdHex)),
     );
 
     // 3. Wrap in UnsignedMessage. P-Chain is the source — its blockchainID is
@@ -140,12 +144,10 @@ export async function initializeValidatorSet(
     //    and queries `state.GetSubnetToL1Conversion(subnetID)`. Without
     //    a justification the verifier returns "failed to parse
     //    justification" and the validator never signs.
-    const subnetIdRawBytes = utils.base58check.decode(args.subnetId);
-    const justificationHex = (`0x${Buffer.from(subnetIdRawBytes).toString("hex")}`) as Hex;
     const signedMessageHex = await args.aggregateSignatures({
         unsignedMessageHex,
         signingSubnetId: args.subnetId,
-        justificationHex,
+        justificationHex: base58checkToBytes32Hex(args.subnetId),
     });
     const signedBytes = utils.hexToBuffer(signedMessageHex);
 
@@ -155,26 +157,21 @@ export async function initializeValidatorSet(
     // 6. Submit initializeValidatorSet(conversionData, messageIndex=0).
     //    The struct passed here mirrors the canonical bytes — the contract
     //    sha256s it and compares to what it pulls from the access list.
-    const initialValidators = conversionData.validators.map(
-        (v: { nodeId: { toBytes(): Uint8Array }; blsPublicKey: { toBytes(): Uint8Array }; weight: { toBytes(): Uint8Array } }) => {
-            const weightBytes = v.weight.toBytes();
-            // weight is 8 bytes BE uint64 — decode to bigint.
-            let weight = 0n;
-            for (const b of weightBytes) weight = (weight << 8n) | BigInt(b);
-            return {
-                nodeID: (`0x${Buffer.from(v.nodeId.toBytes()).toString("hex")}`) as Hex,
-                weight,
-                blsPublicKey: (`0x${Buffer.from(v.blsPublicKey.toBytes()).toString("hex")}`) as Hex,
-            };
-        },
-    );
-
-    const subnetIdBytes32 = (`0x${Buffer.from(utils.base58check.decode(args.subnetId)).toString("hex")}`) as Hex;
-    const blockchainIdBytes32 = (`0x${Buffer.from(utils.base58check.decode(args.blockchainId)).toString("hex")}`) as Hex;
+    type AvajsValidator = {
+        nodeId: { toBytes(): Uint8Array };
+        blsPublicKey: { toBytes(): Uint8Array };
+        weight: { toBytes(): Uint8Array };
+    };
+    const initialValidators = (conversionData.validators as AvajsValidator[]).map((v) => ({
+        nodeID: bytesToHex(v.nodeId.toBytes()),
+        // weight is 8 bytes BE uint64.
+        weight: readU64(v.weight.toBytes(), 0),
+        blsPublicKey: bytesToHex(v.blsPublicKey.toBytes()),
+    }));
 
     const conversionStruct = {
-        subnetID: subnetIdBytes32,
-        validatorManagerBlockchainID: blockchainIdBytes32,
+        subnetID: base58checkToBytes32Hex(args.subnetId),
+        validatorManagerBlockchainID: base58checkToBytes32Hex(args.blockchainId),
         validatorManagerAddress: args.contractAddress,
         initialValidators,
     };

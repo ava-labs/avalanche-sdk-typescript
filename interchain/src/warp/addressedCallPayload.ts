@@ -1,37 +1,32 @@
-import { utils, pvmSerial, Address, Bytes, Short } from "@avalabs/avalanchejs";
+import { Address, Bytes, pvmSerial, utils } from "@avalabs/avalanchejs";
+
+import { encodeWithCodec, throwNoDirectFromBytes } from "./_codec";
+import { evmOrBech32AddressToBytes } from "./utils";
 import { parseWarpMessage } from "./warpMessage";
 import { parseWarpUnsignedMessage } from "./warpUnsignedMessage";
-import { evmOrBech32AddressToBytes } from "./utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
+const Schema = pvmSerial.warp.AddressedCallPayloads.AddressedCall;
 
 /**
- * Parses a Warp AddressedCall payload from a hex string.
+ * Parse an AddressedCall payload from hex, accepting either the inner
+ * payload or any of its wrappings:
  *
- * @param addressedCallPayloadHex - The hex string representing the AddressedCall payload.
- * @returns The parsed AddressedCall instance. {@link AddressedCall}
+ *   1. raw AddressedCall (try direct unpack first)
+ *   2. UnsignedMessage containing an AddressedCall
+ *   3. fully signed WarpMessage → UnsignedMessage → AddressedCall
  */
-export function parseAddressedCallPayload(
-    addressedCallPayloadHex: string,
-): AddressedCall {
+export function parseAddressedCallPayload(hex: string): AddressedCall {
     try {
-        const parsedAddressedCallPayload = warpManager.unpack(
-            utils.hexToBuffer(addressedCallPayloadHex),
-            pvmSerial.warp.AddressedCallPayloads.AddressedCall,
-        );
-        return new AddressedCall(
-            parsedAddressedCallPayload.sourceAddress,
-            parsedAddressedCallPayload.payload
-        );
-    } catch (error) {
-        // Fallback: input might be an UnsignedMessage (no signature) wrapping the AddressedCall.
+        const parsed = warpManager.unpack(utils.hexToBuffer(hex), Schema);
+        return new AddressedCall(parsed.sourceAddress, parsed.payload);
+    } catch {
         try {
-            const unsignedMsg = parseWarpUnsignedMessage(addressedCallPayloadHex);
-            return parseAddressedCallPayload(unsignedMsg.payload.toString('hex'));
+            const unsignedMsg = parseWarpUnsignedMessage(hex);
+            return parseAddressedCallPayload(unsignedMsg.payload.toString("hex"));
         } catch {
-            // Final fallback: input is a fully signed WarpMessage.
-            const warpMsg = parseWarpMessage(addressedCallPayloadHex);
-            return parseAddressedCallPayload(warpMsg.unsignedMessage.payload.toString('hex'));
+            const warpMsg = parseWarpMessage(hex);
+            return parseAddressedCallPayload(warpMsg.unsignedMessage.payload.toString("hex"));
         }
     }
 }
@@ -39,24 +34,20 @@ export function parseAddressedCallPayload(
 /**
  * Creates a new AddressedCall from values.
  *
- * @param sourceAddress - The source address (EVM or Bech32 format).
- * @param payloadHex - The payload as a hex string.
- * @returns A new AddressedCall instance. {@link AddressedCall}
+ * @param sourceAddress - Source address (EVM or Bech32). Pass `""` or `"0x"`
+ *                       for system-source messages (no sender).
+ * @param payloadHex - The inner payload as a hex string.
  */
 export function newAddressedCallPayload(sourceAddress: string, payloadHex: string) {
-    const sourceAddressBytes = evmOrBech32AddressToBytes(sourceAddress);
-    const payloadBytes = utils.hexToBuffer(payloadHex);
-    return new AddressedCall(new Address(sourceAddressBytes), new Bytes(payloadBytes));
+    return new AddressedCall(
+        new Address(evmOrBech32AddressToBytes(sourceAddress)),
+        new Bytes(utils.hexToBuffer(payloadHex)),
+    );
 }
 
-/**
- * AddressedCall class provides utility methods to build
- * and parse AddressedCall payloads from hex strings or values, and
- * access its properties.
- */
-export class AddressedCall extends pvmSerial.warp.AddressedCallPayloads.AddressedCall {
-    static fromHex(addressedCallPayloadHex: string): AddressedCall {
-        return parseAddressedCallPayload(addressedCallPayloadHex);
+export class AddressedCall extends Schema {
+    static fromHex(hex: string): AddressedCall {
+        return parseAddressedCallPayload(hex);
     }
 
     static fromValues(sourceAddress: string, payloadHex: string) {
@@ -64,18 +55,11 @@ export class AddressedCall extends pvmSerial.warp.AddressedCallPayloads.Addresse
     }
 
     toHex() {
-        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
-        const codecBytes = new Short(0)
-        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
+        return encodeWithCodec(this);
     }
 
-    /**
-     * Do not use this method directly.
-     */
-    static override fromBytes(
-        _bytes: never,
-        _codec: never
-    ): [AddressedCall, Uint8Array] {
-        throw new Error('Do not use `AddressedCall.fromBytes` method directly.');
+    /** Do not use directly — go via `fromHex` / `fromValues`. */
+    static override fromBytes(_b: never, _c: never): [AddressedCall, Uint8Array] {
+        return throwNoDirectFromBytes("AddressedCall");
     }
 }

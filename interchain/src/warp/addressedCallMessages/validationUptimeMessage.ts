@@ -1,5 +1,7 @@
 import { utils } from "@avalabs/avalanchejs";
+
 import { parseAddressedCallPayload } from "../addressedCallPayload";
+import { concatBytes, readU16, readU32, readU64, u16, u32, u64 } from "../utils";
 
 // ValidationUptimeMessage layout (46 bytes):
 //   codecID:      uint16  (always 0)
@@ -9,38 +11,6 @@ import { parseAddressedCallPayload } from "../addressedCallPayload";
 const CODEC_ID = 0;
 const TYPE_ID = 0;
 const PAYLOAD_LENGTH = 46;
-
-function u16(n: number): Uint8Array {
-    const b = new Uint8Array(2);
-    new DataView(b.buffer).setUint16(0, n, false);
-    return b;
-}
-function u32(n: number): Uint8Array {
-    const b = new Uint8Array(4);
-    new DataView(b.buffer).setUint32(0, n, false);
-    return b;
-}
-function u64(n: bigint): Uint8Array {
-    const b = new Uint8Array(8);
-    new DataView(b.buffer).setBigUint64(0, n, false);
-    return b;
-}
-function readU16(b: Uint8Array, o: number): number {
-    return new DataView(b.buffer, b.byteOffset, b.byteLength).getUint16(o, false);
-}
-function readU32(b: Uint8Array, o: number): number {
-    return new DataView(b.buffer, b.byteOffset, b.byteLength).getUint32(o, false);
-}
-function readU64(b: Uint8Array, o: number): bigint {
-    return new DataView(b.buffer, b.byteOffset, b.byteLength).getBigUint64(o, false);
-}
-function concat(...parts: Uint8Array[]): Uint8Array {
-    const len = parts.reduce((s, p) => s + p.length, 0);
-    const out = new Uint8Array(len);
-    let off = 0;
-    for (const p of parts) { out.set(p, off); off += p.length; }
-    return out;
-}
 
 /**
  * Creates a new ValidationUptimeMessage payload (the inner AddressedCall payload).
@@ -60,11 +30,9 @@ export function newValidationUptimeMessage(validationId: string, uptime: bigint)
 }
 
 /**
- * Parses a ValidationUptimeMessage from a hex string.
- *
- * Accepts either a raw payload, an AddressedCall-wrapped payload, an UnsignedMessage,
- * or a signed WarpMessage — the inner payload will be located. `parseAddressedCallPayload`
- * already cascades through UnsignedMessage and WarpMessage wrappings.
+ * Parses a ValidationUptimeMessage from a hex string. Accepts a raw payload
+ * or any AddressedCall / UnsignedMessage / WarpMessage wrapping — the inner
+ * payload is located via {@link parseAddressedCallPayload}'s cascade.
  */
 export function parseValidationUptimeMessage(hex: string): ValidationUptimeMessage {
     const bytes = utils.hexToBuffer(hex);
@@ -72,7 +40,7 @@ export function parseValidationUptimeMessage(hex: string): ValidationUptimeMessa
         return ValidationUptimeMessage.fromPayloadBytes(bytes);
     }
     const innerBytes = utils.hexToBuffer(
-        `0x${parseAddressedCallPayload(hex).payload.toString('hex')}`,
+        `0x${parseAddressedCallPayload(hex).payload.toString("hex")}`,
     );
     return ValidationUptimeMessage.fromPayloadBytes(innerBytes);
 }
@@ -104,13 +72,11 @@ export class ValidationUptimeMessage {
         if (codecId !== CODEC_ID) throw new Error(`Invalid codecID ${codecId}`);
         const typeId = readU32(bytes, 2);
         if (typeId !== TYPE_ID) throw new Error(`Invalid typeID ${typeId}`);
-        const validationId = bytes.slice(6, 38);
-        const uptime = readU64(bytes, 38);
-        return new ValidationUptimeMessage(validationId, uptime);
+        return new ValidationUptimeMessage(bytes.slice(6, 38), readU64(bytes, 38));
     }
 
     toBytes(): Uint8Array {
-        return concat(u16(CODEC_ID), u32(TYPE_ID), this.validationId, u64(this.uptime));
+        return concatBytes(u16(CODEC_ID), u32(TYPE_ID), this.validationId, u64(this.uptime));
     }
 
     toHex(): string {

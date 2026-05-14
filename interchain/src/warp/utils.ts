@@ -1,5 +1,54 @@
 import { utils } from "@avalabs/avalanchejs";
 
+// ---------------------------------------------------------------------------
+// Big-endian primitive encoders / decoders.
+//
+// Used by the canonical Avalanche warp byte layout, where every multi-byte
+// integer is big-endian-packed and length prefixes are 4 bytes.
+// ---------------------------------------------------------------------------
+
+export function u16(n: number): Uint8Array {
+    const b = new Uint8Array(2);
+    new DataView(b.buffer).setUint16(0, n, false);
+    return b;
+}
+
+export function u32(n: number): Uint8Array {
+    const b = new Uint8Array(4);
+    new DataView(b.buffer).setUint32(0, n, false);
+    return b;
+}
+
+export function u64(n: bigint): Uint8Array {
+    const b = new Uint8Array(8);
+    new DataView(b.buffer).setBigUint64(0, n, false);
+    return b;
+}
+
+export function readU16(b: Uint8Array, o: number): number {
+    return new DataView(b.buffer, b.byteOffset, b.byteLength).getUint16(o, false);
+}
+
+export function readU32(b: Uint8Array, o: number): number {
+    return new DataView(b.buffer, b.byteOffset, b.byteLength).getUint32(o, false);
+}
+
+export function readU64(b: Uint8Array, o: number): bigint {
+    return new DataView(b.buffer, b.byteOffset, b.byteLength).getBigUint64(o, false);
+}
+
+/** Concatenate Uint8Arrays into one. */
+export function concatBytes(...parts: Uint8Array[]): Uint8Array {
+    const len = parts.reduce((s, p) => s + p.length, 0);
+    const out = new Uint8Array(len);
+    let off = 0;
+    for (const p of parts) {
+        out.set(p, off);
+        off += p.length;
+    }
+    return out;
+}
+
 /**
  * Parses a bech32 address to bytes.
  * @param bech32Address The bech32 address string to parse.

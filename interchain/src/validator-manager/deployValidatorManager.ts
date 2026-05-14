@@ -1,13 +1,9 @@
-import {
-    type Address,
-    type Hex,
-    type WalletClient,
-    type PublicClient,
-} from "viem";
+import { type Address, type Hex, type PublicClient, type WalletClient } from "viem";
 
 import { PoAManagerAbi, PoAManagerBytecode } from "./artifacts/PoAManager.js";
 import { ValidatorManagerAbi, ValidatorManagerBytecode } from "./artifacts/ValidatorManager.js";
 import { ValidatorMessagesAbi, ValidatorMessagesBytecode } from "./artifacts/ValidatorMessages.js";
+import { deployAndAwait } from "./_evmHelpers.js";
 import { linkBytecode, listUnlinkedLibraries } from "./linkBytecode.js";
 
 /**
@@ -92,26 +88,15 @@ export async function deployValidatorManager(
     args: DeployValidatorManagerArgs,
 ): Promise<DeployValidatorManagerResult> {
     // 1. Library (deploy if not provided).
-    let libraryAddress: Address;
-    if (args.validatorMessagesAddress) {
-        libraryAddress = args.validatorMessagesAddress;
-    } else {
-        const libDeployTx = await walletClient.deployContract({
-            abi: ValidatorMessagesAbi,
-            bytecode: ValidatorMessagesBytecode,
-            chain: walletClient.chain,
-            account: walletClient.account ?? null,
-        } as never);
-        const libReceipt = await publicClient.waitForTransactionReceipt({
-            hash: libDeployTx,
-        });
-        if (!libReceipt.contractAddress) {
-            throw new Error(
-                `ValidatorMessages library deploy did not produce a contract address (tx ${libDeployTx})`,
-            );
-        }
-        libraryAddress = libReceipt.contractAddress;
-    }
+    const libraryAddress =
+        args.validatorMessagesAddress ??
+        (
+            await deployAndAwait(walletClient, publicClient, {
+                abi: ValidatorMessagesAbi,
+                bytecode: ValidatorMessagesBytecode,
+                label: "ValidatorMessages library",
+            })
+        ).address;
 
     // 2. Link the library address into the ValidatorManager bytecode.
     const linkedBytecode = linkBytecode(ValidatorManagerBytecode, libraryAddress);
@@ -123,22 +108,12 @@ export async function deployValidatorManager(
     }
 
     // 3. Deploy ValidatorManager(ICMInitializable.Allowed).
-    const deployTxHash = await walletClient.deployContract({
+    const { address, txHash: deployTxHash } = await deployAndAwait(walletClient, publicClient, {
         abi: ValidatorManagerAbi,
         bytecode: linkedBytecode,
         args: [ICMInitializable.Allowed],
-        chain: walletClient.chain,
-        account: walletClient.account ?? null,
-    } as never);
-    const deployReceipt = await publicClient.waitForTransactionReceipt({
-        hash: deployTxHash,
+        label: "ValidatorManager",
     });
-    if (!deployReceipt.contractAddress) {
-        throw new Error(
-            `ValidatorManager deploy did not produce a contract address (tx ${deployTxHash})`,
-        );
-    }
-    const address = deployReceipt.contractAddress;
 
     // 4. Optional initialize.
     let initializeTxHash: Hex | undefined;
@@ -171,20 +146,13 @@ export async function deployPoAManager(
     publicClient: PublicClient,
     args: { initialOwner: Address; validatorManager: Address },
 ): Promise<{ address: Address; deployTxHash: Hex }> {
-    const deployTxHash = await walletClient.deployContract({
+    const { address, txHash } = await deployAndAwait(walletClient, publicClient, {
         abi: PoAManagerAbi,
         bytecode: PoAManagerBytecode,
         args: [args.initialOwner, args.validatorManager],
-        chain: walletClient.chain,
-        account: walletClient.account ?? null,
-    } as never);
-    const receipt = await publicClient.waitForTransactionReceipt({
-        hash: deployTxHash,
+        label: "PoAManager",
     });
-    if (!receipt.contractAddress) {
-        throw new Error(`PoAManager deploy did not produce a contract address (tx ${deployTxHash})`);
-    }
-    return { address: receipt.contractAddress, deployTxHash };
+    return { address, deployTxHash: txHash };
 }
 
 // Re-export artifacts so consumers can compose their own deploy flow if needed.
