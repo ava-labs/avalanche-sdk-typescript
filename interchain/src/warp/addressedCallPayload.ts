@@ -1,6 +1,6 @@
 import { Address, Bytes, pvmSerial, utils } from "@avalabs/avalanchejs";
 
-import { encodeWithCodec, throwNoDirectFromBytes } from "./_codec";
+import { encodeWithCodec, throwNoDirectFromBytes } from "./serialization";
 import { evmOrBech32AddressToBytes } from "./utils";
 import { parseWarpMessage } from "./warpMessage";
 import { parseWarpUnsignedMessage } from "./warpUnsignedMessage";

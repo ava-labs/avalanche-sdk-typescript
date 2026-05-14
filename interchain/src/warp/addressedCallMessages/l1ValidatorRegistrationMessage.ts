@@ -1,6 +1,6 @@
 import { Bool, Id, pvmSerial, utils } from "@avalabs/avalanchejs";
 
-import { encodeWithCodec, parseWithAddressedCallFallback, throwNoDirectFromBytes } from "../_codec";
+import { encodeWithCodec, parseWithAddressedCallFallback, throwNoDirectFromBytes } from "../serialization";
 
 const Schema = pvmSerial.warp.AddressedCallPayloads.L1ValidatorRegistrationMessage;
 

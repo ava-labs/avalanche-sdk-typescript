@@ -1,9 +1,10 @@
 import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 
-import { throwNoDirectFromBytes } from "../_codec";
+import { throwNoDirectFromBytes } from "../serialization";
+import { WARP_CODEC_ID } from "../constants";
 import type { ValidatorData as ValidatorDataRaw } from "../types";
-import { concatBytes, nodeIdToBytes, u16, u32 } from "../utils";
+import { compareBytesLex, concatBytes, nodeIdToBytes, u16, u32 } from "../utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 
@@ -55,15 +56,7 @@ export function newConversionData(
             blsPublicKey: vldr.blsPublicKey,
             weight: vldr.weight,
         }))
-        .sort((a, b) => {
-            const len = Math.min(a.nodeIdBytes.length, b.nodeIdBytes.length);
-            for (let i = 0; i < len; i++) {
-                const ai = a.nodeIdBytes[i] as number;
-                const bi = b.nodeIdBytes[i] as number;
-                if (ai !== bi) return ai - bi;
-            }
-            return a.nodeIdBytes.length - b.nodeIdBytes.length;
-        })
+        .sort((a, b) => compareBytesLex(a.nodeIdBytes, b.nodeIdBytes))
         .map((vldr) => new pvmSerial.warp.AddressedCallPayloads.ValidatorData(
             new NodeId(vldr.nodeIdBytes),
             BlsPublicKey.fromHex(vldr.blsPublicKey),
@@ -115,7 +108,7 @@ export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.Convers
         const managerChainIdBytes = (this.managerChainId as { toBytes(): Uint8Array }).toBytes();
         const managerAddrBytes = (this.managerAddress as { toBytes(): Uint8Array }).toBytes();
         const parts: Uint8Array[] = [
-            u16(0), // codec
+            u16(WARP_CODEC_ID), // codec
             subnetIdBytes, // 32 bytes
             managerChainIdBytes, // 32 bytes
             u32(managerAddrBytes.length), // managerAddress length prefix

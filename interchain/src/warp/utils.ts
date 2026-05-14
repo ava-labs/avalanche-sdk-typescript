@@ -49,6 +49,28 @@ export function concatBytes(...parts: Uint8Array[]): Uint8Array {
     return out;
 }
 
+/** Constant-length byte equality. */
+export function bytesEqual(a: Uint8Array, b: Uint8Array): boolean {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+    return true;
+}
+
+/**
+ * Lexicographic comparator for `Uint8Array`s — matches `bytes.Compare` in Go
+ * and is the canonical sort order Avalanche uses for things like the
+ * `ConversionData` validator set (sorted by raw node ID bytes ascending).
+ */
+export function compareBytesLex(a: Uint8Array, b: Uint8Array): number {
+    const len = Math.min(a.length, b.length);
+    for (let i = 0; i < len; i++) {
+        const ai = a[i] as number;
+        const bi = b[i] as number;
+        if (ai !== bi) return ai - bi;
+    }
+    return a.length - b.length;
+}
+
 /**
  * Parses a bech32 address to bytes.
  * @param bech32Address The bech32 address string to parse.

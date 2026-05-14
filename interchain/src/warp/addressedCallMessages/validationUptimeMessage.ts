@@ -1,16 +1,20 @@
 import { utils } from "@avalabs/avalanchejs";
 
 import { parseAddressedCallPayload } from "../addressedCallPayload";
+import {
+    ADDRESSED_CALL_PAYLOAD_TYPE_ID,
+    VALIDATION_UPTIME_PAYLOAD_LENGTH,
+    WARP_CODEC_ID,
+} from "../constants";
 import { concatBytes, readU16, readU32, readU64, u16, u32, u64 } from "../utils";
 
 // ValidationUptimeMessage layout (46 bytes):
 //   codecID:      uint16  (always 0)
-//   typeID:       uint32  (0 — note: shares 0 with SubnetToL1Conversion; context determines which)
+//   typeID:       uint32  (0 — shares typeID 0 with SubnetToL1Conversion; context disambiguates)
 //   validationID: 32 bytes
 //   uptime:       uint64  (seconds)
-const CODEC_ID = 0;
-const TYPE_ID = 0;
-const PAYLOAD_LENGTH = 46;
+const TYPE_ID = ADDRESSED_CALL_PAYLOAD_TYPE_ID.ValidationUptime;
+const PAYLOAD_LENGTH = VALIDATION_UPTIME_PAYLOAD_LENGTH;
 
 /**
  * Creates a new ValidationUptimeMessage payload (the inner AddressedCall payload).
@@ -69,14 +73,14 @@ export class ValidationUptimeMessage {
             );
         }
         const codecId = readU16(bytes, 0);
-        if (codecId !== CODEC_ID) throw new Error(`Invalid codecID ${codecId}`);
+        if (codecId !== WARP_CODEC_ID) throw new Error(`Invalid codecID ${codecId}`);
         const typeId = readU32(bytes, 2);
         if (typeId !== TYPE_ID) throw new Error(`Invalid typeID ${typeId}`);
         return new ValidationUptimeMessage(bytes.slice(6, 38), readU64(bytes, 38));
     }
 
     toBytes(): Uint8Array {
-        return concatBytes(u16(CODEC_ID), u32(TYPE_ID), this.validationId, u64(this.uptime));
+        return concatBytes(u16(WARP_CODEC_ID), u32(TYPE_ID), this.validationId, u64(this.uptime));
     }
 
     toHex(): string {

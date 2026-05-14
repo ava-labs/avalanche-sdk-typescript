@@ -1,10 +1,9 @@
 import { utils } from "@avalabs/avalanchejs";
 
 import { newAddressedCallPayload } from "./addressedCallPayload";
+import { ADDRESSED_CALL_TYPE_ID, WARP_CODEC_ID } from "./constants";
 import { concatBytes, u16, u32 } from "./utils";
 import { newWarpUnsignedMessage, WarpUnsignedMessage } from "./warpUnsignedMessage";
-
-const ADDRESSED_CALL_TYPE_ID = 1;
 
 /**
  * Build the canonical AddressedCall byte layout for a *system* source (no sender):
@@ -19,7 +18,13 @@ const ADDRESSED_CALL_TYPE_ID = 1;
 function buildSystemSourceAddressedCallHex(payloadHex: string): string {
     const payloadBytes = utils.hexToBuffer(payloadHex);
     return utils.bufferToHex(
-        concatBytes(u16(0), u32(ADDRESSED_CALL_TYPE_ID), u32(0), u32(payloadBytes.length), payloadBytes),
+        concatBytes(
+            u16(WARP_CODEC_ID),
+            u32(ADDRESSED_CALL_TYPE_ID),
+            u32(0),
+            u32(payloadBytes.length),
+            payloadBytes,
+        ),
     );
 }
 

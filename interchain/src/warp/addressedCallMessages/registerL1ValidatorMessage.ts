@@ -1,6 +1,6 @@
 import { BigIntPr, BlsPublicKey, Id, NodeId, PChainOwner, pvmSerial, utils } from "@avalabs/avalanchejs";
 
-import { encodeWithCodec, parseWithAddressedCallFallback, throwNoDirectFromBytes } from "../_codec";
+import { encodeWithCodec, parseWithAddressedCallFallback, throwNoDirectFromBytes } from "../serialization";
 import type { PChainOwner as PChainOwnerRaw } from "../types";
 import { nodeIdToBytes, parseBech32AddressToBytes } from "../utils";
 

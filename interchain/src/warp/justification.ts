@@ -3,8 +3,17 @@ import { sha256 } from "@noble/hashes/sha2";
 import { bytesToHex, hexToBytes, parseAbiItem } from "viem";
 
 import { parseRegisterL1ValidatorMessage } from "./addressedCallMessages/registerL1ValidatorMessage";
+import {
+    ADDRESSED_CALL_PAYLOAD_TYPE_ID,
+    JUSTIFICATION_DEFAULTS,
+} from "./constants";
 import { WARP_PRECOMPILE_ADDRESS } from "./evm";
-import { concatBytes, u32 } from "./utils";
+import {
+    readAddressedCallFromUnsignedMessage,
+    readAddressedCallTypeId,
+    readPayloadFromAddressedCall,
+} from "./serialization";
+import { bytesEqual, concatBytes, u32 } from "./utils";
 
 // ─── protobuf varint encoding ────────────────────────────────────────────────
 
@@ -16,12 +25,6 @@ function encodeVarint(value: number): Uint8Array {
     }
     bytes.push(value);
     return new Uint8Array(bytes);
-}
-
-function bytesEqual(a: Uint8Array, b: Uint8Array): boolean {
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
-    return true;
 }
 
 // ─── justification marshalling ───────────────────────────────────────────────
@@ -55,39 +58,11 @@ function marshalRegisterMessageJustification(registerL1ValidatorMessagePayload: 
     return concatBytes(tag, len, registerL1ValidatorMessagePayload);
 }
 
-// ─── raw warp/addressedCall byte parsing (for log scanning) ──────────────────
-
-function extractAddressedCallFromUnsignedMessage(messageBytes: Uint8Array): Uint8Array {
-    // UnsignedMessage layout: codec(2) + networkID(4) + sourceChainID(32) + msgLen(4) + msg(N)
-    if (messageBytes.length < 42) return new Uint8Array();
-    const dv = new DataView(messageBytes.buffer, messageBytes.byteOffset, messageBytes.byteLength);
-    const msgLen = dv.getUint32(38, false);
-    if (msgLen <= 0 || 42 + msgLen > messageBytes.length) return new Uint8Array();
-    return messageBytes.slice(42, 42 + msgLen);
-}
-
-function extractPayloadFromAddressedCallBytes(addressedCall: Uint8Array): Uint8Array | null {
-    // AddressedCall layout: codec(2) + typeID(4) + srcAddrLen(4) + srcAddr + payloadLen(4) + payload
-    if (addressedCall.length < 10) return null;
-    const dv = new DataView(addressedCall.buffer, addressedCall.byteOffset, addressedCall.byteLength);
-    const srcAddrLen = dv.getUint32(6, false);
-    const payloadLenPos = 10 + srcAddrLen;
-    if (payloadLenPos + 4 > addressedCall.length) return null;
-    const payloadLen = dv.getUint32(payloadLenPos, false);
-    if (payloadLen <= 0) return null;
-    const start = payloadLenPos + 4;
-    const end = start + payloadLen;
-    if (end > addressedCall.length) return null;
-    return addressedCall.slice(start, end);
-}
-
 // ─── public API ──────────────────────────────────────────────────────────────
 
 const SEND_WARP_MESSAGE_EVENT = parseAbiItem(
     "event SendWarpMessage(address indexed sourceAddress, bytes32 indexed unsignedMessageID, bytes message)",
 );
-
-const REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID = 1;
 
 /**
  * A minimal subset of a viem PublicClient — enough to scan warp logs.
@@ -145,9 +120,9 @@ export async function getRegistrationJustification(
     options: GetRegistrationJustificationOptions = {},
 ): Promise<Uint8Array | null> {
     const {
-        bootstrapSearchLimit = 1000,
-        logChunkSize = 2000,
-        maxLogChunks = 100,
+        bootstrapSearchLimit = JUSTIFICATION_DEFAULTS.BOOTSTRAP_SEARCH_LIMIT,
+        logChunkSize = JUSTIFICATION_DEFAULTS.LOG_CHUNK_SIZE,
+        maxLogChunks = JUSTIFICATION_DEFAULTS.MAX_LOG_CHUNKS,
         warpAddress = WARP_PRECOMPILE_ADDRESS,
     } = options;
 
@@ -198,15 +173,11 @@ export async function getRegistrationJustification(
             const fullMessageHex = log?.args?.message;
             if (!fullMessageHex) continue;
             const unsignedBytes = hexToBytes(fullMessageHex);
-            const addressedCall = extractAddressedCallFromUnsignedMessage(unsignedBytes);
-            if (addressedCall.length < 6) continue;
+            const addressedCall = readAddressedCallFromUnsignedMessage(unsignedBytes);
+            const acTypeId = readAddressedCallTypeId(addressedCall);
+            if (acTypeId !== ADDRESSED_CALL_PAYLOAD_TYPE_ID.RegisterL1Validator) continue;
 
-            const acTypeId = new DataView(
-                addressedCall.buffer, addressedCall.byteOffset, addressedCall.byteLength,
-            ).getUint32(2, false);
-            if (acTypeId !== REGISTER_L1_VALIDATOR_MESSAGE_TYPE_ID) continue;
-
-            const payloadBytes = extractPayloadFromAddressedCallBytes(addressedCall);
+            const payloadBytes = readPayloadFromAddressedCall(addressedCall);
             if (!payloadBytes) continue;
 
             try {

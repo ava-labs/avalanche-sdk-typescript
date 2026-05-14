@@ -1,6 +1,6 @@
 import { pvmSerial, utils } from "@avalabs/avalanchejs";
 
-import { encodeWithCodec, throwNoDirectFromBytes } from "./_codec";
+import { encodeWithCodec, throwNoDirectFromBytes } from "./serialization";
 
 const warpManager = pvmSerial.warp.getWarpManager();
 const Schema = pvmSerial.warp.WarpMessage;
