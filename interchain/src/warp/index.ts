@@ -2,6 +2,7 @@ export { AddressedCall, parseAddressedCallPayload, newAddressedCallPayload } fro
 export { WarpMessage, parseWarpMessage } from "./warpMessage";
 export { WarpUnsignedMessage, parseWarpUnsignedMessage, newWarpUnsignedMessage } from "./warpUnsignedMessage";
 export { newWarpMessage } from "./newWarpMessage";
+export { P_CHAIN_BLOCKCHAIN_ID } from "./constants";
 export {
     extractWarpMessageFromReceipt,
     packWarpIntoAccessList,

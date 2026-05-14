@@ -10,12 +10,13 @@ import { ProxyAdminAbi } from "./artifacts/ProxyAdmin.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
 import {
     deployValidatorManager,
+    ICMInitializable,
     type ValidatorManagerSettings,
 } from "./deployValidatorManager.js";
 import {
     VALIDATOR_MANAGER_PROXY_ADDRESS,
     VALIDATOR_MANAGER_PROXY_ADMIN_ADDRESS,
-} from "./proxyGenesis.js";
+} from "./constants.js";
 
 export interface UpgradeProxyToValidatorManagerArgs {
     /**
@@ -85,12 +86,11 @@ export async function upgradeProxyToValidatorManager(
     const proxyAdminAddress = (args.proxyAdminAddress ??
         VALIDATOR_MANAGER_PROXY_ADMIN_ADDRESS) as Address;
 
-    // 1. Deploy the implementation. We intentionally do NOT call initialize
-    //    on the implementation — that runs through the proxy in step 3.
-    //    Passing `null` to deployValidatorManager skips its built-in
-    //    initialize step.
+    // 1. Deploy the implementation with ICMInitializable.Disallowed so it
+    //    can't be initialized directly — only via the proxy's calldata in
+    //    step 3.
     const implResult = await deployValidatorManager(walletClient, publicClient, {
-        initSettings: null,
+        icmInitializable: ICMInitializable.Disallowed,
         ...(args.validatorMessagesAddress !== undefined && {
             validatorMessagesAddress: args.validatorMessagesAddress,
         }),

@@ -11,15 +11,13 @@ import {
 
 import { newConversionData } from "../warp/addressedCallMessages/conversionData.js";
 import { newSubnetToL1ConversionMessage } from "../warp/addressedCallMessages/subnetToL1ConversionMessage.js";
+import { P_CHAIN_BLOCKCHAIN_ID } from "../warp/constants.js";
 import { packWarpIntoAccessList } from "../warp/evm.js";
 import { newWarpMessage } from "../warp/newWarpMessage.js";
+import type { SerializedValidatorEntry } from "../warp/types.js";
 import { readU64 } from "../warp/utils.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
-
-/** Re-encode a base58check ID as a 0x-prefixed 32-byte hex string. */
-function base58checkToBytes32Hex(id: string): Hex {
-    return bytesToHex(utils.base58check.decode(id));
-}
+import { assertSuccessOrReplay, base58checkToBytes32Hex } from "./evmHelpers.js";
 
 /** Validator entry passed to {@link initializeValidatorSet}. */
 export interface InitialValidator {
@@ -131,7 +129,7 @@ export async function initializeValidatorSet(
     //    "11111111111111111111111111111111LpoYY".
     const unsignedMessage = newWarpMessage(
         args.networkId,
-        "11111111111111111111111111111111LpoYY", // P-Chain blockchainID
+        P_CHAIN_BLOCKCHAIN_ID,
         "", // system source — no sender address
         subnetToL1ConversionMessage.toHex(),
     );
@@ -157,12 +155,7 @@ export async function initializeValidatorSet(
     // 6. Submit initializeValidatorSet(conversionData, messageIndex=0).
     //    The struct passed here mirrors the canonical bytes — the contract
     //    sha256s it and compares to what it pulls from the access list.
-    type AvajsValidator = {
-        nodeId: { toBytes(): Uint8Array };
-        blsPublicKey: { toBytes(): Uint8Array };
-        weight: { toBytes(): Uint8Array };
-    };
-    const initialValidators = (conversionData.validators as AvajsValidator[]).map((v) => ({
+    const initialValidators = (conversionData.validators as SerializedValidatorEntry[]).map((v) => ({
         nodeID: bytesToHex(v.nodeId.toBytes()),
         // weight is 8 bytes BE uint64.
         weight: readU64(v.weight.toBytes(), 0),
@@ -206,31 +199,18 @@ export async function initializeValidatorSet(
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
 
     console.log(`[initializeValidatorSet] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`);
-    if (receipt.status !== "success") {
-        // Replay the tx against the pre-tx block (receipt.blockNumber - 1)
-        // so the contract state is what it was right before the failed call.
-        // Calling against receipt.blockNumber would replay against post-tx
-        // state where the revert may no longer trigger.
-        let revertReason = "<eth_call replay produced no error>";
-        try {
-            await publicClient.call({
-                to: args.contractAddress,
-                data: encodeFunctionData({
-                    abi: ValidatorManagerAbi,
-                    functionName: "initializeValidatorSet",
-                    args: [conversionStruct, 0],
-                }),
-                account: walletClient.account ?? undefined,
-                accessList,
-                blockNumber: receipt.blockNumber - 1n,
-            } as never);
-        } catch (err: unknown) {
-            revertReason = err instanceof Error ? err.message : String(err);
-        }
-        throw new Error(
-            `initializeValidatorSet reverted on-chain (tx ${txHash}, block ${receipt.blockNumber}): ${revertReason}`,
-        );
-    }
+    await assertSuccessOrReplay(publicClient, {
+        receipt,
+        contractAddress: args.contractAddress,
+        callData: encodeFunctionData({
+            abi: ValidatorManagerAbi,
+            functionName: "initializeValidatorSet",
+            args: [conversionStruct, 0],
+        }),
+        accessList,
+        ...(walletClient.account ? { account: walletClient.account } : {}),
+        opName: "initializeValidatorSet",
+    });
 
     return { signedMessageHex, txHash, receipt };
 }

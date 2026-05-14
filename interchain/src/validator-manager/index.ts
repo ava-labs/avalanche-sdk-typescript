@@ -1,11 +1,13 @@
 export {
     deployValidatorManager,
-    deployPoAManager,
+    initializeValidatorManager,
     ICMInitializable,
     type ValidatorManagerSettings,
     type DeployValidatorManagerArgs,
     type DeployValidatorManagerResult,
 } from "./deployValidatorManager.js";
+
+export { deployPoAManager } from "./deployPoAManager.js";
 
 export {
     upgradeProxyToValidatorManager,
@@ -23,10 +25,13 @@ export {
 
 export {
     buildValidatorManagerGenesisAlloc,
-    VALIDATOR_MANAGER_PROXY_ADDRESS,
-    VALIDATOR_MANAGER_PROXY_ADMIN_ADDRESS,
     type GenesisAllocEntry,
 } from "./proxyGenesis.js";
+
+export {
+    VALIDATOR_MANAGER_PROXY_ADDRESS,
+    VALIDATOR_MANAGER_PROXY_ADMIN_ADDRESS,
+} from "./constants.js";
 
 export { linkBytecode, listUnlinkedLibraries } from "./linkBytecode.js";
 

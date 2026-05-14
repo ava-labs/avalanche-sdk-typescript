@@ -3,7 +3,7 @@ import { sha256 } from "@noble/hashes/sha2";
 
 import { throwNoDirectFromBytes } from "../serialization";
 import { WARP_CODEC_ID } from "../constants";
-import type { ValidatorData as ValidatorDataRaw } from "../types";
+import type { SerializedValidatorEntry, ValidatorData as ValidatorDataRaw } from "../types";
 import { compareBytesLex, concatBytes, nodeIdToBytes, u16, u32 } from "../utils";
 
 const warpManager = pvmSerial.warp.getWarpManager();
@@ -99,11 +99,7 @@ export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.Convers
      * spec — and what the validators actually sign — does not have that prefix.
      */
     toHex(): string {
-        const validators = this.validators as Array<{
-            nodeId: { toBytes(): Uint8Array };
-            blsPublicKey: { toBytes(): Uint8Array };
-            weight: { toBytes(): Uint8Array };
-        }>;
+        const validators = this.validators as SerializedValidatorEntry[];
         const subnetIdBytes = (this.subnetId as { toBytes(): Uint8Array }).toBytes();
         const managerChainIdBytes = (this.managerChainId as { toBytes(): Uint8Array }).toBytes();
         const managerAddrBytes = (this.managerAddress as { toBytes(): Uint8Array }).toBytes();

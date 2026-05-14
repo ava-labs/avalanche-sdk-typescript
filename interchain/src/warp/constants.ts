@@ -62,6 +62,14 @@ export const ADDRESSED_CALL_OFFSETS = {
     SRC_ADDR: 10,
 } as const;
 
+/**
+ * P-Chain blockchain ID — 32 zero bytes, base58check-encoded.
+ *
+ * Used as the `sourceChainID` on every warp UnsignedMessage signed by the
+ * P-Chain (SubnetToL1Conversion, L1ValidatorRegistration, L1ValidatorWeight).
+ */
+export const P_CHAIN_BLOCKCHAIN_ID = "11111111111111111111111111111111LpoYY" as const;
+
 /** Default knobs for `getRegistrationJustification`'s scan logic. */
 export const JUSTIFICATION_DEFAULTS = {
     BOOTSTRAP_SEARCH_LIMIT: 1000,

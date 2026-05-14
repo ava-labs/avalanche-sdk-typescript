@@ -1,9 +1,8 @@
 import { type Address, type Hex, type PublicClient, type WalletClient } from "viem";
 
-import { PoAManagerAbi, PoAManagerBytecode } from "./artifacts/PoAManager.js";
 import { ValidatorManagerAbi, ValidatorManagerBytecode } from "./artifacts/ValidatorManager.js";
 import { ValidatorMessagesAbi, ValidatorMessagesBytecode } from "./artifacts/ValidatorMessages.js";
-import { deployAndAwait } from "./_evmHelpers.js";
+import { deployAndAwait } from "./evmHelpers.js";
 import { linkBytecode, listUnlinkedLibraries } from "./linkBytecode.js";
 
 /**
@@ -41,12 +40,13 @@ export interface ValidatorManagerSettings {
 
 export interface DeployValidatorManagerArgs {
     /**
-     * Settings passed to `ValidatorManager.initialize(...)` immediately after
-     * deployment. Pass `null` to skip the initialize call (e.g. when you're
-     * deploying the implementation behind a proxy and will initialize via the
-     * proxy's calldata).
+     * Constructor argument for `ValidatorManager`. Defaults to
+     * {@link ICMInitializable.Allowed} (callers expect to invoke
+     * `initialize(settings)` on the deployed contract directly). Pass
+     * {@link ICMInitializable.Disallowed} when deploying behind a proxy
+     * (initialize then runs via the proxy's calldata).
      */
-    initSettings: ValidatorManagerSettings | null;
+    icmInitializable?: ICMInitializable;
     /**
      * Optional override for the ValidatorMessages library address. When
      * omitted, this helper deploys a fresh ValidatorMessages library on the
@@ -63,8 +63,6 @@ export interface DeployValidatorManagerResult {
     libraryAddress: Address;
     /** Transaction hash of the ValidatorManager deploy. */
     deployTxHash: Hex;
-    /** Transaction hash of the `initialize(...)` call, if it ran. */
-    initializeTxHash?: Hex;
 }
 
 /**
@@ -75,9 +73,12 @@ export interface DeployValidatorManagerResult {
  *      library and capture its address.
  *   2. Substitute the library address into the ValidatorManager bytecode
  *      placeholders.
- *   3. Deploy `ValidatorManager(ICMInitializable.Allowed)`.
- *   4. If `initSettings` supplied, call `initialize(settings)` on the new
- *      contract.
+ *   3. Deploy `ValidatorManager(icmInitializable)`.
+ *
+ * Does NOT call `initialize(settings)` on the deployed contract — call
+ * {@link initializeValidatorManager} afterwards (raw path), or use
+ * `upgradeProxyToValidatorManager` (proxy path) which atomically deploys +
+ * upgrades + initializes via `ProxyAdmin.upgradeAndCall`.
  *
  * Network calls are awaited end-to-end, so the returned addresses are usable
  * immediately by callers (no extra wait-for-receipt needed).
@@ -85,9 +86,10 @@ export interface DeployValidatorManagerResult {
 export async function deployValidatorManager(
     walletClient: WalletClient,
     publicClient: PublicClient,
-    args: DeployValidatorManagerArgs,
+    args: DeployValidatorManagerArgs = {},
 ): Promise<DeployValidatorManagerResult> {
-    // 1. Library (deploy if not provided).
+    const icmInitializable = args.icmInitializable ?? ICMInitializable.Allowed;
+
     const libraryAddress =
         args.validatorMessagesAddress ??
         (
@@ -98,7 +100,6 @@ export async function deployValidatorManager(
             })
         ).address;
 
-    // 2. Link the library address into the ValidatorManager bytecode.
     const linkedBytecode = linkBytecode(ValidatorManagerBytecode, libraryAddress);
     const remaining = listUnlinkedLibraries(linkedBytecode);
     if (remaining.length > 0) {
@@ -107,58 +108,43 @@ export async function deployValidatorManager(
         );
     }
 
-    // 3. Deploy ValidatorManager(ICMInitializable.Allowed).
     const { address, txHash: deployTxHash } = await deployAndAwait(walletClient, publicClient, {
         abi: ValidatorManagerAbi,
         bytecode: linkedBytecode,
-        args: [ICMInitializable.Allowed],
+        args: [icmInitializable],
         label: "ValidatorManager",
     });
 
-    // 4. Optional initialize.
-    let initializeTxHash: Hex | undefined;
-    if (args.initSettings) {
-        initializeTxHash = await walletClient.writeContract({
-            address,
-            abi: ValidatorManagerAbi,
-            functionName: "initialize",
-            args: [args.initSettings],
-            chain: walletClient.chain,
-            account: walletClient.account ?? null,
-        } as never);
-        await publicClient.waitForTransactionReceipt({ hash: initializeTxHash });
-    }
-
-    const result: DeployValidatorManagerResult = { address, libraryAddress, deployTxHash };
-    if (initializeTxHash) result.initializeTxHash = initializeTxHash;
-    return result;
+    return { address, libraryAddress, deployTxHash };
 }
 
 /**
- * Deploy a `PoAManager` standalone contract that wraps an already-deployed
- * `ValidatorManager` (passed as `validatorManager`).
+ * Call `ValidatorManager.initialize(settings)` on a deployed instance.
  *
- * Callers typically follow up by transferring `ValidatorManager` ownership
- * to the deployed PoAManager via `transferOwnership(...)`.
+ * Only valid when the contract was deployed with
+ * {@link ICMInitializable.Allowed}. For proxy-fronted deployments, use
+ * `upgradeProxyToValidatorManager`, which runs the initializer behind the
+ * proxy's storage via `ProxyAdmin.upgradeAndCall`.
  */
-export async function deployPoAManager(
+export async function initializeValidatorManager(
     walletClient: WalletClient,
     publicClient: PublicClient,
-    args: { initialOwner: Address; validatorManager: Address },
-): Promise<{ address: Address; deployTxHash: Hex }> {
-    const { address, txHash } = await deployAndAwait(walletClient, publicClient, {
-        abi: PoAManagerAbi,
-        bytecode: PoAManagerBytecode,
-        args: [args.initialOwner, args.validatorManager],
-        label: "PoAManager",
-    });
-    return { address, deployTxHash: txHash };
+    args: { address: Address; settings: ValidatorManagerSettings },
+): Promise<{ txHash: Hex }> {
+    const txHash = await walletClient.writeContract({
+        address: args.address,
+        abi: ValidatorManagerAbi,
+        functionName: "initialize",
+        args: [args.settings],
+        chain: walletClient.chain,
+        account: walletClient.account ?? null,
+    } as never);
+    await publicClient.waitForTransactionReceipt({ hash: txHash });
+    return { txHash };
 }
 
 // Re-export artifacts so consumers can compose their own deploy flow if needed.
 export {
-    PoAManagerAbi,
-    PoAManagerBytecode,
     ValidatorManagerAbi,
     ValidatorManagerBytecode,
     ValidatorMessagesAbi,
