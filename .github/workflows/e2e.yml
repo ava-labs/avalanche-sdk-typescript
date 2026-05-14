@@ -30,6 +30,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Minimal token permissions. The job only needs to read the repo contents
+# (for `actions/checkout`) — no write access to issues, PRs, packages, etc.
+permissions:
+  contents: read
+
 env:
   BUN_VERSION: "1.1.38"
   AVALANCHEGO_VERSION: ${{ github.event.inputs.avalanchego_version || 'v1.14.0' }}
