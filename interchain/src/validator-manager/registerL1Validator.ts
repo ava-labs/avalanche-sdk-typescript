@@ -279,8 +279,14 @@ export interface RegisterL1ValidatorResult {
     completeTxHash: Hex;
     /** L1-signed `RegisterL1ValidatorMessage` warp message (the message that went into the P-Chain tx). */
     signedRegistrationMessageHex: Hex;
-    /** Primary-network-signed `L1ValidatorRegistrationMessage` ACK (the message that went into completeValidatorRegistration). */
+    /** L1-signed `L1ValidatorRegistrationMessage` ACK (the message that went into completeValidatorRegistration). */
     signedRegistrationAckHex: Hex;
+    /**
+     * Inner `RegisterL1ValidatorMessage` payload bytes (codec + typeID + body).
+     * Preserve these — `disableL1Validator` needs them as the justification when
+     * asking L1 validators to sign the `L1ValidatorRegistrationMessage(false)` ACK.
+     */
+    registerMessagePayloadHex: Hex;
 }
 
 /**
@@ -376,5 +382,6 @@ export async function registerL1Validator(
         completeTxHash: complete.txHash,
         signedRegistrationMessageHex,
         signedRegistrationAckHex,
+        registerMessagePayloadHex: initiate.addressedCallPayloadHex,
     };
 }

@@ -14,6 +14,7 @@ import {
   ConversionData,
   initializeValidatorSet,
   newConversionData,
+  disableL1Validator,
   registerL1Validator,
   setL1ValidatorWeight,
   upgradeProxyToValidatorManager,
@@ -81,6 +82,8 @@ interface FlowState {
   signatureAggregator?: SignatureAggregatorManager;
   l1Node2?: NodeInfo;
   newValidationID?: Hex;
+  /** Raw RegisterL1ValidatorMessage payload bytes captured at register time — needed as the justification for the removal ACK. */
+  registerMessagePayloadHex?: Hex;
 }
 const state: FlowState = {};
 
@@ -496,6 +499,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     });
 
     state.newValidationID = result.validationID;
+    state.registerMessagePayloadHex = result.registerMessagePayloadHex;
     expect(result.completeTxHash.length).toBeGreaterThan(2);
     expect(result.pChainRegisterTxId.length).toBeGreaterThan(0);
 
@@ -575,6 +579,82 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(result.nonce).toBeGreaterThan(0n);
     console.log(
       `[step 9] weight updated nonce=${result.nonce} completeTx=${result.completeTxHash}`,
+    );
+  }, BOOT_TIMEOUT_MS);
+
+  test("10. disableL1Validator: remove the new validator", async () => {
+    const {
+      subnetId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+      signatureAggregator,
+      newValidationID,
+      registerMessagePayloadHex,
+      l1Node2,
+    } = requireState(
+      "subnetId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+      "signatureAggregator",
+      "newValidationID",
+      "registerMessagePayloadHex",
+      "l1Node2",
+    );
+
+    const aggregateSignatures = buildAggregateSignaturesFn(signatureAggregator, {
+      log: (m) => console.log(`[step 10] ${m}`),
+    });
+
+    const result = await disableL1Validator(l1WalletClient as never, l1PublicClient as never, {
+      validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      validationID: newValidationID,
+      registerMessagePayloadHex,
+      l1PublicClient: l1PublicClient as never,
+      aggregateSignatures,
+      submitPChainSetWeightTx: async ({ signedWarpMessageHex }) => {
+        for (let i = 0; i < 2; i++) {
+          const adv = await walletClient.pChain.prepareBaseTxn({});
+          const { txHash } = await walletClient.sendXPTransaction({
+            tx: adv.tx,
+            chainAlias: "P",
+          });
+          await waitForCommitted(walletClient, txHash);
+        }
+        await Bun.sleep(30_000);
+
+        const txnRequest = await walletClient.pChain.prepareSetL1ValidatorWeightTxn({
+          message: signedWarpMessageHex,
+        });
+        const { txHash } = await walletClient.sendXPTransaction({
+          tx: txnRequest.tx,
+          chainAlias: "P",
+        });
+        await waitForCommitted(walletClient, txHash);
+        console.log(`[step 10] SetL1ValidatorWeightTx (weight=0) committed on P-Chain: ${txHash}`);
+
+        await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+          console.log(`[step 10] ${m}`),
+        );
+        return { txId: txHash };
+      },
+    });
+
+    expect(result.completeTxHash.length).toBeGreaterThan(2);
+    expect(result.pChainSetWeightTxId.length).toBeGreaterThan(0);
+
+    // P-Chain should be back down to 1 validator on the subnet.
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
+    const validators = (onChain as { validators?: { nodeID: string }[] }).validators ?? [];
+    const stillThere = validators.some((v) => v.nodeID === l1Node2.nodeId);
+    expect(stillThere).toBe(false);
+    console.log(
+      `[step 10] subnet validators on P-Chain: ${validators.length} (removed ${l1Node2.nodeId})`,
     );
   }, BOOT_TIMEOUT_MS);
 });

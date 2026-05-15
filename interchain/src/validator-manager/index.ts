@@ -53,6 +53,18 @@ export {
 } from "./setL1ValidatorWeight.js";
 
 export {
+    disableL1Validator,
+    initiateValidatorRemoval,
+    completeValidatorRemoval,
+    type DisableL1ValidatorArgs,
+    type DisableL1ValidatorResult,
+    type InitiateValidatorRemovalArgs,
+    type InitiateValidatorRemovalResult,
+    type CompleteValidatorRemovalArgs,
+    type CompleteValidatorRemovalResult,
+} from "./disableL1Validator.js";
+
+export {
     buildValidatorManagerGenesisAlloc,
     type GenesisAllocEntry,
 } from "./proxyGenesis.js";
