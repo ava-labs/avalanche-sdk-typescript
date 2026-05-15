@@ -12,6 +12,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { utils } from "@avalabs/avalanchejs";
 import {
   ConversionData,
+  getRegistrationJustification,
   initializeValidatorSet,
   newConversionData,
   disableL1Validator,
@@ -1067,4 +1068,120 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       `[step 14] reconciliation complete: contract Completed, P-Chain validators=${validators.length}`,
     );
   }, BOOT_TIMEOUT_MS);
+
+  test("15. negative cases: duplicate register + onlyOwner", async () => {
+    const {
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      l1Node,
+      ownerPAddr,
+    } = requireState(
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "l1Node",
+      "ownerPAddr",
+    );
+
+    // Use the BOOTSTRAP validator's nodeID (l1Node, still Active in the
+    // contract). completeValidatorRemoval clears _registeredValidators for
+    // removed validators, so node2/node3 wouldn't trip this check anymore.
+    const bootstrapNodeIdHex = `0x${Buffer.from(
+      utils.base58check.decode(l1Node.nodeId.replace(/^NodeID-/, "")),
+    ).toString("hex")}` as Hex;
+    const ownerAddrHex = `0x${Buffer.from(utils.bech32ToBytes(ownerPAddr)).toString(
+      "hex",
+    )}` as Address;
+    const balanceOwner = { threshold: 1, addresses: [ownerAddrHex] as const };
+    const dummyBls = `0x${"00".repeat(48)}` as Hex;
+
+    // E1 — duplicate register. l1Node is currently the active bootstrap
+    // validator; its _registeredValidators[nodeID] mapping is set, so a
+    // re-register attempt must revert with NodeAlreadyRegistered.
+    let reverted = false;
+    try {
+      await l1PublicClient.simulateContract({
+        address: validatorManagerAddress,
+        abi: ValidatorManagerAbi,
+        functionName: "initiateValidatorRegistration",
+        args: [bootstrapNodeIdHex, dummyBls, balanceOwner, balanceOwner, 1n],
+        account: l1WalletClient.account!,
+      } as never);
+    } catch (err) {
+      reverted = true;
+      const msg = err instanceof Error ? err.message : String(err);
+      expect(msg).toMatch(/NodeAlreadyRegistered/);
+    }
+    expect(reverted).toBe(true);
+    console.log(`[step 15] duplicate-register reverts with NodeAlreadyRegistered ✓`);
+
+    // E2 — onlyOwner. Call initiateValidatorRegistration from a random
+    // account (NOT the deployer EWOQ) and expect OwnableUnauthorizedAccount.
+    const randomPk = ("0x" + "11".repeat(32)) as Hex;
+    const randomAccount = privateKeyToAccount(randomPk);
+    let unauthorizedReverted = false;
+    try {
+      await l1PublicClient.simulateContract({
+        address: validatorManagerAddress,
+        abi: ValidatorManagerAbi,
+        functionName: "initiateValidatorRegistration",
+        // Use a fresh fake nodeID so we don't trip NodeAlreadyRegistered first.
+        args: [`0x${"22".repeat(20)}` as Hex, dummyBls, balanceOwner, balanceOwner, 1n],
+        account: randomAccount,
+      } as never);
+    } catch (err) {
+      unauthorizedReverted = true;
+      const msg = err instanceof Error ? err.message : String(err);
+      expect(msg).toMatch(/OwnableUnauthorizedAccount/);
+    }
+    expect(unauthorizedReverted).toBe(true);
+    console.log(`[step 15] non-owner caller reverts with OwnableUnauthorizedAccount ✓`);
+
+    // E3 — expired registration: REGISTRATION_EXPIRY_LENGTH is 1 day on
+    // ValidatorManager (see icm-contracts ValidatorManager.sol), which is
+    // impractical for an e2e. Intentionally skipped — the avalanchego
+    // executor's errWarpMessageExpired path is covered by avalanchego's
+    // own test suite.
+  }, BOOT_TIMEOUT_MS);
+
+  test("16. getRegistrationJustification bootstrap path", async () => {
+    const { subnetId, l1Node, l1PublicClient, validatorManagerAddress } = requireState(
+      "subnetId",
+      "l1Node",
+      "l1PublicClient",
+      "validatorManagerAddress",
+    );
+
+    // The bootstrap validator was registered as part of ConvertSubnetToL1Tx
+    // (step 5), so its validation ID is sha256(subnetID || uint32(0)). Read
+    // it from the contract (getNodeValidationID) and feed it to
+    // getRegistrationJustification — that path doesn't need a log scan,
+    // it hashes subnetID || index directly.
+    const bootstrapNodeIdBytes = utils.base58check.decode(l1Node.nodeId.replace(/^NodeID-/, ""));
+    const bootstrapNodeIdHex = `0x${Buffer.from(bootstrapNodeIdBytes).toString("hex")}` as Hex;
+
+    const bootstrapValidationID = (await l1PublicClient.readContract({
+      address: validatorManagerAddress,
+      abi: ValidatorManagerAbi,
+      functionName: "getNodeValidationID",
+      args: [bootstrapNodeIdHex],
+    })) as Hex;
+    expect(bootstrapValidationID).not.toBe(`0x${"00".repeat(32)}`);
+    console.log(`[step 16] bootstrap validationID: ${bootstrapValidationID}`);
+
+    const justification = await getRegistrationJustification(
+      bootstrapValidationID,
+      subnetId,
+      l1PublicClient as never,
+    );
+    expect(justification).not.toBeNull();
+    // The bootstrap-path protobuf wraps SubnetIDIndex{ subnet_id, index }.
+    // Confirm it's a small payload (smaller than the log-scan path which
+    // wraps the full RegisterL1ValidatorMessage bytes).
+    expect(justification!.length).toBeLessThan(50);
+    console.log(
+      `[step 16] bootstrap justification (${justification!.length} bytes) — sha256(subnetID‖index) path verified`,
+    );
+  }, TX_TIMEOUT_MS);
 });
