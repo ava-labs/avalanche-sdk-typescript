@@ -84,6 +84,9 @@ interface FlowState {
   newValidationID?: Hex;
   /** Raw RegisterL1ValidatorMessage payload bytes captured at register time — needed as the justification for the removal ACK. */
   registerMessagePayloadHex?: Hex;
+  /** Third L1 node, registered fresh for the force-removal path so we don't trip the contract's "node already registered" check on node2's NodeID. */
+  l1Node3?: NodeInfo;
+  validationID3?: Hex;
 }
 const state: FlowState = {};
 
@@ -655,6 +658,162 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(stillThere).toBe(false);
     console.log(
       `[step 10] subnet validators on P-Chain: ${validators.length} (removed ${l1Node2.nodeId})`,
+    );
+  }, BOOT_TIMEOUT_MS);
+
+  test("11. registerL1Validator: add a 3rd validator (setup for force-removal)", async () => {
+    const {
+      tmpnet,
+      subnetId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+      signatureAggregator,
+      ownerPAddr,
+    } = requireState(
+      "tmpnet",
+      "subnetId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+      "signatureAggregator",
+      "ownerPAddr",
+    );
+
+    const addResult = await tmpnet.addL1Node(subnetId, (m) => console.log(`[l1-node-3] ${m}`));
+    expect(addResult.success).toBe(true);
+    const node3 = addResult.data!;
+    state.l1Node3 = node3;
+    expect(node3.signerKeyPath).toBeTruthy();
+    console.log(`[step 11] L1 node 3 up: ${node3.nodeId} @ ${node3.uri}`);
+
+    const blsKeypair = loadValidatorBlsKeypair(node3.signerKeyPath!);
+    const ownerPAddrBytes = utils.bech32ToBytes(ownerPAddr);
+    const ownerAddrHex = `0x${Buffer.from(ownerPAddrBytes).toString("hex")}` as Address;
+    const balanceOwner = { threshold: 1, addresses: [ownerAddrHex] as const };
+
+    const aggregateSignatures = buildAggregateSignaturesFn(signatureAggregator, {
+      log: (m) => console.log(`[step 11] ${m}`),
+    });
+
+    const result = await registerL1Validator(l1WalletClient as never, l1PublicClient as never, {
+      validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      validator: {
+        nodeId: node3.nodeId,
+        blsPublicKey: blsKeypair.publicKey,
+        weight: 1n,
+        remainingBalanceOwner: balanceOwner,
+        disableOwner: balanceOwner,
+      },
+      aggregateSignatures,
+      getBlsProofOfPossession: async () => blsKeypair.proofOfPossession,
+      submitPChainRegisterTx: async ({ signedWarpMessageHex, blsProofOfPossessionHex }) => {
+        for (let i = 0; i < 2; i++) {
+          const adv = await walletClient.pChain.prepareBaseTxn({});
+          const { txHash } = await walletClient.sendXPTransaction({
+            tx: adv.tx,
+            chainAlias: "P",
+          });
+          await waitForCommitted(walletClient, txHash);
+        }
+        await Bun.sleep(30_000);
+
+        const txnRequest = await walletClient.pChain.prepareRegisterL1ValidatorTxn({
+          initialBalanceInNanoAvax: 100_000_000n,
+          blsSignature: blsProofOfPossessionHex,
+          message: signedWarpMessageHex,
+        });
+        const { txHash } = await walletClient.sendXPTransaction({
+          tx: txnRequest.tx,
+          chainAlias: "P",
+        });
+        await waitForCommitted(walletClient, txHash);
+        console.log(`[step 11] RegisterL1ValidatorTx committed on P-Chain: ${txHash}`);
+        await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+          console.log(`[step 11] ${m}`),
+        );
+        return { txId: txHash };
+      },
+    });
+
+    state.validationID3 = result.validationID;
+    expect(result.completeTxHash.length).toBeGreaterThan(2);
+    console.log(`[step 11] node 3 registered (validationID=${result.validationID})`);
+  }, BOOT_TIMEOUT_MS);
+
+  test("12. force-disable on P-Chain via DisableL1ValidatorTx", async () => {
+    const { walletClient, subnetId, validationID3, l1Node3 } = requireState(
+      "walletClient",
+      "subnetId",
+      "validationID3",
+      "l1Node3",
+    );
+
+    // Force-removal is a direct P-Chain tx authorized by the validator's
+    // disableOwner (NOT the validator-manager contract). After this commits,
+    // P-Chain drops the validator, but the contract's _validationPeriods
+    // entry stays Active until separately reconciled — that's the "force"
+    // part of force-removal.
+    const validationIdB58 = utils.base58check.encode(utils.hexToBuffer(validationID3));
+
+    // Advance P-Chain a bit so the mempool verifier sees the validator
+    // (registered in step 11) at a stable height.
+    for (let i = 0; i < 2; i++) {
+      const adv = await walletClient.pChain.prepareBaseTxn({});
+      const { txHash } = await walletClient.sendXPTransaction({
+        tx: adv.tx,
+        chainAlias: "P",
+      });
+      await waitForCommitted(walletClient, txHash);
+    }
+    await Bun.sleep(30_000);
+
+    const txnRequest = await walletClient.pChain.prepareDisableL1ValidatorTxn({
+      validationId: validationIdB58,
+      disableAuth: [0],
+    });
+    const { txHash } = await walletClient.sendXPTransaction({
+      tx: txnRequest.tx,
+      chainAlias: "P",
+      disableOwners: txnRequest.disableOwners,
+      disableAuth: txnRequest.disableAuth,
+    });
+    await waitForCommitted(walletClient, txHash);
+    console.log(`[step 12] DisableL1ValidatorTx committed on P-Chain: ${txHash}`);
+
+    // DisableL1ValidatorTx *deactivates* the L1 validator and refunds its
+    // remaining balance — it does NOT remove the validator from the L1's
+    // validator set the way SetL1ValidatorWeightTx(weight=0) does. Per the
+    // P-Chain tx-format spec ("Disable an L1 validator without removing
+    // them as a validator"). After this commits, getCurrentValidators still
+    // lists node3, but its balance refund means `accruedFees ≥ initialBalance`
+    // and the validator is functionally inactive for warp / consensus
+    // until re-enabled (which requires an IncreaseL1ValidatorBalanceTx).
+    //
+    // Assertion: tx committed (already verified by waitForCommitted) and the
+    // validator's recorded balance has dropped to 0, indicating it was
+    // refunded. The validator may either be absent from getCurrentValidators
+    // (some avalanchego versions filter inactive validators out) or present
+    // with balance=0 — accept both.
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
+    const validators = (onChain as {
+      validators?: Array<{ nodeID: string; balance?: string; weight?: string }>;
+    }).validators ?? [];
+    const stillListed = validators.find((v) => v.nodeID === l1Node3.nodeId);
+    if (stillListed) {
+      console.log(
+        `[step 12] node3 still listed but inactive: balance=${stillListed.balance} weight=${stillListed.weight}`,
+      );
+      expect(BigInt(stillListed.balance ?? "0")).toBe(0n);
+    } else {
+      console.log(`[step 12] node3 dropped from getCurrentValidators (force-disable refunded + removed)`);
+    }
+    console.log(
+      `[step 12] subnet validators on P-Chain: ${validators.length} (force-disabled ${l1Node3.nodeId})`,
     );
   }, BOOT_TIMEOUT_MS);
 });
