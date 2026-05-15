@@ -19,6 +19,7 @@ import {
   setL1ValidatorWeight,
   upgradeProxyToValidatorManager,
   VALIDATOR_MANAGER_PROXY_ADDRESS,
+  ValidatorManagerAbi,
 } from "@avalanche-sdk/interchain";
 import { privateKeyToAvalancheAccount } from "@avalanche-sdk/client/accounts";
 import { avalancheLocal } from "@avalanche-sdk/client/chains";
@@ -105,6 +106,59 @@ function requireState<K extends keyof FlowState>(
     out[k as string] = state[k];
   }
   return out as { [P in K]: NonNullable<FlowState[P]> };
+}
+
+// ValidatorStatus enum values from icm-contracts (must match contract):
+//   Unknown=0 PendingAdded=1 Active=2 PendingRemoved=3 Completed=4
+enum ValidatorStatus {
+  Unknown = 0,
+  PendingAdded = 1,
+  Active = 2,
+  PendingRemoved = 3,
+  Completed = 4,
+}
+
+interface OnChainValidator {
+  status: number;
+  nodeID: Hex;
+  startingWeight: bigint;
+  sentNonce: bigint;
+  receivedNonce: bigint;
+  weight: bigint;
+  startTime: bigint;
+  endTime: bigint;
+}
+
+async function readValidator(
+  pc: PublicClient,
+  contractAddress: Address,
+  validationID: Hex,
+): Promise<OnChainValidator> {
+  return (await pc.readContract({
+    address: contractAddress,
+    abi: ValidatorManagerAbi,
+    functionName: "getValidator",
+    args: [validationID],
+  })) as OnChainValidator;
+}
+
+async function readL1TotalWeight(pc: PublicClient, contractAddress: Address): Promise<bigint> {
+  return (await pc.readContract({
+    address: contractAddress,
+    abi: ValidatorManagerAbi,
+    functionName: "l1TotalWeight",
+  })) as bigint;
+}
+
+async function readIsValidatorSetInitialized(
+  pc: PublicClient,
+  contractAddress: Address,
+): Promise<boolean> {
+  return (await pc.readContract({
+    address: contractAddress,
+    abi: ValidatorManagerAbi,
+    functionName: "isValidatorSetInitialized",
+  })) as boolean;
 }
 
 describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
@@ -394,6 +448,14 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(result.receipt.status).toBe("success");
     expect(result.signedMessageHex.length).toBeGreaterThan(2);
     console.log(`[step 7] initializeValidatorSet committed: ${result.txHash}`);
+
+    // Contract state: validator set should now be marked initialized, and
+    // the bootstrap validator's weight should match what we passed in
+    // ConvertSubnetToL1 (100).
+    expect(
+      await readIsValidatorSetInitialized(l1PublicClient, validatorManagerAddress),
+    ).toBe(true);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(100n);
   }, BOOT_TIMEOUT_MS);
 
   test("8. registerL1Validator: add a 2nd L1 node as a new validator", async () => {
@@ -514,6 +576,17 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     console.log(
       `[step 8] subnet validators on P-Chain: ${validators.length} (validationID=${result.validationID})`,
     );
+
+    // Contract state: new validator is Active at weight 1, total weight 101.
+    const v = await readValidator(
+      l1PublicClient,
+      validatorManagerAddress,
+      result.validationID,
+    );
+    expect(v.status).toBe(ValidatorStatus.Active);
+    expect(v.weight).toBe(1n);
+    expect(v.startingWeight).toBe(1n);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(101n);
   }, BOOT_TIMEOUT_MS);
 
   test("9. setL1ValidatorWeight: bump the new validator's weight 1 → 2", async () => {
@@ -583,6 +656,18 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     console.log(
       `[step 9] weight updated nonce=${result.nonce} completeTx=${result.completeTxHash}`,
     );
+
+    // Contract state: validator weight bumped, total weight = 100 + 2 = 102.
+    const v = await readValidator(
+      l1PublicClient,
+      validatorManagerAddress,
+      newValidationID,
+    );
+    expect(v.status).toBe(ValidatorStatus.Active);
+    expect(v.weight).toBe(2n);
+    expect(v.sentNonce).toBeGreaterThan(0n);
+    expect(v.receivedNonce).toBe(v.sentNonce);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(102n);
   }, BOOT_TIMEOUT_MS);
 
   test("10. disableL1Validator: remove the new validator", async () => {
@@ -659,6 +744,17 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     console.log(
       `[step 10] subnet validators on P-Chain: ${validators.length} (removed ${l1Node2.nodeId})`,
     );
+
+    // Contract state: validator status moves to Completed, endTime set,
+    // total weight drops back to bootstrap only (100).
+    const v = await readValidator(
+      l1PublicClient,
+      validatorManagerAddress,
+      newValidationID,
+    );
+    expect(v.status).toBe(ValidatorStatus.Completed);
+    expect(v.endTime).toBeGreaterThan(0n);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(100n);
   }, BOOT_TIMEOUT_MS);
 
   test("11. registerL1Validator: add a 3rd validator (setup for force-removal)", async () => {
@@ -743,14 +839,33 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     state.validationID3 = result.validationID;
     expect(result.completeTxHash.length).toBeGreaterThan(2);
     console.log(`[step 11] node 3 registered (validationID=${result.validationID})`);
+
+    // Contract state mirrors step 8 but for node3.
+    const v = await readValidator(
+      l1PublicClient,
+      validatorManagerAddress,
+      result.validationID,
+    );
+    expect(v.status).toBe(ValidatorStatus.Active);
+    expect(v.weight).toBe(1n);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(101n);
   }, BOOT_TIMEOUT_MS);
 
   test("12. force-disable on P-Chain via DisableL1ValidatorTx", async () => {
-    const { walletClient, subnetId, validationID3, l1Node3 } = requireState(
+    const {
+      walletClient,
+      subnetId,
+      validationID3,
+      l1Node3,
+      l1PublicClient,
+      validatorManagerAddress,
+    } = requireState(
       "walletClient",
       "subnetId",
       "validationID3",
       "l1Node3",
+      "l1PublicClient",
+      "validatorManagerAddress",
     );
 
     // Force-removal is a direct P-Chain tx authorized by the validator's
@@ -814,6 +929,142 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     }
     console.log(
       `[step 12] subnet validators on P-Chain: ${validators.length} (force-disabled ${l1Node3.nodeId})`,
+    );
+
+    // KEY OBSERVATION: the validator-manager CONTRACT did not participate
+    // in this removal — its _validationPeriods[validationID3] entry is
+    // still Active even though P-Chain force-disabled the validator. This
+    // is the "stale contract state" risk of force-disable. Steps 13–14
+    // exercise the admin-recovery path that reconciles it.
+    const v = await readValidator(l1PublicClient, validatorManagerAddress, validationID3);
+    expect(v.status).toBe(ValidatorStatus.Active);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(101n);
+    console.log(
+      `[step 12] contract state is stale: status=${v.status} (Active=2), totalWeight=101 — admin reconciliation needed`,
+    );
+  }, BOOT_TIMEOUT_MS);
+
+  test("13. IncreaseL1ValidatorBalanceTx reactivates node3 on P-Chain", async () => {
+    const { walletClient, subnetId, validationID3, l1Node3 } = requireState(
+      "walletClient",
+      "subnetId",
+      "validationID3",
+      "l1Node3",
+    );
+
+    // Per the P-Chain spec, IncreaseL1ValidatorBalanceTx tops up a
+    // validator's balance AND reactivates it if it was inactive — the
+    // counterpart to step 12's force-disable.
+    const validationIdB58 = utils.base58check.encode(utils.hexToBuffer(validationID3));
+    const topUpAmount = 200_000_000n; // 0.2 AVAX in nanoAVAX
+
+    const txnRequest = await walletClient.pChain.prepareIncreaseL1ValidatorBalanceTxn({
+      validationId: validationIdB58,
+      balanceInNanoAvax: topUpAmount,
+    });
+    const { txHash } = await walletClient.sendXPTransaction({
+      tx: txnRequest.tx,
+      chainAlias: "P",
+    });
+    await waitForCommitted(walletClient, txHash);
+    console.log(`[step 13] IncreaseL1ValidatorBalanceTx committed on P-Chain: ${txHash}`);
+
+    // After the top-up, P-Chain should report node3 with positive balance
+    // again (the refund-then-topup round-trip).
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
+    const validators = (onChain as {
+      validators?: Array<{ nodeID: string; balance?: string; weight?: string }>;
+    }).validators ?? [];
+    const node3State = validators.find((v) => v.nodeID === l1Node3.nodeId);
+    expect(node3State).toBeDefined();
+    expect(BigInt(node3State?.balance ?? "0")).toBe(topUpAmount);
+    console.log(
+      `[step 13] node3 reactivated: balance=${node3State?.balance} weight=${node3State?.weight}`,
+    );
+  }, BOOT_TIMEOUT_MS);
+
+  test("14. reconcile contract via disableL1Validator (admin recovery path)", async () => {
+    const {
+      subnetId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+      signatureAggregator,
+      validationID3,
+      l1Node3,
+    } = requireState(
+      "subnetId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+      "signatureAggregator",
+      "validationID3",
+      "l1Node3",
+    );
+
+    // After step 12's force-disable, the contract's _validationPeriods entry
+    // for node3 is stale (status=Active). After step 13 reactivated node3 on
+    // P-Chain, we now do a normal contract-driven removal to bring P-Chain
+    // and contract back in sync. This is the operational pattern an L1 admin
+    // would follow to clean up after an emergency force-disable.
+
+    const aggregateSignatures = buildAggregateSignaturesFn(signatureAggregator, {
+      log: (m) => console.log(`[step 14] ${m}`),
+    });
+
+    const result = await disableL1Validator(l1WalletClient as never, l1PublicClient as never, {
+      validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      validationID: validationID3,
+      l1PublicClient: l1PublicClient as never,
+      aggregateSignatures,
+      submitPChainSetWeightTx: async ({ signedWarpMessageHex }) => {
+        for (let i = 0; i < 2; i++) {
+          const adv = await walletClient.pChain.prepareBaseTxn({});
+          const { txHash } = await walletClient.sendXPTransaction({
+            tx: adv.tx,
+            chainAlias: "P",
+          });
+          await waitForCommitted(walletClient, txHash);
+        }
+        await Bun.sleep(30_000);
+
+        const txnRequest = await walletClient.pChain.prepareSetL1ValidatorWeightTxn({
+          message: signedWarpMessageHex,
+        });
+        const { txHash } = await walletClient.sendXPTransaction({
+          tx: txnRequest.tx,
+          chainAlias: "P",
+        });
+        await waitForCommitted(walletClient, txHash);
+        console.log(`[step 14] SetL1ValidatorWeightTx (weight=0) committed on P-Chain: ${txHash}`);
+
+        await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+          console.log(`[step 14] ${m}`),
+        );
+        return { txId: txHash };
+      },
+    });
+
+    expect(result.completeTxHash.length).toBeGreaterThan(2);
+
+    // Contract state now matches P-Chain: validator status=Completed,
+    // totalWeight back to bootstrap only.
+    const v = await readValidator(l1PublicClient, validatorManagerAddress, validationID3);
+    expect(v.status).toBe(ValidatorStatus.Completed);
+    expect(v.endTime).toBeGreaterThan(0n);
+    expect(await readL1TotalWeight(l1PublicClient, validatorManagerAddress)).toBe(100n);
+
+    // P-Chain also no longer lists node3.
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
+    const validators = (onChain as { validators?: { nodeID: string }[] }).validators ?? [];
+    const stillThere = validators.some((v2) => v2.nodeID === l1Node3.nodeId);
+    expect(stillThere).toBe(false);
+    console.log(
+      `[step 14] reconciliation complete: contract Completed, P-Chain validators=${validators.length}`,
     );
   }, BOOT_TIMEOUT_MS);
 });
