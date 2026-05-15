@@ -331,9 +331,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     const reHashed = utils.bufferToHex(sha256(utils.hexToBuffer(localConversionData.toHex())));
     expect(reHashed).toBe(localConversionId);
 
-    // FOLLOWUP: parseConversionData still uses avalanchejs's broken
-    // unpack and is no longer the inverse of toHex(). Round-trip
-    // assertion is intentionally omitted; filed as a separate fix.
+    // parseConversionData round-trip is broken upstream — see
+    // e2e/test/unit/warp-messages.test.ts's FOLLOWUP guard. Re-enable when
+    // avalanchejs's unpack matches our toHex().
   }, BOOT_TIMEOUT_MS);
 
   test("6. Deploy ValidatorManager impl + upgrade proxy on the L1 EVM", async () => {
