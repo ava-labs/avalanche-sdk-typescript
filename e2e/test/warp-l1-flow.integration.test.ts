@@ -15,6 +15,7 @@ import {
   initializeValidatorSet,
   newConversionData,
   registerL1Validator,
+  setL1ValidatorWeight,
   upgradeProxyToValidatorManager,
   VALIDATOR_MANAGER_PROXY_ADDRESS,
 } from "@avalanche-sdk/interchain";
@@ -505,6 +506,75 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(nodeIds.size).toBeGreaterThanOrEqual(2);
     console.log(
       `[step 8] subnet validators on P-Chain: ${validators.length} (validationID=${result.validationID})`,
+    );
+  }, BOOT_TIMEOUT_MS);
+
+  test("9. setL1ValidatorWeight: bump the new validator's weight 1 → 2", async () => {
+    const {
+      subnetId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+      signatureAggregator,
+      newValidationID,
+    } = requireState(
+      "subnetId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+      "signatureAggregator",
+      "newValidationID",
+    );
+
+    const aggregateSignatures = buildAggregateSignaturesFn(signatureAggregator, {
+      log: (m) => console.log(`[step 9] ${m}`),
+    });
+
+    const result = await setL1ValidatorWeight(l1WalletClient as never, l1PublicClient as never, {
+      validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      validationID: newValidationID,
+      newWeight: 2n,
+      aggregateSignatures,
+      submitPChainSetWeightTx: async ({ signedWarpMessageHex }) => {
+        // Same P-Chain advance/sleep dance as step 8: GetMinimumHeight lag
+        // means we have to push P-Chain forward + wait before the mempool
+        // verifier will accept the warp message.
+        for (let i = 0; i < 2; i++) {
+          const adv = await walletClient.pChain.prepareBaseTxn({});
+          const { txHash } = await walletClient.sendXPTransaction({
+            tx: adv.tx,
+            chainAlias: "P",
+          });
+          await waitForCommitted(walletClient, txHash);
+        }
+        await Bun.sleep(30_000);
+
+        const txnRequest = await walletClient.pChain.prepareSetL1ValidatorWeightTxn({
+          message: signedWarpMessageHex,
+        });
+        const { txHash } = await walletClient.sendXPTransaction({
+          tx: txnRequest.tx,
+          chainAlias: "P",
+        });
+        await waitForCommitted(walletClient, txHash);
+        console.log(`[step 9] SetL1ValidatorWeightTx committed on P-Chain: ${txHash}`);
+
+        await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+          console.log(`[step 9] ${m}`),
+        );
+        return { txId: txHash };
+      },
+    });
+
+    expect(result.completeTxHash.length).toBeGreaterThan(2);
+    expect(result.pChainSetWeightTxId.length).toBeGreaterThan(0);
+    expect(result.nonce).toBeGreaterThan(0n);
+    console.log(
+      `[step 9] weight updated nonce=${result.nonce} completeTx=${result.completeTxHash}`,
     );
   }, BOOT_TIMEOUT_MS);
 });

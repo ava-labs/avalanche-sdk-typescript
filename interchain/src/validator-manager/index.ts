@@ -40,6 +40,19 @@ export {
 } from "./registerL1Validator.js";
 
 export {
+    setL1ValidatorWeight,
+    initiateValidatorWeightUpdate,
+    completeValidatorWeightUpdate,
+    type SetL1ValidatorWeightArgs,
+    type SetL1ValidatorWeightResult,
+    type SubmitPChainSetWeightTxFn,
+    type InitiateValidatorWeightUpdateArgs,
+    type InitiateValidatorWeightUpdateResult,
+    type CompleteValidatorWeightUpdateArgs,
+    type CompleteValidatorWeightUpdateResult,
+} from "./setL1ValidatorWeight.js";
+
+export {
     buildValidatorManagerGenesisAlloc,
     type GenesisAllocEntry,
 } from "./proxyGenesis.js";
