@@ -14,6 +14,7 @@ import {
   ConversionData,
   initializeValidatorSet,
   newConversionData,
+  registerL1Validator,
   upgradeProxyToValidatorManager,
   VALIDATOR_MANAGER_PROXY_ADDRESS,
 } from "@avalanche-sdk/interchain";
@@ -46,6 +47,7 @@ import {
   TMPNET_NETWORK_ID,
   TX_TIMEOUT_MS,
 } from "./helpers/constants.ts";
+import { loadValidatorBlsKeypair } from "./helpers/bls.ts";
 import { buildL1GenesisConfig } from "./helpers/genesis.ts";
 import { dumpProposerVMHeights, rollL1PastFirstEpoch } from "./helpers/proposervm.ts";
 import { buildAggregateSignaturesFn } from "./helpers/sig-aggregator.ts";
@@ -76,6 +78,8 @@ interface FlowState {
   l1PublicClient?: PublicClient;
   validatorManagerAddress?: Address;
   signatureAggregator?: SignatureAggregatorManager;
+  l1Node2?: NodeInfo;
+  newValidationID?: Hex;
 }
 const state: FlowState = {};
 
@@ -383,5 +387,124 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     expect(result.receipt.status).toBe("success");
     expect(result.signedMessageHex.length).toBeGreaterThan(2);
     console.log(`[step 7] initializeValidatorSet committed: ${result.txHash}`);
+  }, BOOT_TIMEOUT_MS);
+
+  test("8. registerL1Validator: add a 2nd L1 node as a new validator", async () => {
+    const {
+      tmpnet,
+      subnetId,
+      l1WalletClient,
+      l1PublicClient,
+      validatorManagerAddress,
+      walletClient,
+      signatureAggregator,
+      ownerPAddr,
+    } = requireState(
+      "tmpnet",
+      "subnetId",
+      "l1WalletClient",
+      "l1PublicClient",
+      "validatorManagerAddress",
+      "walletClient",
+      "signatureAggregator",
+      "ownerPAddr",
+    );
+
+    // Spin up a 2nd L1 node. It tracks the L1 from primary-network start but
+    // is NOT a P-Chain validator yet — this flow registers it.
+    const addResult = await tmpnet.addL1Node(subnetId, (m) => console.log(`[l1-node-2] ${m}`));
+    expect(addResult.success).toBe(true);
+    const node2 = addResult.data!;
+    state.l1Node2 = node2;
+    expect(node2.signerKeyPath).toBeTruthy();
+    console.log(`[step 8] L1 node 2 up: ${node2.nodeId} @ ${node2.uri}`);
+
+    // Load the new node's BLS keypair so we can sign the registration on its
+    // behalf — avalanchego's RegisterL1ValidatorTx requires a BLS signature
+    // from the validator over the AddressedCall payload bytes.
+    const blsKeypair = loadValidatorBlsKeypair(node2.signerKeyPath!);
+    expect(blsKeypair.publicKey.toLowerCase()).toBe(node2.blsPublicKey!.toLowerCase());
+
+    // Convert EWOQ's P-Chain bech32 address to a 0x-hex 20-byte form for
+    // the PChainOwner struct the EVM contract expects.
+    const ownerPAddrBytes = utils.bech32ToBytes(ownerPAddr);
+    const ownerAddrHex = `0x${Buffer.from(ownerPAddrBytes).toString("hex")}` as Address;
+    const balanceOwner = { threshold: 1, addresses: [ownerAddrHex] as const };
+
+    const aggregateSignatures = buildAggregateSignaturesFn(signatureAggregator, {
+      log: (m) => console.log(`[step 8] ${m}`),
+    });
+
+    const result = await registerL1Validator(l1WalletClient as never, l1PublicClient as never, {
+      validatorManagerAddress,
+      networkId: TMPNET_NETWORK_ID,
+      subnetId,
+      validator: {
+        nodeId: node2.nodeId,
+        blsPublicKey: blsKeypair.publicKey,
+        weight: 1n,
+        remainingBalanceOwner: balanceOwner,
+        disableOwner: balanceOwner,
+      },
+      aggregateSignatures,
+      getBlsProofOfPossession: async () => blsKeypair.proofOfPossession,
+      submitPChainRegisterTx: async ({ signedWarpMessageHex, blsProofOfPossessionHex }) => {
+        // P-Chain's mempool verifies RegisterL1ValidatorTx warp messages at
+        // `recommendedPChainHeight` (see avalanchego block/builder/builder.go
+        // → GetMinimumHeight). On a fresh local network, this lags behind the
+        // current tip — and at heights before the L1 was registered the
+        // subnet's validator set is empty, so the bitset's signer index can't
+        // be filtered against any validator (the error surfaces as "unknown
+        // validator: NumIndices (0) >= NumFilteredValidators (0)" — the (0)
+        // is misleading, see avalanchego warp/validator.go::FilterValidators).
+        //
+        // Advance P-Chain with self-transfers + a 30s sleep so GetMinimum
+        // catches up past the L1's conversion height before we submit.
+        for (let i = 0; i < 2; i++) {
+          const adv = await walletClient.pChain.prepareBaseTxn({});
+          const { txHash } = await walletClient.sendXPTransaction({
+            tx: adv.tx,
+            chainAlias: "P",
+          });
+          await waitForCommitted(walletClient, txHash);
+        }
+        await Bun.sleep(30_000);
+        console.log(`[step 8] P-Chain advanced, submitting RegisterL1ValidatorTx`);
+
+        const txnRequest = await walletClient.pChain.prepareRegisterL1ValidatorTxn({
+          initialBalanceInNanoAvax: 100_000_000n,
+          blsSignature: blsProofOfPossessionHex,
+          message: signedWarpMessageHex,
+        });
+        const { txHash } = await walletClient.sendXPTransaction({
+          tx: txnRequest.tx,
+          chainAlias: "P",
+        });
+        await waitForCommitted(walletClient, txHash);
+        console.log(`[step 8] RegisterL1ValidatorTx committed on P-Chain: ${txHash}`);
+
+        // Roll the L1's proposerVM forward so its next block sees the
+        // post-registration P-Chain state — otherwise the L1's warp
+        // predicate verifies the ACK message at an older epoch and the
+        // primary-network validator set lookup can be stale.
+        await rollL1PastFirstEpoch(l1WalletClient, l1PublicClient, 35_000, (m) =>
+          console.log(`[step 8] ${m}`),
+        );
+        return { txId: txHash };
+      },
+    });
+
+    state.newValidationID = result.validationID;
+    expect(result.completeTxHash.length).toBeGreaterThan(2);
+    expect(result.pChainRegisterTxId.length).toBeGreaterThan(0);
+
+    // P-Chain should now report 2 validators on the subnet.
+    const onChain = await walletClient.pChain.getCurrentValidators({ subnetID: subnetId });
+    const validators = (onChain as { validators?: { nodeID: string }[] }).validators ?? [];
+    const nodeIds = new Set(validators.map((v) => v.nodeID));
+    expect(nodeIds.size).toBeGreaterThanOrEqual(2);
+    console.log(
+      `[step 8] subnet validators on P-Chain: ${validators.length} (validationID=${result.validationID})`,
+    );
   }, BOOT_TIMEOUT_MS);
 });

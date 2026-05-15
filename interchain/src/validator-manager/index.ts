@@ -24,6 +24,22 @@ export {
 } from "./initializeValidatorSet.js";
 
 export {
+    registerL1Validator,
+    initiateValidatorRegistration,
+    completeValidatorRegistration,
+    type RegisterL1ValidatorArgs,
+    type RegisterL1ValidatorResult,
+    type RegisterValidatorParams,
+    type EvmPChainOwner,
+    type GetBlsProofOfPossessionFn,
+    type SubmitPChainRegisterTxFn,
+    type InitiateValidatorRegistrationArgs,
+    type InitiateValidatorRegistrationResult,
+    type CompleteValidatorRegistrationArgs,
+    type CompleteValidatorRegistrationResult,
+} from "./registerL1Validator.js";
+
+export {
     buildValidatorManagerGenesisAlloc,
     type GenesisAllocEntry,
 } from "./proxyGenesis.js";

@@ -72,17 +72,48 @@ export async function assertSuccessOrReplay(
 ): Promise<void> {
     if (args.receipt.status === "success") return;
 
+    // Replay strategies — try a fresh block first (which sees the current state
+    // including anything that landed in the failing block) and fall back to
+    // block N-1 (pre-tx state). Whichever surfaces the real revert reason wins.
+    const tries: Array<{ label: string; blockNumber?: bigint }> = [
+        { label: "latest" },
+        { label: `block-${args.receipt.blockNumber - 1n}`, blockNumber: args.receipt.blockNumber - 1n },
+    ];
     let revertReason = "<eth_call replay produced no error>";
-    try {
-        await publicClient.call({
-            to: args.contractAddress,
-            data: args.callData,
-            account: args.account,
-            accessList: args.accessList,
-            blockNumber: args.receipt.blockNumber - 1n,
-        } as never);
-    } catch (err: unknown) {
-        revertReason = err instanceof Error ? err.message : String(err);
+    for (const t of tries) {
+        try {
+            await publicClient.call({
+                to: args.contractAddress,
+                data: args.callData,
+                account: args.account,
+                accessList: args.accessList,
+                ...(t.blockNumber !== undefined ? { blockNumber: t.blockNumber } : {}),
+            } as never);
+        } catch (err: unknown) {
+            revertReason = `${t.label}: ${err instanceof Error ? err.message : String(err)}`;
+            break;
+        }
+    }
+
+    // Subnet-EVM-specific: warp predicate failures don't surface via eth_call
+    // (eth_call doesn't run predicates), so fall back to `debug_traceTransaction`
+    // on the failing tx itself. That replays the tx against its own block —
+    // including predicate evaluation — and returns the abi-encoded revert
+    // reason. Best-effort: the node may not have debug RPC enabled.
+    if (revertReason.startsWith("<")) {
+        try {
+            const trace = (await publicClient.request({
+                method: "debug_traceTransaction" as never,
+                params: [args.receipt.transactionHash, { tracer: "callTracer" }] as never,
+            } as never)) as { error?: string; revertReason?: string; output?: string };
+            const reason =
+                trace.revertReason ||
+                trace.error ||
+                (trace.output && trace.output !== "0x" ? `output=${trace.output}` : null);
+            if (reason) revertReason = `debug_trace: ${reason}`;
+        } catch (err: unknown) {
+            // ignore — debug RPC may not be enabled
+        }
     }
     const op = args.opName ?? "transaction";
     throw new Error(

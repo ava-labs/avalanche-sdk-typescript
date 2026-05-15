@@ -323,8 +323,15 @@ export class SignatureAggregatorManager implements IDisposable {
   }
 
   /**
-   * Aggregate signatures for a Warp message.  For tmpnet we default to
-   * quorum-percentage: 1 (any single validator is enough).
+   * Aggregate signatures for a Warp message.  Default `quorum-percentage: 67`
+   * matches the canonical 67% quorum that:
+   *   - the EVM warp precompile predicate enforces via `quorumNumerator` in
+   *     `warpConfig` (we configure 67 in our genesis builder), AND
+   *   - avalanchego's P-Chain warp verifier hard-codes (WarpQuorumNumerator=67
+   *     in `vms/platformvm/txs/executor/warp_verifier.go`).
+   * A lower quorum is fine for outgoing-from-L1 messages with one validator
+   * (it'd reach 100%), but ACK messages from P-Chain (signed by 5 primary
+   * validators) need at least 67% — otherwise the L1's complete* call reverts.
    */
   async aggregateSignatures(request: AggregateSignaturesRequest): Promise<AggregateSignaturesResponse> {
     const status = await this.getStatus();
@@ -333,7 +340,7 @@ export class SignatureAggregatorManager implements IDisposable {
     }
 
     const requestWithDefaults: AggregateSignaturesRequest = {
-      "quorum-percentage": 1,
+      "quorum-percentage": 67,
       ...request,
     };
 

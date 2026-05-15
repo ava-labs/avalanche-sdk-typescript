@@ -269,11 +269,20 @@ export async function finalizeNode(
   };
   saveProcessDetails(finalNodeDir, processDetails);
 
+  // The BLS staking-signer key file is at one of two locations depending on
+  // whether the node loaded a preconfigured staker (primary nodes 1-5) or
+  // had avalanchego auto-generate one inside --data-dir.
+  const signerKeyPath =
+    stakerNum >= 1 && stakerNum <= MAX_PRECONFIGURED_STAKERS
+      ? join(STAKING_KEYS_DIR, `signer${stakerNum}.key`)
+      : join(finalNodeDir, "staking", "signer.key");
+
   return {
     nodeId,
     uri: `http://127.0.0.1:${httpPort}`,
     stakingAddress: `127.0.0.1:${stakingPort}`,
     isValidator: stakerNum <= MAX_PRECONFIGURED_STAKERS,
+    signerKeyPath,
   };
 }
 
@@ -375,6 +384,8 @@ export async function startL1Node(
       trackedSubnets: [subnetId],
       blsPublicKey,
       blsProofOfPossession,
+      // L1 nodes always auto-generate their BLS signer inside --data-dir.
+      signerKeyPath: join(finalNodeDir, "staking", "signer.key"),
     },
   };
 }

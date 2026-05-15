@@ -37,6 +37,19 @@ export interface NodeInfo {
   trackedSubnets?: string[];
   blsPublicKey?: string;
   blsProofOfPossession?: string;
+  /**
+   * Absolute path to the node's BLS staking-signer key file (32 raw bytes
+   * = the BLS12-381 secret scalar serialised big-endian). Avalanchego writes
+   * this file at `${data-dir}/staking/signer.key` on first boot when no
+   * `--staking-signer-key-file` is supplied (the L1-node path), or it points
+   * at the preconfigured `STAKING_KEYS_DIR/signer<N>.key` for primary nodes
+   * that loaded a vendored staker.
+   *
+   * Read it when you need to BLS-sign on behalf of this node (e.g. the
+   * `RegisterL1ValidatorMessage` payload for a new L1 validator). Stays
+   * `undefined` when the node uses ephemeral keys with no persistent file.
+   */
+  signerKeyPath?: string;
 }
 
 export interface DetailedNodeInfo extends NodeInfo {
