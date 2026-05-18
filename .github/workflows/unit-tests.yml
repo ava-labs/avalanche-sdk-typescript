@@ -19,15 +19,28 @@ jobs:
         with:
           bun-version: "1.1.38"
 
-      - name: Install deps
+      - name: Install client + interchain deps
         run: |
           cd client && bun install --frozen-lockfile || bun install
           cd ../interchain && bun install --frozen-lockfile || bun install
-          cd ../e2e && bun install
 
       - name: Build interchain
         working-directory: interchain
         run: bun run build
+
+      - name: Build client (types + esm only — webpack/cjs not needed for typecheck)
+        working-directory: client
+        run: |
+          bun run clean
+          bun run build:esm
+          bun run build:types
+
+      # Install e2e LAST so `file:` deps snapshot the freshly-built dist/
+      # folders into e2e/node_modules. bun install with file: copies the
+      # source dir at install time; building afterwards wouldn't propagate.
+      - name: Install e2e deps
+        working-directory: e2e
+        run: bun install
 
       - name: Typecheck
         working-directory: e2e
