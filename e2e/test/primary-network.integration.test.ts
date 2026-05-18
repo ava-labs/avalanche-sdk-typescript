@@ -72,7 +72,14 @@ describe.skipIf(SKIP_INTEGRATION)("primary network flow against tmpnet", () => {
     state.walletClient = createAvalancheWalletClient({
       account: state.account,
       chain: avalancheLocal,
-      transport: { type: "http", url: "http://127.0.0.1:9650/" },
+      // Point the wallet's root transport at the C-Chain EVM RPC. The SDK
+      // derives per-sub-client URLs from this origin: the C-Chain atomic
+      // sub-client gets /ext/bc/C/avax, pChain gets /ext/bc/P, etc. (see
+      // client/src/clients/utils.ts::getClientURL). The wallet client's
+      // root itself is the EVM RPC, which is where things like
+      // `getBaseFee` (eth_baseFee) need to go — calling it against the
+      // bare root URL 404s.
+      transport: { type: "http", url: "http://127.0.0.1:9650/ext/bc/C/rpc" },
     });
 
     await waitForPChainReady(state.walletClient);
