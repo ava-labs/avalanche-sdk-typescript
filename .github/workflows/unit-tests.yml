@@ -54,6 +54,10 @@ jobs:
           cd ../interchain && bun install --frozen-lockfile || bun install
           cd ../e2e && bun install
 
+      - name: Build interchain (e2e tests import from dist via file: dep)
+        working-directory: ${{ github.workspace }}/interchain
+        run: bun run build
+
       - name: Typecheck
         run: bun run typecheck
 

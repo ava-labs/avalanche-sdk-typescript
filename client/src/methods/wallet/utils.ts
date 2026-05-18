@@ -197,54 +197,61 @@ export function nanoAvaxToAvax(amount: bigint) {
  * Resolve a chain alias (X / P / C) to its blockchain ID.
  *
  * Accepts either:
- *   - a {@link ContextType.Context} object — preferred; uses the live
- *     `xBlockchainID` / `pBlockchainID` / `cBlockchainID` fetched from the
- *     node. Works on ANY network, including local/tmpnet.
- *   - a numeric `networkId` (legacy) — works for mainnet (1) and Fuji
- *     testnet (5) only, falling back to the static blockchain-ID consts.
- *     Throws on any other network ID because local-network blockchain IDs
- *     are randomly generated per-network and can't be hardcoded.
+ *   - a numeric `networkId` for mainnet (1) or Fuji testnet (5) — uses
+ *     the well-known static blockchain-ID consts. This is the legacy path
+ *     and remains the default behavior for the public networks.
+ *   - a {@link ContextType.Context} object — required for any custom or
+ *     local network (e.g. tmpnet, networkID=12345). When networkID is
+ *     mainnet/Fuji we STILL use the static map (test fixtures and prod
+ *     callers may pass a Context whose blockchainIDs lag a fork, etc.);
+ *     only fall through to context-supplied blockchain IDs when the
+ *     network is unknown.
  *
- * Internal callers that have a context already (every prepare*Txn does)
- * should pass it directly; that path is local-network-safe.
+ * Internal callers that have a context should always pass it; the function
+ * will use it only when necessary.
  */
 export function getChainIdFromAlias(
   alias: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS,
   networkIdOrContext: number | ContextType.Context
 ) {
-  // Context path — preferred. Works on any network.
-  if (typeof networkIdOrContext === "object") {
+  const isContext = typeof networkIdOrContext === "object";
+  const networkId = isContext ? networkIdOrContext.networkID : networkIdOrContext;
+
+  // Static map for the public networks — keeps test fixtures and existing
+  // tx-hash assertions stable.
+  if (networkId === MAINNET_NETWORK_ID || networkId === TESTNET_NETWORK_ID) {
     switch (alias) {
       case X_CHAIN_ALIAS:
-        return networkIdOrContext.xBlockchainID;
-      case P_CHAIN_ALIAS:
-        return networkIdOrContext.pBlockchainID;
+        return networkId === MAINNET_NETWORK_ID
+          ? X_CHAIN_MAINNET_ID
+          : X_CHAIN_FUJI_ID;
       case C_CHAIN_ALIAS:
-        return networkIdOrContext.cBlockchainID;
+        return networkId === MAINNET_NETWORK_ID
+          ? C_CHAIN_MAINNET_ID
+          : C_CHAIN_FUJI_ID;
+      case P_CHAIN_ALIAS:
+        return networkId === MAINNET_NETWORK_ID
+          ? P_CHAIN_MAINNET_ID
+          : P_CHAIN_FUJI_ID;
       default:
         throw new Error(`Invalid chain alias: ${alias}`);
     }
   }
 
-  // Legacy networkId-based path. Only mainnet/testnet have stable IDs.
-  const networkId = networkIdOrContext;
-  if (networkId !== MAINNET_NETWORK_ID && networkId !== TESTNET_NETWORK_ID) {
-    throw new Error(`Invalid network ID: ${networkId}`);
+  // Unknown network — must have a Context. Local-network blockchain IDs are
+  // randomly generated per-tmpnet and only available via the live node.
+  if (!isContext) {
+    throw new Error(
+      `Invalid network ID: ${networkId} — pass a Context object to use a custom network.`,
+    );
   }
-
   switch (alias) {
     case X_CHAIN_ALIAS:
-      return networkId === MAINNET_NETWORK_ID
-        ? X_CHAIN_MAINNET_ID
-        : X_CHAIN_FUJI_ID;
-    case C_CHAIN_ALIAS:
-      return networkId === MAINNET_NETWORK_ID
-        ? C_CHAIN_MAINNET_ID
-        : C_CHAIN_FUJI_ID;
+      return networkIdOrContext.xBlockchainID;
     case P_CHAIN_ALIAS:
-      return networkId === MAINNET_NETWORK_ID
-        ? P_CHAIN_MAINNET_ID
-        : P_CHAIN_FUJI_ID;
+      return networkIdOrContext.pBlockchainID;
+    case C_CHAIN_ALIAS:
+      return networkIdOrContext.cBlockchainID;
     default:
       throw new Error(`Invalid chain alias: ${alias}`);
   }
