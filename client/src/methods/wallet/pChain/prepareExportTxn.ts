@@ -61,10 +61,7 @@ export async function prepareExportTxn(
     {
       ...commonTxParams,
       outputs: exportedOutputs,
-      destinationChainId: getChainIdFromAlias(
-        params.destinationChain,
-        context.networkID
-      ),
+      destinationChainId: getChainIdFromAlias(params.destinationChain, context),
     },
     context
   );

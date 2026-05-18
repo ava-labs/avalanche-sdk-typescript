@@ -64,7 +64,7 @@ export async function prepareExportTxn(
     context,
     BigInt(baseFeeInWei),
     params.exportedOutput.amount,
-    getChainIdFromAlias(params.destinationChain, context.networkID),
+    getChainIdFromAlias(params.destinationChain, context),
     utils.hexToBuffer(params.fromAddress),
     pAddressBytes,
     BigInt(txCount)

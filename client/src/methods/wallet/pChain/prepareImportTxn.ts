@@ -48,13 +48,13 @@ export async function prepareImportTxn(
   const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
     context,
-    sourceChain: getChainIdFromAlias(params.sourceChain, context.networkID),
+    sourceChain: getChainIdFromAlias(params.sourceChain, context),
   });
 
   const unsignedTx = pvm.newImportTx(
     {
       ...commonTxParams,
-      sourceChainId: getChainIdFromAlias(params.sourceChain, context.networkID),
+      sourceChainId: getChainIdFromAlias(params.sourceChain, context),
       toAddressesBytes: params.importedOutput.addresses.map(
         utils.bech32ToBytes
       ),

@@ -193,10 +193,41 @@ export function nanoAvaxToAvax(amount: bigint) {
   return Number(amount) / 1e9;
 }
 
+/**
+ * Resolve a chain alias (X / P / C) to its blockchain ID.
+ *
+ * Accepts either:
+ *   - a {@link ContextType.Context} object — preferred; uses the live
+ *     `xBlockchainID` / `pBlockchainID` / `cBlockchainID` fetched from the
+ *     node. Works on ANY network, including local/tmpnet.
+ *   - a numeric `networkId` (legacy) — works for mainnet (1) and Fuji
+ *     testnet (5) only, falling back to the static blockchain-ID consts.
+ *     Throws on any other network ID because local-network blockchain IDs
+ *     are randomly generated per-network and can't be hardcoded.
+ *
+ * Internal callers that have a context already (every prepare*Txn does)
+ * should pass it directly; that path is local-network-safe.
+ */
 export function getChainIdFromAlias(
   alias: typeof P_CHAIN_ALIAS | typeof X_CHAIN_ALIAS | typeof C_CHAIN_ALIAS,
-  networkId: number
+  networkIdOrContext: number | ContextType.Context
 ) {
+  // Context path — preferred. Works on any network.
+  if (typeof networkIdOrContext === "object") {
+    switch (alias) {
+      case X_CHAIN_ALIAS:
+        return networkIdOrContext.xBlockchainID;
+      case P_CHAIN_ALIAS:
+        return networkIdOrContext.pBlockchainID;
+      case C_CHAIN_ALIAS:
+        return networkIdOrContext.cBlockchainID;
+      default:
+        throw new Error(`Invalid chain alias: ${alias}`);
+    }
+  }
+
+  // Legacy networkId-based path. Only mainnet/testnet have stable IDs.
+  const networkId = networkIdOrContext;
   if (networkId !== MAINNET_NETWORK_ID && networkId !== TESTNET_NETWORK_ID) {
     throw new Error(`Invalid network ID: ${networkId}`);
   }
