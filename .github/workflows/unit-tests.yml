@@ -55,8 +55,11 @@ jobs:
           cd ../e2e && bun install
 
       - name: Build interchain (e2e tests import from dist via file: dep)
-        working-directory: ${{ github.workspace }}/interchain
-        run: bun run build
+        # Job default working-directory is `e2e/`, so `../interchain` is the
+        # repo's interchain/ package. Avoid `${{ github.workspace }}/foo` here
+        # because some setups handle path concat through that interpolation
+        # poorly at workflow-parse time.
+        run: cd ../interchain && bun run build
 
       - name: Typecheck
         run: bun run typecheck
