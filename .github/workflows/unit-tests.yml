@@ -48,4 +48,4 @@ jobs:
 
       - name: Run unit tests
         working-directory: e2e
-        run: bun test ./test/unit/
+        run: bun test test/unit
