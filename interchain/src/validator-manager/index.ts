@@ -23,6 +23,8 @@ export {
     type InitializeValidatorSetResult,
 } from "./initializeValidatorSet.js";
 
+export type { OnProgress } from "./types.js";
+
 export {
     registerL1Validator,
     initiateValidatorRegistration,

@@ -14,7 +14,7 @@ import {
     parseRegisterL1ValidatorMessage,
     parseSubnetToL1ConversionMessage,
     parseValidationUptimeMessage,
-} from "../../../interchain/src/warp/index.ts";
+} from "../src/warp/index.ts";
 
 /**
  * Round-trip serialization tests for every AddressedCall message type the

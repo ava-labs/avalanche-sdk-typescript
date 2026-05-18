@@ -367,8 +367,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     // viem is installed twice (e2e + interchain) so WalletClient types
     // don't unify across packages — cast at the boundary.
     const upgrade = await upgradeProxyToValidatorManager(
-      l1WalletClient as never,
-      l1PublicClient as never,
+      l1WalletClient,
+      l1PublicClient,
       {
         initSettings: {
           admin: evmAccount.address,
@@ -435,7 +435,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     );
     expect(sigaggStart.running).toBe(true);
 
-    const result = await initializeValidatorSet(l1WalletClient as never, l1PublicClient as never, {
+    const result = await initializeValidatorSet(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       contractAddress: validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -507,7 +508,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       log: (m) => console.log(`[step 8] ${m}`),
     });
 
-    const result = await registerL1Validator(l1WalletClient as never, l1PublicClient as never, {
+    const result = await registerL1Validator(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -615,7 +617,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       log: (m) => console.log(`[step 9] ${m}`),
     });
 
-    const result = await setL1ValidatorWeight(l1WalletClient as never, l1PublicClient as never, {
+    const result = await setL1ValidatorWeight(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -700,7 +703,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       log: (m) => console.log(`[step 10] ${m}`),
     });
 
-    const result = await disableL1Validator(l1WalletClient as never, l1PublicClient as never, {
+    const result = await disableL1Validator(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -798,7 +802,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       log: (m) => console.log(`[step 11] ${m}`),
     });
 
-    const result = await registerL1Validator(l1WalletClient as never, l1PublicClient as never, {
+    const result = await registerL1Validator(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -1021,7 +1026,8 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       log: (m) => console.log(`[step 14] ${m}`),
     });
 
-    const result = await disableL1Validator(l1WalletClient as never, l1PublicClient as never, {
+    const result = await disableL1Validator(l1WalletClient, l1PublicClient, {
+      onProgress: console.log,
       validatorManagerAddress,
       networkId: TMPNET_NETWORK_ID,
       subnetId,
@@ -1115,7 +1121,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         functionName: "initiateValidatorRegistration",
         args: [bootstrapNodeIdHex, dummyBls, balanceOwner, balanceOwner, 1n],
         account: l1WalletClient.account!,
-      } as never);
+      });
     } catch (err) {
       reverted = true;
       const msg = err instanceof Error ? err.message : String(err);
@@ -1137,7 +1143,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
         // Use a fresh fake nodeID so we don't trip NodeAlreadyRegistered first.
         args: [`0x${"22".repeat(20)}` as Hex, dummyBls, balanceOwner, balanceOwner, 1n],
         account: randomAccount,
-      } as never);
+      });
     } catch (err) {
       unauthorizedReverted = true;
       const msg = err instanceof Error ? err.message : String(err);
@@ -1181,7 +1187,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     const justification = await getRegistrationJustification(
       bootstrapValidationID,
       subnetId,
-      l1PublicClient as never,
+      l1PublicClient,
     );
     expect(justification).not.toBeNull();
     // The bootstrap-path protobuf wraps SubnetIDIndex{ subnet_id, index }.

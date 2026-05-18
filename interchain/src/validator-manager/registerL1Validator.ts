@@ -5,9 +5,7 @@ import {
     encodeFunctionData,
     type Address,
     type Hex,
-    type PublicClient,
     type TransactionReceipt,
-    type WalletClient,
 } from "viem";
 
 import { newL1ValidatorRegistrationMessage } from "../warp/addressedCallMessages/l1ValidatorRegistrationMessage.js";
@@ -20,6 +18,8 @@ import { parseWarpUnsignedMessage } from "../warp/warpUnsignedMessage.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
 import { assertSuccessOrReplay } from "./evmHelpers.js";
 import type { AggregateSignaturesFn } from "./initializeValidatorSet.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
+import type { OnProgress } from "./types.js";
 
 /**
  * P-Chain owner shape on the EVM ABI: a `{ threshold, address[] }` tuple.
@@ -100,8 +100,8 @@ export interface InitiateValidatorRegistrationResult {
  *     precompile's `SendWarpMessage` event
  */
 export async function initiateValidatorRegistration(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: InitiateValidatorRegistrationArgs,
 ): Promise<InitiateValidatorRegistrationResult> {
     const nodeIdHex = bytesToHex(nodeIdToBytes(args.validator.nodeId));
@@ -189,6 +189,8 @@ export interface CompleteValidatorRegistrationArgs {
     validatorManagerAddress: Address;
     /** Aggregated signed `L1ValidatorRegistrationMessage(validationID, true)` warp message. */
     signedAckMessageHex: Hex;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface CompleteValidatorRegistrationResult {
@@ -201,8 +203,8 @@ export interface CompleteValidatorRegistrationResult {
  * the signed P-Chain ACK message packed into the warp-precompile access list.
  */
 export async function completeValidatorRegistration(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: CompleteValidatorRegistrationArgs,
 ): Promise<CompleteValidatorRegistrationResult> {
     const accessList = packWarpIntoAccessList(utils.hexToBuffer(args.signedAckMessageHex));
@@ -240,7 +242,7 @@ export async function completeValidatorRegistration(
         account: walletClient.account ?? null,
     } as never);
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-    console.log(
+    args.onProgress?.(
         `[completeValidatorRegistration] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`,
     );
 
@@ -270,6 +272,8 @@ export interface RegisterL1ValidatorArgs {
     aggregateSignatures: AggregateSignaturesFn;
     getBlsProofOfPossession: GetBlsProofOfPossessionFn;
     submitPChainRegisterTx: SubmitPChainRegisterTxFn;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface RegisterL1ValidatorResult {
@@ -321,8 +325,8 @@ export interface RegisterL1ValidatorResult {
  *            warp-precompile access list.
  */
 export async function registerL1Validator(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: RegisterL1ValidatorArgs,
 ): Promise<RegisterL1ValidatorResult> {
     // 1. Initiate on EVM.
@@ -373,6 +377,7 @@ export async function registerL1Validator(
     const complete = await completeValidatorRegistration(walletClient, publicClient, {
         validatorManagerAddress: args.validatorManagerAddress,
         signedAckMessageHex: signedRegistrationAckHex,
+        ...(args.onProgress ? { onProgress: args.onProgress } : {}),
     });
 
     return {

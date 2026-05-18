@@ -6,7 +6,7 @@ import {
     evmOrBech32AddressToBytes,
     nodeIdToBytes,
     parseBech32AddressToBytes,
-} from "../../../interchain/src/warp/utils.ts";
+} from "../src/warp/utils.ts";
 
 /**
  * Address-parsing helpers in warp/utils.ts get exercised implicitly through

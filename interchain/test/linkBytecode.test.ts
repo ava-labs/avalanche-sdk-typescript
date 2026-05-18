@@ -3,7 +3,7 @@ import { describe, expect, test } from "bun:test";
 import {
     linkBytecode,
     listUnlinkedLibraries,
-} from "../../../interchain/src/validator-manager/linkBytecode.ts";
+} from "../src/validator-manager/linkBytecode.ts";
 
 /**
  * `linkBytecode` performs pure string surgery on Solidity placeholder

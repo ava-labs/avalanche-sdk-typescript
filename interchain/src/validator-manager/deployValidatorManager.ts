@@ -1,9 +1,10 @@
-import { type Address, type Hex, type PublicClient, type WalletClient } from "viem";
+import { type Address, type Hex } from "viem";
 
 import { ValidatorManagerAbi, ValidatorManagerBytecode } from "./artifacts/ValidatorManager.js";
 import { ValidatorMessagesAbi, ValidatorMessagesBytecode } from "./artifacts/ValidatorMessages.js";
 import { deployAndAwait } from "./evmHelpers.js";
 import { linkBytecode, listUnlinkedLibraries } from "./linkBytecode.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
 
 /**
  * ValidatorManager constructor argument.
@@ -84,8 +85,8 @@ export interface DeployValidatorManagerResult {
  * immediately by callers (no extra wait-for-receipt needed).
  */
 export async function deployValidatorManager(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: DeployValidatorManagerArgs = {},
 ): Promise<DeployValidatorManagerResult> {
     const icmInitializable = args.icmInitializable ?? ICMInitializable.Allowed;
@@ -127,8 +128,8 @@ export async function deployValidatorManager(
  * proxy's storage via `ProxyAdmin.upgradeAndCall`.
  */
 export async function initializeValidatorManager(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: { address: Address; settings: ValidatorManagerSettings },
 ): Promise<{ txHash: Hex }> {
     const txHash = await walletClient.writeContract({

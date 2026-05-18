@@ -2,8 +2,6 @@ import {
     encodeFunctionData,
     type Address,
     type Hex,
-    type PublicClient,
-    type WalletClient,
 } from "viem";
 
 import { ProxyAdminAbi } from "./artifacts/ProxyAdmin.js";
@@ -17,6 +15,7 @@ import {
     VALIDATOR_MANAGER_PROXY_ADDRESS,
     VALIDATOR_MANAGER_PROXY_ADMIN_ADDRESS,
 } from "./constants.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
 
 export interface UpgradeProxyToValidatorManagerArgs {
     /**
@@ -77,8 +76,8 @@ export interface UpgradeProxyToValidatorManagerResult {
  *   - The caller's account is the ProxyAdmin's owner.
  */
 export async function upgradeProxyToValidatorManager(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: UpgradeProxyToValidatorManagerArgs,
 ): Promise<UpgradeProxyToValidatorManagerResult> {
     const proxyAddress = (args.proxyAddress ??

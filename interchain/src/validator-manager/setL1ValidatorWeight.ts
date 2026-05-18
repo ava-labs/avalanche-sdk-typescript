@@ -4,9 +4,7 @@ import {
     encodeFunctionData,
     type Address,
     type Hex,
-    type PublicClient,
     type TransactionReceipt,
-    type WalletClient,
 } from "viem";
 
 import { newL1ValidatorWeightMessage } from "../warp/addressedCallMessages/l1ValidatorWeightMessage.js";
@@ -18,6 +16,8 @@ import { parseWarpUnsignedMessage } from "../warp/warpUnsignedMessage.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
 import { assertSuccessOrReplay, base58checkToBytes32Hex } from "./evmHelpers.js";
 import type { AggregateSignaturesFn } from "./initializeValidatorSet.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
+import type { OnProgress } from "./types.js";
 
 /**
  * Callback that submits the P-Chain `SetL1ValidatorWeightTx` carrying the
@@ -57,8 +57,8 @@ export interface InitiateValidatorWeightUpdateResult {
  * wait for the receipt, and extract the unsigned warp message + nonce.
  */
 export async function initiateValidatorWeightUpdate(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: InitiateValidatorWeightUpdateArgs,
 ): Promise<InitiateValidatorWeightUpdateResult> {
     const fnArgs = [args.validationID, args.newWeight] as const;
@@ -123,6 +123,8 @@ function decodeInitiatedWeightUpdateEvent(receipt: TransactionReceipt): bigint {
 export interface CompleteValidatorWeightUpdateArgs {
     validatorManagerAddress: Address;
     signedAckMessageHex: Hex;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface CompleteValidatorWeightUpdateResult {
@@ -131,8 +133,8 @@ export interface CompleteValidatorWeightUpdateResult {
 }
 
 export async function completeValidatorWeightUpdate(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: CompleteValidatorWeightUpdateArgs,
 ): Promise<CompleteValidatorWeightUpdateResult> {
     const accessList = packWarpIntoAccessList(utils.hexToBuffer(args.signedAckMessageHex));
@@ -166,7 +168,7 @@ export async function completeValidatorWeightUpdate(
         account: walletClient.account ?? null,
     } as never);
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-    console.log(
+    args.onProgress?.(
         `[completeValidatorWeightUpdate] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`,
     );
 
@@ -197,6 +199,8 @@ export interface SetL1ValidatorWeightArgs {
     newWeight: bigint;
     aggregateSignatures: AggregateSignaturesFn;
     submitPChainSetWeightTx: SubmitPChainSetWeightTxFn;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface SetL1ValidatorWeightResult {
@@ -228,8 +232,8 @@ export interface SetL1ValidatorWeightResult {
  *   6. EVM   `completeValidatorWeightUpdate(0)`.
  */
 export async function setL1ValidatorWeight(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: SetL1ValidatorWeightArgs,
 ): Promise<SetL1ValidatorWeightResult> {
     const initiate = await initiateValidatorWeightUpdate(walletClient, publicClient, {
@@ -273,6 +277,7 @@ export async function setL1ValidatorWeight(
     const complete = await completeValidatorWeightUpdate(walletClient, publicClient, {
         validatorManagerAddress: args.validatorManagerAddress,
         signedAckMessageHex: signedWeightUpdateAckHex,
+        ...(args.onProgress ? { onProgress: args.onProgress } : {}),
     });
 
     return {

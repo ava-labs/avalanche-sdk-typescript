@@ -5,9 +5,7 @@ import {
     hexToBytes,
     type Address,
     type Hex,
-    type PublicClient,
     type TransactionReceipt,
-    type WalletClient,
 } from "viem";
 
 import { newL1ValidatorRegistrationMessage } from "../warp/addressedCallMessages/l1ValidatorRegistrationMessage.js";
@@ -25,6 +23,8 @@ import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
 import { assertSuccessOrReplay } from "./evmHelpers.js";
 import type { AggregateSignaturesFn } from "./initializeValidatorSet.js";
 import type { SubmitPChainSetWeightTxFn } from "./setL1ValidatorWeight.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
+import type { OnProgress } from "./types.js";
 
 // ---------------------------------------------------------------------------
 // Step 1 — EVM initiate
@@ -53,8 +53,8 @@ export interface InitiateValidatorRemovalResult {
  * as "remove this validator".
  */
 export async function initiateValidatorRemoval(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: InitiateValidatorRemovalArgs,
 ): Promise<InitiateValidatorRemovalResult> {
     const fnArgs = [args.validationID] as const;
@@ -97,6 +97,8 @@ export async function initiateValidatorRemoval(
 export interface CompleteValidatorRemovalArgs {
     validatorManagerAddress: Address;
     signedAckMessageHex: Hex;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface CompleteValidatorRemovalResult {
@@ -105,8 +107,8 @@ export interface CompleteValidatorRemovalResult {
 }
 
 export async function completeValidatorRemoval(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: CompleteValidatorRemovalArgs,
 ): Promise<CompleteValidatorRemovalResult> {
     const accessList = packWarpIntoAccessList(utils.hexToBuffer(args.signedAckMessageHex));
@@ -140,7 +142,7 @@ export async function completeValidatorRemoval(
         account: walletClient.account ?? null,
     } as never);
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-    console.log(
+    args.onProgress?.(
         `[completeValidatorRemoval] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`,
     );
 
@@ -188,6 +190,8 @@ export interface DisableL1ValidatorArgs {
     l1PublicClient?: JustificationPublicClient;
     aggregateSignatures: AggregateSignaturesFn;
     submitPChainSetWeightTx: SubmitPChainSetWeightTxFn;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface DisableL1ValidatorResult {
@@ -217,8 +221,8 @@ export interface DisableL1ValidatorResult {
  *   6. EVM   `completeValidatorRemoval(0)`.
  */
 export async function disableL1Validator(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: DisableL1ValidatorArgs,
 ): Promise<DisableL1ValidatorResult> {
     const initiate = await initiateValidatorRemoval(walletClient, publicClient, {
@@ -263,7 +267,7 @@ export async function disableL1Validator(
     // which scans the L1's warp logs backwards and reconstructs the wrapper.
     let justificationBytes: Uint8Array | null;
     if (args.registerMessagePayloadHex) {
-        console.log(
+        args.onProgress?.(
             "[disableL1Validator] using registerMessagePayloadHex fast path — skipping L1 warp-log scan",
         );
         justificationBytes = marshalRegisterMessageJustification(
@@ -275,7 +279,7 @@ export async function disableL1Validator(
                 "disableL1Validator: l1PublicClient is required to derive the removal-ACK justification when registerMessagePayloadHex is not provided (see getRegistrationJustification)",
             );
         }
-        console.log(
+        args.onProgress?.(
             "[disableL1Validator] scanning L1 warp logs for register payload (no registerMessagePayloadHex provided)",
         );
         justificationBytes = await getRegistrationJustification(
@@ -298,6 +302,7 @@ export async function disableL1Validator(
     const complete = await completeValidatorRemoval(walletClient, publicClient, {
         validatorManagerAddress: args.validatorManagerAddress,
         signedAckMessageHex: signedRemovalAckHex,
+        ...(args.onProgress ? { onProgress: args.onProgress } : {}),
     });
 
     return {

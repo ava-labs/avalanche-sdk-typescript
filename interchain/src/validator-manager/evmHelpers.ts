@@ -7,10 +7,9 @@ import {
     type Address,
     type DeployContractParameters,
     type Hex,
-    type PublicClient,
     type TransactionReceipt,
-    type WalletClient,
 } from "viem";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
 
 /**
  * Deploy a contract, wait for its receipt, and return the deployed address.
@@ -21,8 +20,8 @@ import {
  * `label` is used purely for error messages — pass the contract name.
  */
 export async function deployAndAwait(
-    wc: WalletClient,
-    pc: PublicClient,
+    wc: MinimalWalletClient,
+    pc: MinimalPublicClient,
     params: { abi: Abi; bytecode: Hex; args?: readonly unknown[]; label: string },
 ): Promise<{ address: Address; txHash: Hex }> {
     const txHash = await wc.deployContract({
@@ -60,13 +59,19 @@ export function base58checkToBytes32Hex(id: string): Hex {
  * status=reverted with no detail would otherwise leave the caller blind.
  */
 export async function assertSuccessOrReplay(
-    publicClient: PublicClient,
+    publicClient: MinimalPublicClient,
     args: {
         receipt: TransactionReceipt;
         contractAddress: Address;
         callData: Hex;
         accessList?: AccessList;
-        account?: Account | Address;
+        /**
+         * Account-like shape — viem's `call({ account })` accepts either an
+         * `Account`, a bare address, or anything with `.address`. Loosened
+         * so callers passing a `MinimalWalletClient.account` don't need to
+         * coerce to viem's full `Account` identity.
+         */
+        account?: { address: Address } | Account | Address;
         opName?: string;
     },
 ): Promise<void> {

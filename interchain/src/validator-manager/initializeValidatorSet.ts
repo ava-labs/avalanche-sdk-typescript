@@ -4,9 +4,7 @@ import {
     encodeFunctionData,
     type Address,
     type Hex,
-    type PublicClient,
     type TransactionReceipt,
-    type WalletClient,
 } from "viem";
 
 import { newConversionData } from "../warp/addressedCallMessages/conversionData.js";
@@ -15,9 +13,11 @@ import { P_CHAIN_BLOCKCHAIN_ID } from "../warp/constants.js";
 import { packWarpIntoAccessList } from "../warp/evm.js";
 import { newWarpMessage } from "../warp/newWarpMessage.js";
 import type { SerializedValidatorEntry } from "../warp/types.js";
+import type { OnProgress } from "./types.js";
 import { readU64 } from "../warp/utils.js";
 import { ValidatorManagerAbi } from "./artifacts/ValidatorManager.js";
 import { assertSuccessOrReplay, base58checkToBytes32Hex } from "./evmHelpers.js";
+import type { MinimalWalletClient, MinimalPublicClient } from "./clientTypes.js";
 
 /** Validator entry passed to {@link initializeValidatorSet}. */
 export interface InitialValidator {
@@ -63,6 +63,8 @@ export interface InitializeValidatorSetArgs {
     validators: InitialValidator[];
     /** Aggregate-signatures callback (e.g. wraps signature-aggregator). */
     aggregateSignatures: AggregateSignaturesFn;
+    /** Optional progress callback. See {@link OnProgress}. */
+    onProgress?: OnProgress;
 }
 
 export interface InitializeValidatorSetResult {
@@ -100,8 +102,8 @@ export interface InitializeValidatorSetResult {
  * bytes, the call would revert with `InvalidConversionID`.
  */
 export async function initializeValidatorSet(
-    walletClient: WalletClient,
-    publicClient: PublicClient,
+    walletClient: MinimalWalletClient,
+    publicClient: MinimalPublicClient,
     args: InitializeValidatorSetArgs,
 ): Promise<InitializeValidatorSetResult> {
     // 1. Build canonical ConversionData and capture conversionID.
@@ -198,7 +200,9 @@ export async function initializeValidatorSet(
     } as never);
     const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
 
-    console.log(`[initializeValidatorSet] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`);
+    args.onProgress?.(
+        `[initializeValidatorSet] receipt status=${receipt.status} gasUsed=${receipt.gasUsed} logs=${receipt.logs.length}`,
+    );
     await assertSuccessOrReplay(publicClient, {
         receipt,
         contractAddress: args.contractAddress,

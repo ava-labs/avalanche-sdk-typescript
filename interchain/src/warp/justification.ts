@@ -83,7 +83,9 @@ const SEND_WARP_MESSAGE_EVENT = parseAbiItem(
  */
 export interface JustificationPublicClient {
     getBlockNumber: () => Promise<bigint>;
-    getLogs: (args: unknown) => Promise<unknown[]>;
+    // `args: any` (not `unknown`) so any viem PublicClient is structurally
+    // assignable — viem types getLogs as a wide overload set.
+    getLogs: (args: any) => Promise<unknown[]>;
 }
 
 /** The single log shape we depend on after `getLogs` returns. */
