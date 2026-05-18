@@ -89,6 +89,8 @@ interface FlowState {
   /** Third L1 node, registered fresh for the force-removal path so we don't trip the contract's "node already registered" check on node2's NodeID. */
   l1Node3?: NodeInfo;
   validationID3?: Hex;
+  /** Raw RegisterL1ValidatorMessage payload for node3, captured at step 11 so step 14's reconcile can use the disableL1Validator fast path. */
+  registerMessagePayloadHex3?: Hex;
 }
 const state: FlowState = {};
 
@@ -703,8 +705,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       networkId: TMPNET_NETWORK_ID,
       subnetId,
       validationID: newValidationID,
+      // Fast path: skip the L1 warp-log scan by passing the original
+      // RegisterL1ValidatorMessage payload captured at step 8.
       registerMessagePayloadHex,
-      l1PublicClient: l1PublicClient as never,
       aggregateSignatures,
       submitPChainSetWeightTx: async ({ signedWarpMessageHex }) => {
         for (let i = 0; i < 2; i++) {
@@ -838,6 +841,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
     });
 
     state.validationID3 = result.validationID;
+    state.registerMessagePayloadHex3 = result.registerMessagePayloadHex;
     expect(result.completeTxHash.length).toBeGreaterThan(2);
     console.log(`[step 11] node 3 registered (validationID=${result.validationID})`);
 
@@ -994,6 +998,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       signatureAggregator,
       validationID3,
       l1Node3,
+      registerMessagePayloadHex3,
     } = requireState(
       "subnetId",
       "l1WalletClient",
@@ -1003,6 +1008,7 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       "signatureAggregator",
       "validationID3",
       "l1Node3",
+      "registerMessagePayloadHex3",
     );
 
     // After step 12's force-disable, the contract's _validationPeriods entry
@@ -1020,7 +1026,9 @@ describe.skipIf(SKIP_INTEGRATION)("warp + L1 flow against tmpnet", () => {
       networkId: TMPNET_NETWORK_ID,
       subnetId,
       validationID: validationID3,
-      l1PublicClient: l1PublicClient as never,
+      // Fast path: skip the L1 warp-log scan by passing the original
+      // RegisterL1ValidatorMessage payload captured at step 11.
+      registerMessagePayloadHex: registerMessagePayloadHex3,
       aggregateSignatures,
       submitPChainSetWeightTx: async ({ signedWarpMessageHex }) => {
         for (let i = 0; i < 2; i++) {

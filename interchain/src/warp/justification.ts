@@ -51,7 +51,18 @@ function marshalBootstrapJustification(subnetIdBytes: Uint8Array, index: number)
     return concatBytes(outerTag, outerLen, inner);
 }
 
-function marshalRegisterMessageJustification(registerL1ValidatorMessagePayload: Uint8Array): Uint8Array {
+/**
+ * Wrap a `RegisterL1ValidatorMessage` payload (the AddressedCall body bytes,
+ * NOT the outer warp message) into the protobuf
+ * `L1ValidatorRegistrationJustification` form expected by avalanchego's
+ * `verifyL1ValidatorRegistration` when `registered=false`.
+ *
+ * Exported so callers that already have the raw register payload (e.g. via
+ * {@link import("../validator-manager/registerL1Validator.js").RegisterL1ValidatorResult.registerMessagePayloadHex})
+ * can build the justification directly and skip the L1 warp-log scan in
+ * {@link getRegistrationJustification}.
+ */
+export function marshalRegisterMessageJustification(registerL1ValidatorMessagePayload: Uint8Array): Uint8Array {
     // Field 2: register_l1_validator_message (bytes), wire type 2
     const tag = new Uint8Array([0x12]);
     const len = encodeVarint(registerL1ValidatorMessagePayload.length);

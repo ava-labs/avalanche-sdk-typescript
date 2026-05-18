@@ -4,12 +4,16 @@ import { sha256 } from "@noble/hashes/sha2";
 import { throwNoDirectFromBytes } from "../serialization";
 import { WARP_CODEC_ID } from "../constants";
 import type { SerializedValidatorEntry, ValidatorData as ValidatorDataRaw } from "../types";
-import { compareBytesLex, concatBytes, nodeIdToBytes, u16, u32 } from "../utils";
-
-const warpManager = pvmSerial.warp.getWarpManager();
+import { compareBytesLex, concatBytes, nodeIdToBytes, readU16, readU32, readU64, u16, u32 } from "../utils";
 
 /**
  * Parses a ConversionData (SubnetToL1Conversion) from a hex string.
+ *
+ * Reads the canonical Avalanche byte layout directly — see {@link ConversionData.toHex}.
+ * We intentionally do NOT use avalanchejs's generic `warpManager.unpack`: it
+ * expects an extra 4-byte length prefix wrapping the validators array that the
+ * canonical encoding does not include, and silently drops validators instead
+ * of throwing.
  *
  * @param conversionDataHex - The hex string representing the ConversionData.
  * @returns The parsed ConversionData instance. {@link ConversionData}
@@ -17,15 +21,57 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseConversionData(
     conversionDataHex: string,
 ): ConversionData {
-    const parsedConversionData = warpManager.unpack(
-        utils.hexToBuffer(conversionDataHex),
-        pvmSerial.warp.AddressedCallPayloads.ConversionData,
-    );
+    const bytes = utils.hexToBuffer(conversionDataHex);
+    let o = 0;
+
+    const codec = readU16(bytes, o);
+    o += 2;
+    if (codec !== WARP_CODEC_ID) {
+        throw new Error(`ConversionData: unexpected codec id ${codec}, expected ${WARP_CODEC_ID}`);
+    }
+
+    const subnetIdBytes = bytes.slice(o, o + 32);
+    o += 32;
+    const managerChainIdBytes = bytes.slice(o, o + 32);
+    o += 32;
+
+    const managerAddrLen = readU32(bytes, o);
+    o += 4;
+    const managerAddrBytes = bytes.slice(o, o + managerAddrLen);
+    o += managerAddrLen;
+
+    const numValidators = readU32(bytes, o);
+    o += 4;
+
+    const validators: pvmSerial.warp.AddressedCallPayloads.ValidatorData[] = [];
+    for (let i = 0; i < numValidators; i++) {
+        const nodeIdLen = readU32(bytes, o);
+        o += 4;
+        const nodeIdBytes = bytes.slice(o, o + nodeIdLen);
+        o += nodeIdLen;
+
+        const blsBytes = bytes.slice(o, o + 48);
+        o += 48;
+
+        const weight = readU64(bytes, o);
+        o += 8;
+
+        validators.push(new pvmSerial.warp.AddressedCallPayloads.ValidatorData(
+            new NodeId(nodeIdBytes),
+            BlsPublicKey.fromHex(utils.bufferToHex(blsBytes)),
+            new BigIntPr(weight),
+        ));
+    }
+
+    if (o !== bytes.length) {
+        throw new Error(`ConversionData: ${bytes.length - o} trailing bytes after parse`);
+    }
+
     return new ConversionData(
-        parsedConversionData.subnetId,
-        parsedConversionData.managerChainId,
-        parsedConversionData.managerAddress,
-        parsedConversionData.validators,
+        new Id(subnetIdBytes),
+        new Id(managerChainIdBytes),
+        Address.fromHex(utils.bufferToHex(managerAddrBytes)),
+        validators,
     );
 }
 

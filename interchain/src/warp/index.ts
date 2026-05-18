@@ -11,6 +11,7 @@ export {
 } from "./evm";
 export {
     getRegistrationJustification,
+    marshalRegisterMessageJustification,
     type JustificationPublicClient,
     type GetRegistrationJustificationOptions,
 } from "./justification";

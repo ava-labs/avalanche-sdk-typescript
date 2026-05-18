@@ -2,6 +2,7 @@ import { utils } from "@avalabs/avalanchejs";
 import {
     bytesToHex,
     encodeFunctionData,
+    hexToBytes,
     type Address,
     type Hex,
     type PublicClient,
@@ -15,6 +16,7 @@ import { P_CHAIN_BLOCKCHAIN_ID } from "../warp/constants.js";
 import { extractWarpMessageFromReceipt, packWarpIntoAccessList } from "../warp/evm.js";
 import {
     getRegistrationJustification,
+    marshalRegisterMessageJustification,
     type JustificationPublicClient,
 } from "../warp/justification.js";
 import { newWarpMessage } from "../warp/newWarpMessage.js";
@@ -251,24 +253,41 @@ export async function disableL1Validator(
     // Raw payload bytes here would be rejected as a parse error and the
     // validator refuses to sign (accumulatedWeight=0 from the sigagg side).
     //
-    // We always derive that protobuf via {@link getRegistrationJustification},
-    // which scans the L1's warp logs and reconstructs the wrapper. The
-    // optional `registerMessagePayloadHex` fast-path could be wrapped in
-    // protobuf inline — left for a future optimization.
-    if (!args.l1PublicClient) {
-        throw new Error(
-            "disableL1Validator: l1PublicClient is required to derive the removal-ACK justification (see getRegistrationJustification)",
+    // Fast path: if the caller preserved the original
+    // `RegisterL1ValidatorMessage` payload from register-time (the
+    // `registerMessagePayloadHex` field on `RegisterL1ValidatorResult`),
+    // wrap it in the field-2 protobuf form directly and skip the warp-log
+    // scan entirely.
+    //
+    // Fallback: derive the protobuf via {@link getRegistrationJustification},
+    // which scans the L1's warp logs backwards and reconstructs the wrapper.
+    let justificationBytes: Uint8Array | null;
+    if (args.registerMessagePayloadHex) {
+        console.log(
+            "[disableL1Validator] using registerMessagePayloadHex fast path — skipping L1 warp-log scan",
         );
-    }
-    const justificationBytes = await getRegistrationJustification(
-        args.validationID,
-        args.subnetId,
-        args.l1PublicClient,
-    );
-    if (!justificationBytes) {
-        throw new Error(
-            `disableL1Validator: getRegistrationJustification returned null for validationID ${args.validationID} — register tx not found in the L1's recent warp logs`,
+        justificationBytes = marshalRegisterMessageJustification(
+            hexToBytes(args.registerMessagePayloadHex),
         );
+    } else {
+        if (!args.l1PublicClient) {
+            throw new Error(
+                "disableL1Validator: l1PublicClient is required to derive the removal-ACK justification when registerMessagePayloadHex is not provided (see getRegistrationJustification)",
+            );
+        }
+        console.log(
+            "[disableL1Validator] scanning L1 warp logs for register payload (no registerMessagePayloadHex provided)",
+        );
+        justificationBytes = await getRegistrationJustification(
+            args.validationID,
+            args.subnetId,
+            args.l1PublicClient,
+        );
+        if (!justificationBytes) {
+            throw new Error(
+                `disableL1Validator: getRegistrationJustification returned null for validationID ${args.validationID} — register tx not found in the L1's recent warp logs`,
+            );
+        }
     }
     const signedRemovalAckHex = await args.aggregateSignatures({
         unsignedMessageHex: ackUnsignedHex,

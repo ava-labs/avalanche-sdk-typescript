@@ -159,13 +159,12 @@ describe("warp AddressedCall messages — round-trip", () => {
         expect(forward.toHex()).toBe(reversed.toHex());
     });
 
-    test("parseConversionData round-trip is broken (FOLLOWUP guard)", () => {
-        // FOLLOWUP: parseConversionData uses avalanchejs's generic unpack,
-        // which expects an extra 4-byte length prefix on the validators
-        // array that the canonical Avalanche encoding does NOT include.
-        // The parse silently drops the validators rather than throwing —
-        // worse than a clean failure. This test pins the current broken
-        // behavior so we notice when avalanchejs ships a fix.
+    test("parseConversionData round-trip", () => {
+        // parseConversionData reads the canonical Avalanche byte layout
+        // directly (mirroring toHex) rather than going through avalanchejs's
+        // generic unpack — the latter expects an extra 4-byte length prefix
+        // on the validators array that the canonical encoding does NOT
+        // include, and silently drops validators.
         const cd = newConversionData(
             SUBNET_ID_B58,
             VALIDATION_ID_B58,
@@ -174,9 +173,6 @@ describe("warp AddressedCall messages — round-trip", () => {
         );
         const hex = cd.toHex();
         const parsed = parseConversionData(hex);
-        // Currently fails (parsed validators dropped → shorter bytes). When
-        // this assertion starts passing, the upstream is fixed — flip to
-        // toEqual(hex) and remove this comment.
-        expect(parsed.toHex()).not.toBe(hex);
+        expect(parsed.toHex()).toBe(hex);
     });
 });
