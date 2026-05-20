@@ -79,6 +79,19 @@ export {
 export { linkBytecode, listUnlinkedLibraries } from "./linkBytecode.js";
 
 export {
+    extractRegisterL1ValidatorMessageFromPChainTx,
+    extractL1ValidatorWeightMessageFromPChainTx,
+    extractSubnetToL1ConversionDataFromPChainTx,
+    type ExtractFromPChainTxArgs,
+    type ExtractRegisterL1ValidatorMessageResult,
+    type ExtractL1ValidatorWeightMessageResult,
+    type ExtractSubnetToL1ConversionDataArgs,
+    type ExtractSubnetToL1ConversionDataResult,
+    type PChainConversionTxValidator,
+    type PChainUnsignedTxShape,
+} from "./extractFromPChainTx.js";
+
+export {
     PoAManagerAbi,
     PoAManagerBytecode,
 } from "./artifacts/PoAManager.js";
