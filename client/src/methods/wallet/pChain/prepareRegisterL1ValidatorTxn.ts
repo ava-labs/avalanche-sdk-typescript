@@ -32,7 +32,7 @@ import {
  * });
  *
  * const pChainRegisterL1ValidatorTxnRequest = await prepareRegisterL1ValidatorTxn(walletClient, {
- *   initialBalanceInAvax: avaxToNanoAvax(1),
+ *   initialBalanceInNanoAvax: avaxToNanoAvax(1),
  *   blsSignature: "0x1234567890123456789012345678901234567890",
  *   message: "0x1234567890123456789012345678901234567890",
  * });
@@ -53,7 +53,7 @@ export async function prepareRegisterL1ValidatorTxn(
   const unsignedTx = pvm.newRegisterL1ValidatorTx(
     {
       ...commonTxParams,
-      balance: params.initialBalanceInAvax,
+      balance: params.initialBalanceInNanoAvax,
       blsSignature: utils.hexToBuffer(params.blsSignature),
       message: utils.hexToBuffer(params.message),
     },

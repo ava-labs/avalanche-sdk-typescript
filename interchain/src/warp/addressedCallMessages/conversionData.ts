@@ -1,11 +1,19 @@
-import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, Short, utils } from "@avalabs/avalanchejs";
-import type { ValidatorData as ValidatorDataRaw } from "../types";
+import { Address, BigIntPr, BlsPublicKey, Id, NodeId, pvmSerial, utils } from "@avalabs/avalanchejs";
 import { sha256 } from "@noble/hashes/sha2";
 
-const warpManager = pvmSerial.warp.getWarpManager();
+import { throwNoDirectFromBytes } from "../serialization";
+import { WARP_CODEC_ID } from "../constants";
+import type { SerializedValidatorEntry, ValidatorData as ValidatorDataRaw } from "../types";
+import { compareBytesLex, concatBytes, nodeIdToBytes, readU16, readU32, readU64, u16, u32 } from "../utils";
 
 /**
  * Parses a ConversionData (SubnetToL1Conversion) from a hex string.
+ *
+ * Reads the canonical Avalanche byte layout directly — see {@link ConversionData.toHex}.
+ * We intentionally do NOT use avalanchejs's generic `warpManager.unpack`: it
+ * expects an extra 4-byte length prefix wrapping the validators array that the
+ * canonical encoding does not include, and silently drops validators instead
+ * of throwing.
  *
  * @param conversionDataHex - The hex string representing the ConversionData.
  * @returns The parsed ConversionData instance. {@link ConversionData}
@@ -13,15 +21,57 @@ const warpManager = pvmSerial.warp.getWarpManager();
 export function parseConversionData(
     conversionDataHex: string,
 ): ConversionData {
-    const parsedConversionData = warpManager.unpack(
-        utils.hexToBuffer(conversionDataHex),
-        pvmSerial.warp.AddressedCallPayloads.ConversionData,
-    );
+    const bytes = utils.hexToBuffer(conversionDataHex);
+    let o = 0;
+
+    const codec = readU16(bytes, o);
+    o += 2;
+    if (codec !== WARP_CODEC_ID) {
+        throw new Error(`ConversionData: unexpected codec id ${codec}, expected ${WARP_CODEC_ID}`);
+    }
+
+    const subnetIdBytes = bytes.slice(o, o + 32);
+    o += 32;
+    const managerChainIdBytes = bytes.slice(o, o + 32);
+    o += 32;
+
+    const managerAddrLen = readU32(bytes, o);
+    o += 4;
+    const managerAddrBytes = bytes.slice(o, o + managerAddrLen);
+    o += managerAddrLen;
+
+    const numValidators = readU32(bytes, o);
+    o += 4;
+
+    const validators: pvmSerial.warp.AddressedCallPayloads.ValidatorData[] = [];
+    for (let i = 0; i < numValidators; i++) {
+        const nodeIdLen = readU32(bytes, o);
+        o += 4;
+        const nodeIdBytes = bytes.slice(o, o + nodeIdLen);
+        o += nodeIdLen;
+
+        const blsBytes = bytes.slice(o, o + 48);
+        o += 48;
+
+        const weight = readU64(bytes, o);
+        o += 8;
+
+        validators.push(new pvmSerial.warp.AddressedCallPayloads.ValidatorData(
+            new NodeId(nodeIdBytes),
+            BlsPublicKey.fromHex(utils.bufferToHex(blsBytes)),
+            new BigIntPr(weight),
+        ));
+    }
+
+    if (o !== bytes.length) {
+        throw new Error(`ConversionData: ${bytes.length - o} trailing bytes after parse`);
+    }
+
     return new ConversionData(
-        parsedConversionData.subnetId,
-        parsedConversionData.managerChainId,
-        parsedConversionData.managerAddress,
-        parsedConversionData.validators,
+        new Id(subnetIdBytes),
+        new Id(managerChainIdBytes),
+        Address.fromHex(utils.bufferToHex(managerAddrBytes)),
+        validators,
     );
 }
 
@@ -45,11 +95,19 @@ export function newConversionData(
 ) {
     const subnetIdBytes = utils.base58check.decode(subnetId);
     const managerChainIdBytes = utils.base58check.decode(managerChainId);
-    const formattedValidators = validators.map((vldr) => new pvmSerial.warp.AddressedCallPayloads.ValidatorData(
-        new NodeId(utils.base58check.decode(vldr.nodeId)),
-        BlsPublicKey.fromHex(vldr.blsPublicKey),
-        new BigIntPr(vldr.weight),
-    ));
+    // Avalanche canonical conversion-ID hashing requires validators sorted by raw nodeId bytes ascending.
+    const formattedValidators = validators
+        .map((vldr) => ({
+            nodeIdBytes: nodeIdToBytes(vldr.nodeId),
+            blsPublicKey: vldr.blsPublicKey,
+            weight: vldr.weight,
+        }))
+        .sort((a, b) => compareBytesLex(a.nodeIdBytes, b.nodeIdBytes))
+        .map((vldr) => new pvmSerial.warp.AddressedCallPayloads.ValidatorData(
+            new NodeId(vldr.nodeIdBytes),
+            BlsPublicKey.fromHex(vldr.blsPublicKey),
+            new BigIntPr(vldr.weight),
+        ));
     return new ConversionData(
         new Id(subnetIdBytes),
         new Id(managerChainIdBytes),
@@ -77,23 +135,44 @@ export class ConversionData extends pvmSerial.warp.AddressedCallPayloads.Convers
         return newConversionData(subnetId, managerChainId, managerAddress, validators);
     }
 
-    toHex() {
-        const bytesWithoutCodec = this.toBytes(pvmSerial.warp.codec)
-        const codecBytes = new Short(0)
-        return utils.bufferToHex(Buffer.concat([codecBytes.toBytes(), bytesWithoutCodec]));
+    /**
+     * Canonical Avalanche serialization for `ConversionData`:
+     *   codec(2) | subnetID(32) | managerChainID(32) | managerAddrLen(4) | managerAddr
+     *   | numValidators(4) | { nodeIDLen(4) | nodeID | blsPubKey(48) | weight(8) }*
+     *
+     * NOTE: We don't use avalanchejs's `toBytes(codec)` because its generic serializer
+     * adds an extra 4-byte length prefix around the validators array. The Avalanche
+     * spec — and what the validators actually sign — does not have that prefix.
+     */
+    toHex(): string {
+        const validators = this.validators as SerializedValidatorEntry[];
+        const subnetIdBytes = (this.subnetId as { toBytes(): Uint8Array }).toBytes();
+        const managerChainIdBytes = (this.managerChainId as { toBytes(): Uint8Array }).toBytes();
+        const managerAddrBytes = (this.managerAddress as { toBytes(): Uint8Array }).toBytes();
+        const parts: Uint8Array[] = [
+            u16(WARP_CODEC_ID), // codec
+            subnetIdBytes, // 32 bytes
+            managerChainIdBytes, // 32 bytes
+            u32(managerAddrBytes.length), // managerAddress length prefix
+            managerAddrBytes,
+            u32(validators.length), // numValidators
+        ];
+        for (const v of validators) {
+            const nodeIdBytes = v.nodeId.toBytes();
+            parts.push(u32(nodeIdBytes.length));
+            parts.push(nodeIdBytes);
+            parts.push(v.blsPublicKey.toBytes()); // 48 bytes, no length prefix
+            parts.push(v.weight.toBytes()); // 8 bytes BE uint64
+        }
+        return utils.bufferToHex(concatBytes(...parts));
     }
 
     getConversionId() {
         return utils.bufferToHex(sha256(utils.hexToBuffer(this.toHex())));
     }
 
-    /**
-     * Do not use this method directly.
-     */
-    static override fromBytes(
-        _bytes: never,
-        _codec: never
-    ): [ConversionData, Uint8Array] {
-        throw new Error('Do not use `ConversionData.fromBytes` method directly.');
+    /** Do not use directly — go via `fromHex` / `fromValues`. */
+    static override fromBytes(_b: never, _c: never): [ConversionData, Uint8Array] {
+        return throwNoDirectFromBytes("ConversionData");
     }
 }

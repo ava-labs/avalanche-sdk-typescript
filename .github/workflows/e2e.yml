@@ -1,0 +1,210 @@
+name: E2E (tmpnet)
+
+on:
+  # Push to main always runs full E2E.
+  push:
+    branches: [main]
+  # PRs only run E2E when they touch SDK code that the tmpnet suite exercises,
+  # or when they touch the e2e package itself. Avoids spending ~10 min per PR on
+  # docs/dependabot/chainkit changes.
+  pull_request:
+    branches: [main]
+    paths:
+      - "e2e/**"
+      - "interchain/**"
+      - "client/src/utils/**"
+      - "client/src/methods/wallet/pChain/**"
+      - ".github/workflows/e2e.yml"
+  workflow_dispatch:
+    inputs:
+      avalanchego_version:
+        description: "AvalancheGo version (e.g. v1.14.0)"
+        required: false
+        default: "v1.14.0"
+      subnet_evm_version:
+        description: "Subnet-EVM version (e.g. v0.8.0)"
+        required: false
+        default: "v0.8.0"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Minimal token permissions. The job only needs to read the repo contents
+# (for `actions/checkout`) — no write access to issues, PRs, packages, etc.
+permissions:
+  contents: read
+
+env:
+  BUN_VERSION: "1.1.38"
+  AVALANCHEGO_VERSION: ${{ github.event.inputs.avalanchego_version || 'v1.14.0' }}
+  SUBNET_EVM_VERSION: ${{ github.event.inputs.subnet_evm_version || 'v0.8.0' }}
+  SIGNATURE_AGGREGATOR_VERSION: "v0.5.3"
+  ICM_RELAYER_VERSION: "v1.7.4"
+  ICM_CONTRACTS_VERSION: "v1.0.9"
+
+jobs:
+  e2e:
+    name: tmpnet integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Cache Bun deps
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('e2e/package.json', 'client/package.json', 'interchain/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Cache Avalanche binaries
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.avalanche-cli/bin
+            ~/.avalanchego/plugins
+          key: avalanche-bins-${{ env.AVALANCHEGO_VERSION }}-${{ env.SUBNET_EVM_VERSION }}-${{ env.SIGNATURE_AGGREGATOR_VERSION }}-${{ env.ICM_RELAYER_VERSION }}
+
+      - name: Install client + interchain deps
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd client && bun install --frozen-lockfile || bun install
+          cd ../interchain && bun install --frozen-lockfile || bun install
+
+      - name: Build interchain (postbuild adds .js extensions)
+        working-directory: interchain
+        run: bun run build
+
+      - name: Build client types + esm (e2e imports require dist/_types and dist/_esm)
+        working-directory: client
+        run: |
+          # Skip build:cjs + build:webpack — e2e only needs ESM + types.
+          bun run clean
+          bun run build:esm
+          bun run build:types
+
+      # Install e2e LAST so `file:` deps snapshot the freshly-built dist/ folders.
+      # bun install with file: copies the source dir at install time; building
+      # client/interchain afterwards wouldn't propagate into e2e/node_modules.
+      - name: Install e2e deps
+        working-directory: e2e
+        run: bun install
+
+      - name: Create binary dirs
+        run: |
+          mkdir -p ~/.avalanche-cli/bin
+          mkdir -p ~/.avalanchego/plugins
+
+      - name: Download AvalancheGo
+        run: |
+          set -e
+          VERSION="${AVALANCHEGO_VERSION}"
+          INSTALL_DIR="$HOME/.avalanche-cli/bin/$VERSION"
+          BINARY_PATH="$INSTALL_DIR/avalanchego"
+
+          if [ -f "$BINARY_PATH" ]; then
+            echo "AvalancheGo $VERSION already cached"
+            chmod +x "$BINARY_PATH"
+            exit 0
+          fi
+
+          mkdir -p "$INSTALL_DIR"
+          ASSET_NAME="avalanchego-linux-amd64-${VERSION}.tar.gz"
+          DOWNLOAD_URL="https://github.com/ava-labs/avalanchego/releases/download/${VERSION}/${ASSET_NAME}"
+
+          echo "Downloading AvalancheGo $VERSION..."
+          curl -L -o "$INSTALL_DIR/$ASSET_NAME" "$DOWNLOAD_URL"
+          tar -xzf "$INSTALL_DIR/$ASSET_NAME" -C "$INSTALL_DIR"
+
+          EXTRACTED_DIR="$INSTALL_DIR/avalanchego-${VERSION}"
+          if [ -d "$EXTRACTED_DIR" ]; then
+            mv "$EXTRACTED_DIR/avalanchego" "$BINARY_PATH"
+            rm -rf "$EXTRACTED_DIR"
+          fi
+
+          chmod +x "$BINARY_PATH"
+          rm -f "$INSTALL_DIR/$ASSET_NAME"
+
+      - name: Download Subnet-EVM
+        run: |
+          set -e
+          VERSION="${SUBNET_EVM_VERSION}"
+          INSTALL_DIR="$HOME/.avalanche-cli/bin/subnet-evm/subnet-evm-${VERSION}"
+          BINARY_PATH="$INSTALL_DIR/subnet-evm"
+          PLUGIN_PATH="$HOME/.avalanchego/plugins/srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy"
+
+          if [ -f "$BINARY_PATH" ] && [ -f "$PLUGIN_PATH" ]; then
+            echo "Subnet-EVM $VERSION already cached"
+            chmod +x "$BINARY_PATH" "$PLUGIN_PATH"
+            exit 0
+          fi
+
+          mkdir -p "$INSTALL_DIR"
+          ASSET_NAME="subnet-evm_${VERSION#v}_linux_amd64.tar.gz"
+          DOWNLOAD_URL="https://github.com/ava-labs/subnet-evm/releases/download/${VERSION}/${ASSET_NAME}"
+
+          curl -L -o "$INSTALL_DIR/$ASSET_NAME" "$DOWNLOAD_URL"
+          tar -xzf "$INSTALL_DIR/$ASSET_NAME" -C "$INSTALL_DIR"
+          chmod +x "$BINARY_PATH"
+          cp "$BINARY_PATH" "$PLUGIN_PATH"
+          chmod +x "$PLUGIN_PATH"
+          rm -f "$INSTALL_DIR/$ASSET_NAME"
+
+      - name: Download Signature Aggregator (not used yet — staged for follow-up)
+        run: |
+          set -e
+          VERSION="${SIGNATURE_AGGREGATOR_VERSION}"
+          INSTALL_DIR="$HOME/.avalanche-cli/bin/signature-aggregator/signature-aggregator-${VERSION}"
+          BINARY_PATH="$INSTALL_DIR/signature-aggregator"
+
+          if [ -f "$BINARY_PATH" ]; then
+            chmod +x "$BINARY_PATH"
+            exit 0
+          fi
+
+          mkdir -p "$INSTALL_DIR"
+          ASSET_NAME="signature-aggregator_${VERSION#v}_linux_amd64.tar.gz"
+          DOWNLOAD_URL="https://github.com/ava-labs/icm-services/releases/download/signature-aggregator-${VERSION}/${ASSET_NAME}"
+
+          curl -L -o "$INSTALL_DIR/$ASSET_NAME" "$DOWNLOAD_URL"
+          tar -xzf "$INSTALL_DIR/$ASSET_NAME" -C "$INSTALL_DIR"
+          chmod +x "$BINARY_PATH"
+          rm -f "$INSTALL_DIR/$ASSET_NAME"
+
+      - name: Verify binaries
+        run: |
+          echo "=== AvalancheGo ==="
+          ~/.avalanche-cli/bin/${AVALANCHEGO_VERSION}/avalanchego --version || true
+          echo "=== Subnet-EVM plugin ==="
+          ls -la ~/.avalanchego/plugins/
+          echo "=== Signature Aggregator ==="
+          ls -la ~/.avalanche-cli/bin/signature-aggregator/ || true
+
+      - name: Typecheck e2e package
+        run: bun run typecheck
+
+      - name: Run integration tests
+        env:
+          AVALANCHEGO_PATH: ${{ format('{0}/.avalanche-cli/bin/{1}/avalanchego', github.workspace, env.AVALANCHEGO_VERSION) }}
+        run: bun run test:integration
+
+      - name: Upload tmpnet logs on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tmpnet-logs
+          path: |
+            ~/.avalanche-cli/tmpnet/
+            ~/.avalanche-cli/logs/
+          retention-days: 3

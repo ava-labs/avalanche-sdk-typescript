@@ -1,0 +1,32 @@
+name: Unit tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.1.38"
+
+      - name: Install interchain deps
+        working-directory: interchain
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Typecheck (interchain)
+        working-directory: interchain
+        run: bun run typecheck
+
+      - name: Run interchain unit tests
+        working-directory: interchain
+        run: bun test test/

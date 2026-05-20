@@ -9,7 +9,7 @@ export type PrepareIncreaseL1ValidatorBalanceTxnParameters = CommonTxParams & {
   /**
    * Amount of AVAX to increase the L1 validator balance by (in nano AVAX).
    */
-  balanceInAvax: bigint;
+  balanceInNanoAvax: bigint;
   /**
    * Validation ID of the L1 validator.
    */

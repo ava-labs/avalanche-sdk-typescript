@@ -34,25 +34,21 @@ const getEntryPoints = () => {
 
 const baseConfig = {
   external: [
-    // Keep these as external dependencies
-    '@avalabs/avalanchejs',
-    // '@noble/hashes', // Bundle this ES module dependency
-    // '@noble/secp256k1', // Bundle this ES module dependency
-    'util',
-    'viem',
-    // Node.js built-ins
-    'crypto',
-    'fs',
-    'path',
-    'url',
-    'stream',
-    'buffer',
-    'events',
-    'util',
-    'assert',
-    'os',
-    'child_process',
-    'worker_threads'
+    // Keep these as external dependencies (matches subpath imports too via regex)
+    /^@avalabs\/avalanchejs(\/|$)/,
+    /^viem(\/|$)/,
+    // Externalize @noble/secp256k1 + @scure/bip32 so the SDK doesn't inline
+    // their module-init code (noble-curves' randomBytes setup reads node:crypto
+    // at load time, which throws under Next.js Turbopack's browser stub).
+    /^@noble\/secp256k1(\/|$)/,
+    /^@scure\/bip32(\/|$)/,
+    // NOTE: @noble/hashes intentionally NOT external — SDK source uses 1.x APIs
+    // (e.g. `ahash`) that don't exist in @noble/hashes 2.x. Bundle the 1.x version.
+    // Node.js built-ins (bare + node: prefix)
+    /^node:/,
+    'crypto', 'fs', 'path', 'url', 'stream', 'buffer', 'events',
+    'util', 'assert', 'os', 'child_process', 'worker_threads',
+    'http', 'https', 'net', 'tls', 'zlib', 'dns', 'dgram', 'querystring',
   ],
   plugins: [
     nodeResolve({

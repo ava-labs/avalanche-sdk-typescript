@@ -73,7 +73,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessDelegatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -148,7 +148,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
-      stakeInAvax: stakeAmount,
+      stakeInNanoAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
@@ -170,7 +170,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
       BigInt(mockTxParams.end)
     );
     expect(vldr.weight.value(), "weight mismatch").toBe(
-      mockTxParams.stakeInAvax
+      mockTxParams.stakeInNanoAvax
     );
 
     // check delegator rewards owner
@@ -200,7 +200,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
-      stakeInAvax: stakeAmount,
+      stakeInNanoAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
@@ -229,7 +229,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessDelegatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -256,7 +256,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessDelegatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -287,7 +287,7 @@ describe("prepareAddPermissionlessDelegatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessDelegatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,

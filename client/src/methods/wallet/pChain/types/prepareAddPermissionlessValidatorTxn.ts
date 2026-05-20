@@ -13,7 +13,7 @@ export type PrepareAddPermissionlessValidatorTxnParameters = CommonTxParams & {
    * The staked outputs will be consolidated into a single output
    * and owned by the `changeAddresses` or the `fromAddresses` array.
    */
-  stakeInAvax: bigint;
+  stakeInNanoAvax: bigint;
   /**
    * The NodeID of the validator being added.
    */

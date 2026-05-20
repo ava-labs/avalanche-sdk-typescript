@@ -9,7 +9,9 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "npx tsc"
+    "build": "npx tsc && node scripts/postbuild-add-js-extensions.mjs dist",
+    "test": "bun test test/",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json"
   },
   "files": [
     "dist",
@@ -36,13 +38,16 @@
   "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript#readme",
   "dependencies": {
     "@avalabs/avalanchejs": "5.1.0-alpha.1",
-    "@avalanche-sdk/client": "^0.0.4-alpha.12"
+    "@avalanche-sdk/client": "^0.0.4-alpha.12",
+    "@noble/hashes": "^1.8.0"
   },
   "peerDependencies": {
     "viem": "^2.33.1"
   },
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/node": "^20.0.0",
+    "bun-types": "latest",
     "typescript": "^5.0.0"
   },
   "sideEffects": false,
@@ -51,7 +56,8 @@
     "./chains": "./dist/chains/index.js",
     "./icm": "./dist/icm/index.js",
     "./ictt": "./dist/ictt/index.js",
-    "./warp": "./dist/warp/index.js"
+    "./warp": "./dist/warp/index.js",
+    "./validator-manager": "./dist/validator-manager/index.js"
   },
   "typesVersions": {
     "*": {
@@ -66,6 +72,9 @@
       ],
       "warp": [
         "dist/warp/index.d.ts"
+      ],
+      "validator-manager": [
+        "dist/validator-manager/index.d.ts"
       ]
     }
   }

@@ -33,7 +33,7 @@ import {
  *
  * const pChainAddPermissionlessValidatorTxnRequest = await prepareAddPermissionlessValidatorTxn(walletClient, {
  *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
- *   stakeInAvax: avaxToNanoAvax(1),
+ *   stakeInNanoAvax: avaxToNanoAvax(1),
  *   end: 1716441600n,
  *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   threshold: 1,
@@ -60,7 +60,7 @@ export async function prepareAddPermissionlessValidatorTxn(
   const unsignedTx = pvm.newAddPermissionlessValidatorTx(
     {
       ...commonTxParams,
-      weight: params.stakeInAvax,
+      weight: params.stakeInNanoAvax,
       nodeId: params.nodeId,
       start: 0n, // start time is not relevant after Durango upgrade
       end: BigInt(params.end),

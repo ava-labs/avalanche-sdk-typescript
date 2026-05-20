@@ -46,7 +46,7 @@ import {
  *     {
  *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
  *       weight: 1n,
- *       initialBalanceInAvax: avaxToNanoAvax(1),
+ *       initialBalanceInNanoAvax: avaxToNanoAvax(1),
  *       nodePoP: {
  *         publicKey: "0x1234567890123456789012345678901234567890",
  *         proofOfPossession: "0x1234567890123456789012345678901234567890",
@@ -90,7 +90,7 @@ export async function prepareConvertSubnetToL1Txn(
       FormattedL1Validator.fromNative(
         validator.nodeId,
         validator.weight,
-        validator.initialBalanceInAvax,
+        validator.initialBalanceInNanoAvax,
         new pvmSerial.ProofOfPossession(
           utils.hexToBuffer(validator.nodePoP.publicKey),
           utils.hexToBuffer(validator.nodePoP.proofOfPossession)

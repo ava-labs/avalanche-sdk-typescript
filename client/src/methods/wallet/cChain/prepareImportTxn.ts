@@ -81,10 +81,7 @@ export async function prepareImportTxn(
             await getUtxosForAddress(client, {
               address,
               chainAlias: "C",
-              sourceChain: getChainIdFromAlias(
-                params.sourceChain,
-                context.networkID
-              ),
+              sourceChain: getChainIdFromAlias(params.sourceChain, context),
             })
         )
       )
@@ -95,7 +92,7 @@ export async function prepareImportTxn(
     utils.hexToBuffer(params.toAddress),
     fromAddressesBytes,
     utxos,
-    getChainIdFromAlias(params.sourceChain, context.networkID),
+    getChainIdFromAlias(params.sourceChain, context),
     BigInt(baseFeeInWei)
   );
 

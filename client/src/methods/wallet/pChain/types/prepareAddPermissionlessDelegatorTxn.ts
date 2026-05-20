@@ -12,7 +12,7 @@ export type PrepareAddPermissionlessDelegatorTxnParameters = CommonTxParams & {
    * consolidated into a single output and owned by the
    * `changeAddresses` or the `fromAddresses` array.
    */
-  stakeInAvax: bigint;
+  stakeInNanoAvax: bigint;
   /**
    * NodeID of the validator to delegate AVAX to.
    */

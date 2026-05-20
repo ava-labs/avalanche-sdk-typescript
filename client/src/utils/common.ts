@@ -15,7 +15,7 @@ import { Hex } from "viem";
  * ```
  */
 export function hexToCB58(hex: Hex): string {
-  return utils.base58.encode(utils.hexToBuffer(hex));
+  return utils.base58check.encode(utils.hexToBuffer(hex));
 }
 
 /**
@@ -32,5 +32,5 @@ export function hexToCB58(hex: Hex): string {
  * ```
  */
 export function CB58ToHex(cb58: string): Hex {
-  return utils.bufferToHex(utils.base58.decode(cb58)) as Hex;
+  return utils.bufferToHex(utils.base58check.decode(cb58)) as Hex;
 }

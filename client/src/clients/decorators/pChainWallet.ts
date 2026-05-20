@@ -73,7 +73,7 @@ export type PChainWalletActions = {
    *
    * const delegatorTx = await client.pChain.prepareAddPermissionlessDelegatorTxn({
    *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
-   *   stakeInAvax: avaxToNanoAvax(1),
+   *   stakeInNanoAvax: avaxToNanoAvax(1),
    *   end: 1716441600n,
    *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
    *   threshold: 1,
@@ -111,7 +111,7 @@ export type PChainWalletActions = {
    *
    * const validatorTx = await client.pChain.prepareAddPermissionlessValidatorTxn({
    *   nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
-   *   stakeInAvax: avaxToNanoAvax(1),
+   *   stakeInNanoAvax: avaxToNanoAvax(1),
    *   end: 1716441600n,
    *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
    *   threshold: 1,
@@ -235,7 +235,7 @@ export type PChainWalletActions = {
    *     {
    *       nodeId: "NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg",
    *       weight: 1n,
-   *       initialBalanceInAvax: avaxToNanoAvax(1),
+   *       initialBalanceInNanoAvax: avaxToNanoAvax(1),
    *       nodePoP: {
    *         publicKey: "0x1234567890123456789012345678901234567890",
    *         proofOfPossession: "0x1234567890123456789012345678901234567890",
@@ -464,7 +464,7 @@ export type PChainWalletActions = {
    * })
    *
    * const pChainIncreaseL1ValidatorBalanceTxnRequest = await client.pChain.prepareIncreaseL1ValidatorBalanceTxn({
-   *   balanceInAvax: avaxToNanoAvax(1),
+   *   balanceInNanoAvax: avaxToNanoAvax(1),
    *   validationId: "11111111111111111111111111111111LpoYY",
    * })
    * ```
@@ -499,7 +499,7 @@ export type PChainWalletActions = {
    * })
    *
    * const pChainRegisterL1ValidatorTxnRequest = await client.pChain.prepareRegisterL1ValidatorTxn({
-   *   initialBalanceInAvax: avaxToNanoAvax(1),
+   *   initialBalanceInNanoAvax: avaxToNanoAvax(1),
    *   blsSignature: "0x1234567890123456789012345678901234567890",
    *   message: "0x1234567890123456789012345678901234567890",
    * })

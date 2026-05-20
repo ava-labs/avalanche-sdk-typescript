@@ -79,7 +79,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
-      stakeInAvax: stakeAmount,
+      stakeInNanoAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
@@ -157,7 +157,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
-      stakeInAvax: stakeAmount,
+      stakeInNanoAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
@@ -179,7 +179,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
       BigInt(mockTxParams.end)
     );
     expect(vldr.weight.value(), "weight mismatch").toBe(
-      mockTxParams.stakeInAvax
+      mockTxParams.stakeInNanoAvax
     );
     expect(
       (
@@ -225,7 +225,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const endTime = 1234356770;
     const mockTxParams = {
       changeAddresses, // staked outputs will be owned by these addresses
-      stakeInAvax: stakeAmount,
+      stakeInNanoAvax: stakeAmount,
       nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
       end: BigInt(Math.floor(endTime / 1000)),
       rewardAddresses,
@@ -254,7 +254,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessValidatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -284,7 +284,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessValidatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -318,7 +318,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessValidatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -352,7 +352,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessValidatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
@@ -380,7 +380,7 @@ describe("prepareAddPermissionlessValidatorTxn", () => {
     const txnRequest =
       await walletClient.pChain.prepareAddPermissionlessValidatorTxn({
         changeAddresses,
-        stakeInAvax: stakeAmount,
+        stakeInNanoAvax: stakeAmount,
         nodeId: "NodeID-LbijL9cqXkmq2Q8oQYYGs8LmcSRhnrDWJ",
         end: BigInt(Math.floor(endTime / 1000)),
         rewardAddresses,
