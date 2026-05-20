@@ -2,12 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { utils } from "@avalabs/avalanchejs";
 
 import {
+    newAddressedCallPayload,
     newConversionData,
     newL1ValidatorRegistrationMessage,
     newL1ValidatorWeightMessage,
     newRegisterL1ValidatorMessage,
     newSubnetToL1ConversionMessage,
     newValidationUptimeMessage,
+    parseAddressedCallPayload,
     parseConversionData,
     parseL1ValidatorRegistrationMessage,
     parseL1ValidatorWeightMessage,
@@ -174,5 +176,42 @@ describe("warp AddressedCall messages — round-trip", () => {
         const hex = cd.toHex();
         const parsed = parseConversionData(hex);
         expect(parsed.toHex()).toBe(hex);
+    });
+
+    // ────────────────────────────────────────────────────────────────────
+    // System-source AddressedCall (sourceAddrLen=0)
+    //
+    // avalanchejs's `Address` always serializes as a fixed 20-byte field —
+    // passing an empty input pads to 20 zero bytes, producing
+    // `sourceAddrLen=20` instead of the canonical `sourceAddrLen=0`. That
+    // changes the warp message hash and the signature aggregator won't
+    // converge. `newAddressedCallPayload("", payload)` must emit the
+    // canonical zero-length-source form.
+    // ────────────────────────────────────────────────────────────────────
+
+    test("newAddressedCallPayload('') emits canonical sourceAddrLen=0", () => {
+        const innerPayload = newL1ValidatorRegistrationMessage(VALIDATION_ID_B58, true).toHex();
+        const ac = newAddressedCallPayload("", innerPayload);
+        const hex = ac.toHex();
+
+        // Wire layout: codec(2) | typeID(4) | srcAddrLen(4) | payloadLen(4) | payload
+        // Bytes 6..10 are the srcAddrLen — must be 0x00000000.
+        expect(hex.slice(2 + 2 * 6, 2 + 2 * 10)).toBe("00000000");
+        // Should NOT contain the padded-20-zero-bytes form.
+        expect(hex.slice(2 + 2 * 6, 2 + 2 * 10)).not.toBe("00000014");
+    });
+
+    test("newAddressedCallPayload('0x') matches newAddressedCallPayload('')", () => {
+        const innerPayload = newL1ValidatorRegistrationMessage(VALIDATION_ID_B58, true).toHex();
+        expect(newAddressedCallPayload("", innerPayload).toHex()).toBe(
+            newAddressedCallPayload("0x", innerPayload).toHex(),
+        );
+    });
+
+    test("parseAddressedCallPayload round-trips a system-source message", () => {
+        const innerPayload = newL1ValidatorWeightMessage(VALIDATION_ID_B58, 1n, 100n).toHex();
+        const original = newAddressedCallPayload("", innerPayload);
+        const reparsed = parseAddressedCallPayload(original.toHex());
+        expect(reparsed.toHex()).toBe(original.toHex());
     });
 });
