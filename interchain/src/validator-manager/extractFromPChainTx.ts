@@ -225,11 +225,25 @@ export interface ExtractSubnetToL1ConversionDataResult {
      */
     unsignedMessageHex: Hex;
     /**
-     * ConversionData preimage hex. Aggregators need this as the
-     * `justification` so avalanchego's verifier can recompute the
-     * conversionID.
+     * Justification bytes for the signature aggregator, hex-encoded.
+     *
+     * For `SubnetToL1ConversionMessage` this is the **32-byte subnetID**
+     * (NOT the ConversionData preimage). AvalancheGo's verifier looks up
+     * the conversion locally by subnetID, hashes its own copy of the
+     * ConversionData, and checks against the conversionID in the warp
+     * message. Sending the full preimage produces
+     * `"invalid hash length: expected 32 bytes but got 174"` from the
+     * validator's `SignatureRequestVerifier` (avalanchego ≥ 1.14.x).
      */
     justificationHex: Hex;
+    /**
+     * The raw `ConversionData` preimage hex. Not the aggregator's
+     * justification — see {@link justificationHex} — but useful for
+     * callers that want to sanity-check the conversionID
+     * (`sha256(conversionDataHex) === conversionIdHex`) or pin the
+     * canonical layout for tests.
+     */
+    conversionDataHex: Hex;
     /** Computed 32-byte conversion ID, 0x-hex. */
     conversionIdHex: Hex;
     /** Subnet ID (base58check). */
@@ -283,9 +297,16 @@ export async function extractSubnetToL1ConversionDataFromPChainTx(
     const innerMsg = newSubnetToL1ConversionMessage(conversionIdCB58);
     const unsigned = newWarpMessage(args.networkId, blockchainID, "", innerMsg.toHex());
 
+    // Justification for the aggregator is the 32-byte subnetID (not the
+    // ConversionData preimage). See ExtractSubnetToL1ConversionDataResult
+    // doc-comment for why.
+    const subnetIdBytes = utils.base58check.decode(subnetID);
+    const justificationHex = utils.bufferToHex(subnetIdBytes) as Hex;
+
     return {
         unsignedMessageHex: unsigned.toHex() as Hex,
-        justificationHex: conversionData.toHex() as Hex,
+        justificationHex,
+        conversionDataHex: conversionData.toHex() as Hex,
         conversionIdHex,
         subnetId: subnetID,
         blockchainId: chainID,
