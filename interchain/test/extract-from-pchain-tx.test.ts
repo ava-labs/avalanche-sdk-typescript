@@ -164,11 +164,21 @@ describe("extractSubnetToL1ConversionDataFromPChainTx", () => {
         expect(result.validators).toEqual(validators);
         // conversionIdHex is a 32-byte 0x-hex string.
         expect(result.conversionIdHex.length).toBe(2 + 32 * 2);
-        // unsignedMessageHex and justificationHex are non-empty 0x-hex strings.
+        // Aggregator justification MUST be the 32-byte subnetID (NOT the
+        // ConversionData preimage). avalanchego's signature-request verifier
+        // looks up the conversion locally by subnetID; handing it the full
+        // preimage yields "invalid hash length: expected 32 bytes but got 174"
+        // and the validator silently refuses to sign.
+        expect(result.justificationHex.length).toBe(2 + 32 * 2);
+        expect(result.justificationHex).toBe(
+            utils.bufferToHex(utils.base58check.decode(SUBNET_ID_B58)) as `0x${string}`,
+        );
+        // conversionDataHex is the full preimage (variable length, depends on
+        // the validator set). Sanity: sha256(conversionDataHex) === conversionIdHex.
+        expect(result.conversionDataHex.startsWith("0x")).toBe(true);
+        expect(result.conversionDataHex.length).toBeGreaterThan(2 + 32 * 2);
         expect(result.unsignedMessageHex.startsWith("0x")).toBe(true);
-        expect(result.justificationHex.startsWith("0x")).toBe(true);
         expect(result.unsignedMessageHex.length).toBeGreaterThan(2);
-        expect(result.justificationHex.length).toBeGreaterThan(2);
     });
 
     test("throws on missing required fields", async () => {
