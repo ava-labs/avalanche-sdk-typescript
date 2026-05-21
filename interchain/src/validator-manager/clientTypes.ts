@@ -39,7 +39,14 @@ export interface MinimalWalletClient {
     writeContract: (params: any) => Promise<Hex>;
     deployContract: (params: any) => Promise<Hex>;
     readonly chain?: { id?: number } | null | undefined;
-    readonly account?: { address: `0x${string}` } | null | undefined;
+    // `address` typed as plain `string` (not `0x${string}`) so viem's
+    // `WalletClient` is directly assignable without casts. viem types
+    // `Account.address` as `string`; tightening it to a template literal
+    // here would force consumers into `as never`/`as unknown` at the call
+    // site. The orchestrators always feed this value into viem's
+    // `writeContract`/`deployContract`, which re-asserts the `0x...` shape
+    // at runtime, so we don't lose any safety by loosening the static type.
+    readonly account?: { address: string } | null | undefined;
 }
 
 /**
