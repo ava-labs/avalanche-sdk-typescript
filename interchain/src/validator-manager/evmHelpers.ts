@@ -68,10 +68,11 @@ export async function assertSuccessOrReplay(
         /**
          * Account-like shape — viem's `call({ account })` accepts either an
          * `Account`, a bare address, or anything with `.address`. Loosened
-         * so callers passing a `MinimalWalletClient.account` don't need to
-         * coerce to viem's full `Account` identity.
+         * to plain `string` for the `.address` shape so callers passing a
+         * `MinimalWalletClient.account` (whose `address` is typed as plain
+         * `string` to match viem's `Account.address`) don't need any cast.
          */
-        account?: { address: Address } | Account | Address;
+        account?: { address: string } | Account | Address;
         opName?: string;
     },
 ): Promise<void> {
