@@ -269,6 +269,7 @@ export async function fetchCommonPVMTxParams(
       | typeof C_CHAIN_ALIAS;
     subnetId?: string;
     l1ValidationId?: string;
+    autoRenewedValidatorTxId?: string;
     account?: AvalancheAccount | AddressType | undefined;
     context: ContextType.Context;
   }
@@ -276,6 +277,7 @@ export async function fetchCommonPVMTxParams(
   commonTxParams: FormattedCommonPVMTxParams;
   subnetOwners: PChainOwner | undefined;
   disableOwners: PChainOwner | undefined;
+  autoRenewedValidatorOwners: PChainOwner | undefined;
 }> {
   const {
     txParams,
@@ -283,6 +285,7 @@ export async function fetchCommonPVMTxParams(
     chainAlias,
     subnetId,
     l1ValidationId,
+    autoRenewedValidatorTxId,
     account,
     context,
   } = params;
@@ -318,6 +321,33 @@ export async function fetchCommonPVMTxParams(
       );
       txn.unsignedTx.getSubnetOwners().addrs.forEach((addr) => {
         fromAddressesSet.add(`${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`);
+      });
+    }
+  }
+
+  let autoRenewedValidatorOwners: PChainOwner | undefined;
+  if (autoRenewedValidatorTxId) {
+    const validatorTx = await getTx(client.pChainClient, {
+      txID: autoRenewedValidatorTxId,
+      encoding: "hex",
+    });
+    const strippedTxBytes = utils.strip0x(validatorTx.tx as string);
+    const manager = utils.getManagerForVM("PVM");
+    const txn = manager.unpack(
+      utils.hexToBuffer(strippedTxBytes),
+      avaxSerial.SignedTx
+    );
+
+    if (pvmSerial.isAddAutoRenewedValidatorTx(txn.unsignedTx)) {
+      const owner = txn.unsignedTx.getOwner();
+      autoRenewedValidatorOwners = new PChainOwner(
+        new Int(owner.threshold.value()),
+        owner.addrs
+      );
+      owner.addrs.forEach((addr) => {
+        fromAddressesSet.add(
+          `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`
+        );
       });
     }
   }
@@ -373,7 +403,12 @@ export async function fetchCommonPVMTxParams(
     result.minIssuanceTime = txParams.minIssuanceTime;
   }
 
-  return { commonTxParams: result, subnetOwners, disableOwners };
+  return {
+    commonTxParams: result,
+    subnetOwners,
+    disableOwners,
+    autoRenewedValidatorOwners,
+  };
 }
 
 // TODO: try to paralleize API calls within this function

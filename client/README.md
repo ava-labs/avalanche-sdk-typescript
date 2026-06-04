@@ -559,6 +559,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 
 ### P-Chain Wallet Methods
 
+- [`prepareAddAutoRenewedValidatorTxn`](./src/methods/wallet/pChain/prepareAddAutoRenewedValidatorTxn.ts) - Prepare an add auto-renewed validator transaction. [ACP-236](https://build.avax.network/docs/acps/236-auto-renewed-staking)
 - [`prepareAddPermissionlessDelegatorTx`](./src/methods/wallet/pChain/prepareAddPermissionlessDelegatorTxn.ts) - Prepare an add permissionless delegator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-delegator-tx)
 - [`prepareAddPermissionlessValidatorTxn`](./src/methods/wallet/pChain/prepareAddPermissionlessValidatorTxn.ts) - Prepare an add permissionless validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-validator-tx)
 - [`prepareAddSubnetValidatorTxn`](./src/methods/wallet/pChain/prepareAddSubnetValidatorTxn.ts) - Prepare an add subnet validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-validator-tx)
@@ -572,6 +573,8 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 - [`prepareIncreaseL1ValidatorBalanceTxn`](./src/methods/wallet/pChain/prepareIncreaseL1ValidatorBalanceTxn.ts) - Prepare an increase L1 validator balance transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-increase-l1-validator-balance-tx)
 - [`prepareRegisterL1ValidatorTxn`](./src/methods/wallet/pChain/prepareRegisterL1ValidatorTxn.ts) - Prepare a register L1 validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-register-l1-validator-tx)
 - [`prepareRemoveSubnetValidatorTxn`](./src/methods/wallet/pChain/prepareRemoveSubnetValidatorTxn.ts) - Prepare a remove subnet validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-remove-validator-tx)
+- [`prepareRewardAutoRenewedValidatorTxn`](./src/methods/wallet/pChain/prepareRewardAutoRenewedValidatorTxn.ts) - Prepare a reward auto-renewed validator transaction. [ACP-236](https://build.avax.network/docs/acps/236-auto-renewed-staking)
+- [`prepareSetAutoRenewedValidatorConfigTxn`](./src/methods/wallet/pChain/prepareSetAutoRenewedValidatorConfigTxn.ts) - Prepare a set auto-renewed validator config transaction. [ACP-236](https://build.avax.network/docs/acps/236-auto-renewed-staking)
 - [`prepareSetL1ValidatorWeightTxn`](./src/methods/wallet/pChain/prepareSetL1ValidatorWeightTxn.ts) - Prepare a set L1 validator weight transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-set-l1-validator-weight-tx)
 
 ### X-Chain Wallet Methods
@@ -671,6 +674,7 @@ The [`prepare-primary-network-txns`](./examples/prepare-primary-network-txns) fo
 
 #### P-Chain Transaction Examples
 
+- [`addAutoRenewedValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/addAutoRenewedValidatorTx.ts) - Add auto-renewed validator transaction
 - [`addSubnetValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/addSubnetValidatorTx.ts) - Add subnet validator transaction
 - [`baseTx.ts`](./examples/prepare-primary-network-txns/p-chain/baseTx.ts) - Base transaction example
 - [`convertSubnetToL1Tx.ts`](./examples/prepare-primary-network-txns/p-chain/convertSubnetToL1Tx.ts) - Convert subnet to L1 transaction
@@ -679,6 +683,8 @@ The [`prepare-primary-network-txns`](./examples/prepare-primary-network-txns) fo
 - [`exportTx.ts`](./examples/prepare-primary-network-txns/p-chain/exportTx.ts) - Prepare P-Chain export transaction
 - [`importTx.ts`](./examples/prepare-primary-network-txns/p-chain/importTx.ts) - Prepare P-Chain import transaction
 - [`removeSubnetValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/removeSubnetValidatorTx.ts) - Remove subnet validator transaction
+- [`rewardAutoRenewedValidatorTx.ts`](./examples/prepare-primary-network-txns/p-chain/rewardAutoRenewedValidatorTx.ts) - Reward auto-renewed validator transaction
+- [`setAutoRenewedValidatorConfigTx.ts`](./examples/prepare-primary-network-txns/p-chain/setAutoRenewedValidatorConfigTx.ts) - Set auto-renewed validator config transaction
 
 #### C-Chain Transaction Examples
 

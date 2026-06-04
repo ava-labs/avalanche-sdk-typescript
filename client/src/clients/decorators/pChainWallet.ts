@@ -1,5 +1,7 @@
 import { Chain, Transport } from "viem";
 import {
+  PrepareAddAutoRenewedValidatorTxnParameters,
+  PrepareAddAutoRenewedValidatorTxnReturnType,
   PrepareAddPermissionlessDelegatorTxnParameters,
   PrepareAddPermissionlessDelegatorTxnReturnType,
   PrepareAddPermissionlessValidatorTxnParameters,
@@ -26,12 +28,17 @@ import {
   PrepareRegisterL1ValidatorTxnReturnType,
   PrepareRemoveSubnetValidatorTxnParameters,
   PrepareRemoveSubnetValidatorTxnReturnType,
+  PrepareRewardAutoRenewedValidatorTxnParameters,
+  PrepareRewardAutoRenewedValidatorTxnReturnType,
+  PrepareSetAutoRenewedValidatorConfigTxnParameters,
+  PrepareSetAutoRenewedValidatorConfigTxnReturnType,
   PrepareSetL1ValidatorWeightTxnParameters,
   PrepareSetL1ValidatorWeightTxnReturnType,
   prepareExportTxn,
   prepareImportTxn,
   prepareSetL1ValidatorWeightTxn,
 } from "../../methods/wallet/pChain/index.js";
+import { prepareAddAutoRenewedValidatorTxn } from "../../methods/wallet/pChain/prepareAddAutoRenewedValidatorTxn.js";
 import { prepareAddPermissionlessDelegatorTxn } from "../../methods/wallet/pChain/prepareAddPermissionlessDelegatorTxn.js";
 import { prepareAddPermissionlessValidatorTxn } from "../../methods/wallet/pChain/prepareAddPermissionlessValidatorTxn.js";
 import { prepareAddSubnetValidatorTxn } from "../../methods/wallet/pChain/prepareAddSubnetValidatorTxn.js";
@@ -43,6 +50,8 @@ import { prepareDisableL1ValidatorTxn } from "../../methods/wallet/pChain/prepar
 import { prepareIncreaseL1ValidatorBalanceTxn } from "../../methods/wallet/pChain/prepareIncreaseL1ValidatorBalanceTxn.js";
 import { prepareRegisterL1ValidatorTxn } from "../../methods/wallet/pChain/prepareRegisterL1ValidatorTxn.js";
 import { prepareRemoveSubnetValidatorTxn } from "../../methods/wallet/pChain/prepareRemoveSubnetValidatorTxn.js";
+import { prepareRewardAutoRenewedValidatorTxn } from "../../methods/wallet/pChain/prepareRewardAutoRenewedValidatorTxn.js";
+import { prepareSetAutoRenewedValidatorConfigTxn } from "../../methods/wallet/pChain/prepareSetAutoRenewedValidatorConfigTxn.js";
 import { AvalancheWalletCoreClient } from "../createAvalancheWalletCoreClient.js";
 
 export type PChainWalletActions = {
@@ -83,6 +92,17 @@ export type PChainWalletActions = {
   prepareAddPermissionlessDelegatorTxn: (
     args: PrepareAddPermissionlessDelegatorTxnParameters
   ) => Promise<PrepareAddPermissionlessDelegatorTxnReturnType>;
+
+  /**
+   * Prepare an add auto-renewed validator transaction.
+   * This method creates the transaction data needed to add a Primary Network validator with automatic renewal cycles.
+   *
+   * @param args - {@link PrepareAddAutoRenewedValidatorTxnParameters}
+   * @returns Add auto-renewed validator transaction data. {@link PrepareAddAutoRenewedValidatorTxnReturnType}
+   */
+  prepareAddAutoRenewedValidatorTxn: (
+    args: PrepareAddAutoRenewedValidatorTxnParameters
+  ) => Promise<PrepareAddAutoRenewedValidatorTxnReturnType>;
 
   /**
    * Prepare an add permissionless validator transaction.
@@ -545,6 +565,28 @@ export type PChainWalletActions = {
   ) => Promise<PrepareRemoveSubnetValidatorTxnReturnType>;
 
   /**
+   * Prepare a reward auto-renewed validator transaction.
+   * This method creates issue-ready transaction bytes for rewarding or exiting an auto-renewed validator cycle.
+   *
+   * @param args - {@link PrepareRewardAutoRenewedValidatorTxnParameters}
+   * @returns Reward auto-renewed validator transaction data. {@link PrepareRewardAutoRenewedValidatorTxnReturnType}
+   */
+  prepareRewardAutoRenewedValidatorTxn: (
+    args: PrepareRewardAutoRenewedValidatorTxnParameters
+  ) => Promise<PrepareRewardAutoRenewedValidatorTxnReturnType>;
+
+  /**
+   * Prepare a set auto-renewed validator config transaction.
+   * This method creates the transaction data needed to update the next auto-renewal cycle config.
+   *
+   * @param args - {@link PrepareSetAutoRenewedValidatorConfigTxnParameters}
+   * @returns Set auto-renewed validator config transaction data. {@link PrepareSetAutoRenewedValidatorConfigTxnReturnType}
+   */
+  prepareSetAutoRenewedValidatorConfigTxn: (
+    args: PrepareSetAutoRenewedValidatorConfigTxnParameters
+  ) => Promise<PrepareSetAutoRenewedValidatorConfigTxnReturnType>;
+
+  /**
    * Prepare a set L1 validator weight transaction.
    * This method creates the transaction data needed to set an L1 validator's weight.
    *
@@ -584,6 +626,8 @@ export function pChainWalletActions<
   return {
     prepareAddPermissionlessDelegatorTxn: (args) =>
       prepareAddPermissionlessDelegatorTxn(client, args),
+    prepareAddAutoRenewedValidatorTxn: (args) =>
+      prepareAddAutoRenewedValidatorTxn(client, args),
     prepareAddPermissionlessValidatorTxn: (args) =>
       prepareAddPermissionlessValidatorTxn(client, args),
     prepareAddSubnetValidatorTxn: (args) =>
@@ -603,6 +647,10 @@ export function pChainWalletActions<
       prepareRegisterL1ValidatorTxn(client, args),
     prepareRemoveSubnetValidatorTxn: (args) =>
       prepareRemoveSubnetValidatorTxn(client, args),
+    prepareRewardAutoRenewedValidatorTxn: (args) =>
+      prepareRewardAutoRenewedValidatorTxn(client, args),
+    prepareSetAutoRenewedValidatorConfigTxn: (args) =>
+      prepareSetAutoRenewedValidatorConfigTxn(client, args),
     prepareSetL1ValidatorWeightTxn: (args) =>
       prepareSetL1ValidatorWeightTxn(client, args),
   };

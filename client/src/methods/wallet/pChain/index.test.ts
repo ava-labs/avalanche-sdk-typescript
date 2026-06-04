@@ -6,6 +6,7 @@ test("exports", () => {
   expect(Object.keys(exports)).toMatchInlineSnapshot(`
     [
       "prepareAddPermissionlessDelegatorTx",
+      "prepareAddAutoRenewedValidatorTxn",
       "prepareAddPermissionlessValidatorTxn",
       "prepareAddSubnetValidatorTxn",
       "prepareBaseTxn",
@@ -18,6 +19,8 @@ test("exports", () => {
       "prepareIncreaseL1ValidatorBalanceTxn",
       "prepareRegisterL1ValidatorTxn",
       "prepareRemoveSubnetValidatorTxn",
+      "prepareRewardAutoRenewedValidatorTxn",
+      "prepareSetAutoRenewedValidatorConfigTxn",
       "prepareSetL1ValidatorWeightTxn",
     ]
   `);

@@ -51,6 +51,8 @@ export async function sendXPTransaction(
     subnetOwners,
     disableOwners,
     disableAuth,
+    autoRenewedValidatorOwners,
+    autoRenewedValidatorAuth,
     ...rest
   } = params;
 
@@ -65,6 +67,8 @@ export async function sendXPTransaction(
       subnetAuth,
       disableOwners,
       disableAuth,
+      autoRenewedValidatorOwners,
+      autoRenewedValidatorAuth,
     });
 
     const issueTx = (args: any) => {
@@ -102,6 +106,8 @@ export async function sendXPTransaction(
         | "subnetOwners"
         | "disableOwners"
         | "disableAuth"
+        | "autoRenewedValidatorOwners"
+        | "autoRenewedValidatorAuth"
       > & {
         transactionHex: string;
         utxos: string[] | undefined;

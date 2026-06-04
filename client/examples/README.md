@@ -140,7 +140,7 @@ Located in `prepare-primary-network-txns/`:
 
 #### Chain-Specific Examples
 - **`x-chain/`** - X-Chain specific operations
-- **`p-chain/`** - P-Chain specific operations  
+- **`p-chain/`** - P-Chain specific operations, including ACP-236 auto-renewed validator transactions
 - **`c-chain/`** - C-Chain specific operations
 
 ## Configuration
@@ -218,5 +218,4 @@ Found an issue or want to add more examples? Please contribute by:
 ---
 
 **Happy building on Avalanche! 🏔️**
-
 
