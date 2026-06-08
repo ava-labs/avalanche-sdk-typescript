@@ -328,29 +328,25 @@ export async function fetchCommonPVMTxParams(
 
   let autoRenewedValidatorOwners: PChainOwner | undefined;
   if (autoRenewedValidatorTxId) {
-    try {
-      const currentValidators = await getCurrentValidators(
-        client.pChainClient,
-        {}
+    const currentValidators = await getCurrentValidators(
+      client.pChainClient,
+      {}
+    );
+    const autoRenewedValidator = currentValidators.validators.find(
+      (validator) => validator.txID === autoRenewedValidatorTxId
+    );
+    if (autoRenewedValidator?.validatorAuthority) {
+      const owner = autoRenewedValidator.validatorAuthority;
+      const ownerAddresses = owner.addresses.map((addr) =>
+        addr.startsWith(`${P_CHAIN_ALIAS}-`)
+          ? addr
+          : `${P_CHAIN_ALIAS}-${addr}`
       );
-      const autoRenewedValidator = currentValidators.validators.find(
-        (validator) => validator.txID === autoRenewedValidatorTxId
+      autoRenewedValidatorOwners = new PChainOwner(
+        new Int(Number(owner.threshold)),
+        ownerAddresses.map(Address.fromString)
       );
-      if (autoRenewedValidator?.validatorAuthority) {
-        const owner = autoRenewedValidator.validatorAuthority;
-        const ownerAddresses = owner.addresses.map((addr) =>
-          addr.startsWith(`${P_CHAIN_ALIAS}-`)
-            ? addr
-            : `${P_CHAIN_ALIAS}-${addr}`
-        );
-        autoRenewedValidatorOwners = new PChainOwner(
-          new Int(Number(owner.threshold)),
-          ownerAddresses.map(Address.fromString)
-        );
-        ownerAddresses.forEach((addr) => fromAddressesSet.add(addr));
-      }
-    } catch {
-      // Fall back to decoding the original transaction below.
+      ownerAddresses.forEach((addr) => fromAddressesSet.add(addr));
     }
 
     if (!autoRenewedValidatorOwners) {

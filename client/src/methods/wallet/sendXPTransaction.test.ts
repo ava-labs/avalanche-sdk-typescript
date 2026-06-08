@@ -117,6 +117,8 @@ describe("sendXPTransaction", () => {
         subnetAuth: undefined,
         disableOwners: undefined,
         disableAuth: undefined,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
 
       expect(issueTxPChain).toHaveBeenCalledWith(mockPChainClient, {
@@ -144,6 +146,8 @@ describe("sendXPTransaction", () => {
         subnetAuth: undefined,
         disableOwners: undefined,
         disableAuth: undefined,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
 
       expect(issueTxCChain).toHaveBeenCalledWith(mockCChainClient, {
@@ -172,6 +176,8 @@ describe("sendXPTransaction", () => {
         subnetAuth: undefined,
         disableOwners: undefined,
         disableAuth: undefined,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
 
       expect(issueTxXChain).toHaveBeenCalledWith(mockXChainClient, {
@@ -209,6 +215,38 @@ describe("sendXPTransaction", () => {
         subnetOwners,
         disableOwners,
         disableAuth,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
+      });
+    });
+
+    test("passes auto-renewed validator owner auth to signXPTransaction", async () => {
+      const autoRenewedValidatorOwners = {
+        threshold: 1,
+        addresses: ["P-avax1authority"],
+      } as any;
+      const autoRenewedValidatorAuth = [0];
+
+      await sendXPTransaction(client as any, {
+        tx: testTxHex,
+        chainAlias: "P",
+        autoRenewedValidatorOwners,
+        autoRenewedValidatorAuth,
+      });
+
+      expect(signXPTransaction).toHaveBeenCalledWith(client, {
+        tx: testTxHex,
+        chainAlias: "P",
+        subnetOwners: undefined,
+        subnetAuth: undefined,
+        disableOwners: undefined,
+        disableAuth: undefined,
+        autoRenewedValidatorOwners,
+        autoRenewedValidatorAuth,
+      });
+      expect(issueTxPChain).toHaveBeenCalledWith(mockPChainClient, {
+        tx: mockSignedTxHex,
+        encoding: "hex",
       });
     });
 
@@ -224,7 +262,7 @@ describe("sendXPTransaction", () => {
       } as any;
 
       vi.mocked(parseAvalancheAccount).mockReturnValue(
-        accountWithXpAccount as any
+        accountWithXpAccount as any,
       );
 
       await sendXPTransaction(client as any, {
@@ -244,7 +282,7 @@ describe("sendXPTransaction", () => {
       } as any;
 
       vi.mocked(parseAvalancheAccount).mockReturnValue(
-        accountWithoutXpAccount as any
+        accountWithoutXpAccount as any,
       );
 
       await sendXPTransaction(client as any, {
@@ -374,6 +412,8 @@ describe("sendXPTransaction", () => {
         subnetOwners: { threshold: 1, addresses: [] } as any,
         disableOwners: { threshold: 2, addresses: [] } as any,
         disableAuth: [3, 4],
+        autoRenewedValidatorOwners: { threshold: 1, addresses: [] } as any,
+        autoRenewedValidatorAuth: [0],
       });
 
       const callArgs = mockRequest.mock.calls[0][0];
@@ -383,6 +423,8 @@ describe("sendXPTransaction", () => {
       expect(callArgs.params).not.toHaveProperty("subnetOwners");
       expect(callArgs.params).not.toHaveProperty("disableOwners");
       expect(callArgs.params).not.toHaveProperty("disableAuth");
+      expect(callArgs.params).not.toHaveProperty("autoRenewedValidatorOwners");
+      expect(callArgs.params).not.toHaveProperty("autoRenewedValidatorAuth");
       expect(callArgs.params).toHaveProperty("utxos");
     });
   });
@@ -398,7 +440,7 @@ describe("sendXPTransaction", () => {
         client,
         expect.objectContaining({
           tx: testTxHex,
-        })
+        }),
       );
       expect(result.chainAlias).toBe("P");
     });
@@ -417,7 +459,7 @@ describe("sendXPTransaction", () => {
         client,
         expect.objectContaining({
           tx: mockUnsignedTx,
-        })
+        }),
       );
     });
 
@@ -435,7 +477,7 @@ describe("sendXPTransaction", () => {
           client,
           expect.objectContaining({
             chainAlias,
-          })
+          }),
         );
       }
     });
@@ -507,6 +549,8 @@ describe("sendXPTransaction", () => {
         subnetOwners,
         disableOwners,
         disableAuth,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
 
       expect(signXPTransaction).toHaveBeenCalledWith(client, {
@@ -516,6 +560,8 @@ describe("sendXPTransaction", () => {
         subnetOwners,
         disableOwners,
         disableAuth,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
     });
   });
@@ -534,6 +580,8 @@ describe("sendXPTransaction", () => {
         subnetAuth: undefined,
         disableOwners: undefined,
         disableAuth: undefined,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
       });
     });
 
@@ -571,7 +619,7 @@ describe("sendXPTransaction", () => {
       } as any;
 
       vi.mocked(parseAvalancheAccount).mockReturnValue(
-        accountWithXpAccount as any
+        accountWithXpAccount as any,
       );
 
       await sendXPTransaction(client as any, {
