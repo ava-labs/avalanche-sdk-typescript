@@ -101,6 +101,12 @@ export const getPChainMockServer = (params: {
             return overrideMocker?.[method]
               ? overrideMocker?.[method](reqBody as Record<string, any>)
               : getDefaultGetTxMockResponse(reqBody as Record<string, any>);
+          case "platform.getCurrentValidators":
+            return overrideMocker?.[method]
+              ? overrideMocker?.[method](reqBody as Record<string, any>)
+              : getDefaultGetCurrentValidatorsMockResponse(
+                  reqBody as Record<string, any>
+                );
           case "platform.getL1Validator":
             return overrideMocker?.[method]
               ? overrideMocker?.[method](reqBody as Record<string, any>)
@@ -217,6 +223,18 @@ export const getDefaultGetTxMockResponse = (
       statusText: "Mocked status",
     }
   );
+};
+
+export const getDefaultGetCurrentValidatorsMockResponse = (
+  reqBody: Record<string, any> | DefaultRequestMultipartBody
+) => {
+  return HttpResponse.json({
+    jsonrpc: "2.0",
+    result: {
+      validators: [],
+    },
+    id: reqBody?.["id"] || 1,
+  });
 };
 
 export const getDefaultGetL1ValidatorMockResponse = (

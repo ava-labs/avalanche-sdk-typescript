@@ -36,6 +36,7 @@ import {
   X_CHAIN_MAINNET_ID,
 } from "../consts.js";
 import { getFeeState } from "../pChain/getFeeState.js";
+import { getCurrentValidators } from "../pChain/getCurrentValidators.js";
 import { getL1Validator } from "../pChain/getL1Validator.js";
 import { getTx } from "../pChain/getTx.js";
 import { getAccountPubKey } from "./getAccountPubKey.js";
@@ -327,28 +328,55 @@ export async function fetchCommonPVMTxParams(
 
   let autoRenewedValidatorOwners: PChainOwner | undefined;
   if (autoRenewedValidatorTxId) {
-    const validatorTx = await getTx(client.pChainClient, {
-      txID: autoRenewedValidatorTxId,
-      encoding: "hex",
-    });
-    const strippedTxBytes = utils.strip0x(validatorTx.tx as string);
-    const manager = utils.getManagerForVM("PVM");
-    const txn = manager.unpack(
-      utils.hexToBuffer(strippedTxBytes),
-      avaxSerial.SignedTx
-    );
-
-    if (pvmSerial.isAddAutoRenewedValidatorTx(txn.unsignedTx)) {
-      const owner = txn.unsignedTx.getOwner();
-      autoRenewedValidatorOwners = new PChainOwner(
-        new Int(owner.threshold.value()),
-        owner.addrs
+    try {
+      const currentValidators = await getCurrentValidators(
+        client.pChainClient,
+        {}
       );
-      owner.addrs.forEach((addr) => {
-        fromAddressesSet.add(
-          `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`
+      const autoRenewedValidator = currentValidators.validators.find(
+        (validator) => validator.txID === autoRenewedValidatorTxId
+      );
+      if (autoRenewedValidator?.validatorAuthority) {
+        const owner = autoRenewedValidator.validatorAuthority;
+        const ownerAddresses = owner.addresses.map((addr) =>
+          addr.startsWith(`${P_CHAIN_ALIAS}-`)
+            ? addr
+            : `${P_CHAIN_ALIAS}-${addr}`
         );
+        autoRenewedValidatorOwners = new PChainOwner(
+          new Int(Number(owner.threshold)),
+          ownerAddresses.map(Address.fromString)
+        );
+        ownerAddresses.forEach((addr) => fromAddressesSet.add(addr));
+      }
+    } catch {
+      // Fall back to decoding the original transaction below.
+    }
+
+    if (!autoRenewedValidatorOwners) {
+      const validatorTx = await getTx(client.pChainClient, {
+        txID: autoRenewedValidatorTxId,
+        encoding: "hex",
       });
+      const strippedTxBytes = utils.strip0x(validatorTx.tx as string);
+      const manager = utils.getManagerForVM("PVM");
+      const txn = manager.unpack(
+        utils.hexToBuffer(strippedTxBytes),
+        avaxSerial.SignedTx
+      );
+
+      if (pvmSerial.isAddAutoRenewedValidatorTx(txn.unsignedTx)) {
+        const owner = txn.unsignedTx.getOwner();
+        autoRenewedValidatorOwners = new PChainOwner(
+          new Int(owner.threshold.value()),
+          owner.addrs
+        );
+        owner.addrs.forEach((addr) => {
+          fromAddressesSet.add(
+            `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`
+          );
+        });
+      }
     }
   }
 

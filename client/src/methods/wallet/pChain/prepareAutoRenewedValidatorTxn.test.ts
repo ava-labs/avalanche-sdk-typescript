@@ -85,17 +85,41 @@ const getAddAutoRenewedValidatorTxHex = () => {
   );
 };
 
+let getTxCalls = 0;
+let getCurrentValidatorsCalls = 0;
+
 const pChainWorker = getPChainMockServer({
   overrideMocker: {
-    "platform.getTx": (reqBody) =>
-      HttpResponse.json({
+    "platform.getTx": (reqBody) => {
+      getTxCalls += 1;
+      return HttpResponse.json({
         jsonrpc: "2.0",
         result: {
           tx: getAddAutoRenewedValidatorTxHex(),
           encoding: reqBody?.["params"]?.["encoding"] || "hex",
         },
         id: reqBody?.["id"] || 1,
-      }),
+      });
+    },
+    "platform.getCurrentValidators": (reqBody) => {
+      getCurrentValidatorsCalls += 1;
+      return HttpResponse.json({
+        jsonrpc: "2.0",
+        result: {
+          validators: [
+            {
+              txID: validatorTxId,
+              validatorAuthority: {
+                locktime: "0",
+                threshold: "1",
+                addresses: [account1.getXPAddress("P", "fuji")],
+              },
+            },
+          ],
+        },
+        id: reqBody?.["id"] || 1,
+      });
+    },
   },
 });
 
@@ -115,6 +139,8 @@ describe("auto-renewed validator P-Chain transactions", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    getTxCalls = 0;
+    getCurrentValidatorsCalls = 0;
   });
 
   afterAll(() => {
@@ -160,6 +186,25 @@ describe("auto-renewed validator P-Chain transactions", () => {
       tx.getOwner().addrs.map((addr) => addr.toString("fuji")),
       "owner addresses mismatch"
     ).toEqual(ownerAddresses.map((addr) => addr.replace("P-", "")));
+
+    const codec = utils.getManagerForVM("PVM").getDefaultCodec();
+    const txBytes = tx.toBytes(codec);
+    const baseTxLength = tx.baseTx.toBytes(codec).length;
+    expect(
+      Array.from(txBytes.slice(baseTxLength, baseTxLength + 4)),
+      "nodeID length prefix mismatch"
+    ).toEqual([0, 0, 0, 20]);
+    expect(
+      Array.from(txBytes.slice(-16)),
+      "auto-renewed validator tail mismatch"
+    ).toEqual([
+      ...Array.from(tx.shares.toBytes()),
+      ...Array.from(tx.autoCompoundRewardShares.toBytes()),
+      ...Array.from(tx.period.toBytes()),
+    ]);
+
+    const signedTx = await walletClient.signXPTransaction(txnRequest);
+    expect(signedTx.signedTxHex, "signed tx hex mismatch").toMatch(/^0x/);
   });
 
   it("prepares and signs set auto-renewed validator config transaction", async () => {
@@ -182,6 +227,13 @@ describe("auto-renewed validator P-Chain transactions", () => {
     ).toBe(250_000);
     expect(tx.period.value(), "period mismatch").toBe(604800n);
     expect(txnRequest.autoRenewedValidatorOwners.addresses).toHaveLength(1);
+    expect(
+      txnRequest.autoRenewedValidatorOwners.addresses.map((addr) =>
+        addr.toString("fuji")
+      )
+    ).toEqual([account1.getXPAddress("P", "fuji").replace("P-", "")]);
+    expect(getCurrentValidatorsCalls).toBe(1);
+    expect(getTxCalls).toBe(0);
 
     const signedTx = await walletClient.signXPTransaction(txnRequest);
     const [parsedTx, credentials] = getTxFromBytes(signedTx.signedTxHex, "P");

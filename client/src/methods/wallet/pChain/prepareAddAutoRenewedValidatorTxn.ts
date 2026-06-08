@@ -7,6 +7,7 @@ import {
   PrepareAddAutoRenewedValidatorTxnParameters,
   PrepareAddAutoRenewedValidatorTxnReturnType,
 } from "./types/prepareAddAutoRenewedValidatorTxn.js";
+import { useAvalancheGoAddAutoRenewedValidatorTxSerialization } from "./addAutoRenewedValidatorTxCompat.js";
 
 /**
  * Prepares an add auto-renewed validator transaction for the P-chain.
@@ -75,10 +76,15 @@ export async function prepareAddAutoRenewedValidatorTxn(
     context
   );
 
+  const addAutoRenewedValidatorTx =
+    unsignedTx.getTx() as pvmSerial.AddAutoRenewedValidatorTx;
+  useAvalancheGoAddAutoRenewedValidatorTxSerialization(
+    addAutoRenewedValidatorTx
+  );
+
   return {
     tx: unsignedTx,
-    addAutoRenewedValidatorTx:
-      unsignedTx.getTx() as pvmSerial.AddAutoRenewedValidatorTx,
+    addAutoRenewedValidatorTx,
     chainAlias: P_CHAIN_ALIAS,
   };
 }
