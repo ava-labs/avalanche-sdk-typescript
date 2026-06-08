@@ -2,6 +2,7 @@ import {
   Address,
   avaxSerial,
   BigIntPr,
+  Id,
   Int,
   NodeId,
   OutputOwners,
@@ -32,6 +33,7 @@ import {
 } from "../fixtures/transactions/common";
 import { getPChainMockServer } from "../fixtures/transactions/pChain";
 import { getContextFromURI } from "../getContextFromURI";
+import { useAvalancheGoAddAutoRenewedValidatorTxSerialization } from "./addAutoRenewedValidatorTxCompat";
 
 vi.mock("../getContextFromURI.js", async (importOriginal) => {
   const actual = await importOriginal<
@@ -46,6 +48,21 @@ vi.mock("../getContextFromURI.js", async (importOriginal) => {
 const blsPublicKey =
   "0x85025bca6a302dc61338ff49c8baa572ded3e86f3759304c7f618a2a2593c187e080a3cfdec95040309ad1f158953067";
 const validatorTxId = "2CDLCyFr7x4LcxaJ82rE38gnSk4gcVTeFdJeFbwZRd5fgM1gDH";
+
+const makeMockAddAutoRenewedValidatorTx = (
+  bytes: Uint8Array,
+  baseTxLength: number,
+  weightBytes = bytes.slice(-20, -12)
+) =>
+  ({
+    baseTx: {
+      toBytes: vi.fn(() => new Uint8Array(baseTxLength)),
+    },
+    toBytes: vi.fn(() => bytes),
+    weight: {
+      toBytes: vi.fn(() => weightBytes),
+    },
+  }) as unknown as pvmSerial.AddAutoRenewedValidatorTx;
 
 const getAddAutoRenewedValidatorTxHex = () => {
   const ownerAddress = Address.fromString(account1.getXPAddress("P", "fuji"));
@@ -85,8 +102,32 @@ const getAddAutoRenewedValidatorTxHex = () => {
   );
 };
 
+const getRewardAutoRenewedValidatorTxHex = () =>
+  utils.bufferToHex(
+    utils.addChecksum(
+      new avaxSerial.SignedTx(
+        new pvmSerial.RewardAutoRenewedValidatorTx(
+          Id.fromString(validatorTxId),
+          new BigIntPr(1780576200n)
+        ),
+        []
+      ).toBytes()
+    )
+  );
+
 let getTxCalls = 0;
 let getCurrentValidatorsCalls = 0;
+let getTxHex = getAddAutoRenewedValidatorTxHex;
+let currentValidators = [
+  {
+    txID: validatorTxId,
+    validatorAuthority: {
+      locktime: "0",
+      threshold: "1",
+      addresses: [account1.getXPAddress("P", "fuji")],
+    },
+  },
+];
 
 const pChainWorker = getPChainMockServer({
   overrideMocker: {
@@ -95,7 +136,7 @@ const pChainWorker = getPChainMockServer({
       return HttpResponse.json({
         jsonrpc: "2.0",
         result: {
-          tx: getAddAutoRenewedValidatorTxHex(),
+          tx: getTxHex(),
           encoding: reqBody?.["params"]?.["encoding"] || "hex",
         },
         id: reqBody?.["id"] || 1,
@@ -106,16 +147,7 @@ const pChainWorker = getPChainMockServer({
       return HttpResponse.json({
         jsonrpc: "2.0",
         result: {
-          validators: [
-            {
-              txID: validatorTxId,
-              validatorAuthority: {
-                locktime: "0",
-                threshold: "1",
-                addresses: [account1.getXPAddress("P", "fuji")],
-              },
-            },
-          ],
+          validators: currentValidators,
         },
         id: reqBody?.["id"] || 1,
       });
@@ -141,6 +173,17 @@ describe("auto-renewed validator P-Chain transactions", () => {
     vi.clearAllMocks();
     getTxCalls = 0;
     getCurrentValidatorsCalls = 0;
+    getTxHex = getAddAutoRenewedValidatorTxHex;
+    currentValidators = [
+      {
+        txID: validatorTxId,
+        validatorAuthority: {
+          locktime: "0",
+          threshold: "1",
+          addresses: [account1.getXPAddress("P", "fuji")],
+        },
+      },
+    ];
   });
 
   afterAll(() => {
@@ -207,6 +250,47 @@ describe("auto-renewed validator P-Chain transactions", () => {
     expect(signedTx.signedTxHex, "signed tx hex mismatch").toMatch(/^0x/);
   });
 
+  it("does not double-patch add auto-renewed validator serialization", () => {
+    const tx = makeMockAddAutoRenewedValidatorTx(
+      new Uint8Array([
+        1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 0, 20, 11, 12, 13, 14, 15, 16, 17, 18,
+        21, 22, 23, 24, 25, 26, 27, 28,
+      ]),
+      8
+    );
+
+    useAvalancheGoAddAutoRenewedValidatorTxSerialization(tx);
+    const patchedToBytes = tx.toBytes;
+    useAvalancheGoAddAutoRenewedValidatorTxSerialization(tx);
+
+    expect(tx.toBytes).toBe(patchedToBytes);
+  });
+
+  it("keeps defensive add auto-renewed serialization branches stable", () => {
+    const tooShortTx = makeMockAddAutoRenewedValidatorTx(
+      new Uint8Array([1, 2, 3]),
+      0
+    );
+    useAvalancheGoAddAutoRenewedValidatorTxSerialization(tooShortTx);
+    expect(Array.from(tooShortTx.toBytes({} as any))).toEqual([
+      0, 0, 0, 20, 1, 2, 3,
+    ]);
+
+    const mismatchedWeightTx = makeMockAddAutoRenewedValidatorTx(
+      new Uint8Array([
+        1, 2, 3, 4, 0, 0, 0, 20, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+        24, 25, 26, 27, 28,
+      ]),
+      4,
+      new Uint8Array([99, 99, 99, 99, 99, 99, 99, 99])
+    );
+    useAvalancheGoAddAutoRenewedValidatorTxSerialization(mismatchedWeightTx);
+    expect(Array.from(mismatchedWeightTx.toBytes({} as any))).toEqual([
+      1, 2, 3, 4, 0, 0, 0, 20, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+      24, 25, 26, 27, 28,
+    ]);
+  });
+
   it("prepares and signs set auto-renewed validator config transaction", async () => {
     const txnRequest =
       await walletClient.pChain.prepareSetAutoRenewedValidatorConfigTxn({
@@ -246,6 +330,73 @@ describe("auto-renewed validator P-Chain transactions", () => {
     expect(unsignedTx.hasAllSignatures(), "transaction is not signed").toBe(
       true
     );
+  });
+
+  it("prepares set auto-renewed validator config with unprefixed current-validator authority", async () => {
+    currentValidators = [
+      {
+        txID: validatorTxId,
+        validatorAuthority: {
+          locktime: "0",
+          threshold: "1",
+          addresses: [account1.getXPAddress("P", "fuji").replace("P-", "")],
+        },
+      },
+    ];
+
+    const txnRequest =
+      await walletClient.pChain.prepareSetAutoRenewedValidatorConfigTxn({
+        changeAddresses: [account1.getXPAddress("P", "fuji")],
+        validatorTxId,
+        auth: [0],
+        period: 604800n,
+        autoCompoundRewardPercentage: 25,
+        context: testContext,
+      });
+
+    expect(
+      txnRequest.autoRenewedValidatorOwners.addresses.map((addr) =>
+        addr.toString("fuji")
+      )
+    ).toEqual([account1.getXPAddress("P", "fuji").replace("P-", "")]);
+    expect(getCurrentValidatorsCalls).toBe(1);
+    expect(getTxCalls).toBe(0);
+  });
+
+  it("falls back to the original add tx for set auto-renewed validator config owners", async () => {
+    currentValidators = [];
+
+    const txnRequest =
+      await walletClient.pChain.prepareSetAutoRenewedValidatorConfigTxn({
+        changeAddresses: [account1.getXPAddress("P", "fuji")],
+        validatorTxId,
+        auth: [0],
+        period: 604800n,
+        autoCompoundRewardPercentage: 25,
+        context: testContext,
+      });
+
+    expect(txnRequest.autoRenewedValidatorOwners.addresses).toHaveLength(1);
+    expect(getCurrentValidatorsCalls).toBe(1);
+    expect(getTxCalls).toBe(1);
+  });
+
+  it("throws when set auto-renewed validator config owners are not found", async () => {
+    currentValidators = [];
+    getTxHex = getRewardAutoRenewedValidatorTxHex;
+
+    await expect(
+      walletClient.pChain.prepareSetAutoRenewedValidatorConfigTxn({
+        changeAddresses: [account1.getXPAddress("P", "fuji")],
+        validatorTxId,
+        auth: [0],
+        period: 604800n,
+        autoCompoundRewardPercentage: 25,
+        context: testContext,
+      })
+    ).rejects.toThrow("Auto-renewed validator owners not found");
+    expect(getCurrentValidatorsCalls).toBe(1);
+    expect(getTxCalls).toBe(1);
   });
 
   it("prepares reward auto-renewed validator issue-ready hex", async () => {
