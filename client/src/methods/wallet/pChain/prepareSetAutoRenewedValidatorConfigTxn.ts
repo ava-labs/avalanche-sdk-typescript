@@ -62,7 +62,9 @@ export async function prepareSetAutoRenewedValidatorConfigTxn(
       ...commonTxParams,
       validatorTxId: params.validatorTxId,
       auth: params.auth,
-      autoCompoundRewardShares: params.autoCompoundRewardPercentage * 10000,
+      autoCompoundRewardShares: Math.round(
+        params.autoCompoundRewardPercentage * 10000
+      ),
       period: params.period,
     },
     context

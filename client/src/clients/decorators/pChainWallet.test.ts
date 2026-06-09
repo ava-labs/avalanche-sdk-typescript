@@ -26,7 +26,6 @@ test("default", async () => {
   "prepareIncreaseL1ValidatorBalanceTxn": [Function],
   "prepareRegisterL1ValidatorTxn": [Function],
   "prepareRemoveSubnetValidatorTxn": [Function],
-  "prepareRewardAutoRenewedValidatorTxn": [Function],
   "prepareSetAutoRenewedValidatorConfigTxn": [Function],
   "prepareSetL1ValidatorWeightTxn": [Function],
 }`);

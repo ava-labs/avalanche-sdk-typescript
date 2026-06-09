@@ -19,7 +19,6 @@ test("exports", () => {
       "prepareIncreaseL1ValidatorBalanceTxn",
       "prepareRegisterL1ValidatorTxn",
       "prepareRemoveSubnetValidatorTxn",
-      "prepareRewardAutoRenewedValidatorTxn",
       "prepareSetAutoRenewedValidatorConfigTxn",
       "prepareSetL1ValidatorWeightTxn",
     ]

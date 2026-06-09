@@ -37,8 +37,8 @@ import { useAvalancheGoAddAutoRenewedValidatorTxSerialization } from "./addAutoR
  *   rewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   delegatorRewardAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
  *   ownerAddresses: ["P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz"],
- *   publicKey: "0x1234567890123456789012345678901234567890",
- *   signature: "0x1234567890123456789012345678901234567890",
+ *   publicKey: "0x85025bca6a302dc61338ff49c8baa572ded3e86f3759304c7f618a2a2593c187e080a3cfdec95040309ad1f158953067",
+ *   signature: "0x85ee50110f99f4cf5822ea3c8c9e6941a7f1ab94678e6ba784cd7609492855dc440c37ac605e45f5bd9c63ac13ce06550513264195f87d8e2c78818a51dcba95565f197e3f63962ad566d3c524fc878c4f59ec2d1da5bb042fd99da5",
  *   delegatorRewardPercentage: 2.5,
  *   autoCompoundRewardPercentage: 100,
  * });
@@ -50,6 +50,14 @@ export async function prepareAddAutoRenewedValidatorTxn(
   client: AvalancheWalletCoreClient,
   params: PrepareAddAutoRenewedValidatorTxnParameters
 ): Promise<PrepareAddAutoRenewedValidatorTxnReturnType> {
+  const threshold = params.threshold ?? 1;
+  if (params.stakeInNanoAvax <= 0n) {
+    throw new Error("stakeInNanoAvax must be greater than 0");
+  }
+  if (threshold <= 0) {
+    throw new Error("threshold must be greater than 0");
+  }
+
   const context = params.context || (await getContextFromURI(client));
   const { commonTxParams } = await fetchCommonPVMTxParams(client, {
     txParams: params,
@@ -65,10 +73,12 @@ export async function prepareAddAutoRenewedValidatorTxn(
       delegatorRewardsOwner:
         params.delegatorRewardAddresses.map(bech32AddressToBytes),
       ownerAddresses: params.ownerAddresses.map(bech32AddressToBytes),
-      shares: params.delegatorRewardPercentage * 10000,
-      autoCompoundRewardShares: params.autoCompoundRewardPercentage * 10000,
+      shares: Math.round(params.delegatorRewardPercentage * 10000),
+      autoCompoundRewardShares: Math.round(
+        params.autoCompoundRewardPercentage * 10000
+      ),
       period: params.period,
-      threshold: params.threshold ?? 1,
+      threshold,
       locktime: BigInt(params.locktime ?? 0n),
       publicKey: utils.hexToBuffer(params.publicKey),
       signature: utils.hexToBuffer(params.signature),

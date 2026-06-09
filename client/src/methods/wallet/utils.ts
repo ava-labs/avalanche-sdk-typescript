@@ -328,6 +328,9 @@ export async function fetchCommonPVMTxParams(
 
   let autoRenewedValidatorOwners: PChainOwner | undefined;
   if (autoRenewedValidatorTxId) {
+    // SetAutoRenewedValidatorConfigTx must sign against the active validator
+    // authority from chain state. Do not fall back to the original add tx here;
+    // current-validator state is the source of truth for signing auth.
     const currentValidators = await getCurrentValidators(
       client.pChainClient,
       {}
@@ -347,32 +350,14 @@ export async function fetchCommonPVMTxParams(
         ownerAddresses.map(Address.fromString)
       );
       ownerAddresses.forEach((addr) => fromAddressesSet.add(addr));
-    }
-
-    if (!autoRenewedValidatorOwners) {
-      const validatorTx = await getTx(client.pChainClient, {
-        txID: autoRenewedValidatorTxId,
-        encoding: "hex",
-      });
-      const strippedTxBytes = utils.strip0x(validatorTx.tx as string);
-      const manager = utils.getManagerForVM("PVM");
-      const txn = manager.unpack(
-        utils.hexToBuffer(strippedTxBytes),
-        avaxSerial.SignedTx
+    } else if (autoRenewedValidator) {
+      throw new Error(
+        `Auto-renewed validator ${autoRenewedValidatorTxId} did not include validatorAuthority`
       );
-
-      if (pvmSerial.isAddAutoRenewedValidatorTx(txn.unsignedTx)) {
-        const owner = txn.unsignedTx.getOwner();
-        autoRenewedValidatorOwners = new PChainOwner(
-          new Int(owner.threshold.value()),
-          owner.addrs
-        );
-        owner.addrs.forEach((addr) => {
-          fromAddressesSet.add(
-            `${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`
-          );
-        });
-      }
+    } else {
+      throw new Error(
+        `Auto-renewed validator ${autoRenewedValidatorTxId} not found in current validators`
+      );
     }
   }
 

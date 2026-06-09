@@ -28,8 +28,6 @@ import {
   PrepareRegisterL1ValidatorTxnReturnType,
   PrepareRemoveSubnetValidatorTxnParameters,
   PrepareRemoveSubnetValidatorTxnReturnType,
-  PrepareRewardAutoRenewedValidatorTxnParameters,
-  PrepareRewardAutoRenewedValidatorTxnReturnType,
   PrepareSetAutoRenewedValidatorConfigTxnParameters,
   PrepareSetAutoRenewedValidatorConfigTxnReturnType,
   PrepareSetL1ValidatorWeightTxnParameters,
@@ -50,7 +48,6 @@ import { prepareDisableL1ValidatorTxn } from "../../methods/wallet/pChain/prepar
 import { prepareIncreaseL1ValidatorBalanceTxn } from "../../methods/wallet/pChain/prepareIncreaseL1ValidatorBalanceTxn.js";
 import { prepareRegisterL1ValidatorTxn } from "../../methods/wallet/pChain/prepareRegisterL1ValidatorTxn.js";
 import { prepareRemoveSubnetValidatorTxn } from "../../methods/wallet/pChain/prepareRemoveSubnetValidatorTxn.js";
-import { prepareRewardAutoRenewedValidatorTxn } from "../../methods/wallet/pChain/prepareRewardAutoRenewedValidatorTxn.js";
 import { prepareSetAutoRenewedValidatorConfigTxn } from "../../methods/wallet/pChain/prepareSetAutoRenewedValidatorConfigTxn.js";
 import { AvalancheWalletCoreClient } from "../createAvalancheWalletCoreClient.js";
 
@@ -565,17 +562,6 @@ export type PChainWalletActions = {
   ) => Promise<PrepareRemoveSubnetValidatorTxnReturnType>;
 
   /**
-   * Prepare a reward auto-renewed validator transaction.
-   * This method creates issue-ready transaction bytes for rewarding or exiting an auto-renewed validator cycle.
-   *
-   * @param args - {@link PrepareRewardAutoRenewedValidatorTxnParameters}
-   * @returns Reward auto-renewed validator transaction data. {@link PrepareRewardAutoRenewedValidatorTxnReturnType}
-   */
-  prepareRewardAutoRenewedValidatorTxn: (
-    args: PrepareRewardAutoRenewedValidatorTxnParameters
-  ) => Promise<PrepareRewardAutoRenewedValidatorTxnReturnType>;
-
-  /**
    * Prepare a set auto-renewed validator config transaction.
    * This method creates the transaction data needed to update the next auto-renewal cycle config.
    *
@@ -647,8 +633,6 @@ export function pChainWalletActions<
       prepareRegisterL1ValidatorTxn(client, args),
     prepareRemoveSubnetValidatorTxn: (args) =>
       prepareRemoveSubnetValidatorTxn(client, args),
-    prepareRewardAutoRenewedValidatorTxn: (args) =>
-      prepareRewardAutoRenewedValidatorTxn(client, args),
     prepareSetAutoRenewedValidatorConfigTxn: (args) =>
       prepareSetAutoRenewedValidatorConfigTxn(client, args),
     prepareSetL1ValidatorWeightTxn: (args) =>

@@ -15,7 +15,6 @@ export { prepareImportTxn } from "./prepareImportTxn.js";
 export { prepareIncreaseL1ValidatorBalanceTxn } from "./prepareIncreaseL1ValidatorBalanceTxn.js";
 export { prepareRegisterL1ValidatorTxn } from "./prepareRegisterL1ValidatorTxn.js";
 export { prepareRemoveSubnetValidatorTxn } from "./prepareRemoveSubnetValidatorTxn.js";
-export { prepareRewardAutoRenewedValidatorTxn } from "./prepareRewardAutoRenewedValidatorTxn.js";
 export { prepareSetAutoRenewedValidatorConfigTxn } from "./prepareSetAutoRenewedValidatorConfigTxn.js";
 export { prepareSetL1ValidatorWeightTxn } from "./prepareSetL1ValidatorWeightTxn.js";
 
@@ -80,10 +79,6 @@ export type {
   PrepareRemoveSubnetValidatorTxnParameters,
   PrepareRemoveSubnetValidatorTxnReturnType,
 } from "./types/prepareRemoveSubnetValidatorTxn.js";
-export type {
-  PrepareRewardAutoRenewedValidatorTxnParameters,
-  PrepareRewardAutoRenewedValidatorTxnReturnType,
-} from "./types/prepareRewardAutoRenewedValidatorTxn.js";
 export type {
   PrepareSetAutoRenewedValidatorConfigTxnParameters,
   PrepareSetAutoRenewedValidatorConfigTxnReturnType,

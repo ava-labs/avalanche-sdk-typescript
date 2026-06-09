@@ -11,6 +11,8 @@ const UINT32_BYTE_LENGTH = 4;
 const UINT64_BYTE_LENGTH = 8;
 const WEIGHT_TAIL_OFFSET =
   UINT64_BYTE_LENGTH + UINT32_BYTE_LENGTH + UINT64_BYTE_LENGTH;
+export const ADD_AUTO_RENEWED_VALIDATOR_COMPAT_AVALANCHEJS_VERSION =
+  "5.1.0-alpha.5";
 
 const patchedAddAutoRenewedValidatorTxs =
   new WeakSet<AddAutoRenewedValidatorTx>();
@@ -18,10 +20,23 @@ const patchedAddAutoRenewedValidatorTxs =
 const bytesEqual = (left: Uint8Array, right: Uint8Array) =>
   left.length === right.length && left.every((byte, i) => byte === right[i]);
 
+const unexpectedLayout = (reason: string) =>
+  new Error(
+    `Unsupported AddAutoRenewedValidatorTx serialization layout: ${reason}. ` +
+      `This compatibility shim only targets @avalabs/avalanchejs ` +
+      `${ADD_AUTO_RENEWED_VALIDATOR_COMPAT_AVALANCHEJS_VERSION}; remove or update it when upgrading AvalancheJS.`
+  );
+
 const insertNodeIDLengthPrefix = (
   bytes: Uint8Array,
   baseTxLength: number
 ) => {
+  if (baseTxLength < 0 || baseTxLength > bytes.length) {
+    throw unexpectedLayout(
+      `baseTxLength ${baseTxLength} is outside ${bytes.length} byte tx`
+    );
+  }
+
   if (
     bytesEqual(
       bytes.slice(baseTxLength, baseTxLength + UINT32_BYTE_LENGTH),
@@ -29,6 +44,9 @@ const insertNodeIDLengthPrefix = (
     )
   ) {
     return bytes;
+  }
+  if (bytes.length < baseTxLength + NODE_ID_BYTE_LENGTH) {
+    throw unexpectedLayout("missing nodeID bytes at expected offset");
   }
 
   const prefixed = new Uint8Array(bytes.length + UINT32_BYTE_LENGTH);
@@ -44,7 +62,7 @@ const removeSerializedWeight = (
 ) => {
   const weightStart = bytes.length - WEIGHT_TAIL_OFFSET;
   if (weightStart < 0) {
-    return bytes;
+    throw unexpectedLayout("tx is too short to contain the expected weight tail");
   }
 
   const weightBytes = tx.weight.toBytes();
@@ -54,7 +72,7 @@ const removeSerializedWeight = (
       weightBytes
     )
   ) {
-    return bytes;
+    throw unexpectedLayout("expected weight bytes were not found");
   }
 
   const withoutWeight = new Uint8Array(bytes.length - UINT64_BYTE_LENGTH);
@@ -74,6 +92,8 @@ export function useAvalancheGoAddAutoRenewedValidatorTxSerialization(
   }
 
   const avalancheJSToBytes = tx.toBytes.bind(tx);
+  // TODO: Delete this shim after AvalancheJS serializes ACP-236
+  // AddAutoRenewedValidatorTx bytes in the AvalancheGo-compatible layout.
   tx.toBytes = (codec: AddAutoRenewedValidatorCodec) => {
     const baseTxLength = tx.baseTx.toBytes(codec).length;
     const nodeIDPrefixed = insertNodeIDLengthPrefix(
