@@ -11,8 +11,7 @@ const UINT32_BYTE_LENGTH = 4;
 const UINT64_BYTE_LENGTH = 8;
 const WEIGHT_TAIL_OFFSET =
   UINT64_BYTE_LENGTH + UINT32_BYTE_LENGTH + UINT64_BYTE_LENGTH;
-export const ADD_AUTO_RENEWED_VALIDATOR_COMPAT_AVALANCHEJS_VERSION =
-  "5.1.0-alpha.5";
+export const ADD_AUTO_RENEWED_VALIDATOR_COMPAT_AVALANCHEJS_VERSION = "5.1.0";
 
 const patchedAddAutoRenewedValidatorTxs =
   new WeakSet<AddAutoRenewedValidatorTx>();
@@ -84,6 +83,17 @@ const removeSerializedWeight = (
   return withoutWeight;
 };
 
+/**
+ * Rewrites `AddAutoRenewedValidatorTx.toBytes()` into the layout AvalancheGo
+ * expects for ACP-236: AvalancheJS omits the 4-byte nodeID length prefix and
+ * appends a trailing `weight` field that AvalancheGo's codec does not. The byte
+ * ops are fail-closed — any layout that isn't the known-broken shape throws via
+ * `unexpectedLayout()` rather than emitting a silently-corrupted, validly-signed
+ * staking tx. We can't read the installed AvalancheJS version at runtime (its
+ * `exports` map hides `package.json`), so the exact version pin in `package.json`
+ * plus these structural checks are the guard. ACP-236's wire format is not yet
+ * frozen (devnet only); revisit this whenever AvalancheJS is bumped.
+ */
 export function useAvalancheGoAddAutoRenewedValidatorTxSerialization(
   tx: AddAutoRenewedValidatorTx
 ) {
