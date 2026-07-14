@@ -12,6 +12,7 @@ const pChainWalletClient = pChainWalletActions(client);
 
 test("default", async () => {
   expect(pChainWalletClient).toMatchInlineSnapshot(`{
+  "prepareAddAutoRenewedValidatorTxn": [Function],
   "prepareAddPermissionlessDelegatorTxn": [Function],
   "prepareAddPermissionlessValidatorTxn": [Function],
   "prepareAddSubnetValidatorTxn": [Function],
@@ -25,6 +26,7 @@ test("default", async () => {
   "prepareIncreaseL1ValidatorBalanceTxn": [Function],
   "prepareRegisterL1ValidatorTxn": [Function],
   "prepareRemoveSubnetValidatorTxn": [Function],
+  "prepareSetAutoRenewedValidatorConfigTxn": [Function],
   "prepareSetL1ValidatorWeightTxn": [Function],
 }`);
 });

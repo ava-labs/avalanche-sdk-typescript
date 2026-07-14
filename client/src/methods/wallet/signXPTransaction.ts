@@ -77,6 +77,8 @@ export async function signXPTransaction(
     subnetOwners,
     disableOwners,
     disableAuth,
+    autoRenewedValidatorOwners,
+    autoRenewedValidatorAuth,
   } = params;
 
   const txOrTxHex = tx || signedTxHex;
@@ -174,9 +176,21 @@ export async function signXPTransaction(
         credentials[sigIndex]?.setSignature(addrIndex, signature);
       });
 
-      if ((subnetOwners && subnetAuth) || (disableOwners && disableAuth)) {
-        const owners = (subnetOwners ?? disableOwners)!;
-        const authIndices = (subnetAuth ?? disableAuth) || [];
+      const ownerAuth =
+        subnetOwners && subnetAuth
+          ? { owners: subnetOwners, auth: subnetAuth }
+          : disableOwners && disableAuth
+            ? { owners: disableOwners, auth: disableAuth }
+            : autoRenewedValidatorOwners && autoRenewedValidatorAuth
+              ? {
+                  owners: autoRenewedValidatorOwners,
+                  auth: autoRenewedValidatorAuth,
+                }
+              : undefined;
+
+      if (ownerAuth) {
+        const owners = ownerAuth.owners;
+        const authIndices = ownerAuth.auth;
 
         // Get the addresses that need to sign based on subnetAuth indices
         const signingOwners = owners.addresses.filter((_, index) =>
@@ -213,6 +227,8 @@ export async function signXPTransaction(
         subnetOwners,
         disableOwners,
         disableAuth,
+        autoRenewedValidatorOwners,
+        autoRenewedValidatorAuth,
         chainAlias,
       };
     } else {
@@ -222,11 +238,23 @@ export async function signXPTransaction(
       );
       tx.addSignature(signature);
 
-      if ((subnetOwners && subnetAuth) || (disableOwners && disableAuth)) {
+      const ownerAuth =
+        subnetOwners && subnetAuth
+          ? { owners: subnetOwners, auth: subnetAuth }
+          : disableOwners && disableAuth
+            ? { owners: disableOwners, auth: disableAuth }
+            : autoRenewedValidatorOwners && autoRenewedValidatorAuth
+              ? {
+                  owners: autoRenewedValidatorOwners,
+                  auth: autoRenewedValidatorAuth,
+                }
+              : undefined;
+
+      if (ownerAuth) {
         addPChainOwnerAuthSignature(
           tx,
-          (subnetOwners ?? disableOwners)!,
-          (subnetAuth ?? disableAuth) || [],
+          ownerAuth.owners,
+          ownerAuth.auth,
           signature,
           xpAccount.publicKey
         );
@@ -247,6 +275,8 @@ export async function signXPTransaction(
         subnetOwners,
         disableOwners,
         disableAuth,
+        autoRenewedValidatorOwners,
+        autoRenewedValidatorAuth,
         chainAlias,
       };
     }

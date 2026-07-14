@@ -36,6 +36,7 @@ import {
   X_CHAIN_MAINNET_ID,
 } from "../consts.js";
 import { getFeeState } from "../pChain/getFeeState.js";
+import { getCurrentValidators } from "../pChain/getCurrentValidators.js";
 import { getL1Validator } from "../pChain/getL1Validator.js";
 import { getTx } from "../pChain/getTx.js";
 import { getAccountPubKey } from "./getAccountPubKey.js";
@@ -269,6 +270,7 @@ export async function fetchCommonPVMTxParams(
       | typeof C_CHAIN_ALIAS;
     subnetId?: string;
     l1ValidationId?: string;
+    autoRenewedValidatorTxId?: string;
     account?: AvalancheAccount | AddressType | undefined;
     context: ContextType.Context;
   }
@@ -276,6 +278,7 @@ export async function fetchCommonPVMTxParams(
   commonTxParams: FormattedCommonPVMTxParams;
   subnetOwners: PChainOwner | undefined;
   disableOwners: PChainOwner | undefined;
+  autoRenewedValidatorOwners: PChainOwner | undefined;
 }> {
   const {
     txParams,
@@ -283,6 +286,7 @@ export async function fetchCommonPVMTxParams(
     chainAlias,
     subnetId,
     l1ValidationId,
+    autoRenewedValidatorTxId,
     account,
     context,
   } = params;
@@ -319,6 +323,41 @@ export async function fetchCommonPVMTxParams(
       txn.unsignedTx.getSubnetOwners().addrs.forEach((addr) => {
         fromAddressesSet.add(`${P_CHAIN_ALIAS}-${addr.toString(context.hrp)}`);
       });
+    }
+  }
+
+  let autoRenewedValidatorOwners: PChainOwner | undefined;
+  if (autoRenewedValidatorTxId) {
+    // SetAutoRenewedValidatorConfigTx must sign against the active validator
+    // authority from chain state. Do not fall back to the original add tx here;
+    // current-validator state is the source of truth for signing auth.
+    const currentValidators = await getCurrentValidators(
+      client.pChainClient,
+      {}
+    );
+    const autoRenewedValidator = currentValidators.validators.find(
+      (validator) => validator.txID === autoRenewedValidatorTxId
+    );
+    if (autoRenewedValidator?.validatorAuthority) {
+      const owner = autoRenewedValidator.validatorAuthority;
+      const ownerAddresses = owner.addresses.map((addr) =>
+        addr.startsWith(`${P_CHAIN_ALIAS}-`)
+          ? addr
+          : `${P_CHAIN_ALIAS}-${addr}`
+      );
+      autoRenewedValidatorOwners = new PChainOwner(
+        new Int(Number(owner.threshold)),
+        ownerAddresses.map(Address.fromString)
+      );
+      ownerAddresses.forEach((addr) => fromAddressesSet.add(addr));
+    } else if (autoRenewedValidator) {
+      throw new Error(
+        `Auto-renewed validator ${autoRenewedValidatorTxId} did not include validatorAuthority`
+      );
+    } else {
+      throw new Error(
+        `Auto-renewed validator ${autoRenewedValidatorTxId} not found in current validators`
+      );
     }
   }
 
@@ -373,7 +412,12 @@ export async function fetchCommonPVMTxParams(
     result.minIssuanceTime = txParams.minIssuanceTime;
   }
 
-  return { commonTxParams: result, subnetOwners, disableOwners };
+  return {
+    commonTxParams: result,
+    subnetOwners,
+    disableOwners,
+    autoRenewedValidatorOwners,
+  };
 }
 
 // TODO: try to paralleize API calls within this function

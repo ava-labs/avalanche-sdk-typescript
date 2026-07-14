@@ -28,6 +28,11 @@ interface NodeIdWithBLS {
   blsProofOfPossession?: string;
 }
 
+interface BootstrapNode {
+  nodeId: string;
+  stakingAddress: string;
+}
+
 async function getNodeIdWithBLSFromUri(uri: string): Promise<NodeIdWithBLS> {
   const response = await fetch(`${uri}/ext/info`, {
     method: "POST",
@@ -135,9 +140,14 @@ function addStakingKeyArgs(args: string[], stakerNum: number): void {
   }
 }
 
-function addBootstrapArgs(args: string[], bootstrapNodeId?: string): void {
-  if (bootstrapNodeId) {
-    args.push("--bootstrap-ips=127.0.0.1:9651", `--bootstrap-ids=${bootstrapNodeId}`);
+function addBootstrapArgs(args: string[], bootstrapNodes?: string | BootstrapNode[]): void {
+  if (Array.isArray(bootstrapNodes) && bootstrapNodes.length > 0) {
+    args.push(
+      `--bootstrap-ips=${bootstrapNodes.map((node) => node.stakingAddress).join(",")}`,
+      `--bootstrap-ids=${bootstrapNodes.map((node) => node.nodeId).join(",")}`,
+    );
+  } else if (typeof bootstrapNodes === "string" && bootstrapNodes.length > 0) {
+    args.push("--bootstrap-ips=127.0.0.1:9651", `--bootstrap-ids=${bootstrapNodes}`);
   } else {
     args.push("--bootstrap-ips=", "--bootstrap-ids=");
   }
@@ -205,7 +215,7 @@ export async function startNewNode(
   networkPath: string,
   nodeIndex: number,
   pluginDir: string,
-  bootstrapNodeId?: string
+  bootstrapNodes?: string | BootstrapNode[]
 ): Promise<NodeStartResult> {
   ensureExecutable(avalanchego);
 
@@ -218,7 +228,7 @@ export async function startNewNode(
 
   const args = buildBaseNodeArgs(httpPort, stakingPort, tempNodeDir, pluginDir);
   addStakingKeyArgs(args, stakerNum);
-  addBootstrapArgs(args, bootstrapNodeId);
+  addBootstrapArgs(args, bootstrapNodes);
 
   // Capture stdout/stderr to disk so we can diagnose silent startup failures.
   // avalanchego writes its own logs under --log-dir, but anything it emits

@@ -1,5 +1,6 @@
 // Export existing methods
 export { prepareAddPermissionlessDelegatorTxn as prepareAddPermissionlessDelegatorTx } from "./prepareAddPermissionlessDelegatorTxn.js";
+export { prepareAddAutoRenewedValidatorTxn } from "./prepareAddAutoRenewedValidatorTxn.js";
 export { prepareAddPermissionlessValidatorTxn } from "./prepareAddPermissionlessValidatorTxn.js";
 
 // Export new methods
@@ -14,9 +15,14 @@ export { prepareImportTxn } from "./prepareImportTxn.js";
 export { prepareIncreaseL1ValidatorBalanceTxn } from "./prepareIncreaseL1ValidatorBalanceTxn.js";
 export { prepareRegisterL1ValidatorTxn } from "./prepareRegisterL1ValidatorTxn.js";
 export { prepareRemoveSubnetValidatorTxn } from "./prepareRemoveSubnetValidatorTxn.js";
+export { prepareSetAutoRenewedValidatorConfigTxn } from "./prepareSetAutoRenewedValidatorConfigTxn.js";
 export { prepareSetL1ValidatorWeightTxn } from "./prepareSetL1ValidatorWeightTxn.js";
 
 // Export types
+export type {
+  PrepareAddAutoRenewedValidatorTxnParameters,
+  PrepareAddAutoRenewedValidatorTxnReturnType,
+} from "./types/prepareAddAutoRenewedValidatorTxn.js";
 export type {
   PrepareAddPermissionlessDelegatorTxnParameters,
   PrepareAddPermissionlessDelegatorTxnReturnType,
@@ -73,6 +79,10 @@ export type {
   PrepareRemoveSubnetValidatorTxnParameters,
   PrepareRemoveSubnetValidatorTxnReturnType,
 } from "./types/prepareRemoveSubnetValidatorTxn.js";
+export type {
+  PrepareSetAutoRenewedValidatorConfigTxnParameters,
+  PrepareSetAutoRenewedValidatorConfigTxnReturnType,
+} from "./types/prepareSetAutoRenewedValidatorConfigTxn.js";
 export type {
   PrepareSetL1ValidatorWeightTxnParameters,
   PrepareSetL1ValidatorWeightTxnReturnType,

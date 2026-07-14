@@ -30,6 +30,9 @@ export type GetCurrentValidatorsParameters = {
  * @property validators[].weight - The validator's weight (stake) when sampling validators
  * @property validators[].validationRewardOwner - Specifies the owner of the potential reward earned from staking. Includes locktime, threshold, and an array of addresses. Omitted if subnetID is not the Primary Network
  * @property validators[].delegationRewardOwner - Specifies the owner of the potential reward earned from delegations. Includes locktime, threshold, and an array of addresses. Omitted if subnetID is not the Primary Network
+ * @property validators[].validatorAuthority - Specifies the owner authorized to update auto-renewed validator config. Includes locktime, threshold, and an array of addresses. Only present for auto-renewed validators
+ * @property validators[].period - Auto-renewed validator cycle period in seconds. Only present for auto-renewed validators
+ * @property validators[].autoCompoundRewardShares - Auto-compound reward shares in parts per million. Only present for auto-renewed validators
  * @property validators[].signer - The node's BLS public key and proof of possession. Omitted if the validator doesn't have a BLS public key. Omitted if subnetID is not the Primary Network
  * @property validators[].delegatorCount - The number of delegators on this validator. Omitted if subnetID is not the Primary Network
  * @property validators[].delegatorWeight - The total weight of delegators on this validator. Omitted if subnetID is not the Primary Network
@@ -108,6 +111,29 @@ export type GetCurrentValidatorsReturnType = {
       threshold: string;
       addresses: string[];
     };
+
+    /**
+     * Specifies the owner authorized to update auto-renewed validator config.
+     * Includes locktime, threshold, and an array of addresses.
+     * Only present for auto-renewed validators.
+     */
+    validatorAuthority?: {
+      locktime: string;
+      threshold: string;
+      addresses: string[];
+    };
+
+    /**
+     * Auto-renewed validator cycle period in seconds.
+     * Only present for auto-renewed validators.
+     */
+    period?: string;
+
+    /**
+     * Auto-compound reward shares in parts per million.
+     * Only present for auto-renewed validators.
+     */
+    autoCompoundRewardShares?: string;
 
     /**
      * The node's BLS public key and proof of possession.

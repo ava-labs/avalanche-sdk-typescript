@@ -540,6 +540,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 
 ### P-Chain Wallet Methods
 
+- [`prepareAddAutoRenewedValidatorTxn`](/functions/methods_wallet_pChain.prepareAddAutoRenewedValidatorTxn.html) - Prepare an add auto-renewed validator transaction. [ACP-236](https://build.avax.network/docs/acps/236-auto-renewed-staking)
 - [`prepareAddPermissionlessDelegatorTx`](/functions/methods_wallet_pChain.prepareAddPermissionlessDelegatorTx.html) - Prepare an add permissionless delegator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-delegator-tx)
 - [`prepareAddPermissionlessValidatorTxn`](/functions/methods_wallet_pChain.prepareAddPermissionlessValidatorTxn.html) - Prepare an add permissionless validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-permissionless-validator-tx)
 - [`prepareAddSubnetValidatorTxn`](/functions/methods_wallet_pChain.prepareAddSubnetValidatorTxn.html) - Prepare an add subnet validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-add-validator-tx)
@@ -553,6 +554,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 - [`prepareIncreaseL1ValidatorBalanceTxn`](/functions/methods_wallet_pChain.prepareIncreaseL1ValidatorBalanceTxn.html) - Prepare an increase L1 validator balance transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-increase-l1-validator-balance-tx)
 - [`prepareRegisterL1ValidatorTxn`](/functions/methods_wallet_pChain.prepareRegisterL1ValidatorTxn.html) - Prepare a register L1 validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-register-l1-validator-tx)
 - [`prepareRemoveSubnetValidatorTxn`](/functions/methods_wallet_pChain.prepareRemoveSubnetValidatorTxn.html) - Prepare a remove subnet validator transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-remove-validator-tx)
+- [`prepareSetAutoRenewedValidatorConfigTxn`](/functions/methods_wallet_pChain.prepareSetAutoRenewedValidatorConfigTxn.html) - Prepare a set auto-renewed validator config transaction. [ACP-236](https://build.avax.network/docs/acps/236-auto-renewed-staking)
 - [`prepareSetL1ValidatorWeightTxn`](/functions/methods_wallet_pChain.prepareSetL1ValidatorWeightTxn.html) - Prepare a set L1 validator weight transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/txn-format#unsigned-set-l1-validator-weight-tx)
 
 ### X-Chain Wallet Methods
@@ -643,6 +645,7 @@ The [`prepare-primary-network-txns`](https://github.com/ava-labs/avalanche-sdk-t
 - [`importTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/x-chain/importTx.ts) - Prepare X-Chain import transaction
 
 #### P-Chain Transaction Examples
+- [`addAutoRenewedValidatorTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/addAutoRenewedValidatorTx.ts) - Add auto-renewed validator transaction
 - [`addSubnetValidatorTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/addSubnetValidatorTx.ts) - Add subnet validator transaction
 - [`baseTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/baseTx.ts) - Base transaction example
 - [`convertSubnetToL1Tx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/convertSubnetToL1Tx.ts) - Convert subnet to L1 transaction
@@ -651,6 +654,7 @@ The [`prepare-primary-network-txns`](https://github.com/ava-labs/avalanche-sdk-t
 - [`exportTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/exportTx.ts) - Prepare P-Chain export transaction
 - [`importTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/importTx.ts) - Prepare P-Chain import transaction
 - [`removeSubnetValidatorTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/removeSubnetValidatorTx.ts) - Remove subnet validator transaction
+- [`setAutoRenewedValidatorConfigTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/p-chain/setAutoRenewedValidatorConfigTx.ts) - Set auto-renewed validator config transaction
 
 #### C-Chain Transaction Examples
 - [`exportTx.ts`](https://github.com/ava-labs/avalanche-sdk-typescript/blob/main/client/examples/prepare-primary-network-txns/c-chain/exportTx.ts) - Prepare C-Chain export transaction

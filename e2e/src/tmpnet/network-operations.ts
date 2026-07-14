@@ -40,11 +40,6 @@ function setCurrentNetworkDir(dir: string | null): void {
   currentNetworkDir = dir;
 }
 
-interface NodeStartResult {
-  proc: Subprocess;
-  nodeInfo: NodeInfo;
-}
-
 /**
  * Create a new network and start it.
  * Uses global lock to prevent concurrent creates.
@@ -175,61 +170,42 @@ export async function startNetworkNodes(
   }
 
   if (validatorCount > 1) {
-    safeProgress(onProgress, `starting nodes 1-${validatorCount - 1} in parallel...`);
-    const parallelStart = Date.now();
+    safeProgress(onProgress, `starting nodes 1-${validatorCount - 1}...`);
+    const validatorStart = Date.now();
 
-    const nodePromises: Promise<NodeStartResult | null>[] = [];
     for (let i = 1; i < validatorCount; i++) {
-      nodePromises.push(
-        (async (): Promise<NodeStartResult | null> => {
-          const nodeData = await startNewNode(avalanchego, networkPath, i, pluginDir, node0Result.nodeId);
-          const result = await waitForNode(nodeData.httpPort, NODE_PARALLEL_STARTUP_TIMEOUT);
-          if (result.success && result.nodeId) {
-            const nodeInfo = await finalizeNode(
-              nodeData.proc,
-              nodeData.tempDir,
-              networkPath,
-              nodeData.httpPort,
-              nodeData.stakingPort,
-              nodeData.stakerNum,
-              result.nodeId
-            );
-            return { proc: nodeData.proc, nodeInfo };
-          }
-          if (nodeData.proc.pid) await gracefulKill(nodeData.proc.pid, 5000);
-          return null;
-        })()
+      const bootstrapNodes = nodes.map((node) => ({
+        nodeId: node.nodeId,
+        stakingAddress: node.stakingAddress,
+      }));
+      const nodeData = await startNewNode(avalanchego, networkPath, i, pluginDir, bootstrapNodes);
+      procs.push(nodeData.proc);
+      const result = await waitForNode(nodeData.httpPort, NODE_PARALLEL_STARTUP_TIMEOUT);
+      if (!result.success || !result.nodeId) {
+        await cleanupProcessesOnFailure(procs, "validator node startup");
+        return {
+          success: false,
+          error: {
+            code: "NODE_START_FAILED",
+            message: `node${i} failed to start: ${result.error || "Node failed to start"}`,
+          },
+        };
+      }
+      const nodeInfo = await finalizeNode(
+        nodeData.proc,
+        nodeData.tempDir,
+        networkPath,
+        nodeData.httpPort,
+        nodeData.stakingPort,
+        nodeData.stakerNum,
+        result.nodeId
       );
+      nodes.push(nodeInfo);
+      safeProgress(onProgress, `node${i} ready: ${result.nodeId}`);
     }
 
-    const allResults = await Promise.allSettled(nodePromises);
-
-    const successResults: NodeStartResult[] = [];
-    let failedCount = 0;
-    for (const result of allResults) {
-      if (result.status === "fulfilled" && result.value !== null) successResults.push(result.value);
-      else failedCount++;
-    }
-
-    if (failedCount > 0) {
-      const allProcs = [node0.proc, ...successResults.map((r) => r.proc)];
-      await cleanupProcessesOnFailure(allProcs, "partial node startup failure");
-      return {
-        success: false,
-        error: {
-          code: "NODE_START_FAILED",
-          message: `${failedCount} of ${validatorCount - 1} nodes failed to start. Network creation aborted.`,
-        },
-      };
-    }
-
-    for (const result of successResults) {
-      nodes.push(result.nodeInfo);
-      procs.push(result.proc);
-    }
-
-    const parallelTime = ((Date.now() - parallelStart) / 1000).toFixed(1);
-    safeProgress(onProgress, `${nodes.length - 1} additional validators ready (${parallelTime}s)`);
+    const validatorTime = ((Date.now() - validatorStart) / 1000).toFixed(1);
+    safeProgress(onProgress, `${nodes.length - 1} additional validators ready (${validatorTime}s)`);
   }
 
   setNodeProcesses(procs);

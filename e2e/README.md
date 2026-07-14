@@ -22,6 +22,15 @@ bun run test:integration  # boots a real tmpnet — takes minutes
 
 Set `SKIP_INTEGRATION=true` to skip integration tests in shared environments.
 
+ACP-236 auto-renewed validator E2E is opt-in until the default CI AvalancheGo
+binary includes those transaction types:
+
+```bash
+ACP236_AVALANCHEGO_PATH=/path/to/acp236/avalanchego bun run test:integration:acp236
+```
+
+That test boots tmpnet and spends only local genesis funds.
+
 ## Layout
 
 - `src/tmpnet/` — TypeScript driver for AvalancheGo tmpnet (boot / nodes / L1 ops / locking)

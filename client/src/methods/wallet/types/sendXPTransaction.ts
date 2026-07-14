@@ -17,6 +17,8 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
  * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
  * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
  * @property disableAuth - Optional, the disable auth to use for the transaction. `number[]`
+ * @property autoRenewedValidatorOwners - Optional, the auto-renewed validator owners to use for the transaction. {@link PChainOwner}
+ * @property autoRenewedValidatorAuth - Optional, the auto-renewed validator auth to use for the transaction. `number[]`
  */
 export type SendXPTransactionParameters = {
   account?: AvalancheAccount | Address | undefined;
@@ -30,6 +32,8 @@ export type SendXPTransactionParameters = {
   subnetOwners?: PChainOwner | undefined;
   disableOwners?: PChainOwner | undefined;
   disableAuth?: number[] | undefined;
+  autoRenewedValidatorOwners?: PChainOwner | undefined;
+  autoRenewedValidatorAuth?: number[] | undefined;
 };
 
 /**

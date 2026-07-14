@@ -18,6 +18,8 @@ import { AvalancheAccount } from "../../../accounts/avalancheAccount.js";
  * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
  * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
  * @property disableAuth - Optional, the disable auth to use for the transaction. `number[]`
+ * @property autoRenewedValidatorOwners - Optional, the auto-renewed validator owners to use for the transaction. {@link PChainOwner}
+ * @property autoRenewedValidatorAuth - Optional, the auto-renewed validator auth to use for the transaction. `number[]`
  * @property context - Optional, the context to use for the transaction. {@link ContextType.Context}
  */
 export type SignXPTransactionParameters = {
@@ -30,6 +32,8 @@ export type SignXPTransactionParameters = {
   subnetOwners?: PChainOwner | undefined;
   disableOwners?: PChainOwner | undefined;
   disableAuth?: number[] | undefined;
+  autoRenewedValidatorOwners?: PChainOwner | undefined;
+  autoRenewedValidatorAuth?: number[] | undefined;
   context?: ContextType.Context | undefined;
 };
 
@@ -52,6 +56,8 @@ export type Signatures = {
  * @property subnetOwners - Optional, the subnet owners to use for the transaction. {@link PChainOwner}
  * @property disableOwners - Optional, the disable owners to use for the transaction. {@link PChainOwner}
  * @property disableAuth - Optional, the disable auth to use for the transaction. `number[]`
+ * @property autoRenewedValidatorOwners - Optional, the auto-renewed validator owners to use for the transaction. {@link PChainOwner}
+ * @property autoRenewedValidatorAuth - Optional, the auto-renewed validator auth to use for the transaction. `number[]`
  */
 export type SignXPTransactionReturnType = {
   signedTxHex: string;
@@ -61,6 +67,8 @@ export type SignXPTransactionReturnType = {
   subnetOwners?: PChainOwner | undefined;
   disableOwners?: PChainOwner | undefined;
   disableAuth?: number[] | undefined;
+  autoRenewedValidatorOwners?: PChainOwner | undefined;
+  autoRenewedValidatorAuth?: number[] | undefined;
 };
 
 export type SignXPTransactionErrorType = RequestErrorType;
