@@ -91,8 +91,12 @@ const removeSerializedWeight = (
  * `unexpectedLayout()` rather than emitting a silently-corrupted, validly-signed
  * staking tx. We can't read the installed AvalancheJS version at runtime (its
  * `exports` map hides `package.json`), so the exact version pin in `package.json`
- * plus these structural checks are the guard. ACP-236's wire format is not yet
- * frozen (devnet only); revisit this whenever AvalancheJS is bumped.
+ * plus these structural checks are the guard. ACP-236's wire format is frozen
+ * (avalanche-foundation/ACPs#294) and AvalancheJS serializes it natively as of
+ * ava-labs/avalanchejs#1000 (releases >= 5.1.1), which also removes the
+ * `weight` property this shim reads — so the shim would throw there. Delete it
+ * and use the native serialization when the `@avalabs/avalanchejs` pin is
+ * bumped to a release containing that fix.
  */
 export function useAvalancheGoAddAutoRenewedValidatorTxSerialization(
   tx: AddAutoRenewedValidatorTx

@@ -139,7 +139,7 @@ async function waitForAutoRenewedValidatorConfig(
     lastValidators = validators;
     const validator = validators.find((candidate) => candidate.txID === txID);
     if (
-      validator?.period === expectedPeriod.toString() &&
+      validator?.nextPeriod === expectedPeriod.toString() &&
       validator.autoCompoundRewardShares === expectedAutoCompoundRewardShares.toString()
     ) {
       return validator;
