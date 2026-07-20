@@ -1,0 +1,138 @@
+{
+  "name": "@avalanche-sdk/ui",
+  "version": "0.1.0",
+  "description": "A comprehensive React component library and TypeScript utilities for building Avalanche blockchain applications. Includes ready-to-use UI components for wallet management, token transfers, staking, earning, and interchain operations.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript.git",
+    "directory": "ui"
+  },
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "avalanche",
+    "avalanche-sdk",
+    "react",
+    "ui",
+    "components",
+    "wallet",
+    "blockchain",
+    "web3"
+  ],
+  "author": "0xstt",
+  "bugs": {
+    "url": "https://github.com/ava-labs/avalanche-sdk-typescript/issues"
+  },
+  "homepage": "https://github.com/ava-labs/avalanche-sdk-typescript/tree/main/ui#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm clean && vite build",
+    "dev": "NODE_ENV=development vite build --watch",
+    "clean": "rm -rf dist esm",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "prepublishOnly": "pnpm run typecheck && pnpm run build"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "viem": "^2.0.0"
+  },
+  "dependencies": {
+    "@avalanche-sdk/chainkit": "0.3.0-alpha.8",
+    "@avalanche-sdk/client": "^0.0.4-alpha.16",
+    "@avalanche-sdk/interchain": "^0.1.1-alpha.1",
+    "@floating-ui/react": "^0.27.13",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-popover": "^1.1.14",
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-toast": "^1.2.14",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
+    "tailwind-merge": "^3.2.0",
+    "usehooks-ts": "^3.1.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.4.7",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.13.10",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^3.0.5",
+    "@vitest/ui": "^3.0.5",
+    "autoprefixer": "^10.4.19",
+    "esbuild-fix-imports-plugin": "^1.0.19",
+    "esbuild-plugin-babel": "^0.2.3",
+    "glob": "^11.0.1",
+    "jsdom": "^24.1.0",
+    "postcss": "^8",
+    "postcss-import": "^16.1.0",
+    "postcss-load-config": "^6.0.1",
+    "react": "^18.2.43",
+    "react-dom": "^18.2.17",
+    "rollup-plugin-preserve-use-client": "^3.0.1",
+    "tailwindcss": "^3.4.6",
+    "tailwindcss-animate": "^1.0.7",
+    "tscpaths": "^0.0.9",
+    "tsup": "^8.3.5",
+    "viem": "^2.21.45",
+    "vite": "^5.4.20",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-externalize-deps": "^0.9.0",
+    "vitest": "^3.0.5"
+  },
+  "files": [
+    "dist/**/*",
+    "src/**/*"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    "./styles.css": "./dist/assets/style.css",
+    "./dist/assets/style.css": "./dist/assets/style.css",
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "module": "./dist/theme.js",
+      "import": "./dist/theme.js",
+      "default": "./dist/theme.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "module": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./wallet": {
+      "types": "./dist/wallet.d.ts",
+      "module": "./dist/wallet.js",
+      "import": "./dist/wallet.js",
+      "default": "./dist/wallet.js"
+    },
+    "./transfer": {
+      "types": "./dist/transfer.d.ts",
+      "module": "./dist/transfer.js",
+      "import": "./dist/transfer.js",
+      "default": "./dist/transfer.js"
+    }
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.6.3"
+}
