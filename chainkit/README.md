@@ -334,6 +334,7 @@ run();
 * [getSubnetById](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
 * [listValidators](docs/sdks/primarynetwork/README.md#listvalidators) - List validators
 * [getValidatorDetails](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
+* [listAutoRenewedValidatorCycles](docs/sdks/primarynetwork/README.md#listautorenewedvalidatorcycles) - List auto-renewed validator cycles
 * [listDelegators](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
 * [listL1Validators](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators
 
@@ -508,6 +509,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dataPrimaryNetworkGetNetworkDetails`](docs/sdks/primarynetwork/README.md#getnetworkdetails) - Get network details
 - [`dataPrimaryNetworkGetSubnetById`](docs/sdks/primarynetwork/README.md#getsubnetbyid) - Get Subnet details by ID
 - [`dataPrimaryNetworkGetValidatorDetails`](docs/sdks/primarynetwork/README.md#getvalidatordetails) - Get single validator details
+- [`dataPrimaryNetworkListAutoRenewedValidatorCycles`](docs/sdks/primarynetwork/README.md#listautorenewedvalidatorcycles) - List auto-renewed validator cycles
 - [`dataPrimaryNetworkListBlockchains`](docs/sdks/primarynetwork/README.md#listblockchains) - List blockchains
 - [`dataPrimaryNetworkListDelegators`](docs/sdks/primarynetwork/README.md#listdelegators) - List delegators
 - [`dataPrimaryNetworkListL1Validators`](docs/sdks/primarynetwork/README.md#listl1validators) - List L1 validators

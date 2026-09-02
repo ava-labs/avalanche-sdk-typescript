@@ -196,3 +196,15 @@ actions:
             default: false
           
   
+
+  - target: $["components"]["schemas"]["AutoRenewDetails"]["properties"]["endedAtTimestamp"]
+    description: >-
+      Correct the type of AutoRenewDetails.endedAtTimestamp. The upstream spec
+      declares it as ["object", "null"] because NestJS cannot infer the type of
+      a nullable number, but the API returns a unix timestamp in seconds. Without
+      this the generated zod schema rejects every exited auto-renewed validator.
+      Remove once the type is fixed in glacier-api.
+    update:
+      type: number
+      nullable: true
+      description: When it exited/aborted, in unix seconds; null while still active.

@@ -26,6 +26,9 @@ export const PChainTransactionType = {
   SetL1ValidatorWeightTx: "SetL1ValidatorWeightTx",
   DisableL1ValidatorTx: "DisableL1ValidatorTx",
   IncreaseL1ValidatorBalanceTx: "IncreaseL1ValidatorBalanceTx",
+  AddAutoRenewedValidatorTx: "AddAutoRenewedValidatorTx",
+  SetAutoRenewedValidatorConfigTx: "SetAutoRenewedValidatorConfigTx",
+  RewardAutoRenewedValidatorTx: "RewardAutoRenewedValidatorTx",
   Unknown: "UNKNOWN",
 } as const;
 export type PChainTransactionType = ClosedEnum<typeof PChainTransactionType>;

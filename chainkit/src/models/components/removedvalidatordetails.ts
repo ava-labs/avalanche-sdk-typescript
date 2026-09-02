@@ -12,6 +12,11 @@ import {
   BlsCredentials$Outbound,
   BlsCredentials$outboundSchema,
 } from "./blscredentials.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 
 export type RemovedValidatorDetails = {
   txHash: string;
@@ -24,6 +29,10 @@ export type RemovedValidatorDetails = {
   delegationFee?: string | undefined;
   startTimestamp: number;
   endTimestamp: number;
+  /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
   /**
    * Present for AddPermissionlessValidatorTx
    */
@@ -52,6 +61,7 @@ export const RemovedValidatorDetails$inboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$inboundSchema,
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   removeTxHash: z.string(),
   removeTimestamp: z.number(),
@@ -66,6 +76,7 @@ export type RemovedValidatorDetails$Outbound = {
   delegationFee?: string | undefined;
   startTimestamp: number;
   endTimestamp: number;
+  stakingType: string;
   blsCredentials?: BlsCredentials$Outbound | undefined;
   removeTxHash: string;
   removeTimestamp: number;
@@ -85,6 +96,7 @@ export const RemovedValidatorDetails$outboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$outboundSchema,
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   removeTxHash: z.string(),
   removeTimestamp: z.number(),

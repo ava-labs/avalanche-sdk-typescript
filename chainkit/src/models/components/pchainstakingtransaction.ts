@@ -13,6 +13,12 @@ import {
   AssetAmount$outboundSchema,
 } from "./assetamount.js";
 import {
+  AutoRenewDetails,
+  AutoRenewDetails$inboundSchema,
+  AutoRenewDetails$Outbound,
+  AutoRenewDetails$outboundSchema,
+} from "./autorenewdetails.js";
+import {
   BalanceOwner,
   BalanceOwner$inboundSchema,
   BalanceOwner$Outbound,
@@ -60,7 +66,7 @@ import {
   SubnetOwnershipInfo$outboundSchema,
 } from "./subnetownershipinfo.js";
 
-export type PChainTransaction = {
+export type PChainStakingTransaction = {
   /**
    * A P-Chain transaction hash.
    */
@@ -173,11 +179,15 @@ export type PChainTransaction = {
    * Owner (addresses + signature threshold) authorized to reconfigure or exit the auto-renewed validator via SetAutoRenewedValidatorConfigTx. Present for AddAutoRenewedValidatorTx.
    */
   validatorAuthority?: BalanceOwner | undefined;
+  /**
+   * Present only for an active auto-renewed validator (AddAutoRenewedValidatorTx). The validator's current live auto-renew state and latest/next-cycle config, different from the initial `period`/`autoCompoundRewardShares`.
+   */
+  autoRenew?: AutoRenewDetails | undefined;
 };
 
 /** @internal */
-export const PChainTransaction$inboundSchema: z.ZodType<
-  PChainTransaction,
+export const PChainStakingTransaction$inboundSchema: z.ZodType<
+  PChainStakingTransaction,
   z.ZodTypeDef,
   unknown
 > = z.object({
@@ -213,9 +223,10 @@ export const PChainTransaction$inboundSchema: z.ZodType<
   period: z.number().optional(),
   autoCompoundRewardShares: z.number().optional(),
   validatorAuthority: BalanceOwner$inboundSchema.optional(),
+  autoRenew: AutoRenewDetails$inboundSchema.optional(),
 });
 /** @internal */
-export type PChainTransaction$Outbound = {
+export type PChainStakingTransaction$Outbound = {
   txHash: string;
   txType: string;
   blockTimestamp: number;
@@ -249,13 +260,14 @@ export type PChainTransaction$Outbound = {
   period?: number | undefined;
   autoCompoundRewardShares?: number | undefined;
   validatorAuthority?: BalanceOwner$Outbound | undefined;
+  autoRenew?: AutoRenewDetails$Outbound | undefined;
 };
 
 /** @internal */
-export const PChainTransaction$outboundSchema: z.ZodType<
-  PChainTransaction$Outbound,
+export const PChainStakingTransaction$outboundSchema: z.ZodType<
+  PChainStakingTransaction$Outbound,
   z.ZodTypeDef,
-  PChainTransaction
+  PChainStakingTransaction
 > = z.object({
   txHash: z.string(),
   txType: PChainTransactionType$outboundSchema,
@@ -290,21 +302,22 @@ export const PChainTransaction$outboundSchema: z.ZodType<
   period: z.number().optional(),
   autoCompoundRewardShares: z.number().optional(),
   validatorAuthority: BalanceOwner$outboundSchema.optional(),
+  autoRenew: AutoRenewDetails$outboundSchema.optional(),
 });
 
-export function pChainTransactionToJSON(
-  pChainTransaction: PChainTransaction,
+export function pChainStakingTransactionToJSON(
+  pChainStakingTransaction: PChainStakingTransaction,
 ): string {
   return JSON.stringify(
-    PChainTransaction$outboundSchema.parse(pChainTransaction),
+    PChainStakingTransaction$outboundSchema.parse(pChainStakingTransaction),
   );
 }
-export function pChainTransactionFromJSON(
+export function pChainStakingTransactionFromJSON(
   jsonString: string,
-): SafeParseResult<PChainTransaction, SDKValidationError> {
+): SafeParseResult<PChainStakingTransaction, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => PChainTransaction$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'PChainTransaction' from JSON`,
+    (x) => PChainStakingTransaction$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'PChainStakingTransaction' from JSON`,
   );
 }
