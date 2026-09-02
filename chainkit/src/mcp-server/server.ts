@@ -62,6 +62,7 @@ import { tool$dataPrimaryNetworkGetChainIdsForAddresses } from "./tools/dataPrim
 import { tool$dataPrimaryNetworkGetNetworkDetails } from "./tools/dataPrimaryNetworkGetNetworkDetails.js";
 import { tool$dataPrimaryNetworkGetSubnetById } from "./tools/dataPrimaryNetworkGetSubnetById.js";
 import { tool$dataPrimaryNetworkGetValidatorDetails } from "./tools/dataPrimaryNetworkGetValidatorDetails.js";
+import { tool$dataPrimaryNetworkListAutoRenewedValidatorCycles } from "./tools/dataPrimaryNetworkListAutoRenewedValidatorCycles.js";
 import { tool$dataPrimaryNetworkListBlockchains } from "./tools/dataPrimaryNetworkListBlockchains.js";
 import { tool$dataPrimaryNetworkListDelegators } from "./tools/dataPrimaryNetworkListDelegators.js";
 import { tool$dataPrimaryNetworkListL1Validators } from "./tools/dataPrimaryNetworkListL1Validators.js";
@@ -202,6 +203,7 @@ export function createMCPServer(deps: {
   tool(tool$dataPrimaryNetworkGetSubnetById);
   tool(tool$dataPrimaryNetworkListValidators);
   tool(tool$dataPrimaryNetworkGetValidatorDetails);
+  tool(tool$dataPrimaryNetworkListAutoRenewedValidatorCycles);
   tool(tool$dataPrimaryNetworkListDelegators);
   tool(tool$dataPrimaryNetworkListL1Validators);
   tool(tool$dataTeleporterGetTeleporterMessage);

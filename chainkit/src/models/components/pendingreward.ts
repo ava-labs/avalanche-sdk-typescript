@@ -17,6 +17,11 @@ import {
   RewardType$inboundSchema,
   RewardType$outboundSchema,
 } from "./rewardtype.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 
 export type PendingReward = {
   /**
@@ -28,6 +33,10 @@ export type PendingReward = {
   nodeId: string;
   startTimestamp: number;
   endTimestamp: number;
+  /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
   rewardType: RewardType;
   progress: number;
   /**
@@ -48,6 +57,7 @@ export const PendingReward$inboundSchema: z.ZodType<
   nodeId: z.string(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$inboundSchema,
   rewardType: RewardType$inboundSchema,
   progress: z.number(),
   estimatedReward: AssetAmount$inboundSchema,
@@ -60,6 +70,7 @@ export type PendingReward$Outbound = {
   nodeId: string;
   startTimestamp: number;
   endTimestamp: number;
+  stakingType: string;
   rewardType: string;
   progress: number;
   estimatedReward: AssetAmount$Outbound;
@@ -77,6 +88,7 @@ export const PendingReward$outboundSchema: z.ZodType<
   nodeId: z.string(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$outboundSchema,
   rewardType: RewardType$outboundSchema,
   progress: z.number(),
   estimatedReward: AssetAmount$outboundSchema,

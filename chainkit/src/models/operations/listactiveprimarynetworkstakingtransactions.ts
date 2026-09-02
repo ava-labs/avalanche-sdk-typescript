@@ -60,7 +60,7 @@ export type ListActivePrimaryNetworkStakingTransactionsRequest = {
 };
 
 export type ListActivePrimaryNetworkStakingTransactionsResponse = {
-  result: components.ListPChainTransactionsResponse;
+  result: components.ListPChainStakingTransactionsResponse;
 };
 
 /** @internal */
@@ -194,7 +194,7 @@ export const ListActivePrimaryNetworkStakingTransactionsResponse$inboundSchema:
     z.ZodTypeDef,
     unknown
   > = z.object({
-    Result: components.ListPChainTransactionsResponse$inboundSchema,
+    Result: components.ListPChainStakingTransactionsResponse$inboundSchema,
   }).transform((v) => {
     return remap$(v, {
       "Result": "result",
@@ -202,7 +202,7 @@ export const ListActivePrimaryNetworkStakingTransactionsResponse$inboundSchema:
   });
 /** @internal */
 export type ListActivePrimaryNetworkStakingTransactionsResponse$Outbound = {
-  Result: components.ListPChainTransactionsResponse$Outbound;
+  Result: components.ListPChainStakingTransactionsResponse$Outbound;
 };
 
 /** @internal */
@@ -212,7 +212,7 @@ export const ListActivePrimaryNetworkStakingTransactionsResponse$outboundSchema:
     z.ZodTypeDef,
     ListActivePrimaryNetworkStakingTransactionsResponse
   > = z.object({
-    result: components.ListPChainTransactionsResponse$outboundSchema,
+    result: components.ListPChainStakingTransactionsResponse$outboundSchema,
   }).transform((v) => {
     return remap$(v, {
       result: "Result",

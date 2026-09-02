@@ -62,6 +62,7 @@ export * from "./listaddresschains.js";
 export * from "./listalllatestblocks.js";
 export * from "./listalllatesttransactions.js";
 export * from "./listassettransactions.js";
+export * from "./listautorenewedvalidatorcycles.js";
 export * from "./listblockchains.js";
 export * from "./listchains.js";
 export * from "./listcollectiblebalances.js";

@@ -13,6 +13,12 @@ import {
   AssetAmount$outboundSchema,
 } from "./assetamount.js";
 import {
+  BalanceOwner,
+  BalanceOwner$inboundSchema,
+  BalanceOwner$Outbound,
+  BalanceOwner$outboundSchema,
+} from "./balanceowner.js";
+import {
   BlockchainInfo,
   BlockchainInfo$inboundSchema,
   BlockchainInfo$Outbound,
@@ -94,7 +100,7 @@ export type PChainTransaction = {
    */
   amountBurned: Array<AssetAmount>;
   /**
-   * A list of objects containing P-chain Asset basic info and the amount of that Asset ID. Present for AddValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx
+   * A list of objects containing P-chain Asset basic info and the amount of that Asset ID. Present for AddValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx, AddAutoRenewedValidatorTx
    */
   amountStaked: Array<AssetAmount>;
   /**
@@ -102,19 +108,19 @@ export type PChainTransaction = {
    */
   amountL1ValidatorBalanceBurned: Array<AssetAmount>;
   /**
-   * Present for AddValidatorTx, AddSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx
+   * Present for AddValidatorTx, AddSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx, AddAutoRenewedValidatorTx. For AddAutoRenewedValidatorTx this reflects the cycle the validator is currently serving, so it advances on each renewal; use blockTimestamp for when the position was first created.
    */
   startTimestamp?: number | undefined;
   /**
-   * Present for AddValidatorTx, AddSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx
+   * Present for AddValidatorTx, AddSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx, AddAutoRenewedValidatorTx. For AddAutoRenewedValidatorTx this reflects the cycle the validator is currently serving, so it advances on each renewal.
    */
   endTimestamp?: number | undefined;
   /**
-   * The percentage of total estimated delegator rewards allocated to validator nodes for supporting delegations. Present for AddValidatorTx, AddPermissionlessValidatorTx
+   * The percentage of total estimated delegator rewards allocated to validator nodes for supporting delegations. Present for AddValidatorTx, AddPermissionlessValidatorTx, AddAutoRenewedValidatorTx
    */
   delegationFeePercent?: string | undefined;
   /**
-   * The NodeID of the validator node linked to the stake transaction. Present for AddValidatorTx, AddSubnetValidatorTx, RemoveSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx
+   * The NodeID of the validator node linked to the stake transaction. Present for AddValidatorTx, AddSubnetValidatorTx, RemoveSubnetValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx, AddAutoRenewedValidatorTx
    */
   nodeId?: string | undefined;
   /**
@@ -130,7 +136,7 @@ export type PChainTransaction = {
    */
   l1ValidatorDetails?: Array<L1ValidatorDetailsTransaction> | undefined;
   /**
-   * Estimated reward from the staking transaction, if successful. Present for AddValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx
+   * Estimated reward from the staking transaction, if successful. Present for AddValidatorTx, AddPermissionlessValidatorTx, AddDelegatorTx, AddAutoRenewedValidatorTx (the cycle the validator is currently serving), and each RewardAutoRenewedValidatorTx (the estimate for the next cycle it starts).
    */
   estimatedReward?: string | undefined;
   /**
@@ -140,7 +146,7 @@ export type PChainTransaction = {
   rewardAddresses?: Array<string> | undefined;
   memo?: string | undefined;
   /**
-   * Staking transaction corresponding to the RewardValidatorTx
+   * Staking transaction corresponding to the RewardValidatorTx, or the originating AddAutoRenewedValidatorTx for a RewardAutoRenewedValidatorTx
    */
   stakingTxHash?: string | undefined;
   /**
@@ -148,13 +154,25 @@ export type PChainTransaction = {
    */
   subnetOwnershipInfo?: SubnetOwnershipInfo | undefined;
   /**
-   * Public Key and PoP of new validator registrations. Present for AddPermissionlessValidatorTx
+   * Public Key and PoP of new validator registrations. Present for AddPermissionlessValidatorTx, AddAutoRenewedValidatorTx
    */
   blsCredentials?: BlsCredentials | undefined;
   /**
    * Details of the blockchain that was created in the CreateChainTx
    */
   blockchainInfo?: BlockchainInfo | undefined;
+  /**
+   * Length of an auto-renewed validation cycle, in seconds. Present for AddAutoRenewedValidatorTx and SetAutoRenewedValidatorConfigTx. A value of 0 on SetAutoRenewedValidatorConfigTx indicates validation will attempt a graceful exit at the end of the current cycle.
+   */
+  period?: number | undefined;
+  /**
+   * Fraction of each cycle's rewards that is restaked (compounded into validator weight) rather than withdrawn, expressed in millionths (0-1000000). Present for AddAutoRenewedValidatorTx and SetAutoRenewedValidatorConfigTx.
+   */
+  autoCompoundRewardShares?: number | undefined;
+  /**
+   * Owner (addresses + signature threshold) authorized to reconfigure or exit the auto-renewed validator via SetAutoRenewedValidatorConfigTx. Present for AddAutoRenewedValidatorTx.
+   */
+  validatorAuthority?: BalanceOwner | undefined;
 };
 
 /** @internal */
@@ -192,6 +210,9 @@ export const PChainTransaction$inboundSchema: z.ZodType<
   subnetOwnershipInfo: SubnetOwnershipInfo$inboundSchema.optional(),
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   blockchainInfo: BlockchainInfo$inboundSchema.optional(),
+  period: z.number().optional(),
+  autoCompoundRewardShares: z.number().optional(),
+  validatorAuthority: BalanceOwner$inboundSchema.optional(),
 });
 /** @internal */
 export type PChainTransaction$Outbound = {
@@ -225,6 +246,9 @@ export type PChainTransaction$Outbound = {
   subnetOwnershipInfo?: SubnetOwnershipInfo$Outbound | undefined;
   blsCredentials?: BlsCredentials$Outbound | undefined;
   blockchainInfo?: BlockchainInfo$Outbound | undefined;
+  period?: number | undefined;
+  autoCompoundRewardShares?: number | undefined;
+  validatorAuthority?: BalanceOwner$Outbound | undefined;
 };
 
 /** @internal */
@@ -263,6 +287,9 @@ export const PChainTransaction$outboundSchema: z.ZodType<
   subnetOwnershipInfo: SubnetOwnershipInfo$outboundSchema.optional(),
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   blockchainInfo: BlockchainInfo$outboundSchema.optional(),
+  period: z.number().optional(),
+  autoCompoundRewardShares: z.number().optional(),
+  validatorAuthority: BalanceOwner$outboundSchema.optional(),
 });
 
 export function pChainTransactionToJSON(

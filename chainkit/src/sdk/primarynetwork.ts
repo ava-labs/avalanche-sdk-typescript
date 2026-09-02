@@ -8,6 +8,7 @@ import { dataPrimaryNetworkGetChainIdsForAddresses } from "../funcs/dataPrimaryN
 import { dataPrimaryNetworkGetNetworkDetails } from "../funcs/dataPrimaryNetworkGetNetworkDetails.js";
 import { dataPrimaryNetworkGetSubnetById } from "../funcs/dataPrimaryNetworkGetSubnetById.js";
 import { dataPrimaryNetworkGetValidatorDetails } from "../funcs/dataPrimaryNetworkGetValidatorDetails.js";
+import { dataPrimaryNetworkListAutoRenewedValidatorCycles } from "../funcs/dataPrimaryNetworkListAutoRenewedValidatorCycles.js";
 import { dataPrimaryNetworkListBlockchains } from "../funcs/dataPrimaryNetworkListBlockchains.js";
 import { dataPrimaryNetworkListDelegators } from "../funcs/dataPrimaryNetworkListDelegators.js";
 import { dataPrimaryNetworkListL1Validators } from "../funcs/dataPrimaryNetworkListL1Validators.js";
@@ -214,6 +215,34 @@ export class PrimaryNetwork extends ClientSDK {
     >
   > {
     return unwrapResultIterator(dataPrimaryNetworkGetValidatorDetails(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * List auto-renewed validator cycles
+   *
+   * @remarks
+   * Lists the settled staking cycles of an auto-renewed (ACP-236) validator, newest first. Each cycle reports the weight bonded for that cycle and the gross / withdrawn / compounded split of its rewards.
+   *
+   * Includes cycles that paid nothing out. A fully-compounding cycle mints no reward UTXO and so does not appear in reward history at all.
+   *
+   * The in-flight cycle is not listed; it is on the validator object. Returns an empty list for a node with no auto-renewed validation.
+   *
+   * `cycleIndex` is 1-based per position, so a node that has held more than one auto-renewed position has more than one cycle 1. Group by `stakingTxHash`, or pass `txHash` for a single series.
+   */
+  async listAutoRenewedValidatorCycles(
+    request: operations.ListAutoRenewedValidatorCyclesRequest,
+    options?: RequestOptions,
+  ): Promise<
+    PageIterator<
+      operations.ListAutoRenewedValidatorCyclesResponse,
+      { cursor: string }
+    >
+  > {
+    return unwrapResultIterator(dataPrimaryNetworkListAutoRenewedValidatorCycles(
       this,
       request,
       options,

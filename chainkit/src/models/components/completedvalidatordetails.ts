@@ -7,6 +7,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  AutoRenewDetails,
+  AutoRenewDetails$inboundSchema,
+  AutoRenewDetails$Outbound,
+  AutoRenewDetails$outboundSchema,
+} from "./autorenewdetails.js";
+import {
   BlsCredentials,
   BlsCredentials$inboundSchema,
   BlsCredentials$Outbound,
@@ -18,6 +24,11 @@ import {
   Rewards$Outbound,
   Rewards$outboundSchema,
 } from "./rewards.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 
 export type CompletedValidatorDetails = {
   txHash: string;
@@ -31,6 +42,10 @@ export type CompletedValidatorDetails = {
   startTimestamp: number;
   endTimestamp: number;
   /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
+  /**
    * Present for AddPermissionlessValidatorTx
    */
   blsCredentials?: BlsCredentials | undefined;
@@ -38,6 +53,10 @@ export type CompletedValidatorDetails = {
   amountDelegated?: string | undefined;
   rewards: Rewards;
   validationStatus: "completed";
+  /**
+   * Final-cycle renewal and compounding detail for an auto-renewed validator that has exited/aborted. Present only when stakingType is `autoRenewed`.
+   */
+  autoRenew?: AutoRenewDetails | undefined;
 };
 
 /** @internal */
@@ -53,11 +72,13 @@ export const CompletedValidatorDetails$inboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$inboundSchema,
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   delegatorCount: z.number(),
   amountDelegated: z.string().optional(),
   rewards: Rewards$inboundSchema,
   validationStatus: z.literal("completed"),
+  autoRenew: AutoRenewDetails$inboundSchema.optional(),
 });
 /** @internal */
 export type CompletedValidatorDetails$Outbound = {
@@ -68,11 +89,13 @@ export type CompletedValidatorDetails$Outbound = {
   delegationFee?: string | undefined;
   startTimestamp: number;
   endTimestamp: number;
+  stakingType: string;
   blsCredentials?: BlsCredentials$Outbound | undefined;
   delegatorCount: number;
   amountDelegated?: string | undefined;
   rewards: Rewards$Outbound;
   validationStatus: "completed";
+  autoRenew?: AutoRenewDetails$Outbound | undefined;
 };
 
 /** @internal */
@@ -88,11 +111,13 @@ export const CompletedValidatorDetails$outboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$outboundSchema,
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   delegatorCount: z.number(),
   amountDelegated: z.string().optional(),
   rewards: Rewards$outboundSchema,
   validationStatus: z.literal("completed"),
+  autoRenew: AutoRenewDetails$outboundSchema.optional(),
 });
 
 export function completedValidatorDetailsToJSON(

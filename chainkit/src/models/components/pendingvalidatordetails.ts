@@ -12,6 +12,11 @@ import {
   BlsCredentials$Outbound,
   BlsCredentials$outboundSchema,
 } from "./blscredentials.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 
 export type PendingValidatorDetails = {
   txHash: string;
@@ -29,6 +34,10 @@ export type PendingValidatorDetails = {
    */
   blsCredentials?: BlsCredentials | undefined;
   validationStatus: "pending";
+  /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
 };
 
 /** @internal */
@@ -46,6 +55,7 @@ export const PendingValidatorDetails$inboundSchema: z.ZodType<
   endTimestamp: z.number(),
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   validationStatus: z.literal("pending"),
+  stakingType: StakingType$inboundSchema,
 });
 /** @internal */
 export type PendingValidatorDetails$Outbound = {
@@ -58,6 +68,7 @@ export type PendingValidatorDetails$Outbound = {
   endTimestamp: number;
   blsCredentials?: BlsCredentials$Outbound | undefined;
   validationStatus: "pending";
+  stakingType: string;
 };
 
 /** @internal */
@@ -75,6 +86,7 @@ export const PendingValidatorDetails$outboundSchema: z.ZodType<
   endTimestamp: z.number(),
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   validationStatus: z.literal("pending"),
+  stakingType: StakingType$outboundSchema,
 });
 
 export function pendingValidatorDetailsToJSON(

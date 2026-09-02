@@ -7,6 +7,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  AutoRenewDetails,
+  AutoRenewDetails$inboundSchema,
+  AutoRenewDetails$Outbound,
+  AutoRenewDetails$outboundSchema,
+} from "./autorenewdetails.js";
+import {
   BlsCredentials,
   BlsCredentials$inboundSchema,
   BlsCredentials$Outbound,
@@ -18,6 +24,11 @@ import {
   Rewards$Outbound,
   Rewards$outboundSchema,
 } from "./rewards.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 import {
   ValidatorHealthDetails,
   ValidatorHealthDetails$inboundSchema,
@@ -63,6 +74,10 @@ export type ActiveValidatorDetails = {
   startTimestamp: number;
   endTimestamp: number;
   /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
+  /**
    * Present for AddPermissionlessValidatorTx
    */
   blsCredentials?: BlsCredentials | undefined;
@@ -97,6 +112,10 @@ export type ActiveValidatorDetails = {
    * The geographical location of the validator node, if available.
    */
   geolocation: Geolocation | null;
+  /**
+   * Current-cycle renewal and compounding detail. Present only when stakingType is `autoRenewed`.
+   */
+  autoRenew?: AutoRenewDetails | undefined;
 };
 
 /** @internal */
@@ -159,6 +178,7 @@ export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$inboundSchema,
   blsCredentials: BlsCredentials$inboundSchema.optional(),
   stakePercentage: z.number(),
   delegatorCount: z.number(),
@@ -170,6 +190,7 @@ export const ActiveValidatorDetails$inboundSchema: z.ZodType<
   validationStatus: z.literal("active"),
   validatorHealth: ValidatorHealthDetails$inboundSchema,
   geolocation: z.nullable(z.lazy(() => Geolocation$inboundSchema)),
+  autoRenew: AutoRenewDetails$inboundSchema.optional(),
 });
 /** @internal */
 export type ActiveValidatorDetails$Outbound = {
@@ -180,6 +201,7 @@ export type ActiveValidatorDetails$Outbound = {
   delegationFee?: string | undefined;
   startTimestamp: number;
   endTimestamp: number;
+  stakingType: string;
   blsCredentials?: BlsCredentials$Outbound | undefined;
   stakePercentage: number;
   delegatorCount: number;
@@ -191,6 +213,7 @@ export type ActiveValidatorDetails$Outbound = {
   validationStatus: "active";
   validatorHealth: ValidatorHealthDetails$Outbound;
   geolocation: Geolocation$Outbound | null;
+  autoRenew?: AutoRenewDetails$Outbound | undefined;
 };
 
 /** @internal */
@@ -206,6 +229,7 @@ export const ActiveValidatorDetails$outboundSchema: z.ZodType<
   delegationFee: z.string().optional(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$outboundSchema,
   blsCredentials: BlsCredentials$outboundSchema.optional(),
   stakePercentage: z.number(),
   delegatorCount: z.number(),
@@ -217,6 +241,7 @@ export const ActiveValidatorDetails$outboundSchema: z.ZodType<
   validationStatus: z.literal("active"),
   validatorHealth: ValidatorHealthDetails$outboundSchema,
   geolocation: z.nullable(z.lazy(() => Geolocation$outboundSchema)),
+  autoRenew: AutoRenewDetails$outboundSchema.optional(),
 });
 
 export function activeValidatorDetailsToJSON(

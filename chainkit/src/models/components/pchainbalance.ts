@@ -45,6 +45,14 @@ export type PChainBalance = {
    */
   pendingStaked: Array<AggregatedAssetAmount>;
   /**
+   * Total AVAX (in nAVAX) restaked into auto-renewed validators via compounding. These rewards are bonded into validator weight and have no UTXO until the validator exits, so they are reported here as a separate amount (always AVAX). Add to unlockedStaked/lockedStaked for an auto-renewed validator's full current staked value.
+   *
+   * @remarks
+   *
+   * Current-balance queries only. The field is OMITTED for historical queries, i.e. when blockTimestamp is supplied with a value greater than 0, because compounding history is not reconstructable from current-state data. Absence therefore means "not available for this timestamp" — it does not mean nothing was compounded. A current-balance query for an address with no auto-renewed position returns "0". Note blockTimestamp=0 is treated as "no timestamp supplied" and is answered as a current-balance query.
+   */
+  restakedRewards?: string | undefined;
+  /**
    * A list of objects containing P-chain Asset basic info, amount and utxo count of that Asset ID. Denotes the amount of unlocked Avax in the atomic memory between P-Chain and other chain.
    */
   atomicMemoryUnlocked: Array<PChainSharedAsset>;
@@ -66,6 +74,7 @@ export const PChainBalance$inboundSchema: z.ZodType<
   lockedStakeable: z.array(AggregatedAssetAmount$inboundSchema),
   lockedStaked: z.array(AggregatedAssetAmount$inboundSchema),
   pendingStaked: z.array(AggregatedAssetAmount$inboundSchema),
+  restakedRewards: z.string().optional(),
   atomicMemoryUnlocked: z.array(PChainSharedAsset$inboundSchema),
   atomicMemoryLocked: z.array(PChainSharedAsset$inboundSchema),
 });
@@ -77,6 +86,7 @@ export type PChainBalance$Outbound = {
   lockedStakeable: Array<AggregatedAssetAmount$Outbound>;
   lockedStaked: Array<AggregatedAssetAmount$Outbound>;
   pendingStaked: Array<AggregatedAssetAmount$Outbound>;
+  restakedRewards?: string | undefined;
   atomicMemoryUnlocked: Array<PChainSharedAsset$Outbound>;
   atomicMemoryLocked: Array<PChainSharedAsset$Outbound>;
 };
@@ -93,6 +103,7 @@ export const PChainBalance$outboundSchema: z.ZodType<
   lockedStakeable: z.array(AggregatedAssetAmount$outboundSchema),
   lockedStaked: z.array(AggregatedAssetAmount$outboundSchema),
   pendingStaked: z.array(AggregatedAssetAmount$outboundSchema),
+  restakedRewards: z.string().optional(),
   atomicMemoryUnlocked: z.array(PChainSharedAsset$outboundSchema),
   atomicMemoryLocked: z.array(PChainSharedAsset$outboundSchema),
 });

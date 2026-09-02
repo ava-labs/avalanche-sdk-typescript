@@ -17,6 +17,11 @@ import {
   RewardType$inboundSchema,
   RewardType$outboundSchema,
 } from "./rewardtype.js";
+import {
+  StakingType,
+  StakingType$inboundSchema,
+  StakingType$outboundSchema,
+} from "./stakingtype.js";
 
 export type HistoricalReward = {
   /**
@@ -28,6 +33,10 @@ export type HistoricalReward = {
   nodeId: string;
   startTimestamp: number;
   endTimestamp: number;
+  /**
+   * Staking kind. `autoRenewed` type validators run in repeating cycles; for these the top-level startTimestamp/endTimestamp/amountStaked reflect the current cycle and compounded weight.
+   */
+  stakingType: StakingType;
   rewardType: RewardType;
   utxoId: string;
   outputIndex: number;
@@ -47,6 +56,7 @@ export const HistoricalReward$inboundSchema: z.ZodType<
   nodeId: z.string(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$inboundSchema,
   rewardType: RewardType$inboundSchema,
   utxoId: z.string(),
   outputIndex: z.number(),
@@ -61,6 +71,7 @@ export type HistoricalReward$Outbound = {
   nodeId: string;
   startTimestamp: number;
   endTimestamp: number;
+  stakingType: string;
   rewardType: string;
   utxoId: string;
   outputIndex: number;
@@ -80,6 +91,7 @@ export const HistoricalReward$outboundSchema: z.ZodType<
   nodeId: z.string(),
   startTimestamp: z.number(),
   endTimestamp: z.number(),
+  stakingType: StakingType$outboundSchema,
   rewardType: RewardType$outboundSchema,
   utxoId: z.string(),
   outputIndex: z.number(),
