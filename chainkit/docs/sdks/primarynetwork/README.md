@@ -853,10 +853,10 @@ async function run() {
     sortOrder: "asc",
   });
   if (res.ok) {
-    const { value: result } = res;
-    for await (const page of result) {
-    console.log(page);
-  }
+    // The returned value is both the first page and the page iterator.
+    for await (const page of res) {
+      console.log(page);
+    }
   } else {
     console.log("dataPrimaryNetworkListAutoRenewedValidatorCycles failed:", res.error);
   }

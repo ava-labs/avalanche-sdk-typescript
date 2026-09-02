@@ -11,9 +11,16 @@ It hits the network and reads live chain state. It is deliberately not wired int
 ## Run it
 
 ```bash
-npm run build          # the script resolves @avalanche-sdk/chainkit -> dist
-npm run check:live
+npm run build          # the scripts resolve @avalanche-sdk/chainkit -> dist
+npm run check:live     # do the deployed responses still match the schemas
+npm run check:features # does the added operation behave like a generated one
 ```
+
+`check:live` is about schema drift. `check:features` covers the machinery around
+the operation added for ACP-236 cycles — pagination, error mapping, retries, the
+per-call server and network overrides, the standalone function, and the model
+JSON helpers. Retries and the server override run against a local mock so the
+failures are deterministic; everything else hits Fuji.
 
 To check it the way a consumer would see it, link the built package into a
 scratch project instead:

@@ -36,7 +36,8 @@
     "build:mcp": "bun src/mcp-server/build.mts",
     "build": "npm run build:mcp && tshy",
     "prepublishOnly": "npm run build",
-    "check:live": "node scripts/live-check/check.mjs"
+    "check:live": "node scripts/live-check/check.mjs",
+    "check:features": "node scripts/live-check/check-features.mjs"
   },
   "peerDependencies": {},
   "devDependencies": {
