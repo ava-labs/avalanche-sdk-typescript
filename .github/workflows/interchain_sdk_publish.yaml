@@ -63,7 +63,7 @@ jobs:
           npm run build
 
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11
 
       - name: Check if version exists
         id: check_version
