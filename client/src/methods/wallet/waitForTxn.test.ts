@@ -10,8 +10,8 @@ const privateKey1ForTest =
 const account = privateKeyToAvalancheAccount(privateKey1ForTest);
 
 // Mock the transaction status methods
-vi.mock("../cChain/getAtomicTxStatus.js", () => ({
-  getAtomicTxStatus: vi.fn(),
+vi.mock("../cChain/getAtomicTx.js", () => ({
+  getAtomicTx: vi.fn(),
 }));
 
 vi.mock("../pChain/getTxStatus.js", () => ({
@@ -22,7 +22,7 @@ vi.mock("../xChain/getTxStatus.js", () => ({
   getTxStatus: vi.fn(),
 }));
 
-import { getAtomicTxStatus as getCChainTxStatus } from "../cChain/getAtomicTxStatus.js";
+import { getAtomicTx as getCChainAtomicTx } from "../cChain/getAtomicTx.js";
 import { getTxStatus as getPChainTxStatus } from "../pChain/getTxStatus.js";
 import { getTxStatus as getXChainTxStatus } from "../xChain/getTxStatus.js";
 
@@ -85,11 +85,13 @@ describe("waitForTxn", () => {
     });
   });
 
-  test("resolves when C-Chain transaction is Accepted", async () => {
+  test("resolves when C-Chain transaction has a blockHeight", async () => {
     const txHash = "0x1234567890abcdef";
-    vi.mocked(getCChainTxStatus).mockResolvedValue({
-      status: "Accepted",
-    } as any);
+    vi.mocked(getCChainAtomicTx).mockResolvedValue({
+      tx: "0x00",
+      blockHeight: "123",
+      encoding: "hex",
+    });
 
     const promise = waitForTxn(client as any, {
       txHash,
@@ -97,9 +99,49 @@ describe("waitForTxn", () => {
     });
 
     await expect(promise).resolves.toBeUndefined();
-    expect(getCChainTxStatus).toHaveBeenCalledWith(client.cChainClient, {
+    expect(getCChainAtomicTx).toHaveBeenCalledWith(client.cChainClient, {
       txID: txHash,
     });
+  });
+
+  test("keeps polling C-Chain transaction until it has a blockHeight", async () => {
+    const txHash = "0x1234567890abcdef";
+    vi.mocked(getCChainAtomicTx)
+      .mockRejectedValueOnce(new Error("not found"))
+      .mockRejectedValueOnce(new Error(`could not find tx ${txHash}`))
+      .mockRejectedValueOnce(
+        Object.assign(new Error("HTTP request failed."), { status: 429 })
+      )
+      .mockResolvedValueOnce({ tx: "0x00", encoding: "hex" } as any)
+      .mockResolvedValueOnce({
+        tx: "0x00",
+        blockHeight: "123",
+        encoding: "hex",
+      });
+
+    const promise = waitForTxn(client as any, {
+      txHash,
+      chainAlias: "C",
+      sleepTime: 100,
+    });
+
+    await vi.advanceTimersByTimeAsync(400);
+
+    await expect(promise).resolves.toBeUndefined();
+    expect(getCChainAtomicTx).toHaveBeenCalledTimes(5);
+  });
+
+  test("throws unexpected C-Chain errors", async () => {
+    const txHash = "0x1234567890abcdef";
+    vi.mocked(getCChainAtomicTx).mockRejectedValue(new Error("boom"));
+
+    const promise = waitForTxn(client as any, {
+      txHash,
+      chainAlias: "C",
+    });
+
+    await expect(promise).rejects.toThrow("boom");
+    expect(getCChainAtomicTx).toHaveBeenCalledTimes(1);
   });
 
   test("throws error when transaction is Rejected", async () => {

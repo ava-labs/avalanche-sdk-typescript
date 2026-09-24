@@ -1,8 +1,28 @@
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
-import { getAtomicTxStatus as getCChainTxStatus } from "../cChain/getAtomicTxStatus.js";
+import { getAtomicTx as getCChainAtomicTx } from "../cChain/getAtomicTx.js";
 import { getTxStatus as getPChainTxStatus } from "../pChain/getTxStatus.js";
 import { getTxStatus as getXChainTxStatus } from "../xChain/getTxStatus.js";
 import { WaitForTxnParameters } from "./types/waitForTxn.js";
+
+// `avax.getAtomicTxStatus` is deprecated and unavailable after Helicon.
+// Use `avax.getAtomicTx` instead: the tx is accepted once `blockHeight` is set.
+// Unknown txs return "not found" (SAE) or "could not find tx" (coreth).
+async function getCChainTxStatus(
+  client: AvalancheWalletCoreClient["cChainClient"],
+  args: { txID: string }
+): Promise<{ status: string }> {
+  try {
+    const { blockHeight } = await getCChainAtomicTx(client, args);
+    return { status: blockHeight ? "Accepted" : "Processing" };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const status = (error as { status?: number })?.status;
+    if (/not found|could not find/i.test(message) || status === 429) {
+      return { status: "Unknown" };
+    }
+    throw error;
+  }
+}
 
 export async function waitForTxn(
   client: AvalancheWalletCoreClient,
