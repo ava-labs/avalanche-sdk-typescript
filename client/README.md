@@ -544,7 +544,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 ### C-Chain Methods
 
 - [`getAtomicTx`](./src/methods/cChain/getAtomicTx.ts) - Returns the specified atomic transaction. [Docs](https://build.avax.network/docs/api-reference/c-chain/api#avaxgetatomictx)
-- [`getAtomicTxStatus`](./src/methods/cChain/getAtomicTxStatus.ts) - Returns the status of the specified atomic transaction. [Docs](https://build.avax.network/docs/api-reference/c-chain/api#avaxgetatomictxstatus)
+- [`getAtomicTxStatus`](./src/methods/cChain/getAtomicTxStatus.ts) - Deprecated. Returns the status of the specified atomic transaction. Not available after the Helicon upgrade. Use `getAtomicTx` instead. [Docs](https://build.avax.network/docs/api-reference/c-chain/api#avaxgetatomictxstatus)
 - [`getUTXOs`](./src/methods/cChain/getUTXOs.ts) - Returns the UTXOs that reference a given address. [Docs](https://build.avax.network/docs/api-reference/c-chain/api#avaxgetutxos)
 - [`issueTx`](./src/methods/cChain/issueTx.ts) - Issues a transaction to the C-Chain. [Docs](https://build.avax.network/docs/api-reference/c-chain/api#avaxissuetx)
 

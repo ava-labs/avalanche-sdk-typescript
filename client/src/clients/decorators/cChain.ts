@@ -54,6 +54,8 @@ export type CChainActions = {
    *
    * - Docs: https://build.avax.network/docs/api-reference/c-chain/api#avaxgetatomictxstatus
    *
+   * @deprecated `avax.getAtomicTxStatus` is deprecated in AvalancheGo and is not available after the Helicon upgrade. Use `getAtomicTx` instead: the transaction is accepted when `blockHeight` is set.
+   *
    * @param args - {@link GetAtomicTxStatusParameters}
    * @returns The status of the atomic transaction. {@link GetAtomicTxStatusReturnType}
    *
