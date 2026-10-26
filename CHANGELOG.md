@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- `@avalanche-sdk/client` - Stop calling AvalancheGo RPC methods that are deprecated and will be removed
+
+  - `send()` from the P-Chain no longer calls `platform.getBalance`. The transaction builder already throws `Insufficient funds` when the UTXOs cannot pay the amount and the fee. `send()` from the P-Chain to the C-Chain now spends the UTXOs of `account`, like `send()` from the P-Chain to the P-Chain
+  - `waitForTxn` with `chainAlias: "X"` polls `avm.getTx` instead of `avm.getTxStatus`. The transaction is accepted when `avm.getTx` returns it
+  - `waitForTxn` throws HTTP errors other than 429 at once, and adds the last polling error as the `cause` of `Transaction status not found`
+
 - `@avalanche-sdk/client` - Mark the wrappers of deprecated AvalancheGo RPC methods as deprecated
 
   - Add `@deprecated` to `pChain.getBalance`, `getStake`, `getSubnets`, `getBlockchains` and `getRewardUTXOs`, and to `xChain.getBalance`, `getAllBalances` and `getTxStatus`. Each note names the replacement

@@ -39,10 +39,6 @@ vi.mock("../../pChain/getFeeState.js", () => ({
   getFeeState: vi.fn(),
 }));
 
-vi.mock("../../pChain/getBalance.js", () => ({
-  getBalance: vi.fn(),
-}));
-
 vi.mock("../../public/baseFee.js", () => ({
   baseFee: vi.fn(),
 }));
@@ -74,7 +70,6 @@ vi.mock("@avalabs/avalanchejs", async () => {
   };
 });
 
-import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { baseFee as getBaseFee } from "../../public/baseFee.js";
 import { prepareImportTxn as prepareImportTxnCChain } from "../cChain/prepareImportTxn.js";
@@ -130,9 +125,10 @@ describe("transferPtoCChain", () => {
 
     // Default mocks
     vi.mocked(getContextFromURI).mockResolvedValue(testContext);
-    vi.mocked(getBech32AddressFromAccountOrClient)
-      .mockResolvedValueOnce(fromCChainBech32Address)
-      .mockResolvedValueOnce(fromPChainBech32Address);
+    vi.mocked(getBech32AddressFromAccountOrClient).mockImplementation(
+      async (_client, _account, chainAlias) =>
+        chainAlias === "P" ? fromPChainBech32Address : fromCChainBech32Address
+    );
     vi.mocked(prepareExportTxnPChain).mockResolvedValue({
       tx: mockPChainExportTx,
       exportTx: mockPChainExportBaseTx,
@@ -144,12 +140,6 @@ describe("transferPtoCChain", () => {
       excess: BigInt(0),
     } as any);
     vi.mocked(getBaseFee).mockResolvedValue("1000000"); // Very low baseFee for testing (1e6 wei)
-    vi.mocked(getBalance).mockResolvedValue({
-      balance: BigInt(10e9), // 10 AVAX in nAVAX
-      unlocked: BigInt(10e9),
-      lockedNotStakeable: BigInt(0),
-      lockedStakeable: BigInt(0),
-    } as any);
     vi.mocked(pvm.calculateFee).mockReturnValue(BigInt(1000000)); // 1 nAVAX
     vi.mocked(prepareImportTxnCChain).mockResolvedValue({
       tx: mockCChainImportTx,
@@ -217,6 +207,7 @@ describe("transferPtoCChain", () => {
       expect(prepareExportTxnPChain).toHaveBeenCalledWith(
         client,
         expect.objectContaining({
+          fromAddresses: [fromPChainBech32Address],
           exportedOutputs: [
             {
               addresses: [fromCChainBech32Address],
@@ -229,9 +220,6 @@ describe("transferPtoCChain", () => {
       );
       expect(getFeeState).toHaveBeenCalledWith(client.pChainClient);
       expect(getBaseFee).toHaveBeenCalledWith(client);
-      expect(getBalance).toHaveBeenCalledWith(client.pChainClient, {
-        addresses: [fromPChainBech32Address],
-      });
       expect(pvm.calculateFee).toHaveBeenCalledWith(
         mockPChainExportBaseTx,
         testContext.platformFeeConfig.weights,
@@ -295,10 +283,6 @@ describe("transferPtoCChain", () => {
       const cChainImportTxHash =
         "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
 
-      vi.mocked(getBech32AddressFromAccountOrClient)
-        .mockResolvedValueOnce(fromCChainBech32Address)
-        .mockResolvedValueOnce(fromPChainBech32Address);
-
       vi.mocked(sendXPTransaction)
         .mockResolvedValueOnce({
           txHash: pChainExportTxHash,
@@ -329,7 +313,7 @@ describe("transferPtoCChain", () => {
       );
     });
 
-    test("uses provided from address for both C and P chain", async () => {
+    test("uses provided from address for the export output and the import", async () => {
       const customFromAddress = "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz";
       const amount = BigInt(1e18);
       const pChainExportTxHash =
@@ -353,10 +337,18 @@ describe("transferPtoCChain", () => {
         from: customFromAddress,
       });
 
-      expect(getBech32AddressFromAccountOrClient).not.toHaveBeenCalled();
+      // `from` does not change the P chain address that pays for the export
+      expect(getBech32AddressFromAccountOrClient).toHaveBeenCalledTimes(1);
+      expect(getBech32AddressFromAccountOrClient).toHaveBeenCalledWith(
+        client,
+        undefined,
+        "P",
+        "fuji"
+      );
       expect(prepareExportTxnPChain).toHaveBeenCalledWith(
         client,
         expect.objectContaining({
+          fromAddresses: [fromPChainBech32Address],
           exportedOutputs: [
             {
               addresses: [customFromAddress],
@@ -365,9 +357,6 @@ describe("transferPtoCChain", () => {
           ],
         })
       );
-      expect(getBalance).toHaveBeenCalledWith(client.pChainClient, {
-        addresses: [customFromAddress],
-      });
       expect(prepareImportTxnCChain).toHaveBeenCalledWith(
         client,
         expect.objectContaining({
@@ -388,9 +377,10 @@ describe("transferPtoCChain", () => {
         "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
 
       vi.mocked(getContextFromURI).mockResolvedValue(mainnetContext);
-      vi.mocked(getBech32AddressFromAccountOrClient)
-        .mockResolvedValueOnce("C-avax19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz")
-        .mockResolvedValueOnce("P-avax19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz");
+      vi.mocked(getBech32AddressFromAccountOrClient).mockImplementation(
+        async (_client, _account, chainAlias) =>
+          `${chainAlias}-avax19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz`
+      );
 
       vi.mocked(sendXPTransaction)
         .mockResolvedValueOnce({
@@ -437,28 +427,23 @@ describe("transferPtoCChain", () => {
       expect(sendXPTransaction).not.toHaveBeenCalled();
     });
 
-    test("throws error when balance is insufficient", async () => {
+    test("throws the tx builder error when funds are insufficient", async () => {
       const amount = BigInt(1e18);
-      const amountInNanoAvax = weiToNanoAvax(amount);
-      const balance = amountInNanoAvax - BigInt(1); // Less than amount
+      const builderError = new Error(
+        "Insufficient funds! Provided UTXOs need 500000000 more units of asset U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK"
+      );
 
-      vi.mocked(getBalance).mockResolvedValue({
-        balance,
-        unlocked: balance,
-        lockedNotStakeable: BigInt(0),
-        lockedStakeable: BigInt(0),
-      } as any);
+      vi.mocked(prepareExportTxnPChain).mockRejectedValue(builderError);
 
       await expect(
         transferPtoCChain(client as any, {
           to: toCChainAddress,
           amount,
         })
-      ).rejects.toThrow(
-        `Insufficient balance: ${amountInNanoAvax} nAVAX is required, but only ${balance} nAVAX is available`
-      );
+      ).rejects.toThrow(builderError);
 
       expect(sendXPTransaction).not.toHaveBeenCalled();
+      expect(waitForTxn).not.toHaveBeenCalled();
     });
 
     test("throws error when P-chain export fee is too high", async () => {
@@ -522,7 +507,7 @@ describe("transferPtoCChain", () => {
   });
 
   describe("parallel API calls", () => {
-    test("calls prepareExportTxn, getFeeState, getBaseFee, and getBalance in parallel", async () => {
+    test("calls prepareExportTxn, getFeeState, and getBaseFee", async () => {
       const amount = BigInt(1e18);
       const pChainExportTxHash =
         "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
@@ -532,7 +517,6 @@ describe("transferPtoCChain", () => {
       let prepareExportTxnCalled = false;
       let getFeeStateCalled = false;
       let getBaseFeeCalled = false;
-      let getBalanceCalled = false;
 
       vi.mocked(prepareExportTxnPChain).mockImplementation(async () => {
         prepareExportTxnCalled = true;
@@ -560,17 +544,6 @@ describe("transferPtoCChain", () => {
         return "1000000";
       });
 
-      vi.mocked(getBalance).mockImplementation(async () => {
-        getBalanceCalled = true;
-        await new Promise((resolve) => setTimeout(resolve, 10));
-        return {
-          balance: BigInt(10e9),
-          unlocked: BigInt(10e9),
-          lockedNotStakeable: BigInt(0),
-          lockedStakeable: BigInt(0),
-        } as any;
-      });
-
       // Ensure C-chain import fee is small enough
       const { utils } = await import("@avalabs/avalanchejs");
       vi.mocked((utils as any).costCorethTx).mockReturnValue(1);
@@ -590,11 +563,10 @@ describe("transferPtoCChain", () => {
         amount,
       });
 
-      // All four should be called
+      // All three should be called
       expect(prepareExportTxnCalled).toBe(true);
       expect(getFeeStateCalled).toBe(true);
       expect(getBaseFeeCalled).toBe(true);
-      expect(getBalanceCalled).toBe(true);
     });
   });
 
@@ -767,9 +739,10 @@ describe("transferPtoCChain", () => {
       const cChainAddr = "C-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz";
       const pChainAddr = "P-fuji19fc97zn3mzmwr827j4d3n45refkksgms4y2yzz";
 
-      vi.mocked(getBech32AddressFromAccountOrClient)
-        .mockResolvedValueOnce(cChainAddr)
-        .mockResolvedValueOnce(pChainAddr);
+      vi.mocked(getBech32AddressFromAccountOrClient).mockImplementation(
+        async (_client, _account, chainAlias) =>
+          chainAlias === "P" ? pChainAddr : cChainAddr
+      );
 
       vi.mocked(sendXPTransaction)
         .mockResolvedValueOnce({
@@ -790,6 +763,7 @@ describe("transferPtoCChain", () => {
       expect(prepareExportTxnPChain).toHaveBeenCalledWith(
         client,
         expect.objectContaining({
+          fromAddresses: [pChainAddr],
           exportedOutputs: [
             {
               addresses: [cChainAddr],
@@ -798,9 +772,6 @@ describe("transferPtoCChain", () => {
           ],
         })
       );
-      expect(getBalance).toHaveBeenCalledWith(client.pChainClient, {
-        addresses: [pChainAddr],
-      });
       expect(prepareImportTxnCChain).toHaveBeenCalledWith(
         client,
         expect.objectContaining({

@@ -37,10 +37,6 @@ vi.mock("../../pChain/getFeeState.js", () => ({
   getFeeState: vi.fn(),
 }));
 
-vi.mock("../../pChain/getBalance.js", () => ({
-  getBalance: vi.fn(),
-}));
-
 vi.mock("../sendXPTransaction.js", () => ({
   sendXPTransaction: vi.fn(),
 }));
@@ -59,7 +55,6 @@ vi.mock("@avalabs/avalanchejs", async () => {
   };
 });
 
-import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { getContextFromURI } from "../getContextFromURI.js";
 import { prepareBaseTxn } from "../pChain/prepareBaseTxn.js";
@@ -115,12 +110,6 @@ describe("transferPtoPChain", () => {
       price: BigInt(1000000), // 1 nAVAX
       capacity: BigInt(1000000),
       excess: BigInt(0),
-    } as any);
-    vi.mocked(getBalance).mockResolvedValue({
-      balance: BigInt(10e9), // 10 AVAX in nAVAX
-      unlocked: BigInt(10e9),
-      lockedNotStakeable: BigInt(0),
-      lockedStakeable: BigInt(0),
     } as any);
     vi.mocked(pvm.calculateFee).mockReturnValue(BigInt(1000000)); // 1 nAVAX fee
     vi.mocked(sendXPTransaction).mockResolvedValue({
@@ -178,9 +167,6 @@ describe("transferPtoPChain", () => {
         })
       );
       expect(getFeeState).toHaveBeenCalledWith(client.pChainClient);
-      expect(getBalance).toHaveBeenCalledWith(client.pChainClient, {
-        addresses: [fromPChainAddress],
-      });
       expect(pvm.calculateFee).toHaveBeenCalledWith(
         mockBaseTx,
         testContext.platformFeeConfig.weights,
@@ -292,28 +278,23 @@ describe("transferPtoPChain", () => {
       expect(sendXPTransaction).not.toHaveBeenCalled();
     });
 
-    test("throws error when balance is insufficient", async () => {
+    test("throws the tx builder error when funds are insufficient", async () => {
       const amount = BigInt(1e18); // 1 AVAX
-      const amountInNanoAvax = weiToNanoAvax(amount);
-      const balance = amountInNanoAvax - BigInt(1); // Less than amount
+      const builderError = new Error(
+        "Insufficient funds: provided UTXOs need 4099 more unlocked nAVAX (asset id: U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK) to cover fee."
+      );
 
-      vi.mocked(getBalance).mockResolvedValue({
-        balance,
-        unlocked: balance,
-        lockedNotStakeable: BigInt(0),
-        lockedStakeable: BigInt(0),
-      } as any);
+      vi.mocked(prepareBaseTxn).mockRejectedValue(builderError);
 
       await expect(
         transferPtoPChain(client as any, {
           to: toPChainAddress,
           amount,
         })
-      ).rejects.toThrow(
-        `Insufficient balance: ${amountInNanoAvax} nAVAX is required, but only ${balance} nAVAX is available`
-      );
+      ).rejects.toThrow(builderError);
 
       expect(sendXPTransaction).not.toHaveBeenCalled();
+      expect(waitForTxn).not.toHaveBeenCalled();
     });
 
     test("throws error when transfer amount is too low (fee > amount)", async () => {
@@ -322,12 +303,6 @@ describe("transferPtoPChain", () => {
       const fee = amountInNanoAvax + BigInt(1); // Fee is greater than amount
 
       vi.mocked(pvm.calculateFee).mockReturnValue(fee);
-      vi.mocked(getBalance).mockResolvedValue({
-        balance: BigInt(10e9), // 10 AVAX
-        unlocked: BigInt(10e9),
-        lockedNotStakeable: BigInt(0),
-        lockedStakeable: BigInt(0),
-      } as any);
 
       await expect(
         transferPtoPChain(client as any, {
@@ -340,51 +315,16 @@ describe("transferPtoPChain", () => {
 
       expect(sendXPTransaction).not.toHaveBeenCalled();
     });
-
-    test("throws error when balance equals amount but fee is required", async () => {
-      const amount = BigInt(1e18); // 1 AVAX
-      const amountInNanoAvax = weiToNanoAvax(amount);
-      const fee = BigInt(1000000); // 1 nAVAX fee
-      const balance = amountInNanoAvax; // Exactly equal to amount, but fee is needed
-
-      vi.mocked(getBalance).mockResolvedValue({
-        balance,
-        unlocked: balance,
-        lockedNotStakeable: BigInt(0),
-        lockedStakeable: BigInt(0),
-      } as any);
-      vi.mocked(pvm.calculateFee).mockReturnValue(fee);
-
-      // This should pass because balance >= amount, but if fee > amount, it will fail
-      // Let's test the case where fee is less than amount but balance is exactly amount
-      // In this case, it should still work if balance >= amount (fee is separate)
-      // Actually, looking at the code, it checks balanceInNanoAvax < weiToNanoAvax(params.amount)
-      // So if balance equals amount, it should pass that check
-      // But then it checks if fee > amount, which would fail
-      // Let me test the case where fee > amount
-      const largeFee = amountInNanoAvax + BigInt(1);
-      vi.mocked(pvm.calculateFee).mockReturnValue(largeFee);
-
-      await expect(
-        transferPtoPChain(client as any, {
-          to: toPChainAddress,
-          amount,
-        })
-      ).rejects.toThrow(
-        `Transfer amount is too low: ${largeFee} nAVAX Fee is required, but only ${amountInNanoAvax} nAVAX is being transferred`
-      );
-    });
   });
 
   describe("parallel API calls", () => {
-    test("calls prepareBaseTxn, getFeeState, and getBalance in parallel", async () => {
+    test("calls prepareBaseTxn and getFeeState in parallel", async () => {
       const amount = BigInt(1e18);
       const txHash =
         "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
 
       let prepareBaseTxnCalled = false;
       let getFeeStateCalled = false;
-      let getBalanceCalled = false;
 
       vi.mocked(prepareBaseTxn).mockImplementation(async () => {
         prepareBaseTxnCalled = true;
@@ -406,17 +346,6 @@ describe("transferPtoPChain", () => {
         } as any;
       });
 
-      vi.mocked(getBalance).mockImplementation(async () => {
-        getBalanceCalled = true;
-        await new Promise((resolve) => setTimeout(resolve, 10));
-        return {
-          balance: BigInt(10e9),
-          unlocked: BigInt(10e9),
-          lockedNotStakeable: BigInt(0),
-          lockedStakeable: BigInt(0),
-        } as any;
-      });
-
       vi.mocked(sendXPTransaction).mockResolvedValue({
         txHash,
         chainAlias: "P",
@@ -427,10 +356,9 @@ describe("transferPtoPChain", () => {
         amount,
       });
 
-      // All three should be called
+      // Both should be called
       expect(prepareBaseTxnCalled).toBe(true);
       expect(getFeeStateCalled).toBe(true);
-      expect(getBalanceCalled).toBe(true);
     });
   });
 
