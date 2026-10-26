@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- `@avalanche-sdk/client` - Stop calling AvalancheGo RPC methods that are deprecated and will be removed
+
+  - `send()` from the P-Chain no longer calls `platform.getBalance`. The transaction builder already throws `Insufficient funds` when the UTXOs cannot pay the amount and the fee. `send()` from the P-Chain to the C-Chain now spends the UTXOs of `account`, like `send()` from the P-Chain to the P-Chain
+  - `waitForTxn` with `chainAlias: "X"` polls `avm.getTx` instead of `avm.getTxStatus`. The transaction is accepted when `avm.getTx` returns it
+  - `waitForTxn` throws HTTP errors other than 429 at once, and adds the last polling error as the `cause` of `Transaction status not found`
+
 ## 2026-09-02
 
 - Update `@avalanche-sdk/chainkit@v0.3.14` - Align the P-Chain models with the Helicon (ACP-236 auto-renewed validator) release of the Data API

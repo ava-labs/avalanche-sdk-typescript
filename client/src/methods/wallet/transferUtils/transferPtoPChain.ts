@@ -1,6 +1,5 @@
 import { pvm } from "@avalabs/avalanchejs";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
-import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { getContextFromURI, getHRP } from "../getContextFromURI.js";
 import { prepareBaseTxn } from "../pChain/prepareBaseTxn.js";
@@ -35,27 +34,22 @@ export async function transferPtoPChain(
     throw new Error("Invalid P chain address, it should start with P-");
   }
 
-  // Prepare the base transaction and get the fee state and balance
-  const [baseTxnRequest, pChainFeeState, balanceInNanoAvax] = await Promise.all(
-    [
-      prepareBaseTxn(client, {
-        fromAddresses: [currentAccountPChainAddress],
-        outputs: [
-          {
-            addresses: [params.to],
-            amount: weiToNanoAvax(params.amount),
-          },
-        ],
-        context,
-      }),
-      getFeeState(client.pChainClient),
-      (
-        await getBalance(client.pChainClient, {
-          addresses: [currentAccountPChainAddress],
-        })
-      ).balance,
-    ]
-  );
+  // Prepare the base transaction and get the fee state.
+  // There is no separate balance check: prepareBaseTxn spends the address's
+  // UTXOs and throws "Insufficient funds" if they cannot cover the amount and fee.
+  const [baseTxnRequest, pChainFeeState] = await Promise.all([
+    prepareBaseTxn(client, {
+      fromAddresses: [currentAccountPChainAddress],
+      outputs: [
+        {
+          addresses: [params.to],
+          amount: weiToNanoAvax(params.amount),
+        },
+      ],
+      context,
+    }),
+    getFeeState(client.pChainClient),
+  ]);
 
   // Calculate the fee for the base transaction
   const baseTxnFee = pvm.calculateFee(
@@ -63,14 +57,6 @@ export async function transferPtoPChain(
     context.platformFeeConfig.weights,
     pChainFeeState.price
   );
-
-  if (balanceInNanoAvax < weiToNanoAvax(params.amount)) {
-    throw new Error(
-      `Insufficient balance: ${weiToNanoAvax(
-        params.amount
-      )} nAVAX is required, but only ${balanceInNanoAvax} nAVAX is available`
-    );
-  }
 
   if (baseTxnFee > weiToNanoAvax(params.amount)) {
     throw new Error(
