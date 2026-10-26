@@ -459,7 +459,10 @@ describe("transferCtoPChain", () => {
       const amountInNanoAvax = weiToNanoAvax(amount);
       const cChainExportFee = amountInNanoAvax + BigInt(1); // Fee greater than amount
 
-      vi.mocked(evm.estimateExportCost).mockReturnValue(cChainExportFee);
+      // estimateExportCost returns the fee in wei
+      vi.mocked(evm.estimateExportCost).mockReturnValue(
+        cChainExportFee * BigInt(1e9)
+      );
 
       await expect(
         transferCtoPChain(client as any, {
@@ -476,12 +479,15 @@ describe("transferCtoPChain", () => {
     test("throws error when total fee (export + import) is too high", async () => {
       const amount = BigInt(1e18);
       const amountInNanoAvax = weiToNanoAvax(amount);
-      const cChainExportFee = BigInt(500000); // 0.5 nAVAX
+      const cChainExportFee = BigInt(500000); // 500,000 nAVAX
       const pChainImportFee = amountInNanoAvax - BigInt(400000); // Makes total > amount
       const cChainExportTxHash =
         "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
 
-      vi.mocked(evm.estimateExportCost).mockReturnValue(cChainExportFee);
+      // estimateExportCost returns the fee in wei
+      vi.mocked(evm.estimateExportCost).mockReturnValue(
+        cChainExportFee * BigInt(1e9)
+      );
       vi.mocked(pvm.calculateFee).mockReturnValue(pChainImportFee);
       vi.mocked(sendXPTransaction).mockResolvedValueOnce({
         txHash: cChainExportTxHash,
@@ -499,6 +505,43 @@ describe("transferCtoPChain", () => {
 
       expect(sendXPTransaction).toHaveBeenCalledTimes(1); // Only export tx was sent
       expect(waitForTxn).toHaveBeenCalledTimes(1); // Only export tx was waited for
+    });
+  });
+
+  describe("fee units", () => {
+    test("converts the C chain export fee from wei to nAVAX", async () => {
+      // Mainnet values: baseFee 2.5 gwei, 11230 gas for an export.
+      // The fee is 28,075 nAVAX, far below 1 AVAX.
+      const amount = BigInt(1e18); // 1 AVAX in wei
+      const cChainExportTxHash =
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+      const pChainImportTxHash =
+        "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
+
+      vi.mocked(evm.estimateExportCost).mockReturnValue(
+        BigInt(2500000000) * BigInt(11230)
+      );
+      vi.mocked(sendXPTransaction)
+        .mockResolvedValueOnce({
+          txHash: cChainExportTxHash,
+          chainAlias: "C",
+        } as any)
+        .mockResolvedValueOnce({
+          txHash: pChainImportTxHash,
+          chainAlias: "P",
+        } as any);
+
+      await expect(
+        transferCtoPChain(client as any, {
+          to: toPChainAddress,
+          amount,
+        })
+      ).resolves.toEqual({
+        txHashes: [
+          { txHash: cChainExportTxHash, chainAlias: "C" },
+          { txHash: pChainImportTxHash, chainAlias: "P" },
+        ],
+      });
     });
   });
 

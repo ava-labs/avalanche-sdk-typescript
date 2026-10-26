@@ -8,6 +8,10 @@
   - `waitForTxn` with `chainAlias: "X"` polls `avm.getTx` instead of `avm.getTxStatus`. The transaction is accepted when `avm.getTx` returns it
   - `waitForTxn` throws HTTP errors other than 429 at once, and adds the last polling error as the `cause` of `Transaction status not found`
 
+- `@avalanche-sdk/client` - Fix the fee units in `send()` between the P-Chain and the C-Chain
+
+  - The C-Chain import fee in `send()` from the P-Chain to the C-Chain, and the C-Chain export fee in `send()` from the C-Chain to the P-Chain, were in wei but were compared with amounts in nAVAX. With the mainnet base fee of 2.5 gwei, `send()` threw `Transfer amount is too low` for amounts below about 28,000 AVAX. From the P-Chain, it threw after the P-Chain export was accepted
+
 ## 2026-09-02
 
 - Update `@avalanche-sdk/chainkit@v0.3.14` - Align the P-Chain models with the Helicon (ACP-236 auto-renewed validator) release of the Data API
