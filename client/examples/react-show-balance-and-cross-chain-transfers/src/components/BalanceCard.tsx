@@ -2,7 +2,8 @@ import { Address, createAvalancheWalletClient, formatEther } from "@avalanche-sd
 import { publicKeyToXPAddress } from "@avalanche-sdk/client/accounts";
 import type { Chain } from "@avalanche-sdk/client/chains";
 import { getBalance as getCChainBalance } from "@avalanche-sdk/client/methods";
-import { getBalance as getPChainBalance } from "@avalanche-sdk/client/methods/pChain";
+import { getUTXOs } from "@avalanche-sdk/client/methods/pChain";
+import { getUtxoFromBytes } from "@avalanche-sdk/client/utils";
 import { AccountBalance, CurrencyExchange, Refresh } from '@mui/icons-material';
 import {
     Avatar,
@@ -18,9 +19,21 @@ import {
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+// AVAX asset ID on each network. P-Chain UTXOs can also hold other assets.
+const AVAX_ASSET_ID = {
+  fuji: "U8iRqJoiJm8xZHAacmvYyZVwqQx6uDNtQeP3CQ6fcgQk3JqnK",
+  avax: "FvwEAhmxKfeiG8SnEvq42hc6whRyY3EFYAvebMqDNDGCgxN5Z",
+} as const;
+
+// platform.getUTXOs returns at most 1024 UTXOs in one page.
+const UTXO_PAGE_SIZE = 1024;
+
+// The output types of P-Chain UTXOs (TransferOutput and StakeableLockOut) both have amount().
+type AmountOutput = { amount(): bigint };
+
 /**
  * BalanceCard component
- * - For P-Chain: derives P bech32 address from wallet public key, then calls pChain.getBalance
+ * - For P-Chain: derives P bech32 address from wallet public key, then adds the AVAX amounts of its UTXOs
  * - For C-Chain: uses evm getBalance via wallet client
  * - Automatically refreshes balance every 20 seconds
  * - Shows loading states and error handling
@@ -83,14 +96,29 @@ export function BalanceCard({
         // Derive the bech32 XP address from the public key
         const xpBech32 = publicKeyToXPAddress(xp, hrp);
         
-        // Use the pChain sub-client's getBalance method to fetch balance
-        // The balance is returned in nano-AVAX (1e9 units)
-        const res = await getPChainBalance(client.pChainClient, {
-          addresses: [`P-${xpBech32}`],
-        });
+        // Add the AVAX amounts of all P-Chain UTXOs of the address.
+        // The total includes locked outputs. Amounts are in nano-AVAX (1e9 units).
+        // (platform.getBalance is deprecated and AvalancheGo will remove it.)
+        let nanoAvax = BigInt(0);
+        let startIndex: { address: string; utxo: string } | undefined;
+        for (;;) {
+          const page = await getUTXOs(client.pChainClient, {
+            addresses: [`P-${xpBech32}`],
+            ...(startIndex ? { startIndex } : {}),
+          });
+          for (const utxoHex of page.utxos) {
+            const utxo = getUtxoFromBytes(utxoHex, "P");
+            if (utxo.getAssetId() === AVAX_ASSET_ID[hrp]) {
+              nanoAvax += (utxo.output as unknown as AmountOutput).amount();
+            }
+          }
+          if (Number(page.numFetched) < UTXO_PAGE_SIZE) break;
+          // Get the next page
+          startIndex = page.endIndex;
+        }
         
         // Convert nano-AVAX to AVAX and format for display
-        setBalance(formatEther(res.balance * BigInt(1e+9)));
+        setBalance(formatEther(nanoAvax * BigInt(1e+9)));
         
         // Update the displayed address to show the derived P-Chain address
         setAddr(`P-${xpBech32}`);

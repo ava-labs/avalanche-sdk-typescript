@@ -11,6 +11,8 @@ import { GetStakeParameters, GetStakeReturnType } from "./types/getStake.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake
  *
+ * @deprecated `platform.getStake` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Calculate the stake with `getCurrentValidators` and `getTx` instead: add the stake outputs that the addresses own in each staker transaction. To get the delegator transaction IDs, call `getCurrentValidators` with one node ID in `nodeIDs`.
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The addresses and subnet ID {@link GetStakeParameters}
  * @returns The stake amount. {@link GetStakeReturnType}

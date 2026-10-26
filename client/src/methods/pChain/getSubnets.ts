@@ -14,6 +14,8 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnets
  *
+ * @deprecated `platform.getSubnets` is deprecated in AvalancheGo and can be removed in a future release. Use `getSubnet` to get one subnet by ID. To list subnets, use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.listSubnets`).
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - Optional parameters {@link GetSubnetsParameters}
  * @returns The list of subnets. {@link GetSubnetsReturnType}

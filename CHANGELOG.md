@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- `@avalanche-sdk/client` - Mark the wrappers of deprecated AvalancheGo RPC methods as deprecated
+
+  - Add `@deprecated` to `pChain.getBalance`, `getStake`, `getSubnets`, `getBlockchains` and `getRewardUTXOs`, and to `xChain.getBalance`, `getAllBalances` and `getTxStatus`. Each note names the replacement
+  - The React balance example gets the P-Chain balance from `platform.getUTXOs` instead of `platform.getBalance`
+
 ## 2026-09-02
 
 - Update `@avalanche-sdk/chainkit@v0.3.14` - Align the P-Chain models with the Helicon (ACP-236 auto-renewed validator) release of the Data API

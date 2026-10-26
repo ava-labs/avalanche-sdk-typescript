@@ -134,6 +134,8 @@ export type PChainActions = {
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance
    *
+   * @deprecated `platform.getBalance` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and add the output amounts of the AVAX asset.
+   *
    * @param args - {@link GetBalanceParameters} The addresses to get the balance of
    * @returns The balance information. {@link GetBalanceReturnType}
    *
@@ -218,6 +220,8 @@ export type PChainActions = {
    * Get all the blockchains that exist (excluding the P-Chain).
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchains
+   *
+   * @deprecated `platform.getBlockchains` is deprecated in AvalancheGo and can be removed in a future release. To list blockchains, use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.listBlockchains`). To get the blockchains of one subnet, use `validates`. To get one blockchain, use `getTx` with the blockchain ID.
    *
    * @returns The list of blockchains. {@link GetBlockchainsReturnType}
    *
@@ -482,6 +486,8 @@ export type PChainActions = {
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetrewardutxos
    *
+   * @deprecated `platform.getRewardUTXOs` is deprecated in AvalancheGo and can be removed in a future release. AvalancheGo has no replacement method. Use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.rewards.listHistoricalRewards`).
+   *
    * @param args - {@link GetRewardUTXOsParameters} The transaction ID and encoding
    * @returns The reward UTXOs. {@link GetRewardUTXOsReturnType}
    *
@@ -511,6 +517,8 @@ export type PChainActions = {
    * Get the stake amount for a set of addresses.
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake
+   *
+   * @deprecated `platform.getStake` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Calculate the stake with `getCurrentValidators` and `getTx` instead: add the stake outputs that the addresses own in each staker transaction. To get the delegator transaction IDs, call `getCurrentValidators` with one node ID in `nodeIDs`.
    *
    * @param args - {@link GetStakeParameters} The addresses and subnet ID
    * @returns The stake amount. {@link GetStakeReturnType}
@@ -595,6 +603,8 @@ export type PChainActions = {
    * Get all subnets.
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnets
+   *
+   * @deprecated `platform.getSubnets` is deprecated in AvalancheGo and can be removed in a future release. Use `getSubnet` to get one subnet by ID. To list subnets, use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.listSubnets`).
    *
    * @param args - {@link GetSubnetsParameters} Optional parameters
    * @returns The list of subnets. {@link GetSubnetsReturnType}

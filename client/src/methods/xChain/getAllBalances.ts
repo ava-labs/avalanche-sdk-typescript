@@ -14,6 +14,8 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetallbalances
  *
+ * @deprecated `avm.getAllBalances` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and for each asset add the amounts of the secp256k1fx transfer outputs that only this address owns (threshold 1) and whose locktime has passed. `avm.getAllBalances` skips all other outputs.
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The addresses to get balances for. {@link GetAllBalancesParameters}
  * @returns The balances of all assets. {@link GetAllBalancesReturnType}
