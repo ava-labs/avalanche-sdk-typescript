@@ -2,7 +2,6 @@ import { pvm, utils } from "@avalabs/avalanchejs";
 import { isAddress } from "viem";
 import { AvalancheWalletCoreClient } from "../../../clients/createAvalancheWalletCoreClient.js";
 import { C_CHAIN_ALIAS, P_CHAIN_ALIAS } from "../../consts.js";
-import { getBalance } from "../../pChain/getBalance.js";
 import { getFeeState } from "../../pChain/getFeeState.js";
 import { baseFee as getBaseFee } from "../../public/baseFee.js";
 import { prepareImportTxn as prepareImportTxnCChain } from "../cChain/prepareImportTxn.js";
@@ -41,52 +40,37 @@ export async function transferPtoCChain(
       );
   }
 
-  // Get the bech32 P chain address
-  let currentAccountPChainBech32Address = params.from;
-  if (!currentAccountPChainBech32Address) {
-    currentAccountPChainBech32Address =
-      await getBech32AddressFromAccountOrClient(
-        client,
-        params.account,
-        P_CHAIN_ALIAS,
-        hrp
-      );
-  }
+  // Get the bech32 P chain address of the account that pays for the export
+  const currentAccountPChainBech32Address =
+    await getBech32AddressFromAccountOrClient(
+      client,
+      params.account,
+      P_CHAIN_ALIAS,
+      hrp
+    );
 
   if (!isAddress(params.to)) {
     throw new Error("Invalid `to` address");
   }
 
-  // Prepare the P chain export txn and C chain import txn and get the fee for each
-  const [pChainExportTxnRequest, pChainFeeState, baseFee, balanceInNanoAvax] =
-    await Promise.all([
-      await prepareExportTxnPChain(client, {
-        exportedOutputs: [
-          {
-            addresses: [currentAccountCChainBech32Address],
-            amount: weiToNanoAvax(params.amount),
-          },
-        ],
-        destinationChain: "C",
-        context,
-      }),
-      getFeeState(client.pChainClient),
-      getBaseFee(client),
-      (
-        await getBalance(client.pChainClient, {
-          addresses: [currentAccountPChainBech32Address],
-        })
-      ).balance,
-    ]);
-
-  // Check if user has enough balance
-  if (balanceInNanoAvax < weiToNanoAvax(params.amount)) {
-    throw new Error(
-      `Insufficient balance: ${weiToNanoAvax(
-        params.amount
-      )} nAVAX is required, but only ${balanceInNanoAvax} nAVAX is available`
-    );
-  }
+  // Prepare the P chain export txn and get the fees.
+  // There is no separate balance check: prepareExportTxn spends the account's
+  // P chain UTXOs and throws "Insufficient funds" if they cannot cover the amount and fee.
+  const [pChainExportTxnRequest, pChainFeeState, baseFee] = await Promise.all([
+    await prepareExportTxnPChain(client, {
+      fromAddresses: [currentAccountPChainBech32Address],
+      exportedOutputs: [
+        {
+          addresses: [currentAccountCChainBech32Address],
+          amount: weiToNanoAvax(params.amount),
+        },
+      ],
+      destinationChain: "C",
+      context,
+    }),
+    getFeeState(client.pChainClient),
+    getBaseFee(client),
+  ]);
 
   // Calculate the fee for the P chain import txn
   const pChainExportTxnFeeInNanoAvax = pvm.calculateFee(
