@@ -80,15 +80,18 @@ export async function transferCtoPChain(
     );
   }
 
-  // Calculate the fee for the C chain export txn
-  const cChainExportTxnFeeInNanoAvax = evm.estimateExportCost(
-    context,
-    BigInt(baseFee),
-    weiToNanoAvax(params.amount),
-    getChainIdFromAlias("P", context.networkID),
-    utils.hexToBuffer(currentAccountEVMAddress),
-    [bech32AddressToBytes(params.to)],
-    BigInt(txCount)
+  // Calculate the fee for the C chain export txn.
+  // estimateExportCost returns baseFee * gas, which is in wei.
+  const cChainExportTxnFeeInNanoAvax = weiToNanoAvax(
+    evm.estimateExportCost(
+      context,
+      BigInt(baseFee),
+      weiToNanoAvax(params.amount),
+      getChainIdFromAlias("P", context.networkID),
+      utils.hexToBuffer(currentAccountEVMAddress),
+      [bech32AddressToBytes(params.to)],
+      BigInt(txCount)
+    )
   );
 
   // Check if the fee for the C chain export txn is too high

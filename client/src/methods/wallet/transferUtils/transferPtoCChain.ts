@@ -102,9 +102,11 @@ export async function transferPtoCChain(
     context,
   });
 
-  // Calculate the fee for the C chain import txn
-  const cChainImportTxnFeeInNanoAvax =
-    BigInt(baseFee) * BigInt(utils.costCorethTx(cChainImportTxnRequest.tx));
+  // Calculate the fee for the C chain import txn.
+  // baseFee is in wei per gas, so baseFee * gas is in wei.
+  const cChainImportTxnFeeInNanoAvax = weiToNanoAvax(
+    BigInt(baseFee) * BigInt(utils.costCorethTx(cChainImportTxnRequest.tx))
+  );
 
   // Calculate the total fee
   const totalFeeInNanoAvax =
