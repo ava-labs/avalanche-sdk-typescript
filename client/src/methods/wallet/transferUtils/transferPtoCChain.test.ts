@@ -483,21 +483,18 @@ describe("transferPtoCChain", () => {
     test("throws error when total fee (export + import) is too high", async () => {
       const amount = BigInt(1e18);
       const amountInNanoAvax = weiToNanoAvax(amount);
-      const pChainExportFee = BigInt(500000); // 0.5 nAVAX
-      const baseFee = BigInt(1e6); // Very low for testing
+      const pChainExportFee = BigInt(500000); // 500,000 nAVAX
+      const baseFee = BigInt(25e9); // 25 gwei, in wei per gas
       const pChainExportTxHash =
         "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
 
-      // Make C-chain import fee large enough that total fee > amount
-      // We need: pChainExportFee + cChainImportFee > amountInNanoAvax
-      // So: cChainImportFee > amountInNanoAvax - pChainExportFee
-      // cChainImportFee = baseFee * costCorethTx (result is in wei, treated as nAVAX)
-      // So: costCorethTx > (amountInNanoAvax - pChainExportFee) / baseFee
-      // We want total fee to be slightly more than amount
-      // Make sure the C-chain import fee is large enough
+      // Make the C-chain import fee large enough that total fee > amount.
+      // cChainImportFee (nAVAX) = baseFee (wei) * costCorethTx / 1e9
       const requiredCChainImportFee =
         amountInNanoAvax - pChainExportFee + BigInt(1000000); // Add enough to exceed amount
-      const requiredGasCost = Number(requiredCChainImportFee / baseFee);
+      const requiredGasCost = Number(
+        (requiredCChainImportFee * BigInt(1e9)) / baseFee
+      );
 
       vi.mocked(pvm.calculateFee).mockReturnValue(pChainExportFee);
       vi.mocked(getBaseFee).mockResolvedValue(baseFee.toString());
@@ -518,6 +515,43 @@ describe("transferPtoCChain", () => {
 
       expect(sendXPTransaction).toHaveBeenCalledTimes(1); // Only export tx was sent
       expect(waitForTxn).toHaveBeenCalledTimes(1); // Only export tx was waited for
+    });
+  });
+
+  describe("fee units", () => {
+    test("converts the C chain import fee from wei to nAVAX", async () => {
+      // Mainnet values: baseFee 2.5 gwei, 11230 gas for an import.
+      // The fee is 28,075 nAVAX, far below 1 AVAX.
+      const amount = BigInt(1e18); // 1 AVAX in wei
+      const pChainExportTxHash =
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";
+      const cChainImportTxHash =
+        "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890";
+
+      vi.mocked(getBaseFee).mockResolvedValue("2500000000");
+      const { utils } = await import("@avalabs/avalanchejs");
+      vi.mocked((utils as any).costCorethTx).mockReturnValue(11230);
+      vi.mocked(sendXPTransaction)
+        .mockResolvedValueOnce({
+          txHash: pChainExportTxHash,
+          chainAlias: "P",
+        } as any)
+        .mockResolvedValueOnce({
+          txHash: cChainImportTxHash,
+          chainAlias: "C",
+        } as any);
+
+      await expect(
+        transferPtoCChain(client as any, {
+          to: toCChainAddress,
+          amount,
+        })
+      ).resolves.toEqual({
+        txHashes: [
+          { txHash: pChainExportTxHash, chainAlias: "P" },
+          { txHash: cChainImportTxHash, chainAlias: "C" },
+        ],
+      });
     });
   });
 
