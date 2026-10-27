@@ -1,23 +1,23 @@
 # Changelog
 
-## Unreleased
+## 2026-10-27
 
-- `@avalanche-sdk/client` - Stop calling AvalancheGo RPC methods that are deprecated and will be removed
+- `@avalanche-sdk/client@v0.1.4` - Stop calling AvalancheGo RPC methods that are deprecated and will be removed
 
   - `send()` from the P-Chain no longer calls `platform.getBalance`. The transaction builder already throws `Insufficient funds` when the UTXOs cannot pay the amount and the fee. `send()` from the P-Chain to the C-Chain now spends the UTXOs of `account`, like `send()` from the P-Chain to the P-Chain
   - `waitForTxn` with `chainAlias: "X"` polls `avm.getTx` instead of `avm.getTxStatus`. The transaction is accepted when `avm.getTx` returns it
   - `waitForTxn` throws HTTP errors other than 429 at once, and adds the last polling error as the `cause` of `Transaction status not found`
 
-- `@avalanche-sdk/client` - Fix the fee units in `send()` between the P-Chain and the C-Chain
+- `@avalanche-sdk/client@v0.1.4` - Fix the fee units in `send()` between the P-Chain and the C-Chain
 
   - The C-Chain import fee in `send()` from the P-Chain to the C-Chain, and the C-Chain export fee in `send()` from the C-Chain to the P-Chain, were in wei but were compared with amounts in nAVAX. With the mainnet base fee of 2.5 gwei, `send()` threw `Transfer amount is too low` for amounts below about 28,000 AVAX. From the P-Chain, it threw after the P-Chain export was accepted
 
-- `@avalanche-sdk/client` - Mark the wrappers of deprecated AvalancheGo RPC methods as deprecated
+- `@avalanche-sdk/client@v0.1.4` - Mark the wrappers of deprecated AvalancheGo RPC methods as deprecated
 
   - Add `@deprecated` to `pChain.getStake`, `getSubnets`, `getBlockchains` and `getRewardUTXOs`, and to `xChain.getBalance`, `getAllBalances` and `getTxStatus`. Each note names the replacement
   - The React balance example gets the P-Chain balance from `platform.getUTXOs` instead of `platform.getBalance`
 
-- `@avalanche-sdk/client` - `pChain.getBalance` reads the balance from `platform.getUTXOs`
+- `@avalanche-sdk/client@v0.1.4` - `pChain.getBalance` reads the balance from `platform.getUTXOs`
 
   - `pChain.getBalance` no longer calls `platform.getBalance`, which AvalancheGo deprecated and will remove. It reads all UTXOs of the addresses with `platform.getUTXOs`, one request for each 1024 UTXOs and each 1024 addresses, and adds them up with the rules of `platform.getBalance`. It gets the AVAX asset ID with `platform.getStakingAssetID`. Callers do not change their code
   - When it needs more than 1 `platform.getUTXOs` request, it reads all UTXOs again until 2 reads return the same UTXOs (at most 3 reads). A load-balanced endpoint can send the pages to nodes that keep the UTXOs in different orders, which can skip a UTXO, and the chain can accept a transaction between 2 pages
