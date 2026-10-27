@@ -10,18 +10,12 @@ const mockTransport = () =>
     name: "Mock Transport",
     request: vi.fn(async ({ method }) => {
       switch (method) {
-        case "platform.getBalance":
+        case "platform.getUTXOs":
           return {
-            balance: 1,
-            unlocked: 1,
-            lockedStakeable: 1,
-            lockedNotStakeable: 1,
-            utxoIDs: [
-              {
-                txID: "string",
-                outputIndex: 1,
-              },
-            ],
+            numFetched: "0",
+            utxos: [],
+            endIndex: { address: "string", utxo: "string" },
+            encoding: "hex",
           };
         case "platform.getBlock":
           return {

@@ -132,9 +132,14 @@ export type PChainActions = {
   /**
    * Get the balance of AVAX controlled by a given address.
    *
-   * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance
+   * This function does not call `platform.getBalance`, because AvalancheGo
+   * deprecated that method and will remove it. It reads all UTXOs of the
+   * addresses with `platform.getUTXOs` (one request for each 1024 UTXOs) and
+   * adds them up with the rules of `platform.getBalance`. It gets the AVAX asset
+   * ID with `platform.getStakingAssetID`. It uses the local clock to find which
+   * outputs are locked.
    *
-   * @deprecated `platform.getBalance` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and add the output amounts of the AVAX asset.
+   * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetutxos
    *
    * @param args - {@link GetBalanceParameters} The addresses to get the balance of
    * @returns The balance information. {@link GetBalanceReturnType}
