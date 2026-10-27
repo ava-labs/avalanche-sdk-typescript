@@ -20,6 +20,9 @@ const MAX_UTXOS_PER_PAGE = 1024;
 // AvalancheGo. platform.getBalance had no limit.
 const MAX_ADDRESSES_PER_REQUEST = 1024;
 
+// The maximum number of times getBalance reads all UTXOs of the addresses.
+const MAX_READS = 3;
+
 type Bucket = "unlocked" | "lockedStakeable" | "lockedNotStakeable";
 
 /**
@@ -33,9 +36,11 @@ type Bucket = "unlocked" | "lockedStakeable" | "lockedNotStakeable";
  * `platform.getStakingAssetID`. It uses the local clock to find which outputs
  * are locked.
  *
- * When it sends more than 1 `platform.getUTXOs` request, the requests do not
- * read 1 snapshot of the chain. A transaction accepted between 2 requests can
- * make the result wrong by the amounts of that transaction.
+ * When it needs more than 1 `platform.getUTXOs` request, the requests do not
+ * read 1 state of the chain. A load balancer can send them to different
+ * nodes, and the chain can accept a transaction between 2 requests. So it
+ * reads all UTXOs again until 2 reads return the same UTXOs (at most 3
+ * reads). If all 3 reads are different, it uses the last read.
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetutxos
  *
@@ -115,14 +120,39 @@ export async function getBalance<chain extends Chain | undefined>(
 }
 
 /**
- * Get all UTXOs of the addresses, one page at a time. Each request has at
- * most 1024 addresses, because platform.getUTXOs rejects more.
+ * Get all UTXOs of the addresses.
+ *
+ * 1 request reads 1 state of 1 node. More requests do not. A load balancer can
+ * send the pages to nodes that keep the UTXOs in different orders, and then a
+ * page can skip a UTXO. The chain can also accept a transaction between 2
+ * pages. So when there is more than 1 request, read all UTXOs again until 2
+ * reads return the same UTXOs, at most MAX_READS times.
  */
 async function getAllUTXOs<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   addresses: string[]
 ): Promise<Utxo[]> {
+  let { utxos, requests } = await readAllUTXOs(client, addresses);
+  for (let read = 2; requests > 1 && read <= MAX_READS; read++) {
+    const previous = utxos;
+    ({ utxos, requests } = await readAllUTXOs(client, addresses));
+    if (haveSameKeys(previous, utxos)) {
+      break;
+    }
+  }
+  return [...utxos.values()];
+}
+
+/**
+ * Read all UTXOs of the addresses once, one page at a time. Each request has
+ * at most 1024 addresses, because platform.getUTXOs rejects more.
+ */
+async function readAllUTXOs<chain extends Chain | undefined>(
+  client: Client<Transport, chain>,
+  addresses: string[]
+): Promise<{ utxos: Map<string, Utxo>; requests: number }> {
   const utxos = new Map<string, Utxo>();
+  let requests = 0;
   // An empty list sends no request: platform.getUTXOs rejects it, and
   // platform.getBalance returned 0.
   for (let i = 0; i < addresses.length; i += MAX_ADDRESSES_PER_REQUEST) {
@@ -134,6 +164,7 @@ async function getAllUTXOs<chain extends Chain | undefined>(
         encoding: "hex",
         ...(startIndex === undefined ? {} : { startIndex }),
       });
+      requests++;
       for (const utxoHex of page.utxos) {
         const utxo = getUtxoFromBytes(utxoHex, "P");
         // A UTXO owned by 2 of the addresses can be on 2 pages, or in 2
@@ -146,7 +177,11 @@ async function getAllUTXOs<chain extends Chain | undefined>(
       startIndex = page.endIndex;
     }
   }
-  return [...utxos.values()];
+  return { utxos, requests };
+}
+
+function haveSameKeys(a: Map<string, unknown>, b: Map<string, unknown>) {
+  return a.size === b.size && [...a.keys()].every((key) => b.has(key));
 }
 
 /**

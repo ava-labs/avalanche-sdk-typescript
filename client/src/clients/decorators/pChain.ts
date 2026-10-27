@@ -140,9 +140,11 @@ export type PChainActions = {
    * `platform.getStakingAssetID`. It uses the local clock to find which outputs
    * are locked.
    *
-   * When it sends more than 1 `platform.getUTXOs` request, the requests do not
-   * read 1 snapshot of the chain. A transaction accepted between 2 requests can
-   * make the result wrong by the amounts of that transaction.
+   * When it needs more than 1 `platform.getUTXOs` request, the requests do not
+   * read 1 state of the chain. A load balancer can send them to different
+   * nodes, and the chain can accept a transaction between 2 requests. So it
+   * reads all UTXOs again until 2 reads return the same UTXOs (at most 3
+   * reads). If all 3 reads are different, it uses the last read.
    *
    * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetutxos
    *

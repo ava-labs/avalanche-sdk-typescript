@@ -99,6 +99,12 @@ const client = createAvalancheBaseClient({
     }),
 });
 
+function getUTXOsCalls() {
+  return mockRequest.mock.calls.filter(
+    ([args]) => args.method === "platform.getUTXOs"
+  ).length;
+}
+
 function onePage(utxos: string[]): Page[] {
   return [
     {
@@ -168,6 +174,7 @@ describe("getBalance", () => {
       "platform.getStakingAssetID",
       "platform.getUTXOs",
     ]);
+    // 1 request reads 1 state, so there is no second read.
     expect(mockRequest).toHaveBeenCalledWith({
       method: "platform.getStakingAssetID",
       params: { subnetID: PRIMARY_NETWORK_ID },
@@ -180,14 +187,11 @@ describe("getBalance", () => {
 
   test("reads the next page while a page has 1024 UTXOs, and counts a UTXO on 2 pages once", async () => {
     const endIndex = { address: ADDRESS, utxo: TX_ID };
-    pages = [
+    const read = [
       { numFetched: "1024", utxos: [utxo(0, 100), utxo(1, 200)], endIndex },
-      {
-        numFetched: "2",
-        utxos: [utxo(1, 200), utxo(2, 300)],
-        endIndex: { address: ADDRESS, utxo: TX_ID },
-      },
+      { numFetched: "2", utxos: [utxo(1, 200), utxo(2, 300)], endIndex },
     ];
+    pages = [...read, ...read];
 
     const result = await getBalance(client, { addresses: [ADDRESS] });
 
@@ -195,6 +199,7 @@ describe("getBalance", () => {
       method: "platform.getUTXOs",
       params: { addresses: [ADDRESS], encoding: "hex", startIndex: endIndex },
     });
+    expect(getUTXOsCalls()).toBe(4);
     expect(result.unlocked).toBe(600n);
     expect(result.utxoIDs).toEqual([
       { txID: TX_ID, outputIndex: 0 },
@@ -207,10 +212,11 @@ describe("getBalance", () => {
     const addresses = Array.from({ length: 1025 }, (_, i) =>
       i === 0 ? ADDRESS : `P-fuji-address-${i}`
     );
-    pages = [
+    const read = [
       ...onePage([utxo(0, 100), utxo(1, 200)]),
       ...onePage([utxo(1, 200), utxo(2, 300)]),
     ];
+    pages = [...read, ...read];
 
     const result = await getBalance(client, { addresses });
 
@@ -224,6 +230,38 @@ describe("getBalance", () => {
     });
     expect(result.unlocked).toBe(600n);
     expect(result.utxoIDs).toHaveLength(3);
+  });
+
+  test("reads again when 2 reads differ, and uses the first read that equals the read before it", async () => {
+    const endIndex = { address: ADDRESS, utxo: TX_ID };
+    // The first read misses utxo 2, as when 2 nodes behind a load balancer
+    // serve the 2 pages.
+    pages = [
+      { numFetched: "1024", utxos: [utxo(0, 100)], endIndex },
+      { numFetched: "1", utxos: [utxo(1, 200)], endIndex },
+      { numFetched: "1024", utxos: [utxo(0, 100), utxo(2, 300)], endIndex },
+      { numFetched: "1", utxos: [utxo(1, 200)], endIndex },
+      { numFetched: "1024", utxos: [utxo(0, 100), utxo(2, 300)], endIndex },
+      { numFetched: "1", utxos: [utxo(1, 200)], endIndex },
+    ];
+
+    const result = await getBalance(client, { addresses: [ADDRESS] });
+
+    expect(getUTXOsCalls()).toBe(6);
+    expect(result.unlocked).toBe(600n);
+  });
+
+  test("uses the third read when all 3 reads differ", async () => {
+    const endIndex = { address: ADDRESS, utxo: TX_ID };
+    pages = [0, 1, 2].flatMap((i) => [
+      { numFetched: "1024", utxos: [utxo(i, 100)], endIndex },
+      { numFetched: "0", utxos: [], endIndex },
+    ]);
+
+    const result = await getBalance(client, { addresses: [ADDRESS] });
+
+    expect(getUTXOsCalls()).toBe(6);
+    expect(result.utxoIDs).toEqual([{ txID: TX_ID, outputIndex: 2 }]);
   });
 
   test("skips outputs that platform.getBalance does not count", async () => {
