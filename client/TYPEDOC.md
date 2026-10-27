@@ -478,7 +478,7 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 
 ### P-Chain Methods
 
-- [`getBalance`](/functions/methods_pChain.getBalance.html) - Deprecated. Returns the balance of an address on the Platform Chain. AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` and add the AVAX output amounts instead. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance)
+- [`getBalance`](/functions/methods_pChain.getBalance.html) - Returns the balance of an address on the Platform Chain, from `platform.getUTXOs`. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetutxos)
 - [`getBlock`](/functions/methods_pChain.getBlock.html) - Gets a block by its ID. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblock)
 - [`getBlockByHeight`](/functions/methods_pChain.getBlockByHeight.html) - Gets a block by its height. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockbyheight)
 - [`getBlockchainStatus`](/functions/methods_pChain.getBlockchainStatus.html) - Returns the status of a blockchain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchainstatus)

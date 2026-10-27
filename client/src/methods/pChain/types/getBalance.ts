@@ -14,10 +14,14 @@ export type GetBalanceParameters = {
 
 /**
  * Return type for the `platform.getBalance` method.
- * @property balance - The total balance of the queried addresses
- * @property unlocked - The unlocked balance of the queried addresses
- * @property lockedStakeable - The locked stakeable balance of the queried addresses
- * @property lockedNotStakeable - The locked and not stakeable balance of the queried addresses
+ * @property balance - The total AVAX balance of the queried addresses
+ * @property unlocked - The unlocked AVAX balance of the queried addresses
+ * @property lockedStakeable - The locked stakeable AVAX balance of the queried addresses
+ * @property lockedNotStakeable - The locked and not stakeable AVAX balance of the queried addresses
+ * @property balances - The total balance of each asset, keyed by asset ID, as a decimal string
+ * @property unlockeds - The unlocked balance of each asset, keyed by asset ID, as a decimal string
+ * @property lockedStakeables - The locked stakeable balance of each asset, keyed by asset ID, as a decimal string
+ * @property lockedNotStakeables - The locked and not stakeable balance of each asset, keyed by asset ID, as a decimal string
  * @property utxoIDs - The IDs of the UTXOs that reference the queried addresses
  */
 export type GetBalanceReturnType = {
@@ -25,6 +29,10 @@ export type GetBalanceReturnType = {
   unlocked: bigint;
   lockedStakeable: bigint;
   lockedNotStakeable: bigint;
+  balances: Record<string, string>;
+  unlockeds: Record<string, string>;
+  lockedStakeables: Record<string, string>;
+  lockedNotStakeables: Record<string, string>;
   utxoIDs: {
     /**
      * The transaction ID of the UTXO.
