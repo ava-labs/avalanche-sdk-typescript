@@ -11,6 +11,8 @@ import { GetBlockchainsReturnType } from "./types/getBlockchains.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchains
  *
+ * @deprecated `platform.getBlockchains` is deprecated in AvalancheGo and can be removed in a future release. To list blockchains, use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.listBlockchains`). To get the blockchains of one subnet, use `validates`. To get one blockchain, use `getTx` with the blockchain ID.
+ *
  * @param client - The client to use to make the request {@link AvalancheCoreClient}
  * @returns The list of blockchains. {@link GetBlockchainsReturnType}
  *

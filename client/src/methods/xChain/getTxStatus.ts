@@ -14,6 +14,8 @@ import { XChainRpcSchema } from "./xChainRpcSchema.js";
  *
  * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus
  *
+ * @deprecated `avm.getTxStatus` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getTx` instead: the transaction is accepted when `getTx` returns it.
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The transaction ID. {@link GetTxStatusParameters}
  * @returns The transaction status. {@link GetTxStatusReturnType}

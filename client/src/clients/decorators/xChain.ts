@@ -102,6 +102,8 @@ export type XChainActions = {
    *
    * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetallbalances
    *
+   * @deprecated `avm.getAllBalances` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and for each asset add the amounts of the secp256k1fx transfer outputs that only this address owns (threshold 1) and whose locktime has passed. `avm.getAllBalances` skips all other outputs.
+   *
    * @param args - {@link GetAllBalancesParameters} The addresses to get balances for
    * @returns The balances of all assets. {@link GetAllBalancesReturnType}
    *
@@ -159,6 +161,8 @@ export type XChainActions = {
    * Get the balance of an asset controlled by given addresses.
    *
    * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgetbalance
+   *
+   * @deprecated `avm.getBalance` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and add the amounts of the asset's secp256k1fx transfer outputs that only this address owns (threshold 1) and whose locktime has passed. `avm.getBalance` skips all other outputs.
    *
    * @param args - {@link GetBalanceParameters} The addresses and asset ID
    * @returns The balance of the asset. {@link GetBalanceReturnType}
@@ -321,6 +325,8 @@ export type XChainActions = {
    * Get the status of a transaction.
    *
    * - Docs: https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus
+   *
+   * @deprecated `avm.getTxStatus` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getTx` instead: the transaction is accepted when `getTx` returns it.
    *
    * @param args - {@link GetTxStatusParameters} The transaction ID
    * @returns The transaction status. {@link GetTxStatusReturnType}

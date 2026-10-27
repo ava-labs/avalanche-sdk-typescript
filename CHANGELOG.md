@@ -12,6 +12,11 @@
 
   - The C-Chain import fee in `send()` from the P-Chain to the C-Chain, and the C-Chain export fee in `send()` from the C-Chain to the P-Chain, were in wei but were compared with amounts in nAVAX. With the mainnet base fee of 2.5 gwei, `send()` threw `Transfer amount is too low` for amounts below about 28,000 AVAX. From the P-Chain, it threw after the P-Chain export was accepted
 
+- `@avalanche-sdk/client` - Mark the wrappers of deprecated AvalancheGo RPC methods as deprecated
+
+  - Add `@deprecated` to `pChain.getBalance`, `getStake`, `getSubnets`, `getBlockchains` and `getRewardUTXOs`, and to `xChain.getBalance`, `getAllBalances` and `getTxStatus`. Each note names the replacement
+  - The React balance example gets the P-Chain balance from `platform.getUTXOs` instead of `platform.getBalance`
+
 ## 2026-09-02
 
 - Update `@avalanche-sdk/chainkit@v0.3.14` - Align the P-Chain models with the Helicon (ACP-236 auto-renewed validator) release of the Data API

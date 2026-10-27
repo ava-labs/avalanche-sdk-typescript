@@ -14,6 +14,8 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance
  *
+ * @deprecated `platform.getBalance` is deprecated in AvalancheGo, and AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` instead: page through all UTXOs, decode each with `getUtxoFromBytes` from `@avalanche-sdk/client/utils`, and add the output amounts of the AVAX asset.
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The addresses to get the balance of {@link GetBalanceParameters}
  * @returns The balance information. {@link GetBalanceReturnType}

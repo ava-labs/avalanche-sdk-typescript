@@ -14,6 +14,8 @@ import {
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetrewardutxos
  *
+ * @deprecated `platform.getRewardUTXOs` is deprecated in AvalancheGo and can be removed in a future release. AvalancheGo has no replacement method. Use an indexer, such as the Data API in `@avalanche-sdk/chainkit` (`data.primaryNetwork.rewards.listHistoricalRewards`).
+ *
  * @param client - The client to use. {@link AvalancheCoreClient}
  * @param params - The transaction ID and encoding {@link GetRewardUTXOsParameters}
  * @returns The reward UTXOs. {@link GetRewardUTXOsReturnType}

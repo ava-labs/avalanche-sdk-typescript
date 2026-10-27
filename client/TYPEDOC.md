@@ -478,11 +478,11 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 
 ### P-Chain Methods
 
-- [`getBalance`](/functions/methods_pChain.getBalance.html) - Returns the balance of an address on the Platform Chain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance)
+- [`getBalance`](/functions/methods_pChain.getBalance.html) - Deprecated. Returns the balance of an address on the Platform Chain. AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` and add the AVAX output amounts instead. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetbalance)
 - [`getBlock`](/functions/methods_pChain.getBlock.html) - Gets a block by its ID. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblock)
 - [`getBlockByHeight`](/functions/methods_pChain.getBlockByHeight.html) - Gets a block by its height. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockbyheight)
 - [`getBlockchainStatus`](/functions/methods_pChain.getBlockchainStatus.html) - Returns the status of a blockchain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchainstatus)
-- [`getBlockchains`](/functions/methods_pChain.getBlockchains.html) - Returns all the blockchains that exist (excluding the P-Chain). [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchains)
+- [`getBlockchains`](/functions/methods_pChain.getBlockchains.html) - Deprecated. Returns all the blockchains that exist (excluding the P-Chain). Use an indexer, such as the Data API in `@avalanche-sdk/chainkit`, instead. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetblockchains)
 - [`getCurrentSupply`](/functions/methods_pChain.getCurrentSupply.html) - Returns the current supply of AVAX in the system. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetcurrentsupply)
 - [`getCurrentValidators`](/functions/methods_pChain.getCurrentValidators.html) - Returns the current validators of the given Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetcurrentvalidators)
 - [`getFeeConfig`](/functions/methods_pChain.getFeeConfig.html) - Returns the fee configuration for the P-Chain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetfeeconfig)
@@ -491,11 +491,11 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 - [`getL1Validator`](/functions/methods_pChain.getL1Validator.html) - Returns information about an L1 validator. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetl1validator)
 - [`getMinStake`](/functions/methods_pChain.getMinStake.html) - Returns the minimum amount of nAVAX required to validate the requested Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetminstake)
 - [`getProposedHeight`](/functions/methods_pChain.getProposedHeight.html) - Returns the proposed height of the most recent block. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetproposedheight)
-- [`getRewardUTXOs`](/functions/methods_pChain.getRewardUTXOs.html) - Returns the reward UTXOs for a list of address:utxo_index pairs. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetrewardutxos)
-- [`getStake`](/functions/methods_pChain.getStake.html) - Returns the amount of nAVAX staked by a set of addresses. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake)
+- [`getRewardUTXOs`](/functions/methods_pChain.getRewardUTXOs.html) - Deprecated. Returns the reward UTXOs of a staking transaction. Use an indexer, such as the Data API in `@avalanche-sdk/chainkit`, instead. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetrewardutxos)
+- [`getStake`](/functions/methods_pChain.getStake.html) - Deprecated. Returns the amount of nAVAX staked by a set of addresses. AvalancheGo plans to remove it in an upcoming release. Calculate the stake with `getCurrentValidators` and `getTx` instead. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetstake)
 - [`getStakingAssetID`](/functions/methods_pChain.getStakingAssetID.html) - Returns the assetID of the asset used for staking on the requested Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetstakingassetid)
 - [`getSubnet`](/functions/methods_pChain.getSubnet.html) - Returns information about a Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnet)
-- [`getSubnets`](/functions/methods_pChain.getSubnets.html) - Returns all the blockchains that exist (excluding the P-Chain). [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnets)
+- [`getSubnets`](/functions/methods_pChain.getSubnets.html) - Deprecated. Returns all subnets. Use `getSubnet` for one subnet, or an indexer, such as the Data API in `@avalanche-sdk/chainkit`, for a list. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgetsubnets)
 - [`getTimestamp`](/functions/methods_pChain.getTimestamp.html) - Returns the current timestamp of the P-Chain. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgettimestamp)
 - [`getTotalStake`](/functions/methods_pChain.getTotalStake.html) - Returns the total amount staked on the requested Subnet. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgettotalstake)
 - [`getTx`](/functions/methods_pChain.getTx.html) - Returns the specified transaction. [Docs](https://build.avax.network/docs/api-reference/p-chain/api#platformgettx)
@@ -510,15 +510,15 @@ import { /* Window utilities */ } from '@avalanche-sdk/client/window'
 ### X-Chain Methods
 
 - [`buildGenesis`](/functions/methods_xChain.buildGenesis.html) - Builds a genesis block for the X-Chain. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmbuildgenesis)
-- [`getAllBalances`](/functions/methods_xChain.getAllBalances.html) - Returns all balances for a given address. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetallbalances)
+- [`getAllBalances`](/functions/methods_xChain.getAllBalances.html) - Deprecated. Returns all balances for a given address. AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` and add the amounts of the unlocked transfer outputs that only the address owns instead. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetallbalances)
 - [`getAssetDescription`](/functions/methods_xChain.getAssetDescription.html) - Returns information about an asset. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetassetdescription)
-- [`getBalance`](/functions/methods_xChain.getBalance.html) - Returns the balance of an asset held by an address. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetbalance)
+- [`getBalance`](/functions/methods_xChain.getBalance.html) - Deprecated. Returns the balance of an asset held by an address. AvalancheGo plans to remove it in an upcoming release. Use `getUTXOs` and add the amounts of the unlocked transfer outputs that only the address owns instead. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetbalance)
 - [`getBlock`](/functions/methods_xChain.getBlock.html) - Gets a block by its ID. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetblock)
 - [`getBlockByHeight`](/functions/methods_xChain.getBlockByHeight.html) - Gets a block by its height. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetblockbyheight)
 - [`getHeight`](/functions/methods_xChain.getHeight.html) - Returns the height of the most recent block. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetheight)
 - [`getTx`](/functions/methods_xChain.getTx.html) - Returns the specified transaction. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgettx)
 - [`getTxFee`](/functions/methods_xChain.getTxFee.html) - Returns the fee for the specified transaction. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgettxfee)
-- [`getTxStatus`](/functions/methods_xChain.getTxStatus.html) - Returns the status of the specified transaction. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus)
+- [`getTxStatus`](/functions/methods_xChain.getTxStatus.html) - Deprecated. Returns the status of the specified transaction. AvalancheGo plans to remove it in an upcoming release. Use `getTx` instead: the transaction is accepted when `getTx` returns it. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgettxstatus)
 - [`getUTXOs`](/functions/methods_xChain.getUTXOs.html) - Returns the UTXOs that reference a given address. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmgetutxos)
 - [`issueTx`](/functions/methods_xChain.issueTx.html) - Issues a transaction to the X-Chain. [Docs](https://build.avax.network/docs/api-reference/x-chain/api#avmissuetx)
 
