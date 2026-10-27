@@ -176,6 +176,29 @@ describe("getBalance", () => {
     ]);
   });
 
+  test("sends at most 1024 addresses in one request, and counts a UTXO in 2 address groups once", async () => {
+    const addresses = Array.from({ length: 1025 }, (_, i) =>
+      i === 0 ? ADDRESS : `P-fuji-address-${i}`
+    );
+    pages = [
+      ...onePage([utxo(0, 100), utxo(1, 200)]),
+      ...onePage([utxo(1, 200), utxo(2, 300)]),
+    ];
+
+    const result = await getBalance(client, { addresses });
+
+    expect(mockRequest).toHaveBeenCalledWith({
+      method: "platform.getUTXOs",
+      params: { addresses: addresses.slice(0, 1024), encoding: "hex" },
+    });
+    expect(mockRequest).toHaveBeenCalledWith({
+      method: "platform.getUTXOs",
+      params: { addresses: addresses.slice(1024), encoding: "hex" },
+    });
+    expect(result.unlocked).toBe(600n);
+    expect(result.utxoIDs).toHaveLength(3);
+  });
+
   test("uses the staking asset of the Primary Network for the top-level amounts", async () => {
     stakingAssetID = OTHER_ASSET;
     pages = onePage([utxo(0, 100), utxo(1, 7, { assetID: OTHER_ASSET })]);

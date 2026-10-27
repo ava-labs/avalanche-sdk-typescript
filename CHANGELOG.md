@@ -19,7 +19,7 @@
 
 - `@avalanche-sdk/client` - `pChain.getBalance` reads the balance from `platform.getUTXOs`
 
-  - `pChain.getBalance` no longer calls `platform.getBalance`, which AvalancheGo deprecated and will remove. It reads all UTXOs of the addresses with `platform.getUTXOs`, one request for each 1024 UTXOs, and adds them up with the rules of `platform.getBalance`. It gets the AVAX asset ID with `platform.getStakingAssetID`. Callers do not change their code
+  - `pChain.getBalance` no longer calls `platform.getBalance`, which AvalancheGo deprecated and will remove. It reads all UTXOs of the addresses with `platform.getUTXOs`, one request for each 1024 UTXOs and each 1024 addresses, and adds them up with the rules of `platform.getBalance`. It gets the AVAX asset ID with `platform.getStakingAssetID`. Callers do not change their code
   - The return type now declares the per-asset maps `balances`, `unlockeds`, `lockedStakeables` and `lockedNotStakeables`, which `platform.getBalance` also returned
   - `utxoIDs` is `[]`, not `null`, when no UTXO is found
 

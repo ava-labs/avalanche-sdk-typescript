@@ -16,6 +16,10 @@ import { GetUTXOsParameters } from "./types/getUTXOs.js";
 // The maximum page size of platform.getUTXOs in AvalancheGo.
 const MAX_UTXOS_PER_PAGE = 1024;
 
+// The maximum number of addresses in one platform.getUTXOs request in
+// AvalancheGo. platform.getBalance had no limit.
+const MAX_ADDRESSES_PER_REQUEST = 1024;
+
 type Bucket = "unlocked" | "lockedStakeable" | "lockedNotStakeable";
 
 /**
@@ -23,10 +27,15 @@ type Bucket = "unlocked" | "lockedStakeable" | "lockedNotStakeable";
  *
  * This function does not call `platform.getBalance`, because AvalancheGo
  * deprecated that method and will remove it. It reads all UTXOs of the
- * addresses with `platform.getUTXOs` (one request for each 1024 UTXOs) and
- * adds them up with the rules of `platform.getBalance`. It gets the AVAX asset
- * ID with `platform.getStakingAssetID`. It uses the local clock to find which
- * outputs are locked.
+ * addresses with `platform.getUTXOs` (one request for each 1024 UTXOs and
+ * each 1024 addresses) and adds them up with the rules of
+ * `platform.getBalance`. It gets the AVAX asset ID with
+ * `platform.getStakingAssetID`. It uses the local clock to find which outputs
+ * are locked.
+ *
+ * When it sends more than 1 `platform.getUTXOs` request, the requests do not
+ * read 1 snapshot of the chain. A transaction accepted between 2 requests can
+ * make the result wrong by the amounts of that transaction.
  *
  * - Docs: https://build.avax.network/docs/api-reference/p-chain/api#platformgetutxos
  *
@@ -106,37 +115,38 @@ export async function getBalance<chain extends Chain | undefined>(
 }
 
 /**
- * Get all UTXOs of the addresses, one page at a time, in the order of
- * `platform.getBalance`.
+ * Get all UTXOs of the addresses, one page at a time. Each request has at
+ * most 1024 addresses, because platform.getUTXOs rejects more.
  */
 async function getAllUTXOs<chain extends Chain | undefined>(
   client: Client<Transport, chain>,
   addresses: string[]
 ): Promise<Utxo[]> {
-  // platform.getUTXOs rejects an empty list; platform.getBalance returned 0.
-  if (addresses.length === 0) {
-    return [];
-  }
-
   const utxos = new Map<string, Utxo>();
-  let startIndex: GetUTXOsParameters["startIndex"];
-  for (;;) {
-    const page = await getUTXOs(client, {
-      addresses,
-      encoding: "hex",
-      ...(startIndex === undefined ? {} : { startIndex }),
-    });
-    for (const utxoHex of page.utxos) {
-      const utxo = getUtxoFromBytes(utxoHex, "P");
-      // A UTXO owned by 2 of the addresses can be on 2 pages. The map keeps
-      // it once, at its first position.
-      utxos.set(utxo.ID(), utxo);
+  // An empty list sends no request: platform.getUTXOs rejects it, and
+  // platform.getBalance returned 0.
+  for (let i = 0; i < addresses.length; i += MAX_ADDRESSES_PER_REQUEST) {
+    const addressGroup = addresses.slice(i, i + MAX_ADDRESSES_PER_REQUEST);
+    let startIndex: GetUTXOsParameters["startIndex"];
+    for (;;) {
+      const page = await getUTXOs(client, {
+        addresses: addressGroup,
+        encoding: "hex",
+        ...(startIndex === undefined ? {} : { startIndex }),
+      });
+      for (const utxoHex of page.utxos) {
+        const utxo = getUtxoFromBytes(utxoHex, "P");
+        // A UTXO owned by 2 of the addresses can be on 2 pages, or in 2
+        // address groups. The map keeps it once, at its first position.
+        utxos.set(utxo.ID(), utxo);
+      }
+      if (Number(page.numFetched) < MAX_UTXOS_PER_PAGE) {
+        break;
+      }
+      startIndex = page.endIndex;
     }
-    if (Number(page.numFetched) < MAX_UTXOS_PER_PAGE) {
-      return [...utxos.values()];
-    }
-    startIndex = page.endIndex;
   }
+  return [...utxos.values()];
 }
 
 /**
