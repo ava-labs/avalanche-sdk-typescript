@@ -1,4 +1,4 @@
-import { utils, Utxo } from "@avalabs/avalanchejs";
+import { networkIDs, utils, Utxo } from "@avalabs/avalanchejs";
 import { Chain, Transport } from "viem";
 import {
   AvalancheCoreClient,
@@ -12,8 +12,6 @@ import {
   GetBalanceReturnType,
 } from "./types/getBalance.js";
 import { GetUTXOsParameters } from "./types/getUTXOs.js";
-
-const PRIMARY_NETWORK_ID = "11111111111111111111111111111111LpoYY";
 
 // The maximum page size of platform.getUTXOs in AvalancheGo.
 const MAX_UTXOS_PER_PAGE = 1024;
@@ -60,7 +58,9 @@ export async function getBalance<chain extends Chain | undefined>(
   params: GetBalanceParameters
 ): Promise<GetBalanceReturnType> {
   const [{ assetID: avaxAssetID }, utxos] = await Promise.all([
-    getStakingAssetID(client, { subnetID: PRIMARY_NETWORK_ID }),
+    getStakingAssetID(client, {
+      subnetID: networkIDs.PrimaryNetworkID.toString(),
+    }),
     getAllUTXOs(client, params.addresses),
   ]);
 
