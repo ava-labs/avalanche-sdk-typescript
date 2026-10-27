@@ -1,3 +1,13 @@
+import {
+  avaxSerial,
+  Id,
+  Int,
+  MintOutput,
+  OutputOwners,
+  Short,
+  utils,
+  Utxo,
+} from "@avalabs/avalanchejs";
 import { createTransport, EIP1193RequestFn } from "viem";
 import {
   afterEach,
@@ -35,6 +45,23 @@ function utxo(
     String(locktime),
     1,
     String(stakeableLocktime)
+  );
+}
+
+// A UTXO with an output that platform.getBalance does not count.
+function mintOutputUtxo(outputIndex: number) {
+  const utxo = new Utxo(
+    new avaxSerial.UTXOID(Id.fromString(TX_ID), new Int(outputIndex)),
+    Id.fromString(AVAX),
+    new MintOutput(OutputOwners.fromNative([new Uint8Array(20)]))
+  );
+  return utils.bufferToHex(
+    utils.addChecksum(
+      utils.concatBytes(
+        new Short(0).toBytes(),
+        utxo.toBytes(utils.getManagerForVM("PVM").getDefaultCodec())
+      )
+    )
   );
 }
 
@@ -197,6 +224,15 @@ describe("getBalance", () => {
     });
     expect(result.unlocked).toBe(600n);
     expect(result.utxoIDs).toHaveLength(3);
+  });
+
+  test("skips outputs that platform.getBalance does not count", async () => {
+    pages = onePage([utxo(0, 100), mintOutputUtxo(1)]);
+
+    const result = await getBalance(client, { addresses: [ADDRESS] });
+
+    expect(result.balance).toBe(100n);
+    expect(result.utxoIDs).toEqual([{ txID: TX_ID, outputIndex: 0 }]);
   });
 
   test("uses the staking asset of the Primary Network for the top-level amounts", async () => {
