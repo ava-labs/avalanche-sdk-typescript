@@ -32,8 +32,7 @@ concurrency:
 
 # Minimal token permissions. The job only needs to read the repo contents
 # (for `actions/checkout`) — no write access to issues, PRs, packages, etc.
-permissions:
-  contents: read
+permissions: {}
 
 env:
   BUN_VERSION: "1.1.38"
@@ -45,6 +44,8 @@ env:
 
 jobs:
   e2e:
+    permissions:
+      contents: read
     name: tmpnet integration
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -54,6 +55,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
