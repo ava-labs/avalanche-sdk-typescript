@@ -1,10 +1,5 @@
 name: Publish ChainKit SDK
-permissions:
-  checks: write
-  contents: write
-  pull-requests: write
-  statuses: write
-  id-token: write
+permissions: {}
 "on":
   push:
     branches:
@@ -25,6 +20,12 @@ permissions:
 
 jobs:
   release-typescript:
+    permissions:
+      checks: write
+      contents: write
+      id-token: write
+      pull-requests: write
+      statuses: write
     name: Generate TypeScript SDK Release
     runs-on: ubuntu-22.04
     outputs:
@@ -35,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Tune GitHub-hosted runner network
         uses: smorimoto/tune-github-hosted-runner-network@bb252dcb5c8609a31087e7993daa086f5a1c0069 # v1
@@ -47,6 +50,9 @@ jobs:
           speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
 
   publish-typescript:
+    permissions:
+      contents: read
+      id-token: write
     name: Publish TypeScript SDK to npm
     needs: release-typescript
     if: ${{ github.event_name == 'workflow_dispatch' || (needs.release-typescript.outputs.typescript_regenerated == 'true' && needs.release-typescript.outputs.publish_typescript == 'true') }}
@@ -57,6 +63,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -76,10 +84,10 @@ jobs:
       - name: Check if version exists
         id: check_version
         run: |
-          INPUT_TAG=${{ github.event.inputs.tag }}
+          INPUT_TAG=${GITHUB_EVENT_INPUTS_TAG}
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+            VERSION="${GITHUB_EVENT_INPUTS_VERSION}"
           else
             VERSION=$(npm pkg get version | tr -d '"')
           fi
@@ -93,17 +101,20 @@ jobs:
             echo "Version $VERSION does not exist"
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
+        env:
+          GITHUB_EVENT_INPUTS_TAG: ${{ github.event.inputs.tag }}
+          GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
 
       - name: Publish package
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+            VERSION="${GITHUB_EVENT_INPUTS_VERSION}"
           else
             VERSION=$(npm pkg get version | tr -d '"')
           fi
 
-          INPUT_TAG=${{ github.event.inputs.tag }}
-          EXISTS=${{ steps.check_version.outputs.exists }}
+          INPUT_TAG=${GITHUB_EVENT_INPUTS_TAG}
+          EXISTS=${STEPS_CHECK_VERSION_OUTPUTS_EXISTS}
 
           echo "Detected version: $VERSION"
           echo "Input tag: $INPUT_TAG"
@@ -128,3 +139,7 @@ jobs:
           else
             echo "No input tag provided. Skipping tag addition."
           fi
+        env:
+          GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
+          GITHUB_EVENT_INPUTS_TAG: ${{ github.event.inputs.tag }}
+          STEPS_CHECK_VERSION_OUTPUTS_EXISTS: ${{ steps.check_version.outputs.exists }}

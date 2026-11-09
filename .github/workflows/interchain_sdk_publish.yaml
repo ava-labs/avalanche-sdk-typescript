@@ -16,18 +16,21 @@ on:
         type: string
         default: ""
 
-permissions:
-  id-token: write
-  contents: read
+permissions: {}
 
 jobs:
   publish:
+    permissions:
+      contents: read
+      id-token: write
     name: Publish to npm
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          persist-credentials: true  # kept: job runs git commands that use the checkout token
 
       - name: Use Node.js
         uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3
@@ -39,18 +42,22 @@ jobs:
         id: set_version
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+            VERSION="${GITHUB_EVENT_INPUTS_VERSION}"
           else
             TAG_NAME=${GITHUB_REF#refs/tags/}
             VERSION=${TAG_NAME#interchain/v}
           fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
 
       - name: Update package.json version
         run: |
-          VERSION=${{ steps.set_version.outputs.version }}
+          VERSION=${STEPS_SET_VERSION_OUTPUTS_VERSION}
           cd interchain
           npm version "$VERSION" --no-git-tag-version --allow-same-version
+        env:
+          STEPS_SET_VERSION_OUTPUTS_VERSION: ${{ steps.set_version.outputs.version }}
 
       - name: Install dependencies
         run: |
@@ -69,7 +76,7 @@ jobs:
         id: check_version
         run: |
           cd interchain
-          VERSION=${{ steps.set_version.outputs.version }}
+          VERSION=${STEPS_SET_VERSION_OUTPUTS_VERSION}
           echo "Checking if version $VERSION already exists..."
 
           if npm view "@avalanche-sdk/interchain@$VERSION" version >/dev/null 2>&1; then
@@ -79,13 +86,15 @@ jobs:
             echo "Version $VERSION does not exist"
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
+        env:
+          STEPS_SET_VERSION_OUTPUTS_VERSION: ${{ steps.set_version.outputs.version }}
 
       - name: Publish package
         run: |
           cd interchain
-          VERSION=${{ steps.set_version.outputs.version }}
-          INPUT_TAG=${{ github.event.inputs.tag }}
-          EXISTS=${{ steps.check_version.outputs.exists }}
+          VERSION=${STEPS_SET_VERSION_OUTPUTS_VERSION}
+          INPUT_TAG=${GITHUB_EVENT_INPUTS_TAG}
+          EXISTS=${STEPS_CHECK_VERSION_OUTPUTS_EXISTS}
 
           echo "Detected version: $VERSION"
 
@@ -108,3 +117,7 @@ jobs:
           else
             echo "No input tag provided. Skipping tag addition."
           fi
+        env:
+          STEPS_SET_VERSION_OUTPUTS_VERSION: ${{ steps.set_version.outputs.version }}
+          GITHUB_EVENT_INPUTS_TAG: ${{ github.event.inputs.tag }}
+          STEPS_CHECK_VERSION_OUTPUTS_EXISTS: ${{ steps.check_version.outputs.exists }}

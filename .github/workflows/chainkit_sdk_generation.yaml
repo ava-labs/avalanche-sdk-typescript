@@ -1,10 +1,5 @@
 name: Generate ChainKit SDK
-permissions:
-  checks: write
-  contents: write
-  pull-requests: write
-  statuses: write
-  id-token: write
+permissions: {}
 "on":
   workflow_dispatch:
     inputs:
@@ -19,6 +14,12 @@ permissions:
     - cron: 30 18 * * *
 jobs:
   generate_chainkit_sdk:
+    permissions:
+      checks: write
+      contents: write
+      id-token: write
+      pull-requests: write
+      statuses: write
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
     with:
       force: ${{ github.event.inputs.force }}
