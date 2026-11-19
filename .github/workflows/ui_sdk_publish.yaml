@@ -1,0 +1,119 @@
+name: Publish UI SDK
+
+on:
+  push:
+    tags:
+      - "ui/v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g., 1.0.0)"
+        required: true
+        type: string
+      tag:
+        description: "Tag to publish (e.g., latest, alpha, beta, etc.)"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Set version
+        id: set_version
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            VERSION=${TAG_NAME#ui/v}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package.json version
+        run: |
+          VERSION=${{ steps.set_version.outputs.version }}
+          cd ui
+          npm version "$VERSION" --no-git-tag-version --allow-same-version
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.6.3
+
+      - name: Install dependencies
+        run: |
+          cd ui
+          pnpm install
+
+      - name: Build the package
+        run: |
+          cd ui
+          pnpm run build
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Check if version exists
+        id: check_version
+        run: |
+          cd ui
+          VERSION=${{ steps.set_version.outputs.version }}
+          echo "Checking if version $VERSION already exists..."
+
+          if npm view "@avalanche-sdk/ui@$VERSION" version >/dev/null 2>&1; then
+            echo "Version $VERSION already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version $VERSION does not exist"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish package
+        run: |
+          cd ui
+          VERSION=${{ steps.set_version.outputs.version }}
+          INPUT_TAG=${{ github.event.inputs.tag }}
+          EXISTS=${{ steps.check_version.outputs.exists }}
+
+          echo "Detected version: $VERSION"
+          echo "Input tag: $INPUT_TAG"
+          echo "Version exists: $EXISTS"
+
+          if [[ "$EXISTS" == "false" ]]; then
+            if [[ "$VERSION" == *"-"* ]]; then
+              # Prerelease: publish with auto-detected tag + add input tag if provided
+              PRERELEASE=${VERSION#*-}
+              TAG=${PRERELEASE%%.*}
+              echo "Prerelease detected; publishing under dist-tag: $TAG"
+              npm publish --tag "$TAG" --access public
+            else
+              # Stable: publish with latest tag
+              echo "Official release detected; publishing under 'latest'"
+              npm publish --access public
+            fi
+          fi
+          if [[ -n "$INPUT_TAG" ]]; then
+            echo "Adding input tag: $INPUT_TAG"
+            npm dist-tag add "@avalanche-sdk/ui@$VERSION" "$INPUT_TAG"
+          else
+            echo "No input tag provided. Skipping tag addition."
+          fi
+
+
