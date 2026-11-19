@@ -13,7 +13,7 @@
     "@avalanche-sdk/interchain": "0.1.1-alpha.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "viem": "^2.33.3"
+    "viem": "^2.55.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
