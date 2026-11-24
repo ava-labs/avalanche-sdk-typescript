@@ -275,6 +275,38 @@ describe("sendXPTransaction", () => {
       expect(signXPTransaction).toHaveBeenCalled();
     });
 
+    test("passes the provided account to signXPTransaction", async () => {
+      const providedAccount = {
+        ...account,
+        xpAccount: {
+          signMessage: vi.fn(),
+          signTransaction: vi.fn(),
+          publicKey:
+            "0x0245ae25e2903178ddc15a26bbaa05dc3c923aba8fb64d2443ea02d91589a22208",
+        },
+      } as any;
+
+      vi.mocked(parseAvalancheAccount).mockReturnValueOnce(providedAccount);
+
+      await sendXPTransaction(client as any, {
+        tx: testTxHex,
+        chainAlias: "C",
+        account: providedAccount,
+      });
+
+      expect(signXPTransaction).toHaveBeenCalledWith(client, {
+        tx: testTxHex,
+        chainAlias: "C",
+        account: providedAccount,
+        subnetOwners: undefined,
+        subnetAuth: undefined,
+        disableOwners: undefined,
+        disableAuth: undefined,
+        autoRenewedValidatorOwners: undefined,
+        autoRenewedValidatorAuth: undefined,
+      });
+    });
+
     test("uses client.xpAccount when account has no xpAccount", async () => {
       const accountWithoutXpAccount = {
         ...account,

@@ -1,11 +1,15 @@
 import {
+  Address,
   avaxSerial,
   Credential,
+  EVMUnsignedTx,
+  evmSerial,
   Signature,
   UnsignedTx,
   utils,
 } from "@avalabs/avalanchejs";
-import { Hex } from "viem";
+import { sha256 } from "@noble/hashes/sha256";
+import { Account, concatHex, Hex, parseSignature, toHex } from "viem";
 import { parseAvalancheAccount } from "../../accounts/utils/parseAvalancheAccount.js";
 import { publicKeyToXPAddress } from "../../accounts/utils/publicKeyToXPAddress.js";
 import { AvalancheWalletCoreClient } from "../../clients/createAvalancheWalletCoreClient.js";
@@ -15,6 +19,7 @@ import { AvalancheWalletRpcSchema } from "./avalancheWalletRPCSchema.js";
 import { SepkSignatureLength } from "./constants.js";
 import { getContextFromURI, getHRP } from "./getContextFromURI.js";
 import {
+  Signatures,
   SignXPTransactionParameters,
   SignXPTransactionReturnType,
 } from "./types/signXPTransaction.js";
@@ -23,6 +28,89 @@ import {
   getChainIdFromAlias,
   isTxImportExport,
 } from "./utils.js";
+
+const emptySignatureHex = new Signature(
+  new Uint8Array(SepkSignatureLength)
+).toString();
+
+/**
+ * Gets a C-Chain export tx from its hex as an UnsignedTx that knows the
+ * addresses that sign it. Its inputs are EVM inputs, not UTXOs.
+ * @param txHex - The tx hex, with or without credentials
+ * @returns The UnsignedTx, or undefined if the tx is not a C-Chain export
+ */
+function getCChainExportTxFromHex(txHex: string): UnsignedTx | undefined {
+  const [txn, credentials] = getTxFromBytes(txHex, "C");
+  if (!evmSerial.isExportTx(txn)) {
+    return undefined;
+  }
+
+  // The node checks that credential i holds 1 signature by the address of
+  // input i
+  return new EVMUnsignedTx(
+    txn,
+    [],
+    new utils.AddressMaps(
+      txn.ins.map((input) => new utils.AddressMap([[input.address, 0]]))
+    ),
+    credentials.length > 0
+      ? credentials
+      : txn.ins.map(
+          () =>
+            new Credential([new Signature(new Uint8Array(SepkSignatureLength))])
+        )
+  );
+}
+
+/**
+ * Signs the inputs of a tx that the EVM address of the account owns and that
+ * are not signed yet. A C-Chain export spends inputs of the EVM address. When
+ * the account has different EVM and X/P keys, like the accounts of
+ * `mnemonicsToAvalancheAccount`, the X/P key cannot sign them.
+ * @param tx - The tx to sign {@link UnsignedTx}
+ * @param evmAccount - The EVM account {@link Account}
+ * @returns The signatures added to the tx {@link Signatures}
+ */
+async function signEVMAddressInputs(
+  tx: UnsignedTx,
+  evmAccount: Account | undefined
+): Promise<Signatures[]> {
+  // Only accounts that can sign a hash, like viem local accounts
+  if (!evmAccount?.sign) {
+    return [];
+  }
+
+  const credentials = tx.getCredentials();
+  const sigIndices = (
+    tx.getSigIndicesForAddress(
+      new Address(utils.hexToBuffer(evmAccount.address))
+    ) ?? []
+  ).filter(
+    ([credIndex, sigIndex]) =>
+      credentials[credIndex]?.getSignatures()[sigIndex] === emptySignatureHex
+  );
+  if (sigIndices.length === 0) {
+    return [];
+  }
+
+  // Sign the hash that xpAccount.signTransaction signs
+  const { r, s, yParity } = parseSignature(
+    await evmAccount.sign({ hash: toHex(sha256(tx.toBytes())) })
+  );
+  // viem ends the signature with v (27 or 28), avalanchejs with the
+  // recovery id (0 or 1)
+  const signature = utils.hexToBuffer(
+    concatHex([r, s, toHex(yParity, { size: 1 })])
+  );
+  sigIndices.forEach(([credIndex, sigIndex]) =>
+    tx.addSignatureAt(signature, credIndex, sigIndex)
+  );
+
+  return sigIndices.map((sig) => ({
+    signature: utils.bufferToHex(signature),
+    sigIndices: sig,
+  }));
+}
 
 /**
  * Formats an XP address with the chain alias prefix
@@ -81,7 +169,7 @@ export async function signXPTransaction(
     autoRenewedValidatorAuth,
   } = params;
 
-  const txOrTxHex = tx || signedTxHex;
+  let txOrTxHex = tx || signedTxHex;
 
   if (!txOrTxHex) {
     throw new Error("Either tx or signedTxHex must be provided");
@@ -89,6 +177,7 @@ export async function signXPTransaction(
 
   const paramAc = parseAvalancheAccount(account);
   const xpAccount = paramAc?.xpAccount || client.xpAccount;
+  const evmAccount = paramAc?.evmAccount ?? client.account;
 
   // Always get the actual network ID from the node to determine the correct HRP
   // Don't rely on chain.testnet flag as it doesn't distinguish between different test networks
@@ -101,6 +190,12 @@ export async function signXPTransaction(
       xpAccount.publicKey,
       hrp
     );
+
+    // The hex path below finds the signers from the UTXOs that the inputs
+    // spend, and the inputs of a C-Chain export are not UTXOs
+    if (typeof txOrTxHex === "string" && chainAlias === "C") {
+      txOrTxHex = getCChainExportTxFromHex(txOrTxHex) ?? txOrTxHex;
+    }
 
     if (typeof txOrTxHex === "string") {
       // Get the tx and credentials from the txHex
@@ -237,6 +332,7 @@ export async function signXPTransaction(
         await xpAccount.signTransaction(txOrTxHex.toBytes())
       );
       tx.addSignature(signature);
+      const evmSignatures = await signEVMAddressInputs(tx, evmAccount);
 
       const ownerAuth =
         subnetOwners && subnetAuth
@@ -259,18 +355,22 @@ export async function signXPTransaction(
           xpAccount.publicKey
         );
       }
+      const xpSignatures = tx
+        .getSigIndicesForPubKey(utils.hexToBuffer(xpAccount.publicKey))
+        ?.map((sig) => {
+          return {
+            signature: utils.bufferToHex(signature),
+            sigIndices: sig,
+          };
+        });
       return {
         signedTxHex: utils.bufferToHex(
           utils.addChecksum(tx.getSignedTx().toBytes())
         ),
-        signatures: tx
-          .getSigIndicesForPubKey(utils.hexToBuffer(xpAccount.publicKey))
-          ?.map((sig) => {
-            return {
-              signature: utils.bufferToHex(signature),
-              sigIndices: sig,
-            };
-          }),
+        signatures:
+          evmSignatures.length > 0
+            ? [...(xpSignatures ?? []), ...evmSignatures]
+            : xpSignatures,
         subnetAuth,
         subnetOwners,
         disableOwners,

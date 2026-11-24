@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- `@avalanche-sdk/client` - Sign C-Chain exports with the EVM key
+
+  - `signXPTransaction` signed a C-Chain export only with the X/P key. The EVM key of an account from `mnemonicsToAvalancheAccount` is a different key, so the credential stayed empty and the node rejected the export with `invalid signature`. It now also signs the inputs of the EVM address with `evmAccount` of `account`, or `client.account`. A C-Chain export given as hex no longer throws `Cannot read properties of undefined`
+  - `sendXPTransaction` passes `account` to `signXPTransaction`
+
 ## 2026-10-27
 
 - `@avalanche-sdk/client@v0.1.4` - Stop calling AvalancheGo RPC methods that are deprecated and will be removed
