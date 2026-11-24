@@ -63,6 +63,7 @@ export async function sendXPTransaction(
     let signedTxRes = await signXPTransaction(client, {
       tx: txOrTxHex,
       chainAlias,
+      account,
       subnetOwners,
       subnetAuth,
       disableOwners,
